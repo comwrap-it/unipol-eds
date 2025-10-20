@@ -1,5 +1,8 @@
 sitemaps:
   default:
-    source: /query-index.json
-    destination: /sitemap.xml
     lastmod: YYYY-MM-DD
+    languages:
+       it:
+         source: /it/it/query-index.json
+         destination: /sitemap.xml
+         hreflang: it
