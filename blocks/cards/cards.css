@@ -8,7 +8,7 @@
 }
 
 .cards > ul > li {
-  border: 2px solid #dadada;
+  border: 1px solid #dadada;
   background-color: var(--background-color);
 }
 
