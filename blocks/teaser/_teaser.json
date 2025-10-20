@@ -55,13 +55,6 @@
           ]
         },
         {
-          "component": "reference",
-          "valueType": "string",
-          "name": "bgImage",
-          "label": "Background image",
-          "multi": false
-        },
-        {
           "component": "select",
           "name": "bgImageLazy",
           "label": "Lazy load for Background image",
@@ -77,18 +70,9 @@
           ]
         },
         {
-          "component": "text",
-          "valueType": "string",
-          "name": "imageAlt",
-          "label": "Alt",
-          "value": ""
-        },
-        {
-          "component": "richtext",
-          "name": "text",
-          "value": "",
-          "label": "Text",
-          "valueType": "string"
+          "component": "hero",
+          "name": "hero",
+          "label": "Hero"
         }
       ]
     }
