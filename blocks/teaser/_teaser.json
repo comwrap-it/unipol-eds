@@ -68,14 +68,16 @@
               "value": false
             }
           ]
-        },
-        {
-          "component": "hero",
-          "name": "hero",
-          "label": "Hero"
         }
       ]
     }
   ],
-  "filters": []
+  "filters": [
+    {
+      "id": "teaser",
+      "components": [
+        "hero"
+      ]
+    }
+  ]
 }

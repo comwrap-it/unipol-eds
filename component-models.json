@@ -266,11 +266,6 @@
             "value": false
           }
         ]
-      },
-      {
-        "component": "hero",
-        "name": "hero",
-        "label": "Hero"
       }
     ]
   }
