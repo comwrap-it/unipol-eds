@@ -9,7 +9,7 @@ export default function decorate(block) {
 
   if (image) {
     const img = image.querySelector('img');
-    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    const optimizedPic = createOptimizedPicture(img, imageAlt, false, [{ width: '750' }]);
     moveInstrumentation(img, optimizedPic.querySelector('img'));
     img.closest('picture').replaceWith(optimizedPic);
     if (img) teaser.append(img);

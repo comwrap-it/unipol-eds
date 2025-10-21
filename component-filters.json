@@ -102,11 +102,5 @@
       "button",
       "title"
     ]
-  },
-  {
-    "id": "teaser",
-    "components": [
-      "hero"
-    ]
   }
 ]

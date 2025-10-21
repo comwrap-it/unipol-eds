@@ -21,63 +21,28 @@
       "id": "teaser",
       "fields": [
         {
-          "component": "select",
-          "name": "background",
-          "label": "Background",
-          "options": [
-            {
-              "name": "Transparent",
-              "value": ""
-            },
-            {
-              "name": "Color",
-              "value": "color"
-            },
-            {
-              "name": "Image",
-              "value": "image"
-            }
-          ]
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Image",
+          "multi": false
         },
         {
-          "component": "select",
-          "name": "bgColor",
-          "label": "Background color",
-          "options": [
-            {
-              "name": "Grey",
-              "value": "#9C9C9C"
-            },
-            {
-              "name": "Green",
-              "value": "#228B22"
-            }
-          ]
+          "component": "text",
+          "valueType": "string",
+          "name": "imageAlt",
+          "label": "Alt",
+          "value": ""
         },
         {
-          "component": "select",
-          "name": "bgImageLazy",
-          "label": "Lazy load for Background image",
-          "options": [
-            {
-              "name": "True",
-              "value": true
-            },
-            {
-              "name": "False",
-              "value": false
-            }
-          ]
+          "component": "richtext",
+          "name": "text",
+          "value": "",
+          "label": "Text",
+          "valueType": "string"
         }
       ]
     }
   ],
-  "filters": [
-    {
-      "id": "teaser",
-      "components": [
-        "hero"
-      ]
-    }
-  ]
+  "filters": []
 }
