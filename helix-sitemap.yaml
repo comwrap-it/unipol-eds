@@ -5,5 +5,4 @@ sitemaps:
        it:
          source: /query-index.json
          destination: /sitemap.xml
-         origin: https://main--unipol-eds--comwrap-it.aem.live/
          hreflang: it
