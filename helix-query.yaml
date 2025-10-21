@@ -3,10 +3,10 @@ version: 1
 indices:
   pages:
     include:
-      - '/it/it/**'
+      - '/it/**'
     exclude:
       - '/**.json'
-    target: /it/it/query-index.json
+    target: /query-index.json
     properties:
       lastModified:
         select: none
