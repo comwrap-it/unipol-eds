@@ -2,7 +2,7 @@ import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block) {
-  const image = block.children[0].children;
+  const [image, imageAlt] = block.children[0].children;
   const text = block.children[1].children;
 
   const teaser = document.createElement('div');
