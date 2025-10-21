@@ -20,7 +20,7 @@ export default function decorate(block) {
   content.classList.add('teaser-content');
 
   if (imageAlt) content.append(imageAlt);
-  if (text) content.append(text);
+  if (text) content.append(text[0]);
 
   teaser.append(content);
   block.textContent = '';
