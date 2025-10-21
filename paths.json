@@ -5,6 +5,6 @@
     "/content/unipol/it/it/metadata:/metadata.json"
   ],
   "includes": [
-    "/content/unipol/it/"
+    "/content/unipol/it/it/"
   ]
 }
