@@ -1,10 +1,10 @@
 {
   "mappings": [
-    "/content/unipol/it/it/:/",
+    "/content/unipol/it/it:/homepage",
     "/content/unipol/it/it/configuration:/.helix/config.json",
     "/content/unipol/it/it/metadata:/metadata.json"
   ],
   "includes": [
-    "/content/unipol/it/it/"
+    "/content/unipol/"
   ]
 }
