@@ -3,7 +3,7 @@ version: 1
 indices:
   it:
     include:
-      - '/it/**'
+      - '/it/it/**'
     exclude:
       - '/**.json'
     target: /query-index.json
