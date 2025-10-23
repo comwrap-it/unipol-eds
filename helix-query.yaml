@@ -1,9 +1,9 @@
 version: 1
 
 indices:
-  pages:
+  it:
     include:
-      - '/**'
+      - '/it/**'
     exclude:
       - '/**.json'
     target: /query-index.json
@@ -14,3 +14,16 @@ indices:
       robots:
         select: head > meta[name="robots"]
         value: attribute(el, "content")
+  en:
+    include:
+      - '/en/**'
+    exclude:
+      - '/**.json'
+    target: /en/query-index.json
+    properties:
+      lastModified:
+        select: none
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
+      robots:
+        select: head > meta[name="robots"]
+        value: attribute(el, "content")      
