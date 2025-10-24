@@ -2,7 +2,10 @@
   "mappings": [
     "/content/unipol/it/it/:/",
     "/content/unipol/it/it/configuration:/.helix/config.json",
-    "/content/unipol/it/it/metadata:/metadata.json"
+    "/content/unipol/it/it/metadata:/metadata.json",
+    "/content/unipol/en/us/:/us/",
+    "/content/unipol/en/us/configuration:/.helix/config.json",
+    "/content/unipol/en/us/metadata:/metadata.json"
   ],
   "includes": [
     "/content/unipol/"
