@@ -1,0 +1,133 @@
+{
+  "definitions": [
+    {
+      "title": "Button",
+      "id": "button",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/button/v1/button",
+            "template": {
+              "model": "button"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "button",
+      "fields": [
+        {
+          "component": "text",
+          "name": "text",
+          "label": "Button Text",
+          "required": true
+        },
+        {
+          "component": "select",
+          "name": "variant",
+          "label": "Variant",
+          "options": [
+            {
+              "name": "Primary",
+              "value": "primary"
+            },
+            {
+              "name": "Accent",
+              "value": "accent"
+            },
+            {
+              "name": "Secondary",
+              "value": "secondary"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "size",
+          "label": "Size",
+          "options": [
+            {
+              "name": "Small",
+              "value": "small"
+            },
+            {
+              "name": "Medium",
+              "value": "medium"
+            },
+            {
+              "name": "Large",
+              "value": "large"
+            }
+          ]
+        },
+        {
+          "component": "boolean",
+          "name": "disabled",
+          "label": "Disabled"
+        },
+        {
+          "component": "boolean",
+          "name": "fullWidth",
+          "label": "Full Width"
+        },
+        {
+          "component": "boolean",
+          "name": "loading",
+          "label": "Loading State"
+        },
+        {
+          "component": "text",
+          "name": "onClick",
+          "label": "Click Handler",
+          "description": "JavaScript function name for click handling"
+        },
+        {
+          "component": "text",
+          "name": "className",
+          "label": "Additional CSS Classes"
+        },
+        {
+          "component": "text",
+          "name": "id",
+          "label": "Element ID"
+        },
+        {
+          "component": "select",
+          "name": "type",
+          "label": "Button Type",
+          "options": [
+            {
+              "name": "Button",
+              "value": "button"
+            },
+            {
+              "name": "Submit",
+              "value": "submit"
+            },
+            {
+              "name": "Reset",
+              "value": "reset"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "button",
+      "title": "Button",
+      "condition": {
+        "===": [
+          {
+            "var": "component"
+          },
+          "button"
+        ]
+      }
+    }
+  ]
+}

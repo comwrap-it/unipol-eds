@@ -1,0 +1,67 @@
+/**
+ * Cards Organism Styles - Atomic Design System
+ * Collection of Card molecules in a responsive grid layout
+ */
+
+.cards {
+  width: 100%;
+}
+
+.cards-container {
+  width: 100%;
+}
+
+.cards-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.cards-item {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Ensure cards in the grid have equal height */
+.cards-item .card {
+  height: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cards-grid {
+    gap: 12px;
+  }
+}
+
+/* Grid variations */
+.cards.two-columns .cards-grid {
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+}
+
+.cards.three-columns .cards-grid {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.cards.four-columns .cards-grid {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+/* Compact layout */
+.cards.compact .cards-grid {
+  gap: 16px;
+}
+
+.cards.compact .cards-grid {
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+}

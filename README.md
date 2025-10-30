@@ -2,7 +2,7 @@
 Your project's description...
 
 ## Environments
-- Preview: https://main--unipol-eds--comwrap-it.aem.page/
+- Preview: https://main--unipol-stage--comwrap-it.aem.page/
 - Live: https://main--{repo}--{owner}.aem.live/
 
 ## Documentation

@@ -1,0 +1,124 @@
+{
+  "name": "Card",
+  "type": "molecule",
+  "category": "content",
+  "description": "A single card component that combines image, title, description, and a primary button. Part of the Atomic Design System.",
+  "atoms": [
+    "button"
+  ],
+  "variants": [
+    {
+      "name": "default",
+      "description": "Standard card with image, title, description, and button"
+    },
+    {
+      "name": "featured",
+      "description": "Featured card with accent styling"
+    },
+    {
+      "name": "compact",
+      "description": "Compact card with reduced spacing and smaller image"
+    }
+  ],
+  "properties": {
+    "image": {
+      "type": "string",
+      "description": "Image URL for the card",
+      "required": false
+    },
+    "imageAlt": {
+      "type": "string",
+      "description": "Alt text for the image",
+      "required": false
+    },
+    "title": {
+      "type": "string",
+      "description": "Card title",
+      "required": true
+    },
+    "description": {
+      "type": "string",
+      "description": "Card description text",
+      "required": false
+    },
+    "buttonText": {
+      "type": "string",
+      "description": "Text for the primary button",
+      "default": "Scopri di più"
+    },
+    "buttonLink": {
+      "type": "string",
+      "description": "Link URL for the button",
+      "default": "#"
+    },
+    "onClick": {
+      "type": "function",
+      "description": "Custom click handler for the button",
+      "required": false
+    },
+    "className": {
+      "type": "string",
+      "description": "Additional CSS classes",
+      "required": false
+    }
+  },
+  "examples": [
+    {
+      "name": "Basic Card",
+      "config": {
+        "title": "Titolo della Card",
+        "description": "Descrizione della card con informazioni utili per l'utente.",
+        "buttonText": "Scopri di più"
+      }
+    },
+    {
+      "name": "Card with Image",
+      "config": {
+        "image": "https://via.placeholder.com/400x200",
+        "imageAlt": "Immagine di esempio",
+        "title": "Card con Immagine",
+        "description": "Una card completa con immagine, testo e bottone.",
+        "buttonText": "Vai al dettaglio"
+      }
+    },
+    {
+      "name": "Featured Card",
+      "config": {
+        "image": "https://via.placeholder.com/400x200",
+        "imageAlt": "Card in evidenza",
+        "title": "Card in Evidenza",
+        "description": "Questa card è messa in evidenza con uno stile speciale.",
+        "buttonText": "Scopri l'offerta",
+        "className": "featured"
+      }
+    },
+    {
+      "name": "Compact Card",
+      "config": {
+        "image": "https://via.placeholder.com/400x120",
+        "imageAlt": "Card compatta",
+        "title": "Card Compatta",
+        "description": "Una versione più compatta della card.",
+        "buttonText": "Dettagli",
+        "className": "compact"
+      }
+    }
+  ],
+  "accessibility": {
+    "requirements": [
+      "Card should be keyboard navigable",
+      "Button should have proper focus states",
+      "Images should have meaningful alt text",
+      "Card should have proper contrast ratios"
+    ]
+  },
+  "dependencies": {
+    "atoms": [
+      "../../atoms/buttons/button/button.js"
+    ],
+    "scripts": [
+      "../../../scripts/aem.js",
+      "../../../scripts/scripts.js"
+    ]
+  }
+}

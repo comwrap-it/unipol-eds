@@ -1,0 +1,118 @@
+/* EDS Design Tokens for Atomic Design System */
+
+:root {
+  /* Color Palette */
+  --eds-color-primary-50: #f0f9ff;
+  --eds-color-primary-100: #e0f2fe;
+  --eds-color-primary-200: #bae6fd;
+  --eds-color-primary-300: #7dd3fc;
+  --eds-color-primary-400: #38bdf8;
+  --eds-color-primary-500: #0ea5e9;
+  --eds-color-primary-600: #0284c7;
+  --eds-color-primary-700: #0369a1;
+  --eds-color-primary-800: #075985;
+  --eds-color-primary-900: #0c4a6e;
+
+  --eds-color-accent-50: #fdf4ff;
+  --eds-color-accent-100: #fae8ff;
+  --eds-color-accent-200: #f5d0fe;
+  --eds-color-accent-300: #f0abfc;
+  --eds-color-accent-400: #e879f9;
+  --eds-color-accent-500: #d946ef;
+  --eds-color-accent-600: #c026d3;
+  --eds-color-accent-700: #a21caf;
+  --eds-color-accent-800: #86198f;
+  --eds-color-accent-900: #701a75;
+
+  --eds-color-secondary-50: #f8fafc;
+  --eds-color-secondary-100: #f1f5f9;
+  --eds-color-secondary-200: #e2e8f0;
+  --eds-color-secondary-300: #cbd5e1;
+  --eds-color-secondary-400: #94a3b8;
+  --eds-color-secondary-500: #64748b;
+  --eds-color-secondary-600: #475569;
+  --eds-color-secondary-700: #334155;
+  --eds-color-secondary-800: #1e293b;
+  --eds-color-secondary-900: #0f172a;
+
+  /* Semantic Colors */
+  --eds-color-success: #10b981;
+  --eds-color-warning: #f59e0b;
+  --eds-color-error: #ef4444;
+  --eds-color-info: #3b82f6;
+
+  /* Neutral Colors */
+  --eds-color-white: #ffffff;
+  --eds-color-black: #000000;
+  --eds-color-gray-50: #f9fafb;
+  --eds-color-gray-100: #f3f4f6;
+  --eds-color-gray-200: #e5e7eb;
+  --eds-color-gray-300: #d1d5db;
+  --eds-color-gray-400: #9ca3af;
+  --eds-color-gray-500: #6b7280;
+  --eds-color-gray-600: #4b5563;
+  --eds-color-gray-700: #374151;
+  --eds-color-gray-800: #1f2937;
+  --eds-color-gray-900: #111827;
+
+  /* Button Specific Tokens */
+  --eds-button-border-radius: 0.375rem;
+  --eds-button-border-width: 1px;
+  --eds-button-font-weight: 500;
+  --eds-button-transition: all 0.2s ease-in-out;
+  --eds-button-focus-ring: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  --eds-button-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --eds-button-shadow-hover: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+
+  /* Button Sizes */
+  --eds-button-size-small-height: 2rem;
+  --eds-button-size-small-padding: 0.5rem 0.75rem;
+  --eds-button-size-small-font-size: 0.875rem;
+  --eds-button-size-small-line-height: 1.25rem;
+
+  --eds-button-size-medium-height: 2.5rem;
+  --eds-button-size-medium-padding: 0.625rem 1rem;
+  --eds-button-size-medium-font-size: 0.875rem;
+  --eds-button-size-medium-line-height: 1.25rem;
+
+  --eds-button-size-large-height: 3rem;
+  --eds-button-size-large-padding: 0.75rem 1.5rem;
+  --eds-button-size-large-font-size: 1rem;
+  --eds-button-size-large-line-height: 1.5rem;
+
+  /* Icon Sizes */
+  --eds-icon-size-small: 1rem;
+  --eds-icon-size-medium: 1.25rem;
+  --eds-icon-size-large: 1.5rem;
+
+  /* Spacing */
+  --eds-spacing-xs: 0.25rem;
+  --eds-spacing-sm: 0.5rem;
+  --eds-spacing-md: 0.75rem;
+  --eds-spacing-lg: 1rem;
+  --eds-spacing-xl: 1.5rem;
+  --eds-spacing-2xl: 2rem;
+
+  /* Typography */
+  --eds-font-family-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --eds-font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+
+  /* Z-Index */
+  --eds-z-index-dropdown: 1000;
+  --eds-z-index-sticky: 1020;
+  --eds-z-index-fixed: 1030;
+  --eds-z-index-modal-backdrop: 1040;
+  --eds-z-index-modal: 1050;
+  --eds-z-index-popover: 1060;
+  --eds-z-index-tooltip: 1070;
+
+  /* Animation */
+  --eds-animation-duration-fast: 150ms;
+  --eds-animation-duration-normal: 200ms;
+  --eds-animation-duration-slow: 300ms;
+  --eds-animation-easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Loading Spinner */
+  --eds-loading-spinner-size: 1rem;
+  --eds-loading-spinner-border-width: 2px;
+}

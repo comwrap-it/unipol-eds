@@ -1,0 +1,300 @@
+/* Icon Button Component - Atomic Design System */
+
+/* Import base design tokens */
+@import '../../../../styles/design-tokens.css';
+/* Import base button styles */
+@import '../button/button.css';
+
+/* Icon Button Specific Styles */
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--button-padding);
+  border: 2px solid transparent;
+  border-radius: var(--button-border-radius);
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+  line-height: var(--button-line-height);
+  min-height: var(--button-min-height);
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--button-transition);
+  font-family: inherit;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  gap: 8px;
+}
+
+/* Icon-only button (square) */
+.icon-button.icon-only {
+  width: var(--button-min-height);
+  padding: 12px;
+  aspect-ratio: 1;
+}
+
+.icon-button.icon-only.small {
+  width: 36px;
+  padding: 8px;
+}
+
+.icon-button.icon-only.large {
+  width: 52px;
+  padding: 16px;
+}
+
+/* Primary Variant */
+.icon-button.primary {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-color);
+  border-color: var(--button-primary-border);
+}
+
+.icon-button.primary:hover:not(:disabled):not(.disabled) {
+  opacity: var(--button-hover-opacity);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3);
+}
+
+.icon-button.primary:focus:not(:disabled):not(.disabled) {
+  outline: var(--button-focus-outline);
+  outline-offset: 2px;
+}
+
+.icon-button.primary:active:not(:disabled):not(.disabled),
+.icon-button.primary.pressed {
+  transform: scale(var(--button-pressed-scale));
+  box-shadow: 0 2px 4px rgba(25, 118, 210, 0.2);
+}
+
+/* Accent Variant */
+.icon-button.accent {
+  background-color: var(--button-accent-bg);
+  color: var(--button-accent-color);
+  border-color: var(--button-accent-border);
+}
+
+.icon-button.accent:hover:not(:disabled):not(.disabled) {
+  opacity: var(--button-hover-opacity);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(255, 87, 34, 0.3);
+}
+
+.icon-button.accent:focus:not(:disabled):not(.disabled) {
+  outline: 2px solid #FF5722;
+  outline-offset: 2px;
+}
+
+.icon-button.accent:active:not(:disabled):not(.disabled),
+.icon-button.accent.pressed {
+  transform: scale(var(--button-pressed-scale));
+  box-shadow: 0 2px 4px rgba(255, 87, 34, 0.2);
+}
+
+/* Secondary Variant */
+.icon-button.secondary {
+  background-color: var(--button-secondary-bg);
+  color: var(--button-secondary-color);
+  border-color: var(--button-secondary-border);
+}
+
+.icon-button.secondary:hover:not(:disabled):not(.disabled) {
+  background-color: rgba(117, 117, 117, 0.1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(117, 117, 117, 0.2);
+}
+
+.icon-button.secondary:focus:not(:disabled):not(.disabled) {
+  outline: 2px solid #757575;
+  outline-offset: 2px;
+}
+
+.icon-button.secondary:active:not(:disabled):not(.disabled),
+.icon-button.secondary.pressed {
+  transform: scale(var(--button-pressed-scale));
+  background-color: rgba(117, 117, 117, 0.2);
+}
+
+/* Disabled State */
+.icon-button:disabled,
+.icon-button.disabled {
+  opacity: var(--button-disabled-opacity);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Focus State for Accessibility */
+.icon-button:focus-visible {
+  outline: var(--button-focus-outline);
+  outline-offset: 2px;
+}
+
+/* Loading State */
+.icon-button.loading {
+  position: relative;
+}
+
+.icon-button.loading .icon {
+  opacity: 0;
+}
+
+.icon-button.loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: button-spin 1s linear infinite;
+}
+
+/* Size Variants */
+.icon-button.small {
+  padding: 8px 16px;
+  font-size: 12px;
+  min-height: 36px;
+  gap: 6px;
+}
+
+.icon-button.large {
+  padding: 16px 32px;
+  font-size: 16px;
+  min-height: 52px;
+  gap: 10px;
+}
+
+/* Full Width */
+.icon-button.full-width {
+  width: 100%;
+}
+
+/* Icon Styles */
+.icon-button .icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-button.small .icon {
+  width: 14px;
+  height: 14px;
+}
+
+.icon-button.large .icon {
+  width: 20px;
+  height: 20px;
+}
+
+/* Icon positioning */
+.icon-button .icon.leading {
+  order: -1;
+}
+
+.icon-button .icon.trailing {
+  order: 1;
+}
+
+/* SVG Icon Styles */
+.icon-button .icon svg {
+  width: 100%;
+  height: 100%;
+  fill: currentColor;
+}
+
+/* Font Icon Styles */
+.icon-button .icon.font-icon {
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+}
+
+/* Circular Icon Button */
+.icon-button.circular {
+  border-radius: 50%;
+}
+
+/* Floating Action Button Style */
+.icon-button.fab {
+  border-radius: 50%;
+  box-shadow: 0 3px 5px -1px rgba(0, 0, 0, 0.2),
+              0 6px 10px 0 rgba(0, 0, 0, 0.14),
+              0 1px 18px 0 rgba(0, 0, 0, 0.12);
+  width: 56px;
+  height: 56px;
+  padding: 16px;
+}
+
+.icon-button.fab:hover:not(:disabled):not(.disabled) {
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.icon-button.fab.small {
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+}
+
+.icon-button.fab.large {
+  width: 72px;
+  height: 72px;
+  padding: 24px;
+}
+
+/* Toggle Button State */
+.icon-button.toggle.active {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-color);
+}
+
+.icon-button.toggle.active.secondary {
+  background-color: rgba(117, 117, 117, 0.2);
+  color: var(--button-secondary-color);
+}
+
+/* Badge Support */
+.icon-button {
+  position: relative;
+}
+
+.icon-button .badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  background-color: #f44336;
+  color: white;
+  border-radius: 50%;
+  width: 16px;
+  height: 16px;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  line-height: 1;
+}
+
+.icon-button.small .badge {
+  width: 14px;
+  height: 14px;
+  font-size: 9px;
+  top: -3px;
+  right: -3px;
+}
+
+.icon-button.large .badge {
+  width: 18px;
+  height: 18px;
+  font-size: 11px;
+  top: -5px;
+  right: -5px;
+}

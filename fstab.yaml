@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: "https://author-p167104-e1791522.adobeaemcloud.com/bin/franklin.delivery/comwrap-it/unipol-eds/main"
+    url: "https://localhost:8443/bin/franklin.delivery/comwrap-it/unipol-stage/stage"
     type: "markup"
     suffix: ".html"

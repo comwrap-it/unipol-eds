@@ -1,0 +1,206 @@
+/* Link Button Component - Atomic Design System */
+
+/* Import base design tokens */
+@import '../../../../styles/design-tokens.css';
+/* Import base button tokens */
+@import '../button/button.css';
+
+/* Link Button Specific Styles */
+.link-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--button-padding);
+  border: 2px solid transparent;
+  border-radius: var(--button-border-radius);
+  font-size: var(--button-font-size);
+  font-weight: var(--button-font-weight);
+  line-height: var(--button-line-height);
+  min-height: var(--button-min-height);
+  text-decoration: none;
+  cursor: pointer;
+  transition: var(--button-transition);
+  font-family: inherit;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Remove default link styles */
+.link-button:link,
+.link-button:visited {
+  text-decoration: none;
+}
+
+/* Primary Variant */
+.link-button.primary {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-color);
+  border-color: var(--button-primary-border);
+}
+
+.link-button.primary:hover:not(.disabled) {
+  opacity: var(--button-hover-opacity);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3);
+  text-decoration: none;
+}
+
+.link-button.primary:focus:not(.disabled) {
+  outline: var(--button-focus-outline);
+  outline-offset: 2px;
+  text-decoration: none;
+}
+
+.link-button.primary:active:not(.disabled),
+.link-button.primary.pressed {
+  transform: scale(var(--button-pressed-scale));
+  box-shadow: 0 2px 4px rgba(25, 118, 210, 0.2);
+}
+
+/* Accent Variant */
+.link-button.accent {
+  background-color: var(--button-accent-bg);
+  color: var(--button-accent-color);
+  border-color: var(--button-accent-border);
+}
+
+.link-button.accent:hover:not(.disabled) {
+  opacity: var(--button-hover-opacity);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(255, 87, 34, 0.3);
+  text-decoration: none;
+}
+
+.link-button.accent:focus:not(.disabled) {
+  outline: 2px solid #FF5722;
+  outline-offset: 2px;
+  text-decoration: none;
+}
+
+.link-button.accent:active:not(.disabled),
+.link-button.accent.pressed {
+  transform: scale(var(--button-pressed-scale));
+  box-shadow: 0 2px 4px rgba(255, 87, 34, 0.2);
+}
+
+/* Secondary Variant */
+.link-button.secondary {
+  background-color: var(--button-secondary-bg);
+  color: var(--button-secondary-color);
+  border-color: var(--button-secondary-border);
+}
+
+.link-button.secondary:hover:not(.disabled) {
+  background-color: rgba(117, 117, 117, 0.1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(117, 117, 117, 0.2);
+  text-decoration: none;
+}
+
+.link-button.secondary:focus:not(.disabled) {
+  outline: 2px solid #757575;
+  outline-offset: 2px;
+  text-decoration: none;
+}
+
+.link-button.secondary:active:not(.disabled),
+.link-button.secondary.pressed {
+  transform: scale(var(--button-pressed-scale));
+  background-color: rgba(117, 117, 117, 0.2);
+}
+
+/* Disabled State */
+.link-button.disabled {
+  opacity: var(--button-disabled-opacity);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* Focus State for Accessibility */
+.link-button:focus-visible {
+  outline: var(--button-focus-outline);
+  outline-offset: 2px;
+}
+
+/* Loading State */
+.link-button.loading {
+  position: relative;
+  color: transparent;
+}
+
+.link-button.loading::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 2px solid transparent;
+  border-top: 2px solid currentColor;
+  border-radius: 50%;
+  animation: button-spin 1s linear infinite;
+}
+
+/* Size Variants */
+.link-button.small {
+  padding: 8px 16px;
+  font-size: 12px;
+  min-height: 36px;
+}
+
+.link-button.large {
+  padding: 16px 32px;
+  font-size: 16px;
+  min-height: 52px;
+}
+
+/* Full Width */
+.link-button.full-width {
+  width: 100%;
+}
+
+/* Icon Support */
+.link-button .icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 8px;
+}
+
+.link-button .icon:last-child {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+.link-button .icon:only-child {
+  margin: 0;
+}
+
+/* External Link Indicator */
+.link-button.external::after {
+  content: '↗';
+  margin-left: 4px;
+  font-size: 0.8em;
+}
+
+/* Download Link Indicator */
+.link-button.download::after {
+  content: '⬇';
+  margin-left: 4px;
+  font-size: 0.8em;
+}
+
+/* Link Button specific states */
+.link-button:visited.primary {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-color);
+}
+
+.link-button:visited.accent {
+  background-color: var(--button-accent-bg);
+  color: var(--button-accent-color);
+}
+
+.link-button:visited.secondary {
+  color: var(--button-secondary-color);
+}
