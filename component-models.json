@@ -327,17 +327,38 @@
     "fields": [
       {
         "component": "reference",
-        "valueType": "string",
         "name": "image",
-        "label": "Image",
-        "multi": false
+        "label": "Card Image",
+        "required": true
       },
       {
-        "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
-        "valueType": "string"
+        "component": "text",
+        "name": "title",
+        "label": "Card Title",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "subtitle",
+        "label": "Card Subtitle"
+      },
+      {
+        "component": "reference",
+        "name": "button",
+        "label": "Card Button",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "cards",
+    "fields": [
+      {
+        "component": "number",
+        "name": "maxCards",
+        "label": "Maximum Cards",
+        "description": "Maximum number of cards (1-4)",
+        "defaultValue": 4
       }
     ]
   }

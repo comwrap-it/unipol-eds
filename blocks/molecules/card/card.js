@@ -1,11 +1,82 @@
 /**
  * Card Molecule - Atomic Design System
- * Single card component that combines image, text, and button atom
+ * Single card component with image, title, subtitle, and button atom
  */
 
 import { createOptimizedPicture } from '../../../scripts/aem.js';
 import { moveInstrumentation } from '../../../scripts/scripts.js';
 import { createButton, BUTTON_VARIANTS } from '../../atoms/buttons/button/button.js';
+
+/**
+ * Create image element for card
+ * @param {HTMLElement} imageRow - Row containing image
+ * @returns {HTMLElement} Image container
+ */
+function createImageElement(imageRow) {
+  const imageContainer = document.createElement('div');
+  imageContainer.className = 'card-image';
+
+  const picture = imageRow.querySelector('picture');
+  const img = imageRow.querySelector('img');
+
+  if (img) {
+    const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
+    moveInstrumentation(img, optimizedPic.querySelector('img'));
+    imageContainer.appendChild(optimizedPic);
+  } else if (picture) {
+    imageContainer.appendChild(picture.cloneNode(true));
+  }
+
+  return imageContainer;
+}
+
+/**
+ * Create title element for card
+ * @param {HTMLElement} titleRow - Row containing title
+ * @returns {HTMLElement} Title element
+ */
+function createTitleElement(titleRow) {
+  const title = document.createElement('h3');
+  title.className = 'card-title';
+  title.textContent = titleRow.textContent.trim();
+  return title;
+}
+
+/**
+ * Create subtitle element for card
+ * @param {HTMLElement} subtitleRow - Row containing subtitle
+ * @returns {HTMLElement} Subtitle element
+ */
+function createSubtitleElement(subtitleRow) {
+  const subtitle = document.createElement('p');
+  subtitle.className = 'card-subtitle';
+  subtitle.textContent = subtitleRow.textContent.trim();
+  return subtitle;
+}
+
+/**
+ * Create button element for card using button atom
+ * @param {HTMLElement} buttonRow - Row containing button data
+ * @returns {HTMLElement} Button element
+ */
+function createButtonElement(buttonRow) {
+  const link = buttonRow.querySelector('a');
+  const buttonText = link ? link.textContent.trim() : buttonRow.textContent.trim();
+  const buttonLink = link ? link.href : '#';
+
+  const button = createButton({
+    text: buttonText || 'Scopri di più',
+    variant: BUTTON_VARIANTS.PRIMARY,
+    onClick: () => {
+      if (buttonLink && buttonLink !== '#') {
+        window.location.href = buttonLink;
+      }
+    },
+  });
+
+  button.className += ' card-button';
+  return button;
+}
 
 /**
  * Create a single card element
@@ -17,7 +88,7 @@ export function createCard(config = {}) {
     image = '',
     imageAlt = '',
     title = '',
-    description = '',
+    subtitle = '',
     buttonText = 'Scopri di più',
     buttonLink = '#',
     onClick = null,
@@ -25,45 +96,44 @@ export function createCard(config = {}) {
   } = config;
 
   // Create card container
-  const card = document.createElement('div');
+  const card = document.createElement('article');
   card.className = `card ${className}`.trim();
 
-  // Create image section
+  // Create image section (top)
   if (image) {
     const imageContainer = document.createElement('div');
     imageContainer.className = 'card-image';
 
-    const picture = document.createElement('picture');
     const img = document.createElement('img');
     img.src = image;
     img.alt = imageAlt || title;
-    picture.appendChild(img);
-    imageContainer.appendChild(picture);
+    img.className = 'card-image-img';
+    imageContainer.appendChild(img);
 
     card.appendChild(imageContainer);
   }
 
-  // Create body section
-  const body = document.createElement('div');
-  body.className = 'card-body';
+  // Create content container
+  const content = document.createElement('div');
+  content.className = 'card-content';
 
   // Add title
   if (title) {
     const titleElement = document.createElement('h3');
     titleElement.className = 'card-title';
     titleElement.textContent = title;
-    body.appendChild(titleElement);
+    content.appendChild(titleElement);
   }
 
-  // Add description
-  if (description) {
-    const descElement = document.createElement('p');
-    descElement.className = 'card-description';
-    descElement.textContent = description;
-    body.appendChild(descElement);
+  // Add subtitle
+  if (subtitle) {
+    const subtitleElement = document.createElement('p');
+    subtitleElement.className = 'card-subtitle';
+    subtitleElement.textContent = subtitle;
+    content.appendChild(subtitleElement);
   }
 
-  // Add button (always primary variant)
+  // Add button (using atom)
   if (buttonText) {
     const button = createButton({
       text: buttonText,
@@ -75,10 +145,10 @@ export function createCard(config = {}) {
       }),
     });
     button.className += ' card-button';
-    body.appendChild(button);
+    content.appendChild(button);
   }
 
-  card.appendChild(body);
+  card.appendChild(content);
   return card;
 }
 
@@ -120,70 +190,44 @@ function initializeCardInteractions(card) {
 export default function decorate(block) {
   if (!block) return;
 
-  // Extract data from the block structure
-  const rows = [...block.children];
+  const [imageRow, titleRow, subtitleRow, buttonRow] = block.children;
 
-  rows.forEach((row) => {
-    const card = document.createElement('div');
-    card.className = 'card';
-    moveInstrumentation(row, card);
+  // Create card structure
+  const card = document.createElement('article');
+  card.className = 'card';
 
-    const cells = [...row.children];
+  // Image (top)
+  if (imageRow) {
+    const image = createImageElement(imageRow);
+    card.appendChild(image);
+  }
 
-    cells.forEach((cell) => {
-      if (cell.querySelector('picture')) {
-        // This is an image cell
-        const imageContainer = document.createElement('div');
-        imageContainer.className = 'card-image';
+  // Content container
+  const content = document.createElement('div');
+  content.className = 'card-content';
 
-        const picture = cell.querySelector('picture');
-        const img = picture.querySelector('img');
+  // Title
+  if (titleRow) {
+    const title = createTitleElement(titleRow);
+    content.appendChild(title);
+  }
 
-        if (img) {
-          const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
-          moveInstrumentation(img, optimizedPic.querySelector('img'));
-          imageContainer.appendChild(optimizedPic);
-        }
+  // Subtitle
+  if (subtitleRow) {
+    const subtitle = createSubtitleElement(subtitleRow);
+    content.appendChild(subtitle);
+  }
 
-        card.appendChild(imageContainer);
-      } else {
-        // This is a content cell
-        const body = document.createElement('div');
-        body.className = 'card-body';
+  // Button (using atom)
+  if (buttonRow) {
+    const button = createButtonElement(buttonRow);
+    content.appendChild(button);
+  }
 
-        // Move all content to body
-        while (cell.firstChild) {
-          body.appendChild(cell.firstChild);
-        }
+  card.appendChild(content);
 
-        // Find and enhance any links as buttons
-        const links = body.querySelectorAll('a');
-        links.forEach((link) => {
-          const buttonText = link.textContent;
-          const buttonLink = link.href;
+  // Initialize interactions
+  initializeCardInteractions(card);
 
-          const button = createButton({
-            text: buttonText,
-            variant: BUTTON_VARIANTS.PRIMARY,
-            onClick: () => {
-              if (buttonLink && buttonLink !== '#') {
-                window.location.href = buttonLink;
-              }
-            },
-          });
-          button.className += ' card-button';
-
-          link.replaceWith(button);
-        });
-
-        card.appendChild(body);
-      }
-    });
-
-    // Initialize interactions
-    initializeCardInteractions(card);
-
-    // Replace the original row with the new card
-    row.replaceWith(card);
-  });
+  block.replaceWith(card);
 }

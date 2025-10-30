@@ -133,9 +133,27 @@
     ]
   },
   {
+    "id": "card",
+    "title": "Card",
+    "condition": {
+      "===": [
+        {
+          "var": "component"
+        },
+        "card"
+      ]
+    }
+  },
+  {
     "id": "cards",
-    "components": [
-      "card"
-    ]
+    "title": "Cards",
+    "condition": {
+      "===": [
+        {
+          "var": "component"
+        },
+        "cards"
+      ]
+    }
   }
 ]

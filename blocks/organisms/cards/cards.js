@@ -1,61 +1,27 @@
 /**
  * Cards Organism - Atomic Design System
- * Collection of Card molecules arranged in a grid layout
+ * Container for 1-4 Card molecules arranged in a responsive grid layout
  */
 
 import { moveInstrumentation } from '../../../scripts/scripts.js';
-import { createCard } from '../../molecules/card/card.js';
 
 /**
- * Extract card data from DOM structure
- * @param {HTMLElement} row - Row element containing card data
- * @returns {Object} Card configuration object
+ * Create a single card element from row data
+ * @param {HTMLElement} cardData - Card row data
+ * @param {number} index - Card index
+ * @returns {HTMLElement} Card element
  */
-function extractCardData(row) {
-  const cells = [...row.children];
-  const cardData = {
-    image: '',
-    imageAlt: '',
-    title: '',
-    description: '',
-    buttonText: 'Scopri di più',
-    buttonLink: '#',
-  };
+function createCard(cardData, index) {
+  const cardElement = document.createElement('div');
+  cardElement.className = 'card-item';
+  cardElement.dataset.index = index;
 
-  cells.forEach((cell) => {
-    if (cell.querySelector('picture')) {
-      // Extract image data
-      const img = cell.querySelector('img');
-      if (img) {
-        cardData.image = img.src;
-        cardData.imageAlt = img.alt;
-      }
-    } else {
-      // Extract text content
-      const headings = cell.querySelectorAll('h1, h2, h3, h4, h5, h6');
-      const paragraphs = cell.querySelectorAll('p');
-      const links = cell.querySelectorAll('a');
+  // Move the card content directly - let card.js handle the decoration
+  while (cardData.firstChild) {
+    cardElement.appendChild(cardData.firstChild);
+  }
 
-      // Get title from first heading
-      if (headings.length > 0) {
-        cardData.title = headings[0].textContent.trim();
-      }
-
-      // Get description from paragraphs (excluding those with links)
-      const textParagraphs = [...paragraphs].filter((p) => !p.querySelector('a'));
-      if (textParagraphs.length > 0) {
-        cardData.description = textParagraphs.map((p) => p.textContent.trim()).join(' ');
-      }
-
-      // Get button data from first link
-      if (links.length > 0) {
-        cardData.buttonText = links[0].textContent.trim();
-        cardData.buttonLink = links[0].href;
-      }
-    }
-  });
-
-  return cardData;
+  return cardElement;
 }
 
 /**
@@ -65,32 +31,28 @@ function extractCardData(row) {
 export default function decorate(block) {
   if (!block) return;
 
-  // Create container for cards
-  const cardsContainer = document.createElement('div');
-  cardsContainer.className = 'cards-container';
+  const cards = [...block.children];
 
-  // Create grid for cards
-  const cardsGrid = document.createElement('ul');
-  cardsGrid.className = 'cards-grid';
+  // Limit to maximum 4 cards as per specification
+  if (cards.length > 4) {
+    cards.splice(4);
+  }
 
-  // Process each row as a card
-  [...block.children].forEach((row) => {
-    const cardData = extractCardData(row);
+  // Create grid container
+  const container = document.createElement('div');
+  container.className = 'cards-container';
 
-    // Create card using the Card molecule
-    const card = createCard(cardData);
+  // Set grid columns based on number of cards
+  const numCards = cards.length;
+  container.dataset.cardCount = numCards;
 
-    // Wrap card in list item
-    const li = document.createElement('li');
-    li.className = 'cards-item';
-    moveInstrumentation(row, li);
-    li.appendChild(card);
-
-    cardsGrid.appendChild(li);
+  // Process each card
+  cards.forEach((card, index) => {
+    const cardElement = createCard(card, index);
+    moveInstrumentation(card, cardElement);
+    container.appendChild(cardElement);
   });
 
-  // Replace block content
-  block.textContent = '';
-  cardsContainer.appendChild(cardsGrid);
-  block.appendChild(cardsContainer);
+  // Replace block with container
+  block.replaceWith(container);
 }
