@@ -19,7 +19,7 @@ function extractCardData(row) {
     title: '',
     description: '',
     buttonText: 'Scopri di più',
-    buttonLink: '#'
+    buttonLink: '#',
   };
 
   cells.forEach((cell) => {
@@ -42,9 +42,9 @@ function extractCardData(row) {
       }
 
       // Get description from paragraphs (excluding those with links)
-      const textParagraphs = [...paragraphs].filter(p => !p.querySelector('a'));
+      const textParagraphs = [...paragraphs].filter((p) => !p.querySelector('a'));
       if (textParagraphs.length > 0) {
-        cardData.description = textParagraphs.map(p => p.textContent.trim()).join(' ');
+        cardData.description = textParagraphs.map((p) => p.textContent.trim()).join(' ');
       }
 
       // Get button data from first link
@@ -76,16 +76,16 @@ export default function decorate(block) {
   // Process each row as a card
   [...block.children].forEach((row) => {
     const cardData = extractCardData(row);
-    
+
     // Create card using the Card molecule
     const card = createCard(cardData);
-    
+
     // Wrap card in list item
     const li = document.createElement('li');
     li.className = 'cards-item';
     moveInstrumentation(row, li);
     li.appendChild(card);
-    
+
     cardsGrid.appendChild(li);
   });
 

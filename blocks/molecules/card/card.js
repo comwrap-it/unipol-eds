@@ -21,7 +21,7 @@ export function createCard(config = {}) {
     buttonText = 'Scopri di più',
     buttonLink = '#',
     onClick = null,
-    className = ''
+    className = '',
   } = config;
 
   // Create card container
@@ -32,14 +32,14 @@ export function createCard(config = {}) {
   if (image) {
     const imageContainer = document.createElement('div');
     imageContainer.className = 'card-image';
-    
+
     const picture = document.createElement('picture');
     const img = document.createElement('img');
     img.src = image;
     img.alt = imageAlt || title;
     picture.appendChild(img);
     imageContainer.appendChild(picture);
-    
+
     card.appendChild(imageContainer);
   }
 
@@ -72,7 +72,7 @@ export function createCard(config = {}) {
         if (buttonLink && buttonLink !== '#') {
           window.location.href = buttonLink;
         }
-      })
+      }),
     });
     button.className += ' card-button';
     body.appendChild(button);
@@ -122,46 +122,46 @@ export default function decorate(block) {
 
   // Extract data from the block structure
   const rows = [...block.children];
-  
+
   rows.forEach((row) => {
     const card = document.createElement('div');
     card.className = 'card';
     moveInstrumentation(row, card);
 
     const cells = [...row.children];
-    
-    cells.forEach((cell, index) => {
+
+    cells.forEach((cell) => {
       if (cell.querySelector('picture')) {
         // This is an image cell
         const imageContainer = document.createElement('div');
         imageContainer.className = 'card-image';
-        
+
         const picture = cell.querySelector('picture');
         const img = picture.querySelector('img');
-        
+
         if (img) {
           const optimizedPic = createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }]);
           moveInstrumentation(img, optimizedPic.querySelector('img'));
           imageContainer.appendChild(optimizedPic);
         }
-        
+
         card.appendChild(imageContainer);
       } else {
         // This is a content cell
         const body = document.createElement('div');
         body.className = 'card-body';
-        
+
         // Move all content to body
         while (cell.firstChild) {
           body.appendChild(cell.firstChild);
         }
-        
+
         // Find and enhance any links as buttons
         const links = body.querySelectorAll('a');
-        links.forEach(link => {
+        links.forEach((link) => {
           const buttonText = link.textContent;
           const buttonLink = link.href;
-          
+
           const button = createButton({
             text: buttonText,
             variant: BUTTON_VARIANTS.PRIMARY,
@@ -169,20 +169,20 @@ export default function decorate(block) {
               if (buttonLink && buttonLink !== '#') {
                 window.location.href = buttonLink;
               }
-            }
+            },
           });
           button.className += ' card-button';
-          
+
           link.replaceWith(button);
         });
-        
+
         card.appendChild(body);
       }
     });
 
     // Initialize interactions
     initializeCardInteractions(card);
-    
+
     // Replace the original row with the new card
     row.replaceWith(card);
   });
