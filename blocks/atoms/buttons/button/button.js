@@ -7,7 +7,7 @@
 export const BUTTON_VARIANTS = {
   PRIMARY: 'primary',
   ACCENT: 'accent',
-  SECONDARY: 'secondary'
+  SECONDARY: 'secondary',
 };
 
 export const BUTTON_STATES = {
@@ -15,13 +15,13 @@ export const BUTTON_STATES = {
   HOVER: 'hover',
   FOCUSED: 'focused',
   PRESSED: 'pressed',
-  DISABLED: 'disabled'
+  DISABLED: 'disabled',
 };
 
 export const BUTTON_SIZES = {
   SMALL: 'small',
   MEDIUM: 'medium',
-  LARGE: 'large'
+  LARGE: 'large',
 };
 
 /**
@@ -31,12 +31,12 @@ export const BUTTON_SIZES = {
  */
 export function setButtonVariant(element, variant) {
   if (!element) return;
-  
+
   // Remove existing variant classes
-  Object.values(BUTTON_VARIANTS).forEach(v => {
+  Object.values(BUTTON_VARIANTS).forEach((v) => {
     element.classList.remove(v);
   });
-  
+
   // Add new variant class
   if (Object.values(BUTTON_VARIANTS).includes(variant)) {
     element.classList.add(variant);
@@ -50,12 +50,12 @@ export function setButtonVariant(element, variant) {
  */
 export function setButtonState(element, state) {
   if (!element) return;
-  
+
   // Remove existing state classes
-  Object.values(BUTTON_STATES).forEach(s => {
+  Object.values(BUTTON_STATES).forEach((s) => {
     element.classList.remove(s);
   });
-  
+
   // Handle disabled state
   if (state === BUTTON_STATES.DISABLED) {
     element.disabled = true;
@@ -63,7 +63,7 @@ export function setButtonState(element, state) {
   } else {
     element.disabled = false;
     element.classList.remove('disabled');
-    
+
     // Add state class if valid
     if (Object.values(BUTTON_STATES).includes(state)) {
       element.classList.add(state);
@@ -78,12 +78,12 @@ export function setButtonState(element, state) {
  */
 export function setButtonSize(element, size) {
   if (!element) return;
-  
+
   // Remove existing size classes
-  Object.values(BUTTON_SIZES).forEach(s => {
+  Object.values(BUTTON_SIZES).forEach((s) => {
     element.classList.remove(s);
   });
-  
+
   // Add new size class
   if (Object.values(BUTTON_SIZES).includes(size)) {
     element.classList.add(size);
@@ -106,24 +106,24 @@ export function createButton(config = {}) {
     onClick = null,
     className = '',
     id = '',
-    type = 'button'
+    type = 'button',
   } = config;
 
   const button = document.createElement('button');
   button.type = type;
   button.className = `button ${variant} ${size} ${className}`.trim();
   button.textContent = text;
-  
+
   if (id) button.id = id;
   if (disabled) button.disabled = true;
   if (fullWidth) button.classList.add('full-width');
   if (loading) button.classList.add('loading');
-  
+
   // Add click handler
   if (onClick && typeof onClick === 'function') {
     button.addEventListener('click', onClick);
   }
-  
+
   // Add keyboard accessibility
   button.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -131,7 +131,7 @@ export function createButton(config = {}) {
       button.click();
     }
   });
-  
+
   return button;
 }
 
@@ -141,47 +141,47 @@ export function createButton(config = {}) {
  */
 function initializeButtonInteractions(button) {
   if (!button) return;
-  
+
   // Add hover effects
   button.addEventListener('mouseenter', () => {
     if (!button.disabled) {
       button.classList.add('hover');
     }
   });
-  
+
   button.addEventListener('mouseleave', () => {
     button.classList.remove('hover');
   });
-  
+
   // Add focus effects
   button.addEventListener('focus', () => {
     if (!button.disabled) {
       button.classList.add('focused');
     }
   });
-  
+
   button.addEventListener('blur', () => {
     button.classList.remove('focused');
   });
-  
+
   // Add pressed effects
   button.addEventListener('mousedown', () => {
     if (!button.disabled) {
       button.classList.add('pressed');
     }
   });
-  
+
   button.addEventListener('mouseup', () => {
     button.classList.remove('pressed');
   });
-  
+
   // Handle keyboard interactions
   button.addEventListener('keydown', (e) => {
     if ((e.key === 'Enter' || e.key === ' ') && !button.disabled) {
       button.classList.add('pressed');
     }
   });
-  
+
   button.addEventListener('keyup', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       button.classList.remove('pressed');
@@ -195,36 +195,34 @@ function initializeButtonInteractions(button) {
  */
 export default function decorate(block) {
   if (!block) return;
-  
+
   // Get configuration from block data attributes or content
   const buttonText = block.textContent?.trim() || 'Button';
   const variant = block.dataset.variant || BUTTON_VARIANTS.PRIMARY;
   const size = block.dataset.size || BUTTON_SIZES.MEDIUM;
   const disabled = block.dataset.disabled === 'true';
   const fullWidth = block.dataset.fullWidth === 'true';
-  
+
   // Clear block content
   block.innerHTML = '';
-  
+
   // Create button element
   const button = createButton({
     text: buttonText,
     variant,
     size,
     disabled,
-    fullWidth
+    fullWidth,
   });
-  
+
   // Initialize interactions
   initializeButtonInteractions(button);
-  
+
   // Append button to block
   block.appendChild(button);
-  
+
   // Add block-level classes
   block.classList.add('button-block', 'atom');
-  
-  return block;
 }
 
 // Export for Storybook and testing

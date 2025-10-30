@@ -10,13 +10,13 @@ import { BUTTON_VARIANTS, BUTTON_STATES, BUTTON_SIZES } from '../button/button.j
 export const ICON_POSITIONS = {
   LEADING: 'leading',
   TRAILING: 'trailing',
-  ONLY: 'only'
+  ONLY: 'only',
 };
 
 export const ICON_BUTTON_STYLES = {
   STANDARD: 'standard',
   CIRCULAR: 'circular',
-  FAB: 'fab'
+  FAB: 'fab',
 };
 
 /**
@@ -26,12 +26,12 @@ export const ICON_BUTTON_STYLES = {
  */
 export function setIconButtonVariant(element, variant) {
   if (!element) return;
-  
+
   // Remove existing variant classes
-  Object.values(BUTTON_VARIANTS).forEach(v => {
+  Object.values(BUTTON_VARIANTS).forEach((v) => {
     element.classList.remove(v);
   });
-  
+
   // Add new variant class
   if (Object.values(BUTTON_VARIANTS).includes(variant)) {
     element.classList.add(variant);
@@ -45,12 +45,12 @@ export function setIconButtonVariant(element, variant) {
  */
 export function setIconButtonState(element, state) {
   if (!element) return;
-  
+
   // Remove existing state classes
-  Object.values(BUTTON_STATES).forEach(s => {
+  Object.values(BUTTON_STATES).forEach((s) => {
     element.classList.remove(s);
   });
-  
+
   // Handle disabled state
   if (state === BUTTON_STATES.DISABLED) {
     element.disabled = true;
@@ -58,7 +58,7 @@ export function setIconButtonState(element, state) {
   } else {
     element.disabled = false;
     element.classList.remove('disabled');
-    
+
     // Add state class if valid
     if (Object.values(BUTTON_STATES).includes(state)) {
       element.classList.add(state);
@@ -73,12 +73,12 @@ export function setIconButtonState(element, state) {
  */
 export function setIconButtonSize(element, size) {
   if (!element) return;
-  
+
   // Remove existing size classes
-  Object.values(BUTTON_SIZES).forEach(s => {
+  Object.values(BUTTON_SIZES).forEach((s) => {
     element.classList.remove(s);
   });
-  
+
   // Add new size class
   if (Object.values(BUTTON_SIZES).includes(size)) {
     element.classList.add(size);
@@ -94,7 +94,7 @@ export function setIconButtonSize(element, size) {
 function createIcon(icon, position = ICON_POSITIONS.ONLY) {
   const iconElement = document.createElement('span');
   iconElement.className = `icon ${position}`;
-  
+
   if (typeof icon === 'string') {
     // Handle different icon types
     if (icon.startsWith('<svg')) {
@@ -114,17 +114,18 @@ function createIcon(icon, position = ICON_POSITIONS.ONLY) {
   } else if (icon && typeof icon === 'object') {
     // Icon configuration object
     const { type, content, alt = '' } = icon;
-    
+
     switch (type) {
       case 'svg':
         iconElement.innerHTML = content;
         break;
-      case 'image':
+      case 'image': {
         const img = document.createElement('img');
         img.src = content;
         img.alt = alt;
         iconElement.appendChild(img);
         break;
+      }
       case 'font':
         iconElement.textContent = content;
         iconElement.classList.add('font-icon');
@@ -133,7 +134,7 @@ function createIcon(icon, position = ICON_POSITIONS.ONLY) {
         iconElement.textContent = content;
     }
   }
-  
+
   return iconElement;
 }
 
@@ -160,12 +161,12 @@ export function createIconButton(config = {}) {
     className = '',
     id = '',
     type = 'button',
-    ariaLabel = ''
+    ariaLabel = '',
   } = config;
 
   const button = document.createElement('button');
   button.type = type;
-  
+
   // Build class list
   const classes = ['icon-button', variant, size];
   if (style !== ICON_BUTTON_STYLES.STANDARD) classes.push(style);
@@ -175,25 +176,25 @@ export function createIconButton(config = {}) {
   if (toggle) classes.push('toggle');
   if (toggle && active) classes.push('active');
   if (className) classes.push(className);
-  
+
   button.className = classes.join(' ');
-  
+
   if (id) button.id = id;
   if (disabled) button.disabled = true;
-  
+
   // Set aria-label for accessibility
   if (ariaLabel) {
     button.setAttribute('aria-label', ariaLabel);
   } else if (!text) {
     button.setAttribute('aria-label', 'Icon button');
   }
-  
+
   // Add icon
   if (icon) {
     const iconElement = createIcon(icon, iconPosition);
     button.appendChild(iconElement);
   }
-  
+
   // Add text if provided
   if (text) {
     const textElement = document.createElement('span');
@@ -201,7 +202,7 @@ export function createIconButton(config = {}) {
     textElement.className = 'button-text';
     button.appendChild(textElement);
   }
-  
+
   // Add badge if provided
   if (badge) {
     const badgeElement = document.createElement('span');
@@ -209,7 +210,7 @@ export function createIconButton(config = {}) {
     badgeElement.textContent = badge;
     button.appendChild(badgeElement);
   }
-  
+
   // Add click handler
   if (onClick && typeof onClick === 'function') {
     button.addEventListener('click', (e) => {
@@ -225,7 +226,7 @@ export function createIconButton(config = {}) {
       }
     });
   }
-  
+
   // Add keyboard accessibility
   button.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
@@ -233,7 +234,7 @@ export function createIconButton(config = {}) {
       button.click();
     }
   });
-  
+
   return button;
 }
 
@@ -243,47 +244,47 @@ export function createIconButton(config = {}) {
  */
 function initializeIconButtonInteractions(button) {
   if (!button) return;
-  
+
   // Add hover effects
   button.addEventListener('mouseenter', () => {
     if (!button.disabled && !button.classList.contains('disabled')) {
       button.classList.add('hover');
     }
   });
-  
+
   button.addEventListener('mouseleave', () => {
     button.classList.remove('hover');
   });
-  
+
   // Add focus effects
   button.addEventListener('focus', () => {
     if (!button.disabled && !button.classList.contains('disabled')) {
       button.classList.add('focused');
     }
   });
-  
+
   button.addEventListener('blur', () => {
     button.classList.remove('focused');
   });
-  
+
   // Add pressed effects
   button.addEventListener('mousedown', () => {
     if (!button.disabled && !button.classList.contains('disabled')) {
       button.classList.add('pressed');
     }
   });
-  
+
   button.addEventListener('mouseup', () => {
     button.classList.remove('pressed');
   });
-  
+
   // Handle keyboard interactions
   button.addEventListener('keydown', (e) => {
     if ((e.key === 'Enter' || e.key === ' ') && !button.disabled && !button.classList.contains('disabled')) {
       button.classList.add('pressed');
     }
   });
-  
+
   button.addEventListener('keyup', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       button.classList.remove('pressed');
@@ -297,11 +298,12 @@ function initializeIconButtonInteractions(button) {
  */
 export default function decorate(block) {
   if (!block) return;
-  
+
   // Get configuration from block data attributes or content
   const buttonText = block.dataset.text || '';
   const icon = block.dataset.icon || '★';
-  const iconPosition = block.dataset.iconPosition || (buttonText ? ICON_POSITIONS.LEADING : ICON_POSITIONS.ONLY);
+  const iconPosition = block.dataset.iconPosition
+    || (buttonText ? ICON_POSITIONS.LEADING : ICON_POSITIONS.ONLY);
   const variant = block.dataset.variant || BUTTON_VARIANTS.PRIMARY;
   const size = block.dataset.size || BUTTON_SIZES.MEDIUM;
   const style = block.dataset.style || ICON_BUTTON_STYLES.STANDARD;
@@ -309,12 +311,12 @@ export default function decorate(block) {
   const fullWidth = block.dataset.fullWidth === 'true';
   const toggle = block.dataset.toggle === 'true';
   const active = block.dataset.active === 'true';
-  const badge = block.dataset.badge;
+  const { badge } = block.dataset;
   const ariaLabel = block.dataset.ariaLabel || block.getAttribute('aria-label');
-  
+
   // Clear block content
   block.innerHTML = '';
-  
+
   // Create icon button element
   const button = createIconButton({
     text: buttonText,
@@ -328,19 +330,17 @@ export default function decorate(block) {
     toggle,
     active,
     badge,
-    ariaLabel
+    ariaLabel,
   });
-  
+
   // Initialize interactions
   initializeIconButtonInteractions(button);
-  
+
   // Append button to block
   block.appendChild(button);
-  
+
   // Add block-level classes
   block.classList.add('icon-button-block', 'atom');
-  
-  return block;
 }
 
 // Export for Storybook and testing
