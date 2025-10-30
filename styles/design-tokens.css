@@ -12,7 +12,6 @@
   --eds-color-primary-700: #0369a1;
   --eds-color-primary-800: #075985;
   --eds-color-primary-900: #0c4a6e;
-
   --eds-color-accent-50: #fdf4ff;
   --eds-color-accent-100: #fae8ff;
   --eds-color-accent-200: #f5d0fe;
@@ -23,7 +22,6 @@
   --eds-color-accent-700: #a21caf;
   --eds-color-accent-800: #86198f;
   --eds-color-accent-900: #701a75;
-
   --eds-color-secondary-50: #f8fafc;
   --eds-color-secondary-100: #f1f5f9;
   --eds-color-secondary-200: #e2e8f0;
@@ -42,8 +40,8 @@
   --eds-color-info: #3b82f6;
 
   /* Neutral Colors */
-  --eds-color-white: #ffffff;
-  --eds-color-black: #000000;
+  --eds-color-white: #fff;
+  --eds-color-black: #000;
   --eds-color-gray-50: #f9fafb;
   --eds-color-gray-100: #f3f4f6;
   --eds-color-gray-200: #e5e7eb;
@@ -60,21 +58,19 @@
   --eds-button-border-width: 1px;
   --eds-button-font-weight: 500;
   --eds-button-transition: all 0.2s ease-in-out;
-  --eds-button-focus-ring: 0 0 0 3px rgba(59, 130, 246, 0.1);
-  --eds-button-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --eds-button-shadow-hover: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --eds-button-focus-ring: 0 0 0 3px rgb(59 130 246 / 10%);
+  --eds-button-shadow: 0 1px 2px 0 rgb(0 0 0 / 5%);
+  --eds-button-shadow-hover: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%);
 
   /* Button Sizes */
   --eds-button-size-small-height: 2rem;
   --eds-button-size-small-padding: 0.5rem 0.75rem;
   --eds-button-size-small-font-size: 0.875rem;
   --eds-button-size-small-line-height: 1.25rem;
-
   --eds-button-size-medium-height: 2.5rem;
   --eds-button-size-medium-padding: 0.625rem 1rem;
   --eds-button-size-medium-font-size: 0.875rem;
   --eds-button-size-medium-line-height: 1.25rem;
-
   --eds-button-size-large-height: 3rem;
   --eds-button-size-large-padding: 0.75rem 1.5rem;
   --eds-button-size-large-font-size: 1rem;
@@ -94,8 +90,8 @@
   --eds-spacing-2xl: 2rem;
 
   /* Typography */
-  --eds-font-family-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --eds-font-family-mono: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
+  --eds-font-family-sans: ui-sans-serif, system-ui, -apple-system, blinkmacsystemfont, "Segoe UI", roboto, "Helvetica Neue", arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --eds-font-family-mono: ui-monospace, sfmono-regular, "SF Mono", consolas, "Liberation Mono", menlo, monospace;
 
   /* Z-Index */
   --eds-z-index-dropdown: 1000;
