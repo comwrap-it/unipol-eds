@@ -82,6 +82,42 @@
     ]
   },
   {
+    "id": "button",
+    "title": "Button",
+    "condition": {
+      "===": [
+        {
+          "var": "component"
+        },
+        "button"
+      ]
+    }
+  },
+  {
+    "id": "icon-button",
+    "title": "Icon Button",
+    "condition": {
+      "===": [
+        {
+          "var": "component"
+        },
+        "icon-button"
+      ]
+    }
+  },
+  {
+    "id": "link-button",
+    "title": "Link Button",
+    "condition": {
+      "===": [
+        {
+          "var": "component"
+        },
+        "link-button"
+      ]
+    }
+  },
+  {
     "id": "columns",
     "components": [
       "column"
@@ -94,6 +130,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "cards",
+    "components": [
+      "card"
     ]
   }
 ]

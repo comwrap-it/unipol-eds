@@ -142,6 +142,399 @@
     ]
   },
   {
+    "id": "button",
+    "fields": [
+      {
+        "component": "text",
+        "name": "text",
+        "label": "Button Text",
+        "required": true
+      },
+      {
+        "component": "select",
+        "name": "variant",
+        "label": "Variant",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Accent",
+            "value": "accent"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "size",
+        "label": "Size",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          }
+        ]
+      },
+      {
+        "component": "boolean",
+        "name": "disabled",
+        "label": "Disabled"
+      },
+      {
+        "component": "boolean",
+        "name": "fullWidth",
+        "label": "Full Width"
+      },
+      {
+        "component": "boolean",
+        "name": "loading",
+        "label": "Loading State"
+      },
+      {
+        "component": "text",
+        "name": "onClick",
+        "label": "Click Handler",
+        "description": "JavaScript function name for click handling"
+      },
+      {
+        "component": "text",
+        "name": "className",
+        "label": "Additional CSS Classes"
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "Element ID"
+      },
+      {
+        "component": "select",
+        "name": "type",
+        "label": "Button Type",
+        "options": [
+          {
+            "name": "Button",
+            "value": "button"
+          },
+          {
+            "name": "Submit",
+            "value": "submit"
+          },
+          {
+            "name": "Reset",
+            "value": "reset"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "icon-button",
+    "fields": [
+      {
+        "component": "text",
+        "name": "text",
+        "label": "Button Text",
+        "description": "Optional text to display alongside icon"
+      },
+      {
+        "component": "text",
+        "name": "icon",
+        "label": "Icon",
+        "required": true,
+        "description": "Icon name, SVG string, or image URL"
+      },
+      {
+        "component": "select",
+        "name": "iconPosition",
+        "label": "Icon Position",
+        "options": [
+          {
+            "name": "Leading",
+            "value": "leading"
+          },
+          {
+            "name": "Trailing",
+            "value": "trailing"
+          },
+          {
+            "name": "Only",
+            "value": "only"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "variant",
+        "label": "Variant",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Accent",
+            "value": "accent"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "size",
+        "label": "Size",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "style",
+        "label": "Style",
+        "options": [
+          {
+            "name": "Standard",
+            "value": "standard"
+          },
+          {
+            "name": "Circular",
+            "value": "circular"
+          },
+          {
+            "name": "Floating Action Button",
+            "value": "fab"
+          }
+        ]
+      },
+      {
+        "component": "boolean",
+        "name": "disabled",
+        "label": "Disabled"
+      },
+      {
+        "component": "boolean",
+        "name": "fullWidth",
+        "label": "Full Width"
+      },
+      {
+        "component": "boolean",
+        "name": "loading",
+        "label": "Loading State"
+      },
+      {
+        "component": "boolean",
+        "name": "toggle",
+        "label": "Toggle Button",
+        "description": "Button can be toggled on/off"
+      },
+      {
+        "component": "boolean",
+        "name": "active",
+        "label": "Active State",
+        "description": "Initial active state for toggle buttons"
+      },
+      {
+        "component": "text",
+        "name": "badge",
+        "label": "Badge Text",
+        "description": "Optional badge to display on button"
+      },
+      {
+        "component": "text",
+        "name": "ariaLabel",
+        "label": "Aria Label",
+        "description": "Accessibility label for screen readers"
+      },
+      {
+        "component": "text",
+        "name": "className",
+        "label": "Additional CSS Classes"
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "Element ID"
+      },
+      {
+        "component": "select",
+        "name": "type",
+        "label": "Button Type",
+        "options": [
+          {
+            "name": "Button",
+            "value": "button"
+          },
+          {
+            "name": "Submit",
+            "value": "submit"
+          },
+          {
+            "name": "Reset",
+            "value": "reset"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "onClick",
+        "label": "Click Handler",
+        "description": "JavaScript function name for click handling"
+      }
+    ]
+  },
+  {
+    "id": "link-button",
+    "fields": [
+      {
+        "component": "text",
+        "name": "text",
+        "label": "Button Text",
+        "required": true
+      },
+      {
+        "component": "aem-content",
+        "name": "href",
+        "label": "Link URL",
+        "required": true
+      },
+      {
+        "component": "select",
+        "name": "variant",
+        "label": "Variant",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Accent",
+            "value": "accent"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "size",
+        "label": "Size",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          }
+        ]
+      },
+      {
+        "component": "boolean",
+        "name": "disabled",
+        "label": "Disabled"
+      },
+      {
+        "component": "boolean",
+        "name": "fullWidth",
+        "label": "Full Width"
+      },
+      {
+        "component": "boolean",
+        "name": "loading",
+        "label": "Loading State"
+      },
+      {
+        "component": "boolean",
+        "name": "external",
+        "label": "External Link"
+      },
+      {
+        "component": "text",
+        "name": "download",
+        "label": "Download Filename",
+        "description": "If specified, the link will trigger a download"
+      },
+      {
+        "component": "select",
+        "name": "target",
+        "label": "Target",
+        "options": [
+          {
+            "name": "Same Window",
+            "value": "_self"
+          },
+          {
+            "name": "New Window",
+            "value": "_blank"
+          },
+          {
+            "name": "Parent Frame",
+            "value": "_parent"
+          },
+          {
+            "name": "Top Frame",
+            "value": "_top"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "rel",
+        "label": "Rel Attribute",
+        "description": "Relationship between current and linked document"
+      },
+      {
+        "component": "text",
+        "name": "className",
+        "label": "Additional CSS Classes"
+      },
+      {
+        "component": "text",
+        "name": "id",
+        "label": "Element ID"
+      },
+      {
+        "component": "text",
+        "name": "onClick",
+        "label": "Click Handler",
+        "description": "JavaScript function name for click handling"
+      }
+    ]
+  },
+  {
     "id": "columns",
     "fields": [
       {
@@ -186,6 +579,25 @@
         "name": "imageAlt",
         "label": "Alt",
         "value": ""
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "card",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
       },
       {
         "component": "richtext",
