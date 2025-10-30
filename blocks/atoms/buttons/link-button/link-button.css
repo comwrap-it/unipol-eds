@@ -1,9 +1,10 @@
 /* Link Button Component - Atomic Design System */
 
 /* Import base design tokens */
-@import '../../../../styles/design-tokens.css';
+@import url('../../../../styles/design-tokens.css');
+
 /* Import base button tokens */
-@import '../button/button.css';
+@import url('../button/button.css');
 
 /* Link Button Specific Styles */
 .link-button {
@@ -23,9 +24,6 @@
   font-family: inherit;
   box-sizing: border-box;
   user-select: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
 }
 
 /* Remove default link styles */
@@ -41,10 +39,15 @@
   border-color: var(--button-primary-border);
 }
 
+.link-button:visited.primary {
+  background-color: var(--button-primary-bg);
+  color: var(--button-primary-color);
+}
+
 .link-button.primary:hover:not(.disabled) {
   opacity: var(--button-hover-opacity);
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3);
+  box-shadow: 0 4px 8px rgb(25 118 210 / 30%);
   text-decoration: none;
 }
 
@@ -57,7 +60,7 @@
 .link-button.primary:active:not(.disabled),
 .link-button.primary.pressed {
   transform: scale(var(--button-pressed-scale));
-  box-shadow: 0 2px 4px rgba(25, 118, 210, 0.2);
+  box-shadow: 0 2px 4px rgb(25 118 210 / 20%);
 }
 
 /* Accent Variant */
@@ -67,10 +70,15 @@
   border-color: var(--button-accent-border);
 }
 
+.link-button:visited.accent {
+  background-color: var(--button-accent-bg);
+  color: var(--button-accent-color);
+}
+
 .link-button.accent:hover:not(.disabled) {
   opacity: var(--button-hover-opacity);
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(255, 87, 34, 0.3);
+  box-shadow: 0 4px 8px rgb(255 87 34 / 30%);
   text-decoration: none;
 }
 
@@ -83,7 +91,7 @@
 .link-button.accent:active:not(.disabled),
 .link-button.accent.pressed {
   transform: scale(var(--button-pressed-scale));
-  box-shadow: 0 2px 4px rgba(255, 87, 34, 0.2);
+  box-shadow: 0 2px 4px rgb(255 87 34 / 20%);
 }
 
 /* Secondary Variant */
@@ -93,10 +101,14 @@
   border-color: var(--button-secondary-border);
 }
 
+.link-button:visited.secondary {
+  color: var(--button-secondary-color);
+}
+
 .link-button.secondary:hover:not(.disabled) {
-  background-color: rgba(117, 117, 117, 0.1);
+  background-color: rgb(117 117 117 / 10%);
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(117, 117, 117, 0.2);
+  box-shadow: 0 4px 8px rgb(117 117 117 / 20%);
   text-decoration: none;
 }
 
@@ -109,7 +121,7 @@
 .link-button.secondary:active:not(.disabled),
 .link-button.secondary.pressed {
   transform: scale(var(--button-pressed-scale));
-  background-color: rgba(117, 117, 117, 0.2);
+  background-color: rgb(117 117 117 / 20%);
 }
 
 /* Disabled State */
@@ -137,7 +149,7 @@
   width: 16px;
   height: 16px;
   border: 2px solid transparent;
-  border-top: 2px solid currentColor;
+  border-top: 2px solid currentcolor;
   border-radius: 50%;
   animation: button-spin 1s linear infinite;
 }
@@ -191,16 +203,3 @@
 }
 
 /* Link Button specific states */
-.link-button:visited.primary {
-  background-color: var(--button-primary-bg);
-  color: var(--button-primary-color);
-}
-
-.link-button:visited.accent {
-  background-color: var(--button-accent-bg);
-  color: var(--button-accent-color);
-}
-
-.link-button:visited.secondary {
-  color: var(--button-secondary-color);
-}

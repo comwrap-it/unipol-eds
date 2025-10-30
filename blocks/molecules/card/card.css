@@ -16,7 +16,7 @@
 
 .card:hover,
 .card.card-hover {
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgb(0 0 0 / 10%);
   transform: translateY(-2px);
   border-color: var(--color-primary, #007acc);
 }
@@ -73,7 +73,7 @@
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .card-body {
     padding: 16px;
     gap: 12px;
@@ -127,7 +127,7 @@
 /* Variants */
 .card.featured {
   border-color: var(--color-accent, #ff6b35);
-  background: linear-gradient(135deg, var(--background-color) 0%, rgba(255, 107, 53, 0.05) 100%);
+  background: linear-gradient(135deg, var(--background-color) 0%, rgb(255 107 53 / 5%) 100%);
 }
 
 .card.compact .card-body {
