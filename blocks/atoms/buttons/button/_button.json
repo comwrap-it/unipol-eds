@@ -67,51 +67,6 @@
           "component": "boolean",
           "name": "disabled",
           "label": "Disabled"
-        },
-        {
-          "component": "boolean",
-          "name": "fullWidth",
-          "label": "Full Width"
-        },
-        {
-          "component": "boolean",
-          "name": "loading",
-          "label": "Loading State"
-        },
-        {
-          "component": "text",
-          "name": "onClick",
-          "label": "Click Handler",
-          "description": "JavaScript function name for click handling"
-        },
-        {
-          "component": "text",
-          "name": "className",
-          "label": "Additional CSS Classes"
-        },
-        {
-          "component": "text",
-          "name": "id",
-          "label": "Element ID"
-        },
-        {
-          "component": "select",
-          "name": "type",
-          "label": "Button Type",
-          "options": [
-            {
-              "name": "Button",
-              "value": "button"
-            },
-            {
-              "name": "Submit",
-              "value": "submit"
-            },
-            {
-              "name": "Reset",
-              "value": "reset"
-            }
-          ]
         }
       ]
     }
