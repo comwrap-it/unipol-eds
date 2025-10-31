@@ -61,19 +61,19 @@ function createSubtitleElement(subtitleRow) {
 function createButtonElement(buttonRow) {
   const buttonContainer = document.createElement('div');
   buttonContainer.className = 'card-button';
-  
+
   // Create a button block structure for the button atom
   const buttonBlock = document.createElement('div');
   buttonBlock.className = 'btn';
-  
+
   // Copy the button row content to the button block
   buttonBlock.innerHTML = buttonRow.innerHTML;
-  
+
   // Import and decorate the button atom
   import('../../atoms/buttons/button/button.js').then((buttonModule) => {
     buttonModule.default(buttonBlock);
   });
-  
+
   buttonContainer.appendChild(buttonBlock);
   return buttonContainer;
 }
@@ -91,7 +91,6 @@ export function createCard(config = {}) {
     subtitle = '',
     buttonText = 'Scopri di più',
     buttonLink = '#',
-    onClick = null,
     className = '',
   } = config;
 
@@ -137,10 +136,10 @@ export function createCard(config = {}) {
   if (buttonText) {
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'card-button';
-    
+
     const buttonBlock = document.createElement('div');
     buttonBlock.className = 'btn';
-    
+
     // Create button content structure
     const buttonContent = document.createElement('div');
     if (buttonLink && buttonLink !== '#') {
@@ -152,12 +151,12 @@ export function createCard(config = {}) {
       buttonContent.textContent = buttonText;
     }
     buttonBlock.appendChild(buttonContent);
-    
+
     // Import and decorate the button atom
     import('../../atoms/buttons/button/button.js').then((buttonModule) => {
       buttonModule.default(buttonBlock);
     });
-    
+
     buttonContainer.appendChild(buttonBlock);
     content.appendChild(buttonContainer);
   }

@@ -19,14 +19,14 @@ async function createCard(cardData, index) {
   // Create card block structure for the card molecule
   const cardBlock = document.createElement('div');
   cardBlock.className = 'card';
-  
+
   // Copy the card content to the card block
   cardBlock.innerHTML = cardData.innerHTML;
-  
+
   // Import and decorate the card molecule
   const cardModule = await import('../../molecules/card/card.js');
   cardModule.default(cardBlock);
-  
+
   cardElement.appendChild(cardBlock);
   return cardElement;
 }
@@ -61,7 +61,7 @@ export default async function decorate(block) {
   });
 
   const cardElements = await Promise.all(cardPromises);
-  cardElements.forEach(cardElement => {
+  cardElements.forEach((cardElement) => {
     container.appendChild(cardElement);
   });
 
