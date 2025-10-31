@@ -11,16 +11,23 @@ import { moveInstrumentation } from '../../../scripts/scripts.js';
  * @param {number} index - Card index
  * @returns {HTMLElement} Card element
  */
-function createCard(cardData, index) {
+async function createCard(cardData, index) {
   const cardElement = document.createElement('div');
   cardElement.className = 'card-item';
   cardElement.dataset.index = index;
 
-  // Move the card content directly - let card.js handle the decoration
-  while (cardData.firstChild) {
-    cardElement.appendChild(cardData.firstChild);
-  }
-
+  // Create card block structure for the card molecule
+  const cardBlock = document.createElement('div');
+  cardBlock.className = 'card';
+  
+  // Copy the card content to the card block
+  cardBlock.innerHTML = cardData.innerHTML;
+  
+  // Import and decorate the card molecule
+  const cardModule = await import('../../molecules/card/card.js');
+  cardModule.default(cardBlock);
+  
+  cardElement.appendChild(cardBlock);
   return cardElement;
 }
 
@@ -28,7 +35,7 @@ function createCard(cardData, index) {
  * Main decoration function for Cards organism
  * @param {HTMLElement} block - The cards block element
  */
-export default function decorate(block) {
+export default async function decorate(block) {
   if (!block) return;
 
   const cards = [...block.children];
@@ -47,9 +54,14 @@ export default function decorate(block) {
   container.dataset.cardCount = numCards;
 
   // Process each card
-  cards.forEach((card, index) => {
-    const cardElement = createCard(card, index);
+  const cardPromises = cards.map(async (card, index) => {
+    const cardElement = await createCard(card, index);
     moveInstrumentation(card, cardElement);
+    return cardElement;
+  });
+
+  const cardElements = await Promise.all(cardPromises);
+  cardElements.forEach(cardElement => {
     container.appendChild(cardElement);
   });
 

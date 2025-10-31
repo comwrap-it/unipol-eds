@@ -5,7 +5,6 @@
 
 import { createOptimizedPicture } from '../../../scripts/aem.js';
 import { moveInstrumentation } from '../../../scripts/scripts.js';
-import { createButton, BUTTON_VARIANTS } from '../../atoms/buttons/button/button.js';
 
 /**
  * Create image element for card
@@ -60,22 +59,23 @@ function createSubtitleElement(subtitleRow) {
  * @returns {HTMLElement} Button element
  */
 function createButtonElement(buttonRow) {
-  const link = buttonRow.querySelector('a');
-  const buttonText = link ? link.textContent.trim() : buttonRow.textContent.trim();
-  const buttonLink = link ? link.href : '#';
-
-  const button = createButton({
-    text: buttonText || 'Scopri di più',
-    variant: BUTTON_VARIANTS.PRIMARY,
-    onClick: () => {
-      if (buttonLink && buttonLink !== '#') {
-        window.location.href = buttonLink;
-      }
-    },
+  const buttonContainer = document.createElement('div');
+  buttonContainer.className = 'card-button';
+  
+  // Create a button block structure for the button atom
+  const buttonBlock = document.createElement('div');
+  buttonBlock.className = 'btn';
+  
+  // Copy the button row content to the button block
+  buttonBlock.innerHTML = buttonRow.innerHTML;
+  
+  // Import and decorate the button atom
+  import('../../atoms/buttons/button/button.js').then((buttonModule) => {
+    buttonModule.default(buttonBlock);
   });
-
-  button.className += ' card-button';
-  return button;
+  
+  buttonContainer.appendChild(buttonBlock);
+  return buttonContainer;
 }
 
 /**
@@ -135,17 +135,31 @@ export function createCard(config = {}) {
 
   // Add button (using atom)
   if (buttonText) {
-    const button = createButton({
-      text: buttonText,
-      variant: BUTTON_VARIANTS.PRIMARY,
-      onClick: onClick || (() => {
-        if (buttonLink && buttonLink !== '#') {
-          window.location.href = buttonLink;
-        }
-      }),
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'card-button';
+    
+    const buttonBlock = document.createElement('div');
+    buttonBlock.className = 'btn';
+    
+    // Create button content structure
+    const buttonContent = document.createElement('div');
+    if (buttonLink && buttonLink !== '#') {
+      const link = document.createElement('a');
+      link.href = buttonLink;
+      link.textContent = buttonText;
+      buttonContent.appendChild(link);
+    } else {
+      buttonContent.textContent = buttonText;
+    }
+    buttonBlock.appendChild(buttonContent);
+    
+    // Import and decorate the button atom
+    import('../../atoms/buttons/button/button.js').then((buttonModule) => {
+      buttonModule.default(buttonBlock);
     });
-    button.className += ' card-button';
-    content.appendChild(button);
+    
+    buttonContainer.appendChild(buttonBlock);
+    content.appendChild(buttonContainer);
   }
 
   card.appendChild(content);

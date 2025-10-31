@@ -82,18 +82,6 @@
     ]
   },
   {
-    "id": "button",
-    "title": "Button",
-    "condition": {
-      "===": [
-        {
-          "var": "component"
-        },
-        "button"
-      ]
-    }
-  },
-  {
     "id": "icon-button",
     "title": "Icon Button",
     "condition": {

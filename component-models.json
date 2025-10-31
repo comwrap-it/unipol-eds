@@ -121,12 +121,12 @@
             "value": "primary"
           },
           {
-            "name": "Accent",
-            "value": "accent"
-          },
-          {
             "name": "Secondary",
             "value": "secondary"
+          },
+          {
+            "name": "Accent",
+            "value": "accent"
           }
         ]
       },
@@ -150,9 +150,10 @@
         ]
       },
       {
-        "component": "boolean",
-        "name": "disabled",
-        "label": "Disabled"
+        "component": "aem-content",
+        "name": "href",
+        "label": "Link URL",
+        "description": "Optional URL to make this a link button"
       }
     ]
   },
