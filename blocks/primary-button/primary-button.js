@@ -24,82 +24,25 @@ export const BUTTON_SIZES = {
   LARGE: 'large',
 };
 
-/**
- * Extracts the config from a block.
- * @param {Element} block The block element
- * @returns {object} The block config
- */
-function readBlockConfig(block) {
-  const config = {};
-
+export default function decorate(block) {
   // Look for rows either directly in block or inside default-content-wrapper
-  let rows = [...block.querySelectorAll(':scope > div')];
+  let rows = [...block.children];
 
   // If we have a default-content-wrapper, look inside it
   const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) {
-    rows = [...wrapper.querySelectorAll(':scope > div')];
+    rows = [...wrapper.children];
   }
 
-  rows.forEach((row) => {
-    if (row.children && row.children.length >= 2) {
-      const cols = [...row.children];
-      const nameCol = cols[0];
-      const valueCol = cols[1];
-
-      if (nameCol && valueCol) {
-        const name = nameCol.textContent.trim().toLowerCase().replace(/\s+/g, '-');
-        let value = '';
-
-        if (valueCol.querySelector('a')) {
-          const as = [...valueCol.querySelectorAll('a')];
-          if (as.length === 1) {
-            value = as[0].href;
-          } else {
-            value = as.map((a) => a.href);
-          }
-        } else if (valueCol.querySelector('img')) {
-          const imgs = [...valueCol.querySelectorAll('img')];
-          if (imgs.length === 1) {
-            value = imgs[0].src;
-          } else {
-            value = imgs.map((img) => img.src);
-          }
-        } else if (valueCol.querySelector('p')) {
-          const ps = [...valueCol.querySelectorAll('p')];
-          if (ps.length === 1) {
-            value = ps[0].textContent.trim();
-          } else {
-            value = ps.map((p) => p.textContent.trim());
-          }
-        } else {
-          value = valueCol.textContent.trim();
-        }
-
-        config[name] = value;
-      }
-    }
-  });
-
-  return config;
-}
-
-export default function decorate(block) {
-  // Use readBlockConfig to extract configuration
-  const config = readBlockConfig(block);
-
-  // Extract button configuration with fallbacks
-  const text = config.text || config['button-text'] || 'Button';
-  const variant = config.variant || 'primary';
-  const size = config.size || 'medium';
-  const href = config.href || config['link-url'] || null;
-
-  // Clear the block content
-  block.innerHTML = '';
+  // Extract properties from all rows to create a single button
+  const text = rows[0]?.textContent?.trim() || 'Button';
+  const variant = rows[1]?.textContent?.trim().toLowerCase() || 'primary';
+  const size = rows[2]?.textContent?.trim().toLowerCase() || 'medium';
+  const href = rows[3]?.textContent?.trim() || null;
 
   // Create the button or link element
   let element;
-  if (href) {
+  if (href && href !== '') {
     element = document.createElement('a');
     element.href = href;
     element.setAttribute('role', 'button');
@@ -118,7 +61,7 @@ export default function decorate(block) {
   element.setAttribute('tabindex', '0');
 
   // Add keyboard support for links acting as buttons
-  if (href) {
+  if (href && href !== '') {
     element.addEventListener('keydown', (e) => {
       if (e.key === ' ') {
         e.preventDefault();
@@ -127,7 +70,8 @@ export default function decorate(block) {
     });
   }
 
-  // Append to block
+  // Clear the entire block and append the single button
+  block.innerHTML = '';
   block.appendChild(element);
 
   // Add block classes
