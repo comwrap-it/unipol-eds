@@ -132,6 +132,21 @@
     }
   },
   {
+    "id": "card-children",
+    "title": "Card Children",
+    "components": [
+      "primary-button"
+    ],
+    "condition": {
+      "===": [
+        {
+          "var": "parent"
+        },
+        "card"
+      ]
+    }
+  },
+  {
     "id": "columns",
     "components": [
       "column"

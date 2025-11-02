@@ -299,13 +299,6 @@
         "component": "text",
         "name": "subtitle",
         "label": "Card Subtitle"
-      },
-      {
-        "component": "reference",
-        "name": "button",
-        "label": "Card Button",
-        "required": true,
-        "model": "primary-button"
       }
     ]
   },

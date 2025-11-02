@@ -36,13 +36,6 @@
           "component": "text",
           "name": "subtitle", 
           "label": "Card Subtitle"
-        },
-        {
-          "component": "reference",
-          "name": "button",
-          "label": "Card Button",
-          "required": true,
-          "model": "primary-button"
         }
       ]
     }
@@ -55,6 +48,21 @@
         "===": [
           {
             "var": "component"
+          },
+          "card"
+        ]
+      }
+    },
+    {
+      "id": "card-children",
+      "title": "Card Children",
+      "components": [
+        "primary-button"
+      ],
+      "condition": {
+        "===": [
+          {
+            "var": "parent"
           },
           "card"
         ]

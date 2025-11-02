@@ -188,7 +188,7 @@ export default function decorate(block) {
   }
 
   // Extract data from rows based on Universal Editor structure
-  const [imageRow, titleRow, subtitleRow, buttonRow] = rows;
+  const [imageRow, titleRow, subtitleRow] = rows;
 
   // Create card structure
   const card = document.createElement('article');
@@ -216,40 +216,10 @@ export default function decorate(block) {
     content.appendChild(subtitle);
   }
 
-  // Button - handle referenced primary-button
-  if (buttonRow) {
-    const buttonContainer = document.createElement('div');
-    buttonContainer.className = 'card-button-container';
-
-    // Check if buttonRow contains a primary-button block
-    const primaryButtonBlock = buttonRow.querySelector('.primary-button');
-    if (primaryButtonBlock) {
-      // Clone the primary-button block and decorate it
-      const buttonClone = primaryButtonBlock.cloneNode(true);
-
-      // Import and decorate the primary-button
-      import('../primary-button/primary-button.js').then((buttonModule) => {
-        buttonModule.default(buttonClone);
-      });
-
-      buttonContainer.appendChild(buttonClone);
-    } else {
-      // Fallback: treat buttonRow as primary-button block directly
-      buttonRow.classList.add('primary-button', 'block');
-      buttonRow.setAttribute('data-block-name', 'primary-button');
-
-      // Import and decorate the primary-button
-      import('../primary-button/primary-button.js').then((buttonModule) => {
-        buttonModule.default(buttonRow);
-      });
-
-      buttonContainer.appendChild(buttonRow);
-    }
-
-    content.appendChild(buttonContainer);
-  }
-
   card.appendChild(content);
+
+  // Handle any additional child components (like primary-button) that might be added
+  // These will be processed by their respective decorators when added via Universal Editor
 
   // Initialize interactions
   initializeCardInteractions(card);
