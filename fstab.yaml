@@ -1,5 +1,5 @@
 mountpoints:
   /:
-    url: "https://localhost:8443/bin/franklin.delivery/comwrap-it/unipol-stage/stage"
+    url: "https://main--unipol-stage--comwrap-it.aem.live/bin/franklin.delivery/comwrap-it/unipol-stage/stage"
     type: "markup"
     suffix: ".html"
