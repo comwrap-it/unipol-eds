@@ -1,0 +1,147 @@
+/**
+ * Card Molecule Styles - Atomic Design System
+ * Single card component with image, title, subtitle, and button
+ */
+
+.card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 10%);
+  overflow: hidden;
+  transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 16px rgb(0 0 0 / 15%);
+}
+
+/* Card Image */
+.card-image {
+  width: 100%;
+  line-height: 0;
+  overflow: hidden;
+}
+
+.card-image img,
+.card-image-img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.card:hover .card-image img,
+.card:hover .card-image-img {
+  transform: scale(1.02);
+}
+
+/* Card Content */
+.card-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Card Title */
+.card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin: 0 0 8px;
+  color: var(--text-primary, #1a1a1a);
+  line-height: 1.4;
+}
+
+/* Card Subtitle */
+.card-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-secondary, #6b7280);
+  margin: 0 0 16px;
+  flex-grow: 1;
+  line-height: 1.5;
+}
+
+/* Card Button */
+.card-button {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+/* Responsive Design */
+@media (width <= 768px) {
+  .card-body {
+    padding: 16px;
+    gap: 12px;
+  }
+  
+  .card-title {
+    font-size: 1.125rem;
+  }
+  
+  .card-description {
+    font-size: 0.875rem;
+  }
+  
+  .card-image img {
+    height: 160px;
+  }
+}
+
+/* Accessibility */
+.card:focus-within {
+  outline: 2px solid var(--color-primary, #007acc);
+  outline-offset: 2px;
+}
+
+/* Loading State */
+.card.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.card.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid var(--color-primary, #007acc);
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Variants */
+.card.featured {
+  border-color: var(--color-accent, #ff6b35);
+  background: linear-gradient(135deg, var(--background-color) 0%, rgb(255 107 53 / 5%) 100%);
+}
+
+.card.compact .card-body {
+  padding: 16px;
+  gap: 12px;
+}
+
+.card.compact .card-image img {
+  height: 120px;
+}
+
+.card.compact .card-title {
+  font-size: 1rem;
+}
+
+.card.compact .card-description {
+  font-size: 0.875rem;
+}

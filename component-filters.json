@@ -106,6 +106,30 @@
     }
   },
   {
+    "id": "card-list",
+    "title": "Card List",
+    "condition": {
+      "===": [
+        {
+          "var": "component"
+        },
+        "card-list"
+      ]
+    }
+  },
+  {
+    "id": "card",
+    "title": "Card",
+    "condition": {
+      "===": [
+        {
+          "var": "component"
+        },
+        "card"
+      ]
+    }
+  },
+  {
     "id": "columns",
     "components": [
       "column"

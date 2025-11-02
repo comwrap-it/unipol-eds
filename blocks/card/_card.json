@@ -1,0 +1,63 @@
+{
+  "definitions": [
+    {
+      "title": "Card",
+      "id": "card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Card",
+              "model": "card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "card",
+      "fields": [
+        {
+          "component": "reference",
+          "name": "image",
+          "label": "Card Image",
+          "required": true
+        },
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Card Title",
+          "required": true
+        },
+        {
+          "component": "text",
+          "name": "subtitle", 
+          "label": "Card Subtitle"
+        },
+        {
+          "component": "reference",
+          "name": "button",
+          "label": "Card Button",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "card",
+      "title": "Card",
+      "condition": {
+        "===": [
+          {
+            "var": "component"
+          },
+          "card"
+        ]
+      }
+    }
+  ]
+}
