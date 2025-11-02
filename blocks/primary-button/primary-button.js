@@ -24,35 +24,75 @@ export const BUTTON_SIZES = {
   LARGE: 'large',
 };
 
-export default function decorate(block) {
-  // Get all rows from the block
-  const rows = [...block.children];
+/**
+ * Extracts the config from a block.
+ * @param {Element} block The block element
+ * @returns {object} The block config
+ */
+function readBlockConfig(block) {
+  const config = {};
 
-  // Extract button configuration from first row
-  let text = 'Button';
-  let variant = 'primary';
-  let size = 'medium';
-  let href = null;
+  // Look for rows either directly in block or inside default-content-wrapper
+  let rows = [...block.querySelectorAll(':scope > div')];
 
-  if (rows.length > 0) {
-    const cells = [...rows[0].children];
+  // If we have a default-content-wrapper, look inside it
+  const wrapper = block.querySelector('.default-content-wrapper');
+  if (wrapper) {
+    rows = [...wrapper.querySelectorAll(':scope > div')];
+  }
 
-    // Extract values from cells
-    if (cells[0]) text = cells[0].textContent.trim() || 'Button';
-    if (cells[1]) variant = cells[1].textContent.trim() || 'primary';
-    if (cells[2]) size = cells[2].textContent.trim() || 'medium';
-    if (cells[3]) {
-      const linkElement = cells[3].querySelector('a');
-      if (linkElement) {
-        href = linkElement.href;
-      } else {
-        const linkText = cells[3].textContent.trim();
-        if (linkText && (linkText.startsWith('http') || linkText.startsWith('/'))) {
-          href = linkText;
+  rows.forEach((row) => {
+    if (row.children && row.children.length >= 2) {
+      const cols = [...row.children];
+      const nameCol = cols[0];
+      const valueCol = cols[1];
+
+      if (nameCol && valueCol) {
+        const name = nameCol.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+        let value = '';
+
+        if (valueCol.querySelector('a')) {
+          const as = [...valueCol.querySelectorAll('a')];
+          if (as.length === 1) {
+            value = as[0].href;
+          } else {
+            value = as.map((a) => a.href);
+          }
+        } else if (valueCol.querySelector('img')) {
+          const imgs = [...valueCol.querySelectorAll('img')];
+          if (imgs.length === 1) {
+            value = imgs[0].src;
+          } else {
+            value = imgs.map((img) => img.src);
+          }
+        } else if (valueCol.querySelector('p')) {
+          const ps = [...valueCol.querySelectorAll('p')];
+          if (ps.length === 1) {
+            value = ps[0].textContent.trim();
+          } else {
+            value = ps.map((p) => p.textContent.trim());
+          }
+        } else {
+          value = valueCol.textContent.trim();
         }
+
+        config[name] = value;
       }
     }
-  }
+  });
+
+  return config;
+}
+
+export default function decorate(block) {
+  // Use readBlockConfig to extract configuration
+  const config = readBlockConfig(block);
+
+  // Extract button configuration with fallbacks
+  const text = config.text || config['button-text'] || 'Button';
+  const variant = config.variant || 'primary';
+  const size = config.size || 'medium';
+  const href = config.href || config['link-url'] || null;
 
   // Clear the block content
   block.innerHTML = '';
