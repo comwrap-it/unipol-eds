@@ -147,14 +147,14 @@
     ]
   },
   {
-    "id": "card",
-    "title": "Card",
+    "id": "card-molecule",
+    "title": "Card (Molecules)",
     "condition": {
       "===": [
         {
           "var": "component"
         },
-        "card"
+        "card-molecule"
       ]
     }
   },

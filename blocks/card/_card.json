@@ -41,7 +41,8 @@
           "component": "reference",
           "name": "button",
           "label": "Card Button",
-          "required": true
+          "required": true,
+          "model": "primary-button"
         }
       ]
     }

@@ -54,31 +54,6 @@ function createSubtitleElement(subtitleRow) {
 }
 
 /**
- * Create button element for card using button atom
- * @param {HTMLElement} buttonRow - Row containing button data
- * @returns {HTMLElement} Button element
- */
-function createButtonElement(buttonRow) {
-  const buttonContainer = document.createElement('div');
-  buttonContainer.className = 'card-button';
-
-  // Create a button block structure for the button atom
-  const buttonBlock = document.createElement('div');
-  buttonBlock.className = 'btn';
-
-  // Copy the button row content to the button block
-  buttonBlock.innerHTML = buttonRow.innerHTML;
-
-  // Import and decorate the button atom
-  import('../primary-button/primary-button.js').then((buttonModule) => {
-    buttonModule.default(buttonBlock);
-  });
-
-  buttonContainer.appendChild(buttonBlock);
-  return buttonContainer;
-}
-
-/**
  * Create a single card element
  * @param {Object} config - Card configuration
  * @returns {HTMLElement} Card element
@@ -203,7 +178,17 @@ function initializeCardInteractions(card) {
 export default function decorate(block) {
   if (!block) return;
 
-  const [imageRow, titleRow, subtitleRow, buttonRow] = block.children;
+  // Handle Universal Editor structure
+  let rows = Array.from(block.children);
+
+  // Check if we have default-content-wrapper structure
+  const wrapper = block.querySelector('.default-content-wrapper');
+  if (wrapper) {
+    rows = Array.from(wrapper.children);
+  }
+
+  // Extract data from rows based on Universal Editor structure
+  const [imageRow, titleRow, subtitleRow, buttonRow] = rows;
 
   // Create card structure
   const card = document.createElement('article');
@@ -231,10 +216,37 @@ export default function decorate(block) {
     content.appendChild(subtitle);
   }
 
-  // Button (using atom)
+  // Button - handle referenced primary-button
   if (buttonRow) {
-    const button = createButtonElement(buttonRow);
-    content.appendChild(button);
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'card-button-container';
+
+    // Check if buttonRow contains a primary-button block
+    const primaryButtonBlock = buttonRow.querySelector('.primary-button');
+    if (primaryButtonBlock) {
+      // Clone the primary-button block and decorate it
+      const buttonClone = primaryButtonBlock.cloneNode(true);
+
+      // Import and decorate the primary-button
+      import('../primary-button/primary-button.js').then((buttonModule) => {
+        buttonModule.default(buttonClone);
+      });
+
+      buttonContainer.appendChild(buttonClone);
+    } else {
+      // Fallback: treat buttonRow as primary-button block directly
+      buttonRow.classList.add('primary-button', 'block');
+      buttonRow.setAttribute('data-block-name', 'primary-button');
+
+      // Import and decorate the primary-button
+      import('../primary-button/primary-button.js').then((buttonModule) => {
+        buttonModule.default(buttonRow);
+      });
+
+      buttonContainer.appendChild(buttonRow);
+    }
+
+    content.appendChild(buttonContainer);
   }
 
   card.appendChild(content);
