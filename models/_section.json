@@ -46,9 +46,11 @@
         "text",
         "image",
         "button",
+        "primary-button",
         "title",
         "hero",
-        "cards",
+        "card-list",
+        "card",
         "columns",
         "fragment"
       ]

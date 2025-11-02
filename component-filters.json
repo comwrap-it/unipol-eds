@@ -11,9 +11,11 @@
       "text",
       "image",
       "button",
+      "primary-button",
       "title",
       "hero",
-      "cards",
+      "card-list",
+      "card",
       "columns",
       "fragment"
     ]
@@ -165,6 +167,18 @@
           "var": "component"
         },
         "cards"
+      ]
+    }
+  },
+  {
+    "id": "primary-button",
+    "title": "Primary Button",
+    "condition": {
+      "===": [
+        {
+          "var": "component"
+        },
+        "primary-button"
       ]
     }
   }
