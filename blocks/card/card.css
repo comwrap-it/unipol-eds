@@ -123,6 +123,11 @@
   }
 }
 
+/* Card Wrapper - for Universal Editor compatibility */
+.card-wrapper {
+  display: contents; /* Makes the wrapper transparent for layout */
+}
+
 /* Variants */
 .card.featured {
   border-color: var(--color-accent, #ff6b35);

@@ -254,5 +254,11 @@ export default function decorate(block) {
   // Initialize interactions
   initializeCardInteractions(card);
 
-  block.replaceWith(card);
+  // Instead of replacing the block, clear it and append the card inside
+  // This preserves Universal Editor attributes on the original block
+  block.innerHTML = '';
+  block.appendChild(card);
+
+  // Copy card classes to the block for styling
+  block.className = `${block.className} card-wrapper`.trim();
 }
