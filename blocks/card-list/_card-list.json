@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Card List Container",
+      "title": "Card List",
       "id": "card-list",
       "plugins": {
         "xwalk": {
@@ -14,18 +14,40 @@
           }
         }
       }
+    },
+    {
+      "title": "Card",
+      "id": "card-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Card",
+              "model": "card-item"
+            }
+          }
+        }
+      }
     }
   ],
   "models": [
     {
-      "id": "card-list",
+      "id": "card-item",
       "fields": [
         {
-          "component": "number",
-          "name": "maxCards",
-          "label": "Maximum Cards",
-          "description": "Maximum number of cards (1-4)",
-          "defaultValue": 4
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Image",
+          "multi": false
+        },
+        {
+          "component": "richtext",
+          "name": "text",
+          "value": "",
+          "label": "Text",
+          "valueType": "string"
         }
       ]
     }
@@ -33,32 +55,9 @@
   "filters": [
     {
       "id": "card-list",
-      "title": "Card List",
-      "condition": {
-        "===": [
-          {
-            "var": "component"
-          },
-          "card-list"
-        ]
-      }
-    },
-    {
-      "id": "card-list-children",
-      "title": "Card List Children",
       "components": [
-        "card"
-      ],
-      "minItems": 1,
-      "maxItems": 4,
-      "condition": {
-        "===": [
-          {
-            "var": "parent"
-          },
-          "card-list"
-        ]
-      }
+        "card-item"
+      ]
     }
   ]
 }

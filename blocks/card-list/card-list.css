@@ -1,77 +1,27 @@
-/**
- * Cards Organism Styles - Atomic Design System
- * Container for 1-4 Card molecules in responsive grid layout
- */
-
-.cards-container {
+.card-list > ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
-  gap: 24px;
-  padding: 16px;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  max-width: 1200px;
-  margin: 0 auto;
+  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
+  grid-gap: 24px;
 }
 
-/* Responsive breakpoints as per technical architecture */
-@media (width >= 768px) {
-  .cards-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.card-list > ul > li {
+  border: 1px solid #dadada;
+  background-color: var(--background-color);
 }
 
-@media (width >= 1024px) {
-  .cards-container {
-    grid-template-columns: repeat(4, 1fr);
-  }
+.card-list .cards-card-body {
+  margin: 16px;
 }
 
-/* Card item wrapper */
-.card-item {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
+.card-list .cards-card-image {
+  line-height: 0;
 }
 
-/* Ensure cards have equal height */
-.card-item .card {
-  height: 100%;
-}
-
-/* Dynamic grid based on card count */
-.cards-container[data-card-count="1"] {
-  grid-template-columns: 1fr;
-  max-width: 400px;
-}
-
-.cards-container[data-card-count="2"] {
-  grid-template-columns: repeat(2, 1fr);
-  max-width: 800px;
-}
-
-.cards-container[data-card-count="3"] {
-  grid-template-columns: repeat(3, 1fr);
-  max-width: 1000px;
-}
-
-/* Mobile adjustments */
-@media (width <= 767px) {
-  .cards-container {
-    grid-template-columns: 1fr !important;
-    gap: 16px;
-    padding: 12px;
-  }
-  
-  .cards-container[data-card-count="1"],
-  .cards-container[data-card-count="2"],
-  .cards-container[data-card-count="3"] {
-    max-width: 100%;
-  }
-}
-
-/* Tablet adjustments */
-@media (width >= 768px) and (width <= 1023px) {
-  .cards-container[data-card-count="3"],
-  .cards-container[data-card-count="4"] {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.card-list > ul > li img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
 }

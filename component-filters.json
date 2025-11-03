@@ -109,32 +109,9 @@
   },
   {
     "id": "card-list",
-    "title": "Card List",
-    "condition": {
-      "===": [
-        {
-          "var": "component"
-        },
-        "card-list"
-      ]
-    }
-  },
-  {
-    "id": "card-list-children",
-    "title": "Card List Children",
     "components": [
-      "card"
-    ],
-    "minItems": 1,
-    "maxItems": 4,
-    "condition": {
-      "===": [
-        {
-          "var": "parent"
-        },
-        "card-list"
-      ]
-    }
+      "card-item"
+    ]
   },
   {
     "id": "card",

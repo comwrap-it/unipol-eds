@@ -112,7 +112,7 @@
           }
         },
         {
-          "title": "Card List Container",
+          "title": "Card List",
           "id": "card-list",
           "plugins": {
             "xwalk": {
@@ -121,6 +121,21 @@
                 "template": {
                   "name": "Card List",
                   "filter": "card-list"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Card",
+          "id": "card-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Card",
+                  "model": "card-item"
                 }
               }
             }

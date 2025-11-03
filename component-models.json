@@ -269,14 +269,21 @@
     ]
   },
   {
-    "id": "card-list",
+    "id": "card-item",
     "fields": [
       {
-        "component": "number",
-        "name": "maxCards",
-        "label": "Maximum Cards",
-        "description": "Maximum number of cards (1-4)",
-        "defaultValue": 4
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "value": "",
+        "label": "Text",
+        "valueType": "string"
       }
     ]
   },
