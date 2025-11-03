@@ -126,22 +126,6 @@
     }
   },
   {
-    "id": "card-children",
-    "title": "Card Children",
-    "components": [
-      "primary-button"
-    ],
-    "maxItems": 1,
-    "condition": {
-      "===": [
-        {
-          "var": "parent"
-        },
-        "card"
-      ]
-    }
-  },
-  {
     "id": "columns",
     "components": [
       "column"
@@ -177,18 +161,6 @@
           "var": "component"
         },
         "cards"
-      ]
-    }
-  },
-  {
-    "id": "primary-button",
-    "title": "Primary Button",
-    "condition": {
-      "===": [
-        {
-          "var": "component"
-        },
-        "primary-button"
       ]
     }
   }

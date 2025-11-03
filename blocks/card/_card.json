@@ -1,3 +1,4 @@
+
 {
   "definitions": [
     {
@@ -9,8 +10,7 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Card",
-              "model": "card",
-              "filter": "card-children"
+              "model": "card"
             }
           }
         }
@@ -37,6 +37,25 @@
           "component": "text",
           "name": "subtitle",
           "label": "Card Subtitle"
+        },
+        {
+          "component": "container",
+          "name": "buttons",
+          "label": "Call-to-Actions",
+          "multi": false,
+          "fields": [
+            {
+              "component": "text",
+              "name": "label",
+              "label": "Button Label",
+              "required": true
+            },
+            {
+              "component": "aem-content",
+              "name": "link",
+              "label": "Button Link"
+            }
+          ]
         }
       ]
     }
@@ -48,18 +67,6 @@
       "condition": {
         "===": [
           {"var": "component"},
-          "card"
-        ]
-      }
-    },
-    {
-      "id": "card-children",
-      "title": "Card Children",
-      "components": ["primary-button"],
-      "maxItems": 1,
-      "condition": {
-        "===": [
-          {"var": "parent"},
           "card"
         ]
       }

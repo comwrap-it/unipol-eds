@@ -1,4 +1,3 @@
-/* Button Component - Atomic Design System */
 
 /* Import base design tokens */
 @import url('../../styles/design-tokens.css');
@@ -9,23 +8,23 @@
   --button-primary-bg: #2219d2;
   --button-primary-color: #FFF;
   --button-primary-border: #1976D2;
-  
+
   /* Accent Variant */
   --button-accent-bg: #FF5722;
   --button-accent-color: #FFF;
   --button-accent-border: #FF5722;
-  
+
   /* Secondary Variant */
   --button-secondary-bg: transparent;
   --button-secondary-color: #757575;
   --button-secondary-border: #757575;
-  
+
   /* State Modifiers */
   --button-hover-opacity: 0.9;
   --button-pressed-scale: 0.98;
   --button-disabled-opacity: 0.6;
   --button-focus-outline: 2px solid #1976D2;
-  
+
   /* Sizing */
   --button-padding: 12px 24px;
   --button-border-radius: 8px;
@@ -33,7 +32,7 @@
   --button-min-height: 44px;
   --button-font-weight: 500;
   --button-line-height: 1.5;
-  
+
   /* Transitions */
   --button-transition: all 0.2s ease-in-out;
 }
@@ -163,7 +162,7 @@
   outline-offset: 2px;
 }
 
-/* Block wrapper */
+/* Block wrapper for standalone buttons */
 .button-block {
   display: block;
   margin: 1rem 0;
