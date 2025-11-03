@@ -120,6 +120,23 @@
     }
   },
   {
+    "id": "card-list-children",
+    "title": "Card List Children",
+    "components": [
+      "card"
+    ],
+    "minItems": 1,
+    "maxItems": 4,
+    "condition": {
+      "===": [
+        {
+          "var": "parent"
+        },
+        "card-list"
+      ]
+    }
+  },
+  {
     "id": "card",
     "title": "Card",
     "condition": {
