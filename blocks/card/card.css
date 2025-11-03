@@ -12,6 +12,8 @@
   display: flex;
   flex-direction: column;
   height: 100%;
+  max-width: 100%;
+  width: 100%;
 }
 
 .card:hover {
@@ -67,6 +69,11 @@
 
 /* Responsive Design */
 @media (width <= 768px) {
+  .card-wrapper {
+    max-width: 100%;
+    margin: 0;
+  }
+  
   .card-body {
     padding: 16px;
     gap: 12px;
@@ -119,7 +126,10 @@
 
 /* Card Wrapper - for Universal Editor compatibility */
 .card-wrapper {
-  display: contents; /* Makes the wrapper transparent for layout */
+  display: block;
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
 }
 
 /* Variants */

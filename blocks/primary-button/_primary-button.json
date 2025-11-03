@@ -6,7 +6,7 @@
       "plugins": {
         "xwalk": {
           "page": {
-            "resourceType": "core/franklin/components/block/v1/block",
+            "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "name": "Primary Button",
               "model": "primary-button"
@@ -31,18 +31,9 @@
           "name": "variant",
           "label": "Variant",
           "options": [
-            {
-              "name": "Primary",
-              "value": "primary"
-            },
-            {
-              "name": "Secondary",
-              "value": "secondary"
-            },
-            {
-              "name": "Accent",
-              "value": "accent"
-            }
+            {"name": "Primary", "value": "primary"},
+            {"name": "Secondary", "value": "secondary"},
+            {"name": "Accent", "value": "accent"}
           ]
         },
         {
@@ -50,18 +41,9 @@
           "name": "size",
           "label": "Size",
           "options": [
-            {
-              "name": "Small",
-              "value": "small"
-            },
-            {
-              "name": "Medium",
-              "value": "medium"
-            },
-            {
-              "name": "Large",
-              "value": "large"
-            }
+            {"name": "Small", "value": "small"},
+            {"name": "Medium", "value": "medium"},
+            {"name": "Large", "value": "large"}
           ]
         },
         {
@@ -79,9 +61,7 @@
       "title": "Primary Button",
       "condition": {
         "===": [
-          {
-            "var": "component"
-          },
+          {"var": "component"},
           "primary-button"
         ]
       }
