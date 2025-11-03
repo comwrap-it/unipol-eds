@@ -156,13 +156,20 @@ function initializeCardInteractions(card) {
     card.classList.remove('card-hover');
   });
 
-  // Make the entire card clickable if it has a button
-  const button = card.querySelector('.card-button');
-  if (button) {
+  // Make the entire card clickable if it has buttons
+  const buttons = card.querySelectorAll('.card-button, .card-buttons .primary-button');
+  if (buttons.length > 0) {
+    const primaryButton = buttons[0]; // Use the first button as primary
+
     card.addEventListener('click', (e) => {
-      // Only trigger if not clicking directly on the button
-      if (e.target !== button && !button.contains(e.target)) {
-        button.click();
+      // Only trigger if not clicking directly on any button
+      const clickedButton = e.target.closest('.card-button, .primary-button');
+      if (!clickedButton) {
+        // Find the first clickable element in the primary button
+        const clickableElement = primaryButton.querySelector('a, button') || primaryButton;
+        if (clickableElement.click) {
+          clickableElement.click();
+        }
       }
     });
 
@@ -175,7 +182,7 @@ function initializeCardInteractions(card) {
  * Main decoration function for EDS
  * @param {HTMLElement} block - The card block element
  */
-export default function decorate(block) {
+export default async function decorate(block) {
   if (!block) return;
 
   // Handle Universal Editor structure
@@ -188,7 +195,7 @@ export default function decorate(block) {
   }
 
   // Extract data from rows based on Universal Editor structure
-  const [imageRow, titleRow, subtitleRow] = rows;
+  const [imageRow, titleRow, subtitleRow, ...childItemRows] = rows;
 
   // Create card structure
   const card = document.createElement('article');
@@ -214,6 +221,59 @@ export default function decorate(block) {
   if (subtitleRow) {
     const subtitle = createSubtitleElement(subtitleRow);
     content.appendChild(subtitle);
+  }
+
+  // Handle child components (Primary Buttons) added via Universal Editor
+  if (childItemRows && childItemRows.length > 0) {
+    // Create a container for buttons
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'card-buttons';
+
+    // Process child rows to create buttons
+    // eslint-disable-next-line no-restricted-syntax
+    for (const childRow of childItemRows) {
+      // Check if this is a primary-button component
+      const isPrimaryButton = childRow.classList.contains('primary-button')
+                           || childRow.querySelector('.primary-button')
+                           || childRow.textContent.trim(); // Any content could be a button
+
+      if (isPrimaryButton) {
+        // Create button block element
+        const buttonBlock = document.createElement('div');
+        buttonBlock.className = 'primary-button';
+
+        // Copy content from the child row
+        const cells = Array.from(childRow.querySelectorAll('td, div, p, a'));
+        if (cells.length > 0) {
+          // Use the first cell's content
+          const cellContent = cells[0].cloneNode(true);
+          buttonBlock.appendChild(cellContent);
+        } else {
+          // Fallback: use the entire row content
+          buttonBlock.innerHTML = childRow.innerHTML;
+        }
+
+        // Apply the primary-button decorator
+        import('../primary-button/primary-button.js')
+          .then((buttonModule) => {
+            if (buttonModule.default) {
+              buttonModule.default(buttonBlock);
+            }
+          })
+          .catch((error) => {
+            // eslint-disable-next-line no-console
+            console.warn('Could not load primary-button module:', error);
+          });
+
+        // Add to button container
+        buttonContainer.appendChild(buttonBlock);
+      }
+    }
+
+    // Only add button container if it has buttons
+    if (buttonContainer.children.length > 0) {
+      content.appendChild(buttonContainer);
+    }
   }
 
   card.appendChild(content);

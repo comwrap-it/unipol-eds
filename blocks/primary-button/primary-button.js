@@ -25,6 +25,8 @@ export const BUTTON_SIZES = {
 };
 
 export default function decorate(block) {
+  if (!block) return;
+
   // Look for rows either directly in block or inside default-content-wrapper
   let rows = [...block.children];
 
