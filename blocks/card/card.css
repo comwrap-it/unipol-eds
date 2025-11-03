@@ -1,7 +1,7 @@
 /* Card Component - Uses Button Utility Styles */
 
 /* Import button utility styles */
-@import '../primary-button/primary-button.css';
+@import url('../primary-button/primary-button.css');
 
 /* Card Styles */
 .card {
