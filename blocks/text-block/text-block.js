@@ -85,6 +85,9 @@ export default async function decorate(block) {
   }
 
   // Button - Row 2 (optional)
+  // Button can be defined in two ways:
+  // 1. As a container with instrumentation (Universal Editor) - Row 2 contains nested fields
+  // 2. As simple text rows - Row 2 contains button text, variant, size, href
   const buttonRow = rows[2];
   if (buttonRow && buttonRow.textContent?.trim()) {
     // Check if button row has instrumentation (Universal Editor)
@@ -106,13 +109,11 @@ export default async function decorate(block) {
       moveInstrumentation(buttonRow, buttonWrapper);
       textBlock.appendChild(buttonWrapper);
     } else {
-      // Extract button data from row
-      // Button row structure can be:
-      // - Container with nested fields (text, variant, size, href)
-      // - Simple text rows
+      // Extract button data from row structure
+      // Expected structure: Row 2 contains buttonText, buttonVariant, buttonSize, buttonHref
       const buttonData = Array.from(buttonRow.children);
 
-      // Try to get button text from first child or row text
+      // Extract button text from first child or row text
       let label = 'Button';
       if (buttonData.length > 0) {
         label = buttonData[0]?.textContent?.trim() || buttonRow.textContent?.trim() || 'Button';
@@ -120,7 +121,7 @@ export default async function decorate(block) {
         label = buttonRow.textContent?.trim() || 'Button';
       }
 
-      // Try to get link from row
+      // Extract href from link or button data
       const link = buttonRow.querySelector('a');
       let href = '';
       if (link && link.href) {
@@ -135,8 +136,7 @@ export default async function decorate(block) {
         }
       }
 
-      // Get variant and size from button data or defaults
-      // Variant might be in second or third child depending on structure
+      // Extract variant and size from button data or defaults
       let variant = BUTTON_VARIANTS.PRIMARY;
       let size = BUTTON_SIZES.MEDIUM;
 

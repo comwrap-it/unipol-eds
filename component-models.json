@@ -312,6 +312,12 @@
         "name": "text",
         "label": "Text",
         "valueType": "string"
+      },
+      {
+        "component": "container",
+        "name": "button",
+        "label": "Button",
+        "model": "primary-button"
       }
     ]
   }
