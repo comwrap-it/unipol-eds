@@ -1,9 +1,9 @@
 /**
  * Card Component - Molecule
- * 
+ *
  * Uses primary-button as an atom component for call-to-action buttons.
  * This component can be used as a molecule within card-list.
- * 
+ *
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
 
@@ -40,7 +40,7 @@ export default async function decorate(block) {
   if (imageRow) {
     const cardImage = document.createElement('div');
     cardImage.className = 'card-image';
-    
+
     const picture = imageRow.querySelector('picture');
     if (picture) {
       // Move existing picture (preserves instrumentation)
@@ -52,7 +52,7 @@ export default async function decorate(block) {
           img.src,
           img.alt || '',
           false,
-          [{ width: '750' }]
+          [{ width: '750' }],
         );
         // Preserve instrumentation from original img
         const newImg = optimizedPic.querySelector('img');
@@ -68,7 +68,7 @@ export default async function decorate(block) {
             link.href,
             link.textContent?.trim() || '',
             false,
-            [{ width: '750' }]
+            [{ width: '750' }],
           );
           // Preserve instrumentation from link
           const newImg = optimizedPic.querySelector('img');
@@ -79,7 +79,7 @@ export default async function decorate(block) {
         }
       }
     }
-    
+
     if (cardImage.children.length > 0) {
       card.appendChild(cardImage);
     }
@@ -150,7 +150,7 @@ export default async function decorate(block) {
       if (!buttonRow) return;
 
       // Check if button row has instrumentation (Universal Editor)
-      const hasInstrumentation = buttonRow.hasAttribute('data-aue-resource') 
+      const hasInstrumentation = buttonRow.hasAttribute('data-aue-resource')
         || buttonRow.querySelector('[data-aue-resource]')
         || buttonRow.querySelector('[data-richtext-prop]');
 
@@ -171,11 +171,11 @@ export default async function decorate(block) {
         // Extract button data from row
         const buttonData = Array.from(buttonRow.children);
         const label = buttonData[0]?.textContent?.trim() || 'Button';
-        
+
         // Try to get link from row
         const link = buttonRow.querySelector('a');
         const href = link?.href || buttonData[1]?.textContent?.trim() || '';
-        
+
         // Get variant and size (defaults if not provided)
         const variant = buttonData[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
         const size = buttonData[2]?.textContent?.trim().toLowerCase() || BUTTON_SIZES.MEDIUM;
