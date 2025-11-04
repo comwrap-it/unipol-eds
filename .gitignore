@@ -8,3 +8,7 @@ helix-importer-ui
 *.bak
 .idea
 .env
+
+.agents/*
+.claude/*
+AGENTS.md
