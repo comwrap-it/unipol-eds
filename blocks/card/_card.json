@@ -39,23 +39,9 @@
           "label": "Card Subtitle"
         },
         {
-          "component": "container",
-          "name": "buttons",
-          "label": "Call-to-Actions",
-          "multi": false,
-          "fields": [
-            {
-              "component": "text",
-              "name": "label",
-              "label": "Button Label",
-              "required": true
-            },
-            {
-              "component": "aem-content",
-              "name": "link",
-              "label": "Button Link"
-            }
-          ]
+          "component": "text",
+          "name": "buttonLabel",
+          "label": "Button Label"
         }
       ]
     }
