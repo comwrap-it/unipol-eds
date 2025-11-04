@@ -1,17 +1,40 @@
+/* Card List Component - Organism
+ * 
+ * Uses card component as a molecule to display a list of cards.
+ * Each card uses primary-button as an atom for call-to-action buttons.
+ */
+
+/* Import card styles */
+@import url('../card/card.css');
+
+/* Card List Container */
+.card-list > ul.card-list-items,
 .card-list > ul {
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(257px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 24px;
 }
 
+/* Card List Item */
+.card-list > ul > li.card-list-item,
 .card-list > ul > li {
-  border: 1px solid #dadada;
-  background-color: var(--background-color);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
+/* Ensure card fills the list item */
+.card-list > ul > li .card {
+  height: 100%;
+  width: 100%;
+}
+
+/* Legacy support for old card-list structure */
 .card-list .cards-card-body {
   margin: 16px;
 }
@@ -24,4 +47,20 @@
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
+}
+
+/* Responsive Design */
+@media (width <= 768px) {
+  .card-list > ul.card-list-items,
+  .card-list > ul {
+    grid-template-columns: 1fr;
+    grid-gap: 16px;
+  }
+}
+
+@media (width >= 769px) and (width <= 1024px) {
+  .card-list > ul.card-list-items,
+  .card-list > ul {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
 }
