@@ -28,6 +28,18 @@ export default async function decorate(block) {
   // Process each row as a card
   const rows = Array.from(block.children);
 
+  // Validate card count (1-4 cards)
+  if (rows.length === 0) {
+    // eslint-disable-next-line no-console
+    console.warn('Card List: At least 1 card is required');
+    return;
+  }
+  if (rows.length > 4) {
+    // eslint-disable-next-line no-console
+    console.warn('Card List: Maximum 4 cards allowed. Limiting to first 4 cards.');
+    rows.splice(4);
+  }
+
   // Process all cards in parallel to avoid await in loop
   const cardPromises = rows.map(async (row) => {
     const li = document.createElement('li');

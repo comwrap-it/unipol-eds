@@ -10,12 +10,9 @@
     "components": [
       "text",
       "image",
-      "button",
-      "primary-button",
       "title",
       "hero",
       "card-list",
-      "card",
       "columns",
       "fragment"
     ]
@@ -111,7 +108,9 @@
     "id": "card-list",
     "components": [
       "card-item"
-    ]
+    ],
+    "min": 1,
+    "max": 4
   },
   {
     "id": "card",

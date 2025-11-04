@@ -169,16 +169,48 @@ export default async function decorate(block) {
         buttonsContainer.appendChild(buttonWrapper);
       } else {
         // Extract button data from row
+        // Button row structure can be:
+        // - Container with nested fields (text, variant, size, href)
+        // - Simple text rows
         const buttonData = Array.from(buttonRow.children);
-        const label = buttonData[0]?.textContent?.trim() || 'Button';
+        
+        // Try to get button text from first child or row text
+        let label = 'Button';
+        if (buttonData.length > 0) {
+          label = buttonData[0]?.textContent?.trim() || buttonRow.textContent?.trim() || 'Button';
+        } else {
+          label = buttonRow.textContent?.trim() || 'Button';
+        }
 
         // Try to get link from row
         const link = buttonRow.querySelector('a');
-        const href = link?.href || buttonData[1]?.textContent?.trim() || '';
+        let href = '';
+        if (link && link.href) {
+          href = link.href;
+        } else if (buttonData.length > 1) {
+          // Check if second child is a link
+          const secondChildLink = buttonData[1]?.querySelector('a');
+          if (secondChildLink && secondChildLink.href) {
+            href = secondChildLink.href;
+          } else {
+            href = buttonData[1]?.textContent?.trim() || '';
+          }
+        }
 
-        // Get variant and size (defaults if not provided)
-        const variant = buttonData[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-        const size = buttonData[2]?.textContent?.trim().toLowerCase() || BUTTON_SIZES.MEDIUM;
+        // Get variant and size from button data or defaults
+        // Variant might be in second or third child depending on structure
+        let variant = BUTTON_VARIANTS.PRIMARY;
+        let size = BUTTON_SIZES.MEDIUM;
+        
+        // Try to find variant and size in button data
+        for (let i = 0; i < buttonData.length; i++) {
+          const text = buttonData[i]?.textContent?.trim().toLowerCase();
+          if (text && Object.values(BUTTON_VARIANTS).includes(text)) {
+            variant = text;
+          } else if (text && Object.values(BUTTON_SIZES).includes(text)) {
+            size = text;
+          }
+        }
 
         // Create button using primary-button atom
         const button = createButton(label, href, variant, size);

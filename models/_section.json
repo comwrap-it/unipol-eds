@@ -45,12 +45,9 @@
       "components": [
         "text",
         "image",
-        "button",
-        "primary-button",
         "title",
         "hero",
         "card-list",
-        "card",
         "columns",
         "fragment"
       ]
