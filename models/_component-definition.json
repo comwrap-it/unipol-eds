@@ -21,6 +21,9 @@
       "components": [
         {
           "...": "./_section.json#/definitions"
+        },
+        {
+          "...": "./modules/**/_*.json#/definitions"
         }
       ]
     },

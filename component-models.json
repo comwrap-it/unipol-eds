@@ -103,168 +103,36 @@
     ]
   },
   {
-    "id": "button",
+    "id": "insurance-product-carousel-module",
     "fields": [
       {
-        "component": "text",
-        "name": "text",
-        "label": "Button Text",
-        "required": true
-      },
-      {
         "component": "select",
-        "name": "variant",
-        "label": "Variant",
+        "name": "style",
+        "value": "",
+        "label": "Background Color",
+        "description": "Section background color",
+        "valueType": "string",
         "options": [
           {
-            "name": "Primary",
-            "value": "primary"
+            "name": "Default",
+            "value": "default"
           },
           {
-            "name": "Secondary",
-            "value": "secondary"
+            "name": "White",
+            "value": "bg-white"
           },
           {
-            "name": "Accent",
-            "value": "accent"
+            "name": "Dark Gray",
+            "value": "bg-dark-gray"
           }
         ]
       },
       {
-        "component": "select",
-        "name": "size",
-        "label": "Size",
-        "options": [
-          {
-            "name": "Small",
-            "value": "small"
-          },
-          {
-            "name": "Medium",
-            "value": "medium"
-          },
-          {
-            "name": "Large",
-            "value": "large"
-          }
-        ]
-      },
-      {
-        "component": "aem-content",
-        "name": "href",
-        "label": "Link URL",
-        "description": "Optional URL to make this a link button"
-      }
-    ]
-  },
-  {
-    "id": "icon-button",
-    "fields": [
-      {
-        "component": "text",
-        "name": "text",
-        "label": "Button Text",
-        "description": "Optional text to display alongside icon"
-      },
-      {
-        "component": "text",
-        "name": "icon",
-        "label": "Icon",
-        "required": true,
-        "description": "Icon name, SVG string, or image URL"
-      },
-      {
-        "component": "select",
-        "name": "iconPosition",
-        "label": "Icon Position",
-        "options": [
-          {
-            "name": "Leading",
-            "value": "leading"
-          },
-          {
-            "name": "Trailing",
-            "value": "trailing"
-          },
-          {
-            "name": "Only",
-            "value": "only"
-          }
-        ]
-      },
-      {
-        "component": "select",
-        "name": "variant",
-        "label": "Variant",
-        "options": [
-          {
-            "name": "Primary",
-            "value": "primary"
-          },
-          {
-            "name": "Accent",
-            "value": "accent"
-          },
-          {
-            "name": "Secondary",
-            "value": "secondary"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "link-button",
-    "fields": [
-      {
-        "component": "text",
-        "name": "text",
-        "label": "Button Text",
-        "required": true
-      },
-      {
-        "component": "aem-content",
-        "name": "href",
-        "label": "Link URL",
-        "required": true
-      },
-      {
-        "component": "select",
-        "name": "variant",
-        "label": "Variant",
-        "options": [
-          {
-            "name": "Primary",
-            "value": "primary"
-          },
-          {
-            "name": "Accent",
-            "value": "accent"
-          },
-          {
-            "name": "Secondary",
-            "value": "secondary"
-          }
-        ]
-      },
-      {
-        "component": "select",
-        "name": "size",
-        "label": "Size",
-        "options": [
-          {
-            "name": "Small",
-            "value": "small"
-          },
-          {
-            "name": "Medium",
-            "value": "medium"
-          },
-          {
-            "name": "Large",
-            "value": "large"
-          }
-        ]
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "center-aligned",
+        "label": "Align the default blocks in this section to the center.",
+        "description": "Enabling this option will align the default blocks in this section to the center."
       }
     ]
   },
@@ -377,40 +245,6 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
-      }
-    ]
-  },
-  {
-    "id": "insurance-product-carousel-module",
-    "fields": [
-      {
-        "component": "select",
-        "name": "style",
-        "value": "",
-        "label": "Background Color",
-        "description": "Section background color",
-        "valueType": "string",
-        "options": [
-          {
-            "name": "Default",
-            "value": "default"
-          },
-          {
-            "name": "White",
-            "value": "bg-white"
-          },
-          {
-            "name": "Dark Gray",
-            "value": "bg-dark-gray"
-          }
-        ]
-      },
-      {
-        "component": "boolean",
-        "valueType": "boolean",
-        "name": "center-aligned",
-        "label": "Align the default blocks in this section to the center.",
-        "description": "Enabling this option will align the default blocks in this section to the center."
       }
     ]
   },

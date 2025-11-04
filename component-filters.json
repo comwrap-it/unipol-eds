@@ -2,7 +2,8 @@
   {
     "id": "main",
     "components": [
-      "section"
+      "section",
+      "insurance-product-carousel-module"
     ]
   },
   {
@@ -15,6 +16,12 @@
       "card-list",
       "columns",
       "fragment"
+    ]
+  },
+  {
+    "id": "insurance-product-carousel-module",
+    "components": [
+      "text"
     ]
   },
   {
@@ -81,30 +88,6 @@
     ]
   },
   {
-    "id": "icon-button",
-    "title": "Icon Button",
-    "condition": {
-      "===": [
-        {
-          "var": "component"
-        },
-        "icon-button"
-      ]
-    }
-  },
-  {
-    "id": "link-button",
-    "title": "Link Button",
-    "condition": {
-      "===": [
-        {
-          "var": "component"
-        },
-        "link-button"
-      ]
-    }
-  },
-  {
     "id": "card-list",
     "components": [
       "card-item"
@@ -137,12 +120,6 @@
       "image",
       "button",
       "title"
-    ]
-  },
-  {
-    "id": "insurance-product-carousel-module",
-    "components": [
-      "text"
     ]
   }
 ]

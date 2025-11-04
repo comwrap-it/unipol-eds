@@ -2,16 +2,20 @@
   {
     "id": "main",
     "components": [
-      "section"
+      "section",
+      "insurance-product-carousel-module"
     ]
   },
   {
     "...": "./_section.json#/filters"
   },
   {
+    "...": "./modules/**/_*.json#/filters"
+  },
+  {
     "...": "./_rte.json#/filters"
   },
   {
-    "...": "../blocks/**/_*.json#/filters"
+    "...": "../blocks/*/_*.json#/filters"
   }
 ]

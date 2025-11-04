@@ -61,6 +61,28 @@
               }
             }
           }
+        },
+        {
+          "title": "Insurance Product Carousel Module",
+          "id": "insurance-product-carousel-module",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {
+                  "filter": "insurance-product-carousel-module",
+                  "name": "Insurance Product Carousel Module",
+                  "model": "insurance-product-carousel-module",
+                  "style": "insurance-product-carousel-module",
+                  "text-block": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Text Block",
+                    "model": "text-block"
+                  }
+                }
+              }
+            }
+          }
         }
       ]
     },
@@ -196,28 +218,6 @@
                 "template": {
                   "name": "Hero",
                   "model": "hero"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Insurance Product Carousel Module",
-          "id": "insurance-product-carousel-module",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/section/v1/section",
-                "template": {
-                  "filter": "insurance-product-carousel-module",
-                  "name": "Insurance Product Carousel Module",
-                  "model": "insurance-product-carousel-module",
-                  "style": "insurance-product-carousel-module",
-                  "text-block": {
-                    "sling:resourceType": "core/franklin/components/block/v1/block",
-                    "name": "Text Block",
-                    "model": "text-block"
-                  }
                 }
               }
             }
