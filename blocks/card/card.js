@@ -173,7 +173,7 @@ export default async function decorate(block) {
         // - Container with nested fields (text, variant, size, href)
         // - Simple text rows
         const buttonData = Array.from(buttonRow.children);
-        
+
         // Try to get button text from first child or row text
         let label = 'Button';
         if (buttonData.length > 0) {
@@ -201,9 +201,9 @@ export default async function decorate(block) {
         // Variant might be in second or third child depending on structure
         let variant = BUTTON_VARIANTS.PRIMARY;
         let size = BUTTON_SIZES.MEDIUM;
-        
+
         // Try to find variant and size in button data
-        for (let i = 0; i < buttonData.length; i++) {
+        for (let i = 0; i < buttonData.length; i += 1) {
           const text = buttonData[i]?.textContent?.trim().toLowerCase();
           if (text && Object.values(BUTTON_VARIANTS).includes(text)) {
             variant = text;
