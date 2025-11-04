@@ -1,0 +1,70 @@
+{
+  "definitions": [
+    {
+      "title": "Insurance Product Carousel Module",
+      "id": "insurance-product-carousel-module",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/section/v1/section",
+            "template": {
+                  "filter": "insurance-product-carousel-module",
+                  "name": "Insurance Product Carousel Module",
+                  "model": "insurance-product-carousel-module",
+                  "style": "insurance-product-carousel-module",
+                  "text-block": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Text Block",
+                    "model": "text-block"
+                  }
+                }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "insurance-product-carousel-module",
+      "fields": [
+        {
+          "component": "select",
+          "name": "style",
+          "value": "",
+          "label": "Background Color",
+          "description": "Section background color",
+          "valueType": "string",
+          "options": [
+            {
+              "name": "Default",
+              "value": "default"
+            },
+            {
+              "name": "White",
+              "value": "bg-white"
+            },
+            {
+              "name": "Dark Gray",
+              "value": "bg-dark-gray"
+            }
+          ]
+        },
+        {
+          "component": "boolean",
+          "valueType": "boolean",
+          "name": "center-aligned",
+          "label": "Align the default blocks in this section to the center.",
+          "description": "Enabling this option will align the default blocks in this section to the center."
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "insurance-product-carousel-module",
+      "components": [
+        "text"
+      ]
+    }
+  ]
+}

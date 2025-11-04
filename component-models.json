@@ -292,62 +292,9 @@
         "valueType": "string"
       },
       {
-        "component": "container",
-        "name": "button",
-        "label": "Button",
-        "multi": false,
-        "fields": [
-          {
-            "component": "text",
-            "name": "text",
-            "label": "Button Text",
-            "required": true
-          },
-          {
-            "component": "select",
-            "name": "variant",
-            "label": "Variant",
-            "options": [
-              {
-                "name": "Primary",
-                "value": "primary"
-              },
-              {
-                "name": "Secondary",
-                "value": "secondary"
-              },
-              {
-                "name": "Accent",
-                "value": "accent"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "size",
-            "label": "Size",
-            "options": [
-              {
-                "name": "Small",
-                "value": "small"
-              },
-              {
-                "name": "Medium",
-                "value": "medium"
-              },
-              {
-                "name": "Large",
-                "value": "large"
-              }
-            ]
-          },
-          {
-            "component": "aem-content",
-            "name": "href",
-            "label": "Link URL",
-            "description": "Optional URL to make this a link button"
-          }
-        ]
+        "component": "text",
+        "name": "buttonText",
+        "label": "Button Text"
       }
     ]
   },
@@ -372,23 +319,9 @@
         "label": "Card Subtitle"
       },
       {
-        "component": "container",
-        "name": "buttons",
-        "label": "Call-to-Actions",
-        "multi": false,
-        "fields": [
-          {
-            "component": "text",
-            "name": "label",
-            "label": "Button Label",
-            "required": true
-          },
-          {
-            "component": "aem-content",
-            "name": "link",
-            "label": "Button Link"
-          }
-        ]
+        "component": "text",
+        "name": "buttonLabel",
+        "label": "Button Label"
       }
     ]
   },
@@ -448,42 +381,64 @@
     ]
   },
   {
-    "id": "card-molecule",
+    "id": "insurance-product-carousel-module",
     "fields": [
       {
-        "component": "reference",
-        "name": "image",
-        "label": "Card Image",
-        "required": true
+        "component": "select",
+        "name": "style",
+        "value": "",
+        "label": "Background Color",
+        "description": "Section background color",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "White",
+            "value": "bg-white"
+          },
+          {
+            "name": "Dark Gray",
+            "value": "bg-dark-gray"
+          }
+        ]
       },
       {
-        "component": "text",
-        "name": "title",
-        "label": "Card Title",
-        "required": true
-      },
-      {
-        "component": "text",
-        "name": "subtitle",
-        "label": "Card Subtitle"
-      },
-      {
-        "component": "reference",
-        "name": "button",
-        "label": "Card Button",
-        "required": true
+        "component": "boolean",
+        "valueType": "boolean",
+        "name": "center-aligned",
+        "label": "Align the default blocks in this section to the center.",
+        "description": "Enabling this option will align the default blocks in this section to the center."
       }
     ]
   },
   {
-    "id": "cards",
+    "id": "text-block",
     "fields": [
       {
-        "component": "number",
-        "name": "maxCards",
-        "label": "Maximum Cards",
-        "description": "Maximum number of cards (1-4)",
-        "defaultValue": 4
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Text",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "buttonText",
+        "label": "Button Text"
+      },
+      {
+        "component": "aem-content",
+        "name": "href",
+        "label": "Link URL",
+        "description": "Optional URL to make this a link button"
       }
     ]
   }

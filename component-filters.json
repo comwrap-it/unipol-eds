@@ -140,27 +140,9 @@
     ]
   },
   {
-    "id": "card-molecule",
-    "title": "Card (Molecules)",
-    "condition": {
-      "===": [
-        {
-          "var": "component"
-        },
-        "card-molecule"
-      ]
-    }
-  },
-  {
-    "id": "cards",
-    "title": "Cards",
-    "condition": {
-      "===": [
-        {
-          "var": "component"
-        },
-        "cards"
-      ]
-    }
+    "id": "insurance-product-carousel-module",
+    "components": [
+      "text"
+    ]
   }
 ]
