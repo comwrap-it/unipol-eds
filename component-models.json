@@ -158,11 +158,6 @@
         "name": "text",
         "label": "Text",
         "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "buttonText",
-        "label": "Button Text"
       }
     ]
   },
@@ -262,17 +257,6 @@
         "name": "text",
         "label": "Text",
         "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "buttonText",
-        "label": "Button Text"
-      },
-      {
-        "component": "aem-content",
-        "name": "href",
-        "label": "Link URL",
-        "description": "Optional URL to make this a link button"
       }
     ]
   }
