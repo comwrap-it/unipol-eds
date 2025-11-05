@@ -111,15 +111,86 @@ export default function decorateButton(block) {
     rows = Array.from(wrapper.children);
   }
 
+  // Check if block has instrumentation (Universal Editor)
+  const hasInstrumentation = block.hasAttribute('data-aue-resource')
+    || block.querySelector('[data-aue-resource]')
+    || block.querySelector('[data-richtext-prop]');
+
   // Extract button properties
   const text = rows[0]?.textContent?.trim() || 'Button';
   const variant = rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
   const size = rows[2]?.textContent?.trim().toLowerCase() || BUTTON_SIZES.MEDIUM;
   const href = rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || '';
 
-  // Create and append button
-  const button = createButton(text, href, variant, size);
-  block.textContent = '';
-  block.appendChild(button);
+  if (hasInstrumentation) {
+    // Preserve structure for Universal Editor
+    // Find or create button element preserving instrumentation
+    let buttonElement = block.querySelector('a, button');
+    
+    if (!buttonElement) {
+      // Create button/link element preserving instrumentation from first row
+      const instrumentation = {};
+      if (rows[0]) {
+        [...rows[0].attributes].forEach((attr) => {
+          if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-')) {
+            instrumentation[attr.name] = attr.value;
+          }
+        });
+      }
+
+      if (href && href !== '') {
+        buttonElement = document.createElement('a');
+        buttonElement.href = href;
+        buttonElement.setAttribute('role', 'button');
+      } else {
+        buttonElement = document.createElement('button');
+      }
+
+      buttonElement.textContent = text;
+
+      // Restore instrumentation to button element
+      Object.entries(instrumentation).forEach(([name, value]) => {
+        buttonElement.setAttribute(name, value);
+      });
+
+      // Move instrumentation from first row to button if present
+      if (rows[0]) {
+        // Preserve row structure but add button
+        rows[0].textContent = '';
+        rows[0].appendChild(buttonElement);
+      } else {
+        block.appendChild(buttonElement);
+      }
+    } else {
+      // Update existing button with text and href
+      buttonElement.textContent = text;
+      if (href && href !== '') {
+        if (buttonElement.tagName === 'BUTTON') {
+          // Convert button to link
+          const link = document.createElement('a');
+          link.href = href;
+          link.setAttribute('role', 'button');
+          link.textContent = text;
+          [...buttonElement.attributes].forEach((attr) => {
+            link.setAttribute(attr.name, attr.value);
+          });
+          buttonElement.replaceWith(link);
+          buttonElement = link;
+        } else {
+          buttonElement.href = href;
+        }
+      }
+    }
+
+    // Apply button classes
+    buttonElement.className = ['btn', `btn-${variant}`, `btn-${size}`].join(' ');
+    buttonElement.setAttribute('tabindex', '0');
+  } else {
+    // No instrumentation - create button normally
+    const button = createButton(text, href, variant, size);
+    block.textContent = '';
+    block.appendChild(button);
+  }
+
   block.classList.add('button-block');
 }

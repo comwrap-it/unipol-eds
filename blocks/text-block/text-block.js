@@ -108,21 +108,29 @@ export default async function decorate(block) {
     // Universal Editor will re-decorate the block when values change via editor-support.js
     // Otherwise, create button using primary-button atom
     if (hasInstrumentation) {
-      // Extract button values BEFORE moving children (preserve original structure)
+      // Preserve original button structure for Universal Editor
+      // Following AEM EDS best practices: preserve structure for editing
+      const buttonWrapper = document.createElement('div');
+      buttonWrapper.className = 'text-block-button-wrapper';
+
+      // Move instrumentation from row to wrapper
+      moveInstrumentation(buttonRow, buttonWrapper);
+
+      // Move all children to preserve instrumentation for Universal Editor
+      // These must remain visible and accessible for Universal Editor to work
+      while (buttonRow.firstChild) {
+        buttonWrapper.appendChild(buttonRow.firstChild);
+      }
+
+      // Extract button values from the preserved structure for styling
       // Universal Editor saves select values directly as textContent of the cell
       // Structure: buttonCells[0] = text, [1] = variant, [2] = size, [3] = href
-      const buttonCells = Array.from(buttonRow.children);
+      const buttonCells = Array.from(buttonWrapper.children);
 
       let variant = BUTTON_VARIANTS.PRIMARY;
       let size = BUTTON_SIZES.MEDIUM;
-      let label = 'Button';
-      let href = '';
 
-      // Extract values from original structure
-      if (buttonCells[0]) {
-        label = buttonCells[0].textContent?.trim() || 'Button';
-      }
-
+      // Extract variant and size from preserved structure
       if (buttonCells[1]) {
         const variantText = buttonCells[1].textContent?.trim().toLowerCase() || '';
         if (Object.values(BUTTON_VARIANTS).includes(variantText)) {
@@ -137,40 +145,64 @@ export default async function decorate(block) {
         }
       }
 
-      if (buttonCells[3]) {
-        const link = buttonCells[3].querySelector('a');
-        if (link && link.href) {
-          href = link.href;
+      // Apply button classes directly to the structure for styling
+      // Find existing button/link element in the preserved structure
+      let buttonElement = buttonCells[0]?.querySelector('a, button');
+      if (!buttonElement && buttonCells[0]) {
+        // If first cell has a link, use it
+        buttonElement = buttonCells[0].querySelector('a');
+      }
+      if (!buttonElement && buttonCells[3]) {
+        // Check href cell for link
+        buttonElement = buttonCells[3].querySelector('a');
+      }
+      
+      // If no existing button/link, convert first cell to button/link preserving instrumentation
+      if (!buttonElement && buttonCells[0]) {
+        const href = buttonCells[3]?.querySelector('a')?.href || buttonCells[3]?.textContent?.trim() || '';
+        const label = buttonCells[0].textContent?.trim() || 'Button';
+        
+        // Preserve instrumentation from first cell before modifying
+        const instrumentation = {};
+        [...buttonCells[0].attributes].forEach((attr) => {
+          if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-')) {
+            instrumentation[attr.name] = attr.value;
+          }
+        });
+        
+        // Create button/link element
+        if (href && href !== '') {
+          buttonElement = document.createElement('a');
+          buttonElement.href = href;
+          buttonElement.setAttribute('role', 'button');
         } else {
-          href = buttonCells[3].textContent?.trim() || '';
+          buttonElement = document.createElement('button');
         }
+        
+        buttonElement.textContent = label;
+        
+        // Restore instrumentation to button element
+        Object.entries(instrumentation).forEach(([name, value]) => {
+          buttonElement.setAttribute(name, value);
+        });
+        
+        // Replace first cell content with button element
+        buttonCells[0].textContent = '';
+        buttonCells[0].appendChild(buttonElement);
       }
 
-      // Create styled button that reflects the current values
-      const button = createButton(label, href, variant, size);
+      // Apply button classes to the element if found
+      if (buttonElement) {
+        buttonElement.className = ['btn', `btn-${variant}`, `btn-${size}`].join(' ');
+        buttonElement.setAttribute('tabindex', '0');
+      }
+
+      // Wrap in container for styling
       const buttonContainer = document.createElement('div');
       buttonContainer.className = 'text-block-button';
-      buttonContainer.appendChild(button);
+      buttonContainer.appendChild(buttonWrapper);
 
-      // Preserve original button structure for Universal Editor
-      // Following AEM EDS best practices: preserve structure for editing
-      const buttonWrapper = document.createElement('div');
-      buttonWrapper.className = 'text-block-button-wrapper';
-
-      // Move instrumentation from row to wrapper
-      moveInstrumentation(buttonRow, buttonWrapper);
-
-      // Clone all children to preserve instrumentation for Universal Editor
-      // These must remain visible and accessible for Universal Editor to work
-      while (buttonRow.firstChild) {
-        buttonWrapper.appendChild(buttonRow.firstChild);
-      }
-
-      // Add styled button after original structure (doesn't interfere with Universal Editor)
-      // The original structure is preserved first, so Universal Editor can find it
-      buttonWrapper.appendChild(buttonContainer);
-
-      textBlock.appendChild(buttonWrapper);
+      textBlock.appendChild(buttonContainer);
     } else {
       // Extract button data from row structure
       // Expected structure: Row 2 contains buttonText, buttonVariant, buttonSize, buttonHref
@@ -224,24 +256,30 @@ export default async function decorate(block) {
     }
   }
 
-  // Preserve block instrumentation before replacing content
-  if (block.hasAttribute('data-aue-resource')) {
-    textBlock.setAttribute('data-aue-resource', block.getAttribute('data-aue-resource'));
-    textBlock.setAttribute('data-aue-behavior', block.getAttribute('data-aue-behavior') || 'component');
-    textBlock.setAttribute('data-aue-type', block.getAttribute('data-aue-type') || 'block');
-    const aueLabel = block.getAttribute('data-aue-label');
-    if (aueLabel) {
-      textBlock.setAttribute('data-aue-label', aueLabel);
+  // Preserve ALL block instrumentation attributes before replacing content
+  // Copy all data-aue-* and other instrumentation attributes
+  [...block.attributes].forEach((attr) => {
+    if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
+      textBlock.setAttribute(attr.name, attr.value);
     }
-  }
+  });
 
   // Preserve blockName if present (needed for loadBlock)
   if (block.dataset.blockName) {
     textBlock.dataset.blockName = block.dataset.blockName;
   }
 
-  // Replace block content with text block
-  // Preserve block class and instrumentation
+  // Preserve block class
   textBlock.classList.add('block');
+  if (block.classList.length > 0) {
+    block.classList.forEach((cls) => {
+      if (cls !== 'block') {
+        textBlock.classList.add(cls);
+      }
+    });
+  }
+
+  // Replace block content with text block
   block.replaceWith(textBlock);
 }
+
