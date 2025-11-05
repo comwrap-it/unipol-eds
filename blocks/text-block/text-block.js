@@ -121,52 +121,60 @@ export default async function decorate(block) {
       }
 
       // Extract button values from structure to apply styles
+      // Universal Editor saves select values directly as textContent of the cell
+      // Structure: buttonCells[0] = text, [1] = variant, [2] = size, [3] = href
       const buttonCells = Array.from(buttonWrapper.children);
+
       let variant = BUTTON_VARIANTS.PRIMARY;
       let size = BUTTON_SIZES.MEDIUM;
       let label = 'Button';
       let href = '';
 
-      // Try to find fields by data-aue-prop attribute first
-      const textCell = buttonWrapper.querySelector('[data-aue-prop="text"]') || buttonCells[0];
-      const variantCell = buttonWrapper.querySelector('[data-aue-prop="variant"]') || buttonCells[1];
-      const sizeCell = buttonWrapper.querySelector('[data-aue-prop="size"]') || buttonCells[2];
-      const hrefCell = buttonWrapper.querySelector('[data-aue-prop="href"]') || buttonCells[3];
-
-      // Extract values
-      if (textCell) {
-        const textPara = textCell.querySelector('p') || textCell;
-        label = textPara.textContent?.trim() || 'Button';
+      // Extract text from first cell (index 0)
+      if (buttonCells[0]) {
+        label = buttonCells[0].textContent?.trim() || 'Button';
       }
 
-      if (variantCell) {
-        const variantPara = variantCell.querySelector('p') || variantCell;
-        const variantText = variantPara.textContent?.trim().toLowerCase();
-        if (variantText && Object.values(BUTTON_VARIANTS).includes(variantText)) {
+      // Extract variant from second cell (index 1) - select field value is saved as textContent
+      if (buttonCells[1]) {
+        const variantText = buttonCells[1].textContent?.trim().toLowerCase() || '';
+        // Universal Editor saves the value (e.g., "accent"), not the display name (e.g., "Accent")
+        // Check if it's a valid variant value
+        if (Object.values(BUTTON_VARIANTS).includes(variantText)) {
           variant = variantText;
         }
       }
 
-      if (sizeCell) {
-        const sizePara = sizeCell.querySelector('p') || sizeCell;
-        const sizeText = sizePara.textContent?.trim().toLowerCase();
-        if (sizeText && Object.values(BUTTON_SIZES).includes(sizeText)) {
+      // Extract size from third cell (index 2) - select field value is saved as textContent
+      if (buttonCells[2]) {
+        const sizeText = buttonCells[2].textContent?.trim().toLowerCase() || '';
+        // Universal Editor saves the value (e.g., "medium"), not the display name (e.g., "Medium")
+        // Check if it's a valid size value
+        if (Object.values(BUTTON_SIZES).includes(sizeText)) {
           size = sizeText;
         }
       }
 
-      if (hrefCell) {
-        const link = hrefCell.querySelector('a');
+      // Extract href from fourth cell (index 3)
+      if (buttonCells[3]) {
+        const link = buttonCells[3].querySelector('a');
         if (link && link.href) {
           href = link.href;
         } else {
-          const hrefPara = hrefCell.querySelector('p') || hrefCell;
-          href = hrefPara.textContent?.trim() || '';
+          href = buttonCells[3].textContent?.trim() || '';
         }
       }
 
       // Create styled button that reflects the current values
       // This will be re-created when Universal Editor updates via editor-support.js
+      // Debug: log extracted values to verify they are correct
+      // eslint-disable-next-line no-console
+      console.log('Button values extracted:', {
+        label,
+        href,
+        variant,
+        size,
+      });
       const button = createButton(label, href, variant, size);
       const buttonContainer = document.createElement('div');
       buttonContainer.className = 'text-block-button';
