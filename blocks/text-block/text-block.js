@@ -67,7 +67,7 @@ export default async function decorate(block) {
       || textRow.hasAttribute('data-richtext-prop')
       || textRow.querySelector('[data-aue-resource]')
       || textRow.querySelector('[data-richtext-prop]');
-    
+
     if (hasInstrumentation || textRow.textContent?.trim()) {
       // Try to preserve existing paragraph
       const existingPara = textRow.querySelector('p');
