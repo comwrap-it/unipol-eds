@@ -55,16 +55,5 @@
       ]
     }
   ],
-  "filters": [
-    {
-      "id": "primary-button",
-      "title": "Primary Button",
-      "condition": {
-        "===": [
-          {"var": "component"},
-          "primary-button"
-        ]
-      }
-    }
-  ]
+  "filters": []
 }

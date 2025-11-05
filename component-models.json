@@ -315,64 +315,59 @@
       },
       {
         "component": "container",
-        "name": "button",
+        "name": "button-container",
         "label": "Button",
         "collapsible": true,
-        "models": [
+        "fields": [
           {
-            "id": "primary-button",
-            "fields": [
+            "component": "text",
+            "name": "text",
+            "label": "Button Text",
+            "required": true
+          },
+          {
+            "component": "select",
+            "name": "variant",
+            "label": "Variant",
+            "options": [
               {
-                "component": "text",
-                "name": "text",
-                "label": "Button Text",
-                "required": true
+                "name": "Primary",
+                "value": "primary"
               },
               {
-                "component": "select",
-                "name": "variant",
-                "label": "Variant",
-                "options": [
-                  {
-                    "name": "Primary",
-                    "value": "primary"
-                  },
-                  {
-                    "name": "Secondary",
-                    "value": "secondary"
-                  },
-                  {
-                    "name": "Accent",
-                    "value": "accent"
-                  }
-                ]
+                "name": "Secondary",
+                "value": "secondary"
               },
               {
-                "component": "select",
-                "name": "size",
-                "label": "Size",
-                "options": [
-                  {
-                    "name": "Small",
-                    "value": "small"
-                  },
-                  {
-                    "name": "Medium",
-                    "value": "medium"
-                  },
-                  {
-                    "name": "Large",
-                    "value": "large"
-                  }
-                ]
-              },
-              {
-                "component": "aem-content",
-                "name": "href",
-                "label": "Link URL",
-                "description": "Optional URL to make this a link button"
+                "name": "Accent",
+                "value": "accent"
               }
             ]
+          },
+          {
+            "component": "select",
+            "name": "size",
+            "label": "Size",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "href",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
           }
         ]
       }

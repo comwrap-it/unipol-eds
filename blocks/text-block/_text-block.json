@@ -34,12 +34,12 @@
         },
         {
           "component": "container",
-          "name": "button",
+          "name": "button-container",
           "label": "Button",
           "collapsible": true,
-          "models": [
+          "fields": [
             {
-              "...": "../primary-button/_primary-button.json#/models"
+              "...": "../primary-button/_primary-button.json#/models/primary-button/fields"
             }
           ]
         }
