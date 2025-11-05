@@ -316,8 +316,7 @@
       {
         "component": "container",
         "name": "button",
-        "label": "Button",
-        "model": "primary-button"
+        "label": "Button"
       }
     ]
   }
