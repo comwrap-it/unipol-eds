@@ -156,12 +156,12 @@ export default async function decorate(block) {
         // Check href cell for link
         buttonElement = buttonCells[3].querySelector('a');
       }
-      
+
       // If no existing button/link, convert first cell to button/link preserving instrumentation
       if (!buttonElement && buttonCells[0]) {
         const href = buttonCells[3]?.querySelector('a')?.href || buttonCells[3]?.textContent?.trim() || '';
         const label = buttonCells[0].textContent?.trim() || 'Button';
-        
+
         // Preserve instrumentation from first cell before modifying
         const instrumentation = {};
         [...buttonCells[0].attributes].forEach((attr) => {
@@ -169,7 +169,7 @@ export default async function decorate(block) {
             instrumentation[attr.name] = attr.value;
           }
         });
-        
+
         // Create button/link element
         if (href && href !== '') {
           buttonElement = document.createElement('a');
@@ -178,14 +178,14 @@ export default async function decorate(block) {
         } else {
           buttonElement = document.createElement('button');
         }
-        
+
         buttonElement.textContent = label;
-        
+
         // Restore instrumentation to button element
         Object.entries(instrumentation).forEach(([name, value]) => {
           buttonElement.setAttribute(name, value);
         });
-        
+
         // Replace first cell content with button element
         buttonCells[0].textContent = '';
         buttonCells[0].appendChild(buttonElement);
@@ -282,4 +282,3 @@ export default async function decorate(block) {
   // Replace block content with text block
   block.replaceWith(textBlock);
 }
-

@@ -126,7 +126,7 @@ export default function decorateButton(block) {
     // Preserve structure for Universal Editor
     // Find or create button element preserving instrumentation
     let buttonElement = block.querySelector('a, button');
-    
+
     if (!buttonElement) {
       // Create button/link element preserving instrumentation from first row
       const instrumentation = {};
