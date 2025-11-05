@@ -59,27 +59,36 @@ export default async function decorate(block) {
     }
   }
 
-  // Text Content - Row 1
+  // Text Content - Row 1 (subtitle field)
   const textRow = rows[1];
-  if (textRow && textRow.textContent?.trim()) {
-    // Try to preserve existing paragraph
-    const existingPara = textRow.querySelector('p');
-    if (existingPara) {
-      existingPara.className = 'text-block-text';
-      moveInstrumentation(textRow, existingPara);
-      textBlock.appendChild(existingPara);
-    } else {
-      // Create new paragraph but preserve instrumentation
-      const text = document.createElement('p');
-      text.className = 'text-block-text';
-      // Clone child nodes to preserve richtext instrumentation
-      while (textRow.firstChild) {
-        text.appendChild(textRow.firstChild);
-      }
-      // Move instrumentation from row to text
-      moveInstrumentation(textRow, text);
-      if (text.textContent?.trim()) {
-        textBlock.appendChild(text);
+  if (textRow) {
+    // Always process row if it has instrumentation, even if empty
+    const hasInstrumentation = textRow.hasAttribute('data-aue-resource')
+      || textRow.hasAttribute('data-richtext-prop')
+      || textRow.querySelector('[data-aue-resource]')
+      || textRow.querySelector('[data-richtext-prop]');
+    
+    if (hasInstrumentation || textRow.textContent?.trim()) {
+      // Try to preserve existing paragraph
+      const existingPara = textRow.querySelector('p');
+      if (existingPara) {
+        existingPara.className = 'text-block-text';
+        moveInstrumentation(textRow, existingPara);
+        textBlock.appendChild(existingPara);
+      } else {
+        // Create new paragraph but preserve instrumentation
+        const text = document.createElement('p');
+        text.className = 'text-block-text';
+        // Clone child nodes to preserve richtext instrumentation
+        while (textRow.firstChild) {
+          text.appendChild(textRow.firstChild);
+        }
+        // Move instrumentation from row to text
+        moveInstrumentation(textRow, text);
+        // Always append if it has instrumentation, even if empty
+        if (hasInstrumentation || text.textContent?.trim()) {
+          textBlock.appendChild(text);
+        }
       }
     }
   }
