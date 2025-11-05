@@ -35,7 +35,13 @@
         {
           "component": "container",
           "name": "button",
-          "label": "Button"
+          "label": "Button",
+          "collapsible": true,
+          "models": [
+            {
+              "...": "../primary-button/_primary-button.json#/models"
+            }
+          ]
         }
       ]
     }
