@@ -131,16 +131,34 @@ export default async function decorate(block) {
       let size = BUTTON_SIZES.MEDIUM;
 
       // Extract variant and size from preserved structure
+      // Universal Editor saves select values as textContent of the cell
+      // We need to extract the text content, handling both direct text and nested elements
       if (buttonCells[1]) {
-        const variantText = buttonCells[1].textContent?.trim().toLowerCase() || '';
-        if (Object.values(BUTTON_VARIANTS).includes(variantText)) {
+        // Get all text from cell (handles both direct textContent and nested elements)
+        let variantText = buttonCells[1].textContent?.trim() || '';
+        // If cell has children, prefer first child's textContent
+        // (Universal Editor might wrap in elements)
+        if (!variantText && buttonCells[1].firstChild) {
+          variantText = buttonCells[1].firstChild.textContent?.trim() || '';
+        }
+        variantText = variantText.toLowerCase();
+        // Validate that the extracted value is a valid variant
+        if (variantText && Object.values(BUTTON_VARIANTS).includes(variantText)) {
           variant = variantText;
         }
       }
 
       if (buttonCells[2]) {
-        const sizeText = buttonCells[2].textContent?.trim().toLowerCase() || '';
-        if (Object.values(BUTTON_SIZES).includes(sizeText)) {
+        // Get all text from cell (handles both direct textContent and nested elements)
+        let sizeText = buttonCells[2].textContent?.trim() || '';
+        // If cell has children, prefer first child's textContent
+        // (Universal Editor might wrap in elements)
+        if (!sizeText && buttonCells[2].firstChild) {
+          sizeText = buttonCells[2].firstChild.textContent?.trim() || '';
+        }
+        sizeText = sizeText.toLowerCase();
+        // Validate that the extracted value is a valid size
+        if (sizeText && Object.values(BUTTON_SIZES).includes(sizeText)) {
           size = sizeText;
         }
       }
@@ -176,18 +194,11 @@ export default async function decorate(block) {
           }
         });
 
-        // Create button/link element
-        if (href && href !== '') {
-          buttonElement = document.createElement('a');
-          buttonElement.href = href;
-          buttonElement.setAttribute('role', 'button');
-        } else {
-          buttonElement = document.createElement('button');
-        }
+        // Create button using createButton() to get all functionality
+        // (event listeners, accessibility)
+        buttonElement = createButton(label, href, variant, size);
 
-        buttonElement.textContent = label;
-
-        // Restore instrumentation to button element
+        // Restore instrumentation to button element (preserve Universal Editor editability)
         Object.entries(instrumentation).forEach(([name, value]) => {
           buttonElement.setAttribute(name, value);
         });
@@ -196,46 +207,29 @@ export default async function decorate(block) {
         buttonCells[0].textContent = '';
         buttonCells[0].appendChild(buttonElement);
       } else if (buttonElement) {
-        // Update existing button element with current values
-        // Update text content
-        buttonElement.textContent = label;
-
-        // Update href if it's a link
-        if (href && href !== '') {
-          if (buttonElement.tagName === 'BUTTON') {
-            // Convert button to link preserving instrumentation
-            const link = document.createElement('a');
-            link.href = href;
-            link.setAttribute('role', 'button');
-            link.textContent = label;
-            // Preserve all attributes (including instrumentation)
-            [...buttonElement.attributes].forEach((attr) => {
-              link.setAttribute(attr.name, attr.value);
-            });
-            buttonElement.replaceWith(link);
-            buttonElement = link;
-          } else {
-            buttonElement.href = href;
+        // Update existing button element - always recreate using createButton() to ensure
+        // all functionality (event listeners, accessibility) is preserved
+        // Preserve instrumentation before recreating
+        const instrumentation = {};
+        [...buttonElement.attributes].forEach((attr) => {
+          if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-')) {
+            instrumentation[attr.name] = attr.value;
           }
-        } else if (buttonElement.tagName === 'A') {
-          // Convert link to button if href is empty
-          const button = document.createElement('button');
-          button.textContent = label;
-          // Preserve all attributes (including instrumentation)
-          [...buttonElement.attributes].forEach((attr) => {
-            if (attr.name !== 'href' && attr.name !== 'role') {
-              button.setAttribute(attr.name, attr.value);
-            }
-          });
-          buttonElement.replaceWith(button);
-          buttonElement = button;
-        }
-      }
+        });
 
-      // Always apply button classes to the element (updates variant and size)
-      if (buttonElement) {
-        buttonElement.className = ['btn', `btn-${variant}`, `btn-${size}`].join(' ');
-        buttonElement.setAttribute('tabindex', '0');
+        // Recreate button using createButton() with current values (variant, size, href, label)
+        // This ensures all event listeners and accessibility features are present
+        const newButtonElement = createButton(label, href, variant, size);
+
+        // Restore instrumentation to new button element (preserve Universal Editor editability)
+        Object.entries(instrumentation).forEach(([name, value]) => {
+          newButtonElement.setAttribute(name, value);
+        });
+
+        // Replace old element with new one
+        // (new element has all functionality + correct variant/size)
+        buttonElement.replaceWith(newButtonElement);
+        buttonElement = newButtonElement;
       }
 
       // Wrap in container for styling
