@@ -157,11 +157,17 @@ export default async function decorate(block) {
         buttonElement = buttonCells[3].querySelector('a');
       }
 
+      // Extract label and href from preserved structure
+      // Label can be in buttonCells[0] textContent or in an existing button/link element
+      let label = 'Button';
+      if (buttonCells[0]) {
+        const existingButton = buttonCells[0].querySelector('a, button');
+        label = existingButton?.textContent?.trim() || buttonCells[0].textContent?.trim() || 'Button';
+      }
+      const href = buttonCells[3]?.querySelector('a')?.href || buttonCells[3]?.textContent?.trim() || '';
+
       // If no existing button/link, convert first cell to button/link preserving instrumentation
       if (!buttonElement && buttonCells[0]) {
-        const href = buttonCells[3]?.querySelector('a')?.href || buttonCells[3]?.textContent?.trim() || '';
-        const label = buttonCells[0].textContent?.trim() || 'Button';
-
         // Preserve instrumentation from first cell before modifying
         const instrumentation = {};
         [...buttonCells[0].attributes].forEach((attr) => {
@@ -189,9 +195,44 @@ export default async function decorate(block) {
         // Replace first cell content with button element
         buttonCells[0].textContent = '';
         buttonCells[0].appendChild(buttonElement);
+      } else if (buttonElement) {
+        // Update existing button element with current values
+        // Update text content
+        buttonElement.textContent = label;
+
+        // Update href if it's a link
+        if (href && href !== '') {
+          if (buttonElement.tagName === 'BUTTON') {
+            // Convert button to link preserving instrumentation
+            const link = document.createElement('a');
+            link.href = href;
+            link.setAttribute('role', 'button');
+            link.textContent = label;
+            // Preserve all attributes (including instrumentation)
+            [...buttonElement.attributes].forEach((attr) => {
+              link.setAttribute(attr.name, attr.value);
+            });
+            buttonElement.replaceWith(link);
+            buttonElement = link;
+          } else {
+            buttonElement.href = href;
+          }
+        } else if (buttonElement.tagName === 'A') {
+          // Convert link to button if href is empty
+          const button = document.createElement('button');
+          button.textContent = label;
+          // Preserve all attributes (including instrumentation)
+          [...buttonElement.attributes].forEach((attr) => {
+            if (attr.name !== 'href' && attr.name !== 'role') {
+              button.setAttribute(attr.name, attr.value);
+            }
+          });
+          buttonElement.replaceWith(button);
+          buttonElement = button;
+        }
       }
 
-      // Apply button classes to the element if found
+      // Always apply button classes to the element (updates variant and size)
       if (buttonElement) {
         buttonElement.className = ['btn', `btn-${variant}`, `btn-${size}`].join(' ');
         buttonElement.setAttribute('tabindex', '0');
