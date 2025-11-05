@@ -256,6 +256,7 @@
         "component": "select",
         "name": "variant",
         "label": "Variant",
+        "value": "primary",
         "options": [
           {
             "name": "Primary",
@@ -275,6 +276,7 @@
         "component": "select",
         "name": "size",
         "label": "Size",
+        "value": "medium",
         "options": [
           {
             "name": "Small",
@@ -309,8 +311,8 @@
       },
       {
         "component": "richtext",
-        "name": "text",
-        "label": "Text",
+        "name": "subtitle",
+        "label": "Subtitle",
         "valueType": "string"
       },
       {
@@ -329,6 +331,7 @@
             "component": "select",
             "name": "variant",
             "label": "Variant",
+            "value": "primary",
             "options": [
               {
                 "name": "Primary",
@@ -348,6 +351,7 @@
             "component": "select",
             "name": "size",
             "label": "Size",
+            "value": "medium",
             "options": [
               {
                 "name": "Small",

@@ -28,8 +28,8 @@
         },
         {
           "component": "richtext",
-          "name": "text",
-          "label": "Text",
+          "name": "subtitle",
+          "label": "Subtitle",
           "valueType": "string"
         },
         {
