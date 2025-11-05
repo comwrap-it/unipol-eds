@@ -1,10 +1,8 @@
 /**
  * Primary Button - Utility Component
  *
- * This module exports reusable functions for creating and decorating buttons.
- * It can be imported by other components (Card, Accordion, Hero, etc.)
- *
- * Export constants and functions that can be reused across components.
+ * Reusable functions for creating and decorating buttons.
+ * Can be imported by other components (Text Block, Card, Hero, etc.)
  */
 
 // Button constants for shared use
@@ -22,16 +20,11 @@ export const BUTTON_SIZES = {
 
 /**
  * Create a button element with styling
- *
  * @param {string} label - Button text/label
  * @param {string} href - Button URL (optional)
  * @param {string} variant - Button variant (primary, secondary, accent)
  * @param {string} size - Button size (small, medium, large)
  * @returns {HTMLElement} The button or link element
- *
- * @example
- * const btn = createButton('Click me', 'https://example.com', 'primary', 'medium');
- * container.appendChild(btn);
  */
 export function createButton(
   label,
@@ -40,16 +33,28 @@ export function createButton(
   size = BUTTON_SIZES.MEDIUM,
 ) {
   // Decide if it's a link or button
-  const element = href && href !== ''
+  const element = href && href.trim() !== ''
     ? document.createElement('a')
     : document.createElement('button');
 
   // Set common properties
-  element.textContent = label;
-  element.className = ['btn', `btn-${variant}`, `btn-${size}`].join(' ');
+  element.textContent = label || 'Button';
+  const classes = ['btn', `btn-${variant}`, `btn-${size}`];
+  element.className = classes.join(' ');
+
+  // Debug log: button creation
+  // eslint-disable-next-line no-console
+  console.log('[Button] Created button:', {
+    label,
+    href,
+    variant,
+    size,
+    classes,
+    element: element.tagName,
+  });
 
   // Set href for links
-  if (href && href !== '') {
+  if (href && href.trim() !== '') {
     element.href = href;
     element.setAttribute('role', 'button');
   }
@@ -57,7 +62,7 @@ export function createButton(
   // Add accessibility attributes
   element.setAttribute('tabindex', '0');
 
-  // Add keyboard support for buttons
+  // Add keyboard support
   element.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
@@ -78,27 +83,96 @@ export function createButton(
 }
 
 /**
- * Process button data from rows and create button element
- * Used when button is rendered from Universal Editor data structure
- *
- * @param {Array} rows - Array of rows from block children
- * @returns {HTMLElement} The button element
+ * Extract button data from cell elements
+ * @param {HTMLElement[]} cells - Array of cell elements
+ * @returns {Object} Button configuration object
  */
-export function createButtonFromRows(rows) {
-  if (!rows || rows.length === 0) return null;
+export function extractButtonData(cells) {
+  if (!cells || cells.length === 0) {
+    return {
+      text: 'Button',
+      variant: BUTTON_VARIANTS.PRIMARY,
+      size: BUTTON_SIZES.MEDIUM,
+      href: '',
+    };
+  }
 
-  const text = rows[0]?.textContent?.trim() || 'Button';
-  const variant = rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-  const size = rows[2]?.textContent?.trim().toLowerCase() || BUTTON_SIZES.MEDIUM;
-  const href = rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || '';
+  // Cell structure: [0] = text, [1] = variant, [2] = size, [3] = href
+  // Extract text handling both direct textContent and nested elements
+  let text = cells[0]?.textContent?.trim() || '';
+  if (!text && cells[0]) {
+    const existingButton = cells[0].querySelector('a, button');
+    text = existingButton?.textContent?.trim() || cells[0].firstChild?.textContent?.trim() || '';
+  }
 
-  return createButton(text, href, variant, size);
+  let variantText = cells[1]?.textContent?.trim() || '';
+  if (!variantText && cells[1]?.firstChild) {
+    variantText = cells[1].firstChild.textContent?.trim() || '';
+  }
+
+  let sizeText = cells[2]?.textContent?.trim() || '';
+  if (!sizeText && cells[2]?.firstChild) {
+    sizeText = cells[2].firstChild.textContent?.trim() || '';
+  }
+
+  const buttonData = {
+    text: text || 'Button',
+    variant: variantText.toLowerCase() || BUTTON_VARIANTS.PRIMARY,
+    size: sizeText.toLowerCase() || BUTTON_SIZES.MEDIUM,
+    href: '',
+  };
+
+  // Debug log: extracted button data
+  // eslint-disable-next-line no-console
+  console.log('[Button] Extracted data from cells:', {
+    raw: {
+      text: cells[0]?.textContent?.trim(),
+      variant: cells[1]?.textContent?.trim(),
+      size: cells[2]?.textContent?.trim(),
+      href: cells[3]?.textContent?.trim(),
+    },
+    processed: buttonData,
+  });
+
+  // Extract href from cell (could be text or link)
+  if (cells[3]) {
+    const link = cells[3].querySelector('a');
+    buttonData.href = link?.href || cells[3].textContent?.trim() || '';
+  }
+
+  return buttonData;
+}
+
+/**
+ * Validate button variant and size values
+ * @param {string} variant - Variant value to validate
+ * @param {string} size - Size value to validate
+ * @returns {Object} Validated variant and size
+ */
+export function validateButtonProps(variant = '', size = '') {
+  const validVariants = Object.values(BUTTON_VARIANTS);
+  const validSizes = Object.values(BUTTON_SIZES);
+
+  const validated = {
+    variant: validVariants.includes(variant) ? variant : BUTTON_VARIANTS.PRIMARY,
+    size: validSizes.includes(size) ? size : BUTTON_SIZES.MEDIUM,
+  };
+
+  // Debug log: validation
+  if (variant !== validated.variant || size !== validated.size) {
+    // eslint-disable-next-line no-console
+    console.log('[Button] Validation changed values:', {
+      input: { variant, size },
+      validated,
+    });
+  }
+
+  return validated;
 }
 
 /**
  * Decorator function for standalone button component
  * Used when button is rendered as a standalone block
- *
  * @param {HTMLElement} block - The button block element
  */
 export default function decorateButton(block) {
@@ -106,91 +180,22 @@ export default function decorateButton(block) {
 
   // Get rows from block
   let rows = Array.from(block.children);
+
+  // Handle wrapper structure
   const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) {
     rows = Array.from(wrapper.children);
   }
 
-  // Check if block has instrumentation (Universal Editor)
-  const hasInstrumentation = block.hasAttribute('data-aue-resource')
-    || block.querySelector('[data-aue-resource]')
-    || block.querySelector('[data-richtext-prop]');
-
   // Extract button properties
-  const text = rows[0]?.textContent?.trim() || 'Button';
-  const variant = rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-  const size = rows[2]?.textContent?.trim().toLowerCase() || BUTTON_SIZES.MEDIUM;
-  const href = rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || '';
+  const buttonData = extractButtonData(rows);
+  const { variant, size } = validateButtonProps(buttonData.variant, buttonData.size);
 
-  if (hasInstrumentation) {
-    // Preserve structure for Universal Editor
-    // Find or create button element preserving instrumentation
-    let buttonElement = block.querySelector('a, button');
+  // Create button element
+  const button = createButton(buttonData.text, buttonData.href, variant, size);
 
-    if (!buttonElement) {
-      // Create button/link element preserving instrumentation from first row
-      const instrumentation = {};
-      if (rows[0]) {
-        [...rows[0].attributes].forEach((attr) => {
-          if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-')) {
-            instrumentation[attr.name] = attr.value;
-          }
-        });
-      }
-
-      if (href && href !== '') {
-        buttonElement = document.createElement('a');
-        buttonElement.href = href;
-        buttonElement.setAttribute('role', 'button');
-      } else {
-        buttonElement = document.createElement('button');
-      }
-
-      buttonElement.textContent = text;
-
-      // Restore instrumentation to button element
-      Object.entries(instrumentation).forEach(([name, value]) => {
-        buttonElement.setAttribute(name, value);
-      });
-
-      // Move instrumentation from first row to button if present
-      if (rows[0]) {
-        // Preserve row structure but add button
-        rows[0].textContent = '';
-        rows[0].appendChild(buttonElement);
-      } else {
-        block.appendChild(buttonElement);
-      }
-    } else {
-      // Update existing button with text and href
-      buttonElement.textContent = text;
-      if (href && href !== '') {
-        if (buttonElement.tagName === 'BUTTON') {
-          // Convert button to link
-          const link = document.createElement('a');
-          link.href = href;
-          link.setAttribute('role', 'button');
-          link.textContent = text;
-          [...buttonElement.attributes].forEach((attr) => {
-            link.setAttribute(attr.name, attr.value);
-          });
-          buttonElement.replaceWith(link);
-          buttonElement = link;
-        } else {
-          buttonElement.href = href;
-        }
-      }
-    }
-
-    // Apply button classes
-    buttonElement.className = ['btn', `btn-${variant}`, `btn-${size}`].join(' ');
-    buttonElement.setAttribute('tabindex', '0');
-  } else {
-    // No instrumentation - create button normally
-    const button = createButton(text, href, variant, size);
-    block.textContent = '';
-    block.appendChild(button);
-  }
-
+  // Clear block and add button
+  block.textContent = '';
+  block.appendChild(button);
   block.classList.add('button-block');
 }
