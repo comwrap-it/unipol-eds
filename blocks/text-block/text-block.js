@@ -1,55 +1,14 @@
 /**
  * Text Block Component
  *
- * Displays a title, text content, and an optional button.
- * Fully compatible with AEM Universal Editor.
- * Preserves instrumentation for edit support.
+ * A content block component that displays a title, text content, and an optional button.
+ * Uses primary-button as an atom component for call-to-action buttons.
+ *
+ * Preserves Universal Editor instrumentation for AEM EDS.
  */
 
-import { createButton, extractButtonData, validateButtonProps } from '../primary-button/primary-button.js';
-
-/**
- * Get Universal Editor instrumentation attributes from an element
- * @param {HTMLElement} element - Element to extract instrumentation from
- * @returns {Object} Object with instrumentation attributes
- */
-function getInstrumentation(element) {
-  if (!element) return {};
-
-  const instrumentation = {};
-
-  // Check direct attributes
-  [...element.attributes].forEach((attr) => {
-    if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-')) {
-      instrumentation[attr.name] = attr.value;
-    }
-  });
-
-  // Check child elements for instrumentation
-  const instrumentedChild = element.querySelector('[data-aue-resource], [data-richtext-prop]');
-  if (instrumentedChild) {
-    [...instrumentedChild.attributes].forEach((attr) => {
-      if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-')) {
-        instrumentation[attr.name] = attr.value;
-      }
-    });
-  }
-
-  return instrumentation;
-}
-
-/**
- * Check if element has Universal Editor instrumentation
- * @param {HTMLElement} element - Element to check
- * @returns {boolean} True if element has instrumentation
- */
-function hasInstrumentation(element) {
-  if (!element) return false;
-
-  return element.hasAttribute('data-aue-resource')
-    || element.hasAttribute('data-richtext-prop')
-    || !!element.querySelector('[data-aue-resource], [data-richtext-prop]');
-}
+import { createButton, BUTTON_VARIANTS, BUTTON_SIZES } from '../primary-button/primary-button.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /**
  * Decorates a text-block element
@@ -58,183 +17,292 @@ function hasInstrumentation(element) {
 export default async function decorate(block) {
   if (!block) return;
 
-  // Get rows from block - handle both direct children and wrapped structure
+  // Get rows from block
   let rows = Array.from(block.children);
   const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) {
     rows = Array.from(wrapper.children);
   }
 
-  // Ensure minimum 2 rows (title and text)
-  if (rows.length < 2) return;
+  // Extract text block data
+  // Row 0: Title
+  // Row 1: Text
+  // Row 2: Button (optional)
 
   // Create text block container
   const textBlock = document.createElement('div');
   textBlock.className = 'text-block';
 
-  // ===== TITLE (Row 0) =====
+  // Title - Row 0
   const titleRow = rows[0];
-  if (titleRow && titleRow.textContent?.trim()) {
-    const title = document.createElement('h2');
-    title.className = 'text-block-title';
-
-    // Preserve Universal Editor instrumentation
-    const titleInstrumentation = getInstrumentation(titleRow);
-    Object.entries(titleInstrumentation).forEach(([key, value]) => {
-      title.setAttribute(key, value);
-    });
-
-    // Clone content preserving richtext formatting
-    while (titleRow.firstChild) {
-      title.appendChild(titleRow.firstChild.cloneNode(true));
-    }
-
-    if (title.textContent?.trim()) {
-      textBlock.appendChild(title);
+  if (titleRow) {
+    // Try to preserve existing heading element
+    const existingHeading = titleRow.querySelector('h1, h2, h3, h4, h5, h6');
+    if (existingHeading) {
+      // Move existing heading and preserve instrumentation
+      existingHeading.className = 'text-block-title';
+      moveInstrumentation(titleRow, existingHeading);
+      textBlock.appendChild(existingHeading);
+    } else {
+      // Create new heading but preserve instrumentation
+      const title = document.createElement('h2');
+      title.className = 'text-block-title';
+      // Clone child nodes to preserve richtext instrumentation
+      while (titleRow.firstChild) {
+        title.appendChild(titleRow.firstChild);
+      }
+      // Move instrumentation from row to title
+      moveInstrumentation(titleRow, title);
+      if (title.textContent?.trim()) {
+        textBlock.appendChild(title);
+      }
     }
   }
 
-  // ===== TEXT CONTENT (Row 1) =====
+  // Text Content - Row 1 (subtitle field)
   const textRow = rows[1];
   if (textRow) {
-    const hasTextContent = textRow.textContent?.trim();
-    const hasInstrumentationAttr = hasInstrumentation(textRow);
+    // Always process row if it has instrumentation, even if empty
+    const hasInstrumentation = textRow.hasAttribute('data-aue-resource')
+      || textRow.hasAttribute('data-richtext-prop')
+      || textRow.querySelector('[data-aue-resource]')
+      || textRow.querySelector('[data-richtext-prop]');
 
-    if (hasTextContent || hasInstrumentationAttr) {
-      const text = document.createElement('p');
-      text.className = 'text-block-text';
-
-      // Preserve Universal Editor instrumentation
-      const textInstrumentation = getInstrumentation(textRow);
-      Object.entries(textInstrumentation).forEach(([key, value]) => {
-        text.setAttribute(key, value);
-      });
-
-      // Clone content
-      while (textRow.firstChild) {
-        text.appendChild(textRow.firstChild.cloneNode(true));
+    if (hasInstrumentation || textRow.textContent?.trim()) {
+      // Try to preserve existing paragraph
+      const existingPara = textRow.querySelector('p');
+      if (existingPara) {
+        existingPara.className = 'text-block-text';
+        moveInstrumentation(textRow, existingPara);
+        textBlock.appendChild(existingPara);
+      } else {
+        // Create new paragraph but preserve instrumentation
+        const text = document.createElement('p');
+        text.className = 'text-block-text';
+        // Clone child nodes to preserve richtext instrumentation
+        while (textRow.firstChild) {
+          text.appendChild(textRow.firstChild);
+        }
+        // Move instrumentation from row to text
+        moveInstrumentation(textRow, text);
+        // Always append if it has instrumentation, even if empty
+        if (hasInstrumentation || text.textContent?.trim()) {
+          textBlock.appendChild(text);
+        }
       }
-
-      textBlock.appendChild(text);
     }
   }
 
-  // ===== BUTTON (Row 2+) - Optional =====
-  // Button can be in row 2 with multiple cells: text, variant, size, href
-  if (rows.length > 2) {
-    const buttonRow = rows[2];
+  // Button - Row 2 (optional)
+  // Button can be defined in two ways:
+  // 1. As a container with instrumentation (Universal Editor) - Row 2 contains nested fields
+  // 2. As simple text rows - Row 2 contains button text, variant, size, href
+  const buttonRow = rows[2];
+  if (buttonRow && buttonRow.textContent?.trim()) {
+    // Check if button row has instrumentation (Universal Editor)
+    const hasInstrumentation = buttonRow.hasAttribute('data-aue-resource')
+      || buttonRow.querySelector('[data-aue-resource]')
+      || buttonRow.querySelector('[data-richtext-prop]');
 
-    // Check if this is a button container structure
-    const buttonCells = Array.from(buttonRow.children || []);
+    // If button row has instrumentation, preserve structure and apply button styles
+    // Universal Editor will re-decorate the block when values change via editor-support.js
+    // Otherwise, create button using primary-button atom
+    if (hasInstrumentation) {
+      // Preserve original button structure for Universal Editor
+      // Following AEM EDS best practices: preserve structure for editing
+      const buttonWrapper = document.createElement('div');
+      buttonWrapper.className = 'text-block-button-wrapper';
 
-    if (buttonCells.length > 0 && buttonRow.textContent?.trim()) {
-      // Check if button row has instrumentation (Universal Editor)
-      const buttonHasInstrumentation = hasInstrumentation(buttonRow);
+      // Move instrumentation from row to wrapper
+      moveInstrumentation(buttonRow, buttonWrapper);
 
-      if (buttonHasInstrumentation) {
-        // PRESERVE STRUCTURE for Universal Editor
-        // Create wrapper to preserve original cell structure
-        const buttonWrapper = document.createElement('div');
-        buttonWrapper.className = 'text-block-button-wrapper';
+      // Move all children to preserve instrumentation for Universal Editor
+      // These must remain visible and accessible for Universal Editor to work
+      while (buttonRow.firstChild) {
+        buttonWrapper.appendChild(buttonRow.firstChild);
+      }
 
-        // Preserve instrumentation from row to wrapper
-        const buttonInstrumentation = getInstrumentation(buttonRow);
-        Object.entries(buttonInstrumentation).forEach(([key, value]) => {
-          buttonWrapper.setAttribute(key, value);
-        });
+      // Extract button values from the preserved structure for styling
+      // Universal Editor saves select values directly as textContent of the cell
+      // Structure: buttonCells[0] = text, [1] = variant, [2] = size, [3] = href
+      const buttonCells = Array.from(buttonWrapper.children);
 
-        // Move all cells to wrapper (preserve structure for Universal Editor)
-        while (buttonRow.firstChild) {
-          buttonWrapper.appendChild(buttonRow.firstChild);
+      let variant = BUTTON_VARIANTS.PRIMARY;
+      let size = BUTTON_SIZES.MEDIUM;
+
+      // Extract variant and size from preserved structure
+      // Universal Editor saves select values as textContent of the cell
+      // We need to extract the text content, handling both direct text and nested elements
+      if (buttonCells[1]) {
+        // Get all text from cell (handles both direct textContent and nested elements)
+        let variantText = buttonCells[1].textContent?.trim() || '';
+        // If cell has children, prefer first child's textContent
+        // (Universal Editor might wrap in elements)
+        if (!variantText && buttonCells[1].firstChild) {
+          variantText = buttonCells[1].firstChild.textContent?.trim() || '';
         }
+        variantText = variantText.toLowerCase();
+        // Validate that the extracted value is a valid variant
+        if (variantText && Object.values(BUTTON_VARIANTS).includes(variantText)) {
+          variant = variantText;
+        }
+      }
 
-        // Extract button configuration from preserved cells
-        const preservedCells = Array.from(buttonWrapper.children);
-        const buttonData = extractButtonData(preservedCells);
-        const { variant, size } = validateButtonProps(buttonData.variant, buttonData.size);
+      if (buttonCells[2]) {
+        // Get all text from cell (handles both direct textContent and nested elements)
+        let sizeText = buttonCells[2].textContent?.trim() || '';
+        // If cell has children, prefer first child's textContent
+        // (Universal Editor might wrap in elements)
+        if (!sizeText && buttonCells[2].firstChild) {
+          sizeText = buttonCells[2].firstChild.textContent?.trim() || '';
+        }
+        sizeText = sizeText.toLowerCase();
+        // Validate that the extracted value is a valid size
+        if (sizeText && Object.values(BUTTON_SIZES).includes(sizeText)) {
+          size = sizeText;
+        }
+      }
 
-        // Debug log: button property change detected
-        // eslint-disable-next-line no-console
-        console.log('[Text-Block] Button property change detected:', {
-          extracted: buttonData,
-          validated: { variant, size },
-          cells: {
-            text: preservedCells[0]?.textContent?.trim(),
-            variant: preservedCells[1]?.textContent?.trim(),
-            size: preservedCells[2]?.textContent?.trim(),
-            href: preservedCells[3]?.textContent?.trim(),
-          },
-        });
+      // Apply button classes directly to the structure for styling
+      // Find existing button/link element in the preserved structure
+      let buttonElement = buttonCells[0]?.querySelector('a, button');
+      if (!buttonElement && buttonCells[0]) {
+        // If first cell has a link, use it
+        buttonElement = buttonCells[0].querySelector('a');
+      }
+      if (!buttonElement && buttonCells[3]) {
+        // Check href cell for link
+        buttonElement = buttonCells[3].querySelector('a');
+      }
 
-        // Find or create button element
-        let buttonElement = preservedCells[0]?.querySelector('a, button');
+      // Extract label and href from preserved structure
+      // Label can be in buttonCells[0] textContent or in an existing button/link element
+      let label = 'Button';
+      if (buttonCells[0]) {
+        const existingButton = buttonCells[0].querySelector('a, button');
+        label = existingButton?.textContent?.trim() || buttonCells[0].textContent?.trim() || 'Button';
+      }
+      const href = buttonCells[3]?.querySelector('a')?.href || buttonCells[3]?.textContent?.trim() || '';
 
-        if (!buttonElement) {
-          // Create button with extracted data
-          // eslint-disable-next-line no-console
-          console.log('[Text-Block] Creating new button element');
-          buttonElement = createButton(buttonData.text, buttonData.href, variant, size);
-
-          // Preserve instrumentation from first cell to button
-          const firstCellInstrumentation = getInstrumentation(preservedCells[0]);
-          Object.entries(firstCellInstrumentation).forEach(([key, value]) => {
-            buttonElement.setAttribute(key, value);
-          });
-
-          // Insert button into first cell
-          preservedCells[0].textContent = '';
-          preservedCells[0].appendChild(buttonElement);
-        } else {
-          // Update existing button with new values
-          const oldClasses = buttonElement.className;
-          // eslint-disable-next-line no-console
-          console.log('[Text-Block] Updating existing button:', {
-            oldClasses,
-            newVariant: variant,
-            newSize: size,
-          });
-
-          const firstCellInstrumentation = getInstrumentation(preservedCells[0]);
-          buttonElement = createButton(buttonData.text, buttonData.href, variant, size);
-          Object.entries(firstCellInstrumentation).forEach(([key, value]) => {
-            buttonElement.setAttribute(key, value);
-          });
-
-          const oldButton = preservedCells[0].querySelector('a, button');
-          if (oldButton) {
-            oldButton.replaceWith(buttonElement);
-            // eslint-disable-next-line no-console
-            console.log('[Text-Block] Button replaced:', {
-              oldClasses,
-              newClasses: buttonElement.className,
-            });
+      // If no existing button/link, convert first cell to button/link preserving instrumentation
+      if (!buttonElement && buttonCells[0]) {
+        // Preserve instrumentation from first cell before modifying
+        const instrumentation = {};
+        [...buttonCells[0].attributes].forEach((attr) => {
+          if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-')) {
+            instrumentation[attr.name] = attr.value;
           }
-        }
+        });
 
-        // Add wrapper to container
+        // Create button using createButton() to get all functionality
+        // (event listeners, accessibility)
+        buttonElement = createButton(label, href, variant, size);
+
+        // Restore instrumentation to button element (preserve Universal Editor editability)
+        Object.entries(instrumentation).forEach(([name, value]) => {
+          buttonElement.setAttribute(name, value);
+        });
+
+        // Replace first cell content with button element
+        buttonCells[0].textContent = '';
+        buttonCells[0].appendChild(buttonElement);
+      } else if (buttonElement) {
+        // Update existing button element - always recreate using createButton() to ensure
+        // all functionality (event listeners, accessibility) is preserved
+        // Preserve instrumentation before recreating
+        const instrumentation = {};
+        [...buttonElement.attributes].forEach((attr) => {
+          if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-')) {
+            instrumentation[attr.name] = attr.value;
+          }
+        });
+
+        // Recreate button using createButton() with current values (variant, size, href, label)
+        // This ensures all event listeners and accessibility features are present
+        const newButtonElement = createButton(label, href, variant, size);
+
+        // Restore instrumentation to new button element (preserve Universal Editor editability)
+        Object.entries(instrumentation).forEach(([name, value]) => {
+          newButtonElement.setAttribute(name, value);
+        });
+
+        // Replace old element with new one
+        // (new element has all functionality + correct variant/size)
+        buttonElement.replaceWith(newButtonElement);
+        buttonElement = newButtonElement;
+      }
+
+      // Wrap in container for styling
+      const buttonContainer = document.createElement('div');
+      buttonContainer.className = 'text-block-button';
+      buttonContainer.appendChild(buttonWrapper);
+
+      textBlock.appendChild(buttonContainer);
+    } else {
+      // Extract button data from row structure
+      // Expected structure: Row 2 contains buttonText, buttonVariant, buttonSize, buttonHref
+      const buttonData = Array.from(buttonRow.children);
+
+      // Extract button text from first child or row text
+      let label = 'Button';
+      if (buttonData.length > 0) {
+        label = buttonData[0]?.textContent?.trim() || buttonRow.textContent?.trim() || 'Button';
+      } else {
+        label = buttonRow.textContent?.trim() || 'Button';
+      }
+
+      // Extract href from link or button data
+      const link = buttonRow.querySelector('a');
+      let href = '';
+      if (link && link.href) {
+        href = link.href;
+      } else if (buttonData.length > 1) {
+        // Check if second child is a link
+        const secondChildLink = buttonData[1]?.querySelector('a');
+        if (secondChildLink && secondChildLink.href) {
+          href = secondChildLink.href;
+        } else {
+          href = buttonData[1]?.textContent?.trim() || '';
+        }
+      }
+
+      // Extract variant and size from button data or defaults
+      let variant = BUTTON_VARIANTS.PRIMARY;
+      let size = BUTTON_SIZES.MEDIUM;
+
+      // Try to find variant and size in button data
+      for (let i = 0; i < buttonData.length; i += 1) {
+        const text = buttonData[i]?.textContent?.trim().toLowerCase();
+        if (text && Object.values(BUTTON_VARIANTS).includes(text)) {
+          variant = text;
+        } else if (text && Object.values(BUTTON_SIZES).includes(text)) {
+          size = text;
+        }
+      }
+
+      // Create button using primary-button atom
+      const button = createButton(label, href, variant, size);
+      if (button) {
         const buttonContainer = document.createElement('div');
         buttonContainer.className = 'text-block-button';
-        buttonContainer.appendChild(buttonWrapper);
+        buttonContainer.appendChild(button);
         textBlock.appendChild(buttonContainer);
-      } else {
-        // No instrumentation - create button normally
-        const buttonData = extractButtonData(buttonCells);
-        const { variant, size } = validateButtonProps(buttonData.variant, buttonData.size);
-        const button = createButton(buttonData.text, buttonData.href, variant, size);
-
-        const buttonWrapper = document.createElement('div');
-        buttonWrapper.className = 'text-block-button';
-        buttonWrapper.appendChild(button);
-        textBlock.appendChild(buttonWrapper);
       }
     }
   }
 
-  // Preserve block instrumentation before replacing content
-  const blockInstrumentation = getInstrumentation(block);
-  Object.entries(blockInstrumentation).forEach(([key, value]) => {
-    textBlock.setAttribute(key, value);
+  // Preserve ALL block instrumentation attributes before replacing content
+  // Copy all data-aue-* and other instrumentation attributes
+  [...block.attributes].forEach((attr) => {
+    if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
+      textBlock.setAttribute(attr.name, attr.value);
+    }
   });
+
+  // Preserve blockName if present (needed for loadBlock)
+  if (block.dataset.blockName) {
+    textBlock.dataset.blockName = block.dataset.blockName;
+  }
 
   // Preserve block class
   textBlock.classList.add('block');
@@ -246,6 +314,6 @@ export default async function decorate(block) {
     });
   }
 
-  // Replace block content
+  // Replace block content with text block
   block.replaceWith(textBlock);
 }
