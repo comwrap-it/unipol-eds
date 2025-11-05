@@ -108,54 +108,35 @@ export default async function decorate(block) {
     // Universal Editor will re-decorate the block when values change via editor-support.js
     // Otherwise, create button using primary-button atom
     if (hasInstrumentation) {
-      // Preserve original button structure for Universal Editor
-      const buttonWrapper = document.createElement('div');
-      buttonWrapper.className = 'text-block-button-wrapper';
-
-      // Move instrumentation from row to wrapper
-      moveInstrumentation(buttonRow, buttonWrapper);
-
-      // Clone all children to preserve instrumentation
-      while (buttonRow.firstChild) {
-        buttonWrapper.appendChild(buttonRow.firstChild);
-      }
-
-      // Extract button values from structure to apply styles
+      // Extract button values BEFORE moving children (preserve original structure)
       // Universal Editor saves select values directly as textContent of the cell
       // Structure: buttonCells[0] = text, [1] = variant, [2] = size, [3] = href
-      const buttonCells = Array.from(buttonWrapper.children);
+      const buttonCells = Array.from(buttonRow.children);
 
       let variant = BUTTON_VARIANTS.PRIMARY;
       let size = BUTTON_SIZES.MEDIUM;
       let label = 'Button';
       let href = '';
 
-      // Extract text from first cell (index 0)
+      // Extract values from original structure
       if (buttonCells[0]) {
         label = buttonCells[0].textContent?.trim() || 'Button';
       }
 
-      // Extract variant from second cell (index 1) - select field value is saved as textContent
       if (buttonCells[1]) {
         const variantText = buttonCells[1].textContent?.trim().toLowerCase() || '';
-        // Universal Editor saves the value (e.g., "accent"), not the display name (e.g., "Accent")
-        // Check if it's a valid variant value
         if (Object.values(BUTTON_VARIANTS).includes(variantText)) {
           variant = variantText;
         }
       }
 
-      // Extract size from third cell (index 2) - select field value is saved as textContent
       if (buttonCells[2]) {
         const sizeText = buttonCells[2].textContent?.trim().toLowerCase() || '';
-        // Universal Editor saves the value (e.g., "medium"), not the display name (e.g., "Medium")
-        // Check if it's a valid size value
         if (Object.values(BUTTON_SIZES).includes(sizeText)) {
           size = sizeText;
         }
       }
 
-      // Extract href from fourth cell (index 3)
       if (buttonCells[3]) {
         const link = buttonCells[3].querySelector('a');
         if (link && link.href) {
@@ -166,19 +147,27 @@ export default async function decorate(block) {
       }
 
       // Create styled button that reflects the current values
-      // This will be re-created when Universal Editor updates via editor-support.js
-      // Debug: log extracted values to verify they are correct
-      // eslint-disable-next-line no-console
-      console.log('Button values extracted:', {
-        label,
-        href,
-        variant,
-        size,
-      });
       const button = createButton(label, href, variant, size);
       const buttonContainer = document.createElement('div');
       buttonContainer.className = 'text-block-button';
       buttonContainer.appendChild(button);
+
+      // Preserve original button structure for Universal Editor
+      // Following AEM EDS best practices: preserve structure for editing
+      const buttonWrapper = document.createElement('div');
+      buttonWrapper.className = 'text-block-button-wrapper';
+
+      // Move instrumentation from row to wrapper
+      moveInstrumentation(buttonRow, buttonWrapper);
+
+      // Clone all children to preserve instrumentation for Universal Editor
+      // These must remain visible and accessible for Universal Editor to work
+      while (buttonRow.firstChild) {
+        buttonWrapper.appendChild(buttonRow.firstChild);
+      }
+
+      // Add styled button after original structure (doesn't interfere with Universal Editor)
+      // The original structure is preserved first, so Universal Editor can find it
       buttonWrapper.appendChild(buttonContainer);
 
       textBlock.appendChild(buttonWrapper);
