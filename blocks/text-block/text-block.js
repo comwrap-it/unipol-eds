@@ -105,113 +105,73 @@ export default async function decorate(block) {
       || buttonRow.querySelector('[data-richtext-prop]');
 
     // If button row has instrumentation, preserve structure and apply button styles
+    // Universal Editor will re-decorate the block when values change via editor-support.js
     // Otherwise, create button using primary-button atom
     if (hasInstrumentation) {
       // Preserve original button structure for Universal Editor
-      // This allows Universal Editor to edit the container fields
       const buttonWrapper = document.createElement('div');
       buttonWrapper.className = 'text-block-button-wrapper';
 
       // Move instrumentation from row to wrapper
       moveInstrumentation(buttonRow, buttonWrapper);
 
-      // Clone all children to preserve instrumentation for Universal Editor
+      // Clone all children to preserve instrumentation
       while (buttonRow.firstChild) {
         buttonWrapper.appendChild(buttonRow.firstChild);
       }
 
-      // Function to apply button styles to the structure
-      const applyButtonStyles = () => {
-        // Extract values from the preserved structure
-        const buttonCells = Array.from(buttonWrapper.children);
-        let variant = BUTTON_VARIANTS.PRIMARY;
-        let size = BUTTON_SIZES.MEDIUM;
+      // Extract button values from structure to apply styles
+      const buttonCells = Array.from(buttonWrapper.children);
+      let variant = BUTTON_VARIANTS.PRIMARY;
+      let size = BUTTON_SIZES.MEDIUM;
+      let label = 'Button';
+      let href = '';
 
-        // Try to find fields by data-aue-prop attribute first
-        const variantCell = buttonWrapper.querySelector('[data-aue-prop="variant"]') || buttonCells[1];
-        const sizeCell = buttonWrapper.querySelector('[data-aue-prop="size"]') || buttonCells[2];
+      // Try to find fields by data-aue-prop attribute first
+      const textCell = buttonWrapper.querySelector('[data-aue-prop="text"]') || buttonCells[0];
+      const variantCell = buttonWrapper.querySelector('[data-aue-prop="variant"]') || buttonCells[1];
+      const sizeCell = buttonWrapper.querySelector('[data-aue-prop="size"]') || buttonCells[2];
+      const hrefCell = buttonWrapper.querySelector('[data-aue-prop="href"]') || buttonCells[3];
 
-        // Extract variant for styling
-        if (variantCell) {
-          const variantPara = variantCell.querySelector('p') || variantCell;
-          const variantText = variantPara.textContent?.trim().toLowerCase();
-          if (variantText && Object.values(BUTTON_VARIANTS).includes(variantText)) {
-            variant = variantText;
-          }
+      // Extract values
+      if (textCell) {
+        const textPara = textCell.querySelector('p') || textCell;
+        label = textPara.textContent?.trim() || 'Button';
+      }
+
+      if (variantCell) {
+        const variantPara = variantCell.querySelector('p') || variantCell;
+        const variantText = variantPara.textContent?.trim().toLowerCase();
+        if (variantText && Object.values(BUTTON_VARIANTS).includes(variantText)) {
+          variant = variantText;
         }
+      }
 
-        // Extract size for styling
-        if (sizeCell) {
-          const sizePara = sizeCell.querySelector('p') || sizeCell;
-          const sizeText = sizePara.textContent?.trim().toLowerCase();
-          if (sizeText && Object.values(BUTTON_SIZES).includes(sizeText)) {
-            size = sizeText;
-          }
+      if (sizeCell) {
+        const sizePara = sizeCell.querySelector('p') || sizeCell;
+        const sizeText = sizePara.textContent?.trim().toLowerCase();
+        if (sizeText && Object.values(BUTTON_SIZES).includes(sizeText)) {
+          size = sizeText;
         }
+      }
 
-        // Find or create button element in the structure
-        let buttonElement = buttonWrapper.querySelector('a, button');
-        if (!buttonElement) {
-          // Create button element from text cell
-          const textCell = buttonWrapper.querySelector('[data-aue-prop="text"]') || buttonCells[0];
-          const hrefCell = buttonWrapper.querySelector('[data-aue-prop="href"]') || buttonCells[3];
-          let label = 'Button';
-          let href = '';
-
-          if (textCell) {
-            const textPara = textCell.querySelector('p') || textCell;
-            label = textPara.textContent?.trim() || 'Button';
-          }
-
-          if (hrefCell) {
-            const link = hrefCell.querySelector('a');
-            if (link && link.href) {
-              href = link.href;
-            } else {
-              const hrefPara = hrefCell.querySelector('p') || hrefCell;
-              href = hrefPara.textContent?.trim() || '';
-            }
-          }
-
-          // Create button element
-          buttonElement = href && href !== ''
-            ? document.createElement('a')
-            : document.createElement('button');
-          buttonElement.textContent = label;
-          if (href && href !== '') {
-            buttonElement.href = href;
-            buttonElement.setAttribute('role', 'button');
-          }
-          buttonElement.setAttribute('tabindex', '0');
-
-          // Insert button element into the structure
-          if (textCell) {
-            textCell.appendChild(buttonElement);
-          } else {
-            buttonWrapper.appendChild(buttonElement);
-          }
+      if (hrefCell) {
+        const link = hrefCell.querySelector('a');
+        if (link && link.href) {
+          href = link.href;
+        } else {
+          const hrefPara = hrefCell.querySelector('p') || hrefCell;
+          href = hrefPara.textContent?.trim() || '';
         }
+      }
 
-        // Apply button classes to the button element
-        if (buttonElement) {
-          buttonElement.className = ['btn', `btn-${variant}`, `btn-${size}`].join(' ');
-        }
-      };
-
-      // Apply styles initially
-      applyButtonStyles();
-
-      // Observe changes to the wrapper for Universal Editor updates
-      const observer = new MutationObserver(() => {
-        applyButtonStyles();
-      });
-
-      // Observe changes in the wrapper
-      observer.observe(buttonWrapper, {
-        childList: true,
-        subtree: true,
-        characterData: true,
-      });
+      // Create styled button that reflects the current values
+      // This will be re-created when Universal Editor updates via editor-support.js
+      const button = createButton(label, href, variant, size);
+      const buttonContainer = document.createElement('div');
+      buttonContainer.className = 'text-block-button';
+      buttonContainer.appendChild(button);
+      buttonWrapper.appendChild(buttonContainer);
 
       textBlock.appendChild(buttonWrapper);
     } else {
