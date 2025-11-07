@@ -15,14 +15,41 @@ async function applyChanges(event) {
   // redecorate default content and blocks on patches (in the properties rail)
   const { detail } = event;
 
+  // eslint-disable-next-line no-console
+  console.log('🔧 applyChanges called', { detail });
+
   const resource = detail?.request?.target?.resource // update, patch components
     || detail?.request?.target?.container?.resource // update, patch, add to sections
     || detail?.request?.to?.container?.resource; // move in sections
-  if (!resource) return false;
+
+  // eslint-disable-next-line no-console
+  console.log('🔧 Resource:', resource);
+
+  if (!resource) {
+    // eslint-disable-next-line no-console
+    console.log('❌ No resource found');
+    return false;
+  }
   const updates = detail?.response?.updates;
-  if (!updates.length) return false;
+
+  // eslint-disable-next-line no-console
+  console.log('🔧 Updates:', updates);
+
+  if (!updates.length) {
+    // eslint-disable-next-line no-console
+    console.log('❌ No updates');
+    return false;
+  }
   const { content } = updates[0];
-  if (!content) return false;
+
+  // eslint-disable-next-line no-console
+  console.log('🔧 Content:', content ? content.substring(0, 200) + '...' : 'NO CONTENT');
+
+  if (!content) {
+    // eslint-disable-next-line no-console
+    console.log('❌ No content in update');
+    return false;
+  }
 
   // load dompurify
   await loadScript(`${window.hlx.codeBasePath}/scripts/dompurify.min.js`);
@@ -47,10 +74,25 @@ async function applyChanges(event) {
     }
 
     const block = element.parentElement?.closest('.block[data-aue-resource]') || element?.closest('.block[data-aue-resource]');
+
+    // eslint-disable-next-line no-console
+    console.log('🔧 Block found?', !!block, block);
+
     if (block) {
       const blockResource = block.getAttribute('data-aue-resource');
+
+      // eslint-disable-next-line no-console
+      console.log('🔧 Block resource:', blockResource);
+
       const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
+
+      // eslint-disable-next-line no-console
+      console.log('🔧 New block from update?', !!newBlock, newBlock);
+
       if (newBlock) {
+        // eslint-disable-next-line no-console
+        console.log('✅ RE-DECORATING BLOCK!');
+
         newBlock.style.display = 'none';
         block.insertAdjacentElement('afterend', newBlock);
         decorateButtons(newBlock);
