@@ -152,7 +152,7 @@ export default async function decorate(block) {
           variantText = buttonCells[1].firstChild.textContent?.trim() || '';
         }
         variantText = variantText.toLowerCase();
-        
+
         // eslint-disable-next-line no-console
         console.log('🔍 DEBUG Variant:', {
           rawText: buttonCells[1].textContent,
@@ -160,7 +160,7 @@ export default async function decorate(block) {
           isValid: Object.values(BUTTON_VARIANTS).includes(variantText),
           validValues: Object.values(BUTTON_VARIANTS),
         });
-        
+
         // Validate that the extracted value is a valid variant
         if (variantText && Object.values(BUTTON_VARIANTS).includes(variantText)) {
           variant = variantText;
@@ -176,7 +176,7 @@ export default async function decorate(block) {
           sizeText = buttonCells[2].firstChild.textContent?.trim() || '';
         }
         sizeText = sizeText.toLowerCase();
-        
+
         // eslint-disable-next-line no-console
         console.log('🔍 DEBUG Size:', {
           rawText: buttonCells[2].textContent,
@@ -184,13 +184,13 @@ export default async function decorate(block) {
           isValid: Object.values(BUTTON_SIZES).includes(sizeText),
           validValues: Object.values(BUTTON_SIZES),
         });
-        
+
         // Validate that the extracted value is a valid size
         if (sizeText && Object.values(BUTTON_SIZES).includes(sizeText)) {
           size = sizeText;
         }
       }
-      
+
       // eslint-disable-next-line no-console
       console.log('🎯 DEBUG Final Values:', { variant, size });
 
