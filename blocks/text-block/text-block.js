@@ -127,6 +127,16 @@ export default async function decorate(block) {
       // Structure: buttonCells[0] = text, [1] = variant, [2] = size, [3] = href
       const buttonCells = Array.from(buttonWrapper.children);
 
+      // DEBUG: Log della struttura per capire cosa contengono i cells
+      // eslint-disable-next-line no-console
+      console.log('🔍 DEBUG Button Cells:', {
+        cellCount: buttonCells.length,
+        cell0: buttonCells[0]?.outerHTML,
+        cell1: buttonCells[1]?.outerHTML,
+        cell2: buttonCells[2]?.outerHTML,
+        cell3: buttonCells[3]?.outerHTML,
+      });
+
       let variant = BUTTON_VARIANTS.PRIMARY;
       let size = BUTTON_SIZES.MEDIUM;
 
@@ -142,6 +152,15 @@ export default async function decorate(block) {
           variantText = buttonCells[1].firstChild.textContent?.trim() || '';
         }
         variantText = variantText.toLowerCase();
+        
+        // eslint-disable-next-line no-console
+        console.log('🔍 DEBUG Variant:', {
+          rawText: buttonCells[1].textContent,
+          processed: variantText,
+          isValid: Object.values(BUTTON_VARIANTS).includes(variantText),
+          validValues: Object.values(BUTTON_VARIANTS),
+        });
+        
         // Validate that the extracted value is a valid variant
         if (variantText && Object.values(BUTTON_VARIANTS).includes(variantText)) {
           variant = variantText;
@@ -157,11 +176,23 @@ export default async function decorate(block) {
           sizeText = buttonCells[2].firstChild.textContent?.trim() || '';
         }
         sizeText = sizeText.toLowerCase();
+        
+        // eslint-disable-next-line no-console
+        console.log('🔍 DEBUG Size:', {
+          rawText: buttonCells[2].textContent,
+          processed: sizeText,
+          isValid: Object.values(BUTTON_SIZES).includes(sizeText),
+          validValues: Object.values(BUTTON_SIZES),
+        });
+        
         // Validate that the extracted value is a valid size
         if (sizeText && Object.values(BUTTON_SIZES).includes(sizeText)) {
           size = sizeText;
         }
       }
+      
+      // eslint-disable-next-line no-console
+      console.log('🎯 DEBUG Final Values:', { variant, size });
 
       // Apply button classes directly to the structure for styling
       // Find existing button/link element in the preserved structure
