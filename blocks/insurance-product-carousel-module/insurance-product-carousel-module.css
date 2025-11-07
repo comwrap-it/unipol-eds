@@ -1,83 +1,19 @@
-/* Text Block Component */
+/* Insurance Product Carousel Module */
 
-/* Import button utility styles */
-@import url('../primary-button/primary-button.css');
+/* Import text-block styles (child component) */
+@import url('../text-block/text-block.css');
 
-/* Text Block Container */
-.text-block {
-  max-width: 1200px;
+/* Module Container - Simple wrapper for text-block */
+.insurance-product-carousel-module {
+  width: 100%;
+  max-width: 1400px;
   margin: 0 auto;
-  padding: 40px 24px;
-  text-align: center;
 }
 
-/* Text Block Title */
-.text-block-title {
-  font-size: 2rem;
-  font-weight: 600;
-  margin: 0 0 24px;
-  color: var(--text-primary, #1a1a1a);
-  line-height: 1.3;
-}
-
-/* Text Block Text */
-.text-block-text {
-  font-size: 1rem;
-  line-height: 1.6;
-  color: var(--text-secondary, #4a4a4a);
-  margin: 0 0 32px;
-  max-width: 800px;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* Text Block Button Container */
-.text-block-button,
-.text-block-button-wrapper {
-  margin-top: 24px;
-  display: flex;
-  justify-content: center;
-}
-
-.text-block-button .btn {
-  flex-shrink: 0;
-}
-
-/* Responsive Design */
+/* Responsive padding adjustments if needed */
 @media (width <= 768px) {
-  .text-block {
-    padding: 32px 16px;
+  .insurance-product-carousel-module {
+    padding: 0;
   }
-
-  .text-block-title {
-    font-size: 1.5rem;
-    margin-bottom: 16px;
-  }
-
-  .text-block-text {
-    font-size: 0.9375rem;
-    margin-bottom: 24px;
-  }
-
-  .text-block-button,
-  .text-block-button-wrapper {
-    margin-top: 20px;
-  }
-}
-
-@media (width >= 769px) and (width <= 1024px) {
-  .text-block {
-    padding: 36px 20px;
-  }
-
-  .text-block-title {
-    font-size: 1.75rem;
-  }
-}
-
-/* Accessibility */
-.text-block:focus-within {
-  outline: 2px solid var(--color-primary, #007acc);
-  outline-offset: 2px;
 }
 

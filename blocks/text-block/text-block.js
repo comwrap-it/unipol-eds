@@ -184,50 +184,28 @@ export default async function decorate(block) {
       }
       const href = buttonCells[3]?.querySelector('a')?.href || buttonCells[3]?.textContent?.trim() || '';
 
-      // If no existing button/link, convert first cell to button/link preserving instrumentation
+      // If no existing button/link, create button in first cell
       if (!buttonElement && buttonCells[0]) {
-        // Preserve instrumentation from first cell before modifying
-        const instrumentation = {};
-        [...buttonCells[0].attributes].forEach((attr) => {
-          if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-')) {
-            instrumentation[attr.name] = attr.value;
-          }
-        });
-
         // Create button using createButton() to get all functionality
         // (event listeners, accessibility)
+        // Note: instrumentation stays on the cell (buttonCells[0]), not on the button
+        // Universal Editor edits the cell content, the button is just the visual representation
         buttonElement = createButton(label, href, variant, size);
 
-        // Restore instrumentation to button element (preserve Universal Editor editability)
-        Object.entries(instrumentation).forEach(([name, value]) => {
-          buttonElement.setAttribute(name, value);
-        });
-
         // Replace first cell content with button element
+        // Keep the cell's instrumentation intact (don't touch cell attributes)
         buttonCells[0].textContent = '';
         buttonCells[0].appendChild(buttonElement);
       } else if (buttonElement) {
         // Update existing button element - always recreate using createButton() to ensure
         // all functionality (event listeners, accessibility) is preserved
-        // Preserve instrumentation before recreating
-        const instrumentation = {};
-        [...buttonElement.attributes].forEach((attr) => {
-          if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-')) {
-            instrumentation[attr.name] = attr.value;
-          }
-        });
-
         // Recreate button using createButton() with current values (variant, size, href, label)
         // This ensures all event listeners and accessibility features are present
         const newButtonElement = createButton(label, href, variant, size);
 
-        // Restore instrumentation to new button element (preserve Universal Editor editability)
-        Object.entries(instrumentation).forEach(([name, value]) => {
-          newButtonElement.setAttribute(name, value);
-        });
-
         // Replace old element with new one
         // (new element has all functionality + correct variant/size)
+        // Note: instrumentation stays on the parent cell, not on the button itself
         buttonElement.replaceWith(newButtonElement);
         buttonElement = newButtonElement;
       }
