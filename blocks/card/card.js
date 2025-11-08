@@ -29,6 +29,12 @@ export default async function decorate(block) {
     rows = Array.from(wrapper.children);
   }
 
+  // eslint-disable-next-line no-console
+  console.log('🃏 Card Rows:', {
+    totalRows: rows.length,
+    rows: rows.map((r, i) => ({ index: i, html: r.outerHTML.substring(0, 100), text: r.textContent?.trim().substring(0, 50) })),
+  });
+
   // Extract card data
   // Row 0: Image
   // Row 1: Title
@@ -117,6 +123,12 @@ export default async function decorate(block) {
 
   // Card Subtitle - preserve original element and instrumentation
   const subtitleRow = rows[2];
+  // eslint-disable-next-line no-console
+  console.log('📝 Card Subtitle Row:', {
+    exists: !!subtitleRow,
+    hasContent: subtitleRow?.textContent?.trim(),
+    html: subtitleRow?.outerHTML?.substring(0, 150),
+  });
   if (subtitleRow && subtitleRow.textContent?.trim()) {
     // Try to preserve existing paragraph
     const existingPara = subtitleRow.querySelector('p');
@@ -221,6 +233,12 @@ export default async function decorate(block) {
       cardContent.appendChild(buttonsContainer);
     }
   }
+
+  // eslint-disable-next-line no-console
+  console.log('📦 Card Content Children:', {
+    count: cardContent.children.length,
+    children: Array.from(cardContent.children).map((c) => c.className),
+  });
 
   // Append card content
   if (cardContent.children.length > 0) {
