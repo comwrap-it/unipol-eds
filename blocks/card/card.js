@@ -32,10 +32,13 @@ export default async function decorate(block) {
   // eslint-disable-next-line no-console
   console.log('🃏 Card Rows:', {
     totalRows: rows.length,
+    blockHTML: block.outerHTML.substring(0, 500),
     rows: rows.map((r, i) => ({
       index: i,
-      html: r.outerHTML.substring(0, 100),
-      text: r.textContent?.trim().substring(0, 50),
+      className: r.className,
+      html: r.outerHTML.substring(0, 200),
+      text: r.textContent?.trim().substring(0, 100),
+      hasAueProp: r.querySelector('[data-aue-prop]')?.getAttribute('data-aue-prop'),
     })),
   });
 
@@ -133,14 +136,17 @@ export default async function decorate(block) {
     hasContent: subtitleRow?.textContent?.trim(),
     html: subtitleRow?.outerHTML?.substring(0, 150),
   });
-  if (subtitleRow && subtitleRow.textContent?.trim()) {
+
+  // ALWAYS create subtitle element (even if row doesn't exist or is empty)
+  // This ensures subtitle is always visible in the DOM for editing
+  if (subtitleRow) {
     // Try to preserve existing paragraph
     const existingPara = subtitleRow.querySelector('p');
     if (existingPara) {
       existingPara.className = 'card-subtitle';
       moveInstrumentation(subtitleRow, existingPara);
       cardContent.appendChild(existingPara);
-    } else {
+    } else if (subtitleRow.textContent?.trim()) {
       // Create new paragraph but preserve instrumentation
       const subtitle = document.createElement('p');
       subtitle.className = 'card-subtitle';
@@ -150,9 +156,7 @@ export default async function decorate(block) {
       }
       // Move instrumentation from row to subtitle
       moveInstrumentation(subtitleRow, subtitle);
-      if (subtitle.textContent?.trim()) {
-        cardContent.appendChild(subtitle);
-      }
+      cardContent.appendChild(subtitle);
     }
   }
 

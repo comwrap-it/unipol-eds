@@ -37,13 +37,14 @@
           "component": "richtext",
           "name": "subtitle",
           "label": "Card Subtitle",
+          "value": "",
           "valueType": "string"
         },
         {
           "component": "container",
           "name": "button-container",
           "label": "Button",
-          "collapsible": true,
+          "collapsible": false,
           "fields": [
             {
               "...": "../atoms/buttons/primary-button/_primary-button.json#/models/primary-button/fields"
