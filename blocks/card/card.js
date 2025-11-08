@@ -32,7 +32,11 @@ export default async function decorate(block) {
   // eslint-disable-next-line no-console
   console.log('🃏 Card Rows:', {
     totalRows: rows.length,
-    rows: rows.map((r, i) => ({ index: i, html: r.outerHTML.substring(0, 100), text: r.textContent?.trim().substring(0, 50) })),
+    rows: rows.map((r, i) => ({
+      index: i,
+      html: r.outerHTML.substring(0, 100),
+      text: r.textContent?.trim().substring(0, 50),
+    })),
   });
 
   // Extract card data
