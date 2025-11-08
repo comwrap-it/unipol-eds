@@ -16,6 +16,11 @@
                     "sling:resourceType": "core/franklin/components/block/v1/block",
                     "name": "Text Block",
                     "model": "text-block"
+                  },
+                  "insurance-product-carousel": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Insurance Product Carousel",
+                    "model": "insurance-product-carousel"
                   }
                 }
           }

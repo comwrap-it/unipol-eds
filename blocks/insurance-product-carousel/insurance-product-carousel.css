@@ -1,0 +1,248 @@
+/* Insurance Product Carousel Component */
+
+/* Import card styles */
+@import url('../card/card.css');
+
+/* Carousel Container */
+.insurance-product-carousel {
+  position: relative;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 0;
+}
+
+/* Carousel Track (scrollable container) */
+.carousel-track {
+  display: flex;
+  gap: 24px;
+  overflow: auto hidden; /* horizontal auto, vertical hidden */
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  padding: 0 24px;
+  margin: 0 -24px; /* Negative margin to allow edge cards to be visible */
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+/* Carousel Slide */
+.carousel-slide {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  width: calc(33.333% - 16px); /* 3 cards on desktop */
+  min-width: 280px;
+  max-width: 400px;
+}
+
+/* Ensure card fills the slide */
+.carousel-slide .card,
+.carousel-slide .card-block {
+  height: 100%;
+  width: 100%;
+}
+
+/* Carousel Navigation Buttons */
+.carousel-nav {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+  z-index: 10;
+  padding: 0 8px;
+}
+
+.carousel-nav-btn {
+  pointer-events: auto;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background: white;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 15%);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  line-height: 1;
+  color: var(--color-primary, #003d82);
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.carousel-nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.carousel-nav-btn:hover:not(:disabled) {
+  background: var(--color-primary, #003d82);
+  color: white;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 20%);
+  transform: scale(1.05);
+}
+
+.carousel-nav-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.carousel-nav-btn span {
+  display: block;
+  line-height: 1;
+}
+
+/* Carousel Dots Indicator */
+.carousel-dots {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-top: 32px;
+  padding: 0;
+}
+
+.carousel-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--color-primary, #003d82);
+  background: transparent;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.2s ease;
+}
+
+.carousel-dot:hover {
+  background: var(--color-primary-light, #0056b3);
+  transform: scale(1.2);
+}
+
+.carousel-dot.active {
+  background: var(--color-primary, #003d82);
+  transform: scale(1.2);
+}
+
+.carousel-dot:focus {
+  outline: 2px solid var(--color-primary, #003d82);
+  outline-offset: 2px;
+}
+
+/* Responsive Design */
+
+/* Tablet: 2 cards */
+@media (width <= 1024px) {
+  .carousel-slide {
+    width: calc(50% - 12px);
+    min-width: 250px;
+  }
+
+  .carousel-track {
+    gap: 16px;
+    padding: 0 16px;
+    margin: 0 -16px;
+  }
+
+  .carousel-nav {
+    padding: 0 4px;
+  }
+
+  .carousel-nav-btn {
+    width: 40px;
+    height: 40px;
+    font-size: 28px;
+  }
+}
+
+/* Mobile: 1 card */
+@media (width <= 768px) {
+  .insurance-product-carousel {
+    padding: 16px 0;
+  }
+
+  .carousel-slide {
+    width: calc(100% - 32px);
+    min-width: unset;
+    max-width: unset;
+  }
+
+  .carousel-track {
+    gap: 16px;
+    padding: 0 16px;
+    margin: 0;
+  }
+
+  /* Hide navigation buttons on mobile (swipe instead) */
+  .carousel-nav {
+    display: none;
+  }
+
+  .carousel-dots {
+    margin-top: 24px;
+    gap: 6px;
+  }
+
+  .carousel-dot {
+    width: 8px;
+    height: 8px;
+  }
+}
+
+/* Accessibility */
+.insurance-product-carousel:focus {
+  outline: 2px solid var(--color-primary, #003d82);
+  outline-offset: 4px;
+}
+
+/* Loading State */
+.insurance-product-carousel.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.insurance-product-carousel.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border: 3px solid var(--color-primary, #003d82);
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+  z-index: 20;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .carousel-nav,
+  .carousel-dots {
+    display: none;
+  }
+
+  .carousel-track {
+    overflow: visible;
+    flex-wrap: wrap;
+  }
+
+  .carousel-slide {
+    break-inside: avoid;
+  }
+}
+

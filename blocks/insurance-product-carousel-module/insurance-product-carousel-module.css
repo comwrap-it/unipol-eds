@@ -1,19 +1,35 @@
 /* Insurance Product Carousel Module */
 
-/* Import text-block styles (child component) */
+/* Import child components styles */
 @import url('../text-block/text-block.css');
+@import url('../insurance-product-carousel/insurance-product-carousel.css');
 
-/* Module Container - Simple wrapper for text-block */
+/* Module Container - Wrapper for text-block and carousel */
 .insurance-product-carousel-module {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
+  padding: 40px 24px;
 }
 
-/* Responsive padding adjustments if needed */
+/* Text block in module */
+.insurance-product-carousel-module .text-block {
+  margin-bottom: 48px;
+}
+
+/* Carousel in module */
+.insurance-product-carousel-module .insurance-product-carousel {
+  margin-top: 0;
+}
+
+/* Responsive adjustments */
 @media (width <= 768px) {
   .insurance-product-carousel-module {
-    padding: 0;
+    padding: 24px 16px;
+  }
+
+  .insurance-product-carousel-module .text-block {
+    margin-bottom: 32px;
   }
 }
 
