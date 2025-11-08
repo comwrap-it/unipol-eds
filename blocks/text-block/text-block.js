@@ -15,9 +15,6 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
  * @param {HTMLElement} block - The text-block element
  */
 export default async function decorate(block) {
-  // eslint-disable-next-line no-console
-  console.log('🚀 TEXT-BLOCK DECORATE CALLED', { block });
-
   if (!block) return;
 
   // Get rows from block
@@ -26,9 +23,6 @@ export default async function decorate(block) {
   if (wrapper) {
     rows = Array.from(wrapper.children);
   }
-
-  // eslint-disable-next-line no-console
-  console.log('📦 Rows found:', rows.length, rows);
 
   // Extract text block data
   // Row 0: Title
@@ -99,23 +93,13 @@ export default async function decorate(block) {
     }
   }
 
-  // Button - Row 2 (optional)
-  // Button can be defined in two ways:
+  // Button - Rows 2-5 (optional)
   // Universal Editor creates separate rows for each button field:
   // Row 2 = text, Row 3 = variant, Row 4 = size, Row 5 = href
   const buttonTextRow = rows[2];
   const buttonVariantRow = rows[3];
   const buttonSizeRow = rows[4];
   const buttonHrefRow = rows[5];
-
-  // eslint-disable-next-line no-console
-  console.log('🔘 Button Rows:', {
-    buttonTextRow,
-    buttonVariantRow,
-    buttonSizeRow,
-    buttonHrefRow,
-    hasContent: buttonTextRow?.textContent?.trim(),
-  });
 
   if (buttonTextRow && buttonTextRow.textContent?.trim()) {
     // Check if button row has instrumentation (Universal Editor)
@@ -125,20 +109,10 @@ export default async function decorate(block) {
       || buttonTextRow.querySelector('[data-richtext-prop]')
       || buttonTextRow.querySelector('[data-aue-prop]'); // Universal Editor field marker
 
-    // eslint-disable-next-line no-console
-    console.log('🎯 Button has instrumentation?', hasInstrumentation, {
-      hasDataAueResource: buttonTextRow.hasAttribute('data-aue-resource'),
-      hasChildWithDataAue: !!buttonTextRow.querySelector('[data-aue-resource]'),
-      hasRichtextProp: !!buttonTextRow.querySelector('[data-richtext-prop]'),
-      hasDataAueProp: !!buttonTextRow.querySelector('[data-aue-prop]'),
-    });
-
-      // If button row has instrumentation, preserve structure and apply button styles
-      // Universal Editor will re-decorate the block when values change via editor-support.js
-      // Otherwise, create button using primary-button atom
-      if (hasInstrumentation) {
-        // eslint-disable-next-line no-console
-        console.log('✅ HAS INSTRUMENTATION - Reading from separate rows');
+    // If button row has instrumentation, preserve structure and apply button styles
+    // Universal Editor will re-decorate the block when values change via editor-support.js
+    // Otherwise, create button using primary-button atom
+    if (hasInstrumentation) {
 
         // Universal Editor creates separate rows for each button field
         // Read values from each row's data-aue-prop element
@@ -160,17 +134,6 @@ export default async function decorate(block) {
           size = BUTTON_SIZES.MEDIUM;
         }
 
-        // eslint-disable-next-line no-console
-        console.log('🎯 Button values extracted:', {
-          label,
-          variant,
-          size,
-          href,
-          rawVariant: variantField?.textContent,
-          rawSize: sizeField?.textContent,
-          rawHref: hrefField?.getAttribute('href'),
-        });
-
         // Create button with extracted values
         const buttonElement = createButton(label, href, variant, size);
 
@@ -181,27 +144,9 @@ export default async function decorate(block) {
 
         textBlock.appendChild(buttonContainer);
     } else {
-      // eslint-disable-next-line no-console
-      console.log('⚠️ NO INSTRUMENTATION - Using simple button creation');
-
+      // No instrumentation - simple button creation
       // Extract button data from row structure
-      // Expected structure: Row 2 contains buttonText, buttonVariant, buttonSize, buttonHref
       const buttonData = Array.from(buttonTextRow.children);
-
-      // eslint-disable-next-line no-console
-      console.log('📋 Button Data (no instrumentation):', {
-        dataLength: buttonData.length,
-        data: buttonData.map((d) => ({ text: d.textContent, html: d.outerHTML })),
-      });
-
-      // eslint-disable-next-line no-console
-      console.log('🔍 ButtonTextRow HTML:', buttonTextRow.outerHTML);
-
-      // eslint-disable-next-line no-console
-      if (buttonData[0]) {
-        console.log('🔍 ButtonData[0] HTML:', buttonData[0].outerHTML);
-        console.log('🔍 ButtonData[0] children:', Array.from(buttonData[0].children).map((c) => c.outerHTML));
-      }
 
       // Extract button text from first child or row text
       let label = 'Button';

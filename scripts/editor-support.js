@@ -15,43 +15,22 @@ async function applyChanges(event) {
   // redecorate default content and blocks on patches (in the properties rail)
   const { detail } = event;
 
-  // eslint-disable-next-line no-console
-  console.log('🔧 applyChanges called', { detail });
-
   const resource = detail?.request?.target?.resource // update, patch components
     || detail?.request?.target?.container?.resource // update, patch, add to sections
     || detail?.request?.to?.container?.resource; // move in sections
 
-  // eslint-disable-next-line no-console
-  console.log('🔧 Resource:', resource);
-
   if (!resource) {
-    // eslint-disable-next-line no-console
-    console.log('❌ No resource found');
     return false;
   }
   const updates = detail?.response?.updates;
 
-  // eslint-disable-next-line no-console
-  console.log('🔧 Updates:', updates);
-
   if (!updates.length) {
-    // eslint-disable-next-line no-console
-    console.log('❌ No updates');
     return false;
   }
 
-  // eslint-disable-next-line no-console
-  console.log('🔍 FULL UPDATE OBJECT:', JSON.stringify(updates[0], null, 2));
-
   const { content } = updates[0];
 
-  // eslint-disable-next-line no-console
-  console.log('🔧 Content:', content ? `${content.substring(0, 200)}...` : 'NO CONTENT');
-
   if (!content) {
-    // eslint-disable-next-line no-console
-    console.log('❌ No content in update');
     return false;
   }
 
@@ -79,23 +58,11 @@ async function applyChanges(event) {
 
     const block = element.parentElement?.closest('.block[data-aue-resource]') || element?.closest('.block[data-aue-resource]');
 
-    // eslint-disable-next-line no-console
-    console.log('🔧 Block found?', !!block, block);
-
     if (block) {
       const blockResource = block.getAttribute('data-aue-resource');
-
-      // eslint-disable-next-line no-console
-      console.log('🔧 Block resource:', blockResource);
-
       const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
 
-      // eslint-disable-next-line no-console
-      console.log('🔧 New block from update?', !!newBlock, newBlock);
-
       if (newBlock) {
-        // eslint-disable-next-line no-console
-        console.log('✅ RE-DECORATING BLOCK!');
 
         newBlock.style.display = 'none';
         block.insertAdjacentElement('afterend', newBlock);
@@ -140,12 +107,7 @@ async function applyChanges(event) {
 }
 
 function attachEventListners(main) {
-  // eslint-disable-next-line no-console
-  console.log('🎯 attachEventListners called with main:', main);
-
   if (!main) {
-    // eslint-disable-next-line no-console
-    console.error('❌ No main element found!');
     return;
   }
 
@@ -157,22 +119,10 @@ function attachEventListners(main) {
     'aue:content-remove',
     'aue:content-copy',
   ].forEach((eventType) => {
-    // eslint-disable-next-line no-console
-    console.log(`📌 Attaching listener for ${eventType}`);
-
     main?.addEventListener(eventType, async (event) => {
-      // eslint-disable-next-line no-console
-      console.log(`🎬 EVENT HANDLER CALLED for ${eventType}`, event);
-
       event.stopPropagation();
       const applied = await applyChanges(event);
-
-      // eslint-disable-next-line no-console
-      console.log(`🎬 Applied? ${applied}`);
-
       if (!applied) {
-        // eslint-disable-next-line no-console
-        console.log('⚠️ Not applied, reloading page...');
         window.location.reload();
       }
     });
@@ -180,9 +130,6 @@ function attachEventListners(main) {
 }
 
 const mainElement = document.querySelector('main');
-// eslint-disable-next-line no-console
-console.log('🔍 Main element found:', mainElement);
-
 attachEventListners(mainElement);
 
 // decorate rich text
