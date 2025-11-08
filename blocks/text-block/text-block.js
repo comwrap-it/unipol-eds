@@ -101,73 +101,75 @@ export default async function decorate(block) {
 
   // Button - Row 2 (optional)
   // Button can be defined in two ways:
-  // 1. As a container with instrumentation (Universal Editor) - Row 2 contains nested fields
-  // 2. As simple text rows - Row 2 contains button text, variant, size, href
-  const buttonRow = rows[2];
-  // eslint-disable-next-line no-console
-  console.log('🔘 Button Row:', { buttonRow, hasContent: buttonRow?.textContent?.trim() });
+  // Universal Editor creates separate rows for each button field:
+  // Row 2 = text, Row 3 = variant, Row 4 = size, Row 5 = href
+  const buttonTextRow = rows[2];
+  const buttonVariantRow = rows[3];
+  const buttonSizeRow = rows[4];
+  const buttonHrefRow = rows[5];
 
-  if (buttonRow && buttonRow.textContent?.trim()) {
+  // eslint-disable-next-line no-console
+  console.log('🔘 Button Rows:', {
+    buttonTextRow,
+    buttonVariantRow,
+    buttonSizeRow,
+    buttonHrefRow,
+    hasContent: buttonTextRow?.textContent?.trim(),
+  });
+
+  if (buttonTextRow && buttonTextRow.textContent?.trim()) {
     // Check if button row has instrumentation (Universal Editor)
     // Universal Editor uses data-aue-prop on the fields
-    const hasInstrumentation = buttonRow.hasAttribute('data-aue-resource')
-      || buttonRow.querySelector('[data-aue-resource]')
-      || buttonRow.querySelector('[data-richtext-prop]')
-      || buttonRow.querySelector('[data-aue-prop]'); // Universal Editor field marker
+    const hasInstrumentation = buttonTextRow.hasAttribute('data-aue-resource')
+      || buttonTextRow.querySelector('[data-aue-resource]')
+      || buttonTextRow.querySelector('[data-richtext-prop]')
+      || buttonTextRow.querySelector('[data-aue-prop]'); // Universal Editor field marker
 
     // eslint-disable-next-line no-console
     console.log('🎯 Button has instrumentation?', hasInstrumentation, {
-      hasDataAueResource: buttonRow.hasAttribute('data-aue-resource'),
-      hasChildWithDataAue: !!buttonRow.querySelector('[data-aue-resource]'),
-      hasRichtextProp: !!buttonRow.querySelector('[data-richtext-prop]'),
-      hasDataAueProp: !!buttonRow.querySelector('[data-aue-prop]'),
+      hasDataAueResource: buttonTextRow.hasAttribute('data-aue-resource'),
+      hasChildWithDataAue: !!buttonTextRow.querySelector('[data-aue-resource]'),
+      hasRichtextProp: !!buttonTextRow.querySelector('[data-richtext-prop]'),
+      hasDataAueProp: !!buttonTextRow.querySelector('[data-aue-prop]'),
     });
-
-    // eslint-disable-next-line no-console
-    console.log('🔍 FULL ButtonRow HTML:\n', buttonRow.outerHTML);
 
       // If button row has instrumentation, preserve structure and apply button styles
       // Universal Editor will re-decorate the block when values change via editor-support.js
       // Otherwise, create button using primary-button atom
       if (hasInstrumentation) {
         // eslint-disable-next-line no-console
-        console.log('✅ HAS INSTRUMENTATION - Preserving structure');
+        console.log('✅ HAS INSTRUMENTATION - Reading from separate rows');
 
-        // Universal Editor with container fields: only TEXT field is visible in DOM
-        // variant, size, href are stored in backend but NOT rendered in HTML
-        // We need to extract the text and use default values for other fields
-        // or read from data attributes if available
+        // Universal Editor creates separate rows for each button field
+        // Read values from each row's data-aue-prop element
+        const textField = buttonTextRow.querySelector('[data-aue-prop="text"]');
+        const variantField = buttonVariantRow?.querySelector('[data-aue-prop="variant"]');
+        const sizeField = buttonSizeRow?.querySelector('[data-aue-prop="size"]');
+        const hrefField = buttonHrefRow?.querySelector('a');
 
-        // Extract text from the visible field
-        const textField = buttonRow.querySelector('[data-aue-prop="text"]');
         const label = textField?.textContent?.trim() || 'Button';
+        let variant = variantField?.textContent?.trim()?.toLowerCase() || BUTTON_VARIANTS.PRIMARY;
+        let size = sizeField?.textContent?.trim()?.toLowerCase() || BUTTON_SIZES.MEDIUM;
+        const href = hrefField?.getAttribute('href')?.replace('.html', '') || '';
 
-        // eslint-disable-next-line no-console
-        console.log('🔍 Text field found:', {
-          label,
-          textFieldHTML: textField?.outerHTML,
-        });
-
-        // Try to find variant, size, href from data attributes or use defaults
-        // Universal Editor stores these in the backend, not in DOM
-        let variant = BUTTON_VARIANTS.PRIMARY;
-        let size = BUTTON_SIZES.MEDIUM;
-        let href = '';
-
-        // Check if there are data attributes with the values
-        const container = buttonRow.firstElementChild;
-        if (container) {
-          // eslint-disable-next-line no-console
-          console.log('🔍 Container attributes:', Array.from(container.attributes).map((a) => ({ name: a.name, value: a.value })));
-
-          // Try to read from data attributes if they exist
-          variant = container.dataset.variant || BUTTON_VARIANTS.PRIMARY;
-          size = container.dataset.size || BUTTON_SIZES.MEDIUM;
-          href = container.dataset.href || '';
+        // Validate variant and size
+        if (!Object.values(BUTTON_VARIANTS).includes(variant)) {
+          variant = BUTTON_VARIANTS.PRIMARY;
+        }
+        if (!Object.values(BUTTON_SIZES).includes(size)) {
+          size = BUTTON_SIZES.MEDIUM;
         }
 
         // eslint-disable-next-line no-console
-        console.log('🎯 Button values (using defaults for variant/size/href):', { label, variant, size, href });
+        console.log('🎯 Button values extracted:', {
+          label,
+          variant,
+          size,
+          href,
+          rawVariant: variantField?.textContent,
+          rawSize: sizeField?.textContent,
+          rawHref: hrefField?.getAttribute('href'),
+        });
 
         // Create button with extracted values
         const buttonElement = createButton(label, href, variant, size);
@@ -184,7 +186,7 @@ export default async function decorate(block) {
 
       // Extract button data from row structure
       // Expected structure: Row 2 contains buttonText, buttonVariant, buttonSize, buttonHref
-      const buttonData = Array.from(buttonRow.children);
+      const buttonData = Array.from(buttonTextRow.children);
 
       // eslint-disable-next-line no-console
       console.log('📋 Button Data (no instrumentation):', {
@@ -193,7 +195,7 @@ export default async function decorate(block) {
       });
 
       // eslint-disable-next-line no-console
-      console.log('🔍 ButtonRow HTML:', buttonRow.outerHTML);
+      console.log('🔍 ButtonTextRow HTML:', buttonTextRow.outerHTML);
 
       // eslint-disable-next-line no-console
       if (buttonData[0]) {
@@ -204,13 +206,13 @@ export default async function decorate(block) {
       // Extract button text from first child or row text
       let label = 'Button';
       if (buttonData.length > 0) {
-        label = buttonData[0]?.textContent?.trim() || buttonRow.textContent?.trim() || 'Button';
+        label = buttonData[0]?.textContent?.trim() || buttonTextRow.textContent?.trim() || 'Button';
       } else {
-        label = buttonRow.textContent?.trim() || 'Button';
+        label = buttonTextRow.textContent?.trim() || 'Button';
       }
 
       // Extract href from link or button data
-      const link = buttonRow.querySelector('a');
+      const link = buttonTextRow.querySelector('a');
       let href = '';
       if (link && link.href) {
         href = link.href;
