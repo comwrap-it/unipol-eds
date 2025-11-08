@@ -3,8 +3,8 @@
  * Icon button implementation for EDS with icon support
  */
 
-// Import shared constants from base button
-import { BUTTON_VARIANTS, BUTTON_STATES, BUTTON_SIZES } from '../button/button.js';
+// Import shared constants from primary button
+import { BUTTON_VARIANTS, BUTTON_STATES, BUTTON_SIZES } from '../primary-button/primary-button.js';
 
 // Icon button specific constants
 export const ICON_POSITIONS = {

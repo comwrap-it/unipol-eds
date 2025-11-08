@@ -113,36 +113,35 @@ export default async function decorate(block) {
     // Universal Editor will re-decorate the block when values change via editor-support.js
     // Otherwise, create button using primary-button atom
     if (hasInstrumentation) {
+      // Universal Editor creates separate rows for each button field
+      // Read values from each row's data-aue-prop element
+      const textField = buttonTextRow.querySelector('[data-aue-prop="text"]');
+      const variantField = buttonVariantRow?.querySelector('[data-aue-prop="variant"]');
+      const sizeField = buttonSizeRow?.querySelector('[data-aue-prop="size"]');
+      const hrefField = buttonHrefRow?.querySelector('a');
 
-        // Universal Editor creates separate rows for each button field
-        // Read values from each row's data-aue-prop element
-        const textField = buttonTextRow.querySelector('[data-aue-prop="text"]');
-        const variantField = buttonVariantRow?.querySelector('[data-aue-prop="variant"]');
-        const sizeField = buttonSizeRow?.querySelector('[data-aue-prop="size"]');
-        const hrefField = buttonHrefRow?.querySelector('a');
+      const label = textField?.textContent?.trim() || 'Button';
+      let variant = variantField?.textContent?.trim()?.toLowerCase() || BUTTON_VARIANTS.PRIMARY;
+      let size = sizeField?.textContent?.trim()?.toLowerCase() || BUTTON_SIZES.MEDIUM;
+      const href = hrefField?.getAttribute('href')?.replace('.html', '') || '';
 
-        const label = textField?.textContent?.trim() || 'Button';
-        let variant = variantField?.textContent?.trim()?.toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-        let size = sizeField?.textContent?.trim()?.toLowerCase() || BUTTON_SIZES.MEDIUM;
-        const href = hrefField?.getAttribute('href')?.replace('.html', '') || '';
+      // Validate variant and size
+      if (!Object.values(BUTTON_VARIANTS).includes(variant)) {
+        variant = BUTTON_VARIANTS.PRIMARY;
+      }
+      if (!Object.values(BUTTON_SIZES).includes(size)) {
+        size = BUTTON_SIZES.MEDIUM;
+      }
 
-        // Validate variant and size
-        if (!Object.values(BUTTON_VARIANTS).includes(variant)) {
-          variant = BUTTON_VARIANTS.PRIMARY;
-        }
-        if (!Object.values(BUTTON_SIZES).includes(size)) {
-          size = BUTTON_SIZES.MEDIUM;
-        }
+      // Create button with extracted values
+      const buttonElement = createButton(label, href, variant, size);
 
-        // Create button with extracted values
-        const buttonElement = createButton(label, href, variant, size);
+      // Wrap button in container for styling
+      const buttonContainer = document.createElement('div');
+      buttonContainer.className = 'text-block-button';
+      buttonContainer.appendChild(buttonElement);
 
-        // Wrap button in container for styling
-        const buttonContainer = document.createElement('div');
-        buttonContainer.className = 'text-block-button';
-        buttonContainer.appendChild(buttonElement);
-
-        textBlock.appendChild(buttonContainer);
+      textBlock.appendChild(buttonContainer);
     } else {
       // No instrumentation - simple button creation
       // Extract button data from row structure

@@ -63,7 +63,6 @@ async function applyChanges(event) {
       const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
 
       if (newBlock) {
-
         newBlock.style.display = 'none';
         block.insertAdjacentElement('afterend', newBlock);
         decorateButtons(newBlock);

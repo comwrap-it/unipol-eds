@@ -3,8 +3,8 @@
  * Link button implementation for EDS with href functionality
  */
 
-// Import shared constants from base button
-import { BUTTON_VARIANTS, BUTTON_STATES, BUTTON_SIZES } from '../button/button.js';
+// Import shared constants from primary button
+import { BUTTON_VARIANTS, BUTTON_STATES, BUTTON_SIZES } from '../primary-button/primary-button.js';
 
 /**
  * Set link button variant

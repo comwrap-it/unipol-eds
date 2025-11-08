@@ -20,6 +20,14 @@ export const BUTTON_SIZES = {
   LARGE: 'large',
 };
 
+export const BUTTON_STATES = {
+  DEFAULT: 'default',
+  HOVER: 'hover',
+  ACTIVE: 'active',
+  DISABLED: 'disabled',
+  FOCUSED: 'focused',
+};
+
 /**
  * Create a button element with styling
  *

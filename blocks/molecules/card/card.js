@@ -70,7 +70,7 @@ function createButtonElement(buttonRow) {
   buttonBlock.innerHTML = buttonRow.innerHTML;
 
   // Import and decorate the button atom
-  import('../../atoms/buttons/button/button.js').then((buttonModule) => {
+  import('../../atoms/buttons/primary-button/primary-button.js').then((buttonModule) => {
     buttonModule.default(buttonBlock);
   });
 
@@ -153,7 +153,7 @@ export function createCard(config = {}) {
     buttonBlock.appendChild(buttonContent);
 
     // Import and decorate the button atom
-    import('../../atoms/buttons/button/button.js').then((buttonModule) => {
+    import('../../atoms/buttons/primary-button/primary-button.js').then((buttonModule) => {
       buttonModule.default(buttonBlock);
     });
 
