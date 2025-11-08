@@ -140,85 +140,59 @@ export default async function decorate(block) {
     }
   }
 
-  // Card Buttons/CTA - preserve original elements and instrumentation
-  const buttonRows = rows.slice(3);
-  if (buttonRows && buttonRows.length > 0) {
+  // Card Button - Rows 3-6 (optional)
+  // Universal Editor creates separate rows for each button field:
+  // Row 3 = text, Row 4 = variant, Row 5 = size, Row 6 = href
+  const buttonTextRow = rows[3];
+  const buttonVariantRow = rows[4];
+  const buttonSizeRow = rows[5];
+  const buttonHrefRow = rows[6];
+
+  if (buttonTextRow && buttonTextRow.textContent?.trim()) {
     const buttonsContainer = document.createElement('div');
     buttonsContainer.className = 'card-buttons';
 
-    buttonRows.forEach((buttonRow) => {
-      if (!buttonRow) return;
+    // Check if button row has instrumentation (Universal Editor)
+    // Universal Editor uses data-aue-prop on the fields
+    const hasInstrumentation = buttonTextRow.hasAttribute('data-aue-resource')
+      || buttonTextRow.querySelector('[data-aue-resource]')
+      || buttonTextRow.querySelector('[data-richtext-prop]')
+      || buttonTextRow.querySelector('[data-aue-prop]'); // Universal Editor field marker
 
-      // Check if button row has instrumentation (Universal Editor)
-      const hasInstrumentation = buttonRow.hasAttribute('data-aue-resource')
-        || buttonRow.querySelector('[data-aue-resource]')
-        || buttonRow.querySelector('[data-richtext-prop]');
+    if (hasInstrumentation) {
+      // Universal Editor creates separate rows for each button field
+      // Read values from each row's data-aue-prop element
+      const textField = buttonTextRow.querySelector('[data-aue-prop="text"]');
+      const variantField = buttonVariantRow?.querySelector('[data-aue-prop="variant"]');
+      const sizeField = buttonSizeRow?.querySelector('[data-aue-prop="size"]');
+      const hrefField = buttonHrefRow?.querySelector('a');
 
-      // If button row has instrumentation, preserve the original structure
-      // Otherwise, create button using primary-button atom
-      if (hasInstrumentation) {
-        // Preserve original button structure for Universal Editor
-        const buttonWrapper = document.createElement('div');
-        buttonWrapper.className = 'card-button-wrapper';
-        // Clone all children to preserve instrumentation
-        while (buttonRow.firstChild) {
-          buttonWrapper.appendChild(buttonRow.firstChild);
-        }
-        // Move instrumentation from row to wrapper
-        moveInstrumentation(buttonRow, buttonWrapper);
-        buttonsContainer.appendChild(buttonWrapper);
-      } else {
-        // Extract button data from row
-        // Button row structure can be:
-        // - Container with nested fields (text, variant, size, href)
-        // - Simple text rows
-        const buttonData = Array.from(buttonRow.children);
+      const label = textField?.textContent?.trim() || 'Button';
+      let variant = variantField?.textContent?.trim()?.toLowerCase() || BUTTON_VARIANTS.PRIMARY;
+      let size = sizeField?.textContent?.trim()?.toLowerCase() || BUTTON_SIZES.MEDIUM;
+      const href = hrefField?.getAttribute('href')?.replace('.html', '') || '';
 
-        // Try to get button text from first child or row text
-        let label = 'Button';
-        if (buttonData.length > 0) {
-          label = buttonData[0]?.textContent?.trim() || buttonRow.textContent?.trim() || 'Button';
-        } else {
-          label = buttonRow.textContent?.trim() || 'Button';
-        }
-
-        // Try to get link from row
-        const link = buttonRow.querySelector('a');
-        let href = '';
-        if (link && link.href) {
-          href = link.href;
-        } else if (buttonData.length > 1) {
-          // Check if second child is a link
-          const secondChildLink = buttonData[1]?.querySelector('a');
-          if (secondChildLink && secondChildLink.href) {
-            href = secondChildLink.href;
-          } else {
-            href = buttonData[1]?.textContent?.trim() || '';
-          }
-        }
-
-        // Get variant and size from button data or defaults
-        // Variant might be in second or third child depending on structure
-        let variant = BUTTON_VARIANTS.PRIMARY;
-        let size = BUTTON_SIZES.MEDIUM;
-
-        // Try to find variant and size in button data
-        for (let i = 0; i < buttonData.length; i += 1) {
-          const text = buttonData[i]?.textContent?.trim().toLowerCase();
-          if (text && Object.values(BUTTON_VARIANTS).includes(text)) {
-            variant = text;
-          } else if (text && Object.values(BUTTON_SIZES).includes(text)) {
-            size = text;
-          }
-        }
-
-        // Create button using primary-button atom
-        const button = createButton(label, href, variant, size);
-        if (button) {
-          buttonsContainer.appendChild(button);
-        }
+      // Validate variant and size
+      if (!Object.values(BUTTON_VARIANTS).includes(variant)) {
+        variant = BUTTON_VARIANTS.PRIMARY;
       }
-    });
+      if (!Object.values(BUTTON_SIZES).includes(size)) {
+        size = BUTTON_SIZES.MEDIUM;
+      }
+
+      // Create button with extracted values
+      const button = createButton(label, href, variant, size);
+      if (button) {
+        buttonsContainer.appendChild(button);
+      }
+    } else {
+      // No instrumentation - simple button creation
+      const label = buttonTextRow.textContent?.trim() || 'Button';
+      const button = createButton(label, '', BUTTON_VARIANTS.PRIMARY, BUTTON_SIZES.MEDIUM);
+      if (button) {
+        buttonsContainer.appendChild(button);
+      }
+    }
 
     if (buttonsContainer.children.length > 0) {
       cardContent.appendChild(buttonsContainer);
