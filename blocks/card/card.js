@@ -18,6 +18,14 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 export default async function decorate(block) {
   if (!block) return;
 
+  // Check if card is already decorated (has card-block class)
+  // This happens when Universal Editor re-renders after an edit
+  if (block.classList.contains('card-block')) {
+    // eslint-disable-next-line no-console
+    console.log('🔄 Card already decorated, skipping re-decoration');
+    return;
+  }
+
   // Create card structure
   const card = document.createElement('div');
   card.className = 'card';
