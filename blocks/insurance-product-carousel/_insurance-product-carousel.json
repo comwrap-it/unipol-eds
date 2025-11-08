@@ -16,64 +16,27 @@
       }
     },
     {
-      "title": "Product Card",
-      "id": "insurance-product-card",
+      "title": "Card",
+      "id": "card-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "Product Card",
-              "model": "insurance-product-card"
+              "name": "Card",
+              "model": "card"
             }
           }
         }
       }
     }
   ],
-  "models": [
-    {
-      "id": "insurance-product-card",
-      "fields": [
-        {
-          "component": "reference",
-          "valueType": "string",
-          "name": "image",
-          "label": "Product Image",
-          "multi": false,
-          "required": true
-        },
-        {
-          "component": "text",
-          "name": "title",
-          "label": "Product Title",
-          "required": true
-        },
-        {
-          "component": "richtext",
-          "name": "description",
-          "label": "Product Description",
-          "valueType": "string"
-        },
-        {
-          "component": "container",
-          "name": "button-container",
-          "label": "Button",
-          "collapsible": true,
-          "fields": [
-            {
-              "...": "../atoms/buttons/primary-button/_primary-button.json#/models/primary-button/fields"
-            }
-          ]
-        }
-      ]
-    }
-  ],
+  "models": [],
   "filters": [
     {
       "id": "insurance-product-carousel",
       "components": [
-        "insurance-product-card"
+        "card-item"
       ],
       "min": 1,
       "max": 8

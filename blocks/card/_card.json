@@ -34,14 +34,21 @@
           "required": true
         },
         {
-          "component": "text",
+          "component": "richtext",
           "name": "subtitle",
-          "label": "Card Subtitle"
+          "label": "Card Subtitle",
+          "valueType": "string"
         },
         {
-          "component": "text",
-          "name": "buttonLabel",
-          "label": "Button Label"
+          "component": "container",
+          "name": "button-container",
+          "label": "Button",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../atoms/buttons/primary-button/_primary-button.json#/models/primary-button/fields"
+            }
+          ]
         }
       ]
     }

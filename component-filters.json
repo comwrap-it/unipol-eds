@@ -125,7 +125,7 @@
   {
     "id": "insurance-product-carousel",
     "components": [
-      "insurance-product-card"
+      "card-item"
     ],
     "min": 1,
     "max": 8

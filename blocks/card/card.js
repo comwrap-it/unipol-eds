@@ -148,6 +148,16 @@ export default async function decorate(block) {
   const buttonSizeRow = rows[5];
   const buttonHrefRow = rows[6];
 
+  // eslint-disable-next-line no-console
+  console.log('🔘 Card Button Rows:', {
+    totalRows: rows.length,
+    buttonTextRow,
+    buttonVariantRow,
+    buttonSizeRow,
+    buttonHrefRow,
+    hasContent: buttonTextRow?.textContent?.trim(),
+  });
+
   if (buttonTextRow && buttonTextRow.textContent?.trim()) {
     const buttonsContainer = document.createElement('div');
     buttonsContainer.className = 'card-buttons';
@@ -158,6 +168,9 @@ export default async function decorate(block) {
       || buttonTextRow.querySelector('[data-aue-resource]')
       || buttonTextRow.querySelector('[data-richtext-prop]')
       || buttonTextRow.querySelector('[data-aue-prop]'); // Universal Editor field marker
+
+    // eslint-disable-next-line no-console
+    console.log('🎯 Button has instrumentation?', hasInstrumentation);
 
     if (hasInstrumentation) {
       // Universal Editor creates separate rows for each button field
@@ -172,6 +185,14 @@ export default async function decorate(block) {
       let size = sizeField?.textContent?.trim()?.toLowerCase() || BUTTON_SIZES.MEDIUM;
       const href = hrefField?.getAttribute('href')?.replace('.html', '') || '';
 
+      // eslint-disable-next-line no-console
+      console.log('🎯 Button values extracted:', {
+        label,
+        variant,
+        size,
+        href,
+      });
+
       // Validate variant and size
       if (!Object.values(BUTTON_VARIANTS).includes(variant)) {
         variant = BUTTON_VARIANTS.PRIMARY;
@@ -182,6 +203,8 @@ export default async function decorate(block) {
 
       // Create button with extracted values
       const button = createButton(label, href, variant, size);
+      // eslint-disable-next-line no-console
+      console.log('✅ Button created:', button);
       if (button) {
         buttonsContainer.appendChild(button);
       }
