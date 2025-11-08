@@ -120,95 +120,98 @@ export default async function decorate(block) {
       hasRichtextProp: !!buttonRow.querySelector('[data-richtext-prop]'),
     });
 
-    // If button row has instrumentation, preserve structure and apply button styles
-    // Universal Editor will re-decorate the block when values change via editor-support.js
-    // Otherwise, create button using primary-button atom
-    if (hasInstrumentation) {
-      // Preserve original button structure for Universal Editor
-      // Following AEM EDS best practices: preserve structure for editing
-      const buttonWrapper = document.createElement('div');
-      buttonWrapper.className = 'text-block-button-wrapper';
+      // If button row has instrumentation, preserve structure and apply button styles
+      // Universal Editor will re-decorate the block when values change via editor-support.js
+      // Otherwise, create button using primary-button atom
+      if (hasInstrumentation) {
+        // eslint-disable-next-line no-console
+        console.log('✅ HAS INSTRUMENTATION - Preserving structure');
 
-      // Move instrumentation from row to wrapper
-      moveInstrumentation(buttonRow, buttonWrapper);
+        // Preserve original button structure for Universal Editor
+        // Following AEM EDS best practices: preserve structure for editing
+        const buttonWrapper = document.createElement('div');
+        buttonWrapper.className = 'text-block-button-wrapper';
 
-      // Move all children to preserve instrumentation for Universal Editor
-      // These must remain visible and accessible for Universal Editor to work
-      while (buttonRow.firstChild) {
-        buttonWrapper.appendChild(buttonRow.firstChild);
-      }
+        // Move instrumentation from row to wrapper
+        moveInstrumentation(buttonRow, buttonWrapper);
 
-      // Extract button values from the preserved structure for styling
-      // Universal Editor saves select values directly as textContent of the cell
-      // Structure: buttonCells[0] = text, [1] = variant, [2] = size, [3] = href
-      const buttonCells = Array.from(buttonWrapper.children);
-
-      // DEBUG: Log della struttura per capire cosa contengono i cells
-      // eslint-disable-next-line no-console
-      console.log('🔍 DEBUG Button Cells:', {
-        cellCount: buttonCells.length,
-        cell0: buttonCells[0]?.outerHTML,
-        cell1: buttonCells[1]?.outerHTML,
-        cell2: buttonCells[2]?.outerHTML,
-        cell3: buttonCells[3]?.outerHTML,
-      });
-
-      let variant = BUTTON_VARIANTS.PRIMARY;
-      let size = BUTTON_SIZES.MEDIUM;
-
-      // Extract variant and size from preserved structure
-      // Universal Editor saves select values as textContent of the cell
-      // We need to extract the text content, handling both direct text and nested elements
-      if (buttonCells[1]) {
-        // Get all text from cell (handles both direct textContent and nested elements)
-        let variantText = buttonCells[1].textContent?.trim() || '';
-        // If cell has children, prefer first child's textContent
-        // (Universal Editor might wrap in elements)
-        if (!variantText && buttonCells[1].firstChild) {
-          variantText = buttonCells[1].firstChild.textContent?.trim() || '';
+        // Move all children to preserve instrumentation for Universal Editor
+        // These must remain visible and accessible for Universal Editor to work
+        while (buttonRow.firstChild) {
+          buttonWrapper.appendChild(buttonRow.firstChild);
         }
-        variantText = variantText.toLowerCase();
+
+        // Extract button values from the preserved structure for styling
+        // Universal Editor saves select values directly as textContent of the cell
+        // Structure: buttonCells[0] = text, [1] = variant, [2] = size, [3] = href
+        const buttonCells = Array.from(buttonWrapper.children);
 
         // eslint-disable-next-line no-console
-        console.log('🔍 DEBUG Variant:', {
-          rawText: buttonCells[1].textContent,
-          processed: variantText,
-          isValid: Object.values(BUTTON_VARIANTS).includes(variantText),
-          validValues: Object.values(BUTTON_VARIANTS),
-        });
-
-        // Validate that the extracted value is a valid variant
-        if (variantText && Object.values(BUTTON_VARIANTS).includes(variantText)) {
-          variant = variantText;
-        }
-      }
-
-      if (buttonCells[2]) {
-        // Get all text from cell (handles both direct textContent and nested elements)
-        let sizeText = buttonCells[2].textContent?.trim() || '';
-        // If cell has children, prefer first child's textContent
-        // (Universal Editor might wrap in elements)
-        if (!sizeText && buttonCells[2].firstChild) {
-          sizeText = buttonCells[2].firstChild.textContent?.trim() || '';
-        }
-        sizeText = sizeText.toLowerCase();
+        console.log('🔍 ButtonWrapper HTML:', buttonWrapper.outerHTML);
 
         // eslint-disable-next-line no-console
-        console.log('🔍 DEBUG Size:', {
-          rawText: buttonCells[2].textContent,
-          processed: sizeText,
-          isValid: Object.values(BUTTON_SIZES).includes(sizeText),
-          validValues: Object.values(BUTTON_SIZES),
-        });
+        console.log('🔍 ButtonCells:', buttonCells.map((c, i) => ({
+          index: i,
+          text: c.textContent,
+          html: c.outerHTML,
+        })));
 
-        // Validate that the extracted value is a valid size
-        if (sizeText && Object.values(BUTTON_SIZES).includes(sizeText)) {
-          size = sizeText;
+        let variant = BUTTON_VARIANTS.PRIMARY;
+        let size = BUTTON_SIZES.MEDIUM;
+
+        // Extract variant and size from preserved structure
+        // Universal Editor saves select values as textContent of the cell
+        // We need to extract the text content, handling both direct text and nested elements
+        if (buttonCells[1]) {
+          // Get all text from cell (handles both direct textContent and nested elements)
+          let variantText = buttonCells[1].textContent?.trim() || '';
+          // If cell has children, prefer first child's textContent
+          // (Universal Editor might wrap in elements)
+          if (!variantText && buttonCells[1].firstChild) {
+            variantText = buttonCells[1].firstChild.textContent?.trim() || '';
+          }
+          variantText = variantText.toLowerCase();
+
+          // eslint-disable-next-line no-console
+          console.log('🔍 Variant extracted:', {
+            rawText: buttonCells[1].textContent,
+            processed: variantText,
+            isValid: Object.values(BUTTON_VARIANTS).includes(variantText),
+            validValues: Object.values(BUTTON_VARIANTS),
+          });
+
+          // Validate that the extracted value is a valid variant
+          if (variantText && Object.values(BUTTON_VARIANTS).includes(variantText)) {
+            variant = variantText;
+          }
         }
-      }
 
-      // eslint-disable-next-line no-console
-      console.log('🎯 DEBUG Final Values:', { variant, size });
+        if (buttonCells[2]) {
+          // Get all text from cell (handles both direct textContent and nested elements)
+          let sizeText = buttonCells[2].textContent?.trim() || '';
+          // If cell has children, prefer first child's textContent
+          // (Universal Editor might wrap in elements)
+          if (!sizeText && buttonCells[2].firstChild) {
+            sizeText = buttonCells[2].firstChild.textContent?.trim() || '';
+          }
+          sizeText = sizeText.toLowerCase();
+
+          // eslint-disable-next-line no-console
+          console.log('🔍 Size extracted:', {
+            rawText: buttonCells[2].textContent,
+            processed: sizeText,
+            isValid: Object.values(BUTTON_SIZES).includes(sizeText),
+            validValues: Object.values(BUTTON_SIZES),
+          });
+
+          // Validate that the extracted value is a valid size
+          if (sizeText && Object.values(BUTTON_SIZES).includes(sizeText)) {
+            size = sizeText;
+          }
+        }
+
+        // eslint-disable-next-line no-console
+        console.log('🎯 Final Values:', { variant, size });
 
       // Apply button classes directly to the structure for styling
       // Find existing button/link element in the preserved structure
@@ -276,6 +279,15 @@ export default async function decorate(block) {
         dataLength: buttonData.length,
         data: buttonData.map((d) => ({ text: d.textContent, html: d.outerHTML })),
       });
+
+      // eslint-disable-next-line no-console
+      console.log('🔍 ButtonRow HTML:', buttonRow.outerHTML);
+
+      // eslint-disable-next-line no-console
+      if (buttonData[0]) {
+        console.log('🔍 ButtonData[0] HTML:', buttonData[0].outerHTML);
+        console.log('🔍 ButtonData[0] children:', Array.from(buttonData[0].children).map((c) => c.outerHTML));
+      }
 
       // Extract button text from first child or row text
       let label = 'Button';
