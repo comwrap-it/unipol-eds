@@ -24,7 +24,16 @@
                     "card": {
                       "sling:resourceType": "core/franklin/components/block/v1/block/item",
                       "name": "Card",
-                      "model": "card"
+                      "model": "card",
+                      "image": "",
+                      "title": "Card Title",
+                      "subtitle": "Card description",
+                      "button-container": {
+                        "text": "Learn More",
+                        "variant": "primary",
+                        "size": "medium",
+                        "href": ""
+                      }
                     }
                   }
                 }
