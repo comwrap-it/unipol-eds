@@ -123,6 +123,9 @@ export default async function decorate(block) {
       hasDataAueProp: !!buttonRow.querySelector('[data-aue-prop]'),
     });
 
+    // eslint-disable-next-line no-console
+    console.log('🔍 FULL ButtonRow HTML:\n', buttonRow.outerHTML);
+
       // If button row has instrumentation, preserve structure and apply button styles
       // Universal Editor will re-decorate the block when values change via editor-support.js
       // Otherwise, create button using primary-button atom

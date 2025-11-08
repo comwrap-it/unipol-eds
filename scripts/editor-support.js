@@ -40,6 +40,10 @@ async function applyChanges(event) {
     console.log('❌ No updates');
     return false;
   }
+
+  // eslint-disable-next-line no-console
+  console.log('🔍 FULL UPDATE OBJECT:', JSON.stringify(updates[0], null, 2));
+
   const { content } = updates[0];
 
   // eslint-disable-next-line no-console
