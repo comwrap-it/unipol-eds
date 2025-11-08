@@ -39,7 +39,7 @@
           "collapsible": true,
           "fields": [
             {
-              "...": "../primary-button/_primary-button.json#/models/primary-button/fields"
+              "...": "../atoms/buttons/primary-button/_primary-button.json#/models/primary-button/fields"
             }
           ]
         }

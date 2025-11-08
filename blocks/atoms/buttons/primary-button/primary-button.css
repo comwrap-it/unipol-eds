@@ -1,6 +1,6 @@
 
 /* Import base design tokens */
-@import url('../../styles/design-tokens.css');
+@import url('../../../../styles/design-tokens.css');
 
 /* Design Tokens for Button System */
 :root {

@@ -7,7 +7,7 @@
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
 
-import { createButton, BUTTON_VARIANTS, BUTTON_SIZES } from '../primary-button/primary-button.js';
+import { createButton, BUTTON_VARIANTS, BUTTON_SIZES } from '../atoms/buttons/primary-button/primary-button.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
