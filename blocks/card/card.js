@@ -32,12 +32,14 @@ export default async function decorate(block) {
   // eslint-disable-next-line no-console
   console.log('🃏 Card Rows:', {
     totalRows: rows.length,
-    blockHTML: block.outerHTML.substring(0, 500),
+    blockHTML: block.outerHTML,
+    wrapperHTML: wrapper?.outerHTML || 'NO WRAPPER',
+    blockChildren: Array.from(block.children).map((c) => c.className),
     rows: rows.map((r, i) => ({
       index: i,
       className: r.className,
-      html: r.outerHTML.substring(0, 200),
-      text: r.textContent?.trim().substring(0, 100),
+      html: r.outerHTML,
+      text: r.textContent?.trim(),
       hasAueProp: r.querySelector('[data-aue-prop]')?.getAttribute('data-aue-prop'),
     })),
   });
