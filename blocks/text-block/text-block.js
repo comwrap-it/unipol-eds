@@ -109,15 +109,18 @@ export default async function decorate(block) {
 
   if (buttonRow && buttonRow.textContent?.trim()) {
     // Check if button row has instrumentation (Universal Editor)
+    // Universal Editor uses data-aue-prop on the fields
     const hasInstrumentation = buttonRow.hasAttribute('data-aue-resource')
       || buttonRow.querySelector('[data-aue-resource]')
-      || buttonRow.querySelector('[data-richtext-prop]');
+      || buttonRow.querySelector('[data-richtext-prop]')
+      || buttonRow.querySelector('[data-aue-prop]'); // Universal Editor field marker
 
     // eslint-disable-next-line no-console
     console.log('🎯 Button has instrumentation?', hasInstrumentation, {
       hasDataAueResource: buttonRow.hasAttribute('data-aue-resource'),
       hasChildWithDataAue: !!buttonRow.querySelector('[data-aue-resource]'),
       hasRichtextProp: !!buttonRow.querySelector('[data-richtext-prop]'),
+      hasDataAueProp: !!buttonRow.querySelector('[data-aue-prop]'),
     });
 
       // If button row has instrumentation, preserve structure and apply button styles
@@ -127,145 +130,51 @@ export default async function decorate(block) {
         // eslint-disable-next-line no-console
         console.log('✅ HAS INSTRUMENTATION - Preserving structure');
 
-        // Preserve original button structure for Universal Editor
-        // Following AEM EDS best practices: preserve structure for editing
-        const buttonWrapper = document.createElement('div');
-        buttonWrapper.className = 'text-block-button-wrapper';
+        // Universal Editor with container fields: only TEXT field is visible in DOM
+        // variant, size, href are stored in backend but NOT rendered in HTML
+        // We need to extract the text and use default values for other fields
+        // or read from data attributes if available
 
-        // Move instrumentation from row to wrapper
-        moveInstrumentation(buttonRow, buttonWrapper);
-
-        // Move all children to preserve instrumentation for Universal Editor
-        // These must remain visible and accessible for Universal Editor to work
-        while (buttonRow.firstChild) {
-          buttonWrapper.appendChild(buttonRow.firstChild);
-        }
-
-        // Extract button values from the preserved structure for styling
-        // Universal Editor saves select values directly as textContent of the cell
-        // Structure: buttonCells[0] = text, [1] = variant, [2] = size, [3] = href
-        const buttonCells = Array.from(buttonWrapper.children);
+        // Extract text from the visible field
+        const textField = buttonRow.querySelector('[data-aue-prop="text"]');
+        const label = textField?.textContent?.trim() || 'Button';
 
         // eslint-disable-next-line no-console
-        console.log('🔍 ButtonWrapper HTML:', buttonWrapper.outerHTML);
+        console.log('🔍 Text field found:', {
+          label,
+          textFieldHTML: textField?.outerHTML,
+        });
 
-        // eslint-disable-next-line no-console
-        console.log('🔍 ButtonCells:', buttonCells.map((c, i) => ({
-          index: i,
-          text: c.textContent,
-          html: c.outerHTML,
-        })));
-
+        // Try to find variant, size, href from data attributes or use defaults
+        // Universal Editor stores these in the backend, not in DOM
         let variant = BUTTON_VARIANTS.PRIMARY;
         let size = BUTTON_SIZES.MEDIUM;
+        let href = '';
 
-        // Extract variant and size from preserved structure
-        // Universal Editor saves select values as textContent of the cell
-        // We need to extract the text content, handling both direct text and nested elements
-        if (buttonCells[1]) {
-          // Get all text from cell (handles both direct textContent and nested elements)
-          let variantText = buttonCells[1].textContent?.trim() || '';
-          // If cell has children, prefer first child's textContent
-          // (Universal Editor might wrap in elements)
-          if (!variantText && buttonCells[1].firstChild) {
-            variantText = buttonCells[1].firstChild.textContent?.trim() || '';
-          }
-          variantText = variantText.toLowerCase();
-
+        // Check if there are data attributes with the values
+        const container = buttonRow.firstElementChild;
+        if (container) {
           // eslint-disable-next-line no-console
-          console.log('🔍 Variant extracted:', {
-            rawText: buttonCells[1].textContent,
-            processed: variantText,
-            isValid: Object.values(BUTTON_VARIANTS).includes(variantText),
-            validValues: Object.values(BUTTON_VARIANTS),
-          });
+          console.log('🔍 Container attributes:', Array.from(container.attributes).map((a) => ({ name: a.name, value: a.value })));
 
-          // Validate that the extracted value is a valid variant
-          if (variantText && Object.values(BUTTON_VARIANTS).includes(variantText)) {
-            variant = variantText;
-          }
-        }
-
-        if (buttonCells[2]) {
-          // Get all text from cell (handles both direct textContent and nested elements)
-          let sizeText = buttonCells[2].textContent?.trim() || '';
-          // If cell has children, prefer first child's textContent
-          // (Universal Editor might wrap in elements)
-          if (!sizeText && buttonCells[2].firstChild) {
-            sizeText = buttonCells[2].firstChild.textContent?.trim() || '';
-          }
-          sizeText = sizeText.toLowerCase();
-
-          // eslint-disable-next-line no-console
-          console.log('🔍 Size extracted:', {
-            rawText: buttonCells[2].textContent,
-            processed: sizeText,
-            isValid: Object.values(BUTTON_SIZES).includes(sizeText),
-            validValues: Object.values(BUTTON_SIZES),
-          });
-
-          // Validate that the extracted value is a valid size
-          if (sizeText && Object.values(BUTTON_SIZES).includes(sizeText)) {
-            size = sizeText;
-          }
+          // Try to read from data attributes if they exist
+          variant = container.dataset.variant || BUTTON_VARIANTS.PRIMARY;
+          size = container.dataset.size || BUTTON_SIZES.MEDIUM;
+          href = container.dataset.href || '';
         }
 
         // eslint-disable-next-line no-console
-        console.log('🎯 Final Values:', { variant, size });
+        console.log('🎯 Button values (using defaults for variant/size/href):', { label, variant, size, href });
 
-      // Apply button classes directly to the structure for styling
-      // Find existing button/link element in the preserved structure
-      let buttonElement = buttonCells[0]?.querySelector('a, button');
-      if (!buttonElement && buttonCells[0]) {
-        // If first cell has a link, use it
-        buttonElement = buttonCells[0].querySelector('a');
-      }
-      if (!buttonElement && buttonCells[3]) {
-        // Check href cell for link
-        buttonElement = buttonCells[3].querySelector('a');
-      }
+        // Create button with extracted values
+        const buttonElement = createButton(label, href, variant, size);
 
-      // Extract label and href from preserved structure
-      // Label can be in buttonCells[0] textContent or in an existing button/link element
-      let label = 'Button';
-      if (buttonCells[0]) {
-        const existingButton = buttonCells[0].querySelector('a, button');
-        label = existingButton?.textContent?.trim() || buttonCells[0].textContent?.trim() || 'Button';
-      }
-      const href = buttonCells[3]?.querySelector('a')?.href || buttonCells[3]?.textContent?.trim() || '';
+        // Wrap button in container for styling
+        const buttonContainer = document.createElement('div');
+        buttonContainer.className = 'text-block-button';
+        buttonContainer.appendChild(buttonElement);
 
-      // If no existing button/link, create button in first cell
-      if (!buttonElement && buttonCells[0]) {
-        // Create button using createButton() to get all functionality
-        // (event listeners, accessibility)
-        // Note: instrumentation stays on the cell (buttonCells[0]), not on the button
-        // Universal Editor edits the cell content, the button is just the visual representation
-        buttonElement = createButton(label, href, variant, size);
-
-        // Replace first cell content with button element
-        // Keep the cell's instrumentation intact (don't touch cell attributes)
-        buttonCells[0].textContent = '';
-        buttonCells[0].appendChild(buttonElement);
-      } else if (buttonElement) {
-        // Update existing button element - always recreate using createButton() to ensure
-        // all functionality (event listeners, accessibility) is preserved
-        // Recreate button using createButton() with current values (variant, size, href, label)
-        // This ensures all event listeners and accessibility features are present
-        const newButtonElement = createButton(label, href, variant, size);
-
-        // Replace old element with new one
-        // (new element has all functionality + correct variant/size)
-        // Note: instrumentation stays on the parent cell, not on the button itself
-        buttonElement.replaceWith(newButtonElement);
-        buttonElement = newButtonElement;
-      }
-
-      // Wrap in container for styling
-      const buttonContainer = document.createElement('div');
-      buttonContainer.className = 'text-block-button';
-      buttonContainer.appendChild(buttonWrapper);
-
-      textBlock.appendChild(buttonContainer);
+        textBlock.appendChild(buttonContainer);
     } else {
       // eslint-disable-next-line no-console
       console.log('⚠️ NO INSTRUMENTATION - Using simple button creation');
