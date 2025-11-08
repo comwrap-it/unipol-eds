@@ -43,7 +43,7 @@ async function applyChanges(event) {
   const { content } = updates[0];
 
   // eslint-disable-next-line no-console
-  console.log('🔧 Content:', content ? content.substring(0, 200) + '...' : 'NO CONTENT');
+  console.log('🔧 Content:', content ? `${content.substring(0, 200)}...` : 'NO CONTENT');
 
   if (!content) {
     // eslint-disable-next-line no-console
@@ -136,6 +136,15 @@ async function applyChanges(event) {
 }
 
 function attachEventListners(main) {
+  // eslint-disable-next-line no-console
+  console.log('🎯 attachEventListners called with main:', main);
+
+  if (!main) {
+    // eslint-disable-next-line no-console
+    console.error('❌ No main element found!');
+    return;
+  }
+
   [
     'aue:content-patch',
     'aue:content-update',
@@ -143,14 +152,34 @@ function attachEventListners(main) {
     'aue:content-move',
     'aue:content-remove',
     'aue:content-copy',
-  ].forEach((eventType) => main?.addEventListener(eventType, async (event) => {
-    event.stopPropagation();
-    const applied = await applyChanges(event);
-    if (!applied) window.location.reload();
-  }));
+  ].forEach((eventType) => {
+    // eslint-disable-next-line no-console
+    console.log(`📌 Attaching listener for ${eventType}`);
+
+    main?.addEventListener(eventType, async (event) => {
+      // eslint-disable-next-line no-console
+      console.log(`🎬 EVENT HANDLER CALLED for ${eventType}`, event);
+
+      event.stopPropagation();
+      const applied = await applyChanges(event);
+
+      // eslint-disable-next-line no-console
+      console.log(`🎬 Applied? ${applied}`);
+
+      if (!applied) {
+        // eslint-disable-next-line no-console
+        console.log('⚠️ Not applied, reloading page...');
+        window.location.reload();
+      }
+    });
+  });
 }
 
-attachEventListners(document.querySelector('main'));
+const mainElement = document.querySelector('main');
+// eslint-disable-next-line no-console
+console.log('🔍 Main element found:', mainElement);
+
+attachEventListners(mainElement);
 
 // decorate rich text
 // this has to happen after decorateMain(), and everythime decorateBlocks() is called
