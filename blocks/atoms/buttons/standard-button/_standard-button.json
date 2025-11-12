@@ -38,6 +38,17 @@
           ]
         },
         {
+          "component": "select",
+          "name": "size",
+          "label": "Size",
+          "value": "medium",
+          "options": [
+            {"name": "Small", "value": "small"},
+            {"name": "Medium", "value": "medium"},
+            {"name": "Large", "value": "large"}
+          ]
+        },
+        {
           "component": "aem-content",
           "name": "href",
           "label": "Link URL",

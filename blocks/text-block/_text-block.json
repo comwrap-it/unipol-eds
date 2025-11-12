@@ -22,8 +22,8 @@
       "fields": [
         {
           "component": "tab",
-          "label": "buttonTextConfig",
-          "name": "Configurazione testo e bottone"
+          "label": "Configurazione testo e bottone",
+          "name": "buttonTextConfig"
         },
         {
           "component": "text",
@@ -71,14 +71,14 @@
         },
         {
           "component": "text-input",
-          "label": "Testo superiore",
+          "label": "Testo superiore blocco 1",
           "name": "numberBlockText1",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "name": "Testo inferiore",
-          "label": "numberBlockSubText1",
+          "name": "numberBlockSubText1",
+          "label": "Testo inferiore blocco 1",
           "valueType": "string"
         },
         {
@@ -88,14 +88,14 @@
         },
         {
           "component": "text-input",
-          "label": "Testo superiore",
+          "label": "Testo superiore blocco 2",
           "name": "numberBlockText2",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "name": "Testo inferiore",
-          "label": "numberBlockSubText2",
+          "name": "numberBlockSubText2",
+          "label": "Testo inferiore blocco 2",
           "valueType": "string"
         },
         {
@@ -105,14 +105,14 @@
         },
         {
           "component": "text-input",
-          "label": "Testo superiore",
+          "label": "Testo superiore blocco 3",
           "name": "numberBlockText3",
           "valueType": "string"
         },
         {
           "component": "richtext",
-          "name": "Testo inferiore",
-          "label": "numberBlockSubText3",
+          "name": "numberBlockSubText3",
+          "label": "Testo inferiore blocco 3",
           "valueType": "string"
         }
       ]
