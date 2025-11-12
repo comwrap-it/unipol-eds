@@ -214,5 +214,62 @@
         "valueType": "string"
       }
     ]
+  },
+  {
+    "id": "text-block",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Title",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "subtitle",
+        "label": "Subtitle",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "name": "button-container",
+        "label": "Button",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "text",
+            "label": "Button Text",
+            "required": true
+          },
+          {
+            "component": "select",
+            "name": "variant",
+            "label": "Variant",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Accent",
+                "value": "accent"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "href",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          }
+        ]
+      }
+    ]
   }
 ]
