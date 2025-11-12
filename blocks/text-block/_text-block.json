@@ -21,64 +21,99 @@
       "id": "text-block",
       "fields": [
         {
-          "id": "tab",
+          "component": "tab",
+          "label": "buttonTextConfig",
+          "name": "Configurazione testo e bottone"
+        },
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Titolo",
+          "required": true
+        },
+        {
+          "component": "richtext",
+          "name": "subtitle",
+          "label": "Sottotitolo",
+          "valueType": "string"
+        },
+        {
+          "component": "select",
+          "name": "contentAlignment",
+          "label": "Allineamento Contenuto",
+          "options": [
+            {
+              "name": "Testo e bottone centrati",
+              "value": "text-block-center"
+            },
+            {
+              "name": "Testo a sinistra, bottone a destra",
+              "value": "text-block-left"
+            }
+          ],
+          "defaultValue": "text-block-center"
+        },
+        {
+          "component": "container",
+          "name": "button-container",
+          "label": "Configurazione Bottone",
+          "collapsible": true,
           "fields": [
             {
-              "component": "tab",
-              "label": "buttonTextConfig",
-              "name": "Configurazione testo e bottone"
-            },
-            {
-              "component": "text",
-              "name": "title",
-              "label": "Titolo",
-              "required": true
-            },
-            {
-              "component": "richtext",
-              "name": "subtitle",
-              "label": "Sottotitolo",
-              "valueType": "string"
-            },
-            {
-              "component": "select",
-              "name": "contentAlignment",
-              "label": "Allineamento Contenuto",
-              "options": [
-                {
-                  "name": "Testo e bottone centrati",
-                  "value": "text-block-center"
-                },
-                {
-                  "name": "Testo a sinistra, bottone a destra",
-                  "value": "text-block-left"
-                }
-              ],
-              "defaultValue": "text-block-center"
-            },
-            {
-              "component": "container",
-              "name": "button-container",
-              "label": "Configurazione Bottone",
-              "collapsible": true,
-              "fields": [
-                {
-                  "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
-                }
-              ]
-            },
-            {
-              "component": "tab",
-              "label": "Configurazione Number Block 1",
-              "name": "numberBlock1"
-            },
-            {
-              "component": "text-input",
-              "label": "Text 2",
-              "name": "text2",
-              "valueType": "string"
+              "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
             }
           ]
+        },
+        {
+          "component": "tab",
+          "label": "Configurazione blocco numerico 1",
+          "name": "numberBlock1"
+        },
+        {
+          "component": "text-input",
+          "label": "Testo superiore",
+          "name": "numberBlockText1",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "Testo inferiore",
+          "label": "numberBlockSubText1",
+          "valueType": "string"
+        },
+        {
+          "component": "tab",
+          "label": "Configurazione blocco numerico 2",
+          "name": "numberBlock2"
+        },
+        {
+          "component": "text-input",
+          "label": "Testo superiore",
+          "name": "numberBlockText2",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "Testo inferiore",
+          "label": "numberBlockSubText2",
+          "valueType": "string"
+        },
+        {
+          "component": "tab",
+          "label": "Configurazione blocco numerico 3",
+          "name": "numberBlock3"
+        },
+        {
+          "component": "text-input",
+          "label": "Testo superiore",
+          "name": "numberBlockText3",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "Testo inferiore",
+          "label": "numberBlockSubText3",
+          "valueType": "string"
         }
       ]
     }
