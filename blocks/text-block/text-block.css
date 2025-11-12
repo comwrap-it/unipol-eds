@@ -63,6 +63,7 @@
   font-weight: 600;
   font-size: 4rem;
 }
+
 .number-block {
     margin-bottom: 32px;
 }
@@ -72,7 +73,7 @@
 }
 
 /* Tablet */
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (width >= 769px) and (width <= 1024px) {
   .text-block {
     padding: 36px 20px;
   }
@@ -87,7 +88,7 @@
 }
 
 /* Desktop */
-@media (min-width: 1025px) {
+@media (width >= 1025px) {
   .text-block {
     padding: 40px 24px;
   }

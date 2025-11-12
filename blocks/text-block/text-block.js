@@ -127,7 +127,7 @@ export default async function decorate(block) {
 
       buttonElement = createButton(label, href, variant, size);
     } else {
-      let label = buttonTextRow.textContent?.trim() || 'Button';
+      const label = buttonTextRow.textContent?.trim() || 'Button';
       const link = buttonTextRow.querySelector('a');
       const href = link?.href || '';
       const variant = BUTTON_VARIANTS.PRIMARY;
@@ -147,23 +147,22 @@ export default async function decorate(block) {
   textBlock.appendChild(textContentContainer);
 
   // === Rows 7–12: Grouped Number Blocks (Pairs) ===
-    const numberBlockWrapper = document.createElement('div');
-    numberBlockWrapper.className = 'number-block-container';
+  const numberBlockWrapper = document.createElement('div');
+  numberBlockWrapper.className = 'number-block-container';
 
-    for (let i = 7; i <= 12; i += 2) {
-      const firstRow = rows[i];
-      const secondRow = rows[i + 1];
-      if (!firstRow && !secondRow) continue;
-
+  for (let i = 7; i <= 12; i += 2) {
+    const firstRow = rows[i];
+    const secondRow = rows[i + 1];
+    if (firstRow && secondRow) {
       const itemWrapper = document.createElement('div');
       itemWrapper.className = 'number-block';
 
       const processRow = (row, rowIndex) => {
         if (!row) return;
         const hasInstrumentation = row.hasAttribute('data-aue-resource')
-          || row.hasAttribute('data-richtext-prop')
-          || row.querySelector('[data-aue-resource]')
-          || row.querySelector('[data-richtext-prop]');
+            || row.hasAttribute('data-richtext-prop')
+            || row.querySelector('[data-aue-resource]')
+            || row.querySelector('[data-richtext-prop]');
         const hasContent = row.textContent?.trim();
         if (hasInstrumentation || hasContent) {
           const inner = document.createElement('div');
@@ -187,10 +186,11 @@ export default async function decorate(block) {
         numberBlockWrapper.appendChild(itemWrapper);
       }
     }
+  }
 
-    if (numberBlockWrapper.children.length > 0) {
-      textBlock.appendChild(numberBlockWrapper);
-    }
+  if (numberBlockWrapper.children.length > 0) {
+    textBlock.appendChild(numberBlockWrapper);
+  }
 
   // Preserve ALL block instrumentation attributes before replacing content
   // Copy all data-aue-* and other instrumentation attributes

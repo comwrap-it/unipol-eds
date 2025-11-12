@@ -62,13 +62,13 @@
     color: var(--standard-button-primary-color);
 }
 
-.btn-primary:hover:not(:disabled) {
-    background-color: var(--standard-button-primary-hover-bg);
-}
-
 .btn-primary:disabled {
     background-color: var(--standard-button-primary-disabled-bg);
     color: var(--standard-button-primary-disabled-color);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background-color: var(--standard-button-primary-hover-bg);
 }
 
 /* Accent Variant */
@@ -77,14 +77,14 @@
     color: var(--standard-button-accent-color);
 }
 
-.btn-accent:hover:not(:disabled) {
-    background-color: var(--standard-button-accent-hover-bg);
-    color: var(--standard-button-accent-hover-color);
-}
-
 .btn-accent:disabled {
     background-color: var(--standard-button-accent-disabled-bg);
     color: var(--standard-button-accent-disabled-color);
+}
+
+.btn-accent:hover:not(:disabled) {
+    background-color: var(--standard-button-accent-hover-bg);
+    color: var(--standard-button-accent-hover-color);
 }
 
 /* Secondary Variant */
@@ -92,6 +92,11 @@
     background-color: var(--standard-button-secondary-bg);
     color: var(--standard-button-secondary-color);
     border-color: var(--standard-button-secondary-border);
+}
+
+.btn-secondary:disabled {
+    color: var(--standard-button-secondary-disabled-color);
+    border-color: var(--standard-button-secondary-disabled-border);
 }
 
 .btn-secondary:hover:not(:disabled) {
@@ -106,6 +111,7 @@
 }
 
 /* Size Variants */
+
 /* .btn-small {
     padding: 8px 16px;
     font-size: 12px;
