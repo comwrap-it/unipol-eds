@@ -1,0 +1,27 @@
+/**
+ * This file was generated automatically by Supernova.io and should not be changed manually.
+ * To modify the format or content of this file, please contact your design system team. 
+ */
+
+:root {
+  --typography-text-styles-title-extra-large: var(--font-weight-semi-bold) var(--dimension-font-size-title-extra-large)/100% var(--font-family-font-2);
+  --typography-text-styles-title-hero-apex-new: var(--font-weight-medium) var(--dimension-font-size-title-hero-apex-new)/115% var(--font-family-font-1);
+  --typography-text-styles-title-page: var(--font-weight-medium) var(--dimension-font-size-title-page)/115% var(--font-family-font-1);
+  --typography-text-styles-subtitle-apex-new: var(--font-weight-medium) var(--font-size-32)/115% var(--font-family-font-1);
+  --typography-text-styles-subtitle-manrope: var(--font-weight-semi-bold) var(--dimension-font-size-subtitle-manrope)/120% var(--font-family-font-2);
+  --typography-text-styles-heading: var(--font-weight-semi-bold) var(--dimension-font-size-heading)/125% var(--font-family-font-2);
+  --typography-text-styles-subheading: var(--font-weight-semi-bold) var(--font-size-20)/130% var(--font-family-font-2);
+  --typography-text-styles-body-base: var(--font-weight-regular) var(--font-size-16)/140% var(--font-family-font-2);
+  --typography-text-styles-body-strong: var(--font-weight-semi-bold) var(--font-size-16)/140% var(--font-family-font-2);
+  --typography-text-styles-body-link: var(--font-weight-regular) var(--font-size-16)/140% var(--font-family-font-2);
+  --typography-text-styles-body-small: var(--font-weight-regular) var(--font-size-14)/140% var(--font-family-font-2);
+  --typography-text-styles-body-small-medium: var(--font-weight-medium) var(--font-size-14)/140% var(--font-family-font-2);
+  --typography-text-styles-body-extra-small: var(--font-weight-regular) var(--font-size-12)/140% var(--font-family-font-2);
+  --typography-text-styles-overline: var(--font-weight-semi-bold) var(--font-size-12)/140% var(--font-family-font-2);
+  --typography-text-styles-single-line-body-base: var(--font-weight-semi-bold) var(--font-size-16)/150% var(--font-family-font-2);
+  --typography-text-styles-single-line-body-link: var(--font-weight-semi-bold) var(--font-size-16)/150% var(--font-family-font-2);
+  --typography-text-styles-title-hero-manrope: var(--font-weight-medium) var(--font-size-56)/115% var(--font-family-font-2);
+  --typography-text-styles-subtitle-manrope-fixed: var(--font-weight-semi-bold) var(--font-size-32)/120% var(--font-family-font-2);
+  --typography-text-styles-heading-fixed: var(--font-weight-semi-bold) var(--font-size-24)/125% var(--font-family-font-2);
+  --typography-text-styles-body-medium: var(--font-weight-medium) var(--font-size-16)/140% var(--font-family-font-2);
+}
