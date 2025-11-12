@@ -1,7 +1,7 @@
 /* Text Block Component */
 
 /* Import button utility styles */
-@import url('../atoms/buttons/primary-button/primary-button.css');
+@import url('../atoms/buttons/standard-button/standard-button.css');
 
 /* Text Block Container */
 .text-block {
@@ -13,8 +13,8 @@
 
 /* Text Block Title */
 .text-block-title {
-  font-size: 2rem;
-  font-weight: 600;
+  font-size: 3rem;
+  font-weight: 550;
   margin: 0 0 24px;
   color: var(--text-primary, #1a1a1a);
   line-height: 1.3;
@@ -29,18 +29,33 @@
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
+  font-weight: 400;
 }
 
 /* Text Block Button Container */
 .text-block-button,
 .text-block-button-wrapper {
-  margin-top: 24px;
   display: flex;
   justify-content: center;
 }
 
 .text-block-button .btn {
   flex-shrink: 0;
+}
+
+.text-block.text-block_align-left {
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.text-block.text-block_align-left .text-block-title {
+  margin: 0;
+}
+
+.text-block.text-block_align-left .text-block-text {
+    display:none;
 }
 
 /* Responsive Design */
@@ -50,12 +65,11 @@
   }
 
   .text-block-title {
-    font-size: 1.5rem;
+    font-size: 2rem;
     margin-bottom: 16px;
   }
 
   .text-block-text {
-    font-size: 0.9375rem;
     margin-bottom: 24px;
   }
 
@@ -71,7 +85,7 @@
   }
 
   .text-block-title {
-    font-size: 1.75rem;
+    font-size: 2rem;
   }
 }
 

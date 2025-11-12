@@ -25,9 +25,6 @@ export default async function decorate(block) {
   }
 
   // Extract text block data
-  // Row 0: Title
-  // Row 1: Text
-  // Row 2: Button (optional)
 
   // Create text block container
   const textBlock = document.createElement('div');
@@ -35,6 +32,7 @@ export default async function decorate(block) {
 
   // Title - Row 0
   const titleRow = rows[0];
+  console.log("UNO: ", titleRow);
   if (titleRow) {
     // Try to preserve existing heading element
     const existingHeading = titleRow.querySelector('h1, h2, h3, h4, h5, h6');
@@ -92,14 +90,39 @@ export default async function decorate(block) {
       }
     }
   }
+  console.log("DUE: ", textRow);
 
-  // Button - Rows 2-5 (optional)
+
+   // === Row 2: Content Alignment ===
+   const contentAlignmentRow = rows[2];
+   let contentAlignment = contentAlignmentRow.textContent?.trim();
+
+   if (contentAlignmentRow) {
+     const alignmentField = contentAlignmentRow.querySelector('p[data-aue-prop="contentAlignment"]');
+     if (alignmentField && alignmentField.textContent?.trim()) {
+       contentAlignment = alignmentField.textContent.trim();
+     }
+   }
+
+   if (contentAlignment === 'text-block-center') {
+     textBlock.classList.add('text-block_align-center');
+   } else if (contentAlignment === 'text-block-left') {
+     textBlock.classList.add('text-block_align-left');
+   }
+  console.log("TRE: ", contentAlignmentRow);
+
+
+  // Button - Rows 3-6 (optional)
   // Universal Editor creates separate rows for each button field:
   // Row 2 = text, Row 3 = variant, Row 4 = size, Row 5 = href
-  const buttonTextRow = rows[2];
-  const buttonVariantRow = rows[3];
-  const buttonSizeRow = rows[4];
-  const buttonHrefRow = rows[5];
+  const buttonTextRow = rows[3];
+  const buttonVariantRow = rows[4];
+  const buttonSizeRow = rows[5];
+  const buttonHrefRow = rows[6];
+  console.log("4: ", buttonTextRow);
+  console.log("5: ", buttonVariantRow);
+  console.log("6: ", buttonSizeRow);
+  console.log("7: ", buttonHrefRow);
 
   if (buttonTextRow && buttonTextRow.textContent?.trim()) {
     // Check if button row has instrumentation (Universal Editor)

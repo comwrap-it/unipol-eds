@@ -1,7 +1,7 @@
 
-/* Import base design tokens */
+/* Import base design tokens
 @import url('../../../../styles/design-tokens.css');
-
+*/
 /* Design Tokens for Button System */
 :root {
   /* Primary Variant */
