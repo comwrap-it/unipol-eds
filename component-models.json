@@ -219,70 +219,91 @@
     "id": "text-block",
     "fields": [
       {
-        "component": "text",
-        "name": "title",
-        "label": "Titolo",
-        "required": true
-      },
-      {
-        "component": "richtext",
-        "name": "subtitle",
-        "label": "Sottotitolo",
-        "valueType": "string"
-      },
-      {
-        "component": "select",
-        "name": "contentAlignment",
-        "label": "Allineamento Contenuto",
-        "options": [
-          {
-            "name": "Testo e bottone centrati",
-            "value": "text-block-center"
-          },
-          {
-            "name": "Testo a sinistra, bottone a destra",
-            "value": "text-block-left"
-          }
-        ],
-        "defaultValue": "text-block-center"
-      },
-      {
-        "component": "container",
-        "name": "button-container",
-        "label": "Configurazione Bottone",
-        "collapsible": true,
+        "id": "tab",
         "fields": [
           {
+            "component": "tab",
+            "label": "buttonTextConfig",
+            "name": "Configurazione testo e bottone"
+          },
+          {
             "component": "text",
-            "name": "text",
-            "label": "Button Text",
+            "name": "title",
+            "label": "Titolo",
             "required": true
           },
           {
+            "component": "richtext",
+            "name": "subtitle",
+            "label": "Sottotitolo",
+            "valueType": "string"
+          },
+          {
             "component": "select",
-            "name": "variant",
-            "label": "Variant",
-            "value": "primary",
+            "name": "contentAlignment",
+            "label": "Allineamento Contenuto",
             "options": [
               {
-                "name": "Primary",
-                "value": "primary"
+                "name": "Testo e bottone centrati",
+                "value": "text-block-center"
               },
               {
-                "name": "Secondary",
-                "value": "secondary"
+                "name": "Testo a sinistra, bottone a destra",
+                "value": "text-block-left"
+              }
+            ],
+            "defaultValue": "text-block-center"
+          },
+          {
+            "component": "container",
+            "name": "button-container",
+            "label": "Configurazione Bottone",
+            "collapsible": true,
+            "fields": [
+              {
+                "component": "text",
+                "name": "text",
+                "label": "Button Text",
+                "required": true
               },
               {
-                "name": "Accent",
-                "value": "accent"
+                "component": "select",
+                "name": "variant",
+                "label": "Variant",
+                "value": "primary",
+                "options": [
+                  {
+                    "name": "Primary",
+                    "value": "primary"
+                  },
+                  {
+                    "name": "Secondary",
+                    "value": "secondary"
+                  },
+                  {
+                    "name": "Accent",
+                    "value": "accent"
+                  }
+                ]
+              },
+              {
+                "component": "aem-content",
+                "name": "href",
+                "label": "Link URL",
+                "description": "Optional URL to make this a link button"
               }
             ]
           },
           {
-            "component": "aem-content",
-            "name": "href",
-            "label": "Link URL",
-            "description": "Optional URL to make this a link button"
+            "component": "tab",
+            "label": "Configurazione Number Block 1",
+            "name": "numberBlock1"
+          },
+          {
+            "component": "text-input",
+            "label": "Text 2",
+            "name": "text2",
+            "valueType": "string"
           }
         ]
       }
