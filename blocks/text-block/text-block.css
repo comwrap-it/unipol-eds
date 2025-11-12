@@ -1,7 +1,7 @@
 /* Text Block Component */
 
 /* Import button utility styles */
-@import url('../atoms/buttons/primary-button/primary-button.css');
+@import url('../atoms/buttons/standard-button/standard-button.css');
 
 /* Text Block Container */
 .text-block {

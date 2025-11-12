@@ -95,7 +95,20 @@ export default async function decorate(block) {
 
     // === Row 2: Content Alignment ===
     const contentAlignmentRow = rows[2];
-    console.log('contentAlignment:', contentAlignmentRow);
+    let contentAlignment = contentAlignmentRow.textContent?.trim();
+
+    if (contentAlignmentRow) {
+      const alignmentField = contentAlignmentRow.querySelector('p[data-aue-prop="contentAlignment"]');
+      if (alignmentField && alignmentField.textContent?.trim()) {
+        contentAlignment = alignmentField.textContent.trim();
+      }
+    }
+
+    if (contentAlignment === 'text-block-center') {
+      textBlock.classList.add('align-center');
+    } else if (contentAlignment === 'text-block-left') {
+      textBlock.classList.add('align-left');
+    }
 
 
   // Button - Rows 3-6 (optional)
