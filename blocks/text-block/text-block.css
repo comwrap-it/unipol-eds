@@ -43,14 +43,13 @@
   flex-shrink: 0;
 }
 
-.text-block.text-block_align-left {
+.text-block.text-block-left {
     display:flex;
     justify-content: space-between;
     align-items: center;
-
 }
 
-.text-block.text-block_align-left .text-block-title {
+.text-block.text-block-left .text-block-title {
   margin: 0;
 }
 

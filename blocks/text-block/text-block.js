@@ -32,7 +32,6 @@ export default async function decorate(block) {
 
   // Title - Row 0
   const titleRow = rows[0];
-  console.log("UNO: ", titleRow);
   if (titleRow) {
     // Try to preserve existing heading element
     const existingHeading = titleRow.querySelector('h1, h2, h3, h4, h5, h6');
@@ -90,8 +89,6 @@ export default async function decorate(block) {
       }
     }
   }
-  console.log("DUE: ", textRow);
-
 
    // === Row 2: Content Alignment ===
    const contentAlignmentRow = rows[2];
@@ -105,11 +102,10 @@ export default async function decorate(block) {
    }
 
    if (contentAlignment === 'text-block-center') {
-     textBlock.classList.add('text-block_align-center');
+     textBlock.classList.add('text-block-center');
    } else if (contentAlignment === 'text-block-left') {
-     textBlock.classList.add('text-block_align-left');
+     textBlock.classList.add('text-block-left');
    }
-  console.log("TRE: ", contentAlignmentRow);
 
 
   // Button - Rows 3-6 (optional)
@@ -119,10 +115,6 @@ export default async function decorate(block) {
   const buttonVariantRow = rows[4];
   const buttonSizeRow = rows[5];
   const buttonHrefRow = rows[6];
-  console.log("4: ", buttonTextRow);
-  console.log("5: ", buttonVariantRow);
-  console.log("6: ", buttonSizeRow);
-  console.log("7: ", buttonHrefRow);
 
   if (buttonTextRow && buttonTextRow.textContent?.trim()) {
     // Check if button row has instrumentation (Universal Editor)
