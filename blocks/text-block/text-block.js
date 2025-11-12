@@ -93,13 +93,18 @@ export default async function decorate(block) {
     }
   }
 
-  // Button - Rows 2-5 (optional)
+    // === Row 2: Content Alignment ===
+    const contentAlignmentRow = rows[2];
+    console.log('contentAlignment:', contentAlignmentRow);
+
+
+  // Button - Rows 3-6 (optional)
   // Universal Editor creates separate rows for each button field:
   // Row 2 = text, Row 3 = variant, Row 4 = size, Row 5 = href
-  const buttonTextRow = rows[2];
-  const buttonVariantRow = rows[3];
-  const buttonSizeRow = rows[4];
-  const buttonHrefRow = rows[5];
+  const buttonTextRow = rows[3];
+  const buttonVariantRow = rows[4];
+  const buttonSizeRow = rows[5];
+  const buttonHrefRow = rows[6];
 
   if (buttonTextRow && buttonTextRow.textContent?.trim()) {
     // Check if button row has instrumentation (Universal Editor)

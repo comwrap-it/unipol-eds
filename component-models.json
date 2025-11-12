@@ -221,19 +221,35 @@
       {
         "component": "text",
         "name": "title",
-        "label": "Title",
+        "label": "Titolo",
         "required": true
       },
       {
         "component": "richtext",
         "name": "subtitle",
-        "label": "Subtitle",
+        "label": "Sottotitolo",
         "valueType": "string"
+      },
+      {
+        "component": "select",
+        "name": "contentAlignment",
+        "label": "Allineamento Contenuto",
+        "options": [
+          {
+            "name": "Testo e bottone centrati",
+            "value": "text-block-center"
+          },
+          {
+            "name": "Testo a sinistra, bottone a destra",
+            "value": "text-block-left"
+          }
+        ],
+        "defaultValue": "text-block-center"
       },
       {
         "component": "container",
         "name": "button-container",
-        "label": "Button",
+        "label": "Configurazione Bottone",
         "collapsible": true,
         "fields": [
           {
