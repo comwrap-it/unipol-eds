@@ -9,24 +9,34 @@
 
 // Button constants for shared use
 export const BUTTON_VARIANTS = {
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-  ACCENT: 'accent',
+  PRIMARY: "primary",
+  SECONDARY: "secondary",
+  ACCENT: "accent",
 };
 
 export const BUTTON_SIZES = {
-  SMALL: 'small',
-  MEDIUM: 'medium',
-  LARGE: 'large',
+  SMALL: "small",
+  MEDIUM: "medium",
+  LARGE: "large",
 };
 
 export const BUTTON_STATES = {
-  DEFAULT: 'default',
-  HOVER: 'hover',
-  ACTIVE: 'active',
-  DISABLED: 'disabled',
-  FOCUSED: 'focused',
+  DEFAULT: "default",
+  HOVER: "hover",
+  ACTIVE: "active",
+  DISABLED: "disabled",
+  FOCUSED: "focused",
 };
+
+let stylesLoaded = false;
+async function ensureStyles() {
+  if (stylesLoaded) return;
+  const { loadCSS } = await import("../../../../scripts/aem.js");
+  await loadCSS(
+    `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`
+  );
+  stylesLoaded = true;
+}
 
 /**
  * Create a button element with styling
@@ -43,43 +53,45 @@ export const BUTTON_STATES = {
  */
 export function createButton(
   label,
-  href = '',
+  href = "",
   variant = BUTTON_VARIANTS.PRIMARY,
-  size = BUTTON_SIZES.MEDIUM,
+  size = BUTTON_SIZES.MEDIUM
 ) {
+  ensureStyles();
   // Decide if it's a link or button
-  const element = href && href !== ''
-    ? document.createElement('a')
-    : document.createElement('button');
+  const element =
+    href && href !== ""
+      ? document.createElement("a")
+      : document.createElement("button");
 
   // Set common properties
   element.textContent = label;
-  element.className = ['btn', `btn-${variant}`, `btn-${size}`].join(' ');
+  element.className = ["btn", `btn-${variant}`, `btn-${size}`].join(" ");
 
   // Set href for links
-  if (href && href !== '') {
+  if (href && href !== "") {
     element.href = href;
-    element.setAttribute('role', 'button');
+    element.setAttribute("role", "button");
   }
 
   // Add accessibility attributes
-  element.setAttribute('tabindex', '0');
+  element.setAttribute("tabindex", "0");
 
   // Add keyboard support for buttons
-  element.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+  element.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       element.click();
     }
   });
 
   // Add focus styles
-  element.addEventListener('focus', () => {
-    element.classList.add('btn-focus');
+  element.addEventListener("focus", () => {
+    element.classList.add("btn-focus");
   });
 
-  element.addEventListener('blur', () => {
-    element.classList.remove('btn-focus');
+  element.addEventListener("blur", () => {
+    element.classList.remove("btn-focus");
   });
 
   return element;
@@ -95,10 +107,13 @@ export function createButton(
 export function createButtonFromRows(rows) {
   if (!rows || rows.length === 0) return null;
 
-  const text = rows[0]?.textContent?.trim() || 'Button';
-  const variant = rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-  const size = rows[2]?.textContent?.trim().toLowerCase() || BUTTON_SIZES.MEDIUM;
-  const href = rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || '';
+  const text = rows[0]?.textContent?.trim() || "Button";
+  const variant =
+    rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
+  const size =
+    rows[2]?.textContent?.trim().toLowerCase() || BUTTON_SIZES.MEDIUM;
+  const href =
+    rows[3]?.querySelector("a")?.href || rows[3]?.textContent?.trim() || "";
 
   return createButton(text, href, variant, size);
 }
@@ -114,44 +129,51 @@ export default function decorateButton(block) {
 
   // Get rows from block
   let rows = Array.from(block.children);
-  const wrapper = block.querySelector('.default-content-wrapper');
+  const wrapper = block.querySelector(".default-content-wrapper");
   if (wrapper) {
     rows = Array.from(wrapper.children);
   }
 
   // Check if block has instrumentation (Universal Editor)
-  const hasInstrumentation = block.hasAttribute('data-aue-resource')
-    || block.querySelector('[data-aue-resource]')
-    || block.querySelector('[data-richtext-prop]');
+  const hasInstrumentation =
+    block.hasAttribute("data-aue-resource") ||
+    block.querySelector("[data-aue-resource]") ||
+    block.querySelector("[data-richtext-prop]");
 
   // Extract button properties
-  const text = rows[0]?.textContent?.trim() || 'Button';
-  const variant = rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-  const size = rows[2]?.textContent?.trim().toLowerCase() || BUTTON_SIZES.MEDIUM;
-  const href = rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || '';
+  const text = rows[0]?.textContent?.trim() || "Button";
+  const variant =
+    rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
+  const size =
+    rows[2]?.textContent?.trim().toLowerCase() || BUTTON_SIZES.MEDIUM;
+  const href =
+    rows[3]?.querySelector("a")?.href || rows[3]?.textContent?.trim() || "";
 
   if (hasInstrumentation) {
     // Preserve structure for Universal Editor
     // Find or create button element preserving instrumentation
-    let buttonElement = block.querySelector('a, button');
+    let buttonElement = block.querySelector("a, button");
 
     if (!buttonElement) {
       // Create button/link element preserving instrumentation from first row
       const instrumentation = {};
       if (rows[0]) {
         [...rows[0].attributes].forEach((attr) => {
-          if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-')) {
+          if (
+            attr.name.startsWith("data-aue-") ||
+            attr.name.startsWith("data-richtext-")
+          ) {
             instrumentation[attr.name] = attr.value;
           }
         });
       }
 
-      if (href && href !== '') {
-        buttonElement = document.createElement('a');
+      if (href && href !== "") {
+        buttonElement = document.createElement("a");
         buttonElement.href = href;
-        buttonElement.setAttribute('role', 'button');
+        buttonElement.setAttribute("role", "button");
       } else {
-        buttonElement = document.createElement('button');
+        buttonElement = document.createElement("button");
       }
 
       buttonElement.textContent = text;
@@ -164,7 +186,7 @@ export default function decorateButton(block) {
       // Move instrumentation from first row to button if present
       if (rows[0]) {
         // Preserve row structure but add button
-        rows[0].textContent = '';
+        rows[0].textContent = "";
         rows[0].appendChild(buttonElement);
       } else {
         block.appendChild(buttonElement);
@@ -172,12 +194,12 @@ export default function decorateButton(block) {
     } else {
       // Update existing button with text and href
       buttonElement.textContent = text;
-      if (href && href !== '') {
-        if (buttonElement.tagName === 'BUTTON') {
+      if (href && href !== "") {
+        if (buttonElement.tagName === "BUTTON") {
           // Convert button to link
-          const link = document.createElement('a');
+          const link = document.createElement("a");
           link.href = href;
-          link.setAttribute('role', 'button');
+          link.setAttribute("role", "button");
           link.textContent = text;
           [...buttonElement.attributes].forEach((attr) => {
             link.setAttribute(attr.name, attr.value);
@@ -191,14 +213,16 @@ export default function decorateButton(block) {
     }
 
     // Apply button classes
-    buttonElement.className = ['btn', `btn-${variant}`, `btn-${size}`].join(' ');
-    buttonElement.setAttribute('tabindex', '0');
+    buttonElement.className = ["btn", `btn-${variant}`, `btn-${size}`].join(
+      " "
+    );
+    buttonElement.setAttribute("tabindex", "0");
   } else {
     // No instrumentation - create button normally
     const button = createButton(text, href, variant, size);
-    block.textContent = '';
+    block.textContent = "";
     block.appendChild(button);
   }
 
-  block.classList.add('button-block');
+  block.classList.add("button-block");
 }
