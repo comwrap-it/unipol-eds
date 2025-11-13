@@ -92,6 +92,11 @@
                     "sling:resourceType": "core/franklin/components/block/v1/block",
                     "name": "Text Block",
                     "model": "text-block"
+                  },
+                  "number-block": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Number Block",
+                    "model": "number-block"
                   }
                 }
               }

@@ -20,15 +20,14 @@ export default async function decorate(block) {
     rows = Array.from(wrapper.children);
   }
 
-  // Extract number block data
-
   // Create number block container
   const numberBlock = document.createElement('div');
   numberBlock.className = 'number-block';
 
-  // === Rows 7–12: Grouped Number Blocks (Pairs) ===
   const numberBlockWrapper = document.createElement('div');
   numberBlockWrapper.className = 'number-block_cont';
+
+  let hasConfiguredMainFields = false;
 
   for (let i = 0; i <= 5; i += 2) {
     const firstRow = rows[i];
@@ -48,6 +47,7 @@ export default async function decorate(block) {
           const inner = document.createElement('div');
 
           if (rowIndex === 0 || rowIndex === 2 || rowIndex === 4) {
+            hasConfiguredMainFields = true;
             inner.classList.add('text-block-number');
           }
 
@@ -68,12 +68,16 @@ export default async function decorate(block) {
     }
   }
 
+  if (!hasConfiguredMainFields) {
+    block.remove();
+    return;
+  }
+
   if (numberBlockWrapper.children.length > 0) {
     numberBlock.appendChild(numberBlockWrapper);
   }
 
   // Preserve ALL block instrumentation attributes before replacing content
-  // Copy all data-aue-* and other instrumentation attributes
   [...block.attributes].forEach((attr) => {
     if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
       numberBlock.setAttribute(attr.name, attr.value);
