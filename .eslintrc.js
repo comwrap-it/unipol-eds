@@ -8,6 +8,9 @@ module.exports = {
   env: {
     browser: true,
   },
+  ignorePatterns: [
+    'static/**',
+  ],
   parser: '@babel/eslint-parser',
   parserOptions: {
     allowImportExportEverywhere: true,
