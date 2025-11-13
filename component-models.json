@@ -300,6 +300,10 @@
               {
                 "name": "Large",
                 "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
               }
             ]
           },
@@ -308,6 +312,46 @@
             "name": "href",
             "label": "Link URL",
             "description": "Optional URL to make this a link button"
+          },
+          {
+            "component": "select",
+            "name": "leftIcon",
+            "label": "Left Icon",
+            "description": "Select the left icon",
+            "options": [
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "search-icon"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "rightIcon",
+            "label": "Right Icon",
+            "description": "Select the right icon",
+            "options": [
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left-icon"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right-icon"
+              },
+              {
+                "name": "Search Icon",
+                "value": "search-icon"
+              }
+            ]
           }
         ]
       },
