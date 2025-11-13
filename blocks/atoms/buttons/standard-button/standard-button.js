@@ -28,16 +28,6 @@ export const BUTTON_STATES = {
   FOCUSED: "focused",
 };
 
-let stylesLoaded = false;
-async function ensureStyles() {
-  if (stylesLoaded) return;
-  const { loadCSS } = await import("../../../../scripts/aem.js");
-  await loadCSS(
-    `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`
-  );
-  stylesLoaded = true;
-}
-
 /**
  * Create a button element with styling
  *
@@ -57,7 +47,6 @@ export function createButton(
   variant = BUTTON_VARIANTS.PRIMARY,
   size = BUTTON_SIZES.MEDIUM
 ) {
-  ensureStyles();
   // Decide if it's a link or button
   const element =
     href && href !== ""
@@ -83,15 +72,6 @@ export function createButton(
       e.preventDefault();
       element.click();
     }
-  });
-
-  // Add focus styles
-  element.addEventListener("focus", () => {
-    element.classList.add("btn-focus");
-  });
-
-  element.addEventListener("blur", () => {
-    element.classList.remove("btn-focus");
   });
 
   return element;

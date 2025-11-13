@@ -10,12 +10,23 @@
 import { createButton, BUTTON_VARIANTS, BUTTON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
+let isPrimaryBtnStyleLoaded = false;
+async function ensureBtnStylesLoaded() {
+  if (isPrimaryBtnStyleLoaded) return;
+  const { loadCSS } = await import("../../scripts/aem.js");
+  await loadCSS(
+    `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`
+  );
+  isPrimaryBtnStyleLoaded = true;
+}
+
 /**
  * Decorates a text-block element
  * @param {HTMLElement} block - The text-block element
  */
 export default async function decorate(block) {
   if (!block) return;
+  ensureBtnStylesLoaded();
 
   // Get rows from block
   let rows = Array.from(block.children);
