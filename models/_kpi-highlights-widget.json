@@ -59,9 +59,5 @@
     }
   ],
   "filters": [
-    {
-      "path": "/*",
-      "include": false
-    }
   ]
 }

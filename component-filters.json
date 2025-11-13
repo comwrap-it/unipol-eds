@@ -20,10 +20,6 @@
     ]
   },
   {
-    "path": "/*",
-    "include": false
-  },
-  {
     "id": "cards",
     "components": [
       "card"
