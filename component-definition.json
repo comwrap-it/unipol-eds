@@ -79,6 +79,27 @@
       ]
     },
     {
+      "title": "KPI Highlights Widget",
+      "id": "kpi-highlights-widget",
+      "components": [
+        {
+          "title": "KPI Highlights Widget",
+          "id": "kpi-highlights-widget",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {
+                  "name": "KPI Highlights Widget",
+                  "model": "kpi-highlights-widget"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
       "title": "Blocks",
       "id": "blocks",
       "components": [

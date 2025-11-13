@@ -8,6 +8,7 @@
           "page": {
             "resourceType": "core/franklin/components/section/v1/section",
             "template": {
+              "name" : "KPI Highlights Widget",
               "model": "kpi-highlights-widget"
             }
           }
@@ -21,20 +22,9 @@
       "fields": [
         {
           "component": "text",
-          "name": "name",
+          "name": "highlights-widget-name",
           "label": "Section Name",
           "description": "The label shown for this section in the Content Tree"
-        },
-        {
-          "component": "multiselect",
-          "name": "style",
-          "label": "Style",
-          "options": [
-            {
-              "name": "Highlight",
-              "value": "highlight"
-            }
-          ]
         }
       ]
     }

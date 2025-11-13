@@ -142,6 +142,17 @@
     ]
   },
   {
+    "id": "kpi-highlights-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "highlights-widget-name",
+        "label": "Section Name",
+        "description": "The label shown for this section in the Content Tree"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {

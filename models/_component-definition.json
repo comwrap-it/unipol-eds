@@ -28,6 +28,15 @@
       ]
     },
     {
+      "title": "KPI Highlights Widget",
+      "id": "kpi-highlights-widget",
+      "components": [
+        {
+          "...": "./_kpi-highlights-widget.json#/definitions"
+        }
+      ]
+    },
+    {
       "title": "Blocks",
       "id": "blocks",
       "components": [
