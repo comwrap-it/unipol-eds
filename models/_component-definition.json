@@ -24,13 +24,7 @@
       "components": [
         {
           "...": "./_section.json#/definitions"
-        }
-      ]
-    },
-    {
-      "title": "KPI Highlights Widget",
-      "id": "kpi-highlights-widget",
-      "components": [
+        },
         {
           "...": "./_kpi-highlights-widget.json#/definitions"
         }
