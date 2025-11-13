@@ -7,8 +7,18 @@
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
 
-import { createButton, BUTTON_VARIANTS, BUTTON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
+import { createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+
+let isPrimaryBtnStyleLoaded = false;
+async function ensureBtnStylesLoaded() {
+  if (isPrimaryBtnStyleLoaded) return;
+  const { loadCSS } = await import('../../scripts/aem.js');
+  await loadCSS(
+    `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`,
+  );
+  isPrimaryBtnStyleLoaded = true;
+}
 
 /**
  * Decorates a text-block element
@@ -16,6 +26,7 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
  */
 export default async function decorate(block) {
   if (!block) return;
+  ensureBtnStylesLoaded();
 
   // Get rows from block
   let rows = Array.from(block.children);
@@ -119,11 +130,11 @@ export default async function decorate(block) {
 
       const label = textField?.textContent?.trim() || 'Button';
       let variant = variantField?.textContent?.trim()?.toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-      let size = sizeField?.textContent?.trim()?.toLowerCase() || BUTTON_SIZES.MEDIUM;
+      let size = sizeField?.textContent?.trim()?.toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
       const href = hrefField?.getAttribute('href')?.replace('.html', '') || '';
 
       if (!Object.values(BUTTON_VARIANTS).includes(variant)) variant = BUTTON_VARIANTS.PRIMARY;
-      if (!Object.values(BUTTON_SIZES).includes(size)) size = BUTTON_SIZES.MEDIUM;
+      if (!Object.values(BUTTON_ICON_SIZES).includes(size)) size = BUTTON_ICON_SIZES.MEDIUM;
 
       buttonElement = createButton(label, href, variant, size);
     } else {
@@ -131,7 +142,7 @@ export default async function decorate(block) {
       const link = buttonTextRow.querySelector('a');
       const href = link?.href || '';
       const variant = BUTTON_VARIANTS.PRIMARY;
-      const size = BUTTON_SIZES.MEDIUM;
+      const size = BUTTON_ICON_SIZES.MEDIUM;
       buttonElement = createButton(label, href, variant, size);
     }
 

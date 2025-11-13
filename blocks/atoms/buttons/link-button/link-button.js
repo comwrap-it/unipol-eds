@@ -12,7 +12,7 @@ export const LINK_BUTTON_SIZES = {
   S: 's',
   M: 'm',
   L: 'l',
-  XL: 'xl'
+  XL: 'xl',
 };
 
 /**
@@ -26,14 +26,13 @@ export const LINK_BUTTON_SIZES = {
  * @returns {HTMLElement} link element
  */
 export function createLinkButton(
-  label, 
-  href, 
-  size = LINK_BUTTON_SIZES.M, 
-  showLeftIcon = false, 
-  showRightIcon = false, 
-  disabled = false
+  label,
+  href,
+  size = LINK_BUTTON_SIZES.M,
+  showLeftIcon = false,
+  showRightIcon = false,
+  disabled = false,
 ) {
-  
   const link = document.createElement('a');
   link.textContent = label;
   link.href = href;
@@ -129,7 +128,7 @@ export default function decorateLinkButton(block) {
       linkElement.href = href;
       linkElement.className = ['link-btn', `link-btn-${size}`].join(' ');
 
-      linkElement.querySelectorAll('.link-btn-icon').forEach(icon => icon.remove());
+      linkElement.querySelectorAll('.link-btn-icon').forEach((icon) => icon.remove());
       if (showLeftIcon) {
         const leftIcon = document.createElement('span');
         leftIcon.className = 'link-btn-icon left';
@@ -149,4 +148,3 @@ export default function decorateLinkButton(block) {
 
   block.classList.add('link-button-block');
 }
-

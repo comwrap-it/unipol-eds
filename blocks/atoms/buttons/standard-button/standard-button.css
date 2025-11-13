@@ -1,39 +1,3 @@
-/* Design Tokens for Button System */
-:root {
-    /* Primary Variant */
-    --standard-button-primary-bg: var(--color-brand-800);
-    --standard-button-primary-color: var(--color-neutral-200);
-    --standard-button-primary-hover-bg: var(--color-brand-600);
-    --standard-button-primary-disabled-bg: var(--color-grayscale-200);
-    --standard-button-primary-disabled-color: var(--color-grayscale-800);
-
-    /* Accent Variant */
-    --standard-button-accent-bg: var(--color-accent-500);
-    --standard-button-accent-color: var(--color-neutral-200);
-    --standard-button-accent-hover-bg: var(--color-accent-100);
-    --standard-button-accent-hover-color: var(--color-brand-800);
-    --standard-button-accent-disabled-bg: var(--color-accent-50);
-    --standard-button-accent-disabled-color: var(--color-grayscale-800);
-
-    /* Secondary Variant */
-    --standard-button-secondary-bg: var(--color-null-000);
-    --standard-button-secondary-color: var(--color-brand-800);
-    --standard-button-secondary-border: var(--color-brand-800);
-    --standard-button-secondary-hover-border: var(--color-brand-600);
-    --standard-button-secondary-hover-icon-color: var(--color-brand-600);
-    --standard-button-secondary-disabled-color: var(--color-grayscale-700);
-    --standard-button-secondary-disabled-border: var(--color-grayscale-700);
-
-    /* State Modifiers */
-    --standard-button-focus-outline: var(--border-width-stroke-200-2) solid var(--color-brand-200);
-
-    /* Sizing */
-    --standard-button-line-height: 1.5;
-
-    /* Transitions */
-    --standard-button-transition: all 0.2s ease-in-out;
-}
-
 /* Base Button Styles */
 .btn {
     display: inline-flex;
@@ -45,12 +9,12 @@
     border-radius: var(--border-radius-400-24);
     font-size: var(--font-size-16);
     font-weight: var(--font-weight-semi-bold);
-    line-height: var(--standard-button-line-height);
+    line-height: 1.5;
     min-width: var(--dimension-space-700-48);
     min-height: var(--dimension-space-400-24);
     text-decoration: none;
     cursor: pointer;
-    transition: var(--standard-button-transition);
+    transition: all 0.2s ease-in-out;
     font-family: inherit;
     box-sizing: border-box;
     user-select: none;
@@ -58,77 +22,117 @@
 
 /* Primary Variant */
 .btn-primary {
-    background-color: var(--standard-button-primary-bg);
-    color: var(--standard-button-primary-color);
+    background-color: var(--color-button-primary-default-background);
+    color: var(--color-button-primary-default-text);
+    border-color: var(--color-button-primary-default-border);
+
+    /* Disabled state */
+    &:disabled {
+        background-color: var(--color-button-primary-disabled-background);
+        color: var(--color-button-primary-disabled-text);
+        cursor: default;
+
+        /* they have a variable for the disabled border color but it doesn't match figma specific --color-button-primary-disabled-border */
+        border-color: var(--color-button-primary-disabled-background);
+    }
+
+    /* Hover state */
+    &:hover:not(:disabled) {
+        background-color: var(--color-button-primary-hover-background);
+        color: var(--color-button-primary-hover-text);
+        border-color: var(--color-button-primary-hover-border);
+    }
 }
 
-.btn-primary:disabled {
-    background-color: var(--standard-button-primary-disabled-bg);
-    color: var(--standard-button-primary-disabled-color);
-}
-
-.btn-primary:hover:not(:disabled) {
-    background-color: var(--standard-button-primary-hover-bg);
-}
-
-/* Accent Variant */
+/* Accent */
 .btn-accent {
-    background-color: var(--standard-button-accent-bg);
-    color: var(--standard-button-accent-color);
+    background-color: var(--color-button-accent-default-background);
+    color: var(--color-button-accent-default-text);
+    border-color: var(--color-button-accent-default-border);
+
+    /* Disabled state */
+    &:disabled {
+        background-color: var(--color-button-accent-disabled-background);
+        color: var(--color-button-accent-disabled-text);
+        border-color: var(--color-button-accent-disabled-border);
+        cursor: default;
+    }
+
+    /* Hover state */
+    &:hover:not(:disabled) {
+        background-color: var(--color-button-accent-hover-background);
+        color: var(--color-button-accent-hover-text);
+        border-color: var(--color-button-accent-hover-border);
+    }
 }
 
-.btn-accent:disabled {
-    background-color: var(--standard-button-accent-disabled-bg);
-    color: var(--standard-button-accent-disabled-color);
-}
-
-.btn-accent:hover:not(:disabled) {
-    background-color: var(--standard-button-accent-hover-bg);
-    color: var(--standard-button-accent-hover-color);
-}
-
-/* Secondary Variant */
+/* Secondary */
 .btn-secondary {
-    background-color: var(--standard-button-secondary-bg);
-    color: var(--standard-button-secondary-color);
-    border-color: var(--standard-button-secondary-border);
+    background-color: var(--color-button-secondary-default-background);
+    color: var(--color-button-secondary-default-text);
+    border-color: var(--color-button-secondary-default-border);
+
+    /* Disabled state */
+    &:disabled {
+        background-color: var(--color-button-secondary-disabled-background);
+        color: var(--color-button-secondary-disabled-text);
+        border-color: var(--color-button-secondary-disabled-border);
+        cursor: default;
+    }
+
+    /* Hover state */
+    &:hover:not(:disabled) {
+        background-color: var(--color-button-secondary-hover-background);
+        color: var(--color-button-secondary-hover-text);
+        border-color: var(--color-button-secondary-hover-border);
+    }
 }
 
-.btn-secondary:disabled {
-    color: var(--standard-button-secondary-disabled-color);
-    border-color: var(--standard-button-secondary-disabled-border);
+/* Icon styles */
+.btn-icon {
+    display: inline-block;
+    width: var(--size-icon-100-16);
+    height: var(--size-icon-100-16);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    /* Add specific icon classes for different sizes */
+    &.icon-medium {
+        width: var(--size-icon-200-20);
+        height: var(--size-icon-200-20);
+    }
+
+    &.icon-large {
+        width: var(--size-icon-300-24);
+        height: var(--size-icon-300-24);
+    }
+
+    &.icon-extra-large {
+        width: var(--size-icon-400-32);
+        height: var(--size-icon-400-32);
+    }
+
+    /* Add the effective icon based on the class */
+    &.search-icon {
+        background-image: url("/icons/search.svg");
+    }
+
+    &.chevron-left-icon {
+        background-image: url("/icons/chevron-left.svg");
+    }
+
+    &.chevron-right-icon {
+        background-image: url("/icons/chevron-right.svg");
+    }
 }
 
-.btn-secondary:hover:not(:disabled) {
-    border-color: var(--standard-button-secondary-hover-border);
-    color: var(--standard-button-secondary-hover-icon-color);
-}
-
-/* Focus State for Accessibility */
+/* Focus state for accessibility (generic token) */
 .btn:focus-visible,
 .btn:focus {
-    outline: var(--standard-button-focus-outline);
+    outline: var(--border-width-stroke-200-2) solid
+        var(--color-border-default-focused);
 }
-
-/* Size Variants */
-
-/* .btn-small {
-    padding: 8px 16px;
-    font-size: 12px;
-    min-height: 36px;
-}
-
-.btn-medium {
-    padding: 12px 24px;
-    font-size: 14px;
-    min-height: 44px;
-}
-
-.btn-large {
-    padding: 16px 32px;
-    font-size: 16px;
-    min-height: 52px;
-} */
 
 /* Block wrapper for standalone buttons */
 .button-block {
