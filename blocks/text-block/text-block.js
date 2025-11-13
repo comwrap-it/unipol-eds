@@ -146,52 +146,6 @@ export default async function decorate(block) {
   // Append the main text container to textBlock
   textBlock.appendChild(textContentContainer);
 
-  // === Rows 7–12: Grouped Number Blocks (Pairs) ===
-  const numberBlockWrapper = document.createElement('div');
-  numberBlockWrapper.className = 'number-block-container';
-
-  for (let i = 7; i <= 12; i += 2) {
-    const firstRow = rows[i];
-    const secondRow = rows[i + 1];
-    if (firstRow && secondRow) {
-      const itemWrapper = document.createElement('div');
-      itemWrapper.className = 'number-block';
-
-      const processRow = (row, rowIndex) => {
-        if (!row) return;
-        const hasInstrumentation = row.hasAttribute('data-aue-resource')
-            || row.hasAttribute('data-richtext-prop')
-            || row.querySelector('[data-aue-resource]')
-            || row.querySelector('[data-richtext-prop]');
-        const hasContent = row.textContent?.trim();
-        if (hasInstrumentation || hasContent) {
-          const inner = document.createElement('div');
-
-          if (rowIndex === 7 || rowIndex === 9 || rowIndex === 11) {
-            inner.classList.add('text-block-number');
-          }
-
-          while (row.firstChild) {
-            inner.appendChild(row.firstChild);
-          }
-          moveInstrumentation(row, inner);
-          itemWrapper.appendChild(inner);
-        }
-      };
-
-      processRow(firstRow, i);
-      processRow(secondRow, i + 1);
-
-      if (itemWrapper.children.length > 0) {
-        numberBlockWrapper.appendChild(itemWrapper);
-      }
-    }
-  }
-
-  if (numberBlockWrapper.children.length > 0) {
-    textBlock.appendChild(numberBlockWrapper);
-  }
-
   // Preserve ALL block instrumentation attributes before replacing content
   // Copy all data-aue-* and other instrumentation attributes
   [...block.attributes].forEach((attr) => {

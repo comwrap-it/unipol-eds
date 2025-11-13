@@ -39,7 +39,7 @@
     {
       "id": "kpi-highlights-widget",
       "components": [
-        "text"
+        "number-block"
       ]
     }
   ]

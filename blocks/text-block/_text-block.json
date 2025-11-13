@@ -21,11 +21,6 @@
       "id": "text-block",
       "fields": [
         {
-          "component": "tab",
-          "label": "Configurazione testo e bottone",
-          "name": "buttonTextConfig"
-        },
-        {
           "component": "text",
           "name": "title",
           "label": "Titolo",
@@ -63,57 +58,6 @@
               "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
             }
           ]
-        },
-        {
-          "component": "tab",
-          "label": "Configurazione blocco numerico 1",
-          "name": "numberBlock1"
-        },
-        {
-          "component": "text-input",
-          "label": "Testo superiore blocco 1",
-          "name": "numberBlockText1",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "name": "numberBlockSubText1",
-          "label": "Testo inferiore blocco 1",
-          "valueType": "string"
-        },
-        {
-          "component": "tab",
-          "label": "Configurazione blocco numerico 2",
-          "name": "numberBlock2"
-        },
-        {
-          "component": "text-input",
-          "label": "Testo superiore blocco 2",
-          "name": "numberBlockText2",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "name": "numberBlockSubText2",
-          "label": "Testo inferiore blocco 2",
-          "valueType": "string"
-        },
-        {
-          "component": "tab",
-          "label": "Configurazione blocco numerico 3",
-          "name": "numberBlock3"
-        },
-        {
-          "component": "text-input",
-          "label": "Testo superiore blocco 3",
-          "name": "numberBlockText3",
-          "valueType": "string"
-        },
-        {
-          "component": "richtext",
-          "name": "numberBlockSubText3",
-          "label": "Testo inferiore blocco 3",
-          "valueType": "string"
         }
       ]
     }

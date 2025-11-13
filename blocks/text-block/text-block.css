@@ -50,28 +50,6 @@
   display: none;
 }
 
-.number-block-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  font-size: 1rem;
-  font-weight: 400;
-}
-
-.text-block-number {
-  font-weight: 600;
-  font-size: 4rem;
-}
-
-.number-block {
-    margin-bottom: 32px;
-}
-
-.number-block p{
-    margin: 0;
-}
-
 /* Tablet */
 @media (width >= 769px) and (width <= 1024px) {
   .text-block {
@@ -80,10 +58,6 @@
 
   .text-block-title {
     font-size: 2rem;
-  }
-
-  .text-block-number {
-    font-size: 4rem;
   }
 }
 
@@ -105,15 +79,6 @@
   .text-block-button,
   .text-block-button-wrapper {
     margin-top: 0;
-  }
-
-  .number-block-container {
-    flex-direction: row;
-    justify-content: space-around;
-  }
-
-  .text-block-number {
-    font-size: 5rem;
   }
 }
 
