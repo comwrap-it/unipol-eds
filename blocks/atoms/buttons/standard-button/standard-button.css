@@ -26,34 +26,29 @@
     color: var(--color-button-primary-default-text);
     border-color: var(--color-button-primary-default-border);
 
+    /* Disabled state */
+    &:disabled {
+        background-color: var(--color-button-primary-disabled-background);
+        color: var(--color-button-primary-disabled-text);
+        cursor: default;
+
+        /* they have a variable for the disabled border color but it doesn't match figma specific --color-button-primary-disabled-border */
+        border-color: var(--color-button-primary-disabled-background);
+    }
+
     /* Hover state */
     &:hover:not(:disabled) {
         background-color: var(--color-button-primary-hover-background);
         color: var(--color-button-primary-hover-text);
         border-color: var(--color-button-primary-hover-border);
     }
-
-    /* Disabled state */
-    &:disabled {
-        background-color: var(--color-button-primary-disabled-background);
-        color: var(--color-button-primary-disabled-text);
-        cursor: default;
-        /* they have a variable for the disabled border color but it doesn't match figma specific --color-button-primary-disabled-border */
-        border-color: var(--color-button-primary-disabled-background);
-    }
 }
+
 /* Accent */
 .btn-accent {
     background-color: var(--color-button-accent-default-background);
     color: var(--color-button-accent-default-text);
     border-color: var(--color-button-accent-default-border);
-
-    /* Hover state */
-    &:hover:not(:disabled) {
-        background-color: var(--color-button-accent-hover-background);
-        color: var(--color-button-accent-hover-text);
-        border-color: var(--color-button-accent-hover-border);
-    }
 
     /* Disabled state */
     &:disabled {
@@ -61,6 +56,13 @@
         color: var(--color-button-accent-disabled-text);
         border-color: var(--color-button-accent-disabled-border);
         cursor: default;
+    }
+
+    /* Hover state */
+    &:hover:not(:disabled) {
+        background-color: var(--color-button-accent-hover-background);
+        color: var(--color-button-accent-hover-text);
+        border-color: var(--color-button-accent-hover-border);
     }
 }
 
@@ -70,19 +72,19 @@
     color: var(--color-button-secondary-default-text);
     border-color: var(--color-button-secondary-default-border);
 
-    /* Hover state */
-    &:hover:not(:disabled) {
-        background-color: var(--color-button-secondary-hover-background);
-        color: var(--color-button-secondary-hover-text);
-        border-color: var(--color-button-secondary-hover-border);
-    }
-
     /* Disabled state */
     &:disabled {
         background-color: var(--color-button-secondary-disabled-background);
         color: var(--color-button-secondary-disabled-text);
         border-color: var(--color-button-secondary-disabled-border);
         cursor: default;
+    }
+
+    /* Hover state */
+    &:hover:not(:disabled) {
+        background-color: var(--color-button-secondary-hover-background);
+        color: var(--color-button-secondary-hover-text);
+        border-color: var(--color-button-secondary-hover-border);
     }
 }
 
@@ -100,21 +102,26 @@
         width: var(--size-icon-200-20);
         height: var(--size-icon-200-20);
     }
+
     &.icon-large {
         width: var(--size-icon-300-24);
         height: var(--size-icon-300-24);
     }
+
     &.icon-extra-large {
         width: var(--size-icon-400-32);
         height: var(--size-icon-400-32);
     }
+
     /* Add the effective icon based on the class */
     &.search-icon {
         background-image: url("/icons/search.svg");
     }
+
     &.chevron-left-icon {
         background-image: url("/icons/chevron-left.svg");
     }
+
     &.chevron-right-icon {
         background-image: url("/icons/chevron-right.svg");
     }

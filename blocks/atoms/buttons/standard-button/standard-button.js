@@ -9,24 +9,24 @@
 
 // Button constants for shared use
 export const BUTTON_VARIANTS = {
-  PRIMARY: "primary",
-  SECONDARY: "secondary",
-  ACCENT: "accent",
+  PRIMARY: 'primary',
+  SECONDARY: 'secondary',
+  ACCENT: 'accent',
 };
 
 export const BUTTON_ICON_SIZES = {
-  SMALL: "small",
-  MEDIUM: "medium",
-  LARGE: "large",
-  EXTRA_LARGE: "extra-large",
+  SMALL: 'small',
+  MEDIUM: 'medium',
+  LARGE: 'large',
+  EXTRA_LARGE: 'extra-large',
 };
 
 export const BUTTON_STATES = {
-  DEFAULT: "default",
-  HOVER: "hover",
-  ACTIVE: "active",
-  DISABLED: "disabled",
-  FOCUSED: "focused",
+  DEFAULT: 'default',
+  HOVER: 'hover',
+  ACTIVE: 'active',
+  DISABLED: 'disabled',
+  FOCUSED: 'focused',
 };
 
 /**
@@ -36,8 +36,8 @@ export const BUTTON_STATES = {
  * @param {string} href - Button URL (optional)
  * @param {string} variant - Button variant (primary, secondary, accent)
  * @param {string} iconSize - Icon size (small, medium, large, extra-large)
- * @param {string} leftIcon - Left icon (optional) the value will be the icon name as specified in the json config
- * @param {string} rightIcon - Right icon (optional) the value will be the icon name as specified in the json config
+ * @param {string} leftIcon - Left icon (optional)
+ * @param {string} rightIcon - Right icon (optional)
  * @param {Object} instrumentation - Instrumentation attributes (optional)
  * @returns {HTMLElement} The button or link element
  *
@@ -47,51 +47,51 @@ export const BUTTON_STATES = {
  */
 export function createButton(
   label,
-  href = "",
-  variant = BUTTON_VARIANTS.PRIMARY,
-  iconSize = BUTTON_ICON_SIZES.MEDIUM,
+  href,
+  variant,
+  iconSize,
   leftIcon,
   rightIcon,
-  instrumentation = {}
+  instrumentation = {},
 ) {
   // Decide if it's a link or button
   const isLink = !!href;
 
   const element = isLink
-    ? document.createElement("a")
-    : document.createElement("button");
+    ? document.createElement('a')
+    : document.createElement('button');
 
   // add left icon if provided
   if (leftIcon) {
-    const leftIconSpan = document.createElement("span");
-    leftIconSpan.className = `btn-icon icon-${iconSize} ${leftIcon}`;
+    const leftIconSpan = document.createElement('span');
+    leftIconSpan.className = `btn-icon icon-${iconSize || BUTTON_ICON_SIZES.MEDIUM} ${leftIcon}`;
     element.appendChild(leftIconSpan);
   }
 
-  const buttonTextSpan = document.createElement("span");
+  const buttonTextSpan = document.createElement('span');
   buttonTextSpan.textContent = label;
   element.appendChild(buttonTextSpan);
 
   // add right icon if provided
   if (rightIcon) {
-    const rightIconSpan = document.createElement("span");
-    rightIconSpan.className = `btn-icon icon-${iconSize} ${rightIcon}`;
+    const rightIconSpan = document.createElement('span');
+    rightIconSpan.className = `btn-icon icon-${iconSize || BUTTON_ICON_SIZES.MEDIUM} ${rightIcon}`;
     element.appendChild(rightIconSpan);
   }
-  element.className = ["btn", `btn-${variant}`].join(" ");
+  element.className = ['btn', `btn-${variant || BUTTON_VARIANTS.PRIMARY}`].join(' ');
 
   // Set href for links
   if (isLink) {
     element.href = href;
-    element.setAttribute("role", "button");
+    element.setAttribute('role', 'button');
   }
 
   // Add accessibility attributes
-  element.setAttribute("tabindex", "0");
+  element.setAttribute('tabindex', '0');
 
   // Add keyboard support for buttons
-  element.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === " ") {
+  element.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       element.click();
     }
@@ -104,6 +104,52 @@ export function createButton(
 
   return element;
 }
+
+/**
+ * Extract instrumentation attributes from an element
+ * (Placeholder function - implementation depends on specific requirements)
+ *
+ * @param {HTMLElement} element - The element to extract attributes from
+ * @returns {Object} An object containing instrumentation attributes
+ */
+const extractInstrumentationAttributes = (element) => {
+  const instrumentation = {};
+  if (element) {
+    [...element.attributes].forEach((attr) => {
+      if (
+        attr.name.startsWith('data-aue-')
+        || attr.name.startsWith('data-richtext-')
+      ) {
+        instrumentation[attr.name] = attr.value;
+      }
+    });
+  }
+  return instrumentation;
+};
+
+/** Extract button properties from rows
+ *
+ * @param {Array} rows - Array of rows from block children
+ * @returns {Object} An object containing button properties
+ */
+const extractValuesFromRows = (rows) => {
+  const text = rows[0]?.textContent?.trim() || 'Button';
+  const variant = rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
+  const iconSize = rows[2]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
+  const href = rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || '';
+  const leftIcon = rows[4]?.textContent?.trim() || '';
+  const rightIcon = rows[5]?.textContent?.trim() || '';
+  const instrumentation = extractInstrumentationAttributes(rows[0]);
+  return {
+    text,
+    variant,
+    iconSize,
+    href,
+    leftIcon,
+    rightIcon,
+    instrumentation,
+  };
+};
 
 /**
  * Process button data from rows and create button element
@@ -132,58 +178,9 @@ export function createButtonFromRows(rows) {
     iconSize,
     leftIcon,
     rightIcon,
-    instrumentation
+    instrumentation,
   );
 }
-
-/**
- * Extract instrumentation attributes from an element
- * (Placeholder function - implementation depends on specific requirements)
- *
- * @param {HTMLElement} element - The element to extract attributes from
- * @returns {Object} An object containing instrumentation attributes
- */
-const extractInstrumentationAttributes = (element) => {
-  const instrumentation = {};
-  if (element) {
-    [...element.attributes].forEach((attr) => {
-      if (
-        attr.name.startsWith("data-aue-") ||
-        attr.name.startsWith("data-richtext-")
-      ) {
-        instrumentation[attr.name] = attr.value;
-      }
-    });
-  }
-  return instrumentation;
-};
-
-/** Extract button properties from rows
- *
- * @param {Array} rows - Array of rows from block children
- * @returns {Object} An object containing button properties (text, variant, iconSize, href, leftIcon, rightIcon, instrumentation)
- */
-const extractValuesFromRows = (rows) => {
-  const text = rows[0]?.textContent?.trim() || "Button";
-  const variant =
-    rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-  const iconSize =
-    rows[2]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
-  const href =
-    rows[3]?.querySelector("a")?.href || rows[3]?.textContent?.trim() || "";
-  const leftIcon = rows[4]?.textContent?.trim() || "";
-  const rightIcon = rows[5]?.textContent?.trim() || "";
-  const instrumentation = extractInstrumentationAttributes(rows[0]);
-  return {
-    text,
-    variant,
-    iconSize,
-    href,
-    leftIcon,
-    rightIcon,
-    instrumentation,
-  };
-};
 
 /**
  * Decorator function for standalone button component
@@ -196,16 +193,15 @@ export default function decorateButton(block) {
 
   // Get rows from block
   let rows = Array.from(block.children);
-  const wrapper = block.querySelector(".default-content-wrapper");
+  const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) {
     rows = Array.from(wrapper.children);
   }
 
   // Check if block has instrumentation (Universal Editor)
-  const hasInstrumentation =
-    block.hasAttribute("data-aue-resource") ||
-    block.querySelector("[data-aue-resource]") ||
-    block.querySelector("[data-richtext-prop]");
+  const hasInstrumentation = block.hasAttribute('data-aue-resource')
+    || block.querySelector('[data-aue-resource]')
+    || block.querySelector('[data-richtext-prop]');
 
   // Extract button properties
   const {
@@ -221,7 +217,7 @@ export default function decorateButton(block) {
   if (hasInstrumentation) {
     // Preserve structure for Universal Editor
     // Find or create button element preserving instrumentation
-    let buttonElement = block.querySelector("a, button");
+    let buttonElement = block.querySelector('a, button');
 
     if (!buttonElement) {
       // Create button/link element preserving instrumentation from first row
@@ -232,11 +228,11 @@ export default function decorateButton(block) {
         iconSize,
         leftIcon,
         rightIcon,
-        instrumentation
+        instrumentation,
       );
       if (rows[0]) {
         // Preserve row structure but add button
-        rows[0].textContent = "";
+        rows[0].textContent = '';
         rows[0].appendChild(buttonElement);
       } else {
         block.appendChild(buttonElement);
@@ -250,13 +246,13 @@ export default function decorateButton(block) {
         iconSize,
         leftIcon,
         rightIcon,
-        instrumentation
+        instrumentation,
       );
     }
 
     // Apply button classes
-    buttonElement.className = ["btn", `btn-${variant}`].join(" ");
-    buttonElement.setAttribute("tabindex", "0");
+    buttonElement.className = ['btn', `btn-${variant}`].join(' ');
+    buttonElement.setAttribute('tabindex', '0');
   } else {
     // No instrumentation - create button normally
     const button = createButton(
@@ -265,11 +261,11 @@ export default function decorateButton(block) {
       variant,
       iconSize,
       leftIcon,
-      rightIcon
+      rightIcon,
     );
-    block.textContent = "";
+    block.textContent = '';
     block.appendChild(button);
   }
 
-  block.classList.add("button-block");
+  block.classList.add('button-block');
 }

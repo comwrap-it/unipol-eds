@@ -13,9 +13,9 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 let isPrimaryBtnStyleLoaded = false;
 async function ensureBtnStylesLoaded() {
   if (isPrimaryBtnStyleLoaded) return;
-  const { loadCSS } = await import("../../scripts/aem.js");
+  const { loadCSS } = await import('../../scripts/aem.js');
   await loadCSS(
-    `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`
+    `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`,
   );
   isPrimaryBtnStyleLoaded = true;
 }
