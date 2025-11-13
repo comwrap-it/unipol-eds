@@ -2,7 +2,8 @@
   {
     "id": "main",
     "components": [
-      "section"
+      "section",
+      "kpi-highlights-widget"
     ]
   },
   {
@@ -15,8 +16,13 @@
       "hero",
       "cards",
       "columns",
-      "fragment",
-      "text-block"
+      "fragment"
+    ]
+  },
+  {
+    "id": "kpi-highlights-widget",
+    "components": [
+      "number-block"
     ]
   },
   {

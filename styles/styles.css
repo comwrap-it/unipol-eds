@@ -225,3 +225,15 @@ main .section.highlight {
   margin: 0;
   padding: 40px 0;
 }
+
+main .section.text-block-container.number-block-container {
+    margin: 0;
+}
+
+main .section.text-block-container.number-block-container.bg-dark-gray {
+  background-color: var(--color-grayscale-50);
+}
+
+main .section.text-block-container.number-block-container.bg-white {
+  background-color: var(--color-neutral-50);
+}

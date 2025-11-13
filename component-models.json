@@ -142,6 +142,34 @@
     ]
   },
   {
+    "id": "kpi-highlights-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "highlights-widget-name",
+        "label": "Nome sezione KPI Highlights Widget"
+      },
+      {
+        "component": "select",
+        "name": "style",
+        "value": "",
+        "label": "Background Color",
+        "description": "Colore sfondo della sezione KPI Highlights Widget",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Bianco",
+            "value": "bg-white"
+          },
+          {
+            "name": "Grigio scuro",
+            "value": "bg-dark-gray"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -216,13 +244,64 @@
     ]
   },
   {
-    "id": "text-block",
+    "id": "number-block",
     "fields": [
       {
         "component": "tab",
-        "label": "Configurazione testo e bottone",
-        "name": "buttonTextConfig"
+        "label": "Configurazione blocco numerico 1",
+        "name": "numberBlock1"
       },
+      {
+        "component": "text-input",
+        "label": "Testo superiore blocco 1",
+        "name": "numberBlockText1",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "numberBlockSubText1",
+        "label": "Testo inferiore blocco 1",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione blocco numerico 2",
+        "name": "numberBlock2"
+      },
+      {
+        "component": "text-input",
+        "label": "Testo superiore blocco 2",
+        "name": "numberBlockText2",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "numberBlockSubText2",
+        "label": "Testo inferiore blocco 2",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione blocco numerico 3",
+        "name": "numberBlock3"
+      },
+      {
+        "component": "text-input",
+        "label": "Testo superiore blocco 3",
+        "name": "numberBlockText3",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "numberBlockSubText3",
+        "label": "Testo inferiore blocco 3",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "text-block",
+    "fields": [
       {
         "component": "text",
         "name": "title",
@@ -354,57 +433,6 @@
             ]
           }
         ]
-      },
-      {
-        "component": "tab",
-        "label": "Configurazione blocco numerico 1",
-        "name": "numberBlock1"
-      },
-      {
-        "component": "text-input",
-        "label": "Testo superiore blocco 1",
-        "name": "numberBlockText1",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "numberBlockSubText1",
-        "label": "Testo inferiore blocco 1",
-        "valueType": "string"
-      },
-      {
-        "component": "tab",
-        "label": "Configurazione blocco numerico 2",
-        "name": "numberBlock2"
-      },
-      {
-        "component": "text-input",
-        "label": "Testo superiore blocco 2",
-        "name": "numberBlockText2",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "numberBlockSubText2",
-        "label": "Testo inferiore blocco 2",
-        "valueType": "string"
-      },
-      {
-        "component": "tab",
-        "label": "Configurazione blocco numerico 3",
-        "name": "numberBlock3"
-      },
-      {
-        "component": "text-input",
-        "label": "Testo superiore blocco 3",
-        "name": "numberBlockText3",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "numberBlockSubText3",
-        "label": "Testo inferiore blocco 3",
-        "valueType": "string"
       }
     ]
   }

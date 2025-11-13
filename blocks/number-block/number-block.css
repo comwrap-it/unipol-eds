@@ -1,0 +1,44 @@
+.number-block_cont {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: var(--font-size-16);
+  font-family: var(--font-family-font-2);
+  font-weight: 400;
+}
+
+.text-block-number {
+  font-weight: 600;
+  font-size: var(--font-size-56);
+}
+
+.number-block {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.number-block p{
+    margin: 0;
+}
+
+/* Tablet */
+@media (width >= 769px) and (width <= 1024px) {
+  .text-block-number {
+    font-size: var(--font-size-56);
+  }
+}
+
+@media (width >= 769px) {
+  .number-block_cont {
+    flex-direction: row;
+    justify-content: space-around;
+  }
+}
+
+/* Desktop */
+@media (width >= 1025px) {
+  .text-block-number {
+    font-size: 5rem;
+  }
+}
