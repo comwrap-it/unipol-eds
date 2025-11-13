@@ -25,9 +25,7 @@ export default async function decorate(block) {
   numberBlock.className = 'number-block';
 
   const numberBlockWrapper = document.createElement('div');
-  numberBlockWrapper.className = 'number-block_cont';
-
-  let hasConfiguredMainFields = false;
+  numberBlockWrapper.className = 'number-block-cont';
 
   for (let i = 0; i <= 5; i += 2) {
     const firstRow = rows[i];
@@ -47,7 +45,6 @@ export default async function decorate(block) {
           const inner = document.createElement('div');
 
           if (rowIndex === 0 || rowIndex === 2 || rowIndex === 4) {
-            hasConfiguredMainFields = true;
             inner.classList.add('text-block-number');
           }
 
@@ -66,11 +63,6 @@ export default async function decorate(block) {
         numberBlockWrapper.appendChild(itemWrapper);
       }
     }
-  }
-
-  if (!hasConfiguredMainFields) {
-    block.remove();
-    return;
   }
 
   if (numberBlockWrapper.children.length > 0) {

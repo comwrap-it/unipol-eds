@@ -17,10 +17,15 @@
                 "name": "Text Block",
                 "model": "text-block"
               },
-              "number-block": {
+              "kpi-highlights-widget": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Number Block",
-                "model": "number-block"
+                "name": "KPI Highlights Widget",
+                "filter": "kpi-highlights-widget",
+                "number-block": {
+                  "sling:resourceType": "core/franklin/components/block/v1/block",
+                  "name": "Number Block",
+                  "model": "number-block"
+                }
               }
             }
           }

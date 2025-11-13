@@ -1,4 +1,4 @@
-.number-block_cont {
+.number-block-cont {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,7 +30,7 @@
 }
 
 @media (width >= 769px) {
-  .number-block_cont {
+  .number-block-cont {
     flex-direction: row;
     justify-content: space-around;
   }
