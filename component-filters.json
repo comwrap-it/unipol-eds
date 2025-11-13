@@ -20,6 +20,10 @@
     ]
   },
   {
+    "id": "kpi-highlights-widget",
+    "components": []
+  },
+  {
     "id": "cards",
     "components": [
       "card"
