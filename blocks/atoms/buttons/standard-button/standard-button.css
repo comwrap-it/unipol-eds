@@ -89,7 +89,7 @@
 }
 
 /* Icon styles */
-.btn-icon {
+.icon {
     display: inline-block;
     width: var(--size-icon-100-16);
     height: var(--size-icon-100-16);
