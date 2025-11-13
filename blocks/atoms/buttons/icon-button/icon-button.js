@@ -1,57 +1,29 @@
 /**
- * Primary Button - Utility Component
+ * Icon Button - Utility Component
  *
- * This module exports reusable functions for creating and decorating buttons.
+ * This module exports reusable functions for creating and decorating icon buttons.
  * It can be imported by other components (Card, Accordion, Hero, etc.)
  *
- * Export constants and functions that can be reused across components.
  */
 
-// Button constants for shared use
-export const BUTTON_VARIANTS = {
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-  ACCENT: 'accent',
-};
-
-export const BUTTON_ICON_SIZES = {
-  SMALL: 'small',
-  MEDIUM: 'medium',
-  LARGE: 'large',
-  EXTRA_LARGE: 'extra-large',
-};
-
-export const BUTTON_STATES = {
-  DEFAULT: 'default',
-  HOVER: 'hover',
-  ACTIVE: 'active',
-  DISABLED: 'disabled',
-  FOCUSED: 'focused',
-};
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../standard-button/standard-button.js';
 
 /**
  * Create a button element with styling
  *
- * @param {string} label - Button text/label
- * @param {string} href - Button URL (optional)
- * @param {string} variant - Button variant (primary, secondary, accent)
+ * @param {string} icon - icon (required)
+ * @param {string} variant - Button variant (primary, secondary)
  * @param {string} iconSize - Icon size (small, medium, large, extra-large)
- * @param {string} leftIcon - Left icon (optional)
- * @param {string} rightIcon - Right icon (optional)
+ * @param {string} href - Button URL (optional)
  * @param {Object} instrumentation - Instrumentation attributes (optional)
  * @returns {HTMLElement} The button or link element
  *
- * @example
- * const btn = createButton('Click me', 'https://example.com', 'primary', 'medium');
- * container.appendChild(btn);
  */
-export function createButton(
-  label,
-  href,
+export function createIconButton(
+  icon,
   variant,
   iconSize,
-  leftIcon,
-  rightIcon,
+  href,
   instrumentation = {},
 ) {
   // Decide if it's a link or button
@@ -61,27 +33,11 @@ export function createButton(
     ? document.createElement('a')
     : document.createElement('button');
 
-  // add left icon if provided
-  if (leftIcon) {
-    const leftIconSpan = document.createElement('span');
-    leftIconSpan.className = `icon icon-${
-      iconSize || BUTTON_ICON_SIZES.MEDIUM
-    } ${leftIcon}`;
-    element.appendChild(leftIconSpan);
-  }
-
-  const buttonTextSpan = document.createElement('span');
-  buttonTextSpan.textContent = label;
-  element.appendChild(buttonTextSpan);
-
-  // add right icon if provided
-  if (rightIcon) {
-    const rightIconSpan = document.createElement('span');
-    rightIconSpan.className = `icon icon-${
-      iconSize || BUTTON_ICON_SIZES.MEDIUM
-    } ${rightIcon}`;
-    element.appendChild(rightIconSpan);
-  }
+  const iconSpan = document.createElement('span');
+  iconSpan.className = `icon icon-${
+    iconSize || BUTTON_ICON_SIZES.MEDIUM
+  } ${icon}`;
+  element.appendChild(iconSpan);
   element.className = ['btn', `btn-${variant || BUTTON_VARIANTS.PRIMARY}`].join(
     ' ',
   );
@@ -139,20 +95,16 @@ const extractInstrumentationAttributes = (element) => {
  * @returns {Object} An object containing button properties
  */
 const extractValuesFromRows = (rows) => {
-  const text = rows[0]?.textContent?.trim() || 'Button';
+  const icon = rows[0]?.textContent?.trim() || '';
   const variant = rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
   const iconSize = rows[2]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
   const href = rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || '';
-  const leftIcon = rows[4]?.textContent?.trim() || '';
-  const rightIcon = rows[5]?.textContent?.trim() || '';
   const instrumentation = extractInstrumentationAttributes(rows[0]);
   return {
-    text,
+    icon,
     variant,
     iconSize,
     href,
-    leftIcon,
-    rightIcon,
     instrumentation,
   };
 };
@@ -168,29 +120,14 @@ export function createButtonFromRows(rows) {
   if (!rows || rows.length === 0) return null;
 
   const {
-    text,
-    variant,
-    iconSize,
-    href,
-    leftIcon,
-    rightIcon,
-    instrumentation,
+    icon, variant, iconSize, href, instrumentation,
   } = extractValuesFromRows(rows);
 
-  return createButton(
-    text,
-    href,
-    variant,
-    iconSize,
-    leftIcon,
-    rightIcon,
-    instrumentation,
-  );
+  return createIconButton(icon, variant, iconSize, href, instrumentation);
 }
 
 /**
- * Decorator function for standalone button component
- * Used when button is rendered as a standalone block
+ * Decorator function for icon button block
  *
  * @param {HTMLElement} block - The button block element
  */
@@ -211,13 +148,7 @@ export default function decorateButton(block) {
 
   // Extract button properties
   const {
-    text,
-    variant,
-    iconSize,
-    href,
-    leftIcon,
-    rightIcon,
-    instrumentation,
+    icon, variant, iconSize, href, instrumentation,
   } = extractValuesFromRows(rows);
 
   if (hasInstrumentation) {
@@ -227,13 +158,11 @@ export default function decorateButton(block) {
 
     if (!buttonElement) {
       // Create button/link element preserving instrumentation from first row
-      buttonElement = createButton(
-        text,
+      buttonElement = createIconButton(
+        icon,
         href,
         variant,
         iconSize,
-        leftIcon,
-        rightIcon,
         instrumentation,
       );
       if (rows[0]) {
@@ -245,13 +174,11 @@ export default function decorateButton(block) {
       }
     } else {
       // Update existing button with text and href
-      buttonElement = createButton(
-        text,
+      buttonElement = createIconButton(
+        icon,
         href,
         variant,
         iconSize,
-        leftIcon,
-        rightIcon,
         instrumentation,
       );
     }
@@ -261,17 +188,8 @@ export default function decorateButton(block) {
     buttonElement.setAttribute('tabindex', '0');
   } else {
     // No instrumentation - create button normally
-    const button = createButton(
-      text,
-      href,
-      variant,
-      iconSize,
-      leftIcon,
-      rightIcon,
-    );
+    const button = createIconButton(icon, href, variant, iconSize);
     block.textContent = '';
     block.appendChild(button);
   }
-
-  block.classList.add('button-block');
 }
