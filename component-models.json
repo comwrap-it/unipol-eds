@@ -146,7 +146,7 @@
     "fields": [
       {
         "component": "text",
-        "name": "highlights-widget-name",
+        "name": "kpi-highlights-widget-name",
         "label": "Nome sezione KPI Highlights Widget"
       },
       {
