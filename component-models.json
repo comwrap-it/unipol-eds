@@ -154,19 +154,15 @@
         "name": "style",
         "value": "",
         "label": "Background Color",
-        "description": "Section background color",
+        "description": "Colore sfondo della sezione KPI Highlights Widget",
         "valueType": "string",
         "options": [
           {
-            "name": "Default",
-            "value": "default"
-          },
-          {
-            "name": "White",
+            "name": "Bianco",
             "value": "bg-white"
           },
           {
-            "name": "Dark Gray",
+            "name": "Grigio scuro",
             "value": "bg-dark-gray"
           }
         ]
