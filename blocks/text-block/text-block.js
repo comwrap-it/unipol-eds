@@ -114,6 +114,8 @@ export default async function decorate(block) {
   const buttonVariantRow = rows[4];
   const buttonSizeRow = rows[5];
   const buttonHrefRow = rows[6];
+  const leftIcon = rows[7]?.textContent?.trim() || '';
+  const rightIcon = rows[8]?.textContent?.trim() || '';
 
   if (buttonTextRow && buttonTextRow.textContent?.trim()) {
     const hasInstrumentation = buttonTextRow.hasAttribute('data-aue-resource')
@@ -136,14 +138,14 @@ export default async function decorate(block) {
       if (!Object.values(BUTTON_VARIANTS).includes(variant)) variant = BUTTON_VARIANTS.PRIMARY;
       if (!Object.values(BUTTON_ICON_SIZES).includes(size)) size = BUTTON_ICON_SIZES.MEDIUM;
 
-      buttonElement = createButton(label, href, variant, size);
+      buttonElement = createButton(label, href, variant, size, leftIcon, rightIcon);
     } else {
       const label = buttonTextRow.textContent?.trim() || 'Button';
       const link = buttonTextRow.querySelector('a');
       const href = link?.href || '';
       const variant = BUTTON_VARIANTS.PRIMARY;
       const size = BUTTON_ICON_SIZES.MEDIUM;
-      buttonElement = createButton(label, href, variant, size);
+      buttonElement = createButton(label, href, variant, size, leftIcon, rightIcon);
     }
 
     if (buttonElement) {

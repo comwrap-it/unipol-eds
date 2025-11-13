@@ -400,11 +400,11 @@
             "options": [
               {
                 "name": "Chevron Left",
-                "value": "chevron-left"
+                "value": "chevron-left-icon"
               },
               {
                 "name": "Chevron Right",
-                "value": "chevron-right"
+                "value": "chevron-right-icon"
               },
               {
                 "name": "Search Icon",
