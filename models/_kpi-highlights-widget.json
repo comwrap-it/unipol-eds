@@ -59,5 +59,11 @@
     }
   ],
   "filters": [
+    {
+      "id": "highlights-widget-name",
+      "components": [
+        "text"
+      ]
+    }
   ]
 }

@@ -20,6 +20,12 @@
     ]
   },
   {
+    "id": "highlights-widget-name",
+    "components": [
+      "text"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"
