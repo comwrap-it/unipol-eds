@@ -58,12 +58,5 @@
       ]
     }
   ],
-  "filters": [
-    {
-      "id": "kpi-highlights-widget",
-      "components": [
-        "text"
-      ]
-    }
-  ]
+  "filters": []
 }

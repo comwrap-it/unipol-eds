@@ -10,9 +10,6 @@
     "...": "./_section.json#/filters"
   },
   {
-    "...": "./_kpi-highlights-widget.json#/filters"
-  },
-  {
     "...": "../blocks/*/_*.json#/filters"
   }
 ]
