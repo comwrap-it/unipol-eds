@@ -1,14 +1,14 @@
 {
   "definitions": [
     {
-      "title": "Section",
-      "id": "section",
+      "title": "KPI Highlights Widget",
+      "id": "kpi-highlights-widget",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/section/v1/section",
             "template": {
-              "model": "section"
+              "model": "kpi-highlights-widget"
             }
           }
         }
@@ -17,7 +17,7 @@
   ],
   "models": [
     {
-      "id": "section",
+      "id": "kpi-highlights-widget",
       "fields": [
         {
           "component": "text",
@@ -41,16 +41,9 @@
   ],
   "filters": [
     {
-      "id": "section",
+      "id": "kpi-highlights-widget",
       "components": [
-        "text",
-        "image",
-        "button",
-        "title",
-        "hero",
-        "cards",
-        "columns",
-        "fragment"
+        "text-block"
       ]
     }
   ]
