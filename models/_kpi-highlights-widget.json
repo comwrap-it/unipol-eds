@@ -60,7 +60,7 @@
   ],
   "filters": [
     {
-      "id": "highlights-widget-name",
+      "id": "kpi-highlights-widget",
       "components": [
         "text"
       ]
