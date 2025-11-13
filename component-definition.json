@@ -75,7 +75,13 @@
               }
             }
           }
-        },
+        }
+      ]
+    },
+    {
+      "title": "KPI Highlights Widget",
+      "id": "kpi-highlights-widget",
+      "components": [
         {
           "title": "KPI Highlights Widget",
           "id": "kpi-highlights-widget",
