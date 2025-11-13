@@ -21,7 +21,9 @@
   },
   {
     "id": "kpi-highlights-widget-name",
-    "components": []
+    "components": [
+      "text"
+    ]
   },
   {
     "id": "cards",
