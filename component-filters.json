@@ -22,7 +22,7 @@
   {
     "id": "kpi-highlights-widget",
     "components": [
-      "text-block"
+      "text"
     ]
   },
   {
