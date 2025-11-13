@@ -147,7 +147,7 @@
       {
         "component": "text",
         "name": "highlights-widget-name",
-        "label": "Sezione KPI Highlights Widget"
+        "label": "Nome sezione KPI Highlights Widget"
       }
     ]
   },

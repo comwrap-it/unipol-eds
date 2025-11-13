@@ -28,7 +28,7 @@ export default async function decorate(block) {
 
   // === Rows 7–12: Grouped Number Blocks (Pairs) ===
   const numberBlockWrapper = document.createElement('div');
-  numberBlockWrapper.className = 'number-block-container';
+  numberBlockWrapper.className = 'number-block_cont';
 
   for (let i = 0; i <= 5; i += 2) {
     const firstRow = rows[i];

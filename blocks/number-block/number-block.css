@@ -1,18 +1,20 @@
-.number-block-container {
+.number-block_cont {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-size: 1rem;
+  font-size: var(--font-size-16);
+  font-family: var(--font-family-font-2);
   font-weight: 400;
 }
 
 .text-block-number {
   font-weight: 600;
-  font-size: 4rem;
+  font-size: var(--font-size-56);
 }
 
 .number-block {
+    text-align: center;
     margin-bottom: 32px;
 }
 
@@ -23,17 +25,19 @@
 /* Tablet */
 @media (width >= 769px) and (width <= 1024px) {
   .text-block-number {
-    font-size: 4rem;
+    font-size: var(--font-size-56);
+  }
+}
+
+@media (width >= 769px) {
+  .number-block_cont {
+    flex-direction: row;
+    justify-content: space-around;
   }
 }
 
 /* Desktop */
 @media (width >= 1025px) {
-  .number-block-container {
-    flex-direction: row;
-    justify-content: space-around;
-  }
-
   .text-block-number {
     font-size: 5rem;
   }
