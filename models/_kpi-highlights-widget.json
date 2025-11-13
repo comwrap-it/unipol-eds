@@ -34,7 +34,7 @@
       "fields": [
         {
           "component": "text",
-          "name": "highlights-widget-name",
+          "name": "kpi-highlights-widget-name",
           "label": "Nome sezione KPI Highlights Widget"
         },
         {
@@ -60,10 +60,8 @@
   ],
   "filters": [
     {
-      "id": "highlights-widget-name",
-      "components": [
-        "text"
-      ]
+      "id": "kpi-highlights-widget",
+      "components": []
     }
   ]
 }
