@@ -158,12 +158,12 @@ export default function decorateLinkButton(block) {
     }
   } else {
     const link = createLinkButton(
-      text, 
-      href, 
-      showLeftIcon, 
-      showRightIcon, 
-      leftIconSize, 
-      rightIconSize
+      text,
+      href,
+      showLeftIcon,
+      showRightIcon,
+      leftIconSize,
+      rightIconSize,
     );
     block.textContent = '';
     block.appendChild(link);

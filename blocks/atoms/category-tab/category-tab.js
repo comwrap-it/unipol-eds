@@ -1,7 +1,7 @@
 import {
   BUTTON_ICON_SIZES,
   extractInstrumentationAttributes,
-} from "../buttons/standard-button/standard-button";
+} from '../buttons/standard-button/standard-button.js';
 
 /**
  * Create a category tab element with styling
@@ -15,18 +15,18 @@ export const createCategoryTab = (
   category,
   icon,
   iconSize = BUTTON_ICON_SIZES.MEDIUM,
-  instrumentation = {}
+  instrumentation = {},
 ) => {
-  const tab = document.createElement("button");
-  tab.className = "category-tab";
+  const tab = document.createElement('button');
+  tab.className = 'category-tab';
 
-  const iconSpan = document.createElement("span");
+  const iconSpan = document.createElement('span');
   iconSpan.className = `icon icon-${
     iconSize || BUTTON_ICON_SIZES.MEDIUM
   } ${icon}`;
   tab.appendChild(iconSpan);
 
-  const textSpan = document.createElement("span");
+  const textSpan = document.createElement('span');
   textSpan.textContent = category.charAt(0).toUpperCase() + category.slice(1);
   tab.appendChild(textSpan);
 
@@ -36,8 +36,8 @@ export const createCategoryTab = (
   });
 
   tab.onclick = () => {
-    tab.classList.add('selected')
-  }
+    tab.classList.add('selected');
+  };
 
   return tab;
 };
@@ -49,10 +49,12 @@ export const createCategoryTab = (
  */
 const extractValuesFromRows = (rows) => {
   const category = rows[0].textContent.trim();
-  const icon = rows[1] ? rows[1].textContent.trim() : "";
-  const iconSize = rows[2] ? rows[2].textContent.trim() : "";
+  const icon = rows[1] ? rows[1].textContent.trim() : '';
+  const iconSize = rows[2] ? rows[2].textContent.trim() : '';
   const instrumentation = extractInstrumentationAttributes(rows[0]);
-  return { category, icon, iconSize, instrumentation };
+  return {
+    category, icon, iconSize, instrumentation,
+  };
 };
 
 /**
@@ -64,32 +66,32 @@ export default function decorateCategoryTab(block) {
 
   // Get rows from block
   let rows = Array.from(block.children);
-  const wrapper = block.querySelector(".default-content-wrapper");
+  const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) {
     rows = Array.from(wrapper.children);
   }
 
   // Check if block has instrumentation (Universal Editor)
-  const hasInstrumentation =
-    block.hasAttribute("data-aue-resource") ||
-    block.querySelector("[data-aue-resource]") ||
-    block.querySelector("[data-richtext-prop]");
+  const hasInstrumentation = block.hasAttribute('data-aue-resource')
+    || block.querySelector('[data-aue-resource]')
+    || block.querySelector('[data-richtext-prop]');
 
   // Extract category chip properties
-  const { category, icon, iconSize, instrumentation } =
-    extractValuesFromRows(rows);
+  const {
+    category, icon, iconSize, instrumentation,
+  } = extractValuesFromRows(rows);
 
   if (hasInstrumentation) {
-    let categoryTab = block.querySelector(".category-tab");
+    let categoryTab = block.querySelector('.category-tab');
     if (!categoryTab) {
       categoryTab = createCategoryTab(
         category,
         icon,
         iconSize,
-        instrumentation
+        instrumentation,
       );
       if (rows[0]) {
-        rows[0].textContent = "";
+        rows[0].textContent = '';
         rows[0].appendChild(categoryTab);
       } else {
         block.appendChild(categoryTab);
@@ -100,13 +102,13 @@ export default function decorateCategoryTab(block) {
         category,
         icon,
         iconSize,
-        instrumentation
+        instrumentation,
       );
     }
   } else {
-    categoryTab = createCategoryTab(category, icon, iconSize, instrumentation);
+    const categoryTab = createCategoryTab(category, icon, iconSize, instrumentation);
     // Clear block and append category tab
-    block.textContent = "";
+    block.textContent = '';
     block.appendChild(categoryTab);
   }
 }
