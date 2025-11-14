@@ -39,13 +39,13 @@
           "fields": [
             {
               "component": "text",
-              "name": "linkText",
+              "name": "linkTextElenco1",
               "label": "Testo Link",
               "valueType": "string"
             },
             {
               "component": "text",
-              "name": "linkUrl",
+              "name": "linkUrlElenco1",
               "label": "URL Link",
               "valueType": "string"
             }
@@ -75,13 +75,13 @@
           "fields": [
             {
               "component": "text",
-              "name": "linkText",
+              "name": "linkTextElenco2",
               "label": "Testo Link",
               "valueType": "string"
             },
             {
               "component": "text",
-              "name": "linkUrl",
+              "name": "linkUrlElenco2",
               "label": "URL Link",
               "valueType": "string"
             }
@@ -106,13 +106,13 @@
           "fields": [
             {
               "component": "text",
-              "name": "linkText",
+              "name": "linkTextElenco3",
               "label": "Testo Link",
               "valueType": "string"
             },
             {
               "component": "text",
-              "name": "linkUrl",
+              "name": "linkUrlElenco3",
               "label": "URL Link",
               "valueType": "string"
             }
@@ -137,13 +137,13 @@
           "fields": [
             {
               "component": "text",
-              "name": "linkText",
+              "name": "linkTextElenco4",
               "label": "Testo Link",
               "valueType": "string"
             },
             {
               "component": "text",
-              "name": "linkUrl",
+              "name": "linkUrlElenco4",
               "label": "URL Link",
               "valueType": "string"
             }
@@ -162,7 +162,7 @@
         },
         {
           "component": "container",
-          "name": "button-container",
+          "name": "footer-button-container",
           "label": "Configurazione Bottone",
           "collapsible": true,
           "fields": [
@@ -256,7 +256,7 @@
         {
           "component": "tab",
           "label": "Configurazione Note legali e privacy",
-          "name": "socialLink"
+          "name": "legalNoteSection"
         },
         {
           "component": "container",
@@ -266,13 +266,13 @@
           "fields": [
             {
               "component": "text",
-              "name": "linkText",
+              "name": "linkTextPrivacy",
               "label": "Testo Link",
               "valueType": "string"
             },
             {
               "component": "text",
-              "name": "linkUrl",
+              "name": "linkUrlPrivacy",
               "label": "URL Link",
               "valueType": "string"
             }
