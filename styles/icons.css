@@ -1,0 +1,11 @@
+.search-icon {
+    background-image: url("/icons/search.svg");
+}
+
+.chevron-left-icon {
+    background-image: url("/icons/chevron-left.svg");
+}
+
+.chevron-right-icon {
+    background-image: url("/icons/chevron-right.svg");
+}

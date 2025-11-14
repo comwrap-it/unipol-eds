@@ -112,19 +112,6 @@
         width: var(--size-icon-400-32);
         height: var(--size-icon-400-32);
     }
-
-    /* Add the effective icon based on the class */
-    &.search-icon {
-        background-image: url("/icons/search.svg");
-    }
-
-    &.chevron-left-icon {
-        background-image: url("/icons/chevron-left.svg");
-    }
-
-    &.chevron-right-icon {
-        background-image: url("/icons/chevron-right.svg");
-    }
 }
 
 /* Focus state for accessibility (generic token) */
