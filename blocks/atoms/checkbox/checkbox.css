@@ -1,0 +1,64 @@
+.checkbox-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+}
+
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-text-default-primary);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.2s, transform 0.1s;
+  background-color: transparent;
+}
+
+/* Unhecked status */
+.checkbox-unchecked {
+  background-color: transparent;
+}
+
+/* Indeterminate status */
+.checkbox-indeterminate::after {
+  content: '-';
+  color: var(--color-brand-600);
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Hover status */
+.checkbox-wrapper:hover .checkbox {
+  border-color: var(--color-brand-600);
+}
+
+/* Pressed status */
+.checkbox-wrapper:active .checkbox {
+  transform: scale(0.95);
+}
+
+/* Focused status */
+.checkbox-wrapper:focus .checkbox {
+  outline: 2px solid var(--color-brand-200);
+  outline-offset: 2px;
+}
+
+/* Disabled status */
+.checkbox.disabled {
+  color: var(--color-grayscale-700);
+  border-color: var(--color-grayscale-700);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.checked-icon {
+  background-image: url("/icons/checked.svg");
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}

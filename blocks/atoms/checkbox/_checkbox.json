@@ -1,0 +1,45 @@
+{
+  "definitions": [
+    {
+      "title": "Checkbox",
+      "id": "checkbox",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Checkbox",
+              "model": "checkbox"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "checkbox",
+      "fields": [
+        {
+          "component": "select",
+          "name": "type",
+          "label": "Type",
+          "value": "unchecked",
+          "options": [
+            { "name": "Unchecked", "value": "unchecked" },
+            { "name": "Checked", "value": "checked" },
+            { "name": "Indeterminate", "value": "indeterminate" }
+          ]
+        },
+        {
+          "component": "switch",
+          "name": "disabled",
+          "label": "Disabled",
+          "description": "Toggle to disable the checkbox",
+          "value": false
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
