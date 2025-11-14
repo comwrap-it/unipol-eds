@@ -22,20 +22,20 @@
       "fields": [
         {
           "component": "text",
-          "name": "text",
+          "name": "linkButtonText",
           "label": "Link Text",
           "required": true
         },
         {
           "component": "aem-content",
-          "name": "href",
+          "name": "linkButtonHref",
           "label": "Link URL",
           "description": "Destination URL for this link button",
           "required": true
         },
         {
           "component": "select",
-          "name": "size",
+          "name": "linkButtonSize",
           "label": "Size",
           "value": "m",
           "options": [
@@ -47,14 +47,14 @@
         },
         {
           "component": "switch",
-          "name": "showLeftIcon",
+          "name": "linkButtonShowLeftIcon",
           "label": "Show Left Icon",
           "description": "Toggle to display a left icon",
           "value": false
         },
         {
           "component": "switch",
-          "name": "showRightIcon",
+          "name": "linkButtonShowRightIcon",
           "label": "Show Right Icon",
           "description": "Toggle to display a right icon",
           "value": false

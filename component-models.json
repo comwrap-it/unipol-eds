@@ -300,6 +300,246 @@
     ]
   },
   {
+    "id": "test-buttons",
+    "fields": [
+      {
+        "component": "container",
+        "name": "test-button-container-standard",
+        "label": "Configurazione Bottone Standard",
+        "fields": [
+          {
+            "component": "text",
+            "name": "standardButtonText",
+            "label": "Button Text",
+            "required": true
+          },
+          {
+            "component": "select",
+            "name": "standardButtonVariant",
+            "label": "Variant",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Accent",
+                "value": "accent"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonSize",
+            "label": "Size",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          },
+          {
+            "component": "select",
+            "name": "standardButtonLeftIcon",
+            "label": "Left Icon",
+            "description": "Select the left icon",
+            "options": [
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left-icon"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right-icon"
+              },
+              {
+                "name": "Search Icon",
+                "value": "search-icon"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonRightIcon",
+            "label": "Right Icon",
+            "description": "Select the right icon",
+            "options": [
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left-icon"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right-icon"
+              },
+              {
+                "name": "Search Icon",
+                "value": "search-icon"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "test-button-container-icon",
+        "label": "Configurazione Bottone Icona",
+        "fields": [
+          {
+            "component": "select",
+            "name": "iconButtonIcon",
+            "label": "Icon",
+            "required": true,
+            "description": "Select the icon",
+            "options": [
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "search-icon"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "iconButtonVariant",
+            "label": "Variant",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "iconButtonSize",
+            "label": "Size",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "iconButtonHref",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "test-button-container-link",
+        "label": "Configurazione Bottone Link",
+        "fields": [
+          {
+            "component": "text",
+            "name": "linkButtonText",
+            "label": "Link Text",
+            "required": true
+          },
+          {
+            "component": "aem-content",
+            "name": "linkButtonHref",
+            "label": "Link URL",
+            "description": "Destination URL for this link button",
+            "required": true
+          },
+          {
+            "component": "select",
+            "name": "linkButtonSize",
+            "label": "Size",
+            "value": "m",
+            "options": [
+              {
+                "name": "Small",
+                "value": "s"
+              },
+              {
+                "name": "Medium",
+                "value": "m"
+              },
+              {
+                "name": "Large",
+                "value": "l"
+              },
+              {
+                "name": "Extra Large",
+                "value": "xl"
+              }
+            ]
+          },
+          {
+            "component": "switch",
+            "name": "linkButtonShowLeftIcon",
+            "label": "Show Left Icon",
+            "description": "Toggle to display a left icon",
+            "value": false
+          },
+          {
+            "component": "switch",
+            "name": "linkButtonShowRightIcon",
+            "label": "Show Right Icon",
+            "description": "Toggle to display a right icon",
+            "value": false
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "text-block",
     "fields": [
       {
@@ -338,13 +578,13 @@
         "fields": [
           {
             "component": "text",
-            "name": "text",
+            "name": "standardButtonText",
             "label": "Button Text",
             "required": true
           },
           {
             "component": "select",
-            "name": "variant",
+            "name": "standardButtonVariant",
             "label": "Variant",
             "value": "primary",
             "options": [
@@ -364,7 +604,7 @@
           },
           {
             "component": "select",
-            "name": "size",
+            "name": "standardButtonSize",
             "label": "Size",
             "value": "medium",
             "options": [
@@ -388,13 +628,13 @@
           },
           {
             "component": "aem-content",
-            "name": "href",
+            "name": "standardButtonHref",
             "label": "Link URL",
             "description": "Optional URL to make this a link button"
           },
           {
             "component": "select",
-            "name": "leftIcon",
+            "name": "standardButtonLeftIcon",
             "label": "Left Icon",
             "description": "Select the left icon",
             "options": [
@@ -414,7 +654,7 @@
           },
           {
             "component": "select",
-            "name": "rightIcon",
+            "name": "standardButtonRightIcon",
             "label": "Right Icon",
             "description": "Select the right icon",
             "options": [
