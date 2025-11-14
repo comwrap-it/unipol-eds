@@ -43,7 +43,7 @@ export function createCheckbox(typeStatus = CHECKBOX_TYPES.UNCHECKED, disabled =
 
     if (type === CHECKBOX_TYPES.CHECKED) {
       checkbox.classList.add('checked-icon');
-    } else if(type === CHECKBOX_TYPES.INDETERMINATE){
+    } else if (type === CHECKBOX_TYPES.INDETERMINATE) {
       checkbox.classList.add('minus-icon');
     } else {
       checkbox.classList.remove('checked-icon');
