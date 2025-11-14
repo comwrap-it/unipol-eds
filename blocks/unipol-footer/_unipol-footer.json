@@ -146,7 +146,7 @@
         },
         {
           "component": "tab",
-          "label": "Configurazione Unipol-button, App Store, Google Play e QrCode",
+          "label": "Unipol-button, App Store, Google Play e QrCode",
           "name": "appQrLink"
         },
         {
@@ -158,11 +158,11 @@
         {
           "component": "container",
           "name": "footer-button-container",
-          "label": "Configurazione Bottone",
+          "label": "Configurazione Bottone Unipol",
           "collapsible": true,
           "fields": [
             {
-              "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
+              "...": "../atoms/buttons/link-button/_link-button.json#/models/link-button/fields"
             }
           ]
         },

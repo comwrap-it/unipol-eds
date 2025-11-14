@@ -568,7 +568,7 @@
       },
       {
         "component": "tab",
-        "label": "Configurazione Unipol-button, App Store, Google Play e QrCode",
+        "label": "Unipol-button, App Store, Google Play e QrCode",
         "name": "appQrLink"
       },
       {
@@ -580,104 +580,59 @@
       {
         "component": "container",
         "name": "footer-button-container",
-        "label": "Configurazione Bottone",
+        "label": "Configurazione Bottone Unipol",
         "collapsible": true,
         "fields": [
           {
             "component": "text",
             "name": "text",
-            "label": "Button Text",
+            "label": "Link Text",
             "required": true
-          },
-          {
-            "component": "select",
-            "name": "variant",
-            "label": "Variant",
-            "value": "primary",
-            "options": [
-              {
-                "name": "Primary",
-                "value": "primary"
-              },
-              {
-                "name": "Secondary",
-                "value": "secondary"
-              },
-              {
-                "name": "Accent",
-                "value": "accent"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "size",
-            "label": "Size",
-            "value": "medium",
-            "options": [
-              {
-                "name": "Small",
-                "value": "small"
-              },
-              {
-                "name": "Medium",
-                "value": "medium"
-              },
-              {
-                "name": "Large",
-                "value": "large"
-              },
-              {
-                "name": "Extra Large",
-                "value": "extra-large"
-              }
-            ]
           },
           {
             "component": "aem-content",
             "name": "href",
             "label": "Link URL",
-            "description": "Optional URL to make this a link button"
+            "description": "Destination URL for this link button",
+            "required": true
           },
           {
             "component": "select",
-            "name": "leftIcon",
-            "label": "Left Icon",
-            "description": "Select the left icon",
+            "name": "size",
+            "label": "Size",
+            "value": "m",
             "options": [
               {
-                "name": "Chevron Left",
-                "value": "chevron-left-icon"
+                "name": "Small",
+                "value": "s"
               },
               {
-                "name": "Chevron Right",
-                "value": "chevron-right-icon"
+                "name": "Medium",
+                "value": "m"
               },
               {
-                "name": "Search Icon",
-                "value": "search-icon"
+                "name": "Large",
+                "value": "l"
+              },
+              {
+                "name": "Extra Large",
+                "value": "xl"
               }
             ]
           },
           {
-            "component": "select",
-            "name": "rightIcon",
-            "label": "Right Icon",
-            "description": "Select the right icon",
-            "options": [
-              {
-                "name": "Chevron Left",
-                "value": "chevron-left-icon"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "chevron-right-icon"
-              },
-              {
-                "name": "Search Icon",
-                "value": "search-icon"
-              }
-            ]
+            "component": "switch",
+            "name": "showLeftIcon",
+            "label": "Show Left Icon",
+            "description": "Toggle to display a left icon",
+            "value": false
+          },
+          {
+            "component": "switch",
+            "name": "showRightIcon",
+            "label": "Show Right Icon",
+            "description": "Toggle to display a right icon",
+            "value": false
           }
         ]
       },
