@@ -1,0 +1,141 @@
+/* Base Button Styles */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--dimension-space-200-8);
+    padding: var(--dimension-space-250-12) var(--dimension-space-400-24);
+    border: var(--border-width-stroke-200-2) solid transparent;
+    border-radius: var(--border-radius-400-24);
+    font-size: var(--font-size-16);
+    font-weight: var(--font-weight-semi-bold);
+    line-height: 1.5;
+    min-width: var(--dimension-space-700-48);
+    min-height: var(--dimension-space-400-24);
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-family: inherit;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+/* Primary Variant */
+.btn-primary {
+    background-color: var(--color-button-primary-default-background);
+    color: var(--color-button-primary-default-text);
+    border-color: var(--color-button-primary-default-border);
+
+    /* Disabled state */
+    &:disabled {
+        background-color: var(--color-button-primary-disabled-background);
+        color: var(--color-button-primary-disabled-text);
+        cursor: default;
+
+        /* they have a variable for the disabled border color but it doesn't match figma specific --color-button-primary-disabled-border */
+        border-color: var(--color-button-primary-disabled-background);
+    }
+
+    /* Hover state */
+    &:hover:not(:disabled) {
+        background-color: var(--color-button-primary-hover-background);
+        color: var(--color-button-primary-hover-text);
+        border-color: var(--color-button-primary-hover-border);
+    }
+}
+
+/* Accent */
+.btn-accent {
+    background-color: var(--color-button-accent-default-background);
+    color: var(--color-button-accent-default-text);
+    border-color: var(--color-button-accent-default-border);
+
+    /* Disabled state */
+    &:disabled {
+        background-color: var(--color-button-accent-disabled-background);
+        color: var(--color-button-accent-disabled-text);
+        border-color: var(--color-button-accent-disabled-border);
+        cursor: default;
+    }
+
+    /* Hover state */
+    &:hover:not(:disabled) {
+        background-color: var(--color-button-accent-hover-background);
+        color: var(--color-button-accent-hover-text);
+        border-color: var(--color-button-accent-hover-border);
+    }
+}
+
+/* Secondary */
+.btn-secondary {
+    background-color: var(--color-button-secondary-default-background);
+    color: var(--color-button-secondary-default-text);
+    border-color: var(--color-button-secondary-default-border);
+
+    /* Disabled state */
+    &:disabled {
+        background-color: var(--color-button-secondary-disabled-background);
+        color: var(--color-button-secondary-disabled-text);
+        border-color: var(--color-button-secondary-disabled-border);
+        cursor: default;
+    }
+
+    /* Hover state */
+    &:hover:not(:disabled) {
+        background-color: var(--color-button-secondary-hover-background);
+        color: var(--color-button-secondary-hover-text);
+        border-color: var(--color-button-secondary-hover-border);
+    }
+}
+
+/* Icon styles */
+.icon {
+    display: inline-block;
+    width: var(--size-icon-100-16);
+    height: var(--size-icon-100-16);
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    /* Add specific icon classes for different sizes */
+    &.icon-medium {
+        width: var(--size-icon-200-20);
+        height: var(--size-icon-200-20);
+    }
+
+    &.icon-large {
+        width: var(--size-icon-300-24);
+        height: var(--size-icon-300-24);
+    }
+
+    &.icon-extra-large {
+        width: var(--size-icon-400-32);
+        height: var(--size-icon-400-32);
+    }
+
+    /* Add the effective icon based on the class */
+    &.search-icon {
+        background-image: url("/icons/search.svg");
+    }
+
+    &.chevron-left-icon {
+        background-image: url("/icons/chevron-left.svg");
+    }
+
+    &.chevron-right-icon {
+        background-image: url("/icons/chevron-right.svg");
+    }
+}
+
+/* Focus state for accessibility (generic token) */
+.btn:focus-visible,
+.btn:focus {
+    outline: var(--border-width-stroke-200-2) solid
+        var(--color-border-default-focused);
+}
+
+/* Block wrapper for standalone buttons */
+.button-block {
+    display: block;
+    margin: 1rem 0;
+}

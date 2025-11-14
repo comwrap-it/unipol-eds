@@ -1,0 +1,123 @@
+{
+  "definitions": [
+    {
+      "title": "Standard Button",
+      "id": "standard-button",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Standard Button",
+              "model": "standard-button"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "standard-button",
+      "fields": [
+        {
+          "component": "text",
+          "name": "text",
+          "label": "Button Text",
+          "required": true
+        },
+        {
+          "component": "select",
+          "name": "variant",
+          "label": "Variant",
+          "value": "primary",
+          "options": [
+            {
+              "name": "Primary",
+              "value": "primary"
+            },
+            {
+              "name": "Secondary",
+              "value": "secondary"
+            },
+            {
+              "name": "Accent",
+              "value": "accent"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "size",
+          "label": "Size",
+          "value": "medium",
+          "options": [
+            {
+              "name": "Small",
+              "value": "small"
+            },
+            {
+              "name": "Medium",
+              "value": "medium"
+            },
+            {
+              "name": "Large",
+              "value": "large"
+            },
+            {
+              "name": "Extra Large",
+              "value": "extra-large"
+            }
+          ]
+        },
+        {
+          "component": "aem-content",
+          "name": "href",
+          "label": "Link URL",
+          "description": "Optional URL to make this a link button"
+        },
+        {
+          "component": "select",
+          "name": "leftIcon",
+          "label": "Left Icon",
+          "description": "Select the left icon",
+          "options": [
+            {
+              "name": "Chevron Left",
+              "value": "chevron-left-icon"
+            },
+            {
+              "name": "Chevron Right",
+              "value": "chevron-right-icon"
+            },
+            {
+              "name": "Search Icon",
+              "value": "search-icon"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "rightIcon",
+          "label": "Right Icon",
+          "description": "Select the right icon",
+          "options": [
+            {
+              "name": "Chevron Left",
+              "value": "chevron-left-icon"
+            },
+            {
+              "name": "Chevron Right",
+              "value": "chevron-right-icon"
+            },
+            {
+              "name": "Search Icon",
+              "value": "search-icon"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

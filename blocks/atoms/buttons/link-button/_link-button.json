@@ -1,0 +1,66 @@
+{
+  "definitions": [
+    {
+      "title": "Link Button",
+      "id": "link-button",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Link Button",
+              "model": "link-button"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "link-button",
+      "fields": [
+        {
+          "component": "text",
+          "name": "text",
+          "label": "Link Text",
+          "required": true
+        },
+        {
+          "component": "aem-content",
+          "name": "href",
+          "label": "Link URL",
+          "description": "Destination URL for this link button",
+          "required": true
+        },
+        {
+          "component": "select",
+          "name": "size",
+          "label": "Size",
+          "value": "m",
+          "options": [
+            { "name": "Small", "value": "s" },
+            { "name": "Medium", "value": "m" },
+            { "name": "Large", "value": "l" },
+            { "name": "Extra Large", "value": "xl" }
+          ]
+        },
+        {
+          "component": "switch",
+          "name": "showLeftIcon",
+          "label": "Show Left Icon",
+          "description": "Toggle to display a left icon",
+          "value": false
+        },
+        {
+          "component": "switch",
+          "name": "showRightIcon",
+          "label": "Show Right Icon",
+          "description": "Toggle to display a right icon",
+          "value": false
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

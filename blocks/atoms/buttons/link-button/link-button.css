@@ -1,0 +1,105 @@
+
+/* Design Tokens for Button System */
+:root {
+  /* Primary Variant */
+  --button-primary-bg: #2219d2;
+  --button-primary-color: #FFF;
+  --button-primary-border: #1976D2;
+
+  /* Accent Variant */
+  --button-accent-bg: #FF5722;
+  --button-accent-color: #FFF;
+  --button-accent-border: #FF5722;
+
+  /* Secondary Variant */
+  --button-secondary-bg: transparent;
+  --button-secondary-color: #757575;
+  --button-secondary-border: #757575;
+
+  /* State Modifiers */
+  --button-hover-opacity: 0.9;
+  --button-pressed-scale: 0.98;
+  --button-disabled-opacity: 0.6;
+  --button-focus-outline: 2px solid #1976D2;
+
+  /* Sizing */
+  --button-padding: 12px 24px;
+  --button-border-radius: 8px;
+  --button-font-size: 14px;
+  --button-min-height: 44px;
+  --button-font-weight: 500;
+  --button-line-height: 1.5;
+
+  /* Transitions */
+  --button-transition: all 0.2s ease-in-out;
+}
+
+/* Enabled State */
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: var(--dimension-button-min-width, var(--dimension-space-700-48));
+  min-height: var(--dimension-button-min-height, var(--dimension-space-400-24));
+  background-color: var(--color-null-000, #1110);
+  border: 1px solid var(--color-null-000, #1110);
+  color: var(--color-text-default-primary, var(--color-brand-800));
+  font-family: var(--font-family-font-2);
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-semi-bold);
+  line-height: var(--button-line-height, 1.5);
+  text-decoration: underline;
+  cursor: pointer;
+  text-align: center;
+  text-decoration-skip-ink: auto;
+  box-sizing: border-box;
+  border-radius: var(--dimension-button-radius-ghost, var(--border-radius-0));
+  gap: var(--dimension-button-gap, var(--dimension-space-200-8));
+}
+
+.link-btn-icon {
+  display: inline-block;
+  width: var(--size-icon-100-16);
+  height: 16px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.link-btn-icon.left {
+  background-image: url('/icons/search.svg');
+}
+
+.link-btn-icon.right {
+  background-image: url('/icons/search.svg');
+}
+
+/* Hover and Pressed state */
+.link-btn:hover,
+.link-btn.pressed {
+  color: var(--color-brand-600);
+}
+
+.link-btn:hover::selection,
+.link-btn.pressed::selection {
+  color: var(--color-brand-600);
+}
+
+/* Disabled state */
+.link-btn:disabled,
+.link-btn.disabled {
+  color: var(--color-grayscale-700);
+  cursor: not-allowed;
+}
+
+.link-btn:disabled::selection,
+.link-btn.disabled::selection {
+  color: var(--color-grayscale-700);
+}
+
+/* Focused state */
+.link-btn:focus,
+.link-btn.focused {
+  outline: 2px solid var(--color-brand-200);
+  border-radius: var(--border-radius-400-24);
+}

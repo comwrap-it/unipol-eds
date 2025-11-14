@@ -142,6 +142,34 @@
     ]
   },
   {
+    "id": "kpi-highlights-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "kpi-highlights-widget-name",
+        "label": "Nome sezione KPI Highlights Widget"
+      },
+      {
+        "component": "select",
+        "name": "style",
+        "value": "",
+        "label": "Background Color",
+        "description": "Colore sfondo della sezione KPI Highlights Widget",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Bianco",
+            "value": "bg-white"
+          },
+          {
+            "name": "Grigio scuro",
+            "value": "bg-dark-gray"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -212,6 +240,202 @@
         "value": "",
         "label": "Text",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "number-block",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Configurazione blocco numerico 1",
+        "name": "numberBlock1"
+      },
+      {
+        "component": "text-input",
+        "label": "Titolo blocco 1",
+        "name": "numberBlockText1",
+        "maxlength": 7,
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "numberBlockSubText1",
+        "label": "Descrizione blocco 1",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione blocco numerico 2",
+        "name": "numberBlock2"
+      },
+      {
+        "component": "text-input",
+        "label": "Titolo blocco 2",
+        "name": "numberBlockText2",
+        "maxlength": 7,
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "numberBlockSubText2",
+        "label": "Descrizione blocco 2",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione blocco numerico 3",
+        "name": "numberBlock3"
+      },
+      {
+        "component": "text-input",
+        "label": "Titolo blocco 3",
+        "name": "numberBlockText3",
+        "maxlength": 7,
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "numberBlockSubText3",
+        "label": "Descrizione blocco 3",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "text-block",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Titolo",
+        "maxlength": 60,
+        "required": true
+      },
+      {
+        "component": "boolean",
+        "label": "Centra e mostra testo",
+        "description": "Attivo: contenuto centrato verticalmente e testo visibile. Disattivo: contenuto allineato orizzontalmente e testo non visibile.",
+        "name": "contentAlignment",
+        "valueType": "boolean"
+      },
+      {
+        "component": "richtext",
+        "label": "Testo",
+        "name": "subtitle",
+        "valueType": "string",
+        "condition": {
+          "===": [
+            {
+              "var": "contentAlignment"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "container",
+        "name": "button-container",
+        "label": "Configurazione Bottone",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "text",
+            "label": "Button Text",
+            "required": true
+          },
+          {
+            "component": "select",
+            "name": "variant",
+            "label": "Variant",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Accent",
+                "value": "accent"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "size",
+            "label": "Size",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "href",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          },
+          {
+            "component": "select",
+            "name": "leftIcon",
+            "label": "Left Icon",
+            "description": "Select the left icon",
+            "options": [
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left-icon"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right-icon"
+              },
+              {
+                "name": "Search Icon",
+                "value": "search-icon"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "rightIcon",
+            "label": "Right Icon",
+            "description": "Select the right icon",
+            "options": [
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left-icon"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right-icon"
+              },
+              {
+                "name": "Search Icon",
+                "value": "search-icon"
+              }
+            ]
+          }
+        ]
       }
     ]
   }

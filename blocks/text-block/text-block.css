@@ -1,0 +1,91 @@
+/* Base styles (Mobile first) */
+.text-block {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 16px;
+  text-align: center;
+}
+
+.text-block-title {
+  font-size: var(--font-size-32);
+  font-family: var(--font-family-font-1);
+  font-weight: 550;
+  margin: 0 0 16px;
+  color: var(--color-brand-800);
+  line-height: 1.3;
+}
+
+.text-block-text {
+  font-size: var(--font-size-16);
+  font-family: var(--font-family-font-2);
+  line-height: 1.5;
+  color: var(--color-brand-800);
+  margin: 0 0 24px;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 400;
+}
+
+.text-block-button,
+.text-block-button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.text-block-button .btn {
+  flex-shrink: 0;
+}
+
+.text-block.text-block-left .text-block-container{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text-block.text-block-left .text-block-title {
+  margin: 0;
+}
+
+.text-block.text-block-left .text-block-text {
+  display: none;
+}
+
+/* Tablet */
+@media (width >= 769px) and (width <= 1024px) {
+  .text-block {
+    padding: 36px 20px;
+  }
+
+  .text-block-title {
+    font-size: var(--font-size-32);
+  }
+}
+
+/* Desktop */
+@media (width >= 1025px) {
+  .text-block {
+    padding: 40px 24px;
+  }
+
+  .text-block-title {
+    font-size: var(--dimension-font-size-title-page);
+    margin-bottom: 24px;
+  }
+
+  .text-block-text {
+    margin-bottom: 32px;
+  }
+
+  .text-block-button,
+  .text-block-button-wrapper {
+    margin-top: 0;
+  }
+}
+
+/* Accessibility */
+.text-block:focus-within {
+  outline: 2px solid var(--color-primary, #007acc);
+  outline-offset: 2px;
+}

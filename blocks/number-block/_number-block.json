@@ -1,0 +1,82 @@
+{
+  "definitions": [
+    {
+      "title": "Number Block",
+      "id": "number-block",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Number Block",
+              "model": "number-block"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "number-block",
+      "fields": [
+        {
+          "component": "tab",
+          "label": "Configurazione blocco numerico 1",
+          "name": "numberBlock1"
+        },
+        {
+          "component": "text-input",
+          "label": "Titolo blocco 1",
+          "name": "numberBlockText1",
+          "maxlength": 7,
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "numberBlockSubText1",
+          "label": "Descrizione blocco 1",
+          "valueType": "string"
+        },
+        {
+          "component": "tab",
+          "label": "Configurazione blocco numerico 2",
+          "name": "numberBlock2"
+        },
+        {
+          "component": "text-input",
+          "label": "Titolo blocco 2",
+          "name": "numberBlockText2",
+          "maxlength": 7,
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "numberBlockSubText2",
+          "label": "Descrizione blocco 2",
+          "valueType": "string"
+        },
+        {
+          "component": "tab",
+          "label": "Configurazione blocco numerico 3",
+          "name": "numberBlock3"
+        },
+        {
+          "component": "text-input",
+          "label": "Titolo blocco 3",
+          "name": "numberBlockText3",
+          "maxlength": 7,
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "numberBlockSubText3",
+          "label": "Descrizione blocco 3",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
+
