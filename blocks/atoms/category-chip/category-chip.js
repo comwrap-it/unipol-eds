@@ -1,4 +1,4 @@
-import { extractInstrumentationAttributes } from "../buttons/standard-button/standard-button";
+import { extractInstrumentationAttributes } from '../buttons/standard-button/standard-button.js';
 
 /**
  * Create a category chip element with styling
@@ -8,14 +8,14 @@ import { extractInstrumentationAttributes } from "../buttons/standard-button/sta
  * @returns {HTMLElement} The category chip element
  */
 export const createCategoryChip = (category, icon, instrumentation = {}) => {
-  const chip = document.createElement("div");
-  chip.className = "category-chip";
+  const chip = document.createElement('div');
+  chip.className = 'category-chip';
 
-  const iconSpan = document.createElement("span");
+  const iconSpan = document.createElement('span');
   iconSpan.className = `icon ${icon}`;
   chip.appendChild(iconSpan);
 
-  const textSpan = document.createElement("span");
+  const textSpan = document.createElement('span');
   textSpan.textContent = category.charAt(0).toUpperCase() + category.slice(1);
   chip.appendChild(textSpan);
 
@@ -35,8 +35,8 @@ export const createCategoryChip = (category, icon, instrumentation = {}) => {
 const extractValuesFromRows = (rows) => {
   const category = rows[0]
     ? rows[0].textContent.trim().toLowerCase()
-    : "mobility";
-  const icon = rows[1] ? rows[1].textContent.trim() : "";
+    : 'mobility';
+  const icon = rows[1] ? rows[1].textContent.trim() : '';
   const instrumentation = extractInstrumentationAttributes(rows[0]);
   return { category, icon, instrumentation };
 };
@@ -50,26 +50,25 @@ export default function decorateCategoryChip(block) {
 
   // Get rows from block
   let rows = Array.from(block.children);
-  const wrapper = block.querySelector(".default-content-wrapper");
+  const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) {
     rows = Array.from(wrapper.children);
   }
 
   // Check if block has instrumentation (Universal Editor)
-  const hasInstrumentation =
-    block.hasAttribute("data-aue-resource") ||
-    block.querySelector("[data-aue-resource]") ||
-    block.querySelector("[data-richtext-prop]");
+  const hasInstrumentation = block.hasAttribute('data-aue-resource')
+    || block.querySelector('[data-aue-resource]')
+    || block.querySelector('[data-richtext-prop]');
 
   // Extract category chip properties
   const { category, icon, instrumentation } = extractValuesFromRows(rows);
 
   if (hasInstrumentation) {
-    let categoryChip = block.querySelector(".category-chip");
+    let categoryChip = block.querySelector('.category-chip');
     if (!categoryChip) {
       categoryChip = createCategoryChip(category, icon, instrumentation);
       if (rows[0]) {
-        rows[0].textContent = "";
+        rows[0].textContent = '';
         rows[0].appendChild(categoryChip);
       } else {
         block.appendChild(categoryChip);
@@ -79,9 +78,9 @@ export default function decorateCategoryChip(block) {
       categoryChip = createCategoryChip(category, icon, instrumentation);
     }
   } else {
-    categoryChip = createCategoryChip(category, icon, instrumentation);
+    const categoryChip = createCategoryChip(category, icon, instrumentation);
     // Clear block and append category chip
-    block.textContent = "";
+    block.textContent = '';
     block.appendChild(categoryChip);
   }
 }
