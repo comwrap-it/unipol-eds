@@ -22,6 +22,6 @@ module.exports = {
     'linebreak-style': ['error', 'unix'], // enforce unix linebreaks
     'no-param-reassign': [2, { props: false }], // allow modifying properties of param
     'xwalk/max-cells': ['warn', { '*': 60 }],
-    'xwalk/no-orphan-collapsible-fields': 'off',
+    'xwalk/no-orphan-collapsible-fields': 'error',
   },
 };

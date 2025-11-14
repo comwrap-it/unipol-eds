@@ -22,7 +22,7 @@
       "fields": [
         {
           "component": "text",
-          "name": "linkButtonText",
+          "name": "linkButtonLabel",
           "label": "Link Text",
           "required": true
         },

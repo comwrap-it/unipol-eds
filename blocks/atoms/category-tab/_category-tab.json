@@ -22,7 +22,7 @@
             "fields": [
                 {
                     "component": "text",
-                    "name": "categoryTabText",
+                    "name": "categoryTabLabel",
                     "label": "Category tab text",
                     "required": true
                 },
