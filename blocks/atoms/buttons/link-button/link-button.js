@@ -6,9 +6,9 @@
  */
 
 /**
- * Size variants for Link Button
+ * Size variants for Link Button Icons
  */
-export const LINK_BUTTON_SIZES = {
+export const ICON_SIZES = {
   S: 's',
   M: 'm',
   L: 'l',
@@ -20,23 +20,25 @@ export const LINK_BUTTON_SIZES = {
  *
  * @param {string} label - Link text
  * @param {string} href - URL for the link
- * @param {string} size - size variant ('S', 'M', 'L', 'XL')
  * @param {boolean} showLeftIcon - show or hide left icon
  * @param {boolean} showRightIcon - show or hide right icon
+ * @param {string} leftIconSize - size of left icon
+ * @param {string} rightIconSize - size of right icon
  * @returns {HTMLElement} link element
  */
 export function createLinkButton(
   label,
   href,
-  size = LINK_BUTTON_SIZES.M,
   showLeftIcon = false,
   showRightIcon = false,
+  leftIconSize = ICON_SIZES.M,
+  rightIconSize = ICON_SIZES.M,
   disabled = false,
 ) {
   const link = document.createElement('a');
   link.textContent = label;
   link.href = href;
-  link.className = ['link-btn', `link-btn-${size}`].join(' ');
+  link.className = ['link-btn'].join(' ');
   link.setAttribute('role', 'link');
   link.setAttribute('tabindex', '0');
 
@@ -47,17 +49,15 @@ export function createLinkButton(
     link.setAttribute('tabindex', '-1');
   }
 
-  // Add optional left icon
   if (showLeftIcon) {
     const leftIcon = document.createElement('span');
-    leftIcon.className = 'link-btn-icon left';
+    leftIcon.className = `link-btn-icon chevron-left-icon icon-${leftIconSize}`;
     link.prepend(leftIcon);
   }
 
-  // Add optional right icon
   if (showRightIcon) {
     const rightIcon = document.createElement('span');
-    rightIcon.className = 'link-btn-icon right';
+    rightIcon.className = `link-btn-icon chevron-right-icon icon-${rightIconSize}`;
     link.appendChild(rightIcon);
   }
 
@@ -88,11 +88,19 @@ export function createLinkButtonFromRows(rows) {
 
   const text = rows[0]?.textContent?.trim() || 'Link';
   const href = rows[1]?.querySelector('a')?.href || rows[1]?.textContent?.trim() || '#';
-  const size = rows[2]?.textContent?.trim().toLowerCase() || LINK_BUTTON_SIZES.M;
-  const showLeftIcon = rows[3]?.textContent?.trim() === 'true';
-  const showRightIcon = rows[4]?.textContent?.trim() === 'true';
+  const showLeftIcon = rows[2]?.textContent?.trim() === 'true';
+  const showRightIcon = rows[3]?.textContent?.trim() === 'true';
+  const leftIconSize = (rows[4]?.textContent?.trim() || 'm').toLowerCase();
+  const rightIconSize = (rows[5]?.textContent?.trim() || 'm').toLowerCase();
 
-  return createLinkButton(text, href, size, showLeftIcon, showRightIcon);
+  return createLinkButton(
+    text,
+    href,
+    showLeftIcon,
+    showRightIcon,
+    leftIconSize,
+    rightIconSize,
+  );
 }
 
 /**
@@ -113,35 +121,50 @@ export default function decorateLinkButton(block) {
 
   const text = rows[0]?.textContent?.trim() || 'Link';
   const href = rows[1]?.querySelector('a')?.href || rows[1]?.textContent?.trim() || '#';
-  const size = rows[2]?.textContent?.trim().toLowerCase() || LINK_BUTTON_SIZES.M;
-  const showLeftIcon = rows[3]?.textContent?.trim() === 'true';
-  const showRightIcon = rows[4]?.textContent?.trim() === 'true';
+  const showLeftIcon = rows[2]?.textContent?.trim() === 'true';
+  const showRightIcon = rows[3]?.textContent?.trim() === 'true';
+  const leftIconSize = (rows[4]?.textContent?.trim() || 'm').toLowerCase();
+  const rightIconSize = (rows[5]?.textContent?.trim() || 'm').toLowerCase();
 
   if (hasInstrumentation) {
     let linkElement = block.querySelector('a');
     if (!linkElement) {
-      linkElement = createLinkButton(text, href, size, showLeftIcon, showRightIcon);
+      linkElement = createLinkButton(
+        text,
+        href,
+        showLeftIcon,
+        showRightIcon,
+        leftIconSize,
+        rightIconSize,
+      );
       block.textContent = '';
       block.appendChild(linkElement);
     } else {
       linkElement.textContent = text;
       linkElement.href = href;
-      linkElement.className = ['link-btn', `link-btn-${size}`].join(' ');
+      linkElement.className = ['link-btn'].join(' ');
 
       linkElement.querySelectorAll('.link-btn-icon').forEach((icon) => icon.remove());
       if (showLeftIcon) {
         const leftIcon = document.createElement('span');
-        leftIcon.className = 'link-btn-icon left';
+        leftIcon.className = `link-btn-icon chevron-left-icon icon-${leftIconSize}`;
         linkElement.prepend(leftIcon);
       }
       if (showRightIcon) {
         const rightIcon = document.createElement('span');
-        rightIcon.className = 'link-btn-icon right';
+        rightIcon.className = `link-btn-icon chevron-right-icon icon-${rightIconSize}`;
         linkElement.appendChild(rightIcon);
       }
     }
   } else {
-    const link = createLinkButton(text, href, size, showLeftIcon, showRightIcon);
+    const link = createLinkButton(
+      text, 
+      href, 
+      showLeftIcon, 
+      showRightIcon, 
+      leftIconSize, 
+      rightIconSize
+    );
     block.textContent = '';
     block.appendChild(link);
   }

@@ -118,7 +118,7 @@ export function createButton(
  * @param {HTMLElement} element - The element to extract attributes from
  * @returns {Object} An object containing instrumentation attributes
  */
-const extractInstrumentationAttributes = (element) => {
+export const extractInstrumentationAttributes = (element) => {
   const instrumentation = {};
   if (element) {
     [...element.attributes].forEach((attr) => {

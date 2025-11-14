@@ -22,13 +22,13 @@
       "fields": [
         {
           "component": "text",
-          "name": "text",
+          "name": "standardButtonText",
           "label": "Button Text",
           "required": true
         },
         {
           "component": "select",
-          "name": "variant",
+          "name": "standardButtonVariant",
           "label": "Variant",
           "value": "primary",
           "options": [
@@ -48,7 +48,7 @@
         },
         {
           "component": "select",
-          "name": "size",
+          "name": "standardButtonSize",
           "label": "Size",
           "value": "medium",
           "options": [
@@ -72,13 +72,13 @@
         },
         {
           "component": "aem-content",
-          "name": "href",
+          "name": "standardButtonHref",
           "label": "Link URL",
           "description": "Optional URL to make this a link button"
         },
         {
           "component": "select",
-          "name": "leftIcon",
+          "name": "standardButtonLeftIcon",
           "label": "Left Icon",
           "description": "Select the left icon",
           "options": [
@@ -98,7 +98,7 @@
         },
         {
           "component": "select",
-          "name": "rightIcon",
+          "name": "standardButtonRightIcon",
           "label": "Right Icon",
           "description": "Select the right icon",
           "options": [

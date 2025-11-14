@@ -1,0 +1,48 @@
+/* Icon styles */
+.icon {
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    /* Add specific icon classes for different sizes */
+    &.icon-small {
+        width: var(--size-icon-100-16);
+        height: var(--size-icon-100-16);
+    }
+
+    &.icon-medium {
+        width: var(--size-icon-200-20);
+        height: var(--size-icon-200-20);
+    }
+
+    &.icon-large {
+        width: var(--size-icon-300-24);
+        height: var(--size-icon-300-24);
+    }
+
+    &.icon-extra-large {
+        width: var(--size-icon-400-32);
+        height: var(--size-icon-400-32);
+    }
+}
+
+.search-icon {
+    background-image: url("/icons/search.svg");
+}
+
+.checked-icon {
+    background-image: url("/icons/checked.svg");
+}
+
+.minus-icon {
+    background-image: url("/icons/minus.svg");
+}
+
+.chevron-left-icon {
+    background-image: url("/icons/chevron-left.svg");
+}
+
+.chevron-right-icon {
+    background-image: url("/icons/chevron-right.svg");
+}
