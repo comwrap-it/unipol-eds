@@ -38,7 +38,7 @@ export function createIconButton(
     iconSize || BUTTON_ICON_SIZES.MEDIUM
   } ${icon}`;
   element.appendChild(iconSpan);
-  element.className = ['btn', `btn-${variant || BUTTON_VARIANTS.PRIMARY}`].join(
+  element.className = ['btn-icon', `btn-icon-${variant || BUTTON_VARIANTS.PRIMARY}`].join(
     ' ',
   );
 

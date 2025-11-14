@@ -37,7 +37,7 @@ export default async function decorate(block) {
 
   // Create test buttons container
   const testButtons = document.createElement('div');
-  testButtons.style = 'display: flex; width: 100%; align-items: center; gap: 16px; flex-wrap: wrap;';
+  testButtons.style = 'display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;';
 
   // standard button properties
   const text = rows[0]?.textContent?.trim() || 'Button';
