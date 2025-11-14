@@ -43,8 +43,11 @@ export function createCheckbox(typeStatus = CHECKBOX_TYPES.UNCHECKED, disabled =
 
     if (type === CHECKBOX_TYPES.CHECKED) {
       checkbox.classList.add('checked-icon');
+    } else if(type === CHECKBOX_TYPES.INDETERMINATE){
+      checkbox.classList.add('minus-icon');
     } else {
       checkbox.classList.remove('checked-icon');
+      checkbox.classList.remove('minus-icon');
     }
 
     checkbox.setAttribute('aria-checked', type === CHECKBOX_TYPES.CHECKED);

@@ -24,14 +24,6 @@
   background-color: transparent;
 }
 
-/* Indeterminate status */
-.checkbox-indeterminate::after {
-  content: '-';
-  color: var(--color-brand-600);
-  font-size: 18px;
-  line-height: 1;
-}
-
 /* Hover status */
 .checkbox-wrapper:hover .checkbox {
   border-color: var(--color-brand-600);
@@ -54,11 +46,4 @@
   border-color: var(--color-grayscale-700);
   cursor: not-allowed;
   pointer-events: none;
-}
-
-.checked-icon {
-  background-image: url("/icons/checked.svg");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
 }
