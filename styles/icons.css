@@ -31,6 +31,14 @@
     background-image: url("/icons/Search.svg");
 }
 
+.checked-icon {
+    background-image: url("/icons/checked.svg");
+}
+
+.minus-icon {
+    background-image: url("/icons/minus.svg");
+}
+
 .chevron-left-icon {
     background-image: url("/icons/ChevronLeft.svg");
 }
