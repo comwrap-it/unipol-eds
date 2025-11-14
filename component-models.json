@@ -253,14 +253,15 @@
       },
       {
         "component": "text-input",
-        "label": "Testo superiore blocco 1",
+        "label": "Titolo blocco 1",
         "name": "numberBlockText1",
+        "maxlength": 7,
         "valueType": "string"
       },
       {
         "component": "richtext",
         "name": "numberBlockSubText1",
-        "label": "Testo inferiore blocco 1",
+        "label": "Descrizione blocco 1",
         "valueType": "string"
       },
       {
@@ -270,14 +271,15 @@
       },
       {
         "component": "text-input",
-        "label": "Testo superiore blocco 2",
+        "label": "Titolo blocco 2",
         "name": "numberBlockText2",
+        "maxlength": 7,
         "valueType": "string"
       },
       {
         "component": "richtext",
         "name": "numberBlockSubText2",
-        "label": "Testo inferiore blocco 2",
+        "label": "Descrizione blocco 2",
         "valueType": "string"
       },
       {
@@ -287,14 +289,15 @@
       },
       {
         "component": "text-input",
-        "label": "Testo superiore blocco 3",
+        "label": "Titolo blocco 3",
         "name": "numberBlockText3",
+        "maxlength": 7,
         "valueType": "string"
       },
       {
         "component": "richtext",
         "name": "numberBlockSubText3",
-        "label": "Testo inferiore blocco 3",
+        "label": "Descrizione blocco 3",
         "valueType": "string"
       }
     ]
@@ -576,29 +579,29 @@
         "component": "text",
         "name": "title",
         "label": "Titolo",
+        "maxlength": 60,
         "required": true
       },
       {
-        "component": "richtext",
-        "name": "subtitle",
-        "label": "Sottotitolo",
-        "valueType": "string"
+        "component": "boolean",
+        "label": "Centra e mostra testo",
+        "description": "Attivo: contenuto centrato verticalmente e testo visibile. Disattivo: contenuto allineato orizzontalmente e testo non visibile.",
+        "name": "contentAlignment",
+        "valueType": "boolean"
       },
       {
-        "component": "select",
-        "name": "contentAlignment",
-        "label": "Allineamento Contenuto",
-        "options": [
-          {
-            "name": "Testo e bottone centrati",
-            "value": "text-block-center"
-          },
-          {
-            "name": "Testo a sinistra, bottone a destra",
-            "value": "text-block-left"
-          }
-        ],
-        "defaultValue": "text-block-center"
+        "component": "richtext",
+        "label": "Testo",
+        "name": "subtitle",
+        "valueType": "string",
+        "condition": {
+          "===": [
+            {
+              "var": "contentAlignment"
+            },
+            true
+          ]
+        }
       },
       {
         "component": "container",
