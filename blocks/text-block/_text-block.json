@@ -24,6 +24,7 @@
           "component": "text",
           "name": "title",
           "label": "Titolo",
+          "maxlength": 60,
           "required": true
         },
         {
