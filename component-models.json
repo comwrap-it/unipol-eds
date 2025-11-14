@@ -309,26 +309,25 @@
         "required": true
       },
       {
-        "component": "richtext",
-        "name": "subtitle",
-        "label": "Sottotitolo",
-        "valueType": "string"
+        "component": "boolean",
+        "label": "Centra e mostra testo",
+        "description": "Attivo: contenuto centrato verticalmente e testo visibile. Disattivo: contenuto allineato orizzontalmente e testo non visibile.",
+        "name": "contentAlignment",
+        "valueType": "boolean"
       },
       {
-        "component": "select",
-        "name": "contentAlignment",
-        "label": "Allineamento Contenuto",
-        "options": [
-          {
-            "name": "Testo e bottone centrati",
-            "value": "text-block-center"
-          },
-          {
-            "name": "Testo a sinistra, bottone a destra",
-            "value": "text-block-left"
-          }
-        ],
-        "defaultValue": "text-block-center"
+        "component": "richtext",
+        "label": "Testo",
+        "name": "subtitle",
+        "valueType": "string",
+        "condition": {
+          "===": [
+            {
+              "var": "contentAlignment"
+            },
+            true
+          ]
+        }
       },
       {
         "component": "container",

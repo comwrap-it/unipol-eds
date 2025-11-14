@@ -65,8 +65,10 @@ export default async function decorate(block) {
       }
     }
   }
-
   // Text Content - Row 1
+
+  /*
+
   const textRow = rows[1];
   if (textRow) {
     const hasInstrumentation = textRow.hasAttribute('data-aue-resource')
@@ -108,7 +110,7 @@ export default async function decorate(block) {
   } else if (contentAlignment === 'text-block-left') {
     textBlock.classList.add('text-block-left');
   }
-
+*/
   // Button - Rows 3-6 (optional)
   const buttonTextRow = rows[3];
   const buttonVariantRow = rows[4];
