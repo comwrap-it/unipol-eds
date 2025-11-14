@@ -1,0 +1,163 @@
+{
+  "definitions": [
+    {
+      "title": "Unipol Footer",
+      "id": "unipol-footer",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Unipol Footer",
+              "model": "unipol-footer"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "unipol-footer",
+      "fields": [
+        {
+          "component": "text",
+          "name": "socialLabel",
+          "label": "Etichetta Social",
+          "value": "Seguici su"
+        },
+        {
+          "component": "text",
+          "name": "facebookUrl",
+          "label": "URL Facebook",
+          "value": "#"
+        },
+        {
+          "component": "text",
+          "name": "instagramUrl",
+          "label": "URL Instagram",
+          "value": "#"
+        },
+        {
+          "component": "text",
+          "name": "linkedinUrl",
+          "label": "URL LinkedIn",
+          "value": "#"
+        },
+        {
+          "component": "text",
+          "name": "youtubeUrl",
+          "label": "URL YouTube",
+          "value": "#"
+        },
+        {
+          "component": "text",
+          "name": "privacyUrl",
+          "label": "URL Privacy",
+          "value": "#"
+        },
+        {
+          "component": "text",
+          "name": "cookieUrl",
+          "label": "URL Cookie",
+          "value": "#"
+        },
+        {
+          "component": "text",
+          "name": "ivassUrl",
+          "label": "URL IVASS",
+          "value": "#"
+        },
+        {
+          "component": "text",
+          "name": "paymentUrl",
+          "label": "URL Pagamento Polizze",
+          "value": "#"
+        },
+        {
+          "component": "container",
+          "name": "column1Links",
+          "label": "Link Colonna 1",
+          "multi": true,
+          "fields": [
+            {
+              "component": "text",
+              "name": "linkText",
+              "label": "Testo Link",
+              "valueType": "string"
+            },
+            {
+              "component": "text",
+              "name": "linkUrl",
+              "label": "URL Link",
+              "valueType": "string"
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "column2Links",
+          "label": "Link Colonna 2",
+          "multi": true,
+          "fields": [
+            {
+              "component": "text",
+              "name": "linkText",
+              "label": "Testo Link",
+              "valueType": "string"
+            },
+            {
+              "component": "text",
+              "name": "linkUrl",
+              "label": "URL Link",
+              "valueType": "string"
+            }
+          ]
+        },
+        {
+          "component": "richtext",
+          "name": "companyInfo",
+          "label": "Informazioni Societarie",
+          "value": "<p><strong>Unipol Assicurazioni S.p.A.</strong><br>Sede Legale: Via Stalingrado, 45 40128 Bologna<br>Telefono: +39 051 5076111 - Fax: +39 051 5076666 - Mail PEC: unipol@pec.unipol.it</p><p>Capitale sociale i.v. € 3.365.292.408,03 - Registro delle Imprese di Bologna C.F. 00284160371 - P.IVA 03740811207 - R.E.A. 160304</p><p>Società iscritta all'Albo Imprese di Assicurazione e Riassicurazione Sez. I n. 1.00183. Capogruppo del Gruppo Assicurativo Unipol iscritto all'Albo delle società capogruppo al n. 046.</p>"
+        },
+        {
+          "component": "text",
+          "name": "appTitle",
+          "label": "Titolo App",
+          "value": "Scarica o aggiorna l'App<br>Unipol"
+        },
+        {
+          "component": "text",
+          "name": "appStoreUrl",
+          "label": "URL App Store",
+          "value": "#"
+        },
+        {
+          "component": "text",
+          "name": "googlePlayUrl",
+          "label": "URL Google Play",
+          "value": "#"
+        },
+        {
+          "component": "aem-content",
+          "name": "qrCodeImage",
+          "label": "Immagine QR Code",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "phoneImage",
+          "label": "Immagine Telefono",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "description",
+          "label": "Descrizione Azienda",
+          "value": "Unipol è un gruppo assicurativo, leader in Italia nei rami danni, in particolare nell'RCAuto. Fortemente attivo anche nei rami Vita, occupa una posizione di assoluta preminenza nella graduatoria nazionale dei gruppi assicurativi per raccolta diretta, e serve oltre 16 milioni di clienti. La Compagnia opera attraverso la più grande rete agenziale d'Italia, forte di circa 2.000 agenzie assicurative e oltre 5.200 subagenzie distribuite sul territorio nazionale."
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
