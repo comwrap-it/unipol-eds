@@ -22,42 +22,60 @@
       "fields": [
         {
           "component": "text",
-          "name": "text",
+          "name": "linkButtonText",
           "label": "Link Text",
           "required": true
         },
         {
           "component": "aem-content",
-          "name": "href",
+          "name": "linkButtonHref",
           "label": "Link URL",
           "description": "Destination URL for this link button",
           "required": true
         },
         {
-          "component": "select",
-          "name": "size",
-          "label": "Size",
-          "value": "m",
-          "options": [
-            { "name": "Small", "value": "s" },
-            { "name": "Medium", "value": "m" },
-            { "name": "Large", "value": "l" },
-            { "name": "Extra Large", "value": "xl" }
-          ]
-        },
-        {
           "component": "switch",
-          "name": "showLeftIcon",
+          "name": "linkButtonShowLeftIcon",
           "label": "Show Left Icon",
           "description": "Toggle to display a left icon",
           "value": false
         },
         {
           "component": "switch",
-          "name": "showRightIcon",
+          "name": "linkButtonShowRightIcon",
           "label": "Show Right Icon",
           "description": "Toggle to display a right icon",
           "value": false
+        },
+        {
+          "component": "select",
+          "name": "linkButtonLeftIconSize",
+          "label": "Left Icon Size",
+          "if": {
+            "linkButtonShowLeftIcon": true
+          },
+          "value": "m",
+          "options": [
+            { "name": "Small", "value": "s" },
+            { "name": "Medium", "value": "m" },
+            { "name": "Large", "value": "l" },
+            { "name": "ExtraLarge", "value": "xl" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "linkButtonRightIconSize",
+          "label": "Right Icon Size",
+          "if": {
+            "linkButtonShowRightIcon": true
+          },
+          "value": "m",
+          "options": [
+            { "name": "Small", "value": "s" },
+            { "name": "Medium", "value": "m" },
+            { "name": "Large", "value": "l" },
+            { "name": "ExtraLarge", "value": "xl" }
+          ]
         }
       ]
     }

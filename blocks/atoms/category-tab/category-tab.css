@@ -1,0 +1,28 @@
+.category-tab {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: var(--dimension-category-tabs-height, 40px);
+    padding: 0 var(--dimension-category-tabs-horizontal-padding, 16px);
+    gap: var(--dimension-category-tabs-gap, 8px);
+    flex-shrink: 0;
+    border-radius: var(--dimension-category-tabs-radius);
+    border: var(--dimension-category-tabs-border-width) solid
+        var(--color-category-tabs-default-border);
+    background-color: var(--color-category-tabs-default-background);
+    color: var(--color-category-tabs-default-text);
+
+    /* .icon {
+        fill: var(--color-category-tabs-default-icon);
+    } */
+
+    &.selected {
+        background-color: var(--color-category-tabs-selected-background);
+        border-color: var(--color-category-tabs-selected-border);
+        color: var(--color-category-tabs-selected-text);
+
+        /* .icon {
+            fill: var(--color-category-tabs-selected-icon);
+        } */
+    }
+}

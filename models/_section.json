@@ -51,7 +51,8 @@
         "cards",
         "columns",
         "fragment",
-        "unipol-footer"
+        "unipol-footer",
+        "test-buttons"
       ]
     }
   ]

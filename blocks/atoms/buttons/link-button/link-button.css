@@ -59,19 +59,30 @@
 
 .link-btn-icon {
   display: inline-block;
-  width: var(--size-icon-100-16);
-  height: 16px;
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
 }
 
-.link-btn-icon.left {
-  background-image: url('/icons/search.svg');
+/* Icon size variants */
+.link-btn-icon.icon-s {
+  width: var(--size-icon-100-16);
+  height: var(--size-icon-100-16);
 }
 
-.link-btn-icon.right {
-  background-image: url('/icons/search.svg');
+.link-btn-icon.icon-m {
+  width: var(--size-icon-200-20);
+  height: var(--size-icon-200-20);
+}
+
+.link-btn-icon.icon-l {
+  width: var(--size-icon-300-24);
+  height: var(--size-icon-300-24);
+}
+
+.link-btn-icon.icon-xl {
+  width: var(--size-icon-400-32);
+  height: var(--size-icon-400-32);
 }
 
 /* Hover and Pressed state */

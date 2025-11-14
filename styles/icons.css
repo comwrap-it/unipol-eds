@@ -1,0 +1,124 @@
+/* Icon styles */
+.icon {
+    display: inline-block;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    /* Add specific icon classes for different sizes */
+    &.icon-small {
+        width: var(--size-icon-100-16);
+        height: var(--size-icon-100-16);
+    }
+
+    &.icon-medium {
+        width: var(--size-icon-200-20);
+        height: var(--size-icon-200-20);
+    }
+
+    &.icon-large {
+        width: var(--size-icon-300-24);
+        height: var(--size-icon-300-24);
+    }
+
+    &.icon-extra-large {
+        width: var(--size-icon-400-32);
+        height: var(--size-icon-400-32);
+    }
+}
+
+.search-icon {
+    background-image: url("/icons/Search.svg");
+}
+
+.checked-icon {
+    background-image: url("/icons/checked.svg");
+}
+
+.minus-icon {
+    background-image: url("/icons/minus.svg");
+}
+
+.chevron-left-icon {
+    background-image: url("/icons/ChevronLeft.svg");
+}
+
+.chevron-right-icon {
+    background-image: url("/icons/ChevronRight.svg");
+}
+
+.phone-icon {
+    background-image: url("/icons/Phone.svg");
+}
+
+.phone-call-icon {
+    background-image: url("/icons/PhoneCall.svg");
+}
+
+.placeholder-icon {
+    background-image: url("/icons/Placeholder.svg");
+}
+
+.plant-icon {
+    background-image: url("/icons/Plant.svg");
+}
+
+.play-circle-icon {
+    background-image: url("/icons/PlayCircle.svg");
+}
+
+.play-pause-icon {
+    background-image: url("/icons/PlayPause.svg");
+}
+
+.plus-icon {
+    background-image: url("/icons/Plus.svg");
+}
+
+.prohibit-icon {
+    background-image: url("/icons/Prohibit.svg");
+}
+
+.push-pin-icon {
+    background-image: url("/icons/PushPin.svg");
+}
+
+.question-icon {
+    background-image: url("/icons/Question.svg");
+}
+
+.quotes-icon {
+    background-image: url("/icons/Quotes.svg");
+}
+
+.share-icon {
+    background-image: url("/icons/Share.svg");
+}
+
+.share-big-icon {
+    background-image: url("/icons/ShareBig.svg");
+}
+
+.shield-check-icon {
+    background-image: url("/icons/ShieldCheck.svg");
+}
+
+.shield-plus-icon {
+    background-image: url("/icons/ShieldPlus.svg");
+}
+
+.shield-slash-icon {
+    background-image: url("/icons/ShieldSlash.svg");
+}
+
+.sign-in-icon {
+    background-image: url("/icons/Signin.svg");
+}
+
+.sign-out-icon {
+    background-image: url("/icons/Signout.svg");
+}
+
+.skip-back-circle-icon {
+    background-image: url("/icons/SkipBackCircle.svg");
+}

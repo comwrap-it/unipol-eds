@@ -22,7 +22,7 @@
             "fields": [
                 {
                     "component": "select",
-                    "name": "icon",
+                    "name": "iconButtonIcon",
                     "label": "Icon",
                     "required": true,
                     "description": "Select the icon",
@@ -43,7 +43,7 @@
                 },
                 {
                     "component": "select",
-                    "name": "variant",
+                    "name": "iconButtonVariant",
                     "label": "Variant",
                     "value": "primary",
                     "options": [
@@ -59,7 +59,7 @@
                 },
                 {
                     "component": "select",
-                    "name": "size",
+                    "name": "iconButtonSize",
                     "label": "Size",
                     "value": "medium",
                     "options": [
@@ -83,7 +83,7 @@
                 },
                 {
                     "component": "aem-content",
-                    "name": "href",
+                    "name": "iconButtonHref",
                     "label": "Link URL",
                     "description": "Optional URL to make this a link button"
                 }

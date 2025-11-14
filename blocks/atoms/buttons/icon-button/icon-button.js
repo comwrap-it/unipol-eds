@@ -6,7 +6,7 @@
  *
  */
 
-import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../standard-button/standard-button.js';
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS, extractInstrumentationAttributes } from '../standard-button/standard-button.js';
 
 /**
  * Create a button element with styling
@@ -38,7 +38,7 @@ export function createIconButton(
     iconSize || BUTTON_ICON_SIZES.MEDIUM
   } ${icon}`;
   element.appendChild(iconSpan);
-  element.className = ['btn', `btn-${variant || BUTTON_VARIANTS.PRIMARY}`].join(
+  element.className = ['btn-icon', `btn-icon-${variant || BUTTON_VARIANTS.PRIMARY}`].join(
     ' ',
   );
 
@@ -66,28 +66,6 @@ export function createIconButton(
 
   return element;
 }
-
-/**
- * Extract instrumentation attributes from an element
- * (Placeholder function - implementation depends on specific requirements)
- *
- * @param {HTMLElement} element - The element to extract attributes from
- * @returns {Object} An object containing instrumentation attributes
- */
-const extractInstrumentationAttributes = (element) => {
-  const instrumentation = {};
-  if (element) {
-    [...element.attributes].forEach((attr) => {
-      if (
-        attr.name.startsWith('data-aue-')
-        || attr.name.startsWith('data-richtext-')
-      ) {
-        instrumentation[attr.name] = attr.value;
-      }
-    });
-  }
-  return instrumentation;
-};
 
 /** Extract button properties from rows
  *

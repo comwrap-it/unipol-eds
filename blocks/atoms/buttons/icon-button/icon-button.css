@@ -2,11 +2,10 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    height: var(--dimension-space-600-40);
-    width: var(--dimension-space-600-40);
-    border-radius: var(--border-radius-400-24);
+    height: var(--dimension-icon-button-dimentions);
+    width: var(--dimension-icon-button-dimentions);
+    border-radius: var(--dimension-icon-button-radius);
     gap: var(--dimension-space-200-8);
-    padding: var(--dimension-space-250-12) var(--dimension-space-400-24);
     border: var(--border-width-stroke-100-1) solid transparent;
     text-decoration: none;
     cursor: pointer;
