@@ -25,6 +25,9 @@
 @import url("./cssTokens/shadow.css");
 @import url("./cssTokens/blur.css");
 
+/* Icons */
+@import url("./icons.css");
+
 :root {
   /* colors */
   --background-color: white;

@@ -34,18 +34,6 @@
           "required": true
         },
         {
-          "component": "select",
-          "name": "linkButtonSize",
-          "label": "Size",
-          "value": "m",
-          "options": [
-            { "name": "Small", "value": "s" },
-            { "name": "Medium", "value": "m" },
-            { "name": "Large", "value": "l" },
-            { "name": "Extra Large", "value": "xl" }
-          ]
-        },
-        {
           "component": "switch",
           "name": "linkButtonShowLeftIcon",
           "label": "Show Left Icon",
@@ -58,6 +46,36 @@
           "label": "Show Right Icon",
           "description": "Toggle to display a right icon",
           "value": false
+        },
+        {
+          "component": "select",
+          "name": "linkButtonLeftIconSize",
+          "label": "Left Icon Size",
+          "if": {
+            "linkButtonShowLeftIcon": true
+          },
+          "value": "m",
+          "options": [
+            { "name": "Small", "value": "s" },
+            { "name": "Medium", "value": "m" },
+            { "name": "Large", "value": "l" },
+            { "name": "ExtraLarge", "value": "xl" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "linkButtonRightIconSize",
+          "label": "Right Icon Size",
+          "if": {
+            "linkButtonShowRightIcon": true
+          },
+          "value": "m",
+          "options": [
+            { "name": "Small", "value": "s" },
+            { "name": "Medium", "value": "m" },
+            { "name": "Large", "value": "l" },
+            { "name": "ExtraLarge", "value": "xl" }
+          ]
         }
       ]
     }
