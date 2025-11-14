@@ -568,8 +568,8 @@
       },
       {
         "component": "tab",
-        "label": "Configurazione Social link",
-        "name": "socialLink"
+        "label": "Configurazione Unipol-button, App Store, Google Play e QrCode",
+        "name": "appQrLink"
       },
       {
         "component": "aem-content",
@@ -716,52 +716,29 @@
         "label": "Link App Store"
       },
       {
-        "component": "text",
-        "name": "facebookUrl",
-        "label": "URL Facebook",
-        "value": "#"
+        "component": "tab",
+        "label": "Configurazione Social link",
+        "name": "socialLink"
       },
       {
-        "component": "aem-content",
-        "name": "facebookImage",
-        "label": "Logo Facebook",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "instagramUrl",
-        "label": "URL Instagram",
-        "value": "#"
-      },
-      {
-        "component": "aem-content",
-        "name": "instagramImage",
-        "label": "Logo Instagram",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "linkedinUrl",
-        "label": "URL LinkedIn",
-        "value": "#"
-      },
-      {
-        "component": "aem-content",
-        "name": "linkedinImage",
-        "label": "Logo linkedin",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "youtubeUrl",
-        "label": "URL YouTube",
-        "value": "#"
-      },
-      {
-        "component": "aem-content",
-        "name": "youtubeImage",
-        "label": "Logo youtube",
-        "valueType": "string"
+        "component": "container",
+        "name": "socialList",
+        "label": "Elenco Social",
+        "multi": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "socialUrl",
+            "label": "URL Social",
+            "value": "#"
+          },
+          {
+            "component": "aem-content",
+            "name": "socialImage",
+            "label": "Logo Social",
+            "valueType": "string"
+          }
+        ]
       },
       {
         "component": "tab",
