@@ -57,11 +57,6 @@
           "name": "titleLink2"
         },
         {
-          "component": "tab",
-          "label": "Configurazione Titolo ed elenco link 2",
-          "name": "titleLink2"
-        },
-        {
           "component": "text",
           "name": "title2",
           "label": "Titolo elenco 2",
