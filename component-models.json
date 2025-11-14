@@ -443,63 +443,20 @@
     "id": "unipol-footer",
     "fields": [
       {
-        "component": "text",
-        "name": "socialLabel",
-        "label": "Etichetta Social",
-        "value": "Seguici su"
+        "component": "tab",
+        "label": "Configurazione Titolo ed elenco link 1",
+        "name": "titleLink1"
       },
       {
         "component": "text",
-        "name": "facebookUrl",
-        "label": "URL Facebook",
-        "value": "#"
-      },
-      {
-        "component": "text",
-        "name": "instagramUrl",
-        "label": "URL Instagram",
-        "value": "#"
-      },
-      {
-        "component": "text",
-        "name": "linkedinUrl",
-        "label": "URL LinkedIn",
-        "value": "#"
-      },
-      {
-        "component": "text",
-        "name": "youtubeUrl",
-        "label": "URL YouTube",
-        "value": "#"
-      },
-      {
-        "component": "text",
-        "name": "privacyUrl",
-        "label": "URL Privacy",
-        "value": "#"
-      },
-      {
-        "component": "text",
-        "name": "cookieUrl",
-        "label": "URL Cookie",
-        "value": "#"
-      },
-      {
-        "component": "text",
-        "name": "ivassUrl",
-        "label": "URL IVASS",
-        "value": "#"
-      },
-      {
-        "component": "text",
-        "name": "paymentUrl",
-        "label": "URL Pagamento Polizze",
-        "value": "#"
+        "name": "title1",
+        "label": "Titolo elenco 1",
+        "required": true
       },
       {
         "component": "container",
         "name": "column1Links",
-        "label": "Link Colonna 1",
+        "label": "Elenco Link 1",
         "multi": true,
         "fields": [
           {
@@ -517,9 +474,309 @@
         ]
       },
       {
+        "component": "tab",
+        "label": "Configurazione Titolo ed elenco link 2",
+        "name": "titleLink2"
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Titolo ed elenco link 2",
+        "name": "titleLink2"
+      },
+      {
+        "component": "text",
+        "name": "title2",
+        "label": "Titolo elenco 2",
+        "required": true
+      },
+      {
         "component": "container",
         "name": "column2Links",
-        "label": "Link Colonna 2",
+        "label": "Elenco Link 2",
+        "multi": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "linkText",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "linkUrl",
+            "label": "URL Link",
+            "valueType": "string"
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Titolo ed elenco link 3",
+        "name": "titleLink3"
+      },
+      {
+        "component": "text",
+        "name": "title3",
+        "label": "Titolo elenco 3",
+        "required": true
+      },
+      {
+        "component": "container",
+        "name": "column3Links",
+        "label": "Elenco Link 3",
+        "multi": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "linkText",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "linkUrl",
+            "label": "URL Link",
+            "valueType": "string"
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Titolo ed elenco link 4",
+        "name": "titleLink4"
+      },
+      {
+        "component": "text",
+        "name": "title4",
+        "label": "Titolo elenco 4",
+        "required": true
+      },
+      {
+        "component": "container",
+        "name": "column4Links",
+        "label": "Elenco Link 4",
+        "multi": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "linkText",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "linkUrl",
+            "label": "URL Link",
+            "valueType": "string"
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Social link",
+        "name": "socialLink"
+      },
+      {
+        "component": "aem-content",
+        "name": "logoUnipolFooter",
+        "label": "Logo Unipol",
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "name": "button-container",
+        "label": "Configurazione Bottone",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "text",
+            "label": "Button Text",
+            "required": true
+          },
+          {
+            "component": "select",
+            "name": "variant",
+            "label": "Variant",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Accent",
+                "value": "accent"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "size",
+            "label": "Size",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "href",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          },
+          {
+            "component": "select",
+            "name": "leftIcon",
+            "label": "Left Icon",
+            "description": "Select the left icon",
+            "options": [
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left-icon"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right-icon"
+              },
+              {
+                "name": "Search Icon",
+                "value": "search-icon"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "rightIcon",
+            "label": "Right Icon",
+            "description": "Select the right icon",
+            "options": [
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left-icon"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right-icon"
+              },
+              {
+                "name": "Search Icon",
+                "value": "search-icon"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "aem-content",
+        "name": "qrCodeImage",
+        "label": "Immagine QR Code",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "label": "Testo QR",
+        "name": "qrText",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "googlePlayImage",
+        "label": "Logo Google Play",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "googlePlayPath",
+        "label": "Link Google Play"
+      },
+      {
+        "component": "aem-content",
+        "name": "appStoreImage",
+        "label": "Logo App Store",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "appStorePath",
+        "label": "Link App Store"
+      },
+      {
+        "component": "text",
+        "name": "facebookUrl",
+        "label": "URL Facebook",
+        "value": "#"
+      },
+      {
+        "component": "aem-content",
+        "name": "facebookImage",
+        "label": "Logo Facebook",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "instagramUrl",
+        "label": "URL Instagram",
+        "value": "#"
+      },
+      {
+        "component": "aem-content",
+        "name": "instagramImage",
+        "label": "Logo Instagram",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "linkedinUrl",
+        "label": "URL LinkedIn",
+        "value": "#"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkedinImage",
+        "label": "Logo linkedin",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "youtubeUrl",
+        "label": "URL YouTube",
+        "value": "#"
+      },
+      {
+        "component": "aem-content",
+        "name": "youtubeImage",
+        "label": "Logo youtube",
+        "valueType": "string"
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Note legali e privacy",
+        "name": "socialLink"
+      },
+      {
+        "component": "container",
+        "name": "privacyLink",
+        "label": "Elenco privacy Link",
         "multi": true,
         "fields": [
           {
@@ -539,44 +796,7 @@
       {
         "component": "richtext",
         "name": "companyInfo",
-        "label": "Informazioni Societarie",
-        "value": "<p><strong>Unipol Assicurazioni S.p.A.</strong><br>Sede Legale: Via Stalingrado, 45 40128 Bologna<br>Telefono: +39 051 5076111 - Fax: +39 051 5076666 - Mail PEC: unipol@pec.unipol.it</p><p>Capitale sociale i.v. € 3.365.292.408,03 - Registro delle Imprese di Bologna C.F. 00284160371 - P.IVA 03740811207 - R.E.A. 160304</p><p>Società iscritta all'Albo Imprese di Assicurazione e Riassicurazione Sez. I n. 1.00183. Capogruppo del Gruppo Assicurativo Unipol iscritto all'Albo delle società capogruppo al n. 046.</p>"
-      },
-      {
-        "component": "text",
-        "name": "appTitle",
-        "label": "Titolo App",
-        "value": "Scarica o aggiorna l'App<br>Unipol"
-      },
-      {
-        "component": "text",
-        "name": "appStoreUrl",
-        "label": "URL App Store",
-        "value": "#"
-      },
-      {
-        "component": "text",
-        "name": "googlePlayUrl",
-        "label": "URL Google Play",
-        "value": "#"
-      },
-      {
-        "component": "aem-content",
-        "name": "qrCodeImage",
-        "label": "Immagine QR Code",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "phoneImage",
-        "label": "Immagine Telefono",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "name": "description",
-        "label": "Descrizione Azienda",
-        "value": "Unipol è un gruppo assicurativo, leader in Italia nei rami danni, in particolare nell'RCAuto. Fortemente attivo anche nei rami Vita, occupa una posizione di assoluta preminenza nella graduatoria nazionale dei gruppi assicurativi per raccolta diretta, e serve oltre 16 milioni di clienti. La Compagnia opera attraverso la più grande rete agenziale d'Italia, forte di circa 2.000 agenzie assicurative e oltre 5.200 subagenzie distribuite sul territorio nazionale."
+        "label": "Informazioni Societarie"
       }
     ]
   }
