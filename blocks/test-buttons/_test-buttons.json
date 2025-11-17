@@ -69,6 +69,16 @@
               "...": "../atoms/category-tab/_category-tab.json#/models/category-tab/fields"
             }
           ]
+        },
+        {
+          "component": "container",
+          "name": "test-button-container-tag",
+          "label": "Configurazione Tag",
+          "fields": [
+            {
+              "...": "../atoms/tag/_tag.json#/models/tag/fields"
+            }
+          ]
         }
       ]
     }
