@@ -569,6 +569,265 @@
             ]
           }
         ]
+      },
+      {
+        "component": "container",
+        "name": "test-button-container-category-chip",
+        "label": "Configurazione Category Chip",
+        "fields": [
+          {
+            "component": "select",
+            "name": "categoryChipCategory",
+            "label": "Category",
+            "required": true,
+            "value": "mobility",
+            "options": [
+              {
+                "name": "Mobility",
+                "value": "mobility"
+              },
+              {
+                "name": "Welfare",
+                "value": "welfare"
+              },
+              {
+                "name": "Property",
+                "value": "property"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "categoryChipIcon",
+            "label": "Icon",
+            "required": true,
+            "description": "Select the icon",
+            "options": [
+              {
+                "name": "Search",
+                "value": "search-icon"
+              },
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left-icon"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right-icon"
+              },
+              {
+                "name": "Phone",
+                "value": "phone-icon"
+              },
+              {
+                "name": "Phone Call",
+                "value": "phone-call-icon"
+              },
+              {
+                "name": "Placeholder",
+                "value": "placeholder-icon"
+              },
+              {
+                "name": "Plant",
+                "value": "plant-icon"
+              },
+              {
+                "name": "Play Circle",
+                "value": "play-circle-icon"
+              },
+              {
+                "name": "Play Pause",
+                "value": "play-pause-icon"
+              },
+              {
+                "name": "Plus",
+                "value": "plus-icon"
+              },
+              {
+                "name": "Prohibit",
+                "value": "prohibit-icon"
+              },
+              {
+                "name": "Push Pin",
+                "value": "push-pin-icon"
+              },
+              {
+                "name": "Question",
+                "value": "question-icon"
+              },
+              {
+                "name": "Quotes",
+                "value": "quotes-icon"
+              },
+              {
+                "name": "Share",
+                "value": "share-icon"
+              },
+              {
+                "name": "Share Big",
+                "value": "share-big-icon"
+              },
+              {
+                "name": "Shield Check",
+                "value": "shield-check-icon"
+              },
+              {
+                "name": "Shield Plus",
+                "value": "shield-plus-icon"
+              },
+              {
+                "name": "Shield Slash",
+                "value": "shield-slash-icon"
+              },
+              {
+                "name": "Sign In",
+                "value": "sign-in-icon"
+              },
+              {
+                "name": "Sign Out",
+                "value": "sign-out-icon"
+              },
+              {
+                "name": "Skip Back Circle",
+                "value": "skip-back-circle-icon"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "test-button-container-category-tab",
+        "label": "Configurazione Category Tab",
+        "fields": [
+          {
+            "component": "text",
+            "name": "categoryTabLabel",
+            "label": "Category tab text",
+            "required": true
+          },
+          {
+            "component": "select",
+            "name": "categoryTabIcon",
+            "label": "Icon",
+            "required": true,
+            "description": "Select the icon",
+            "options": [
+              {
+                "name": "Search",
+                "value": "search-icon"
+              },
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left-icon"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right-icon"
+              },
+              {
+                "name": "Phone",
+                "value": "phone-icon"
+              },
+              {
+                "name": "Phone Call",
+                "value": "phone-call-icon"
+              },
+              {
+                "name": "Placeholder",
+                "value": "placeholder-icon"
+              },
+              {
+                "name": "Plant",
+                "value": "plant-icon"
+              },
+              {
+                "name": "Play Circle",
+                "value": "play-circle-icon"
+              },
+              {
+                "name": "Play Pause",
+                "value": "play-pause-icon"
+              },
+              {
+                "name": "Plus",
+                "value": "plus-icon"
+              },
+              {
+                "name": "Prohibit",
+                "value": "prohibit-icon"
+              },
+              {
+                "name": "Push Pin",
+                "value": "push-pin-icon"
+              },
+              {
+                "name": "Question",
+                "value": "question-icon"
+              },
+              {
+                "name": "Quotes",
+                "value": "quotes-icon"
+              },
+              {
+                "name": "Share",
+                "value": "share-icon"
+              },
+              {
+                "name": "Share Big",
+                "value": "share-big-icon"
+              },
+              {
+                "name": "Shield Check",
+                "value": "shield-check-icon"
+              },
+              {
+                "name": "Shield Plus",
+                "value": "shield-plus-icon"
+              },
+              {
+                "name": "Shield Slash",
+                "value": "shield-slash-icon"
+              },
+              {
+                "name": "Sign In",
+                "value": "sign-in-icon"
+              },
+              {
+                "name": "Sign Out",
+                "value": "sign-out-icon"
+              },
+              {
+                "name": "Skip Back Circle",
+                "value": "skip-back-circle-icon"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "categoryTabIconSize",
+            "label": "Icon size",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          }
+        ]
       }
     ]
   },

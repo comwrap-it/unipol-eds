@@ -49,10 +49,29 @@
               "...": "../atoms/buttons/link-button/_link-button.json#/models/link-button/fields"
             }
           ]
+        },
+        {
+          "component": "container",
+          "name": "test-button-container-category-chip",
+          "label": "Configurazione Category Chip",
+          "fields": [
+            {
+              "...": "../atoms/category-chip/_category-chip.json#/models/category-chip/fields"
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "test-button-container-category-tab",
+          "label": "Configurazione Category Tab",
+          "fields": [
+            {
+              "...": "../atoms/category-tab/_category-tab.json#/models/category-tab/fields"
+            }
+          ]
         }
       ]
     }
   ],
   "filters": []
 }
-

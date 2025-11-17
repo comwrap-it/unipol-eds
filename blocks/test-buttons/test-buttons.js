@@ -1,6 +1,8 @@
 import { createIconButton } from '../atoms/buttons/icon-button/icon-button.js';
 import { createLinkButton } from '../atoms/buttons/link-button/link-button.js';
 import { BUTTON_ICON_SIZES, BUTTON_VARIANTS, createButton } from '../atoms/buttons/standard-button/standard-button.js';
+import { createCategoryChip } from '../atoms/category-chip/category-chip.js';
+import { createCategoryTab } from '../atoms/category-tab/category-tab.js';
 
 let isBtnsStylesLoaded = false;
 async function ensureBtnStylesLoaded() {
@@ -59,7 +61,13 @@ export default async function decorate(block) {
   const linkSize = rows[12]?.textContent?.trim().toLowerCase() || 'm';
   const showLeftIcon = rows[13]?.textContent?.trim() === 'true';
   const showRightIcon = rows[14]?.textContent?.trim() === 'true';
-
+  // category chip properties
+  const categoryChipCategory = rows[15]?.textContent?.trim() || '';
+  const categoryChipIcon = rows[16]?.textContent?.trim() || '';
+  // category tab properties
+  const categoryTabLabel = rows[17]?.textContent?.trim() || '';
+  const categoryTabIcon = rows[18]?.textContent?.trim() || '';
+  const categoryTabIconSize = rows[19]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
   // Create standard button
   const standardButton = createButton(
     text,
@@ -87,5 +95,19 @@ export default async function decorate(block) {
     showRightIcon,
   );
   testButtons.appendChild(linkButton);
+  // Create category chip
+  const categoryChip = createCategoryChip(
+    categoryChipCategory,
+    categoryChipIcon,
+  );
+  testButtons.appendChild(categoryChip);
+  // Create category tab
+  const categoryTab = createCategoryTab(
+    categoryTabLabel,
+    categoryTabIcon,
+    categoryTabIconSize,
+  );
+  testButtons.appendChild(categoryTab);
+
   block.appendChild(testButtons);
 }
