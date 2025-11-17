@@ -67,7 +67,7 @@ export default async function decorate(block) {
   // category tab properties
   const categoryTabLabel = rows[17]?.textContent?.trim() || '';
   const categoryTabIcon = rows[18]?.textContent?.trim() || '';
-  const categoryTabIconSize = rows[19]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
+  const categoryTabIconSize = rows[19]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM;
   // Create standard button
   const standardButton = createButton(
     text,
