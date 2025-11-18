@@ -26,7 +26,8 @@
     {
       "id": "footer-title-link",
       "components": [
-        "link-button"
+        "link-button",
+        "columns"
       ]
     }
   ]

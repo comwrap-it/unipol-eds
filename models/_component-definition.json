@@ -27,9 +27,6 @@
         },
         {
           "...": "./_kpi-highlights-widget.json#/definitions"
-        },
-        {
-          "...": "./_section-footer.json#/definitions"
         }
       ]
     },
