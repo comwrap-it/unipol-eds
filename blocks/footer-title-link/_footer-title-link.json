@@ -27,9 +27,10 @@
           "valueType": "string"
         },
         {
-          "component": "aem-content",
-          "name": "reference",
+          "component": "reference",
           "label": "Reference",
+          "name": "reference",
+          "valueType": "string",
           "multi": true
         }
       ]
