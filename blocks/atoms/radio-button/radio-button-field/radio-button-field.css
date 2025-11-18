@@ -1,0 +1,80 @@
+.radio-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  gap: var(--dimension-space-250-12);
+}
+
+.radio {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-text-default-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}
+
+/* Unchecked */
+.radio-unchecked {
+  background-color: transparent;
+}
+
+/* Checked */
+.radio-checked {
+  background-color: var(--color-text-default-primary);
+}
+
+/* Hover */
+.radio-wrapper:hover .radio {
+  border-color: var(--color-brand-600);
+}
+
+/* Pressed */
+.radio-wrapper:active .radio {
+  transform: scale(0.95);
+}
+
+/* Focus */
+.radio-wrapper:focus .radio {
+  outline: 2px solid var(--color-brand-200);
+  outline-offset: 2px;
+}
+
+/* Disabled */
+.radio.disabled {
+  color: var(--color-grayscale-700);
+  border-color: var(--color-grayscale-700);
+  background-color: var(--color-grayscale-700);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.radio-text-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.radio-label {
+  font-family: var(--font-family-font-2, Manrope);
+  font-size: var(--font-size-16, 16px);
+  font-weight: 400;
+  line-height: 140%;
+  color: var(--color-checkbox-field-unchecked-text-label, #001C35);
+}
+
+.radio-wrapper.disabled .radio-label {
+  color: var(--color-checkbox-field-disabled-text-label, #63727D);
+}
+
+.radio-description {
+  font-family: var(--font-family-font-2, Manrope);
+  font-size: var(--font-size-14, 14px);
+  font-weight: 400;
+  line-height: 140%;
+  color: var(--color-checkbox-field-disabled-text-label, #63727D);
+}

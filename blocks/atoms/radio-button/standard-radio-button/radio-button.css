@@ -1,0 +1,54 @@
+.radio-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+}
+
+.radio {
+  width: 20px;
+  height: 20px;
+  border: 2px solid var(--color-text-default-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+}
+
+/* Unchecked */
+.radio-unchecked {
+  background-color: transparent;
+}
+
+/* Checked */
+.radio-checked {
+  background-color: var(--color-text-default-primary);
+}
+
+/* Hover status */
+.radio-wrapper:hover .radio {
+  border-color: var(--color-brand-600);
+}
+
+/* Pressed status */
+.radio-wrapper:active .radio {
+  transform: scale(0.95);
+}
+
+/* Focused status */
+.radio-wrapper:focus .radio {
+  outline: 2px solid var(--color-brand-200);
+  outline-offset: 2px;
+}
+
+/* Disabled */
+.radio.disabled {
+  color: var(--color-grayscale-700);
+  border-color: var(--color-grayscale-700);
+  background-color: var(--color-grayscale-700);
+  cursor: not-allowed;
+  pointer-events: none;
+}

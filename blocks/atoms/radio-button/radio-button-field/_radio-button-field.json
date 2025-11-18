@@ -1,0 +1,56 @@
+{
+  "definitions": [
+    {
+      "title": "Radio Button Field",
+      "id": "radio-button-field",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Radio Button Field",
+              "model": "radio-button-field"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "radio-button-field",
+      "fields": [
+        {
+          "component": "select",
+          "name": "type",
+          "label": "Type",
+          "value": "unchecked",
+          "options": [
+            { "name": "Unchecked", "value": "unchecked" },
+            { "name": "Checked", "value": "checked" }
+          ]
+        },
+        {
+          "component": "switch",
+          "name": "disabled",
+          "label": "Disabled",
+          "description": "Toggle to disable the radio button",
+          "value": false
+        },
+        {
+          "component": "text",
+          "name": "label",
+          "label": "Label",
+          "value": "Label"
+        },
+        {
+          "component": "text",
+          "name": "description",
+          "label": "Description",
+          "value": "Description"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
