@@ -2,7 +2,7 @@
   "definitions": [
     {
       "title": "Section Footer",
-      "id": "section-foter",
+      "id": "section-footer",
       "plugins": {
         "xwalk": {
           "page": {
