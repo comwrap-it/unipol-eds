@@ -55,8 +55,7 @@
   {
     "id": "footer-title-link",
     "components": [
-      "link-button",
-      "columns"
+      "button"
     ]
   }
 ]
