@@ -38,9 +38,9 @@
     --link-hover-color: #1d3ecf;
 
     /* fonts */
-    --body-font-family: var(--font-family-font-2), Arial, sans-serif; /* Manrope primary */
+    --body-font-family: var(--font-family-font-2), arial, sans-serif; /* Manrope primary */
     --heading-font-family: var(--font-family-font-2), var(--font-family-font-1),
-        Arial, sans-serif; /* Manrope primary, Apex New prepared */
+        arial, sans-serif; /* Manrope primary, Apex New prepared */
 
     /* body sizes */
     --body-font-size-m: 22px;
@@ -118,18 +118,23 @@ h6 {
 h1 {
     font-size: var(--heading-font-size-xxl);
 }
+
 h2 {
     font-size: var(--heading-font-size-xl);
 }
+
 h3 {
     font-size: var(--heading-font-size-l);
 }
+
 h4 {
     font-size: var(--heading-font-size-m);
 }
+
 h5 {
     font-size: var(--heading-font-size-s);
 }
+
 h6 {
     font-size: var(--heading-font-size-xs);
 }
