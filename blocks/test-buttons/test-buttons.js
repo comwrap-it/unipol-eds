@@ -1,10 +1,17 @@
 import { createIconButton } from '../atoms/buttons/icon-button/icon-button.js';
 import { createLinkButton } from '../atoms/buttons/link-button/link-button.js';
-import { BUTTON_ICON_SIZES, BUTTON_VARIANTS, createButton } from '../atoms/buttons/standard-button/standard-button.js';
+import {
+  BUTTON_ICON_SIZES,
+  BUTTON_VARIANTS,
+  createButton,
+} from '../atoms/buttons/standard-button/standard-button.js';
+import { createCategoryChip } from '../atoms/category-chip/category-chip.js';
+import { createCategoryTab } from '../atoms/category-tab/category-tab.js';
+import { createTag } from '../atoms/tag/tag.js';
 
-let isBtnsStylesLoaded = false;
-async function ensureBtnStylesLoaded() {
-  if (isBtnsStylesLoaded) return;
+let isStylesLoaded = false;
+async function ensureStylesLoaded() {
+  if (isStylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
   await Promise.all([
     loadCSS(
@@ -16,8 +23,17 @@ async function ensureBtnStylesLoaded() {
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`,
     ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/category-chip/category-chip.css`,
+    ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/category-tab/category-tab.css`,
+    ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`,
+    ),
   ]);
-  isBtnsStylesLoaded = true;
+  isStylesLoaded = true;
 }
 
 /**
@@ -26,7 +42,7 @@ async function ensureBtnStylesLoaded() {
  */
 export default async function decorate(block) {
   if (!block) return;
-  ensureBtnStylesLoaded();
+  ensureStylesLoaded();
 
   // Get rows from block
   let rows = Array.from(block.children);
@@ -37,7 +53,7 @@ export default async function decorate(block) {
 
   // Create test buttons container
   const testButtons = document.createElement('div');
-  testButtons.style = 'display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap;';
+  testButtons.style = 'display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; align-items: center; width: 100%;';
 
   // standard button properties
   const text = rows[0]?.textContent?.trim() || 'Button';
@@ -53,13 +69,22 @@ export default async function decorate(block) {
   const iconBtnHref = rows[9]?.querySelector('a')?.href || rows[9]?.textContent?.trim() || '';
   // link button properties
   const linkText = rows[10]?.textContent?.trim() || 'Link';
-  const linkHref = rows[11]?.querySelector('a')?.href
-      || rows[11]?.textContent?.trim()
-      || '#';
-  const linkSize = rows[12]?.textContent?.trim().toLowerCase() || 'm';
-  const showLeftIcon = rows[13]?.textContent?.trim() === 'true';
-  const showRightIcon = rows[14]?.textContent?.trim() === 'true';
-
+  const linkHref = rows[11]?.querySelector('a')?.href || rows[11]?.textContent?.trim() || '#';
+  const showLeftIcon = rows[12]?.textContent?.trim() === 'true';
+  const showRightIcon = rows[13]?.textContent?.trim() === 'true';
+  const leftIconSize = rows[14]?.textContent?.trim().toLowerCase() || 'm';
+  const rightIconSize = rows[15]?.textContent?.trim().toLowerCase() || 'm';
+  // category chip properties
+  const categoryChipCategory = rows[16]?.textContent?.trim() || '';
+  const categoryChipIcon = rows[17]?.textContent?.trim() || '';
+  // category tab properties
+  const categoryTabLabel = rows[18]?.textContent?.trim() || '';
+  const categoryTabIcon = rows[19]?.textContent?.trim() || '';
+  const categoryTabIconSize = rows[20]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM;
+  // tag properties
+  const tagLabel = rows[21]?.textContent?.trim() || 'Tag';
+  const tagCategory = rows[22]?.textContent?.trim() || 'mobility';
+  const tagType = rows[23]?.textContent?.trim() || 'default';
   // Create standard button
   const standardButton = createButton(
     text,
@@ -82,10 +107,33 @@ export default async function decorate(block) {
   const linkButton = createLinkButton(
     linkText,
     linkHref,
-    linkSize,
     showLeftIcon,
     showRightIcon,
+    leftIconSize,
+    rightIconSize,
   );
   testButtons.appendChild(linkButton);
+  // Create category chip
+  const categoryChip = createCategoryChip(
+    categoryChipCategory,
+    categoryChipIcon,
+  );
+  testButtons.appendChild(categoryChip);
+  // Create category tab
+  const categoryTab = createCategoryTab(
+    categoryTabLabel,
+    categoryTabIcon,
+    categoryTabIconSize,
+  );
+  testButtons.appendChild(categoryTab);
+  // Create tag
+  const tag = createTag(
+    tagLabel,
+    tagCategory,
+    tagType,
+  );
+  testButtons.appendChild(tag);
+  // Clear block and append test buttons
+  block.textContent = '';
   block.appendChild(testButtons);
 }

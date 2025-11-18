@@ -22,7 +22,7 @@
       "fields": [
         {
           "component": "text",
-          "name": "standardButtonText",
+          "name": "standardButtonLabel",
           "label": "Button Text",
           "required": true
         },

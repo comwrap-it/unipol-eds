@@ -9,7 +9,7 @@ import { extractInstrumentationAttributes } from '../buttons/standard-button/sta
  */
 export const createCategoryChip = (category, icon, instrumentation = {}) => {
   const chip = document.createElement('div');
-  chip.className = 'category-chip';
+  chip.className = `category-chip ${category}`;
 
   const iconSpan = document.createElement('span');
   iconSpan.className = `icon ${icon}`;

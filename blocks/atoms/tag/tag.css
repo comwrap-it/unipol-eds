@@ -1,0 +1,66 @@
+.tag {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--dimension-tag-vertical-padding)
+        var(--dimension-tag-horizontal-padding);
+    border-radius: var(--dimension-tag-radius);
+    border: var(--dimension-tag-border) solid;
+    font-size: var(--font-size-12);
+    font-weight: var(--font-weight-600-semi-bold);
+    line-height: 1.4;
+    letter-spacing: 0.24px;
+    text-transform: uppercase;
+
+    &.default {
+        &.mobility {
+            background-color: var(--color-tag-default-mobility-background);
+            border-color: var(--color-tag-default-mobility-border);
+            color: var(--color-tag-default-mobility-text);
+        }
+
+        &.welfare {
+            background-color: var(--color-tag-default-welfare-background);
+            border-color: var(--color-tag-default-welfare-border);
+            color: var(--color-tag-default-welfare-text);
+        }
+
+        &.property {
+            background-color: var(--color-tag-default-property-background);
+            border-color: var(--color-tag-default-property-border);
+            color: var(--color-tag-default-property-text);
+        }
+    }
+
+    &.secondary {
+        &.mobility {
+            background-color: var(--color-tag-secondary-mobility-background);
+            border-color: var(--color-tag-secondary-mobility-border);
+            color: var(--color-tag-secondary-mobility-text);
+        }
+
+        &.welfare {
+            background-color: var(--color-tag-secondary-welfare-background);
+            border-color: var(--color-tag-secondary-welfare-border);
+            color: var(--color-tag-secondary-welfare-text);
+        }
+
+        &.property {
+            background-color: var(--color-tag-secondary-property-background);
+            border-color: var(--color-tag-secondary-property-border);
+            color: var(--color-tag-secondary-property-text);
+        }
+    }
+
+    &.neutral {
+        background-color: var(--color-tag-neutral-background);
+        border-color: var(--color-tag-neutral-border);
+        color: var(--color-tag-neutral-text);
+    }
+
+    &.custom {
+        background-color: var(--color-tag-custom-background);
+        border-color: var(--color-tag-custom-border);
+        color: var(--color-tag-custom-text);
+    }
+}

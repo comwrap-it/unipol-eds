@@ -1,15 +1,15 @@
 {
     "definitions": [
         {
-            "title": "Category Chips",
-            "id": "category-chips",
+            "title": "Category Chip",
+            "id": "category-chip",
             "plugins": {
                 "xwalk": {
                     "page": {
                         "resourceType": "core/franklin/components/block/v1/block/item",
                         "template": {
-                            "name": "Category Chips",
-                            "model": "category-chips"
+                            "name": "Category Chip",
+                            "model": "category-chip"
                         }
                     }
                 }
@@ -18,7 +18,7 @@
     ],
     "models": [
         {
-            "id": "category-chips",
+            "id": "category-chip",
             "fields": [
                 {
                     "component": "select",
