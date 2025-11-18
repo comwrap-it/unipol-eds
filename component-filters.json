@@ -59,10 +59,7 @@
   {
     "id": "footer-title-link",
     "components": [
-      "text",
-      "image",
-      "button",
-      "title"
+      "link-button"
     ]
   }
 ]
