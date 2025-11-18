@@ -220,21 +220,7 @@
   },
   {
     "id": "footer-title-link",
-    "fields": [
-      {
-        "component": "richtext",
-        "name": "linkTitleNameBlock1",
-        "label": "Titolo elenco 1",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "label": "Reference",
-        "name": "reference",
-        "valueType": "string",
-        "multi": true
-      }
-    ]
+    "fields": []
   },
   {
     "id": "fragment",

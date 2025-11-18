@@ -55,5 +55,14 @@
       "button",
       "title"
     ]
+  },
+  {
+    "id": "footer-title-link",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title"
+    ]
   }
 ]
