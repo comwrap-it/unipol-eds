@@ -33,7 +33,7 @@
   ],
   "models": [
     {
-      "id": "footer-title-link",
+      "id": "footer-link",
       "fields": [
         {
           "component": "richtext",
