@@ -8,7 +8,10 @@
           "page": {
             "resourceType": "core/franklin/components/section/v1/section",
             "template": {
-              "model": "footer-section"
+              "filter": "footer-section",
+              "name": "Footer Section",
+              "model": "footer-section",
+              "style": "footer-section"
             }
           }
         }
@@ -22,7 +25,7 @@
         {
           "component": "text",
           "name": "footer-section-name",
-          "label": "Nome sezione Footer "
+          "label": "Nome sezione Unipol Footer"
         }
       ]
     }
@@ -30,13 +33,7 @@
   "filters": [
     {
       "id": "footer-section",
-      "components": [
-        "text",
-        "image",
-        "button",
-        "columns",
-        "footer-title-link"
-      ]
+      "components": ["footer-title-link"]
     }
   ]
 }

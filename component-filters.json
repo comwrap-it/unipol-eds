@@ -28,10 +28,6 @@
   {
     "id": "footer-section",
     "components": [
-      "text",
-      "image",
-      "button",
-      "columns",
       "footer-title-link"
     ]
   },
