@@ -170,6 +170,17 @@
     ]
   },
   {
+    "id": "section-footer",
+    "fields": [
+      {
+        "component": "text",
+        "name": "name",
+        "label": "Section Footer Name",
+        "description": "The label shown for this section in the Content Tree"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -204,6 +215,23 @@
         "name": "rows",
         "value": "",
         "label": "Rows"
+      }
+    ]
+  },
+  {
+    "id": "footer-title-link",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "linkTitleNameBlock1",
+        "label": "Titolo elenco 1",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "reference",
+        "label": "Reference",
+        "multi": true
       }
     ]
   },
@@ -1024,324 +1052,6 @@
             ]
           }
         ]
-      }
-    ]
-  },
-  {
-    "id": "unipol-footer",
-    "fields": [
-      {
-        "component": "tab",
-        "label": "Configurazione Titolo ed elenco link 1",
-        "name": "titleLink1"
-      },
-      {
-        "component": "text",
-        "name": "title1",
-        "label": "Titolo elenco 1",
-        "required": true
-      },
-      {
-        "component": "container",
-        "name": "column1Links",
-        "label": "Elenco Link 1",
-        "multi": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "linkTextElenco1",
-            "label": "Testo Link",
-            "valueType": "string"
-          },
-          {
-            "component": "text",
-            "name": "linkUrlElenco1",
-            "label": "URL Link",
-            "valueType": "string"
-          }
-        ]
-      },
-      {
-        "component": "tab",
-        "label": "Configurazione Titolo ed elenco link 2",
-        "name": "titleLink2"
-      },
-      {
-        "component": "text",
-        "name": "title2",
-        "label": "Titolo elenco 2",
-        "required": true
-      },
-      {
-        "component": "container",
-        "name": "column2Links",
-        "label": "Elenco Link 2",
-        "multi": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "linkTextElenco2",
-            "label": "Testo Link",
-            "valueType": "string"
-          },
-          {
-            "component": "text",
-            "name": "linkUrlElenco2",
-            "label": "URL Link",
-            "valueType": "string"
-          }
-        ]
-      },
-      {
-        "component": "tab",
-        "label": "Configurazione Titolo ed elenco link 3",
-        "name": "titleLink3"
-      },
-      {
-        "component": "text",
-        "name": "title3",
-        "label": "Titolo elenco 3",
-        "required": true
-      },
-      {
-        "component": "container",
-        "name": "column3Links",
-        "label": "Elenco Link 3",
-        "multi": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "linkTextElenco3",
-            "label": "Testo Link",
-            "valueType": "string"
-          },
-          {
-            "component": "text",
-            "name": "linkUrlElenco3",
-            "label": "URL Link",
-            "valueType": "string"
-          }
-        ]
-      },
-      {
-        "component": "tab",
-        "label": "Configurazione Titolo ed elenco link 4",
-        "name": "titleLink4"
-      },
-      {
-        "component": "text",
-        "name": "title4",
-        "label": "Titolo elenco 4",
-        "required": true
-      },
-      {
-        "component": "container",
-        "name": "column4Links",
-        "label": "Elenco Link 4",
-        "multi": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "linkTextElenco4",
-            "label": "Testo Link",
-            "valueType": "string"
-          },
-          {
-            "component": "text",
-            "name": "linkUrlElenco4",
-            "label": "URL Link",
-            "valueType": "string"
-          }
-        ]
-      },
-      {
-        "component": "tab",
-        "label": "Unipol-button, App Store, Google Play e QrCode",
-        "name": "appQrLink"
-      },
-      {
-        "component": "aem-content",
-        "name": "logoUnipolFooter",
-        "label": "Logo Unipol",
-        "valueType": "string"
-      },
-      {
-        "component": "container",
-        "name": "footer-button-container",
-        "label": "Configurazione Bottone Unipol",
-        "collapsible": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "linkButtonLabel",
-            "label": "Link Text",
-            "required": true
-          },
-          {
-            "component": "aem-content",
-            "name": "linkButtonHref",
-            "label": "Link URL",
-            "description": "Destination URL for this link button",
-            "required": true
-          },
-          {
-            "component": "switch",
-            "name": "linkButtonShowLeftIcon",
-            "label": "Show Left Icon",
-            "description": "Toggle to display a left icon",
-            "value": false
-          },
-          {
-            "component": "switch",
-            "name": "linkButtonShowRightIcon",
-            "label": "Show Right Icon",
-            "description": "Toggle to display a right icon",
-            "value": false
-          },
-          {
-            "component": "select",
-            "name": "linkButtonLeftIconSize",
-            "label": "Left Icon Size",
-            "if": {
-              "linkButtonShowLeftIcon": true
-            },
-            "value": "m",
-            "options": [
-              {
-                "name": "Small",
-                "value": "s"
-              },
-              {
-                "name": "Medium",
-                "value": "m"
-              },
-              {
-                "name": "Large",
-                "value": "l"
-              },
-              {
-                "name": "ExtraLarge",
-                "value": "xl"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "linkButtonRightIconSize",
-            "label": "Right Icon Size",
-            "if": {
-              "linkButtonShowRightIcon": true
-            },
-            "value": "m",
-            "options": [
-              {
-                "name": "Small",
-                "value": "s"
-              },
-              {
-                "name": "Medium",
-                "value": "m"
-              },
-              {
-                "name": "Large",
-                "value": "l"
-              },
-              {
-                "name": "ExtraLarge",
-                "value": "xl"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "component": "aem-content",
-        "name": "qrCodeImage",
-        "label": "Immagine QR Code",
-        "valueType": "string"
-      },
-      {
-        "component": "richtext",
-        "label": "Testo QR",
-        "name": "qrText",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "googlePlayImage",
-        "label": "Logo Google Play",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "googlePlayPath",
-        "label": "Link Google Play"
-      },
-      {
-        "component": "aem-content",
-        "name": "appStoreImage",
-        "label": "Logo App Store",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "appStorePath",
-        "label": "Link App Store"
-      },
-      {
-        "component": "tab",
-        "label": "Configurazione Social link",
-        "name": "socialLink"
-      },
-      {
-        "component": "container",
-        "name": "socialList",
-        "label": "Elenco Social",
-        "multi": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "socialUrl",
-            "label": "URL Social",
-            "value": "#"
-          },
-          {
-            "component": "aem-content",
-            "name": "socialImage",
-            "label": "Logo Social",
-            "valueType": "string"
-          }
-        ]
-      },
-      {
-        "component": "tab",
-        "label": "Configurazione Note legali e privacy",
-        "name": "legalNoteSection"
-      },
-      {
-        "component": "container",
-        "name": "privacyLink",
-        "label": "Elenco privacy Link",
-        "multi": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "linkTextPrivacy",
-            "label": "Testo Link",
-            "valueType": "string"
-          },
-          {
-            "component": "text",
-            "name": "linkUrlPrivacy",
-            "label": "URL Link",
-            "valueType": "string"
-          }
-        ]
-      },
-      {
-        "component": "richtext",
-        "name": "companyInfo",
-        "label": "Informazioni Societarie"
       }
     ]
   }

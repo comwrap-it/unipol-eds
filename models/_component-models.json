@@ -21,6 +21,9 @@
     "...": "./_kpi-highlights-widget.json#/models"
   },
   {
+    "...": "./_section-footer.json#/models"
+  },
+  {
     "...": "../blocks/*/_*.json#/models"
   }
 ]

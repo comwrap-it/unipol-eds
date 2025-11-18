@@ -3,7 +3,8 @@
     "id": "main",
     "components": [
       "section",
-      "kpi-highlights-widget"
+      "kpi-highlights-widget",
+      "section-footer"
     ]
   },
   {
@@ -17,13 +18,22 @@
       "cards",
       "columns",
       "fragment",
-      "unipol-footer",
       "test-buttons"
     ]
   },
   {
     "id": "kpi-highlights-widget",
     "components": []
+  },
+  {
+    "id": "section",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "columns",
+      "footer-title-link"
+    ]
   },
   {
     "id": "cards",

@@ -102,6 +102,20 @@
               }
             }
           }
+        },
+        {
+          "title": "Section Footer",
+          "id": "section-foter",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {
+                  "model": "section-footer"
+                }
+              }
+            }
+          }
         }
       ]
     },
@@ -149,6 +163,21 @@
                 "template": {
                   "columns": "2",
                   "rows": "1"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer Title Link",
+          "id": "footer-title-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Footer Title Link",
+                  "model": "footer-title-link"
                 }
               }
             }
@@ -224,21 +253,6 @@
                 "template": {
                   "name": "Text Block",
                   "model": "text-block"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Unipol Footer",
-          "id": "unipol-footer",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Unipol Footer",
-                  "model": "unipol-footer"
                 }
               }
             }

@@ -3,7 +3,8 @@
     "id": "main",
     "components": [
       "section",
-      "kpi-highlights-widget"
+      "kpi-highlights-widget",
+      "section-footer"
     ]
   },
   {
@@ -11,6 +12,9 @@
   },
   {
     "...": "./_kpi-highlights-widget.json#/filters"
+  },
+  {
+  "...": "./_section-footer.json#/filters"
   },
   {
     "...": "../blocks/*/_*.json#/filters"
