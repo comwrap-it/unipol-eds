@@ -170,13 +170,12 @@
     ]
   },
   {
-    "id": "section-footer",
+    "id": "footer-section",
     "fields": [
       {
         "component": "text",
-        "name": "name",
-        "label": "Section Footer Name",
-        "description": "The label shown for this section in the Content Tree"
+        "name": "footer-section-name",
+        "label": "Nome sezione Footer "
       }
     ]
   },

@@ -1,14 +1,14 @@
 {
   "definitions": [
     {
-      "title": "Section Footer",
-      "id": "section-footer",
+      "title": "Footer Section",
+      "id": "footer-section",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/section/v1/section",
             "template": {
-              "model": "section-footer"
+              "model": "footer-section"
             }
           }
         }
@@ -17,20 +17,19 @@
   ],
   "models": [
     {
-      "id": "section-footer",
+      "id": "footer-section",
       "fields": [
         {
           "component": "text",
-          "name": "name",
-          "label": "Section Footer Name",
-          "description": "The label shown for this section in the Content Tree"
+          "name": "footer-section-name",
+          "label": "Nome sezione Footer "
         }
       ]
     }
   ],
   "filters": [
     {
-      "id": "section",
+      "id": "footer-section",
       "components": [
         "text",
         "image",

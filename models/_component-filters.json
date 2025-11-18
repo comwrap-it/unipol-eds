@@ -4,7 +4,7 @@
     "components": [
       "section",
       "kpi-highlights-widget",
-      "section-footer"
+      "footer-section"
     ]
   },
   {
@@ -14,7 +14,7 @@
     "...": "./_kpi-highlights-widget.json#/filters"
   },
   {
-  "...": "./_section-footer.json#/filters"
+  "...": "./_footer-section.json#/filters"
   },
   {
     "...": "../blocks/*/_*.json#/filters"
