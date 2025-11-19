@@ -27,9 +27,6 @@
         },
         {
           "...": "./_kpi-highlights-widget.json#/definitions"
-        },
-        {
-          "...": "../blocks/atoms/options/options-list/_options-list.json#/definitions"
         }
       ]
     },
@@ -39,6 +36,9 @@
       "components": [
         {
           "...": "../blocks/*/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/atoms/options/options-list/_options-list.json#/definitions"
         }
       ]
     }
