@@ -28,7 +28,8 @@
   {
     "id": "footer-section",
     "components": [
-      "footer-title-link"
+      "footer-title-link",
+      "footer-download-link"
     ]
   },
   {

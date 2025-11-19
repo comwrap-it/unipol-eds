@@ -33,7 +33,7 @@
   ],
   "models": [
     {
-      "id": "footer-title-link",
+      "id": "footer-link",
       "fields": [
         {
           "component": "richtext",
@@ -41,16 +41,11 @@
           "value": "",
           "label": "Titolo Elenco Link Footer",
           "valueType": "string"
-        }
-      ]
-    },
-    {
-      "id": "footer-link",
-      "fields": [
+        },
         {
           "component": "container",
           "name": "button-container",
-          "label": "Configurazione Bottone",
+          "label": "Configurazione Elenco Link",
           "collapsible": false,
           "fields": [
             {

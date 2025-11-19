@@ -218,14 +218,127 @@
     ]
   },
   {
-    "id": "footer-title-link",
+    "id": "footer-download-link",
     "fields": [
       {
+        "component": "reference",
+        "valueType": "string",
+        "name": "logoUnipolFooter",
+        "label": "Logo Unipol Footer",
+        "multi": false
+      },
+      {
+        "component": "container",
+        "name": "unipol-footer-button-container",
+        "label": "Configurazione Bottone Unipol Footer",
+        "collapsible": false,
+        "fields": [
+          {
+            "component": "select",
+            "name": "iconButtonIcon",
+            "label": "Icon",
+            "required": true,
+            "description": "Select the icon",
+            "options": [
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "search-icon"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "iconButtonVariant",
+            "label": "Variant",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "iconButtonSize",
+            "label": "Size",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "iconButtonHref",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "qrCodeImg",
+        "label": "Immagine QR",
+        "multi": false
+      },
+      {
         "component": "richtext",
-        "name": "footer-link-list-title",
+        "name": "qrCodeText",
         "value": "",
-        "label": "Titolo Elenco Link Footer",
+        "label": "qrCode Testo",
         "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "googlePlayImg",
+        "label": "Immagine GooglePlay",
+        "multi": false
+      },
+      {
+        "component": "aem-content",
+        "name": "googlePlayHref",
+        "label": "GooglePlay Link URL"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "appStoreImg",
+        "label": "Immagine AppleStore",
+        "multi": false
+      },
+      {
+        "component": "aem-content",
+        "name": "appStoreHref",
+        "label": "appStore Link URL"
       }
     ]
   },
@@ -233,9 +346,16 @@
     "id": "footer-link",
     "fields": [
       {
+        "component": "richtext",
+        "name": "footer-link-list-title",
+        "value": "",
+        "label": "Titolo Elenco Link Footer",
+        "valueType": "string"
+      },
+      {
         "component": "container",
         "name": "button-container",
-        "label": "Configurazione Bottone",
+        "label": "Configurazione Elenco Link",
         "collapsible": false,
         "fields": [
           {
