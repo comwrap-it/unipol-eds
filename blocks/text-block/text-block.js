@@ -107,43 +107,54 @@ export default async function decorate(block) {
     }
   }
 
-  // ROW 3-8 BUTTON
-  const buttonTextRow = rows[3];
-  const buttonVariantRow = rows[4];
-  const buttonSizeRow = rows[5];
-  const buttonHrefRow = rows[6];
-  const leftIcon = rows[7]?.textContent?.trim() || '';
-  const rightIcon = rows[8]?.textContent?.trim() || '';
+  // ROW 3 BUTTON CONTAINER
+  // Note: The button fields are nested inside a container in the model
+  const buttonContainerRow = rows[3];
 
-  if (buttonTextRow && buttonTextRow.textContent?.trim()) {
-    const hasInstrumentation = buttonTextRow.hasAttribute('data-aue-resource')
-      || buttonTextRow.querySelector('[data-aue-resource]')
-      || buttonTextRow.querySelector('[data-richtext-prop]')
-      || buttonTextRow.querySelector('[data-aue-prop]');
+  if (buttonContainerRow) {
+    // Search for the standard-button fields inside the container
+    const labelField = buttonContainerRow.querySelector('[data-aue-prop="standardButtonLabel"]');
+    const variantField = buttonContainerRow.querySelector('[data-aue-prop="standardButtonVariant"]');
+    const sizeField = buttonContainerRow.querySelector('[data-aue-prop="standardButtonSize"]');
+    const hrefField = buttonContainerRow.querySelector('[data-aue-prop="standardButtonHref"]');
+    const leftIconField = buttonContainerRow.querySelector('[data-aue-prop="standardButtonLeftIcon"]');
+    const rightIconField = buttonContainerRow.querySelector('[data-aue-prop="standardButtonRightIcon"]');
+
+    const hasInstrumentation = labelField
+      || variantField
+      || sizeField
+      || hrefField
+      || buttonContainerRow.hasAttribute('data-aue-resource')
+      || buttonContainerRow.querySelector('[data-aue-resource]');
 
     let buttonElement;
     if (hasInstrumentation) {
-      const textField = buttonTextRow.querySelector('[data-aue-prop="text"]');
-      const variantField = buttonVariantRow?.querySelector('[data-aue-prop="variant"]');
-      const sizeField = buttonSizeRow?.querySelector('[data-aue-prop="size"]');
-      const hrefField = buttonHrefRow?.querySelector('a');
-
-      const label = textField?.textContent?.trim() || 'Button';
+      const label = labelField?.textContent?.trim() || 'Button';
       let variant = variantField?.textContent?.trim()?.toLowerCase() || BUTTON_VARIANTS.PRIMARY;
       let size = sizeField?.textContent?.trim()?.toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
-      const href = hrefField?.getAttribute('href')?.replace('.html', '') || '';
+
+      // For the href, it could be a link <a> or aem-content field
+      let href = '';
+      if (hrefField) {
+        const link = hrefField.querySelector('a');
+        href = link?.getAttribute('href')?.replace('.html', '') || '';
+      }
+
+      const leftIcon = leftIconField?.textContent?.trim() || '';
+      const rightIcon = rightIconField?.textContent?.trim() || '';
 
       if (!Object.values(BUTTON_VARIANTS).includes(variant)) variant = BUTTON_VARIANTS.PRIMARY;
       if (!Object.values(BUTTON_ICON_SIZES).includes(size)) size = BUTTON_ICON_SIZES.MEDIUM;
 
       buttonElement = createButton(label, href, variant, size, leftIcon, rightIcon);
     } else {
-      const label = buttonTextRow.textContent?.trim() || 'Button';
-      const link = buttonTextRow.querySelector('a');
+      // Fallback for content without instrumentation
+      const label = buttonContainerRow.textContent?.trim() || 'Button';
+      const link = buttonContainerRow.querySelector('a');
       const href = link?.href || '';
       const variant = BUTTON_VARIANTS.PRIMARY;
       const size = BUTTON_ICON_SIZES.MEDIUM;
-      buttonElement = createButton(label, href, variant, size, leftIcon, rightIcon);
+      buttonElement = createButton(label, href, variant, size, '', '');
     }
 
     if (buttonElement) {
