@@ -225,6 +225,7 @@ main .section.text-block-container.number-block-container.bg-white {
 .section.footer-list-link-container.footer-social-list-container,
 .section.footer-text-container{
     background-color: var(--color-background-default-tertiary);
+    margin: 0;
 }
 
 .section.footer-list-link-container.footer-download-link-container,
