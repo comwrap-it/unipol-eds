@@ -1,29 +1,35 @@
 export default function decorate(block) {
-  // Itera sui componenti footer-link senza rimuovere block.children
   [...block.children].forEach((row) => {
     const children = [...row.children];
-    const hideTitle = children[0]?.textContent.trim() === 'true';
-    const title = children[1]?.textContent.trim();
-    const linkText = children[2]?.textContent.trim();
+
+    const hideTitleText = children[0]?.textContent.trim();
+    const hideTitle = hideTitleText === 'true';
+    const titleDiv = children[1]; // div del titolo
+    const linkTextP = children[2]?.querySelector('p');
     const linkHref = children[3]?.querySelector('a');
 
+    // Nascondi il <p> con true/false
+    if (children[0]) children[0].textContent = '';
+
     // Gestisci titolo
-    if (hideTitle && title) {
-      const titleDiv = children[1]; // usa il div originale
-      titleDiv.style.display = 'block';
-    } else if (children[1]) {
-      children[1].style.display = 'none';
+    if (titleDiv) {
+      titleDiv.style.display = hideTitle ? 'block' : 'none';
     }
 
-    // Gestisci testo del link
-    if (linkHref && linkText) {
-      if ((hideTitle && linkText.toLowerCase() === 'true') ||
-          (!hideTitle && linkText.toLowerCase() === 'false')) {
-        linkHref.style.display = 'none';
-      } else {
-        linkHref.style.display = 'block';
-        linkHref.textContent = linkText;
-      }
+    // Gestisci link
+    if (linkTextP && linkHref) {
+      const linkText = linkTextP.textContent.trim();
+
+      // Determina se mostrare il link
+      const showLink = !((hideTitle && linkText.toLowerCase() === 'true') ||
+                         (!hideTitle && linkText.toLowerCase() === 'false'));
+
+      linkHref.style.display = showLink ? 'block' : 'none';
+      if (showLink) linkHref.textContent = linkText;
+
+      // Nascondi completamente il <p> originale
+      linkTextP.style.display = 'none';
+      linkTextP.textContent = '';
     }
   });
-};
+}
