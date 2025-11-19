@@ -284,8 +284,8 @@
     "fields": [
       {
         "component": "boolean",
-        "label": "Mostra Titolo Elenco Link",
-        "description": "Attivo: stamperà un titolo sopra al link. Disattivo: mostrerà solo il link.",
+        "label": "Mostra Titolo Elenco Link o singolo Link",
+        "description": "Attivo: stamperà il titolo. Disattivo: mostrerà il link.",
         "name": "hideTitleListLink",
         "valueType": "boolean"
       },
@@ -307,13 +307,27 @@
         "component": "text",
         "name": "footerListLinkText",
         "label": "Testo Link",
-        "required": true
+        "condition": {
+          "===": [
+            {
+              "var": "hideTitleListLink"
+            },
+            false
+          ]
+        }
       },
       {
         "component": "aem-content",
         "name": "footerListLinkHref",
         "label": "Link URL",
-        "required": true
+        "condition": {
+          "===": [
+            {
+              "var": "hideTitleListLink"
+            },
+            false
+          ]
+        }
       }
     ]
   },
