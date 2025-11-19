@@ -7,6 +7,8 @@ import {
 } from '../atoms/buttons/standard-button/standard-button.js';
 import { createCategoryChip } from '../atoms/category-chip/category-chip.js';
 import { createCategoryTab } from '../atoms/category-tab/category-tab.js';
+import { createTextarea } from '../atoms/inputs/textarea/textarea.js';
+import { createTextfield } from '../atoms/inputs/textfield/textfield.js';
 import { createTag } from '../atoms/tag/tag.js';
 
 let isStylesLoaded = false;
@@ -29,8 +31,9 @@ async function ensureStylesLoaded() {
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/atoms/category-tab/category-tab.css`,
     ),
+    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`),
     loadCSS(
-      `${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`,
+      `${window.hlx.codeBasePath}/blocks/atoms/inputs/inputs.css`,
     ),
   ]);
   isStylesLoaded = true;
@@ -53,7 +56,7 @@ export default async function decorate(block) {
 
   // Create test buttons container
   const testButtons = document.createElement('div');
-  testButtons.style = 'display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; align-items: center; width: 100%;';
+  testButtons.classList.add('test-buttons');
 
   // standard button properties
   const text = rows[0]?.textContent?.trim() || 'Button';
@@ -127,12 +130,34 @@ export default async function decorate(block) {
   );
   testButtons.appendChild(categoryTab);
   // Create tag
-  const tag = createTag(
-    tagLabel,
-    tagCategory,
-    tagType,
-  );
+  const tag = createTag(tagLabel, tagCategory, tagType);
   testButtons.appendChild(tag);
+
+  // Create textfield
+  const textfieldContainer = document.createElement('div');
+  textfieldContainer.style = 'width: 100%; display: flex; justify-content: center; margin-top: 20px;';
+  const textField = createTextfield(
+    'Sample Textfield',
+    'search-icon',
+    BUTTON_ICON_SIZES.SMALL,
+    'hint text',
+    'checked-icon',
+  );
+  textfieldContainer.appendChild(textField);
+  testButtons.appendChild(textfieldContainer);
+  // Create textarea
+  const textareaContainer = document.createElement('div');
+  textareaContainer.style = 'width: 100%; display: flex; justify-content: center; margin-top: 20px;';
+  const textArea = createTextarea(
+    'Sample Textarea',
+    'search-icon',
+    BUTTON_ICON_SIZES.SMALL,
+    'hint text',
+    'checked-icon',
+  );
+  textareaContainer.appendChild(textArea);
+  testButtons.appendChild(textareaContainer);
+
   // Clear block and append test buttons
   block.textContent = '';
   block.appendChild(testButtons);

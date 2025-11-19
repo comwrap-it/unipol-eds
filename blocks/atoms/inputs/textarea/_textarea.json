@@ -1,0 +1,256 @@
+{
+    "definitions": [
+        {
+            "title": "Textarea",
+            "id": "textarea",
+            "plugins": {
+                "xwalk": {
+                    "page": {
+                        "resourceType": "core/franklin/components/block/v1/block/item",
+                        "template": {
+                            "name": "Textarea",
+                            "model": "textarea"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "models": [
+        {
+            "id": "textarea",
+            "fields": [
+                {
+                    "component": "text",
+                    "name": "textareaLabel",
+                    "label": "Label",
+                    "required": true,
+                    "value": "Textarea Label"
+                },
+                {
+                    "component": "select",
+                    "name": "textareaIcon",
+                    "label": "Textarea icon",
+                    "description": "Select the icon",
+                    "options": [
+                        {
+                            "name": "Search",
+                            "value": "search-icon"
+                        },
+                        {
+                            "name": "Chevron Left",
+                            "value": "chevron-left-icon"
+                        },
+                        {
+                            "name": "Chevron Right",
+                            "value": "chevron-right-icon"
+                        },
+                        {
+                            "name": "Phone",
+                            "value": "phone-icon"
+                        },
+                        {
+                            "name": "Phone Call",
+                            "value": "phone-call-icon"
+                        },
+                        {
+                            "name": "Placeholder",
+                            "value": "placeholder-icon"
+                        },
+                        {
+                            "name": "Plant",
+                            "value": "plant-icon"
+                        },
+                        {
+                            "name": "Play Circle",
+                            "value": "play-circle-icon"
+                        },
+                        {
+                            "name": "Play Pause",
+                            "value": "play-pause-icon"
+                        },
+                        {
+                            "name": "Plus",
+                            "value": "plus-icon"
+                        },
+                        {
+                            "name": "Prohibit",
+                            "value": "prohibit-icon"
+                        },
+                        {
+                            "name": "Push Pin",
+                            "value": "push-pin-icon"
+                        },
+                        {
+                            "name": "Question",
+                            "value": "question-icon"
+                        },
+                        {
+                            "name": "Quotes",
+                            "value": "quotes-icon"
+                        },
+                        {
+                            "name": "Share",
+                            "value": "share-icon"
+                        },
+                        {
+                            "name": "Share Big",
+                            "value": "share-big-icon"
+                        },
+                        {
+                            "name": "Shield Check",
+                            "value": "shield-check-icon"
+                        },
+                        {
+                            "name": "Shield Plus",
+                            "value": "shield-plus-icon"
+                        },
+                        {
+                            "name": "Shield Slash",
+                            "value": "shield-slash-icon"
+                        },
+                        {
+                            "name": "Sign In",
+                            "value": "sign-in-icon"
+                        },
+                        {
+                            "name": "Sign Out",
+                            "value": "sign-out-icon"
+                        },
+                        {
+                            "name": "Skip Back Circle",
+                            "value": "skip-back-circle-icon"
+                        }
+                    ]
+                },
+                {
+                    "component": "select",
+                    "name": "textareaIconSize",
+                    "label": "Icon size",
+                    "value": "medium",
+                    "options": [
+                        {
+                            "name": "Small",
+                            "value": "small"
+                        },
+                        {
+                            "name": "Medium",
+                            "value": "medium"
+                        },
+                        {
+                            "name": "Large",
+                            "value": "large"
+                        },
+                        {
+                            "name": "Extra Large",
+                            "value": "extra-large"
+                        }
+                    ]
+                },
+                {
+                    "component": "text",
+                    "name": "textareaHint",
+                    "label": "Hint Text",
+                    "value": "Textarea Hint Text"
+                },
+                {
+                    "component": "select",
+                    "name": "textareaHintIcon",
+                    "label": "Textarea hint icon",
+                    "description": "Select the icon",
+                    "options": [
+                        {
+                            "name": "Search",
+                            "value": "search-icon"
+                        },
+                        {
+                            "name": "Chevron Left",
+                            "value": "chevron-left-icon"
+                        },
+                        {
+                            "name": "Chevron Right",
+                            "value": "chevron-right-icon"
+                        },
+                        {
+                            "name": "Phone",
+                            "value": "phone-icon"
+                        },
+                        {
+                            "name": "Phone Call",
+                            "value": "phone-call-icon"
+                        },
+                        {
+                            "name": "Placeholder",
+                            "value": "placeholder-icon"
+                        },
+                        {
+                            "name": "Plant",
+                            "value": "plant-icon"
+                        },
+                        {
+                            "name": "Play Circle",
+                            "value": "play-circle-icon"
+                        },
+                        {
+                            "name": "Play Pause",
+                            "value": "play-pause-icon"
+                        },
+                        {
+                            "name": "Plus",
+                            "value": "plus-icon"
+                        },
+                        {
+                            "name": "Prohibit",
+                            "value": "prohibit-icon"
+                        },
+                        {
+                            "name": "Push Pin",
+                            "value": "push-pin-icon"
+                        },
+                        {
+                            "name": "Question",
+                            "value": "question-icon"
+                        },
+                        {
+                            "name": "Quotes",
+                            "value": "quotes-icon"
+                        },
+                        {
+                            "name": "Share",
+                            "value": "share-icon"
+                        },
+                        {
+                            "name": "Share Big",
+                            "value": "share-big-icon"
+                        },
+                        {
+                            "name": "Shield Check",
+                            "value": "shield-check-icon"
+                        },
+                        {
+                            "name": "Shield Plus",
+                            "value": "shield-plus-icon"
+                        },
+                        {
+                            "name": "Shield Slash",
+                            "value": "shield-slash-icon"
+                        },
+                        {
+                            "name": "Sign In",
+                            "value": "sign-in-icon"
+                        },
+                        {
+                            "name": "Sign Out",
+                            "value": "sign-out-icon"
+                        },
+                        {
+                            "name": "Skip Back Circle",
+                            "value": "skip-back-circle-icon"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "filters": []
+}
