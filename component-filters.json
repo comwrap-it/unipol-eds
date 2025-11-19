@@ -65,7 +65,7 @@
   {
     "id": "footer-privacy-link-list",
     "components": [
-      "footer-list-link"
+      "footer-privacy-link"
     ]
   },
   {
