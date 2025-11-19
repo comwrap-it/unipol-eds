@@ -1163,7 +1163,7 @@
         "condition": {
           "===": [
             {
-              "var": "hideTitleListLink"
+              "var": "hideTextLinkList"
             },
             true
           ]
@@ -1176,7 +1176,7 @@
         "condition": {
           "===": [
             {
-              "var": "hideTitleListLink"
+              "var": "hideTextLinkList"
             },
             false
           ]
@@ -1189,7 +1189,7 @@
         "condition": {
           "===": [
             {
-              "var": "hideTitleListLink"
+              "var": "hideTextLinkList"
             },
             false
           ]

@@ -47,19 +47,19 @@
           "label": "Testo Elenco",
           "name": "listLinkText",
           "valueType": "string",
-          "condition": { "===": [{"var" : "hideTitleListLink"}, true] }
+          "condition": { "===": [{"var" : "hideTextLinkList"}, true] }
         },
         {
           "component": "text",
           "name": "linkTextComp",
           "label": "Testo Link",
-          "condition": { "===": [{"var" : "hideTitleListLink"}, false] }
+          "condition": { "===": [{"var" : "hideTextLinkList"}, false] }
         },
         {
           "component": "aem-content",
           "name": "linkHrefComp",
           "label": "Link URL",
-          "condition": { "===": [{"var" : "hideTitleListLink"}, false] }
+          "condition": { "===": [{"var" : "hideTextLinkList"}, false] }
         }
       ]
     }
