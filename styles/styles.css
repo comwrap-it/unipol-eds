@@ -104,7 +104,7 @@ footer .footer[data-block-status="loaded"] {
     visibility: visible;
 }
 
-p {
+p, input, ul, ol, dl, blockquote {
     margin: 0;
 }
 
