@@ -1,7 +1,7 @@
 import {
   CHECKBOX_TYPES,
   createCheckbox,
-} from "../../checkbox/standard-checkbox/checkbox.js";
+} from '../../checkbox/standard-checkbox/checkbox.js';
 
 /**
  *
@@ -13,20 +13,20 @@ import {
  * @param {Object} instrumentation - Instrumentation attributes (optional)
  * @return {HTMLElement}
  */
-export const createOption = (
+export default function createOption(
   labelText,
   descriptionText,
   shouldShowCheckbox = false,
   typeStatus = CHECKBOX_TYPES.UNCHECKED,
   disabled = false,
-  instrumentation = {}
-) => {
-  const optionContainer = document.createElement("div");
-  optionContainer.className = "option-container";
+  instrumentation = {},
+) {
+  const optionContainer = document.createElement('div');
+  optionContainer.className = 'option-container';
 
-  const option = document.createElement("button");
-  option.className = "option";
-  option.setAttribute("type", "button");
+  const option = document.createElement('button');
+  option.className = 'option';
+  option.setAttribute('type', 'button');
 
   let checkbox = null;
   if (shouldShowCheckbox) {
@@ -34,15 +34,15 @@ export const createOption = (
     option.appendChild(checkbox);
   }
 
-  const textContainer = document.createElement("div");
-  textContainer.className = "texts-container";
-  const label = document.createElement("span");
-  label.className = "title";
+  const textContainer = document.createElement('div');
+  textContainer.className = 'texts-container';
+  const label = document.createElement('span');
+  label.className = 'title';
   label.textContent = labelText;
   textContainer.appendChild(label);
   if (descriptionText) {
-    const description = document.createElement("span");
-    description.className = "description";
+    const description = document.createElement('span');
+    description.className = 'description';
     description.textContent = descriptionText;
     textContainer.appendChild(description);
   }
@@ -54,10 +54,10 @@ export const createOption = (
     option.setAttribute(name, value);
   });
 
-  option.addEventListener("click", () => {
-    option.classList.toggle("selected");
+  option.addEventListener('click', () => {
+    option.classList.toggle('selected');
     checkbox?.click();
   });
 
   return optionContainer;
-};
+}
