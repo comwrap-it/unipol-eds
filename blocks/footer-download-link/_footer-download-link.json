@@ -39,9 +39,14 @@
         {
           "component": "reference",
           "valueType": "string",
-          "name": "qrCodeImg",
-          "label": "Immagine QR",
-          "multi": false
+          "name": "buttonIconUnipolGroup",
+          "label": "Icona Button Unipol Group"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "qrCodeFooterImg",
+          "label": "Immagine QR CODE"
         },
         {
           "component": "richtext",
@@ -54,8 +59,7 @@
           "component": "reference",
           "valueType": "string",
           "name": "googlePlayImg",
-          "label": "Immagine GooglePlay",
-          "multi": false
+          "label": "Immagine GooglePlay"
         },
         {
           "component": "aem-content",
@@ -66,8 +70,7 @@
           "component": "reference",
           "valueType": "string",
           "name": "appStoreImg",
-          "label": "Immagine AppleStore",
-          "multi": false
+          "label": "Immagine AppleStore"
         },
         {
           "component": "aem-content",

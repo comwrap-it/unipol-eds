@@ -220,7 +220,14 @@ main .section.text-block-container.number-block-container.bg-white {
     background-color: var(--color-neutral-50);
 }
 
-.section.footer-list-link-container.footer-download-link-container {
-    display: flex;
+/* section Unipol Footer */
+.section.footer-list-link-container.footer-download-link-container,
+.section.footer-list-link-container.footer-social-list-container,
+.section.footer-text-container{
     background-color: var(--color-background-default-tertiary);
+}
+
+.section.footer-list-link-container.footer-download-link-container,
+.section.footer-list-link-container.footer-social-list-container {
+    display: flex;
 }
