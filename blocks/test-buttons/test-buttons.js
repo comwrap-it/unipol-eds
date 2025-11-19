@@ -102,11 +102,11 @@ export default async function decorate(block) {
   const testButtons = document.createElement('div');
   testButtons.classList.add('test-buttons');
 
-  // standard button properties
+  // standard button properties (rows 0-5)
   const text = rows[0]?.textContent?.trim() || 'Button';
   const variant = rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-  const iconSize = rows[2]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
-  const href = rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || '';
+  const href = rows[2]?.querySelector('a')?.href || rows[2]?.textContent?.trim() || '';
+  const iconSize = rows[3]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
   const leftIcon = rows[4]?.textContent?.trim() || '';
   const rightIcon = rows[5]?.textContent?.trim() || '';
   // icon button properties
