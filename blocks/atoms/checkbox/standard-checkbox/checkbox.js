@@ -15,13 +15,14 @@ export const CHECKBOX_TYPES = {
  * @param {boolean} disabled - disables checkbox if true
  * @returns {HTMLElement}
  */
-export function createCheckbox(typeStatus = CHECKBOX_TYPES.UNCHECKED, disabled = false) {
-  let type = typeStatus;
-  const wrapper = document.createElement('span');
-  wrapper.className = 'checkbox-wrapper';
-  wrapper.tabIndex = disabled ? -1 : 0; // prevents focus if disabled
-
-  const checkbox = document.createElement('span');
+export function createCheckbox(
+  typeStatus = CHECKBOX_TYPES.UNCHECKED,
+  disabled = false,
+) {
+  const type = typeStatus;
+  const checkbox = document.createElement('input');
+  checkbox.name = 'checkbox';
+  checkbox.type = 'checkbox';
   checkbox.className = ['checkbox', `checkbox-${type}`].join(' ');
   checkbox.setAttribute('role', 'checkbox');
   checkbox.setAttribute('aria-checked', type === CHECKBOX_TYPES.CHECKED);
@@ -30,38 +31,7 @@ export function createCheckbox(typeStatus = CHECKBOX_TYPES.UNCHECKED, disabled =
     checkbox.setAttribute('aria-disabled', 'true');
   }
 
-  wrapper.appendChild(checkbox);
-
-  const toggle = () => {
-    if (disabled) return;
-
-    if (type === CHECKBOX_TYPES.UNCHECKED) type = CHECKBOX_TYPES.CHECKED;
-    else if (type === CHECKBOX_TYPES.CHECKED) type = CHECKBOX_TYPES.UNCHECKED;
-    else if (type === CHECKBOX_TYPES.INDETERMINATE) type = CHECKBOX_TYPES.CHECKED;
-
-    checkbox.className = ['checkbox', `checkbox-${type}`].join(' ');
-
-    if (type === CHECKBOX_TYPES.CHECKED) {
-      checkbox.classList.add('checked-icon');
-    } else if (type === CHECKBOX_TYPES.INDETERMINATE) {
-      checkbox.classList.add('minus-icon');
-    } else {
-      checkbox.classList.remove('checked-icon');
-      checkbox.classList.remove('minus-icon');
-    }
-
-    checkbox.setAttribute('aria-checked', type === CHECKBOX_TYPES.CHECKED);
-  };
-
-  wrapper.addEventListener('click', toggle);
-  wrapper.addEventListener('keydown', (e) => {
-    if (e.key === ' ' || e.key === 'Enter') {
-      e.preventDefault();
-      toggle();
-    }
-  });
-
-  return wrapper;
+  return checkbox;
 }
 
 /**

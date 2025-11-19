@@ -73,10 +73,13 @@
     }
 }
 
+body * {
+    box-sizing: border-box;
+}
+
 body {
     display: none;
     margin: 0;
-    box-sizing: border-box;
     background-color: var(--background-color);
     color: var(--text-color);
     font: var(--typography-text-styles-body-base);
@@ -99,6 +102,10 @@ footer .footer {
 header .header[data-block-status="loaded"],
 footer .footer[data-block-status="loaded"] {
     visibility: visible;
+}
+
+p, input, ul, ol, dl, blockquote {
+    margin: 0;
 }
 
 h1,
@@ -137,67 +144,6 @@ h5 {
 
 h6 {
     font-size: var(--heading-font-size-xs);
-}
-
-p,
-dl,
-ol,
-ul,
-pre,
-blockquote {
-    margin-top: 0.8em;
-    margin-bottom: 0.25em;
-}
-
-code,
-pre {
-    font-size: var(--body-font-size-s);
-}
-
-pre {
-    padding: 16px;
-    border-radius: 8px;
-    background-color: var(--light-color);
-    overflow-x: auto;
-    white-space: pre;
-}
-
-main > div {
-    margin: 40px 16px;
-}
-
-input,
-textarea,
-select,
-button {
-    font: inherit;
-}
-
-main img {
-    max-width: 100%;
-    width: auto;
-    height: auto;
-}
-
-/* sections */
-main > .section {
-    margin: 40px 0;
-}
-
-main > .section > div {
-    max-width: 1200px;
-    margin: auto;
-    padding: 0 24px;
-}
-
-main > .section:first-of-type {
-    margin-top: 0;
-}
-
-@media (width >= 900px) {
-    main > .section > div {
-        padding: 0 32px;
-    }
 }
 
 /* section metadata */

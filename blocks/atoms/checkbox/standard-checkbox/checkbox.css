@@ -1,17 +1,9 @@
-.checkbox-wrapper {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  width: 24px;
-  height: 24px;
-}
 
 .checkbox {
-  width: 20px;
-  height: 20px;
-  border: 2px solid var(--color-text-default-primary);
-  border-radius: 4px;
+  width: var(--dimension-checkbox-dimentions);
+  height: var(--dimension-checkbox-dimentions);
+  border: var(--dimension-checkbox-border-width) solid var(--color-text-default-primary);
+  border-radius: var(--dimension-checkbox-radius);
   display: flex;
   align-items: center;
   justify-content: center;
