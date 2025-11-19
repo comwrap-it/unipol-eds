@@ -236,7 +236,7 @@
         "component": "container",
         "name": "button-container",
         "label": "Configurazione Bottone",
-        "collapsible": true,
+        "collapsible": false,
         "fields": [
           {
             "component": "text",

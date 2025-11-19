@@ -51,7 +51,7 @@
           "component": "container",
           "name": "button-container",
           "label": "Configurazione Bottone",
-          "collapsible": true,
+          "collapsible": false,
           "fields": [
             {
               "...": "../atoms/buttons/link-button/_link-button.json#/models/link-button/fields"
