@@ -51,7 +51,8 @@
         "cards",
         "columns",
         "fragment",
-        "test-buttons"
+        "test-buttons",
+        "text-list"
       ]
     }
   ]

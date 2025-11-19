@@ -280,69 +280,6 @@
     ]
   },
   {
-    "id": "footer-link",
-    "fields": [
-      {
-        "component": "boolean",
-        "label": "Mostra Titolo Elenco Link o singolo Link",
-        "description": "Attivo: stamperà il titolo. Disattivo: mostrerà il link.",
-        "name": "hideTitleListLink",
-        "valueType": "boolean"
-      },
-      {
-        "component": "richtext",
-        "label": "Titolo Elenco Link",
-        "name": "footerListLinkTitle",
-        "valueType": "string",
-        "condition": {
-          "===": [
-            {
-              "var": "hideTitleListLink"
-            },
-            true
-          ]
-        }
-      },
-      {
-        "component": "text",
-        "name": "footerListLinkText",
-        "label": "Testo Link",
-        "condition": {
-          "===": [
-            {
-              "var": "hideTitleListLink"
-            },
-            false
-          ]
-        }
-      },
-      {
-        "component": "aem-content",
-        "name": "footerListLinkHref",
-        "label": "Link URL",
-        "condition": {
-          "===": [
-            {
-              "var": "hideTitleListLink"
-            },
-            false
-          ]
-        }
-      }
-    ]
-  },
-  {
-    "id": "footer-privacy-list-title",
-    "fields": [
-      {
-        "component": "text",
-        "name": "footerListLinkTitleEL",
-        "label": "Titolo elenco footer",
-        "required": true
-      }
-    ]
-  },
-  {
     "id": "footer-privacy-link",
     "fields": [
       {
@@ -1205,6 +1142,58 @@
             ]
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "text-link",
+    "fields": [
+      {
+        "component": "boolean",
+        "label": "Mostra Testo o  Link",
+        "description": "Attivo: mostra un Titolo/ Testo. Disattivo: mostra un link.",
+        "name": "hideTextLinkList",
+        "valueType": "boolean"
+      },
+      {
+        "component": "richtext",
+        "label": "Testo Elenco",
+        "name": "listLinkText",
+        "valueType": "string",
+        "condition": {
+          "===": [
+            {
+              "var": "hideTitleListLink"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "linkTextComp",
+        "label": "Testo Link",
+        "condition": {
+          "===": [
+            {
+              "var": "hideTitleListLink"
+            },
+            false
+          ]
+        }
+      },
+      {
+        "component": "aem-content",
+        "name": "linkHrefComp",
+        "label": "Link URL",
+        "condition": {
+          "===": [
+            {
+              "var": "hideTitleListLink"
+            },
+            false
+          ]
+        }
       }
     ]
   }
