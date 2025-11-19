@@ -1,0 +1,137 @@
+/**
+ * This file was generated automatically by Supernova.io and should not be changed manually.
+ * To modify the format or content of this file, please contact your design system team. 
+ */
+
+.theme-dark {
+  /* Bg/Utilities/Scrim */
+  --color-background-utilities-scrim: #000000cc;
+  /* Bg/Utilities/Overlay */
+  --color-background-utilities-overlay: #00000080;
+  /* Bg/Utilities/Blanket */
+  --color-background-utilities-blanket: #000000b2;
+  --color-text-utilities-text-on-measurement: #fae1fa;
+  --color-icon-default-tertiary: #ffffff66;
+  --color-icon-utilities-icon-on-measurement: #fae1fa;
+  --color-icon-utilities-icon: #f19edc;
+  --color-border-utilities-measurement: #d732a8;
+  --color-border-utilities-swatch: #ffffff3d;
+  /* Bg/Default/Default */
+  --color-background-default-primary: var(--color-neutral-200);
+  /* Bg/Default/Secondary */
+  --color-background-default-secondary: var(--color-neutral-50);
+  /* Bg/Default/Tertiary */
+  --color-background-default-tertiary: var(--color-neutral-200);
+  /* Bg/Default/Tertiary */
+  --color-background-default-accent-fixed: var(--color-accent-500);
+  /* Bg/Default/Tertiary */
+  --color-background-default-accent-light: var(--color-grayscale-700);
+  /* Bg/Default/Default Hover */
+  --color-background-default-accent-hover: var(--color-accent-700);
+  /* Bg/Default/Tertiary Hover */
+  --color-background-default-tertiary-hover: var(--color-grayscale-200);
+  /* Bg/Brand/Default */
+  --color-background-brand-mobilty-light: var(--color-blue-100);
+  /* Bg/Brand/Secondary */
+  --color-background-brand-mobilty-strong: var(--color-blue-600);
+  /* Bg/Brand/Hover */
+  --color-background-brand-welfare-light: var(--color-green-100);
+  /* Bg/Brand/Hover */
+  --color-background-brand-welfare-strong: var(--color-green-800);
+  /* Bg/Brand/Hover */
+  --color-background-brand-property-light: var(--color-orange-100);
+  /* Bg/Brand/Hover */
+  --color-background-brand-property-strong: var(--color-orange-700);
+  /* Bg/Positive/Default */
+  --color-background-success-default: #4b9d2f;
+  /* Bg/Positive/Secondary */
+  --color-background-success-secondary: #387623;
+  /* Bg/Positive/Tertiary */
+  --color-background-success-tertiary: #254f17;
+  /* Bg/Warning/Default */
+  --color-background-warning-default: #f59670;
+  /* Bg/Warning/Secondary */
+  --color-background-warning-secondary: #8f300a;
+  /* Bg/Warning/Tertiary */
+  --color-background-warning-tertiary: #5f2007;
+  /* Bg/Danger/Default */
+  --color-background-error-default: #0050b4;
+  /* Bg/Danger/Secondary */
+  --color-background-error-secondary: #00295c;
+  /* Bg/Danger/Tertiary */
+  --color-background-error-tertiary: #001b3d;
+  /* Bg/Disabled/Default */
+  --color-background-disabled-primary: var(--color-grayscale-700);
+  /* Bg/Disabled/Default */
+  --color-background-disabled-secondary: var(--color-grayscale-700);
+  /* Bg/Neutral/Secondary */
+  --color-background-neutral-primary: var(--color-grayscale-800);
+  /* Bg/Neutral/Default */
+  --color-background-neutral-secondary: var(--color-grayscale-400);
+  /* Bg/Neutral/Tertiary */
+  --color-background-neutral-tertiary: var(--color-grayscale-500);
+  --color-text-default-primary: var(--color-neutral-200);
+  --color-text-default-accent: var(--color-neutral-200);
+  --color-text-default-secondary: var(--color-neutral-200);
+  --color-text-brand-mobility: var(--color-blue-600);
+  --color-text-brand-welfare: var(--color-green-800);
+  --color-text-brand-property: var(--color-orange-700);
+  --color-text-success-default: var(--color-feedback-success-100);
+  --color-text-success-secondary: #9edc89;
+  --color-text-warning-default: var(--color-feedback-warning-100);
+  --color-text-warning-secondary: #f59670;
+  --color-text-error-default: var(--color-feedback-error-100);
+  --color-text-error-secondary: #3d95ff;
+  --color-text-disabled-primary: #63727d;
+  --color-text-disabled-secondary: var(--color-grayscale-400);
+  --color-text-disabled-tertiary: var(--color-grayscale-400);
+  --color-text-utilities-text-on-overlay: var(--color-white-1100);
+  --color-text-neutral-primary: #e3e3e3;
+  --color-text-neutral-secondary: #cdcdcd;
+  --color-text-neutral-tertiary: var(--color-brand-800);
+  --color-icon-default-primary: var(--color-neutral-200);
+  --color-icon-default-secondary: var(--color-grayscale-400);
+  --color-icon-brand-mobility: #e5f3ff;
+  --color-icon-brand-welfare: #99cfff;
+  --color-icon-brand-property: #66b8ff;
+  --color-icon-success-primary: var(--color-feedback-success-100);
+  --color-icon-success-secondary: #9edc89;
+  --color-icon-warning-primary: var(--color-feedback-warning-100);
+  --color-icon-warning-secondary: #f59670;
+  --color-icon-error-primary: var(--color-feedback-error-100);
+  --color-icon-error-secondary: #3d95ff;
+  --color-icon-disabled-primary: var(--color-grayscale-400);
+  --color-icon-disabled-secondary: var(--color-grayscale-500);
+  --color-icon-disabled-tertiary: var(--color-grayscale-400);
+  --color-icon-neutral-primary: #e3e3e3;
+  --color-icon-neutral-secondary: #cdcdcd;
+  --color-icon-neutral-tertiary: var(--color-brand-800);
+  --color-border-default-primary: var(--color-neutral-200);
+  --color-border-default-accent: #cdcdcd;
+  --color-border-default-secondary: var(--color-grayscale-400);
+  --color-border-default-focused: var(--color-brand-200);
+  --color-border-brand-mobility: var(--color-blue-400);
+  --color-border-brand-welfare: var(--color-green-400);
+  --color-border-brand-property: var(--color-orange-400);
+  --color-border-success-primary: var(--color-feedback-success-100);
+  --color-border-success-secondary: #9edc89;
+  --color-border-warning-primary: var(--color-feedback-warning-100);
+  --color-border-warning-secondary: #f59670;
+  --color-border-error-primary: var(--color-feedback-error-100);
+  --color-border-error-secondary: #3d95ff;
+  --color-border-disabled-primary: var(--color-grayscale-300);
+  --color-border-disabled-secondary: var(--color-grayscale-600);
+  --color-border-neutral-primary: #f3f3f3;
+  --color-border-neutral-secondary: var(--color-grayscale-600);
+  /* Bg/Neutral/Default */
+  --color-background-opacity-primary: var(--color-white-600);
+  /* Bg/Neutral/Secondary */
+  --color-background-opacity-secondary: var(--color-black-400);
+  /* Bg/Neutral/Tertiary */
+  --color-background-opacity-tertiary: var(--color-black-500);
+  --color-text-neutral-fixed: var(--color-neutral-200);
+  --color-icon-neutral-fixed: var(--color-neutral-200);
+  --color-icon-default-fixed: var(--color-brand-800);
+  --color-border-default-tertiary: var(--color-neutral-200);
+  --color-border-neutral-tertiary: var(--color-grayscale-500);
+}

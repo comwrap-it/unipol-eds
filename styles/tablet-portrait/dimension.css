@@ -1,0 +1,64 @@
+/**
+ * This file was generated automatically by Supernova.io and should not be changed manually.
+ * To modify the format or content of this file, please contact your design system team. 
+ */
+
+.theme-tablet-portrait {
+  --dimension-layout-page-width: 768px;
+  --dimension-layout-page-min-height: 1024px;
+  --dimension-layout-container-horizontal-gap: 24px;
+  --dimension-layout-container-vertical-gap: 24px;
+  --dimension-column-size-col-1: 54px;
+  --dimension-column-size-col-2: 116px;
+  --dimension-column-size-col-3: 178px;
+  --dimension-column-size-col-4: 240px;
+  --dimension-column-size-col-5: 302px;
+  --dimension-column-size-col-6: 364px;
+  --dimension-column-size-col-7: 426px;
+  --dimension-column-size-col-8: 488px;
+  --dimension-column-size-col-9: 550px;
+  --dimension-column-size-col-10: 612px;
+  --dimension-column-size-col-11: 674px;
+  --dimension-column-size-col-12: 736px;
+  --dimension-layout-page-gap: var(--dimension-space-1000-80);
+  --dimension-layout-section-margin-horizontal-padding: var(--dimension-space-300-16);
+  --dimension-layout-section-vertical-padding: var(--dimension-space-0);
+  --dimension-layout-section-vertical-gap: 24px;
+  --dimension-layout-section-horizontal-gap: 24px;
+  --dimension-layout-row-horizontal-padding: var(--dimension-space-0);
+  --dimension-layout-row-vertical-padding: var(--dimension-space-0);
+  --dimension-layout-row-gutter-horizontal-gap: var(--dimension-space-200-8);
+  --dimension-layout-row-gutter-vertical-gap: var(--dimension-space-200-8);
+  --dimension-layout-container-vertical-padding: var(--dimension-space-0);
+  --dimension-layout-container-horizontal-padding: var(--dimension-space-0);
+  --dimension-container-width-l6-m6-s12: var(--dimension-column-size-col-6);
+  --dimension-container-width-l4-m4-s12: var(--dimension-column-size-col-4);
+  --dimension-container-width-l3-m6-s12: var(--dimension-column-size-col-6);
+  --dimension-container-width-l3-m4-s12: var(--dimension-column-size-col-4);
+  --dimension-container-width-l6-m3-s12: var(--dimension-column-size-col-3);
+  --dimension-container-width-l9-m6-s12: var(--dimension-column-size-col-6);
+  --dimension-container-width-l4-m6-s12: var(--dimension-column-size-col-6);
+  --dimension-font-size-title-hero-apex-new: 56px;
+  --dimension-spacing-padding-24-16: var(--dimension-space-300-16);
+  --dimension-spacing-gap-24-16: var(--dimension-space-300-16);
+  --dimension-font-size-title-extra-large: 80px;
+  --dimension-font-size-title-page: 56px;
+  --dimension-font-size-subtitle-manrope: 24px;
+  --dimension-font-size-heading: 24px;
+  --dimension-spacing-padding-4-2: var(--dimension-space-50-2);
+  --dimension-spacing-padding-16-12: var(--dimension-space-250-12);
+  --dimension-spacing-gap-16-8: var(--dimension-space-200-8);
+  --dimension-spacing-gap-8-4: var(--dimension-space-100-4);
+  --dimension-font-size-body-2: 24px;
+  --dimension-spacing-padding-32-24: var(--dimension-space-400-24);
+  --dimension-spacing-gap-32-24: var(--dimension-space-400-24);
+  --dimension-spacing-gap-48-40: var(--dimension-space-600-40);
+  --dimension-spacing-gap-80-48: var(--dimension-space-700-48);
+  --dimension-container-width-l7-m7-s12: var(--dimension-column-size-col-7);
+  --dimension-container-width-l5-m5-s12: var(--dimension-column-size-col-5);
+  --dimension-icon-size-icon-32-24: var(--dimension-space-400-24);
+  --dimension-icon-size-bg-icon-56-48: var(--dimension-space-700-48);
+  --dimension-icon-size-icon-64-56: var(--dimension-space-800-56);
+  --dimension-icon-size-logo-120-80: var(--dimension-space-1100-96);
+  --dimension-spacing-padding-8-4: var(--dimension-space-100-4);
+}
