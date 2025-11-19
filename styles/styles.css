@@ -219,3 +219,8 @@ main .section.text-block-container.number-block-container.bg-dark-gray {
 main .section.text-block-container.number-block-container.bg-white {
     background-color: var(--color-neutral-50);
 }
+
+.section.footer-list-link-container.footer-download-link-container {
+    display: flex;
+    background-color: var(--color-background-default-tertiary);
+}
