@@ -7,6 +7,13 @@ export const NAVIGATION_PILL_VARIANTS = {
   SECONDARY: 'secondary',
 };
 
+export const NAVIGATION_PILL_ICON_SIZES = {
+  SMALL: 'small',
+  MEDIUM: 'medium',
+  LARGE: 'large',
+  EXTRA_LARGE: 'extra-large',
+};
+
 /**
  * Retrieves instrumentation attributes
  *
@@ -33,7 +40,9 @@ export function extractInstrumentationAttributes(element) {
  * @param {string} [href] - link.
  * @param {string} variant - "primary" or "secondary".
  * @param {string} [leftIcon] - Left Icon className.
+ * @param {string} [leftIconSize] - Left Icon size.
  * @param {string} [rightIcon] - Right Icon className.
+ * @param {string} [rightIconSize] - Right Icon size.
  * @param {Object} [instrumentation={}] - AEM attributes.
  * @returns {HTMLElement}
  */
@@ -42,7 +51,9 @@ export function createNavigationPill(
   href,
   variant,
   leftIcon,
+  leftIconSize,
   rightIcon,
+  rightIconSize,
   instrumentation = {},
 ) {
   const isLink = Boolean(href);
@@ -50,7 +61,7 @@ export function createNavigationPill(
 
   if (leftIcon) {
     const span = document.createElement('span');
-    span.className = `icon ${leftIcon}`;
+    span.className = `icon icon-${leftIconSize || NAVIGATION_PILL_ICON_SIZES.MEDIUM} ${leftIcon}`;
     el.appendChild(span);
   }
 
@@ -60,7 +71,7 @@ export function createNavigationPill(
 
   if (rightIcon) {
     const span = document.createElement('span');
-    span.className = `icon ${rightIcon}`;
+    span.className = `icon icon-${rightIconSize || NAVIGATION_PILL_ICON_SIZES.MEDIUM} ${rightIcon}`;
     el.appendChild(span);
   }
 

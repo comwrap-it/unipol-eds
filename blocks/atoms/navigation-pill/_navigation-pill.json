@@ -56,6 +56,30 @@
         },
         {
           "component": "select",
+          "name": "navigationPillLeftIconSize",
+          "label": "Size",
+          "value": "medium",
+          "options": [
+              {
+                  "name": "Small",
+                  "value": "small"
+              },
+              {
+                  "name": "Medium",
+                  "value": "medium"
+              },
+              {
+                  "name": "Large",
+                  "value": "large"
+              },
+              {
+                  "name": "Extra Large",
+                  "value": "extra-large"
+              }
+          ]
+        },
+        {
+          "component": "select",
           "name": "navigationPillRightIcon",
           "label": "Right Icon",
           "description": "Optional icon on the right",
@@ -64,6 +88,30 @@
             { "name": "Chevron Left", "value": "chevron-left" },
             { "name": "Chevron Right", "value": "chevron-right" },
             { "name": "Search", "value": "search-icon" }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "navigationPillRightIconSize",
+          "label": "Size",
+          "value": "medium",
+          "options": [
+              {
+                  "name": "Small",
+                  "value": "small"
+              },
+              {
+                  "name": "Medium",
+                  "value": "medium"
+              },
+              {
+                  "name": "Large",
+                  "value": "large"
+              },
+              {
+                  "name": "Extra Large",
+                  "value": "extra-large"
+              }
           ]
         }
       ]

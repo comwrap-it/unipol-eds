@@ -6,13 +6,13 @@
   padding: var(--dimension-navigation-pill-vertical-padding)
            var(--dimension-navigation-pill-horizontal-padding);
   border: var(--border-width-stroke-200-2) solid transparent;
-  border-radius: var(--border-radius-400-24);
-  font-size: var(--font-size-16);
+  border-radius: var(--dimension-navigation-pill-radius);
+  font-size: var(--font-size-14);
   font-weight: var(--font-weight-semi-bold);
   line-height: 1.5;
   text-decoration: none;
   cursor: pointer;
-  font-family: inherit;
+  font-family: var(--family-font-2, Manrope);
   user-select: none;
   min-height: var(--dimension-space-400-24);
   box-sizing: border-box;
@@ -20,38 +20,38 @@
 
 /* Primary */
 .navigation-pill-primary {
-  background-color: var(--color-button-secondary-default-background);
-  color: var(--color-button-secondary-default-text);
-  border-color: var(--color-button-secondary-default-border);
+  color: var(--color-navigation-pill-primary-default-text);
+  background-color: var(--color-navigation-pill-primary-default-background);
 }
 
 /* Hover Status */
 .navigation-pill-primary:hover:not(:disabled) {
-  color: var(--color-brand-600);
+  color: var(--color-navigation-pill-primary-hover-text);
+  background-color: var(--color-navigation-pill-primary-hover-background);
 }
 
 /* Active Status */
 .navigation-pill-primary:active:not(:disabled) {
-  background-color: var(--color-neutral-200);
+  color: var(--color-navigation-pill-active-text);
+  background-color: var(--color-navigation-pill-active-background);
 }
 
 /* Secondary */
 .navigation-pill-secondary {
-  background-color: var(--color-button-accent-default-background);
-  color: var(--color-button-accent-default-text);
-  border-color: var(--color-button-accent-default-border);
+  color: var(--color-navigation-pill-secondary-default-text);
+  background-color: var(--color-navigation-pill-secondary-default-background);
 }
 
 /* Hover Status */
 .navigation-pill-secondary:hover:not(:disabled) {
-  background-color: var(--color-button-accent-hover-background);
-  color: var(--color-button-accent-hover-text);
-  border-color: var(--color-button-accent-hover-border);
+  color: var(--color-navigation-pill-secondary-hover-text);
+  background-color: var(--color-navigation-pill-secondary-hover-background);
 }
 
 /* Active Status */
 .navigation-pill-secondary:active:not(:disabled) {
-  background-color: var(--color-neutral-200);
+  color: var(--color-navigation-pill-active-text);
+  background-color: var(--color-navigation-pill-active-background);
 }
 
 /* Focused Status */
