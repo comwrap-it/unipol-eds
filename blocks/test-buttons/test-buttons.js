@@ -5,10 +5,10 @@ import {
   BUTTON_VARIANTS,
   createButton,
 } from '../atoms/buttons/standard-button/standard-button.js';
-import { 
-  NAVIGATION_PILL_VARIANTS, 
+import {
+  NAVIGATION_PILL_VARIANTS,
   NAVIGATION_PILL_ICON_SIZES,
-  createNavigationPill
+  createNavigationPill,
 } from '../atoms/navigation-pill/navigation-pill.js';
 import { createCategoryChip } from '../atoms/category-chip/category-chip.js';
 import { createCategoryTab } from '../atoms/category-tab/category-tab.js';
@@ -143,12 +143,12 @@ export default async function decorate(block) {
 
   // Create Navigation Pill
   const navigationPill = createNavigationPill(
-    "NavPill",
+    'NavPill',
     undefined,
     NAVIGATION_PILL_VARIANTS.SECONDARY,
-    "search-icon",
+    'search-icon',
     NAVIGATION_PILL_ICON_SIZES.LARGE,
-    "phone-icon",
+    'phone-icon',
     NAVIGATION_PILL_ICON_SIZES.SMALL,
   );
   testButtons.appendChild(navigationPill);
