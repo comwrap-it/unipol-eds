@@ -1,0 +1,9 @@
+.test-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 40px 20px;
+}
