@@ -1,0 +1,314 @@
+/* --color-input-field-hint-helper-text-icon: var(--color-icon-neutral-secondary);
+  --color-input-field-hint-helper-text: var(--color-text-neutral-secondary);
+  --color-input-field-hint-error-text-icon: var(--color-icon-error-primary);
+  --color-input-field-hint-error-text: var(--color-text-error-default);
+  --color-input-field-hint-checkbox-icon: var(--color-icon-default-primary);
+  --color-input-field-hint-checkbox-text: var(--color-text-default-primary);
+  --color-input-fields-placeholder-background: var(--color-null-000);
+  --color-input-fields-placeholder-border: var(--color-border-neutral-secondary);
+  --color-input-fields-placeholder-text-label: var(--color-text-default-primary);
+  --color-input-fields-placeholder-text-value: var(--color-text-neutral-secondary);
+  --color-input-fields-placeholder-icon: var(--color-icon-default-primary);
+  --color-input-fields-enabled-background: var(--color-null-000);
+  --color-input-fields-enabled-border: var(--color-border-neutral-secondary);
+  --color-input-fields-enabled-text-title: var(--color-text-default-primary);
+  --color-input-fields-enabled-text-value: var(--color-text-default-primary);
+  --color-input-fields-enabled-icon: var(--color-icon-default-primary);
+  --color-input-fields-disabled-background: var(--color-background-disabled-primary);
+  --color-input-fields-disabled-border: var(--color-null-000);
+  --color-input-fields-disabled-text-title: var(--color-text-default-primary);
+  --color-input-fields-disabled-text-value: var(--color-text-disabled-secondary);
+  --color-input-fields-disabled-icon: var(--color-icon-default-primary);
+  --color-input-fields-hover-background: var(--color-background-neutral-primary);
+  --color-input-fields-hover-border: var(--color-border-neutral-secondary);
+  --color-input-fields-hover-text-title: var(--color-text-default-primary);
+  --color-input-fields-hover-text-value: var(--color-text-default-primary);
+  --color-input-fields-hover-icon: var(--color-icon-default-primary);
+  --color-input-fields-pressed-background: var(--color-background-neutral-primary);
+  --color-input-fields-pressed-border: var(--color-border-neutral-secondary);
+  --color-input-fields-pressed-text-title: var(--color-text-default-primary);
+  --color-input-fields-pressed-text-value: var(--color-text-default-primary);
+  --color-input-fields-pressed-icon: var(--color-icon-default-primary);
+  --color-input-fields-focused-background: var(--color-null-000);
+  --color-input-fields-focused-border-default: var(--color-border-disabled-primary);
+  --color-input-fields-focused-border-focused: var(--color-border-default-focused);
+  --color-input-fields-focused-text-title: var(--color-text-default-primary);
+  --color-input-fields-focused-text-value: var(--color-text-default-primary);
+  --color-input-fields-focused-icon: var(--color-icon-default-primary);
+  --color-input-fields-error-background: var(--color-null-000);
+  --color-input-fields-error-border: var(--color-border-error-primary);
+  --color-input-fields-error-text-label: var(--color-text-default-primary);
+  --color-input-fields-error-text-value: var(--color-text-default-primary);
+  --color-input-fields-error-icon: var(--color-icon-default-primary);
+  --color-input-field-hint-radio-button-icon: var(--color-icon-default-primary);
+  --color-input-field-hint-radio-button-text: var(--color-text-default-primary);
+  --color-input-field-hint-warning-text-icon: var(--color-icon-warning-primary);
+  --color-input-field-hint-warning-text: var(--color-text-warning-default);
+  --color-input-field-hint-success-text-icon: var(--color-icon-success-primary);
+  --color-input-field-hint-success-text: var(--color-text-success-default);
+  --color-input-fields-disabled-background-2: var(--color-background-disabled-primary);
+  --color-label-input-fields-primary-background: var(--color-background-default-primary);
+  --color-label-input-fields-primary-text: var(--color-text-default-primary);
+  --color-label-input-fields-secondary-background: var(--color-background-default-secondary);
+  --color-label-input-fields-secondary-text: var(--color-text-default-primary);
+  --color-input-fields-warning-background: var(--color-null-000);
+  --color-input-fields-warning-border: var(--color-border-warning-primary);
+  --color-input-fields-warning-text-label: var(--color-text-default-primary);
+  --color-input-fields-warning-text-value: var(--color-text-default-primary);
+  --color-input-fields-warning-icon: var(--color-icon-default-primary);
+  --color-input-fields-success-background: var(--color-null-000);
+  --color-input-fields-success-border: var(--color-border-success-primary);
+  --color-input-fields-success-text-label: var(--color-text-default-primary);
+  --color-input-fields-success-text-value: var(--color-text-default-primary);
+  --color-input-fields-success-icon: var(--color-icon-default-primary); */
+
+/* dimension-input-fields-radius-default: var(--border-radius-9999);
+  dimension-input-fields-radius-text-area: var(--border-radius-300-16);
+  --dimension-input-fields-border-default: var(--border-width-stroke-100-1);
+  --dimension-input-fields-border-focused: var(--border-width-stroke-200-2);
+  --dimension-input-fields-vertical-gap: var(--dimension-space-100-4);
+  --dimension-input-fields-vertical-gap-select: var(--dimension-space-50-2);
+  --dimension-input-fields-horizontal-gap: var(--dimension-space-200-8);
+  --dimension-input-fields-min-height-text-area: var(--dimension-space-900-64);
+  --dimension-input-fields-vertical-padding: var(--dimension-space-300-16);
+  --dimension-input-fields-horizontal-padding: var(--dimension-space-400-24);
+  --dimension-input-fields-horizontal-padding-icon: var(--dimension-space-350-20);
+  --dimension-label-input-fields-vertical-padding: var(--dimension-space-0);
+  --dimension-input-field-hint-vertical-padding-selection-control: var(--dimension-space-100-4);
+  --dimension-input-field-hint-horizontal-gap-icon: var(--dimension-space-100-4);
+  --dimension-input-field-hint-horizontal-gap-selection-control: var(--dimension-space-200-8);
+  dimension-input-field-hint-vertical-padding: var(--dimension-space-0);
+  --dimension-input-fields-text-field-height: var(--dimension-space-700-48);
+  --dimension-label-input-fields-horizontal-padding: var(--dimension-space-350-20);
+  --dimension-input-fields-horizontal-padding-text-area: var(--dimension-space-400-24);
+  --dimension-input-fields-label-padding: var(--dimension-space-100-4);
+  --dimension-label-input-fields-radius: var(--border-radius-100-4); */
+
+.input-main-wrapper {
+    display: flex;
+    width: 350px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--dimension-input-fields-vertical-gap, 4px);
+
+    .input-container {
+        position: relative;
+        width: 100%;
+
+        .input {
+            width: 100%;
+            height: var(--dimension-input-fields-text-field-height, 48px);
+            padding-block: var(--dimension-input-fields-vertical-padding, 16px);
+            padding-left: var(
+                --dimension-input-fields-horizontal-padding,
+                24px
+            );
+            padding-right: var(
+                --dimension-input-fields-horizontal-padding-icon,
+                20px
+            );
+            border-radius: var(--dimension-input-fields-radius-default, 9999px);
+            border: var(--dimension-input-fields-border-default, 1px) solid
+                var(--color-input-fields-placeholder-border);
+            background-color: var(--color-input-fields-enabled-background);
+            color: var(--color-input-fields-placeholder-text-value);
+            font-family: var(--font-family-font-2);
+            font-size: var(--font-size-16);
+            font-weight: var(--font-weight-italic);
+            line-height: 1.4;
+
+            &::placeholder {
+                color: var(--color-input-fields-placeholder-text-value);
+            }
+
+            &:disabled {
+                background-color: var(--color-input-fields-disabled-background);
+                border-color: var(--color-input-fields-disabled-border);
+                color: var(--color-input-fields-disabled-text-value);
+                cursor: not-allowed;
+            }
+
+            &:enabled {
+                color: var(--color-input-fields-enabled-text-value);
+                border-color: var(--color-input-fields-enabled-border);
+                background-color: var(--color-input-fields-enabled-background);
+
+                &:hover {
+                    border-color: var(--color-input-fields-hover-border);
+                    background-color: var(
+                        --color-input-fields-hover-background
+                    );
+                    color: var(--color-input-fields-hover-text-value);
+                }
+
+                &:focus {
+                    outline: var(--dimension-input-fields-border-focused) solid
+                        var(--color-input-fields-focused-border-focused);
+                    background-color: var(
+                        --color-input-fields-focused-background
+                    );
+                    color: var(--color-input-fields-focused-text-value);
+                }
+
+                &:active {
+                    border-color: var(--color-input-fields-pressed-border);
+                    background-color: var(
+                        --color-input-fields-pressed-background
+                    );
+                    color: var(--color-input-fields-pressed-text-value);
+                }
+            }
+        }
+
+        label {
+            color: var(--color-input-fields-placeholder-text-value);
+            padding: var(--dimension-input-fields-label-padding, 4px) 0;
+            position: absolute;
+            left: var(--dimension-input-fields-horizontal-padding, 24px);
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            transition: all 0.2s ease-in-out;
+            font-family: var(--font-family-font-2);
+            font-size: var(--font-size-16);
+            font-weight: var(--font-weight-italic);
+            line-height: 1.4;
+        }
+
+        .icon {
+            position: absolute;
+            top: 50%;
+            right: var(--dimension-input-fields-horizontal-padding-icon, 20px);
+            transform: translateY(-50%);
+        }
+
+        .textarea {
+            border-radius: var(--dimension-input-fields-radius-text-area);
+            resize: none;
+            height: 100%;
+
+            & + label {
+                top: var(--dimension-input-fields-vertical-padding, 16px);
+                padding-block: var(
+                    --dimension-label-input-fields-vertical-padding,
+                    0
+                );
+                transform: translateY(0);
+            }
+
+            &:not(:placeholder-shown),
+            &:focus {
+                & + label {
+                    transform: translateY(-50%);
+                }
+            }
+
+            & ~ .icon {
+                top: var(--dimension-input-fields-vertical-padding, 16px);
+                transform: translateY(0);
+            }
+        }
+
+        /* if i have the icon i increase the padding-right of the icon width + 5px */
+        &:has(.icon .icon-small) .input {
+            padding-right: calc(
+                var(--dimension-input-fields-horizontal-padding-icon, 20px) +
+                    var(--dimension-space-300-16) + 5px
+            );
+        }
+
+        &:has(.icon .icon-medium) .input {
+            padding-right: calc(
+                var(--dimension-input-fields-horizontal-padding-icon, 20px) +
+                    var(--dimension-space-350-20) + 5px
+            );
+        }
+
+        &:has(.icon .icon-large) .input {
+            padding-right: calc(
+                var(--dimension-input-fields-horizontal-padding-icon, 20px) +
+                    var(--dimension-space-400-24) + 5px
+            );
+        }
+
+        &:has(.icon .icon-extra-large) .input {
+            padding-right: calc(
+                var(--dimension-input-fields-horizontal-padding-icon, 20px) +
+                    var(--dimension-space-500-32) + 5px
+            );
+        }
+
+        .input:not(:placeholder-shown),
+        .input:focus {
+            & + label {
+                top: 0;
+                font-size: var(--font-size-12);
+                padding: var(--dimension-label-input-fields-vertical-padding, 0)
+                    var(--dimension-input-fields-label-padding, 4px);
+                background-color: var(
+                    --color-label-input-fields-secondary-background
+                );
+                border-radius: var(--dimension-label-input-fields-radius, 4px);
+                color: var(--color-label-input-fields-secondary-text);
+            }
+        }
+
+        &:has(.textarea) {
+            height: var(--dimension-space-1100-96);
+        }
+    }
+
+    .helper-container {
+        display: flex;
+        align-items: center;
+        padding-left: var(--dimension-input-fields-horizontal-padding, 24px);
+        gap: var(--dimension-space-200-8, 8px);
+        align-self: stretch;
+        font-family: var(--font-family-font-2);
+        font-size: var(--font-size-12);
+        font-weight: var(--font-weight-italic);
+        line-height: 1.4;
+        color: var(--color-input-field-hint-helper-text);
+    }
+
+    /* handle warning state */
+    .input-container:has(.warning) {
+        input.warning {
+            border-color: var(--color-input-fields-warning-border);
+            background-color: var(--color-input-fields-warning-background);
+            color: var(--color-input-fields-warning-text-value);
+        }
+
+        + .helper-container {
+            color: var(--color-input-field-hint-warning-text);
+        }
+    }
+
+    /* handle success state */
+    .input-container:has(.success) {
+        input.success {
+            border-color: var(--color-input-fields-success-border);
+            background-color: var(--color-input-fields-success-background);
+            color: var(--color-input-fields-success-text-value);
+        }
+
+        + .helper-container {
+            color: var(--color-input-field-hint-success-text);
+        }
+    }
+
+    /* handle error state */
+    .input-container:has(.error),
+    .input-container:has(input:invalid) {
+        input:invalid,
+        input.error {
+            border-color: var(--color-input-fields-error-border);
+            background-color: var(--color-input-fields-error-background);
+            color: var(--color-input-fields-error-text-value);
+        }
+
+        + .helper-container {
+            color: var(--color-input-field-hint-error-text);
+        }
+    }
+}
