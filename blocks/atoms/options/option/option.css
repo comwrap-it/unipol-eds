@@ -1,0 +1,70 @@
+/* --color-options-default-text-label: var(--color-text-default-primary);
+--color-options-default-text-description: var(--color-text-neutral-secondary);
+--color-options-default-background: var(--color-null-000);
+--color-options-selected-text-label: var(--color-text-default-primary);
+--color-options-selected-text-description: var(--color-text-neutral-secondary);
+--color-options-selected-background: var(--color-background-neutral-primary);
+--dimension-options-radius: var(--border-radius-300-16);
+--dimension-options-radius-box: var(--border-radius-400-24);
+--dimension-options-horizontal-padding-external: var(--dimension-space-200-8);
+--dimension-options-horizontal-padding-internal: var(--dimension-space-250-12);
+--dimension-options-horizontal-gap: var(--dimension-space-250-12);
+--dimension-options-vertical-padding: var(--dimension-space-200-8);
+--dimension-options-vertical-padding-list: var(--dimension-space-200-8);
+--dimension-options-vertical-gap: var(--dimension-space-0);
+--dimension-options-border: var(--border-width-stroke-100-1); */
+
+.option-container {
+    display: flex;
+    width: 350px;
+    padding: 0 var(--dimension-options-horizontal-padding-external, 8px);
+    align-items: flex-start;
+
+    & .option {
+        display: flex;
+        padding: var(--dimension-options-vertical-padding, 8px)
+            var(--dimension-options-horizontal-padding-internal, 12px);
+        align-items: flex-start;
+        gap: var(--dimension-options-horizontal-gap, 12px);
+        flex: 1 0 0;
+        border-radius: var(--dimension-options-radius, 16px);
+        background: var(
+            --color-options-default-background,
+            rgba(17, 17, 17, 0)
+        );
+        border: none;
+
+        & .texts-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            & .title {
+                color: var(--color-options-default-text-label, #001c35);
+                font-family: var(--font-family-font-2, Manrope);
+                font-size: var(--font-size-14, 14px);
+                font-style: normal;
+                font-weight: var(--font-weight-medium);
+                line-height: 1.4;
+            }
+
+            & .description {
+                color: var(--color-options-default-text-description, #63727d);
+
+                /* Text styles/Body Small */
+                font-family: var(--font-family-font-2, Manrope);
+                font-size: var(--font-size-14, 14px);
+                font-style: normal;
+                font-weight: var(--font-weight-italic);
+                line-height: 1.4;
+            }
+        }
+        & input[type="checkbox"] {
+            margin-block: 2px;
+        }
+
+        &.selected {
+            background: var(--color-options-selected-background, #f6f7f8);
+        }
+    }
+}
