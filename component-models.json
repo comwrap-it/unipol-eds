@@ -318,6 +318,17 @@
     ]
   },
   {
+    "id": "footer-privacy-list-title",
+    "fields": [
+      {
+        "component": "text",
+        "name": "footerListLinkTitleEL",
+        "label": "Titolo elenco footer",
+        "required": true
+      }
+    ]
+  },
+  {
     "id": "footer-privacy-link",
     "fields": [
       {
