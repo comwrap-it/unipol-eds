@@ -33,6 +33,10 @@
     ],
     "models": [
         {
+            "id": "options-list",
+            "fields": []
+        },
+        {
             "id": "option",
             "fields": [
                 {
