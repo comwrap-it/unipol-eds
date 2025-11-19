@@ -311,9 +311,9 @@
       },
       {
         "component": "richtext",
-        "name": "qrCodeText",
+        "name": "qrCodeImgText",
         "value": "",
-        "label": "qrCode Testo",
+        "label": "Testo immagine codice qr",
         "valueType": "string"
       },
       {
