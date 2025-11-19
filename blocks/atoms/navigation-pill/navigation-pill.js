@@ -37,7 +37,14 @@ export function extractInstrumentationAttributes(element) {
  * @param {Object} [instrumentation={}] - AEM attributes.
  * @returns {HTMLElement}
  */
-export function createNavigationPill(label, href, variant, leftIcon, rightIcon, instrumentation = {}) {
+export function createNavigationPill(
+  label, 
+  href, 
+  variant, 
+  leftIcon, 
+  rightIcon, 
+  instrumentation = {}
+) {
   const isLink = Boolean(href);
   const el = isLink ? document.createElement('a') : document.createElement('button');
 
@@ -97,20 +104,27 @@ export function createNavigationPill(label, href, variant, leftIcon, rightIcon, 
 function extractValuesFromRows(rows) {
   const text = rows[0]?.textContent?.trim() || 'Navigation Pill';
   const variant =
-    rows[1]?.textContent?.trim().toLowerCase() ||
-    NAVIGATION_PILL_VARIANTS.PRIMARY;
+    rows[1]?.textContent?.trim().toLowerCase()
+    || NAVIGATION_PILL_VARIANTS.PRIMARY;
 
   const href =
-    rows[2]?.querySelector('a')?.href ||
-    rows[2]?.textContent?.trim() ||
-    '';
+    rows[2]?.querySelector('a')?.href
+    || rows[2]?.textContent?.trim()
+    || '';
 
   const leftIcon = rows[3]?.textContent?.trim() || '';
   const rightIcon = rows[4]?.textContent?.trim() || '';
 
   const instrumentation = extractInstrumentationAttributes(rows[0]);
 
-  return { text, variant, href, leftIcon, rightIcon, instrumentation };
+  return {
+    text,
+    variant,
+    href,
+    leftIcon,
+    rightIcon,
+    instrumentation,
+  };
 }
 
 /**
@@ -136,9 +150,9 @@ export default function decorateNavigationPill(block) {
   } = extractValuesFromRows(rows);
 
   const hasInstrumentation =
-    block.hasAttribute('data-aue-resource') ||
-    block.querySelector('[data-aue-resource]') ||
-    block.querySelector('[data-richtext-prop]');
+    block.hasAttribute('data-aue-resource')
+    || block.querySelector('[data-aue-resource]')
+    || block.querySelector('[data-richtext-prop]');
 
   let pillElement;
 
@@ -152,7 +166,7 @@ export default function decorateNavigationPill(block) {
         variant,
         leftIcon,
         rightIcon,
-        instrumentation
+        instrumentation,
       );
 
       if (rows[0]) {
@@ -169,8 +183,8 @@ export default function decorateNavigationPill(block) {
           variant,
           leftIcon,
           rightIcon,
-          instrumentation
-        )
+          instrumentation,
+        ),
       );
     }
   } else {
