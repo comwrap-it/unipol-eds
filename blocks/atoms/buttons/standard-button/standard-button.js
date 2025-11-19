@@ -61,6 +61,19 @@ export function createButton(
     ? document.createElement('a')
     : document.createElement('button');
 
+  element.className = ['btn', `btn-${variant || BUTTON_VARIANTS.PRIMARY}`].join(
+    ' ',
+  );
+
+  // Set href for links
+  if (isLink) {
+    element.href = href;
+    element.setAttribute('role', 'button');
+  }
+
+  // Add accessibility attributes
+  element.setAttribute('tabindex', '0');
+
   // add left icon if provided
   if (leftIcon) {
     const leftIconSpan = document.createElement('span');
@@ -82,18 +95,6 @@ export function createButton(
     } ${rightIcon}`;
     element.appendChild(rightIconSpan);
   }
-  element.className = ['btn', `btn-${variant || BUTTON_VARIANTS.PRIMARY}`].join(
-    ' ',
-  );
-
-  // Set href for links
-  if (isLink) {
-    element.href = href;
-    element.setAttribute('role', 'button');
-  }
-
-  // Add accessibility attributes
-  element.setAttribute('tabindex', '0');
 
   // Add keyboard support for buttons
   element.addEventListener('keydown', (e) => {
@@ -137,12 +138,20 @@ export const extractInstrumentationAttributes = (element) => {
  *
  * @param {Array} rows - Array of rows from block children
  * @returns {Object} An object containing button properties
+ *
+ * Row mapping (based on _standard-button.json field order):
+ * rows[0]: standardButtonLabel (text)
+ * rows[1]: standardButtonVariant (select)
+ * rows[2]: standardButtonHref (aem-content)
+ * rows[3]: standardButtonSize (select)
+ * rows[4]: standardButtonLeftIcon (select)
+ * rows[5]: standardButtonRightIcon (select)
  */
 const extractValuesFromRows = (rows) => {
   const text = rows[0]?.textContent?.trim() || 'Button';
   const variant = rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-  const iconSize = rows[2]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
-  const href = rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || '';
+  const href = rows[2]?.querySelector('a')?.href || rows[2]?.textContent?.trim() || '';
+  const iconSize = rows[3]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
   const leftIcon = rows[4]?.textContent?.trim() || '';
   const rightIcon = rows[5]?.textContent?.trim() || '';
   const instrumentation = extractInstrumentationAttributes(rows[0]);

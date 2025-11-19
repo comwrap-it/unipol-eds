@@ -39,6 +39,9 @@
       "components": [
         {
           "...": "../blocks/*/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/atoms/options/options-list/_options-list.json#/definitions"
         }
       ]
     }

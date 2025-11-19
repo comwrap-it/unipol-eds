@@ -70,6 +70,12 @@
     ]
   },
   {
+    "id": "options-list",
+    "components": [
+      "option"
+    ]
+  },
+  {
     "id": "text-list",
     "components": [
       "text-link"

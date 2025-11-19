@@ -28,11 +28,27 @@
         border-color: var(--color-icon-button-primary-disabled-border);
     }
 
+    /* Focus state */
+    &:focus-visible,
+    &:focus {
+        outline: var(--border-width-stroke-200-2) solid
+            var(--color-icon-button-primary-focused-border-focused);
+        background-color: var(--color-icon-button-primary-focused-background);
+        color: var(--color-icon-button-primary-focused-icon);
+    }
+
     /* Hover state */
     &:hover:not(:disabled) {
         background-color: var(--color-icon-button-primary-hover-background);
         color: var(--color-icon-button-primary-hover-icon);
         border-color: var(--color-icon-button-primary-hover-border);
+    }
+
+    /* Pressed state */
+    &:active:not(:disabled) {
+        background-color: var(--color-icon-button-primary-pressed-background);
+        color: var(--color-icon-button-primary-pressed-icon);
+        border-color: var(--color-icon-button-primary-pressed-border);
     }
 }
 
@@ -51,17 +67,26 @@
         cursor: default;
     }
 
+    /* Focus state */
+    &:focus-visible,
+    &:focus {
+        outline: var(--border-width-stroke-200-2) solid
+            var(--color-icon-button-secondary-focused-border);
+        background-color: var(--color-icon-button-secondary-focused-background);
+        color: var(--color-icon-button-secondary-focused-icon);
+    }
+
     /* Hover state */
     &:hover:not(:disabled) {
         background-color: var(--color-icon-button-secondary-hover-background);
         color: var(--color-icon-button-secondary-hover-icon);
         border-color: var(--color-icon-button-secondary-hover-border);
     }
-}
 
-/* Focus state */
-.btn-icon:focus,
-.btn-icon:focus-visible {
-    outline: var(--border-width-stroke-200-2) solid
-        var(--color-border-default-focused);
+    /* Pressed state */
+    &:active:not(:disabled) {
+        background-color: var(--color-icon-button-secondary-pressed-background);
+        color: var(--color-icon-button-secondary-pressed-icon);
+        border-color: var(--color-icon-button-secondary-pressed-border);
+    }
 }

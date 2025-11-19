@@ -31,6 +31,10 @@ export function createCheckbox(
     checkbox.setAttribute('aria-disabled', 'true');
   }
 
+  checkbox.onclick = (e) => {
+    e.stopPropagation();
+  };
+
   return checkbox;
 }
 

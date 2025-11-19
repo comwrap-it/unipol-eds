@@ -455,8 +455,15 @@
             ]
           },
           {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          },
+          {
             "component": "select",
             "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
             "label": "Size",
             "value": "medium",
             "options": [
@@ -479,17 +486,16 @@
             ]
           },
           {
-            "component": "aem-content",
-            "name": "standardButtonHref",
-            "label": "Link URL",
-            "description": "Optional URL to make this a link button"
-          },
-          {
             "component": "select",
             "name": "standardButtonLeftIcon",
             "label": "Left Icon",
             "description": "Select the left icon",
+            "value": "",
             "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
               {
                 "name": "Chevron Left",
                 "value": "chevron-left-icon"
@@ -509,7 +515,12 @@
             "name": "standardButtonRightIcon",
             "label": "Right Icon",
             "description": "Select the right icon",
+            "value": "",
             "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
               {
                 "name": "Chevron Left",
                 "value": "chevron-left-icon"
@@ -1072,8 +1083,15 @@
             ]
           },
           {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          },
+          {
             "component": "select",
             "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
             "label": "Size",
             "value": "medium",
             "options": [
@@ -1096,17 +1114,16 @@
             ]
           },
           {
-            "component": "aem-content",
-            "name": "standardButtonHref",
-            "label": "Link URL",
-            "description": "Optional URL to make this a link button"
-          },
-          {
             "component": "select",
             "name": "standardButtonLeftIcon",
             "label": "Left Icon",
             "description": "Select the left icon",
+            "value": "",
             "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
               {
                 "name": "Chevron Left",
                 "value": "chevron-left-icon"
@@ -1126,7 +1143,12 @@
             "name": "standardButtonRightIcon",
             "label": "Right Icon",
             "description": "Select the right icon",
+            "value": "",
             "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
               {
                 "name": "Chevron Left",
                 "value": "chevron-left-icon"
