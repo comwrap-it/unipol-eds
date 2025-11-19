@@ -5,23 +5,15 @@
  * It can be imported or used by other components if needed.
  */
 
-/**
- * Size variants for Link Button Icons
- */
-export const ICON_SIZES = {
-  S: 's',
-  M: 'm',
-  L: 'l',
-  XL: 'xl',
-};
+import { BUTTON_ICON_SIZES } from '../standard-button/standard-button.js';
 
 /**
  * Create a link button element
  *
  * @param {string} label - Link text
  * @param {string} href - URL for the link
- * @param {boolean} showLeftIcon - show or hide left icon
- * @param {boolean} showRightIcon - show or hide right icon
+ * @param {boolean} leftIcon - left icon class
+ * @param {boolean} rightIcon - right icon class
  * @param {string} leftIconSize - size of left icon
  * @param {string} rightIconSize - size of right icon
  * @returns {HTMLElement} link element
@@ -29,10 +21,10 @@ export const ICON_SIZES = {
 export function createLinkButton(
   label,
   href,
-  showLeftIcon = false,
-  showRightIcon = false,
-  leftIconSize = ICON_SIZES.M,
-  rightIconSize = ICON_SIZES.M,
+  leftIcon,
+  rightIcon,
+  leftIconSize = BUTTON_ICON_SIZES.M,
+  rightIconSize = BUTTON_ICON_SIZES.M,
   disabled = false,
 ) {
   const link = document.createElement('a');
@@ -49,16 +41,16 @@ export function createLinkButton(
     link.setAttribute('tabindex', '-1');
   }
 
-  if (showLeftIcon) {
-    const leftIcon = document.createElement('span');
-    leftIcon.className = `link-btn-icon chevron-left-icon icon-${leftIconSize}`;
-    link.prepend(leftIcon);
+  if (leftIcon) {
+    const span = document.createElement('span');
+    span.className = `icon icon-${leftIconSize || BUTTON_ICON_SIZES.MEDIUM} ${leftIcon}`;
+    link.prepend(span);
   }
 
-  if (showRightIcon) {
-    const rightIcon = document.createElement('span');
-    rightIcon.className = `link-btn-icon chevron-right-icon icon-${rightIconSize}`;
-    link.appendChild(rightIcon);
+  if (rightIcon) {
+    const span = document.createElement('span');
+    span.className = `icon icon-${rightIconSize || BUTTON_ICON_SIZES.MEDIUM} ${rightIcon}`;
+    link.appendChild(span);
   }
 
   // Keyboard support
@@ -88,16 +80,16 @@ export function createLinkButtonFromRows(rows) {
 
   const text = rows[0]?.textContent?.trim() || 'Link';
   const href = rows[1]?.querySelector('a')?.href || rows[1]?.textContent?.trim() || '#';
-  const showLeftIcon = rows[2]?.textContent?.trim() === 'true';
-  const showRightIcon = rows[3]?.textContent?.trim() === 'true';
-  const leftIconSize = (rows[4]?.textContent?.trim() || 'm').toLowerCase();
-  const rightIconSize = (rows[5]?.textContent?.trim() || 'm').toLowerCase();
+  const leftIcon = rows[2]?.textContent?.trim() === 'true';
+  const rightIcon = rows[3]?.textContent?.trim() === 'true';
+  const leftIconSize = (rows[4]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM).toLowerCase();
+  const rightIconSize = (rows[5]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM).toLowerCase();
 
   return createLinkButton(
     text,
     href,
-    showLeftIcon,
-    showRightIcon,
+    leftIcon,
+    rightIcon,
     leftIconSize,
     rightIconSize,
   );
@@ -121,10 +113,10 @@ export default function decorateLinkButton(block) {
 
   const text = rows[0]?.textContent?.trim() || 'Link';
   const href = rows[1]?.querySelector('a')?.href || rows[1]?.textContent?.trim() || '#';
-  const showLeftIcon = rows[2]?.textContent?.trim() === 'true';
-  const showRightIcon = rows[3]?.textContent?.trim() === 'true';
-  const leftIconSize = (rows[4]?.textContent?.trim() || 'm').toLowerCase();
-  const rightIconSize = (rows[5]?.textContent?.trim() || 'm').toLowerCase();
+  const leftIcon = rows[2]?.textContent?.trim() === 'true';
+  const rightIcon = rows[3]?.textContent?.trim() === 'true';
+  const leftIconSize = (rows[4]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM).toLowerCase();
+  const rightIconSize = (rows[5]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM).toLowerCase();
 
   if (hasInstrumentation) {
     let linkElement = block.querySelector('a');
@@ -132,8 +124,8 @@ export default function decorateLinkButton(block) {
       linkElement = createLinkButton(
         text,
         href,
-        showLeftIcon,
-        showRightIcon,
+        leftIcon,
+        rightIcon,
         leftIconSize,
         rightIconSize,
       );
@@ -145,23 +137,24 @@ export default function decorateLinkButton(block) {
       linkElement.className = ['link-btn'].join(' ');
 
       linkElement.querySelectorAll('.link-btn-icon').forEach((icon) => icon.remove());
-      if (showLeftIcon) {
-        const leftIcon = document.createElement('span');
-        leftIcon.className = `link-btn-icon chevron-left-icon icon-${leftIconSize}`;
-        linkElement.prepend(leftIcon);
+      if (leftIcon) {
+        const span = document.createElement('span');
+        span.className = `icon icon-${leftIconSize || BUTTON_ICON_SIZES.MEDIUM} ${leftIcon}`;
+        linkElement.prepend(span);
       }
-      if (showRightIcon) {
-        const rightIcon = document.createElement('span');
-        rightIcon.className = `link-btn-icon chevron-right-icon icon-${rightIconSize}`;
-        linkElement.appendChild(rightIcon);
+
+      if (rightIcon) {
+        const span = document.createElement('span');
+        span.className = `icon icon-${rightIconSize || BUTTON_ICON_SIZES.MEDIUM} ${rightIcon}`;
+        linkElement.appendChild(span);
       }
     }
   } else {
     const link = createLinkButton(
       text,
       href,
-      showLeftIcon,
-      showRightIcon,
+      leftIcon,
+      rightIcon,
       leftIconSize,
       rightIconSize,
     );
