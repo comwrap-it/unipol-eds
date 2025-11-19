@@ -30,7 +30,8 @@
     "components": [
       "footer-list-link",
       "footer-download-link",
-      "footer-social-list"
+      "footer-social-list",
+      "footer-text"
     ]
   },
   {

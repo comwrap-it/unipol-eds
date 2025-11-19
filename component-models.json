@@ -461,6 +461,18 @@
     ]
   },
   {
+    "id": "footer-text",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "footer-text",
+        "value": "",
+        "label": "Configurazione dei testi del footer",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {

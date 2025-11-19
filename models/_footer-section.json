@@ -11,7 +11,17 @@
               "filter": "footer-section",
               "name": "Footer Section",
               "model": "footer-section",
-              "style": "footer-section"
+              "style": "footer-section",
+              "footer-text": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Titolo Elenco Link 1",
+                "model": "footer-text"
+              },
+              "footer-list-link": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Elenco link 1",
+                "model": "footer-list-link"
+              }
             }
           }
         }
@@ -36,7 +46,8 @@
       "components": [
         "footer-list-link",
         "footer-download-link",
-        "footer-social-list"
+        "footer-social-list",
+        "footer-text"
       ]
     }
   ]
