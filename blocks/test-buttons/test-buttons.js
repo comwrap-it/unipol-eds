@@ -10,7 +10,7 @@ import { createCategoryTab } from '../atoms/category-tab/category-tab.js';
 import { createTextarea } from '../atoms/inputs/textarea/textarea.js';
 import { createTextfield } from '../atoms/inputs/textfield/textfield.js';
 import createOption from '../atoms/options/option/option.js';
-import createOptionsList from '../atoms/options/options-list/options-list.js';
+import { createOptionsList } from '../atoms/options/options-list/options-list.js';
 import { createTag } from '../atoms/tag/tag.js';
 
 let isStylesLoaded = false;
