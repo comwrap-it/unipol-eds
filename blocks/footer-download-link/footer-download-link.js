@@ -11,7 +11,7 @@ export default function decorate(block) {
   const imgRow3 = rows[3].querySelector(':scope > div')?.firstElementChild;
 
   const container1 = document.createElement('div');
-  container1.className = 'footer-row-container';
+  container1.className = 'footer-unipol-button-container';
   container1.style.display = 'flex';
   container1.style.alignItems = 'center';
   container1.style.gap = '10px';
@@ -21,7 +21,7 @@ export default function decorate(block) {
   const link1 = document.createElement('a');
   link1.textContent = row1Text || '';
   link1.href = rows[2].querySelector(':scope > div')?.textContent.trim() || '#';
-  link1.className = 'footer-link';
+  link1.className = 'footer-link-unipol-button';
   container1.appendChild(link1);
 
   if (imgRow3) container1.appendChild(imgRow3.cloneNode(true));
@@ -33,7 +33,7 @@ export default function decorate(block) {
   const row5Text = rows[5].querySelector(':scope > div')?.textContent.trim();
 
   const container2 = document.createElement('div');
-  container2.className = 'footer-row-container';
+  container2.className = 'footer-download-link-container';
   container2.style.display = 'flex';
   container2.style.alignItems = 'center';
   container2.style.gap = '10px';
@@ -51,7 +51,7 @@ export default function decorate(block) {
   const row7Href = rows[7].querySelector(':scope > div')?.textContent.trim();
 
   const container3 = document.createElement('div');
-  container3.className = 'footer-row-container';
+  container3.className = 'footer-download-store-container';
   container3.style.display = 'flex';
   container3.style.alignItems = 'center';
   container3.style.gap = '10px';
@@ -60,7 +60,7 @@ export default function decorate(block) {
     const link2 = document.createElement('a');
     link2.href = row7Href || '#';
     link2.appendChild(imgRow6.cloneNode(true));
-    link2.className = 'footer-link';
+    link2.className = 'footer-link-google';
     container3.appendChild(link2);
   }
 
@@ -71,7 +71,7 @@ export default function decorate(block) {
   const row9Href = rows[9].querySelector(':scope > div')?.textContent.trim();
 
   const container4 = document.createElement('div');
-  container4.className = 'footer-row-container';
+  container4.className = 'footer-store-link-container';
   container4.style.display = 'flex';
   container4.style.alignItems = 'center';
   container4.style.gap = '10px';
@@ -80,7 +80,7 @@ export default function decorate(block) {
     const link3 = document.createElement('a');
     link3.href = row9Href || '#';
     link3.appendChild(imgRow8.cloneNode(true));
-    link3.className = 'footer-link';
+    link3.className = 'footer-link-app-store';
     container3.appendChild(link3);
   }
   block.innerHTML = '';
