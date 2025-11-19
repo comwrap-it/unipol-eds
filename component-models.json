@@ -318,6 +318,23 @@
     ]
   },
   {
+    "id": "footer-privacy-link",
+    "fields": [
+      {
+        "component": "text",
+        "name": "footerPrivacyLinkText",
+        "label": "Testo Link",
+        "required": true
+      },
+      {
+        "component": "aem-content",
+        "name": "footerPrivacyLinkHref",
+        "label": "Link URL",
+        "required": true
+      }
+    ]
+  },
+  {
     "id": "footer-social-link",
     "fields": [
       {

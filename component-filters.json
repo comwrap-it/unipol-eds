@@ -31,7 +31,8 @@
       "footer-list-link",
       "footer-download-link",
       "footer-social-list",
-      "footer-text"
+      "footer-text",
+      "footer-privacy-link-list"
     ]
   },
   {
@@ -59,6 +60,12 @@
     "id": "footer-list-link",
     "components": [
       "footer-link"
+    ]
+  },
+  {
+    "id": "footer-privacy-link-list",
+    "components": [
+      "footer-list-link"
     ]
   },
   {

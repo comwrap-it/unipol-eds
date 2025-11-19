@@ -37,7 +37,8 @@
         "footer-list-link",
         "footer-download-link",
         "footer-social-list",
-        "footer-text"
+        "footer-text",
+        "footer-privacy-link-list"
       ]
     }
   ]

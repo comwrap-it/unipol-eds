@@ -64,25 +64,25 @@ export default function decorate(block) {
     container3.appendChild(link2);
   }
 
-    // ================================
-    // Container 4: Row 7 (img) - <a>  href Row 8
-    // ================================
-    const imgRow8 = rows[8].querySelector(':scope > div')?.firstElementChild;
-    const row9Href = rows[9].querySelector(':scope > div')?.textContent.trim();
+  // ================================
+  // Container 4: Row 7 (img) - <a>  href Row 8
+  // ================================
+  const imgRow8 = rows[8].querySelector(':scope > div')?.firstElementChild;
+  const row9Href = rows[9].querySelector(':scope > div')?.textContent.trim();
 
-    const container4 = document.createElement('div');
-    container4.className = 'footer-row-container';
-    container4.style.display = 'flex';
-    container4.style.alignItems = 'center';
-    container4.style.gap = '10px';
+  const container4 = document.createElement('div');
+  container4.className = 'footer-row-container';
+  container4.style.display = 'flex';
+  container4.style.alignItems = 'center';
+  container4.style.gap = '10px';
 
-    if (imgRow8) {
-      const link3 = document.createElement('a');
-      link3.href = row9Href || '#';
-      link3.appendChild(imgRow8.cloneNode(true));
-      link3.className = 'footer-link';
-      container3.appendChild(link3);
-    }
+  if (imgRow8) {
+    const link3 = document.createElement('a');
+    link3.href = row9Href || '#';
+    link3.appendChild(imgRow8.cloneNode(true));
+    link3.className = 'footer-link';
+    container3.appendChild(link3);
+  }
   block.innerHTML = '';
   block.appendChild(container1);
   block.appendChild(container2);
