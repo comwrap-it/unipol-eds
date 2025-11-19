@@ -1,0 +1,40 @@
+.icons-3d {
+    display: flex;
+    justify-content: center;
+    width: 260px;
+    height: 83px;
+}
+
+.icons-3d-icon {
+    display: flex;
+    width: var(--dimension-card-insurance-product-card-bg-icon-size, 80px);
+    height: 80px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    aspect-ratio: 1/1;
+    border-radius: var(--border-radius-9999, 9999px);
+}
+
+.icons-3d-icon.icon-mobility {
+    background: var(--color-card-insurance-product-card-background-mobility, #E5F1FF);
+}
+
+.icons-3d-icon.icon-property {
+    background: var(--color-card-insurance-product-card-background-property, #FDEDE7);
+}
+
+.icons-3d-icon.icon-welfare {
+    background: var(--color-card-insurance-product-card-background-welfare, #EBF8E7);
+}
+
+.icons-3d-icon .icon-img {
+    display: flex;
+    width: var(--dimension-card-insurance-product-card-icon-size, 48px);
+    height: 48px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    aspect-ratio: 1/1;
+}
