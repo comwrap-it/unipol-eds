@@ -19,6 +19,15 @@
     box-sizing: border-box;
     user-select: none;
 }
+/* stylelint-disable no-descending-specificity */
+
+/*
+ * I apply the above rule because Button variant classes (e.g., .btn-primary,
+ * .btn-accent, .btn-secondary) are mutually exclusive. With nesting (`& .icon`),
+ * Stylelint expands selectors like `.btn-primary:hover .icon` and treats later
+ * base rules as descending specificity. Since a button can't have multiple
+ * variants at once, these warnings are false positives.
+ */
 
 /* Primary Variant */
 .btn-primary {
@@ -187,9 +196,4 @@
         }
     }
 }
-
-/* Block wrapper for standalone buttons */
-.button-block {
-    display: block;
-    margin: 1rem 0;
-}
+/* stylelint-enable no-descending-specificity */
