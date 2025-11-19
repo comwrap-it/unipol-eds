@@ -111,38 +111,47 @@ export default async function decorate(block) {
   // Note: The button fields are nested inside a container in the model
   const buttonContainerRow = rows[3];
 
-  if (buttonContainerRow) {
-    // Search for the standard-button fields inside the container
-    const labelField = buttonContainerRow.querySelector('[data-aue-prop="standardButtonLabel"]');
-    const variantField = buttonContainerRow.querySelector('[data-aue-prop="standardButtonVariant"]');
-    const sizeField = buttonContainerRow.querySelector('[data-aue-prop="standardButtonSize"]');
-    const hrefField = buttonContainerRow.querySelector('[data-aue-prop="standardButtonHref"]');
-    const leftIconField = buttonContainerRow.querySelector('[data-aue-prop="standardButtonLeftIcon"]');
-    const rightIconField = buttonContainerRow.querySelector('[data-aue-prop="standardButtonRightIcon"]');
-
-    const hasInstrumentation = labelField
-      || variantField
-      || sizeField
-      || hrefField
-      || buttonContainerRow.hasAttribute('data-aue-resource')
-      || buttonContainerRow.querySelector('[data-aue-resource]');
+  if (buttonContainerRow && buttonContainerRow.textContent?.trim()) {
+    // Check if block has instrumentation (Universal Editor)
+    const hasInstrumentation = buttonContainerRow.hasAttribute('data-aue-resource')
+      || buttonContainerRow.querySelector('[data-aue-resource]')
+      || buttonContainerRow.querySelector('[data-aue-prop]');
 
     let buttonElement;
     if (hasInstrumentation) {
-      const label = labelField?.textContent?.trim() || 'Button';
-      let variant = variantField?.textContent?.trim()?.toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-      let size = sizeField?.textContent?.trim()?.toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
-
-      // For the href, it could be a link <a> or aem-content field
-      let href = '';
-      if (hrefField) {
-        const link = hrefField.querySelector('a');
-        href = link?.getAttribute('href')?.replace('.html', '') || '';
+      // Universal Editor structures container fields as child rows
+      // Get child rows from the button container
+      let buttonRows = Array.from(buttonContainerRow.children);
+      
+      // If there's a wrapper, get rows from it
+      const containerWrapper = buttonContainerRow.querySelector('.default-content-wrapper');
+      if (containerWrapper) {
+        buttonRows = Array.from(containerWrapper.children);
       }
 
-      const leftIcon = leftIconField?.textContent?.trim() || '';
-      const rightIcon = rightIconField?.textContent?.trim() || '';
+      // Extract values from button rows
+      // Following the standard-button model field order:
+      // 0: standardButtonLabel (text)
+      // 1: standardButtonVariant (select)
+      // 2: standardButtonSize (select)
+      // 3: standardButtonHref (aem-content)
+      // 4: standardButtonLeftIcon (select)
+      // 5: standardButtonRightIcon (select)
+      const label = buttonRows[0]?.textContent?.trim() || 'Button';
+      let variant = buttonRows[1]?.textContent?.trim()?.toLowerCase() || BUTTON_VARIANTS.PRIMARY;
+      let size = buttonRows[2]?.textContent?.trim()?.toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
+      
+      // For href, check if there's a link element or just text
+      let href = '';
+      if (buttonRows[3]) {
+        const link = buttonRows[3].querySelector('a');
+        href = link?.getAttribute('href')?.replace('.html', '') || buttonRows[3].textContent?.trim() || '';
+      }
+      
+      const leftIcon = buttonRows[4]?.textContent?.trim() || '';
+      const rightIcon = buttonRows[5]?.textContent?.trim() || '';
 
+      // Validate variant and size
       if (!Object.values(BUTTON_VARIANTS).includes(variant)) variant = BUTTON_VARIANTS.PRIMARY;
       if (!Object.values(BUTTON_ICON_SIZES).includes(size)) size = BUTTON_ICON_SIZES.MEDIUM;
 
