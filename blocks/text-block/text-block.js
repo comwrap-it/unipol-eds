@@ -107,43 +107,63 @@ export default async function decorate(block) {
     }
   }
 
-  // ROW 3-8 BUTTON
-  const buttonTextRow = rows[3];
-  const buttonVariantRow = rows[4];
-  const buttonSizeRow = rows[5];
-  const buttonHrefRow = rows[6];
-  const leftIcon = rows[7]?.textContent?.trim() || '';
-  const rightIcon = rows[8]?.textContent?.trim() || '';
+  // ROW 3 BUTTON CONTAINER
+  // Note: The button fields are nested inside a container in the model
+  const buttonContainerRow = rows[3];
 
-  if (buttonTextRow && buttonTextRow.textContent?.trim()) {
-    const hasInstrumentation = buttonTextRow.hasAttribute('data-aue-resource')
-      || buttonTextRow.querySelector('[data-aue-resource]')
-      || buttonTextRow.querySelector('[data-richtext-prop]')
-      || buttonTextRow.querySelector('[data-aue-prop]');
+  if (buttonContainerRow && buttonContainerRow.textContent?.trim()) {
+    // Check if block has instrumentation (Universal Editor)
+    const hasInstrumentation = buttonContainerRow.hasAttribute('data-aue-resource')
+      || buttonContainerRow.querySelector('[data-aue-resource]')
+      || buttonContainerRow.querySelector('[data-aue-prop]');
 
     let buttonElement;
     if (hasInstrumentation) {
-      const textField = buttonTextRow.querySelector('[data-aue-prop="text"]');
-      const variantField = buttonVariantRow?.querySelector('[data-aue-prop="variant"]');
-      const sizeField = buttonSizeRow?.querySelector('[data-aue-prop="size"]');
-      const hrefField = buttonHrefRow?.querySelector('a');
+      // Universal Editor structures container fields as child rows
+      // Get child rows from the button container
+      let buttonRows = Array.from(buttonContainerRow.children);
+      
+      // If there's a wrapper, get rows from it
+      const containerWrapper = buttonContainerRow.querySelector('.default-content-wrapper');
+      if (containerWrapper) {
+        buttonRows = Array.from(containerWrapper.children);
+      }
 
-      const label = textField?.textContent?.trim() || 'Button';
-      let variant = variantField?.textContent?.trim()?.toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-      let size = sizeField?.textContent?.trim()?.toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
-      const href = hrefField?.getAttribute('href')?.replace('.html', '') || '';
+      // Extract values from button rows
+      // Following the standard-button model field order:
+      // 0: standardButtonLabel (text)
+      // 1: standardButtonVariant (select)
+      // 2: standardButtonSize (select)
+      // 3: standardButtonHref (aem-content)
+      // 4: standardButtonLeftIcon (select)
+      // 5: standardButtonRightIcon (select)
+      const label = buttonRows[0]?.textContent?.trim() || 'Button';
+      let variant = buttonRows[1]?.textContent?.trim()?.toLowerCase() || BUTTON_VARIANTS.PRIMARY;
+      let size = buttonRows[2]?.textContent?.trim()?.toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
+      
+      // For href, check if there's a link element or just text
+      let href = '';
+      if (buttonRows[3]) {
+        const link = buttonRows[3].querySelector('a');
+        href = link?.getAttribute('href')?.replace('.html', '') || buttonRows[3].textContent?.trim() || '';
+      }
+      
+      const leftIcon = buttonRows[4]?.textContent?.trim() || '';
+      const rightIcon = buttonRows[5]?.textContent?.trim() || '';
 
+      // Validate variant and size
       if (!Object.values(BUTTON_VARIANTS).includes(variant)) variant = BUTTON_VARIANTS.PRIMARY;
       if (!Object.values(BUTTON_ICON_SIZES).includes(size)) size = BUTTON_ICON_SIZES.MEDIUM;
 
       buttonElement = createButton(label, href, variant, size, leftIcon, rightIcon);
     } else {
-      const label = buttonTextRow.textContent?.trim() || 'Button';
-      const link = buttonTextRow.querySelector('a');
+      // Fallback for content without instrumentation
+      const label = buttonContainerRow.textContent?.trim() || 'Button';
+      const link = buttonContainerRow.querySelector('a');
       const href = link?.href || '';
       const variant = BUTTON_VARIANTS.PRIMARY;
       const size = BUTTON_ICON_SIZES.MEDIUM;
-      buttonElement = createButton(label, href, variant, size, leftIcon, rightIcon);
+      buttonElement = createButton(label, href, variant, size, '', '');
     }
 
     if (buttonElement) {
