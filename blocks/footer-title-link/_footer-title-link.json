@@ -33,14 +33,30 @@
   ],
   "models": [
     {
-      "id": "footer-link",
+      "id": "footer-title-link",
       "fields": [
         {
           "component": "richtext",
-          "name": "footer-link-text",
+          "name": "footer-link-list-title",
           "value": "",
-          "label": "Text",
+          "label": "Titolo Elenco Link Footer",
           "valueType": "string"
+        }
+      ]
+    },
+    {
+      "id": "footer-link",
+      "fields": [
+        {
+          "component": "container",
+          "name": "button-container",
+          "label": "Configurazione Bottone",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../atoms/buttons/link-button/_link-button.json#/models/link-button/fields"
+            }
+          ]
         }
       ]
     }

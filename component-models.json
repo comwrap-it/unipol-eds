@@ -218,14 +218,108 @@
     ]
   },
   {
-    "id": "footer-link",
+    "id": "footer-title-link",
     "fields": [
       {
         "component": "richtext",
-        "name": "footer-link-text",
+        "name": "footer-link-list-title",
         "value": "",
-        "label": "Text",
+        "label": "Titolo Elenco Link Footer",
         "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-link",
+    "fields": [
+      {
+        "component": "container",
+        "name": "button-container",
+        "label": "Configurazione Bottone",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "linkButtonLabel",
+            "label": "Link Text",
+            "required": true
+          },
+          {
+            "component": "aem-content",
+            "name": "linkButtonHref",
+            "label": "Link URL",
+            "description": "Destination URL for this link button",
+            "required": true
+          },
+          {
+            "component": "switch",
+            "name": "linkButtonShowLeftIcon",
+            "label": "Show Left Icon",
+            "description": "Toggle to display a left icon",
+            "value": false
+          },
+          {
+            "component": "switch",
+            "name": "linkButtonShowRightIcon",
+            "label": "Show Right Icon",
+            "description": "Toggle to display a right icon",
+            "value": false
+          },
+          {
+            "component": "select",
+            "name": "linkButtonLeftIconSize",
+            "label": "Left Icon Size",
+            "if": {
+              "linkButtonShowLeftIcon": true
+            },
+            "value": "m",
+            "options": [
+              {
+                "name": "Small",
+                "value": "s"
+              },
+              {
+                "name": "Medium",
+                "value": "m"
+              },
+              {
+                "name": "Large",
+                "value": "l"
+              },
+              {
+                "name": "ExtraLarge",
+                "value": "xl"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "linkButtonRightIconSize",
+            "label": "Right Icon Size",
+            "if": {
+              "linkButtonShowRightIcon": true
+            },
+            "value": "m",
+            "options": [
+              {
+                "name": "Small",
+                "value": "s"
+              },
+              {
+                "name": "Medium",
+                "value": "m"
+              },
+              {
+                "name": "Large",
+                "value": "l"
+              },
+              {
+                "name": "ExtraLarge",
+                "value": "xl"
+              }
+            ]
+          }
+        ]
       }
     ]
   },
