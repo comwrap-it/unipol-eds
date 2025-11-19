@@ -45,20 +45,21 @@
         {
           "component": "richtext",
           "label": "Titolo Elenco Link",
-          "name": "subtitle",
+          "name": "footerListLinkTitle",
           "valueType": "string",
           "condition": { "===": [{"var" : "hideTitleListLink"}, true] }
         },
         {
-          "component": "container",
-          "name": "button-container",
-          "label": "Configurazione Elenco Link",
-          "collapsible": false,
-          "fields": [
-            {
-              "...": "../atoms/buttons/link-button/_link-button.json#/models/link-button/fields"
-            }
-          ]
+          "component": "text",
+          "name": "footerListLinkText",
+          "label": "Testo Link",
+          "required": true
+        },
+        {
+          "component": "aem-content",
+          "name": "footerListLinkHref",
+          "label": "Link URL",
+          "required": true
         }
       ]
     }
