@@ -444,6 +444,23 @@
     ]
   },
   {
+    "id": "footer-social-link",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "socialFooterImg",
+        "label": "Logo Social Footer",
+        "multi": false
+      },
+      {
+        "component": "aem-content",
+        "name": "logoSocialHref",
+        "label": "Social Link URL"
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {

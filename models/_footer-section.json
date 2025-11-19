@@ -34,8 +34,9 @@
     {
       "id": "footer-section",
       "components": [
-        "footer-title-link",
-        "footer-download-link"
+        "footer-list-link",
+        "footer-download-link",
+        "footer-social-list"
       ]
     }
   ]
