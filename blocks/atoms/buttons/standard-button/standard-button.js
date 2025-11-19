@@ -61,6 +61,19 @@ export function createButton(
     ? document.createElement('a')
     : document.createElement('button');
 
+  element.className = ['btn', `btn-${variant || BUTTON_VARIANTS.PRIMARY}`].join(
+    ' ',
+  );
+
+  // Set href for links
+  if (isLink) {
+    element.href = href;
+    element.setAttribute('role', 'button');
+  }
+
+  // Add accessibility attributes
+  element.setAttribute('tabindex', '0');
+
   // add left icon if provided
   if (leftIcon) {
     const leftIconSpan = document.createElement('span');
@@ -82,18 +95,6 @@ export function createButton(
     } ${rightIcon}`;
     element.appendChild(rightIconSpan);
   }
-  element.className = ['btn', `btn-${variant || BUTTON_VARIANTS.PRIMARY}`].join(
-    ' ',
-  );
-
-  // Set href for links
-  if (isLink) {
-    element.href = href;
-    element.setAttribute('role', 'button');
-  }
-
-  // Add accessibility attributes
-  element.setAttribute('tabindex', '0');
 
   // Add keyboard support for buttons
   element.addEventListener('keydown', (e) => {

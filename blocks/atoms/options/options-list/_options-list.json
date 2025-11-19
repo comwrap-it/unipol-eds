@@ -6,10 +6,25 @@
             "plugins": {
                 "xwalk": {
                     "page": {
-                        "resourceType": "core/franklin/components/block/v1/block/item",
+                        "resourceType": "core/franklin/components/block/v1/block",
                         "template": {
                             "name": "Options List",
                             "model": "options-list"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "title": "Option",
+            "id": "option",
+            "plugins": {
+                "xwalk": {
+                    "page": {
+                        "resourceType": "core/franklin/components/block/v1/block/item",
+                        "template": {
+                            "name": "Option",
+                            "model": "option"
                         }
                     }
                 }
@@ -24,7 +39,6 @@
                     "component": "container",
                     "name": "options-list-option-container",
                     "label": "Config Options List's Option",
-                    "multi": true,
                     "fields": [
                         {
                             "...": "../../options/option/_option.json#/models/option/fields"
@@ -34,5 +48,12 @@
             ]
         }
     ],
-    "filters": []
+    "filters": [
+    {
+      "id": "options",
+      "components": [
+        "option"
+      ]
+    }
+  ]
 }
