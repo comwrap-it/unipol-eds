@@ -138,7 +138,7 @@ export const extractInstrumentationAttributes = (element) => {
  *
  * @param {Array} rows - Array of rows from block children
  * @returns {Object} An object containing button properties
- * 
+ *
  * Row mapping (based on _standard-button.json field order):
  * rows[0]: standardButtonLabel (text)
  * rows[1]: standardButtonVariant (select)

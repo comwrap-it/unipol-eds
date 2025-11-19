@@ -59,7 +59,7 @@ export function createOptionsList(optionsArray, instrumentation = {}) {
  */
 export default async function decorate(block) {
   if (!block) return;
-  
+
   // Ensure CSS is loaded
   await ensureStylesLoaded();
 
@@ -83,7 +83,7 @@ export default async function decorate(block) {
   for (let i = 0; i < optionCount; i += 1) {
     const startIndex = i * FIELDS_PER_OPTION;
     const optionRows = rows.slice(startIndex, startIndex + FIELDS_PER_OPTION);
-    
+
     const optionElement = createOptionFromRows(optionRows);
     if (optionElement) {
       optionsListContainer.appendChild(optionElement);
