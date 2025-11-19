@@ -36,6 +36,20 @@
       "id": "footer-link",
       "fields": [
         {
+          "component": "boolean",
+          "label": "Mostra Titolo Elenco Link",
+          "description": "Attivo: stamperà un titolo sopra al link. Disattivo: mostrerà solo il link.",
+          "name": "hideTitleListLink",
+          "valueType": "boolean"
+        },
+        {
+          "component": "richtext",
+          "label": "Titolo Elenco Link",
+          "name": "subtitle",
+          "valueType": "string",
+          "condition": { "===": [{"var" : "hideTitleListLink"}, true] }
+        },
+        {
           "component": "container",
           "name": "button-container",
           "label": "Configurazione Elenco Link",
