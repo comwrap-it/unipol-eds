@@ -887,6 +887,74 @@
             ]
           }
         ]
+      },
+      {
+        "component": "container",
+        "name": "test-button-container-options-list",
+        "label": "Configurazione Options List",
+        "fields": [
+          {
+            "component": "container",
+            "name": "options-list-option-container",
+            "label": "Config Options List's Option",
+            "fields": [
+              {
+                "component": "container",
+                "name": "option-checkbox-container",
+                "label": "Configurazione Option Checkbox",
+                "fields": [
+                  {
+                    "component": "select",
+                    "name": "type",
+                    "label": "Type",
+                    "value": "unchecked",
+                    "options": [
+                      {
+                        "name": "Unchecked",
+                        "value": "unchecked"
+                      },
+                      {
+                        "name": "Checked",
+                        "value": "checked"
+                      },
+                      {
+                        "name": "Indeterminate",
+                        "value": "indeterminate"
+                      }
+                    ]
+                  },
+                  {
+                    "component": "switch",
+                    "name": "disabled",
+                    "label": "Disabled",
+                    "description": "Toggle to disable the checkbox",
+                    "value": false
+                  }
+                ]
+              },
+              {
+                "component": "text",
+                "name": "label",
+                "label": "Label",
+                "value": "Label",
+                "required": true
+              },
+              {
+                "component": "text",
+                "name": "description",
+                "label": "Description",
+                "value": "Description"
+              },
+              {
+                "component": "switch",
+                "name": "showCheckbox",
+                "label": "Show Checkbox",
+                "description": "Toggle to show or hide the checkbox",
+                "value": false
+              }
+            ]
+          }
+        ]
       }
     ]
   },
