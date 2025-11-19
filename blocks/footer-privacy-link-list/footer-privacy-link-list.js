@@ -1,25 +1,36 @@
 export default function decorate(block) {
   const rows = [...block.children];
 
+  // Creo il container finale
   const container = document.createElement('div');
   container.className = 'footer-privacy-link-container';
   container.style.display = 'flex';
-  rows.forEach(row => {
-    const textDiv = row.querySelector('div:first-child p');
-    const text = textDiv ? textDiv.textContent : '';
+  container.style.gap = '1rem'; // spazio tra i link
 
-    const linkEl = row.querySelector('div:last-child a');
-    if (linkEl && text) {
+  rows.forEach(row => {
+    const [textDiv, linkDiv] = [...row.children];
+
+    if (!textDiv || !linkDiv) return;
+
+    // Prendo il testo dal primo div
+    const linkText = textDiv.querySelector('p')?.textContent.trim();
+    // Prendo il link dal secondo div
+    const linkEl = linkDiv.querySelector('a');
+
+    if (linkText && linkEl) {
+      // Creo nuovo <a> con href già presente
       const a = document.createElement('a');
       a.href = linkEl.href;
       a.title = linkEl.title;
       a.className = 'button';
-      a.textContent = text;
+      a.textContent = linkText;
 
+      // Aggiungo il link al container
       container.appendChild(a);
     }
   });
 
+  // Pulisco il block originale e inserisco il container
   block.innerHTML = '';
   block.appendChild(container);
 }
