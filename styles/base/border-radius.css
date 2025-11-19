@@ -4,10 +4,10 @@
  */
 
 :root {
-  --border-radius-0: 0px;
-  --border-radius-100-4: 4px;
-  --border-radius-200-8: 8px;
-  --border-radius-300-16: 16px;
-  --border-radius-400-24: 24px;
-  --border-radius-9999: 9999px;
+  --Radius-0: 0rem;
+  --Radius-100-4: 0.25rem;
+  --Radius-200-8: 0.5rem;
+  --Radius-300-16: 1rem;
+  --Radius-400-24: 1.5rem;
+  --Radius-9999: 624.938rem;
 }

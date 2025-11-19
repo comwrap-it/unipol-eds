@@ -4,8 +4,8 @@
  */
 
 :root {
-  --border-width-stroke-0: 0px;
-  --border-width-stroke-100-1: 1px;
-  --border-width-stroke-200-2: 2px;
-  --border-width-stroke-400-4: 4px;
+  --Stroke-0: 0rem;
+  --Stroke-100-1: 0.063rem;
+  --Stroke-200-2: 0.125rem;
+  --Stroke-400-4: 0.25rem;
 }

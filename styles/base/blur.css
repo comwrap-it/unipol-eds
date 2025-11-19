@@ -4,6 +4,6 @@
  */
 
 :root {
-  --blur-background-blur-400-24-2: blur(24px);
-  --blur-background-blur-200-8: blur(8px);
+  --Background-Blur-400-24-2: blur(1.5rem);
+  --Background-Blur-200-8: blur(0.5rem);
 }

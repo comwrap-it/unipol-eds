@@ -4,24 +4,24 @@
  */
 
 :root {
-  --typography-text-styles-title-extra-large: var(--font-weight-semi-bold) var(--dimension-font-size-title-extra-large)/100% var(--font-family-font-2);
-  --typography-text-styles-title-hero-apex-new: var(--font-weight-medium) var(--dimension-font-size-title-hero-apex-new)/115% var(--font-family-font-1);
-  --typography-text-styles-title-page: var(--font-weight-medium) var(--dimension-font-size-title-page)/115% var(--font-family-font-1);
-  --typography-text-styles-subtitle-apex-new: var(--font-weight-medium) var(--font-size-32)/115% var(--font-family-font-1);
-  --typography-text-styles-subtitle-manrope: var(--font-weight-semi-bold) var(--dimension-font-size-subtitle-manrope)/120% var(--font-family-font-2);
-  --typography-text-styles-heading: var(--font-weight-semi-bold) var(--dimension-font-size-heading)/125% var(--font-family-font-2);
-  --typography-text-styles-subheading: var(--font-weight-semi-bold) var(--font-size-20)/130% var(--font-family-font-2);
-  --typography-text-styles-body-base: var(--font-weight-regular) var(--font-size-16)/140% var(--font-family-font-2);
-  --typography-text-styles-body-strong: var(--font-weight-semi-bold) var(--font-size-16)/140% var(--font-family-font-2);
-  --typography-text-styles-body-link: var(--font-weight-regular) var(--font-size-16)/140% var(--font-family-font-2);
-  --typography-text-styles-body-small: var(--font-weight-regular) var(--font-size-14)/140% var(--font-family-font-2);
-  --typography-text-styles-body-small-medium: var(--font-weight-medium) var(--font-size-14)/140% var(--font-family-font-2);
-  --typography-text-styles-body-extra-small: var(--font-weight-regular) var(--font-size-12)/140% var(--font-family-font-2);
-  --typography-text-styles-overline: var(--font-weight-semi-bold) var(--font-size-12)/140% var(--font-family-font-2);
-  --typography-text-styles-single-line-body-base: var(--font-weight-semi-bold) var(--font-size-16)/150% var(--font-family-font-2);
-  --typography-text-styles-single-line-body-link: var(--font-weight-semi-bold) var(--font-size-16)/150% var(--font-family-font-2);
-  --typography-text-styles-title-hero-manrope: var(--font-weight-semi-bold) var(--font-size-56)/115% var(--font-family-font-2);
-  --typography-text-styles-subtitle-manrope-fixed: var(--font-weight-semi-bold) var(--font-size-32)/120% var(--font-family-font-2);
-  --typography-text-styles-heading-fixed: var(--font-weight-semi-bold) var(--font-size-24)/125% var(--font-family-font-2);
-  --typography-text-styles-body-medium: var(--font-weight-medium) var(--font-size-16)/140% var(--font-family-font-2);
+  --Text-Styles-Title-Extra-Large: var(--Weight-Semi-Bold) var(--Font-Size-Title-Extra-Large)/100% var(--Family-Font-2);
+  --Text-Styles-Title-Hero-Apex-New: var(--Weight-Medium) var(--Font-Size-Title-Hero-Apex-New)/115% var(--Family-Font-1);
+  --Text-Styles-Title-Page: var(--Weight-Medium) var(--Font-Size-Title-Page)/115% var(--Family-Font-1);
+  --Text-Styles-Subtitle-Apex-New: var(--Weight-Medium) var(--Size-32)/115% var(--Family-Font-1);
+  --Text-Styles-Subtitle-Manrope: var(--Weight-Semi-Bold) var(--Font-Size-Subtitle-Manrope)/120% var(--Family-Font-2);
+  --Text-Styles-Heading: var(--Weight-Semi-Bold) var(--Font-Size-Heading)/125% var(--Family-Font-2);
+  --Text-Styles-Subheading: var(--Weight-Semi-Bold) var(--Size-20)/130% var(--Family-Font-2);
+  --Text-Styles-Body-Base: var(--Weight-Regular) var(--Size-16)/140% var(--Family-Font-2);
+  --Text-Styles-Body-Strong: var(--Weight-Semi-Bold) var(--Size-16)/140% var(--Family-Font-2);
+  --Text-Styles-Body-Link: var(--Weight-Regular) var(--Size-16)/140% var(--Family-Font-2);
+  --Text-Styles-Body-Small: var(--Weight-Regular) var(--Size-14)/140% var(--Family-Font-2);
+  --Text-Styles-Body-Small-Medium: var(--Weight-Medium) var(--Size-14)/140% var(--Family-Font-2);
+  --Text-Styles-Body-Extra-Small: var(--Weight-Regular) var(--Size-12)/140% var(--Family-Font-2);
+  --Text-Styles-Overline: var(--Weight-Semi-Bold) var(--Size-12)/140% var(--Family-Font-2);
+  --Text-Styles-Single-Line-Body-Base: var(--Weight-Semi-Bold) var(--Size-16)/150% var(--Family-Font-2);
+  --Text-Styles-Single-Line-Body-Link: var(--Weight-Semi-Bold) var(--Size-16)/150% var(--Family-Font-2);
+  --Text-Styles-Title-Hero-Manrope: var(--Weight-Semi-Bold) var(--Size-56)/115% var(--Family-Font-2);
+  --Text-Styles-Subtitle-Manrope-Fixed: var(--Weight-Semi-Bold) var(--Size-32)/120% var(--Family-Font-2);
+  --Text-Styles-Heading-Fixed: var(--Weight-Semi-Bold) var(--Size-24)/125% var(--Family-Font-2);
+  --Text-Styles-Body-Medium: var(--Weight-Medium) var(--Size-16)/140% var(--Family-Font-2);
 }

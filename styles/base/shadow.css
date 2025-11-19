@@ -4,11 +4,11 @@
  */
 
 :root {
-  --shadow-drop-shadow-100: 2px 2px 8px 0px #00000014;
-  --shadow-inner-shadow-not-in-use-100: inset 0px 1px 4px 0px #0c0c0d0d;
-  --shadow-inner-shadow-not-in-use-200: inset 0px 1px 4px 0px #0c0c0d0d;
-  --shadow-inner-shadow-not-in-use-300: inset 0px 4px 4px -1px #0c0c0d0d;
-  --shadow-inner-shadow-not-in-use-400: inset 0px 16px 32px -4px #0c0c0d1a;
-  --shadow-inner-shadow-not-in-use-500: inset 0px 16px 16px -8px #0c0c0d1a;
-  --shadow-inner-shadow-not-in-use-600: inset 0px 16px 32px -8px #0c0c0d66;
+  --Drop-Shadow-100: 0.125rem 0.125rem 0.5rem 0rem #00000014;
+  --Inner-Shadow-Not-In-Use-100: inset 0rem 0.063rem 0.25rem 0rem #0c0c0d0d;
+  --Inner-Shadow-Not-In-Use-200: inset 0rem 0.063rem 0.25rem 0rem #0c0c0d0d;
+  --Inner-Shadow-Not-In-Use-300: inset 0rem 0.25rem 0.25rem -0.062rem #0c0c0d0d;
+  --Inner-Shadow-Not-In-Use-400: inset 0rem 1rem 2rem -0.25rem #0c0c0d1a;
+  --Inner-Shadow-Not-In-Use-500: inset 0rem 1rem 1rem -0.5rem #0c0c0d1a;
+  --Inner-Shadow-Not-In-Use-600: inset 0rem 1rem 2rem -0.5rem #0c0c0d66;
 }
