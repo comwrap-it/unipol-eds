@@ -38,12 +38,12 @@ export function extractInstrumentationAttributes(element) {
  * @returns {HTMLElement}
  */
 export function createNavigationPill(
-  label, 
-  href, 
-  variant, 
-  leftIcon, 
-  rightIcon, 
-  instrumentation = {}
+  label,
+  href,
+  variant,
+  leftIcon,
+  rightIcon,
+  instrumentation = {},
 ) {
   const isLink = Boolean(href);
   const el = isLink ? document.createElement('a') : document.createElement('button');
@@ -103,12 +103,10 @@ export function createNavigationPill(
  */
 function extractValuesFromRows(rows) {
   const text = rows[0]?.textContent?.trim() || 'Navigation Pill';
-  const variant =
-    rows[1]?.textContent?.trim().toLowerCase()
+  const variant = rows[1]?.textContent?.trim().toLowerCase()
     || NAVIGATION_PILL_VARIANTS.PRIMARY;
 
-  const href =
-    rows[2]?.querySelector('a')?.href
+  const href = rows[2]?.querySelector('a')?.href
     || rows[2]?.textContent?.trim()
     || '';
 
@@ -149,8 +147,7 @@ export default function decorateNavigationPill(block) {
     instrumentation,
   } = extractValuesFromRows(rows);
 
-  const hasInstrumentation =
-    block.hasAttribute('data-aue-resource')
+  const hasInstrumentation = block.hasAttribute('data-aue-resource')
     || block.querySelector('[data-aue-resource]')
     || block.querySelector('[data-richtext-prop]');
 
