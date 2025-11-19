@@ -224,83 +224,17 @@
         "component": "reference",
         "valueType": "string",
         "name": "logoUnipolFooter",
-        "label": "Logo Unipol Footer",
-        "multi": false
+        "label": "Logo Unipol Footer"
       },
       {
-        "component": "container",
-        "name": "unipol-footer-button-container",
-        "label": "Configurazione Bottone Unipol Footer",
-        "collapsible": false,
-        "fields": [
-          {
-            "component": "select",
-            "name": "iconButtonIcon",
-            "label": "Icon",
-            "required": true,
-            "description": "Select the icon",
-            "options": [
-              {
-                "name": "Chevron Left",
-                "value": "chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "chevron-right"
-              },
-              {
-                "name": "Search Icon",
-                "value": "search-icon"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "iconButtonVariant",
-            "label": "Variant",
-            "value": "primary",
-            "options": [
-              {
-                "name": "Primary",
-                "value": "primary"
-              },
-              {
-                "name": "Secondary",
-                "value": "secondary"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "iconButtonSize",
-            "label": "Size",
-            "value": "medium",
-            "options": [
-              {
-                "name": "Small",
-                "value": "small"
-              },
-              {
-                "name": "Medium",
-                "value": "medium"
-              },
-              {
-                "name": "Large",
-                "value": "large"
-              },
-              {
-                "name": "Extra Large",
-                "value": "extra-large"
-              }
-            ]
-          },
-          {
-            "component": "aem-content",
-            "name": "iconButtonHref",
-            "label": "Link URL",
-            "description": "Optional URL to make this a link button"
-          }
-        ]
+        "component": "text",
+        "name": "UnipolButtonText",
+        "label": "Testo Unipol Group"
+      },
+      {
+        "component": "aem-content",
+        "name": "UnipolButtonHref",
+        "label": "Link URL Unipol Group"
       },
       {
         "component": "reference",

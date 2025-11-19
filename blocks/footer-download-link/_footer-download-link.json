@@ -24,19 +24,17 @@
           "component": "reference",
           "valueType": "string",
           "name": "logoUnipolFooter",
-          "label": "Logo Unipol Footer",
-          "multi": false
+          "label": "Logo Unipol Footer"
         },
         {
-          "component": "container",
-          "name": "unipol-footer-button-container",
-          "label": "Configurazione Bottone Unipol Footer",
-          "collapsible": false,
-          "fields": [
-            {
-              "...": "../atoms/buttons/icon-button/_icon-button.json#/models/icon-button/fields"
-            }
-          ]
+          "component": "text",
+          "name": "UnipolButtonText",
+          "label": "Testo Unipol Group"
+        },
+        {
+          "component": "aem-content",
+          "name": "UnipolButtonHref",
+          "label": "Link URL Unipol Group"
         },
         {
           "component": "reference",
