@@ -14,6 +14,8 @@ import { createCategoryChip } from '../atoms/category-chip/category-chip.js';
 import { createCategoryTab } from '../atoms/category-tab/category-tab.js';
 import { createTextarea } from '../atoms/inputs/textarea/textarea.js';
 import { createTextfield } from '../atoms/inputs/textfield/textfield.js';
+import createOption from '../atoms/options/option/option.js';
+import createOptionsList from '../atoms/options/options-list/options-list.js';
 import { createTag } from '../atoms/tag/tag.js';
 
 let isStylesLoaded = false;
@@ -37,8 +39,15 @@ async function ensureStylesLoaded() {
       `${window.hlx.codeBasePath}/blocks/atoms/category-tab/category-tab.css`,
     ),
     loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`),
+    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/inputs/inputs.css`),
     loadCSS(
-      `${window.hlx.codeBasePath}/blocks/atoms/inputs/inputs.css`,
+      `${window.hlx.codeBasePath}/blocks/atoms/options/option/option.css`,
+    ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/options/options-list/options-list.css`,
+    ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/checkbox/standard-checkbox/checkbox.css`,
     ),
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/atoms/navigation-pill/navigation-pill.css`,
@@ -46,6 +55,41 @@ async function ensureStylesLoaded() {
   ]);
   isStylesLoaded = true;
 }
+
+const optionsData = [
+  {
+    labelText: 'Email notifications',
+    descriptionText: 'Get updates about account activity',
+    shouldShowCheckbox: true,
+    typeStatus: 'checked',
+    disabled: false,
+    instrumentation: { 'data-tracking-id': 'opt_email', 'data-aue-resource': 'option-1' },
+  },
+  {
+    labelText: 'SMS alerts',
+    descriptionText: 'Security and login alerts via SMS',
+    shouldShowCheckbox: true,
+    typeStatus: 'unchecked',
+    disabled: true,
+    instrumentation: { 'data-tracking-id': 'opt_sms' },
+  },
+  {
+    labelText: 'Weekly digest',
+    descriptionText: 'Summary of product updates',
+    shouldShowCheckbox: true,
+    typeStatus: 'indeterminate',
+    disabled: false,
+    instrumentation: { 'data-tracking-id': 'opt_digest' },
+  },
+  {
+    labelText: 'Beta features',
+    descriptionText: 'Access experimental features',
+    shouldShowCheckbox: false,
+    typeStatus: 'unchecked',
+    disabled: false,
+    instrumentation: { 'data-tracking-id': 'opt_beta' },
+  },
+];
 
 /**
  * Decorates a test buttons element
@@ -177,6 +221,25 @@ export default async function decorate(block) {
   );
   textareaContainer.appendChild(textArea);
   testButtons.appendChild(textareaContainer);
+  // create option
+  const optionContainer = document.createElement('div');
+  optionContainer.style = 'width: 100%; display: flex; justify-content: center; margin-top: 20px;';
+  const option = createOption(
+    'Sample Option',
+    'This is a description for the option.',
+    true,
+    'unchecked',
+    false,
+  );
+  optionContainer.appendChild(option);
+  testButtons.appendChild(optionContainer);
+  // create options list
+  const optionsListContainer = document.createElement('div');
+  optionsListContainer.style = 'width: 100%; display: flex; justify-content: center; margin-top: 20px;';
+
+  const optionsList = createOptionsList(optionsData);
+  optionsListContainer.appendChild(optionsList);
+  testButtons.appendChild(optionsListContainer);
 
   // Clear block and append test buttons
   block.textContent = '';

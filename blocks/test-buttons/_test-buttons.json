@@ -93,5 +93,10 @@
       ]
     }
   ],
-  "filters": []
+  "filters": [{
+    "id": "options-list",
+    "components": [
+      "option"
+    ]
+  }]
 }
