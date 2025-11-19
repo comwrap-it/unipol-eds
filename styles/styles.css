@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
- /* Base tokens */
+/* Base tokens */
 @import url("./cssTokens/string.css");
 @import url("./cssTokens/dimension.css");
 @import url("./cssTokens/border-radius.css");
@@ -29,91 +29,76 @@
 @import url("./icons.css");
 
 :root {
-  /* colors */
-  --background-color: white;
-  --light-color: #f8f8f8;
-  --dark-color: #505050;
-  --text-color: #131313;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
+    /* colors */
+    --background-color: white;
+    --light-color: #f8f8f8;
+    --dark-color: #505050;
+    --text-color: #131313;
+    --link-color: #3b63fb;
+    --link-hover-color: #1d3ecf;
 
-  /* fonts */
-  --body-font-family: roboto, roboto-fallback, sans-serif;
-  --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
+    /* fonts */
+    --body-font-family: var(--font-family-font-2), arial, sans-serif; /* Manrope primary */
+    --heading-font-family: var(--font-family-font-2), var(--font-family-font-1),
+        arial, sans-serif; /* Manrope primary, Apex New prepared */
 
-  /* body sizes */
-  --body-font-size-m: 22px;
-  --body-font-size-s: 19px;
-  --body-font-size-xs: 17px;
+    /* body sizes */
+    --body-font-size-m: 22px;
+    --body-font-size-s: 19px;
+    --body-font-size-xs: 17px;
 
-  /* heading sizes */
-  --heading-font-size-xxl: 55px;
-  --heading-font-size-xl: 44px;
-  --heading-font-size-l: 34px;
-  --heading-font-size-m: 27px;
-  --heading-font-size-s: 24px;
-  --heading-font-size-xs: 22px;
-
-  /* nav height */
-  --nav-height: 64px;
-}
-
-/* fallback fonts */
-@font-face {
-  font-family: roboto-condensed-fallback;
-  size-adjust: 88.82%;
-  src: local('Arial');
-}
-
-@font-face {
-  font-family: roboto-fallback;
-  size-adjust: 99.529%;
-  src: local('Arial');
+    /* heading sizes */
+    --heading-font-size-xxl: 55px;
+    --heading-font-size-xl: 44px;
+    --heading-font-size-l: 34px;
+    --heading-font-size-m: 27px;
+    --heading-font-size-s: 24px;
+    --heading-font-size-xs: 22px;
 }
 
 @media (width >= 900px) {
-  :root {
-    /* body sizes */
-    --body-font-size-m: 18px;
-    --body-font-size-s: 16px;
-    --body-font-size-xs: 14px;
+    :root {
+        /* body sizes */
+        --body-font-size-m: 18px;
+        --body-font-size-s: 16px;
+        --body-font-size-xs: 14px;
 
-    /* heading sizes */
-    --heading-font-size-xxl: 45px;
-    --heading-font-size-xl: 36px;
-    --heading-font-size-l: 28px;
-    --heading-font-size-m: 22px;
-    --heading-font-size-s: 20px;
-    --heading-font-size-xs: 18px;
-  }
+        /* heading sizes */
+        --heading-font-size-xxl: 45px;
+        --heading-font-size-xl: 36px;
+        --heading-font-size-l: 28px;
+        --heading-font-size-m: 22px;
+        --heading-font-size-s: 20px;
+        --heading-font-size-xs: 18px;
+    }
 }
 
 body {
-  display: none;
-  margin: 0;
-  background-color: var(--background-color);
-  color: var(--text-color);
-  font-family: var(--body-font-family);
-  font-size: var(--body-font-size-m);
-  line-height: 1.6;
+    display: none;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    font: var(--typography-text-styles-body-base);
+    line-height: 1.6;
 }
 
 body.appear {
-  display: block;
+    display: block;
 }
 
 header {
-  height: var(--nav-height);
+    height: var(--dimension-header-height);
 }
 
 header .header,
 footer .footer {
-  visibility: hidden;
+    visibility: hidden;
 }
 
 header .header[data-block-status="loaded"],
 footer .footer[data-block-status="loaded"] {
-  visibility: visible;
+    visibility: visible;
 }
 
 h1,
@@ -122,20 +107,37 @@ h3,
 h4,
 h5,
 h6 {
-  margin-top: 0.8em;
-  margin-bottom: 0.25em;
-  font-family: var(--heading-font-family);
-  font-weight: 600;
-  line-height: 1.25;
-  scroll-margin: 40px;
+    margin-top: 0.8em;
+    margin-bottom: 0.25em;
+    font-family: var(--heading-font-family);
+    font-weight: 600;
+    line-height: 1.25;
+    scroll-margin: 40px;
 }
 
-h1 { font-size: var(--heading-font-size-xxl); }
-h2 { font-size: var(--heading-font-size-xl); }
-h3 { font-size: var(--heading-font-size-l); }
-h4 { font-size: var(--heading-font-size-m); }
-h5 { font-size: var(--heading-font-size-s); }
-h6 { font-size: var(--heading-font-size-xs); }
+h1 {
+    font-size: var(--heading-font-size-xxl);
+}
+
+h2 {
+    font-size: var(--heading-font-size-xl);
+}
+
+h3 {
+    font-size: var(--heading-font-size-l);
+}
+
+h4 {
+    font-size: var(--heading-font-size-m);
+}
+
+h5 {
+    font-size: var(--heading-font-size-s);
+}
+
+h6 {
+    font-size: var(--heading-font-size-xs);
+}
 
 p,
 dl,
@@ -143,67 +145,67 @@ ol,
 ul,
 pre,
 blockquote {
-  margin-top: 0.8em;
-  margin-bottom: 0.25em;
+    margin-top: 0.8em;
+    margin-bottom: 0.25em;
 }
 
 code,
 pre {
-  font-size: var(--body-font-size-s);
+    font-size: var(--body-font-size-s);
 }
 
 pre {
-  padding: 16px;
-  border-radius: 8px;
-  background-color: var(--light-color);
-  overflow-x: auto;
-  white-space: pre;
+    padding: 16px;
+    border-radius: 8px;
+    background-color: var(--light-color);
+    overflow-x: auto;
+    white-space: pre;
 }
 
 main > div {
-  margin: 40px 16px;
+    margin: 40px 16px;
 }
 
 input,
 textarea,
 select,
 button {
-  font: inherit;
+    font: inherit;
 }
 
 main img {
-  max-width: 100%;
-  width: auto;
-  height: auto;
+    max-width: 100%;
+    width: auto;
+    height: auto;
 }
 
 /* sections */
 main > .section {
-  margin: 40px 0;
+    margin: 40px 0;
 }
 
 main > .section > div {
-  max-width: 1200px;
-  margin: auto;
-  padding: 0 24px;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 24px;
 }
 
 main > .section:first-of-type {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 @media (width >= 900px) {
-  main > .section > div {
-    padding: 0 32px;
-  }
+    main > .section > div {
+        padding: 0 32px;
+    }
 }
 
 /* section metadata */
 main .section.light,
 main .section.highlight {
-  background-color: var(--light-color);
-  margin: 0;
-  padding: 40px 0;
+    background-color: var(--light-color);
+    margin: 0;
+    padding: 40px 0;
 }
 
 main .section.text-block-container.number-block-container {
@@ -211,9 +213,9 @@ main .section.text-block-container.number-block-container {
 }
 
 main .section.text-block-container.number-block-container.bg-dark-gray {
-  background-color: var(--color-grayscale-50);
+    background-color: var(--color-grayscale-50);
 }
 
 main .section.text-block-container.number-block-container.bg-white {
-  background-color: var(--color-neutral-50);
+    background-color: var(--color-neutral-50);
 }

@@ -10,3 +10,8 @@ helix-importer-ui
 
 # Env files
 .env
+
+# Agents
+.claude/*
+.agents/*
+AGENTS.md
