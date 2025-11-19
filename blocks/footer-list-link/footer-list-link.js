@@ -1,37 +1,29 @@
 export default function decorate(block) {
-  const wrapper = document.createElement('div');
-  wrapper.className = 'footer-list-links-wrapper';
-
+  // Itera sui componenti footer-link senza rimuovere block.children
   [...block.children].forEach((row) => {
-    const linkDiv = document.createElement('div');
-
     const children = [...row.children];
     const hideTitle = children[0]?.textContent.trim() === 'true';
     const title = children[1]?.textContent.trim();
     const linkText = children[2]?.textContent.trim();
-    const linkHref = children[3]?.querySelector('a')?.getAttribute('href');
+    const linkHref = children[3]?.querySelector('a');
 
+    // Gestisci titolo
     if (hideTitle && title) {
-      const titleDiv = document.createElement('div');
-      const p = document.createElement('p');
-      p.textContent = title;
-      titleDiv.append(p);
-      linkDiv.append(titleDiv);
+      const titleDiv = children[1]; // usa il div originale
+      titleDiv.style.display = 'block';
+    } else if (children[1]) {
+      children[1].style.display = 'none';
     }
 
-    const linkContainerDiv = document.createElement('div');
-    linkContainerDiv.className = 'button-container';
-    const a = document.createElement('a');
-    a.href = linkHref || '#';
-    a.title = linkHref || '';
-    a.className = 'button';
-    a.textContent = linkText || 'Link';
-    linkContainerDiv.append(a);
-    linkDiv.append(linkContainerDiv);
-
-    wrapper.append(linkDiv);
+    // Gestisci testo del link
+    if (linkHref && linkText) {
+      if ((hideTitle && linkText.toLowerCase() === 'true') ||
+          (!hideTitle && linkText.toLowerCase() === 'false')) {
+        linkHref.style.display = 'none';
+      } else {
+        linkHref.style.display = 'block';
+        linkHref.textContent = linkText;
+      }
+    }
   });
-
-  block.textContent = '';
-  block.append(wrapper);
-}
+};
