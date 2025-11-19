@@ -122,7 +122,7 @@ export default async function decorate(block) {
       // Universal Editor structures container fields as child rows
       // Get child rows from the button container
       let buttonRows = Array.from(buttonContainerRow.children);
-      
+
       // If there's a wrapper, get rows from it
       const containerWrapper = buttonContainerRow.querySelector('.default-content-wrapper');
       if (containerWrapper) {
@@ -140,14 +140,14 @@ export default async function decorate(block) {
       const label = buttonRows[0]?.textContent?.trim() || 'Button';
       let variant = buttonRows[1]?.textContent?.trim()?.toLowerCase() || BUTTON_VARIANTS.PRIMARY;
       let size = buttonRows[2]?.textContent?.trim()?.toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
-      
+
       // For href, check if there's a link element or just text
       let href = '';
       if (buttonRows[3]) {
         const link = buttonRows[3].querySelector('a');
         href = link?.getAttribute('href')?.replace('.html', '') || buttonRows[3].textContent?.trim() || '';
       }
-      
+
       const leftIcon = buttonRows[4]?.textContent?.trim() || '';
       const rightIcon = buttonRows[5]?.textContent?.trim() || '';
 
