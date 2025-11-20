@@ -375,7 +375,7 @@
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
                   "name": "Options List",
-                  "model": "options-list"
+                  "filter": "options"
                 }
               }
             }
@@ -383,14 +383,14 @@
         },
         {
           "title": "Option",
-          "id": "option",
+          "id": "unipol-option",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "name": "Option",
-                  "model": "option"
+                  "model": "unipol-option"
                 }
               }
             }

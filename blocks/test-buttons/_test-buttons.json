@@ -79,6 +79,16 @@
               "...": "../atoms/tag/_tag.json#/models/tag/fields"
             }
           ]
+        },
+        {
+          "component": "container",
+          "name": "test-button-container-navigation-pill",
+          "label": "Configurazione Navigation Pill",
+          "fields": [
+            {
+              "...": "../atoms/navigation-pill/_navigation-pill.json#/models/navigation-pill/fields"
+            }
+          ]
         }
       ]
     }
@@ -86,7 +96,7 @@
   "filters": [{
     "id": "options-list",
     "components": [
-      "option"
+      "unipol-option"
     ]
   }]
 }
