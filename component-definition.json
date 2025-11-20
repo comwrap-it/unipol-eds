@@ -246,14 +246,14 @@
         },
         {
           "title": "Option",
-          "id": "option",
+          "id": "unipol-option",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "name": "Option",
-                  "model": "option"
+                  "model": "unipol-option"
                 }
               }
             }
