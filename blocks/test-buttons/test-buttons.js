@@ -1,5 +1,5 @@
-import { createIconButton } from '../atoms/buttons/icon-button/icon-button.js';
 import { createLinkButton } from '../atoms/buttons/link-button/link-button.js';
+import { createIconButton } from '../atoms/buttons/icon-button/icon-button.js';
 import {
   BUTTON_ICON_SIZES,
   BUTTON_VARIANTS,
@@ -17,7 +17,9 @@ import { createTextfield } from '../atoms/inputs/textfield/textfield.js';
 import createOption from '../atoms/options/option/option.js';
 import { createOptionsList } from '../atoms/options/options-list/options-list.js';
 import { createTag } from '../atoms/tag/tag.js';
+import { RADIO_TYPES, createRadio } from '../atoms/radio-button/standard-radio-button/radio-button.js';
 import { create3Dicons } from '../atoms/3D-icons/3D-icons.js';
+import { createRadioButtonField } from '../atoms/radio-button/radio-button-field/radio-button-field.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -52,6 +54,12 @@ async function ensureStylesLoaded() {
     ),
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/atoms/navigation-pill/navigation-pill.css`,
+    ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/radio-button/standard-radio-button/radio-button.css`,
+    ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/radio-button/radio-button-field/radio-button-field.css`,
     ),
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/atoms/3D-icons/3D-icons.css`,
@@ -200,6 +208,21 @@ export default async function decorate(block) {
     NAVIGATION_PILL_ICON_SIZES.SMALL,
   );
   testButtons.appendChild(navigationPill);
+
+  // Create Radio Button
+  const radioButton = createRadio(
+    RADIO_TYPES.UNCHECKED,
+  );
+  testButtons.appendChild(radioButton);
+
+  // Create Radio Button Field
+  const radioButtonField = createRadioButtonField(
+    RADIO_TYPES.UNCHECKED,
+    false,
+    'LabelTest',
+    'longText',
+  );
+  testButtons.appendChild(radioButtonField);
 
   // Create textfield
   const textfieldContainer = document.createElement('div');
