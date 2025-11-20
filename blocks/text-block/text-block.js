@@ -7,7 +7,7 @@
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
 
-import { createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
+import { createButtonFromRows } from '../atoms/buttons/standard-button/standard-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 let isPrimaryBtnStyleLoaded = false;
@@ -107,51 +107,18 @@ export default async function decorate(block) {
     }
   }
 
-  // ROW 3-8 BUTTON
-  const buttonTextRow = rows[3];
-  const buttonVariantRow = rows[4];
-  const buttonSizeRow = rows[5];
-  const buttonHrefRow = rows[6];
-  const leftIcon = rows[7]?.textContent?.trim() || '';
-  const rightIcon = rows[8]?.textContent?.trim() || '';
+  // ROWS 3-8: BUTTON FIELDS (from button-container)
+  // Note: Container fields are flattened at the parent level in Universal Editor
+  // The button-container fields are exposed as individual rows starting from row 3
+  // We use the standard-button's createButtonFromRows utility to handle extraction
+  const buttonRows = rows.slice(3, 9); // Extract rows 3-8 for button fields
+  const buttonElement = createButtonFromRows(buttonRows);
 
-  if (buttonTextRow && buttonTextRow.textContent?.trim()) {
-    const hasInstrumentation = buttonTextRow.hasAttribute('data-aue-resource')
-      || buttonTextRow.querySelector('[data-aue-resource]')
-      || buttonTextRow.querySelector('[data-richtext-prop]')
-      || buttonTextRow.querySelector('[data-aue-prop]');
-
-    let buttonElement;
-    if (hasInstrumentation) {
-      const textField = buttonTextRow.querySelector('[data-aue-prop="text"]');
-      const variantField = buttonVariantRow?.querySelector('[data-aue-prop="variant"]');
-      const sizeField = buttonSizeRow?.querySelector('[data-aue-prop="size"]');
-      const hrefField = buttonHrefRow?.querySelector('a');
-
-      const label = textField?.textContent?.trim() || 'Button';
-      let variant = variantField?.textContent?.trim()?.toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-      let size = sizeField?.textContent?.trim()?.toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
-      const href = hrefField?.getAttribute('href')?.replace('.html', '') || '';
-
-      if (!Object.values(BUTTON_VARIANTS).includes(variant)) variant = BUTTON_VARIANTS.PRIMARY;
-      if (!Object.values(BUTTON_ICON_SIZES).includes(size)) size = BUTTON_ICON_SIZES.MEDIUM;
-
-      buttonElement = createButton(label, href, variant, size, leftIcon, rightIcon);
-    } else {
-      const label = buttonTextRow.textContent?.trim() || 'Button';
-      const link = buttonTextRow.querySelector('a');
-      const href = link?.href || '';
-      const variant = BUTTON_VARIANTS.PRIMARY;
-      const size = BUTTON_ICON_SIZES.MEDIUM;
-      buttonElement = createButton(label, href, variant, size, leftIcon, rightIcon);
-    }
-
-    if (buttonElement) {
-      const buttonContainer = document.createElement('div');
-      buttonContainer.className = 'text-block-button';
-      buttonContainer.appendChild(buttonElement);
-      textContentContainer.appendChild(buttonContainer);
-    }
+  if (buttonElement) {
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'text-block-button';
+    buttonContainer.appendChild(buttonElement);
+    textContentContainer.appendChild(buttonContainer);
   }
 
   // Append the main text container to textBlock

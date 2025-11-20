@@ -337,8 +337,15 @@
             ]
           },
           {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          },
+          {
             "component": "select",
             "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
             "label": "Size",
             "value": "medium",
             "options": [
@@ -361,17 +368,16 @@
             ]
           },
           {
-            "component": "aem-content",
-            "name": "standardButtonHref",
-            "label": "Link URL",
-            "description": "Optional URL to make this a link button"
-          },
-          {
             "component": "select",
             "name": "standardButtonLeftIcon",
             "label": "Left Icon",
             "description": "Select the left icon",
+            "value": "",
             "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
               {
                 "name": "Chevron Left",
                 "value": "chevron-left-icon"
@@ -391,7 +397,12 @@
             "name": "standardButtonRightIcon",
             "label": "Right Icon",
             "description": "Select the right icon",
+            "value": "",
             "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
               {
                 "name": "Chevron Left",
                 "value": "chevron-left-icon"
@@ -887,67 +898,6 @@
             ]
           }
         ]
-      },
-      {
-        "component": "container",
-        "name": "test-button-container-options-list",
-        "label": "Configurazione Options List",
-        "fields": [
-          {
-            "component": "container",
-            "name": "option-checkbox-container",
-            "label": "Configurazione Option Checkbox",
-            "fields": [
-              {
-                "component": "select",
-                "name": "type",
-                "label": "Type",
-                "value": "unchecked",
-                "options": [
-                  {
-                    "name": "Unchecked",
-                    "value": "unchecked"
-                  },
-                  {
-                    "name": "Checked",
-                    "value": "checked"
-                  },
-                  {
-                    "name": "Indeterminate",
-                    "value": "indeterminate"
-                  }
-                ]
-              },
-              {
-                "component": "switch",
-                "name": "disabled",
-                "label": "Disabled",
-                "description": "Toggle to disable the checkbox",
-                "value": false
-              }
-            ]
-          },
-          {
-            "component": "text",
-            "name": "label",
-            "label": "Label",
-            "value": "Label",
-            "required": true
-          },
-          {
-            "component": "text",
-            "name": "description",
-            "label": "Description",
-            "value": "Description"
-          },
-          {
-            "component": "switch",
-            "name": "showCheckbox",
-            "label": "Show Checkbox",
-            "description": "Toggle to show or hide the checkbox",
-            "value": false
-          }
-        ]
       }
     ]
   },
@@ -1015,8 +965,15 @@
             ]
           },
           {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          },
+          {
             "component": "select",
             "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
             "label": "Size",
             "value": "medium",
             "options": [
@@ -1039,17 +996,16 @@
             ]
           },
           {
-            "component": "aem-content",
-            "name": "standardButtonHref",
-            "label": "Link URL",
-            "description": "Optional URL to make this a link button"
-          },
-          {
             "component": "select",
             "name": "standardButtonLeftIcon",
             "label": "Left Icon",
             "description": "Select the left icon",
+            "value": "",
             "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
               {
                 "name": "Chevron Left",
                 "value": "chevron-left-icon"
@@ -1069,7 +1025,12 @@
             "name": "standardButtonRightIcon",
             "label": "Right Icon",
             "description": "Select the right icon",
+            "value": "",
             "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
               {
                 "name": "Chevron Left",
                 "value": "chevron-left-icon"

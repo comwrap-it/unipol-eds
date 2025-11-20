@@ -79,19 +79,14 @@
               "...": "../atoms/tag/_tag.json#/models/tag/fields"
             }
           ]
-        },
-        {
-          "component": "container",
-          "name": "test-button-container-options-list",
-          "label": "Configurazione Options List",
-          "fields": [
-            {
-              "...": "../atoms/options/options-list/_options-list.json#/models/option/fields"
-            }
-          ]
         }
       ]
     }
   ],
-  "filters": []
+  "filters": [{
+    "id": "options-list",
+    "components": [
+      "option"
+    ]
+  }]
 }
