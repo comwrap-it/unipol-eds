@@ -90,6 +90,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: var(--dimension-input-fields-vertical-gap, 4px);
+    position: relative;
 
     .input-container {
         position: relative;
@@ -255,6 +256,19 @@
 
         &:has(.textarea) {
             height: var(--dimension-space-1100-96);
+        }
+    }
+
+    .options-list {
+        position: absolute;
+        opacity: 0;
+        top: calc(var(--dimension-input-fields-text-field-height, 48px) + var(--dimension-input-fields-vertical-gap, 4px));
+        z-index: 30;
+        background-color: var(--color-white-1100);
+        transition: opacity 0.3s ease-in-out;
+
+        &.options-list-visible {
+            opacity: 1;
         }
     }
 

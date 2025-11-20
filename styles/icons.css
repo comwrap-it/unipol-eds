@@ -122,3 +122,7 @@
 .skip-back-circle-icon {
     background-image: url("/icons/SkipBackCircle.svg");
 }
+
+.dropdown-icon {
+    background-image: url("/icons/Dropdown.svg");
+}

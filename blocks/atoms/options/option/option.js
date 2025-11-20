@@ -6,6 +6,7 @@ import {
 /**
  *
  * @param {string} labelText a label for the option (required)
+ * @param {string} optionValue the value for the option (required)
  * @param {string} descriptionText a description for the option (optional)
  * @param {boolean} shouldShowCheckbox whether to show the checkbox (optional)
  * @param {string} typeStatus - "unchecked", "checked", "indeterminate"
@@ -15,6 +16,7 @@ import {
  */
 export default function createOption(
   labelText,
+  optionValue,
   descriptionText,
   shouldShowCheckbox = false,
   typeStatus = CHECKBOX_TYPES.UNCHECKED,
@@ -27,6 +29,7 @@ export default function createOption(
   const option = document.createElement('button');
   option.className = 'option';
   option.setAttribute('type', 'button');
+  option.setAttribute('value', optionValue);
 
   let checkbox = null;
   if (shouldShowCheckbox) {
@@ -55,8 +58,16 @@ export default function createOption(
   });
 
   option.addEventListener('click', () => {
+    if (checkbox) {
+      checkbox?.click();
+    } else {
+      option.classList.toggle('selected');
+    }
+  });
+
+  checkbox?.addEventListener('click', (e) => {
+    e.stopPropagation();
     option.classList.toggle('selected');
-    checkbox?.click();
   });
 
   return optionContainer;
