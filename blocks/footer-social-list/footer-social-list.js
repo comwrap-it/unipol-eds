@@ -9,6 +9,8 @@ export default function decorate(block) {
   rows.forEach((row) => {
     const firstCol = row.children[0];
     const secondCol = row.children[1];
+    console.log(firstCol);
+    console.log(secondCol);
 
     const picture = firstCol?.querySelector('picture');
     const linkEl = secondCol?.querySelector('a');
