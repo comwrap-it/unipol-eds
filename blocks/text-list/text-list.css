@@ -1,20 +1,3 @@
-.text-list-link-light {
-    color: #F9F9F7; /* cambiare */
-}
-
-.text-list-link-dark {
-    color: #001C35; /* cambiare */
-}
-
-.text-list-title-light {
-    color: #F9F9F7; /* cambiare */
-}
-
-.text-list-title-dark {
-    color: #001C35; /* cambiare */
-}
-
-.text-list-wrapper,
 .text-list-wrapper a {
     text-decoration: none;
 }
