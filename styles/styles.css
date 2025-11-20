@@ -180,12 +180,14 @@ main .section.text-block-container.number-block-container.bg-white {
     font-family: var(--Family-Font-2);
 }
 
-.section.footer-download-link-container {
-    padding-bottom: 80px; /* var(--Space-1000-80) */
+.section.text-list-container.footer-download-link-container {
+    height: 270px;
 }
 
 .section.footer-privacy-link-list-container.footer-social-list-container {
     border-bottom: 1px solid #63727D;
+    padding-top: 80px; /* var(--Space-1000-80) */
+    padding-bottom: 24px; /* var(--Space-400-24) */
 }
 
 .section.text-list-container.footer-download-link-container,

@@ -1,3 +1,4 @@
 .footer-text {
     color: #A4AFB7; /* var(--Text-Neutral-Primary); */
+    margin-top: var(--Space-400-24);
 }
