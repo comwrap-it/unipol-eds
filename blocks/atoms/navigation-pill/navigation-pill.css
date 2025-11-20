@@ -2,62 +2,62 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--dimension-space-200-8);
-  padding: var(--dimension-navigation-pill-vertical-padding)
-           var(--dimension-navigation-pill-horizontal-padding);
-  border: var(--border-width-stroke-200-2) solid transparent;
-  border-radius: var(--dimension-navigation-pill-radius);
-  font-size: var(--font-size-14);
-  font-weight: var(--font-weight-semi-bold);
+  gap: var(--Space-200-8);
+  padding: var(--Navigation-Pill-Vertical-Padding)
+           var(--Navigation-Pill-Horizontal-Padding);
+  border: var(--Stroke-200-2) solid transparent;
+  border-radius: var(--Navigation-Pill-Radius);
+  font-size: var(--Text-Styles-Body-Small);
+  font-weight: var(--Weight-Semi-Bold);
   line-height: 1.5;
   text-decoration: none;
   cursor: pointer;
-  font-family: var(--family-font-2, Manrope);
+  font-family: var(--Family-Font-2, Manrope);
   user-select: none;
-  min-height: var(--dimension-space-400-24);
+  min-height: var(--Space-400-24);
   box-sizing: border-box;
 }
 
 /* Primary */
 .navigation-pill-primary {
-  color: var(--color-navigation-pill-primary-default-text);
-  background-color: var(--color-navigation-pill-primary-default-background);
+  color: var(--Navigation-Pill-Primary-Default-Text);
+  background-color: var(--Navigation-Pill-Primary-Default-Background);
 }
 
 /* Hover Status */
 .navigation-pill-primary:hover:not(:disabled) {
-  color: var(--color-navigation-pill-primary-hover-text);
-  background-color: var(--color-navigation-pill-primary-hover-background);
+  color: var(--Navigation-Pill-Primary-Hover-Text);
+  background-color: var(--Navigation-Pill-Primary-Hover-Background);
 }
 
 /* Active Status */
 .navigation-pill-primary:active:not(:disabled) {
-  color: var(--color-navigation-pill-active-text);
-  background-color: var(--color-navigation-pill-active-background);
+  color: var(--Navigation-Pill-Active-Text);
+  background-color: var(--Navigation-Pill-Active-Background);
 }
 
 /* Secondary */
 .navigation-pill-secondary {
-  color: var(--color-navigation-pill-secondary-default-text);
-  background-color: var(--color-navigation-pill-secondary-default-background);
+  color: var(--Navigation-Pill-Secondary-Default-Text);
+  background-color: var(--Navigation-Pill-Secondary-Default-Background);
 }
 
 /* Hover Status */
 .navigation-pill-secondary:hover:not(:disabled) {
-  color: var(--color-navigation-pill-secondary-hover-text);
-  background-color: var(--color-navigation-pill-secondary-hover-background);
+  color: var(--Navigation-Pill-Secondary-Hover-Text);
+  background-color: var(--Navigation-Pill-Secondary-Hover-Background);
 }
 
 /* Active Status */
 .navigation-pill-secondary:active:not(:disabled) {
-  color: var(--color-navigation-pill-active-text);
-  background-color: var(--color-navigation-pill-active-background);
+  color: var(--Navigation-Pill-Active-Text);
+  background-color: var(--Navigation-Pill-Active-Background);
 }
 
 /* Focused Status */
 .navigation-pill:focus,
 .navigation-pill:focus-visible {
-  outline: var(--border-width-stroke-200-2) solid var(--color-border-default-focused);
+  outline: var(--Stroke-200-2) solid var(--Border-Default-Focused);
 }
 
 .navigation-pill-block {

@@ -51,6 +51,9 @@ async function ensureStylesLoaded() {
       `${window.hlx.codeBasePath}/blocks/atoms/checkbox/standard-checkbox/checkbox.css`,
     ),
     loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/navigation-pill/navigation-pill.css`,
+    ),
+    loadCSS(
       `${window.hlx.codeBasePath}/blocks/atoms/3D-icons/3D-icons.css`,
     ),
   ]);
