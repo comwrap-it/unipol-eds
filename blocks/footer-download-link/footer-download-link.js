@@ -27,7 +27,7 @@ export default function decorate(block) {
   if (imgRow3) container1.appendChild(imgRow3.cloneNode(true));
 
   // ================================
-  // Container 2: Row 4 (img) + Row 5 (text)
+  // Container 2: Row 4 (img) + Row 5
   // ================================
   const imgRow4 = rows[4].querySelector(':scope > div')?.firstElementChild;
   const row5Text = rows[5].querySelector(':scope > div')?.textContent.trim();
@@ -45,7 +45,7 @@ export default function decorate(block) {
   container2.appendChild(textSpan);
 
   // ================================
-  // Container 3: Row 6 (img) - <a>  href Row 7
+  // Container 3: Row 6 & Row 7
   // ================================
   const imgRow6 = rows[6].querySelector(':scope > div')?.firstElementChild;
   const row7Href = rows[7].querySelector(':scope > div')?.textContent.trim();
@@ -65,16 +65,10 @@ export default function decorate(block) {
   }
 
   // ================================
-  // Container 4: Row 7 (img) - <a>  href Row 8
+  // Container 4: Row 8 & Row 9
   // ================================
   const imgRow8 = rows[8].querySelector(':scope > div')?.firstElementChild;
   const row9Href = rows[9].querySelector(':scope > div')?.textContent.trim();
-
-  const container4 = document.createElement('div');
-  container4.className = 'footer-store-link-container';
-  container4.style.display = 'flex';
-  container4.style.alignItems = 'center';
-  container4.style.gap = '10px';
 
   if (imgRow8) {
     const link3 = document.createElement('a');
@@ -83,8 +77,23 @@ export default function decorate(block) {
     link3.className = 'footer-link-app-store';
     container3.appendChild(link3);
   }
+
+  // ================================
+  // NEW WRAPPER: container2 + container3
+  // ================================
+  const downloadWrapper = document.createElement('div');
+  downloadWrapper.className = 'footer-link-download-container';
+  downloadWrapper.style.display = 'flex';
+  downloadWrapper.style.flexDirection = 'column';
+  downloadWrapper.style.gap = '10px';
+
+  downloadWrapper.appendChild(container2);
+  downloadWrapper.appendChild(container3);
+
+  // ================================
+  // Append final structure
+  // ================================
   block.innerHTML = '';
   block.appendChild(container1);
-  block.appendChild(container2);
-  block.appendChild(container3);
+  block.appendChild(downloadWrapper);
 }

@@ -1,3 +1,7 @@
+.footer-privacy-link-list-wrapper {
+    margin-right: auto;
+}
+
 .footer-privacy-link-list-wrapper .footer-privacy-link-list {
     display: flex;
 }

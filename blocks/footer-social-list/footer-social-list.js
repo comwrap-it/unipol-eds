@@ -6,7 +6,7 @@ export default function decorate(block) {
   container.style.display = 'flex';
   container.style.gap = '1rem';
 
-  rows.forEach(row => {
+  rows.forEach((row) => {
     const picture = row.querySelector('div:first-child picture');
 
     const linkEl = row.querySelector('div:last-child a');

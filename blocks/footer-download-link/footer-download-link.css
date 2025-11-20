@@ -1,3 +1,11 @@
+.footer-download-link {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: space-between;
+}
+
 .footer-download-link-wrapper {
     margin-left: auto;
 }
