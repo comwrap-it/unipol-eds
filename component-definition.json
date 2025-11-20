@@ -104,7 +104,7 @@
           }
         },
         {
-          "title": "Insurance Product Carousel Widget",
+          "title": "Insurance Product Carousel - Widget",
           "id": "insurance-product-carousel",
           "plugins": {
             "xwalk": {
