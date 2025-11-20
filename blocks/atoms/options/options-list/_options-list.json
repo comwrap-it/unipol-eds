@@ -36,31 +36,14 @@
       "id": "option",
       "fields": [
         {
-          "component": "select",
-          "name": "type",
-          "label": "Type",
-          "value": "unchecked",
-          "options": [
+          "component": "container",
+          "name": "option-checkbox-container",
+          "label": "Configurazione Option Checkbox",
+          "fields": [
             {
-              "name": "Unchecked",
-              "value": "unchecked"
-            },
-            {
-              "name": "Checked",
-              "value": "checked"
-            },
-            {
-              "name": "Indeterminate",
-              "value": "indeterminate"
+              "...": "../../checkbox/standard-checkbox/_checkbox.json#/models/checkbox/fields"
             }
           ]
-        },
-        {
-          "component": "switch",
-          "name": "disabled",
-          "label": "Disabled",
-          "description": "Toggle to disable the checkbox",
-          "value": false
         },
         {
           "component": "text",
