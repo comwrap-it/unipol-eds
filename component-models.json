@@ -337,8 +337,15 @@
             ]
           },
           {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          },
+          {
             "component": "select",
             "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
             "label": "Size",
             "value": "medium",
             "options": [
@@ -361,17 +368,16 @@
             ]
           },
           {
-            "component": "aem-content",
-            "name": "standardButtonHref",
-            "label": "Link URL",
-            "description": "Optional URL to make this a link button"
-          },
-          {
             "component": "select",
             "name": "standardButtonLeftIcon",
             "label": "Left Icon",
             "description": "Select the left icon",
+            "value": "",
             "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
               {
                 "name": "Chevron Left",
                 "value": "chevron-left-icon"
@@ -391,7 +397,12 @@
             "name": "standardButtonRightIcon",
             "label": "Right Icon",
             "description": "Select the right icon",
+            "value": "",
             "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
               {
                 "name": "Chevron Left",
                 "value": "chevron-left-icon"
@@ -501,72 +512,107 @@
             "required": true
           },
           {
-            "component": "switch",
-            "name": "linkButtonShowLeftIcon",
-            "label": "Show Left Icon",
-            "description": "Toggle to display a left icon",
-            "value": false
+            "component": "select",
+            "name": "linkButtonLeftIcon",
+            "label": "Link Button Left Icon",
+            "description": "Optional icon on the left",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right"
+              },
+              {
+                "name": "Search",
+                "value": "search-icon"
+              }
+            ]
           },
           {
-            "component": "switch",
-            "name": "linkButtonShowRightIcon",
-            "label": "Show Right Icon",
-            "description": "Toggle to display a right icon",
-            "value": false
+            "component": "select",
+            "name": "linkButtonRightIcon",
+            "label": "Right Button Right Icon",
+            "description": "Optional icon on the right",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right"
+              },
+              {
+                "name": "Search",
+                "value": "search-icon"
+              }
+            ]
           },
           {
             "component": "select",
             "name": "linkButtonLeftIconSize",
-            "label": "Left Icon Size",
-            "if": {
-              "linkButtonShowLeftIcon": true
-            },
-            "value": "m",
+            "label": "Size",
+            "value": "medium",
             "options": [
               {
                 "name": "Small",
-                "value": "s"
+                "value": "small"
               },
               {
                 "name": "Medium",
-                "value": "m"
+                "value": "medium"
               },
               {
                 "name": "Large",
-                "value": "l"
+                "value": "large"
               },
               {
-                "name": "ExtraLarge",
-                "value": "xl"
+                "name": "Extra Large",
+                "value": "extra-large"
               }
             ]
           },
           {
             "component": "select",
             "name": "linkButtonRightIconSize",
-            "label": "Right Icon Size",
-            "if": {
-              "linkButtonShowRightIcon": true
-            },
-            "value": "m",
+            "label": "Size",
+            "value": "medium",
             "options": [
               {
                 "name": "Small",
-                "value": "s"
+                "value": "small"
               },
               {
                 "name": "Medium",
-                "value": "m"
+                "value": "medium"
               },
               {
                 "name": "Large",
-                "value": "l"
+                "value": "large"
               },
               {
-                "name": "ExtraLarge",
-                "value": "xl"
+                "name": "Extra Large",
+                "value": "extra-large"
               }
             ]
+          },
+          {
+            "component": "switch",
+            "name": "linkButtonDisabled",
+            "label": "Disabled",
+            "description": "Toggle to disable the link button",
+            "value": false
           }
         ]
       },
@@ -1085,8 +1131,15 @@
             ]
           },
           {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          },
+          {
             "component": "select",
             "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
             "label": "Size",
             "value": "medium",
             "options": [
@@ -1109,17 +1162,16 @@
             ]
           },
           {
-            "component": "aem-content",
-            "name": "standardButtonHref",
-            "label": "Link URL",
-            "description": "Optional URL to make this a link button"
-          },
-          {
             "component": "select",
             "name": "standardButtonLeftIcon",
             "label": "Left Icon",
             "description": "Select the left icon",
+            "value": "",
             "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
               {
                 "name": "Chevron Left",
                 "value": "chevron-left-icon"
@@ -1139,7 +1191,12 @@
             "name": "standardButtonRightIcon",
             "label": "Right Icon",
             "description": "Select the right icon",
+            "value": "",
             "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
               {
                 "name": "Chevron Left",
                 "value": "chevron-left-icon"

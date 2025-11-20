@@ -96,7 +96,7 @@
   "filters": [{
     "id": "options-list",
     "components": [
-      "option"
+      "unipol-option"
     ]
   }]
 }
