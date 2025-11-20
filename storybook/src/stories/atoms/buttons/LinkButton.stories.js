@@ -2,8 +2,9 @@ import { fn } from 'storybook/test';
 import { html } from 'lit';
 
 // Import EDS Link Button components
-import { createLinkButton, ICON_SIZES } from '@blocks/atoms/buttons/link-button/link-button.js';
-// CSS imported globally in preview.js
+import { createLinkButton } from '@blocks/atoms/buttons/link-button/link-button.js';
+import { BUTTON_BUTTON_ICON_SIZES } from '@blocks/atoms/buttons/standard-button/standard-button.js';
+// CSS imported globally in preview-head.html
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 export default {
@@ -63,8 +64,8 @@ export default {
     href: '#',
     showLeftIcon: false,
     showRightIcon: false,
-    leftIconSize: ICON_SIZES.M,
-    rightIconSize: ICON_SIZES.M,
+    leftIconSize: BUTTON_ICON_SIZES.M,
+    rightIconSize: BUTTON_ICON_SIZES.M,
     disabled: false
   },
 };
@@ -111,7 +112,7 @@ export const WithLeftIcon = {
     label: 'Link with Left Icon',
     href: 'https://example.com',
     showLeftIcon: true,
-    leftIconSize: ICON_SIZES.M,
+    leftIconSize: BUTTON_ICON_SIZES.M,
   },
   parameters: {
     docs: {
@@ -127,7 +128,7 @@ export const WithRightIcon = {
     label: 'Link with Right Icon',
     href: 'https://example.com',
     showRightIcon: true,
-    rightIconSize: ICON_SIZES.M,
+    rightIconSize: BUTTON_ICON_SIZES.M,
   },
   parameters: {
     docs: {
@@ -144,8 +145,8 @@ export const WithBothIcons = {
     href: 'https://example.com',
     showLeftIcon: true,
     showRightIcon: true,
-    leftIconSize: ICON_SIZES.M,
-    rightIconSize: ICON_SIZES.M,
+    leftIconSize: BUTTON_ICON_SIZES.M,
+    rightIconSize: BUTTON_ICON_SIZES.M,
   },
   parameters: {
     docs: {
@@ -162,7 +163,7 @@ export const LeftIconSmall = {
     label: 'Small Left Icon',
     href: 'https://example.com',
     showLeftIcon: true,
-    leftIconSize: ICON_SIZES.S,
+    leftIconSize: BUTTON_ICON_SIZES.S,
   },
 };
 
@@ -171,7 +172,7 @@ export const LeftIconMedium = {
     label: 'Medium Left Icon',
     href: 'https://example.com',
     showLeftIcon: true,
-    leftIconSize: ICON_SIZES.M,
+    leftIconSize: BUTTON_ICON_SIZES.M,
   },
 };
 
@@ -180,7 +181,7 @@ export const LeftIconLarge = {
     label: 'Large Left Icon',
     href: 'https://example.com',
     showLeftIcon: true,
-    leftIconSize: ICON_SIZES.L,
+    leftIconSize: BUTTON_ICON_SIZES.L,
   },
 };
 
@@ -189,7 +190,7 @@ export const LeftIconExtraLarge = {
     label: 'XL Left Icon',
     href: 'https://example.com',
     showLeftIcon: true,
-    leftIconSize: ICON_SIZES.XL,
+    leftIconSize: BUTTON_ICON_SIZES.XL,
   },
 };
 
@@ -199,7 +200,7 @@ export const RightIconSmall = {
     label: 'Small Right Icon',
     href: 'https://example.com',
     showRightIcon: true,
-    rightIconSize: ICON_SIZES.S,
+    rightIconSize: BUTTON_ICON_SIZES.S,
   },
 };
 
@@ -208,7 +209,7 @@ export const RightIconMedium = {
     label: 'Medium Right Icon',
     href: 'https://example.com',
     showRightIcon: true,
-    rightIconSize: ICON_SIZES.M,
+    rightIconSize: BUTTON_ICON_SIZES.M,
   },
 };
 
@@ -217,7 +218,7 @@ export const RightIconLarge = {
     label: 'Large Right Icon',
     href: 'https://example.com',
     showRightIcon: true,
-    rightIconSize: ICON_SIZES.L,
+    rightIconSize: BUTTON_ICON_SIZES.L,
   },
 };
 
@@ -226,7 +227,7 @@ export const RightIconExtraLarge = {
     label: 'XL Right Icon',
     href: 'https://example.com',
     showRightIcon: true,
-    rightIconSize: ICON_SIZES.XL,
+    rightIconSize: BUTTON_ICON_SIZES.XL,
   },
 };
 
@@ -235,9 +236,9 @@ export const AllIconConfigurations = {
   render: () => html`
     <div style="display: flex; flex-direction: column; gap: 1rem;">
       ${createLinkButton('No Icons', 'https://example.com', false, false)}
-      ${createLinkButton('Left Icon Only', 'https://example.com', true, false, ICON_SIZES.M)}
-      ${createLinkButton('Right Icon Only', 'https://example.com', false, true, ICON_SIZES.M, ICON_SIZES.M)}
-      ${createLinkButton('Both Icons', 'https://example.com', true, true, ICON_SIZES.M, ICON_SIZES.M)}
+      ${createLinkButton('Left Icon Only', 'https://example.com', true, false, BUTTON_ICON_SIZES.M)}
+      ${createLinkButton('Right Icon Only', 'https://example.com', false, true, BUTTON_ICON_SIZES.M, BUTTON_ICON_SIZES.M)}
+      ${createLinkButton('Both Icons', 'https://example.com', true, true, BUTTON_ICON_SIZES.M, BUTTON_ICON_SIZES.M)}
     </div>
   `,
   parameters: {
@@ -253,10 +254,10 @@ export const AllIconConfigurations = {
 export const AllLeftIconSizes = {
   render: () => html`
     <div style="display: flex; flex-direction: column; gap: 1rem;">
-      ${createLinkButton('Small', 'https://example.com', true, false, ICON_SIZES.S)}
-      ${createLinkButton('Medium', 'https://example.com', true, false, ICON_SIZES.M)}
-      ${createLinkButton('Large', 'https://example.com', true, false, ICON_SIZES.L)}
-      ${createLinkButton('Extra Large', 'https://example.com', true, false, ICON_SIZES.XL)}
+      ${createLinkButton('Small', 'https://example.com', true, false, BUTTON_ICON_SIZES.S)}
+      ${createLinkButton('Medium', 'https://example.com', true, false, BUTTON_ICON_SIZES.M)}
+      ${createLinkButton('Large', 'https://example.com', true, false, BUTTON_ICON_SIZES.L)}
+      ${createLinkButton('Extra Large', 'https://example.com', true, false, BUTTON_ICON_SIZES.XL)}
     </div>
   `,
   parameters: {
@@ -272,10 +273,10 @@ export const AllLeftIconSizes = {
 export const AllRightIconSizes = {
   render: () => html`
     <div style="display: flex; flex-direction: column; gap: 1rem;">
-      ${createLinkButton('Small', 'https://example.com', false, true, ICON_SIZES.M, ICON_SIZES.S)}
-      ${createLinkButton('Medium', 'https://example.com', false, true, ICON_SIZES.M, ICON_SIZES.M)}
-      ${createLinkButton('Large', 'https://example.com', false, true, ICON_SIZES.M, ICON_SIZES.L)}
-      ${createLinkButton('Extra Large', 'https://example.com', false, true, ICON_SIZES.M, ICON_SIZES.XL)}
+      ${createLinkButton('Small', 'https://example.com', false, true, BUTTON_ICON_SIZES.M, BUTTON_ICON_SIZES.S)}
+      ${createLinkButton('Medium', 'https://example.com', false, true, BUTTON_ICON_SIZES.M, BUTTON_ICON_SIZES.M)}
+      ${createLinkButton('Large', 'https://example.com', false, true, BUTTON_ICON_SIZES.M, BUTTON_ICON_SIZES.L)}
+      ${createLinkButton('Extra Large', 'https://example.com', false, true, BUTTON_ICON_SIZES.M, BUTTON_ICON_SIZES.XL)}
     </div>
   `,
   parameters: {
@@ -293,29 +294,29 @@ export const CompleteExample = {
     <div style="display: flex; flex-direction: column; gap: 1.5rem; max-width: 400px;">
       <h3>Navigation Links</h3>
       <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-        ${createLinkButton('Go Back', '/previous-page', true, false, ICON_SIZES.M)}
-        ${createLinkButton('Continue', '/next-page', false, true, ICON_SIZES.M, ICON_SIZES.M)}
-        ${createLinkButton('Learn More', 'https://example.com', false, true, ICON_SIZES.M, ICON_SIZES.M)}
+        ${createLinkButton('Go Back', '/previous-page', true, false, BUTTON_ICON_SIZES.M)}
+        ${createLinkButton('Continue', '/next-page', false, true, BUTTON_ICON_SIZES.M, BUTTON_ICON_SIZES.M)}
+        ${createLinkButton('Learn More', 'https://example.com', false, true, BUTTON_ICON_SIZES.M, BUTTON_ICON_SIZES.M)}
       </div>
       
       <h3>Document Links</h3>
       <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-        ${createLinkButton('Download PDF', '/document.pdf', true, false, ICON_SIZES.M)}
-        ${createLinkButton('View Documentation', '/docs', false, true, ICON_SIZES.M, ICON_SIZES.M)}
-        ${createLinkButton('External Resource', 'https://external.com', false, true, ICON_SIZES.M, ICON_SIZES.M)}
+        ${createLinkButton('Download PDF', '/document.pdf', true, false, BUTTON_ICON_SIZES.M)}
+        ${createLinkButton('View Documentation', '/docs', false, true, BUTTON_ICON_SIZES.M, BUTTON_ICON_SIZES.M)}
+        ${createLinkButton('External Resource', 'https://external.com', false, true, BUTTON_ICON_SIZES.M, BUTTON_ICON_SIZES.M)}
       </div>
       
       <h3>Action Links</h3>
       <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-        ${createLinkButton('Read Article', '/article', false, true, ICON_SIZES.M, ICON_SIZES.M)}
-        ${createLinkButton('View All Items', '/items', false, true, ICON_SIZES.M, ICON_SIZES.M)}
-        ${createLinkButton('Contact Support', '/support', true, false, ICON_SIZES.M)}
+        ${createLinkButton('Read Article', '/article', false, true, BUTTON_ICON_SIZES.M, BUTTON_ICON_SIZES.M)}
+        ${createLinkButton('View All Items', '/items', false, true, BUTTON_ICON_SIZES.M, BUTTON_ICON_SIZES.M)}
+        ${createLinkButton('Contact Support', '/support', true, false, BUTTON_ICON_SIZES.M)}
       </div>
       
       <h3>Disabled State</h3>
       <div style="display: flex; flex-direction: column; gap: 0.5rem;">
-        ${createLinkButton('Disabled Link', '#', false, false, ICON_SIZES.M, ICON_SIZES.M, true)}
-        ${createLinkButton('Disabled with Icon', '#', false, true, ICON_SIZES.M, ICON_SIZES.M, true)}
+        ${createLinkButton('Disabled Link', '#', false, false, BUTTON_ICON_SIZES.M, BUTTON_ICON_SIZES.M, true)}
+        ${createLinkButton('Disabled with Icon', '#', false, true, BUTTON_ICON_SIZES.M, BUTTON_ICON_SIZES.M, true)}
       </div>
     </div>
   `,
