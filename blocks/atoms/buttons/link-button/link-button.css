@@ -3,11 +3,11 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: var(--dimension-button-min-width, var(--dimension-space-700-48));
-  min-height: var(--dimension-button-min-height, var(--dimension-space-400-24));
-  color: var(--link-button-link-default-text);
-  font-family: var(--family-font-2, Manrope);
-  font-size: var(--size-16, 16px);
+  min-width: var(--Button-Min-Width, var(--Space-700-48));
+  min-height: var(--Button-Min-Height, var(--Space-400-24));
+  color: var(--Link-Button-Link-Default-Text);
+  font-family: var(--Family-Font-2, Manrope);
+  font-size: var(--Size-16, 16px);
   font-style: normal;
   font-weight: 600;
   line-height: 150%;
@@ -18,33 +18,33 @@
   text-underline-offset: auto;
   text-underline-position: from-font;
   box-sizing: border-box;
-  border: var(--space-0, 0) solid var(--color-link-button-link-default-border, rgb(17 17 17 / 0%));
-  background: var(--color-link-button-link-default-background, rgb(17 17 17 / 0%));
-  border-radius: var(--dimension-button-radius-ghost, var(--border-radius-0));
-  gap: var(--dimension-button-gap, var(--dimension-space-200-8));
+  border: var(--space-0, 0) solid var(--Link-Button-Link-Default-Border);
+  background: var(--Link-Button-Link-Default-Background, rgb(17 17 17 / 0%));
+  border-radius: var(--Button-Radius-Ghost, var(--Border-Radius-0));
+  gap: var(--Button-Gap, var(--Space-200-8));
 }
 
 /* Hover and Pressed state */
 .link-btn:hover,
 .link-btn.pressed {
-  color: var(--color-link-button-link-hover-text);
+  color: var(--Link-Button-Link-Hover-Text);
 }
 
 .link-btn:hover::selection,
 .link-btn.pressed::selection {
-  color: var(--color-link-button-link-pressed-text);
+  color: var(--Link-Button-Link-Pressed-Text);
 }
 
 /* Disabled state */
 .link-btn:disabled,
 .link-btn.disabled {
-  color: var(--color-link-button-link-disabled-text);
+  color: var(--Link-Button-Link-Disabled-Text);
   cursor: not-allowed;
 }
 
 /* Focused state */
 .link-btn:focus,
 .link-btn.focused {
-  outline: 2px solid var(--color-link-button-link-focused-border);
-  border-radius: var(--border-radius-400-24);
+  outline: 2px solid var(--Link-Button-Link-Focused-Border);
+  border-radius: var(--Border-Radius-400-24);
 }
