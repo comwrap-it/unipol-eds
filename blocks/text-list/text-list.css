@@ -1,3 +1,35 @@
+.footer .section.text-list-container h1,
+.footer .section.text-list-container h2,
+.footer .section.text-list-container h3,
+.footer .section.text-list-container h4,
+.footer .section.text-list-container h5,
+.footer .section.text-list-container h6,
+.footer .section.text-list-container p {
+    color: #F9F9F7; /* cambiare */
+}
+
+.footer .section.text-list-container a {
+    color: #F9F9F7; /* cambiare */
+}
+
+.section.text-list-container h1,
+.section.text-list-container h2,
+.section.text-list-container h3,
+.section.text-list-container h4,
+.section.text-list-container h5,
+.section.text-list-container h6,
+.section.text-list-container p {
+    color: black; /* cambiare */
+}
+
+.section.text-list-container a {
+    color: red; /* cambiare */
+}
+
+.section.text-list-container.footer-download-link-container a {
+    color: #F9F9F7; /* cambiare */
+}
+
 .text-list-wrapper a {
     text-decoration: none;
 }

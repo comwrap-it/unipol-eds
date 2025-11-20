@@ -170,8 +170,9 @@ main .section.footer-text-container {
     margin-bottom: 40px;
 }
 
-.section.text-list-container.footer-download-link-container,
-.section.footer-privacy-link-list-container.footer-social-list-container,
+.section.footer-download-link-container,
+.section.footer-privacy-link-list-container,
+.section.footer-social-list-container,
 .section.footer-text-container
 .footer-text p{
     background-color: var(--color-background-default-tertiary);
@@ -179,22 +180,8 @@ main .section.footer-text-container {
     font-family: var(--Family-Font-2);
 }
 
-.section.text-list-container.footer-download-link-container {
+.section.footer-download-link-container {
     padding-bottom: 80px; /* var(--Space-1000-80) */
-}
-
-.section.text-list-container.footer-download-link-container h1,
-.section.text-list-container.footer-download-link-container h2,
-.section.text-list-container.footer-download-link-container h3,
-.section.text-list-container.footer-download-link-container h4,
-.section.text-list-container.footer-download-link-container h5,
-.section.text-list-container.footer-download-link-container h6,
-.section.text-list-container.footer-download-link-container p {
-    color: #F9F9F7; /* cambiare */
-}
-
-.section.text-list-container.footer-download-link-container a {
-    color: #F9F9F7; /* cambiare */
 }
 
 .section.footer-privacy-link-list-container.footer-social-list-container {

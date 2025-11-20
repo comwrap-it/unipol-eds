@@ -17,4 +17,20 @@ export default async function decorate(block) {
   while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
 
   block.append(footer);
+(function wrapFooterTextLists() {
+  const section = footer.querySelector('.section.text-list-container.footer-download-link-container');
+  if (!section) return;
+
+  const wrappers = Array.from(section.querySelectorAll(':scope > .text-list-wrapper'));
+  if (!wrappers.length) return;
+
+  const container = document.createElement('div');
+  container.className = 'footer-text-list-container';
+
+  section.insertBefore(container, wrappers[0]);
+
+  wrappers.forEach(w => container.appendChild(w));
+})();
+
+
 }
