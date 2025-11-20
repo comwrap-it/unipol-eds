@@ -37,8 +37,8 @@
       "fields": [
         {
           "component": "boolean",
-          "label": "Mostra Testo o  Link",
-          "description": "Attivo: mostra un Titolo/ Testo. Disattivo: mostra un link.",
+          "label": "Mostra Testo o Link",
+          "description": "Attivo: mostra la configurazione Titolo/ Testo. Disattivo: mostra la configurazione link.",
           "name": "hideTextLinkList",
           "valueType": "boolean"
         },
