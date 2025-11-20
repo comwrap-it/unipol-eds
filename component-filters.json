@@ -27,6 +27,12 @@
     "components": []
   },
   {
+    "id": "insurance-product-carousel",
+    "components": [
+      "insurance-product-card"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"

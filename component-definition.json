@@ -102,6 +102,28 @@
               }
             }
           }
+        },
+        {
+          "title": "Insurance Product Carousel Widget",
+          "id": "insurance-product-carousel",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {
+                  "filter": "insurance-product-carousel",
+                  "name": "Insurance Product Carousel Widget",
+                  "model": "insurance-product-carousel",
+                  "style": "insurance-product-carousel",
+                  "text-block": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Text Block",
+                    "model": "text-block"
+                  }
+                }
+              }
+            }
+          }
         }
       ]
     },
