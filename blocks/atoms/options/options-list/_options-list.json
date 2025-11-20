@@ -37,23 +37,43 @@
             "fields": [
                 {
                     "component": "container",
-                    "name": "options-list-option-container",
-                    "label": "Config Options List's Option",
+                    "name": "option-checkbox-container",
+                    "label": "Configurazione Option Checkbox",
                     "fields": [
                         {
-                            "...": "../../options/option/_option.json#/models/option/fields"
+                            "...": "../../checkbox/standard-checkbox/_checkbox.json#/models/checkbox/fields"
                         }
                     ]
+                },
+                {
+                    "component": "text",
+                    "name": "label",
+                    "label": "Label",
+                    "value": "Label",
+                    "required": true
+                },
+                {
+                    "component": "text",
+                    "name": "description",
+                    "label": "Description",
+                    "value": "Description"
+                },
+                {
+                    "component": "switch",
+                    "name": "showCheckbox",
+                    "label": "Show Checkbox",
+                    "description": "Toggle to show or hide the checkbox",
+                    "value": false
                 }
             ]
         }
     ],
     "filters": [
-    {
-      "id": "options",
-      "components": [
-        "option"
-      ]
-    }
-  ]
+        {
+            "id": "options",
+            "components": [
+                "option"
+            ]
+        }
+    ]
 }
