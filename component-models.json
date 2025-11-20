@@ -1216,6 +1216,24 @@
             false
           ]
         }
+      },
+      {
+        "component": "select",
+        "name": "style",
+        "value": "",
+        "label": "Colore del testo",
+        "description": "Cambia il colore del testo da chiaro a scuro",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Chiaro",
+            "value": "text-list-light"
+          },
+          {
+            "name": "Scuro",
+            "value": "text-list-dark"
+          }
+        ]
       }
     ]
   }

@@ -166,16 +166,21 @@ main .section.text-block-container.number-block-container.bg-white {
     background-color: var(--color-neutral-50);
 }
 
+main .section.footer-text-container {
+    margin-bottom: 40px;
+}
+
 .section.text-list-container.footer-download-link-container,
 .section.footer-privacy-link-list-container.footer-social-list-container,
 .section.footer-text-container
 .footer-text p{
     background-color: var(--color-background-default-tertiary);
     margin: 0;
+    font-family: var(--Family-Font-2);
 }
 
 .section.text-list-container.footer-download-link-container {
-    margin-bottom: 80px; /* var(--Space-1000-80) */
+    padding-bottom: 80px; /* var(--Space-1000-80) */
 }
 
 .section.footer-privacy-link-list-container.footer-social-list-container {

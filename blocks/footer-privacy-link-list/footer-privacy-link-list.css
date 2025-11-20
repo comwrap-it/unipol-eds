@@ -1,4 +1,8 @@
 .footer-privacy-link-list-wrapper .footer-privacy-link-list {
     display: flex;
+}
+
+.footer-privacy-link-list-wrapper .footer-privacy-link-list a {
     color: #F9F9F7; /* cambiare */
+    text-decoration: none;
 }
