@@ -1,0 +1,73 @@
+{
+  "definitions": [
+    {
+      "title": "Button Group",
+      "id": "button-group",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Button Group",
+              "model": "button-group"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "button-group",
+      "fields": [
+        {
+          "component": "select",
+          "name": "buttonGroupVariant",
+          "label": "Button Group Variant",
+          "value": "primary-horizontal",
+          "options": [
+            {
+              "name": "Primary Horizontal",
+              "value": "primary-horizontal"
+            },
+            {
+              "name": "Primary Vertical",
+              "value": "primary-vertical"
+            },
+            {
+              "name": "Accent Horizontal",
+              "value": "accent-horizontal"
+            },
+            {
+              "name": "Accent Vertical",
+              "value": "accent-vertical"
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "button-1-container",
+          "label": "First Button Configuration",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "button-2-container",
+          "label": "Second Button Configuration",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

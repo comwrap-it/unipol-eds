@@ -1,0 +1,30 @@
+/**
+ * Mini Banner Styles
+ *
+ * Container with title and button-group
+ */
+
+.mini-banner {
+  display: flex;
+  width: 26.75rem;
+  padding: var(--Mini-Banner-Vertical-Padding) var(--Mini-Banner-Horizontal-Padding);
+  flex-direction: column;
+  align-items: center;
+  gap: var(--Mini-Banner-Gap);
+  background-color: var(--Mini-Banner-Background);
+  border-radius: var(--Mini-Banner-Radius);
+}
+
+.mini-banner .title {
+  color: var(--Mini-Banner-Text);
+  text-align: center;
+  margin: 0;
+}
+
+/* Responsive - Mobile */
+@media (width <= 768px) {
+  .mini-banner {
+    gap: var(--Mini-Banner-Gap-M);
+    padding: var(--Mini-Banner-Vertical-Padding-M) var(--Mini-Banner-Horizontal-Padding-M);
+  }
+}

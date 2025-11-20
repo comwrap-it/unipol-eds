@@ -12,6 +12,7 @@ import { createTextfield } from '../atoms/inputs/textfield/textfield.js';
 import createOption from '../atoms/options/option/option.js';
 import { createOptionsList } from '../atoms/options/options-list/options-list.js';
 import { createTag } from '../atoms/tag/tag.js';
+import { createButtonGroup } from '../molecules/button-group/button-group.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -43,6 +44,12 @@ async function ensureStylesLoaded() {
     ),
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/atoms/checkbox/standard-checkbox/checkbox.css`,
+    ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/molecules/button-group/button-group.css`,
+    ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/molecules/banners/mini-banner/mini-banner.css`,
     ),
   ]);
   isStylesLoaded = true;
@@ -220,6 +227,37 @@ export default async function decorate(block) {
   const optionsList = createOptionsList(optionsData);
   optionsListContainer.appendChild(optionsList);
   testButtons.appendChild(optionsListContainer);
+
+  // create mini banner (rows 24-37)
+  // Mini banner structure:
+  // row[24]: title
+  // row[25]: buttonGroupVariant
+  // rows[26-31]: button 1 (label, variant, href, size, leftIcon, rightIcon)
+  // rows[32-37]: button 2 (label, variant, href, size, leftIcon, rightIcon)
+  const miniBannerContainer = document.createElement('div');
+  miniBannerContainer.style = 'width: 100%; display: flex; justify-content: center; margin-top: 40px;';
+
+  // Create mini banner wrapper
+  const miniBanner = document.createElement('div');
+  miniBanner.className = 'mini-banner';
+
+  // Mini banner title
+  const miniBannerTitle = document.createElement('h3');
+  miniBannerTitle.className = 'title';
+  miniBannerTitle.textContent = rows[24]?.textContent?.trim() || 'Mini Banner Title';
+  miniBanner.appendChild(miniBannerTitle);
+
+  // Create button group for mini banner
+  const buttonGroupRows = rows.slice(25, 38); // 13 rows for button group
+  if (buttonGroupRows.length > 0 && buttonGroupRows[0]?.textContent?.trim()) {
+    const buttonGroup = createButtonGroup(buttonGroupRows);
+    if (buttonGroup) {
+      miniBanner.appendChild(buttonGroup);
+    }
+  }
+
+  miniBannerContainer.appendChild(miniBanner);
+  testButtons.appendChild(miniBannerContainer);
 
   // Clear block and append test buttons
   block.textContent = '';

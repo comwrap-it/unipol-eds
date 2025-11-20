@@ -79,6 +79,17 @@
               "...": "../atoms/tag/_tag.json#/models/tag/fields"
             }
           ]
+        },
+        {
+          "component": "container",
+          "name": "test-mini-banner-container",
+          "label": "Configurazione Mini Banner",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../molecules/banners/mini-banner/_mini-banner.json#/models/mini-banner/fields"
+            }
+          ]
         }
       ]
     }

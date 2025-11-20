@@ -1,0 +1,23 @@
+/**
+ * Button Group Styles
+ *
+ * Container for 2 buttons with horizontal or vertical layout
+ */
+
+.button-group {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Horizontal variant (default) */
+.button-group.horizontal {
+  flex-direction: row;
+  gap: var(--Button-Group-Horizontal-Gap);
+  padding: var(--Button-Group-Horizontal-Padding);
+}
+
+/* Vertical variant */
+.button-group.vertical {
+  flex-direction: column;
+  gap: var(--Button-Group-Vertical-Gap);
+}

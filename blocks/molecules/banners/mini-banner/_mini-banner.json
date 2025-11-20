@@ -1,0 +1,44 @@
+{
+  "definitions": [
+    {
+      "title": "Mini Banner",
+      "id": "mini-banner",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Mini Banner",
+              "model": "mini-banner"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "mini-banner",
+      "fields": [
+        {
+          "component": "text",
+          "name": "miniBannerTitle",
+          "label": "Title",
+          "required": true
+        },
+        {
+          "component": "container",
+          "name": "button-group-container",
+          "label": "Button Group Configuration",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../../../molecules/button-group/_button-group.json#/models/button-group/fields"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
