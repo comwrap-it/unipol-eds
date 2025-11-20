@@ -1,3 +1,7 @@
+.footer-download-link-wrapper {
+    margin-left: auto;
+}
+
 .footer-download-link .footer-download-link-container {
     color: #F9F9F7; /* cambiare */
 }
@@ -5,5 +9,3 @@
 .footer-download-link-wrapper .footer-unipol-button-container a {
     color:  #F9F9F7; /*  var(--Text-Default-Primary); */
 }
-
-

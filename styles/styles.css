@@ -166,17 +166,16 @@ main .section.text-block-container.number-block-container.bg-white {
     background-color: var(--color-neutral-50);
 }
 
-/* section Unipol footer */
+/* Section Unipol footer */
 .section.footer-download-link-container,
 .section.footer-privacy-link-list-container,
 .section.footer-social-list-container,
 .section.footer-text-container,
-.footer-text p{
+.footer-text p {
     background-color: var(--color-background-default-tertiary);
     margin: 0;
     font-family: var(--Family-Font-2);
 }
-
 
 main .section.footer-text-container {
     margin-bottom: 40px;
@@ -187,7 +186,7 @@ main .section.footer-text-container {
 }
 
 .section.footer-privacy-link-list-container.footer-social-list-container {
-    border-bottom: 1px solid #63727D; /*  var(--Grayscale-700); */
+    border-bottom: 1px solid #63727D;
 }
 
 .section.text-list-container.footer-download-link-container,
@@ -203,12 +202,38 @@ main .section.footer-text-container {
 .section.text-list-container h4,
 .section.text-list-container h5,
 .section.text-list-container h6,
-.section.text-list-container p {
-    color: #001C35; /* cambiare */
+.section.text-list-container p,
+.section.text-list-container a,
+.section.text-list-container p.button-container {
+    padding: 0;
+    margin: 0;
 }
 
-.section.text-list-container a {
-    color: #001C35; /* cambiare */
+.section.text-list-container h1,
+.section.text-list-container h2,
+.section.text-list-container h3,
+.section.text-list-container h4,
+.section.text-list-container h5,
+.section.text-list-container h6,
+.section.text-list-container p {
+    margin-bottom: 16px; /* var(--dimension-space-300-16) */
+}
+
+.section.text-list-container a,
+.section.text-list-container p.button-container {
+    margin-bottom: 8px; /* var(--dimension-space-200-8) */
+}
+
+.section.text-list-container h1,
+.section.text-list-container h2,
+.section.text-list-container h3,
+.section.text-list-container h4,
+.section.text-list-container h5,
+.section.text-list-container h6,
+.section.text-list-container p,
+.section.text-list-container a,
+.section.text-list-container p.button-container {
+    color: #001C35;
 }
 
 .section.text-list-container.footer-download-link-container h1,
@@ -217,10 +242,8 @@ main .section.footer-text-container {
 .section.text-list-container.footer-download-link-container h4,
 .section.text-list-container.footer-download-link-container h5,
 .section.text-list-container.footer-download-link-container h6,
-.section.text-list-container.footer-download-link-container p {
-    color: #F9F9F7; /* cambiare */
-}
-
-.section.text-list-container.footer-download-link-container a {
-    color: #F9F9F7; /* cambiare */
+.section.text-list-container.footer-download-link-container p,
+.section.text-list-container.footer-download-link-container a,
+.section.text-list-container.footer-download-link-container p.button-container {
+    color: #F9F9F7;
 }

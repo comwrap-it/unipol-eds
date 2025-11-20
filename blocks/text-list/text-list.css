@@ -1,3 +1,12 @@
+.text-list-wrapper {
+    width: 220px;
+}
+
+.text-list-wrapper p {
+    margin: 0;
+    padding: 0;
+}
+
 .text-list-wrapper a {
     text-decoration: none;
 }
