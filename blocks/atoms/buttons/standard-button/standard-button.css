@@ -19,6 +19,15 @@
     box-sizing: border-box;
     user-select: none;
 }
+/* stylelint-disable no-descending-specificity */
+
+/*
+ * I apply the above rule because Button variant classes (e.g., .btn-primary,
+ * .btn-accent, .btn-secondary) are mutually exclusive. With nesting (`& .icon`),
+ * Stylelint expands selectors like `.btn-primary:hover .icon` and treats later
+ * base rules as descending specificity. Since a button can't have multiple
+ * variants at once, these warnings are false positives.
+ */
 
 /* Primary Variant */
 .btn-primary {
@@ -26,14 +35,31 @@
     color: var(--color-button-primary-default-text);
     border-color: var(--color-button-primary-default-border);
 
+    & .icon {
+        color: var(--color-button-primary-default-icon-color);
+    }
+
+    /* Focus state */
+    &:focus-visible,
+    &:focus {
+        outline: var(--border-width-stroke-200-2) solid
+            var(--color-button-primary-focused-border);
+
+        & .icon {
+            color: var(--color-button-primary-focused-icon-color);
+        }
+    }
+
     /* Disabled state */
     &:disabled {
         background-color: var(--color-button-primary-disabled-background);
         color: var(--color-button-primary-disabled-text);
         cursor: default;
-
-        /* they have a variable for the disabled border color but it doesn't match figma specific --color-button-primary-disabled-border */
         border-color: var(--color-button-primary-disabled-background);
+
+        & .icon {
+            color: var(--color-button-primary-disabled-icon-color);
+        }
     }
 
     /* Hover state */
@@ -41,6 +67,21 @@
         background-color: var(--color-button-primary-hover-background);
         color: var(--color-button-primary-hover-text);
         border-color: var(--color-button-primary-hover-border);
+
+        & .icon {
+            color: var(--color-button-primary-hover-icon-color);
+        }
+    }
+
+    /* Pressed state */
+    &:active:not(:disabled) {
+        background-color: var(--color-button-primary-pressed-background);
+        color: var(--color-button-primary-pressed-text);
+        border-color: var(--color-button-primary-pressed-border);
+
+        & .icon {
+            color: var(--color-button-primary-pressed-icon-color);
+        }
     }
 }
 
@@ -50,12 +91,31 @@
     color: var(--color-button-accent-default-text);
     border-color: var(--color-button-accent-default-border);
 
+    & .icon {
+        color: var(--color-button-accent-default-icon-color);
+    }
+
+    /* Focus state */
+    &:focus-visible,
+    &:focus {
+        outline: var(--border-width-stroke-200-2) solid
+            var(--color-button-accent-focused-border);
+
+        & .icon {
+            color: var(--color-button-accent-focused-icon);
+        }
+    }
+
     /* Disabled state */
     &:disabled {
         background-color: var(--color-button-accent-disabled-background);
         color: var(--color-button-accent-disabled-text);
         border-color: var(--color-button-accent-disabled-border);
         cursor: default;
+
+        & .icon {
+            color: var(--color-button-accent-disabled-icon);
+        }
     }
 
     /* Hover state */
@@ -63,6 +123,21 @@
         background-color: var(--color-button-accent-hover-background);
         color: var(--color-button-accent-hover-text);
         border-color: var(--color-button-accent-hover-border);
+
+        & .icon {
+            color: var(--color-button-accent-hover-icon-color);
+        }
+    }
+
+    /* Pressed state */
+    &:active:not(:disabled) {
+        background-color: var(--color-button-accent-pressed-background);
+        color: var(--color-button-accent-pressed-text);
+        border-color: var(--color-button-accent-pressed-border);
+
+        & .icon {
+            color: var(--color-button-accent-pressed-icon-color);
+        }
     }
 }
 
@@ -72,12 +147,31 @@
     color: var(--color-button-secondary-default-text);
     border-color: var(--color-button-secondary-default-border);
 
+    & .icon {
+        color: var(--color-button-secondary-default-icon);
+    }
+
+    /* Focus state */
+    &:focus-visible,
+    &:focus {
+        outline: var(--border-width-stroke-200-2) solid
+            var(--color-button-secondary-focused-border-default);
+
+        & .icon {
+            color: var(--color-button-secondary-focused-icon);
+        }
+    }
+
     /* Disabled state */
     &:disabled {
         background-color: var(--color-button-secondary-disabled-background);
         color: var(--color-button-secondary-disabled-text);
         border-color: var(--color-button-secondary-disabled-border);
         cursor: default;
+
+        & .icon {
+            color: var(--color-button-secondary-disabled-icon);
+        }
     }
 
     /* Hover state */
@@ -85,18 +179,21 @@
         background-color: var(--color-button-secondary-hover-background);
         color: var(--color-button-secondary-hover-text);
         border-color: var(--color-button-secondary-hover-border);
+
+        & .icon {
+            color: var(--color-button-secondary-hover-icon);
+        }
+    }
+
+    /* Pressed state */
+    &:active:not(:disabled) {
+        background-color: var(--color-button-secondary-pressed-background);
+        color: var(--color-button-secondary-pressed-text);
+        border-color: var(--color-button-secondary-pressed-border);
+
+        & .icon {
+            color: var(--color-button-secondary-pressed-icon);
+        }
     }
 }
-
-/* Focus state for accessibility (generic token) */
-.btn:focus-visible,
-.btn:focus {
-    outline: var(--border-width-stroke-200-2) solid
-        var(--color-border-default-focused);
-}
-
-/* Block wrapper for standalone buttons */
-.button-block {
-    display: block;
-    margin: 1rem 0;
-}
+/* stylelint-enable no-descending-specificity */

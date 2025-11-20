@@ -1,0 +1,57 @@
+{
+  "definitions": [
+    {
+      "title": "Option",
+      "id": "option",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Option",
+              "model": "option"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "option",
+      "fields": [
+        {
+          "component": "container",
+          "name": "option-checkbox-container",
+          "label": "Configurazione Option Checkbox",
+          "fields": [
+            {
+              "...": "../../checkbox/standard-checkbox/_checkbox.json#/models/checkbox/fields"
+            }
+          ]
+        },
+        {
+          "component": "text",
+          "name": "label",
+          "label": "Label",
+          "value": "Label",
+          "required": true
+        },
+        {
+          "component": "text",
+          "name": "description",
+          "label": "Description",
+          "value": "Description"
+        },
+        {
+          "component": "switch",
+          "name": "showCheckbox",
+          "label": "Show Checkbox",
+          "description": "Toggle to show or hide the checkbox",
+          "value": false
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
