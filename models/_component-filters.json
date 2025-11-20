@@ -3,7 +3,8 @@
     "id": "main",
     "components": [
       "section",
-      "kpi-highlights-widget"
+      "kpi-highlights-widget",
+      "insurance-product-carousel"
     ]
   },
   {
