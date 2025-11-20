@@ -92,16 +92,6 @@
         },
         {
           "component": "container",
-          "name": "test-button-container-radio",
-          "label": "Configurazione Radio Button",
-          "fields": [
-            {
-              "...": "../atoms/radio-button/standard-radio-button/_radio-button.json#/models/radio/fields"
-            }
-          ]
-        },
-        {
-          "component": "container",
           "name": "test-button-container-radio-field",
           "label": "Configurazione Radio Button Field",
           "fields": [
