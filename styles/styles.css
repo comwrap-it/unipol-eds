@@ -166,7 +166,6 @@ main .section.text-block-container.number-block-container.bg-white {
     background-color: var(--color-neutral-50);
 }
 
-/* section Unipol Footer */
 .section.text-list-container.footer-download-link-container,
 .section.footer-privacy-link-list-container.footer-social-list-container,
 .section.footer-text-container
@@ -178,4 +177,5 @@ main .section.text-block-container.number-block-container.bg-white {
 .section.text-list-container.footer-download-link-container,
 .section.footer-privacy-link-list-container.footer-social-list-container {
     display: flex;
+    justify-content: space-around;
 }

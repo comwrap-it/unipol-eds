@@ -1,11 +1,12 @@
+/* section Unipol Footer */
 footer {
-  background-color: var(--light-color);
-  font-size: var(--body-font-size-xs);
+    background-color: var(--color-background-default-tertiary);
+    margin: auto;
+    max-width: 100%;
 }
 
 footer .footer > div {
-  margin: auto;
-  max-width: 100%;
+    padding: 48px 64px; /* var(--Space-700-48) var(--Space-900-64); */
 }
 
 footer .footer p {
