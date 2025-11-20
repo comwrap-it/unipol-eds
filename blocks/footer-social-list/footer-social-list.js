@@ -1,31 +1,21 @@
 export default function decorate(block) {
-  const rows = [...block.children];
+  [...block.children].forEach((row) => {
+    const children = [...row.children];
+    const hideTitle = children[0]; // div che contiene <picture>
+    const titleDiv = children[1]; // contiene la URL
 
-  const container = document.createElement('div');
-  container.className = 'footer-social-container';
-  container.style.display = 'flex';
-  container.style.gap = '1rem';
+    const url = titleDiv?.textContent?.trim();
+    const picture = hideTitle.querySelector('picture');
 
-  rows.forEach((row) => {
-    const firstCol = row.children[0];
-    const secondCol = row.children[1];
-    console.log(firstCol);
-    console.log(secondCol);
+    if (!url || !picture) return;
 
-    const picture = firstCol?.querySelector('picture');
-    const linkEl = secondCol?.querySelector('a');
+    const a = document.createElement('a');
+    a.href = url;
 
-    if (picture && linkEl) {
-      const a = document.createElement('a');
-      a.href = linkEl.href;
-      a.title = linkEl.title || '';
-      a.className = 'button';
+    const clonedPicture = picture.cloneNode(true);
+    a.appendChild(clonedPicture);
 
-      a.appendChild(picture.cloneNode(true));
-      container.appendChild(a);
-    }
+    row.innerHTML = '';
+    row.appendChild(a);
   });
-
-  block.innerHTML = '';
-  block.appendChild(container);
 }

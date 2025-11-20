@@ -1,3 +1,7 @@
 .footer-social-list-wrapper {
     margin-left: auto;
 }
+
+.footer-social-list {
+    display: flex;
+}
