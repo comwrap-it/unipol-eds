@@ -38,3 +38,40 @@
     flex-shrink: 0;
     aspect-ratio: 1/1;
 }
+
+/* Tablet Portrait */
+@media (480px <= width < 768px) {
+    .icons-3d {
+        width: 208px;
+        height: 64px;
+    }
+
+    .icons-3d-icon {
+        width: var(--Card-Insurance-Product-Card-Bg-Icon-Size-Tp, 64px);
+        height: 64px;
+        gap: 8px;
+        border-radius: 7999.221px;
+    }
+
+    .icons-3d-icon .icon-img {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+/* Mobile */
+@media (width < 480px) {
+    .icons-3d {
+        width: 258px;
+        height: 80px;
+    }
+
+    .icons-3d-icon {
+        width: var(--Card-Insurance-Product-Card-Bg-Icon-Size, 80px);
+        height: 80px;
+        gap: 10px;
+        flex-shrink: 0;
+        aspect-ratio: 1/1;
+        border-radius: var(--Card-Insurance-Product-Card-Radius-Icon, 9999px);
+    }
+}
