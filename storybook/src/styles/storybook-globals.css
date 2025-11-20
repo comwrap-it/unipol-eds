@@ -1,0 +1,51 @@
+/**
+ * Storybook Global Styles
+ * 
+ * Imports all necessary EDS styles including:
+ * - Design tokens (colors, typography, spacing, etc.)
+ * - Fonts
+ * - Icons
+ * - Base styles
+ */
+
+/* Import all EDS Design Tokens and Base Styles */
+@import url("../../../styles/index.css");
+
+/* Import Fonts */
+@import url("../../../styles/fonts.css");
+
+/* Import Icons */
+@import url("../../../styles/icons.css");
+
+/* Import Base Styles */
+@import url("../../../styles/styles.css");
+
+/* Storybook-specific overrides and utilities */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-family-base, system-ui, -apple-system, sans-serif);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensure Storybook canvas has proper background */
+.sb-show-main {
+  background: var(--color-background-primary, #fff);
+}
+
+/* Story container styling */
+.sb-story {
+  padding: 2rem;
+}
+
+/* Reset for demo purposes */
+* {
+  box-sizing: border-box;
+}
+
+/* Ensure proper rendering of components */
+[hidden] {
+  display: none !important;
+}
+

@@ -10,8 +10,9 @@ import { createCategoryTab } from '../atoms/category-tab/category-tab.js';
 import { createTextarea } from '../atoms/inputs/textarea/textarea.js';
 import { createTextfield } from '../atoms/inputs/textfield/textfield.js';
 import createOption from '../atoms/options/option/option.js';
-import createOptionsList from '../atoms/options/options-list/options-list.js';
+import { createOptionsList } from '../atoms/options/options-list/options-list.js';
 import { createTag } from '../atoms/tag/tag.js';
+import { create3Dicons } from '../atoms/3D-icons/3D-icons.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -43,6 +44,9 @@ async function ensureStylesLoaded() {
     ),
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/atoms/checkbox/standard-checkbox/checkbox.css`,
+    ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/3D-icons/3D-icons.css`,
     ),
   ]);
   isStylesLoaded = true;
@@ -102,11 +106,11 @@ export default async function decorate(block) {
   const testButtons = document.createElement('div');
   testButtons.classList.add('test-buttons');
 
-  // standard button properties
+  // standard button properties (rows 0-5)
   const text = rows[0]?.textContent?.trim() || 'Button';
   const variant = rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-  const iconSize = rows[2]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
-  const href = rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || '';
+  const href = rows[2]?.querySelector('a')?.href || rows[2]?.textContent?.trim() || '';
+  const iconSize = rows[3]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
   const leftIcon = rows[4]?.textContent?.trim() || '';
   const rightIcon = rows[5]?.textContent?.trim() || '';
   // icon button properties
@@ -224,4 +228,37 @@ export default async function decorate(block) {
   // Clear block and append test buttons
   block.textContent = '';
   block.appendChild(testButtons);
+
+  // Create 3D icons
+  const icons3D = create3Dicons(
+    true,
+    true,
+    true,
+  );
+  block.textContent = '';
+  block.appendChild(icons3D);
+
+  // Create 3D icons
+  const icons3D2items = create3Dicons(
+    true,
+    true,
+    false,
+  );
+  block.appendChild(icons3D2items);
+
+  // Create 3D icons
+  const icons3D1items = create3Dicons(
+    true,
+    false,
+    false,
+  );
+  block.appendChild(icons3D1items);
+
+  // Create 3D icons
+  const icons3DpropertyWelfare = create3Dicons(
+    false,
+    true,
+    true,
+  );
+  block.appendChild(icons3DpropertyWelfare);
 }

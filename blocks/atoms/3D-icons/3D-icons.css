@@ -1,0 +1,77 @@
+.icons-3d {
+    display: flex;
+    justify-content: center;
+    width: 260px;
+    height: 83px;
+}
+
+.icons-3d-icon {
+    display: flex;
+    width: var(--dimension-card-insurance-product-card-bg-icon-size, 80px);
+    height: 80px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    aspect-ratio: 1/1;
+    border-radius: var(--border-radius-9999, 9999px);
+}
+
+.icons-3d-icon.icon-mobility {
+    background: var(--color-card-insurance-product-card-background-mobility, #E5F1FF);
+}
+
+.icons-3d-icon.icon-property {
+    background: var(--color-card-insurance-product-card-background-property, #FDEDE7);
+}
+
+.icons-3d-icon.icon-welfare {
+    background: var(--color-card-insurance-product-card-background-welfare, #EBF8E7);
+}
+
+.icons-3d-icon .icon-img {
+    display: flex;
+    width: var(--dimension-card-insurance-product-card-icon-size, 48px);
+    height: 48px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    aspect-ratio: 1/1;
+}
+
+/* Tablet Portrait */
+@media (480px <= width < 768px) {
+    .icons-3d {
+        width: 208px;
+        height: 64px;
+    }
+
+    .icons-3d-icon {
+        width: var(--Card-Insurance-Product-Card-Bg-Icon-Size-Tp, 64px);
+        height: 64px;
+        gap: 8px;
+        border-radius: 7999.221px;
+    }
+
+    .icons-3d-icon .icon-img {
+        width: 32px;
+        height: 32px;
+    }
+}
+
+/* Mobile */
+@media (width < 480px) {
+    .icons-3d {
+        width: 258px;
+        height: 80px;
+    }
+
+    .icons-3d-icon {
+        width: var(--Card-Insurance-Product-Card-Bg-Icon-Size, 80px);
+        height: 80px;
+        gap: 10px;
+        flex-shrink: 0;
+        aspect-ratio: 1/1;
+        border-radius: var(--Card-Insurance-Product-Card-Radius-Icon, 9999px);
+    }
+}

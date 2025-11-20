@@ -10,6 +10,7 @@ module.exports = {
   },
   ignorePatterns: [
     'static/**',
+    'storybook/**',
   ],
   parser: '@babel/eslint-parser',
   parserOptions: {

@@ -7,7 +7,7 @@
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
 
-import { createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
+import { createButtonFromRows } from '../atoms/buttons/standard-button/standard-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 let isPrimaryBtnStyleLoaded = false;
@@ -107,71 +107,18 @@ export default async function decorate(block) {
     }
   }
 
-  // ROW 3 BUTTON CONTAINER
-  // Note: The button fields are nested inside a container in the model
-  const buttonContainerRow = rows[3];
+  // ROWS 3-8: BUTTON FIELDS (from button-container)
+  // Note: Container fields are flattened at the parent level in Universal Editor
+  // The button-container fields are exposed as individual rows starting from row 3
+  // We use the standard-button's createButtonFromRows utility to handle extraction
+  const buttonRows = rows.slice(3, 9); // Extract rows 3-8 for button fields
+  const buttonElement = createButtonFromRows(buttonRows);
 
-  if (buttonContainerRow && buttonContainerRow.textContent?.trim()) {
-    // Check if block has instrumentation (Universal Editor)
-    const hasInstrumentation = buttonContainerRow.hasAttribute('data-aue-resource')
-      || buttonContainerRow.querySelector('[data-aue-resource]')
-      || buttonContainerRow.querySelector('[data-aue-prop]');
-
-    let buttonElement;
-    if (hasInstrumentation) {
-      // Universal Editor structures container fields as child rows
-      // Get child rows from the button container
-      let buttonRows = Array.from(buttonContainerRow.children);
-
-      // If there's a wrapper, get rows from it
-      const containerWrapper = buttonContainerRow.querySelector('.default-content-wrapper');
-      if (containerWrapper) {
-        buttonRows = Array.from(containerWrapper.children);
-      }
-
-      // Extract values from button rows
-      // Following the standard-button model field order:
-      // 0: standardButtonLabel (text)
-      // 1: standardButtonVariant (select)
-      // 2: standardButtonSize (select)
-      // 3: standardButtonHref (aem-content)
-      // 4: standardButtonLeftIcon (select)
-      // 5: standardButtonRightIcon (select)
-      const label = buttonRows[0]?.textContent?.trim() || 'Button';
-      let variant = buttonRows[1]?.textContent?.trim()?.toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-      let size = buttonRows[2]?.textContent?.trim()?.toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
-
-      // For href, check if there's a link element or just text
-      let href = '';
-      if (buttonRows[3]) {
-        const link = buttonRows[3].querySelector('a');
-        href = link?.getAttribute('href')?.replace('.html', '') || buttonRows[3].textContent?.trim() || '';
-      }
-
-      const leftIcon = buttonRows[4]?.textContent?.trim() || '';
-      const rightIcon = buttonRows[5]?.textContent?.trim() || '';
-
-      // Validate variant and size
-      if (!Object.values(BUTTON_VARIANTS).includes(variant)) variant = BUTTON_VARIANTS.PRIMARY;
-      if (!Object.values(BUTTON_ICON_SIZES).includes(size)) size = BUTTON_ICON_SIZES.MEDIUM;
-
-      buttonElement = createButton(label, href, variant, size, leftIcon, rightIcon);
-    } else {
-      // Fallback for content without instrumentation
-      const label = buttonContainerRow.textContent?.trim() || 'Button';
-      const link = buttonContainerRow.querySelector('a');
-      const href = link?.href || '';
-      const variant = BUTTON_VARIANTS.PRIMARY;
-      const size = BUTTON_ICON_SIZES.MEDIUM;
-      buttonElement = createButton(label, href, variant, size, '', '');
-    }
-
-    if (buttonElement) {
-      const buttonContainer = document.createElement('div');
-      buttonContainer.className = 'text-block-button';
-      buttonContainer.appendChild(buttonElement);
-      textContentContainer.appendChild(buttonContainer);
-    }
+  if (buttonElement) {
+    const buttonContainer = document.createElement('div');
+    buttonContainer.className = 'text-block-button';
+    buttonContainer.appendChild(buttonElement);
+    textContentContainer.appendChild(buttonContainer);
   }
 
   // Append the main text container to textBlock
