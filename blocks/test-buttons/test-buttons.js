@@ -5,6 +5,11 @@ import {
   BUTTON_VARIANTS,
   createButton,
 } from '../atoms/buttons/standard-button/standard-button.js';
+import {
+  NAVIGATION_PILL_VARIANTS,
+  NAVIGATION_PILL_ICON_SIZES,
+  createNavigationPill,
+} from '../atoms/navigation-pill/navigation-pill.js';
 import { createCategoryChip } from '../atoms/category-chip/category-chip.js';
 import { createCategoryTab } from '../atoms/category-tab/category-tab.js';
 import { createTextarea } from '../atoms/inputs/textarea/textarea.js';
@@ -44,6 +49,9 @@ async function ensureStylesLoaded() {
     ),
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/atoms/checkbox/standard-checkbox/checkbox.css`,
+    ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/navigation-pill/navigation-pill.css`,
     ),
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/atoms/3D-icons/3D-icons.css`,
@@ -121,10 +129,10 @@ export default async function decorate(block) {
   // link button properties
   const linkText = rows[10]?.textContent?.trim() || 'Link';
   const linkHref = rows[11]?.querySelector('a')?.href || rows[11]?.textContent?.trim() || '#';
-  const showLeftIcon = rows[12]?.textContent?.trim() === 'true';
-  const showRightIcon = rows[13]?.textContent?.trim() === 'true';
-  const leftIconSize = rows[14]?.textContent?.trim().toLowerCase() || 'm';
-  const rightIconSize = rows[15]?.textContent?.trim().toLowerCase() || 'm';
+  const linkLeftIcon = rows[12]?.textContent?.trim() === 'true';
+  const linkRightIcon = rows[13]?.textContent?.trim() === 'true';
+  const leftIconSize = rows[14]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
+  const rightIconSize = rows[15]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
   // category chip properties
   const categoryChipCategory = rows[16]?.textContent?.trim() || '';
   const categoryChipIcon = rows[17]?.textContent?.trim() || '';
@@ -158,8 +166,8 @@ export default async function decorate(block) {
   const linkButton = createLinkButton(
     linkText,
     linkHref,
-    showLeftIcon,
-    showRightIcon,
+    linkLeftIcon,
+    linkRightIcon,
     leftIconSize,
     rightIconSize,
   );
@@ -180,6 +188,18 @@ export default async function decorate(block) {
   // Create tag
   const tag = createTag(tagLabel, tagCategory, tagType);
   testButtons.appendChild(tag);
+
+  // Create Navigation Pill
+  const navigationPill = createNavigationPill(
+    'NavPill',
+    undefined,
+    NAVIGATION_PILL_VARIANTS.SECONDARY,
+    'search-icon',
+    NAVIGATION_PILL_ICON_SIZES.LARGE,
+    'phone-icon',
+    NAVIGATION_PILL_ICON_SIZES.SMALL,
+  );
+  testButtons.appendChild(navigationPill);
 
   // Create textfield
   const textfieldContainer = document.createElement('div');
