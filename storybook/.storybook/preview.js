@@ -1,5 +1,5 @@
-// Import global EDS styles
-import '../src/styles/storybook-globals.css';
+// ALL CSS loaded via preview-head.html as static HTML <link> tags
+// NO CSS imports in JS to avoid Vite transforming them into JS modules
 
 /** @type { import('@storybook/web-components-vite').Preview } */
 const preview = {

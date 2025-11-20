@@ -3,7 +3,7 @@ import { html } from 'lit';
 
 // Import EDS Category Chip components
 import { createCategoryChip } from '@blocks/atoms/category-chip/category-chip.js';
-import '@blocks/atoms/category-chip/category-chip.css';
+// CSS imported globally in preview.js
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 export default {

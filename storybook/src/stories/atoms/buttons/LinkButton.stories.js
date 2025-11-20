@@ -3,7 +3,7 @@ import { html } from 'lit';
 
 // Import EDS Link Button components
 import { createLinkButton, ICON_SIZES } from '@blocks/atoms/buttons/link-button/link-button.js';
-import '@blocks/atoms/buttons/link-button/link-button.css';
+// CSS imported globally in preview.js
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 export default {

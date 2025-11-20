@@ -1,24 +1,10 @@
 /**
- * Storybook Global Styles
+ * Storybook-specific CSS overrides and utilities
  * 
- * Imports all necessary EDS styles including:
- * - Design tokens (colors, typography, spacing, etc.)
- * - Fonts
- * - Icons
- * - Base styles
+ * NOTE: EDS styles (tokens, fonts, icons, base styles, components) 
+ * are imported directly as JS modules in preview.js
+ * This file only contains Storybook-specific overrides
  */
-
-/* Import all EDS Design Tokens and Base Styles */
-@import url("../../../styles/index.css");
-
-/* Import Fonts */
-@import url("../../../styles/fonts.css");
-
-/* Import Icons */
-@import url("../../../styles/icons.css");
-
-/* Import Base Styles */
-@import url("../../../styles/styles.css");
 
 /* Storybook-specific overrides and utilities */
 body {
