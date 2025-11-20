@@ -116,3 +116,15 @@ export function createOptionFromRows(rows) {
     disabled,
   );
 }
+
+export async function decorate(block) {
+  if (!block) return;
+
+  let rows = Array.from(block.children);
+  const wrapper = block.querySelector('.default-content-wrapper');
+  if (wrapper) rows = Array.from(wrapper.children);
+
+  const optionFromRows = createOptionFromRows(rows);
+  block.textContent = '';
+  block.appendChild(optionFromRows);
+}
