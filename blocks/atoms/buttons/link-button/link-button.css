@@ -18,7 +18,7 @@
   text-underline-offset: auto;
   text-underline-position: from-font;
   box-sizing: border-box;
-  border: var(--space-0, 0) solid var(--Link-Button-Link-Default-Border);
+  border: var(--Space-0, 0) solid var(--Link-Button-Link-Default-Border);
   background: var(--Link-Button-Link-Default-Background, rgb(17 17 17 / 0%));
   border-radius: var(--Button-Radius-Ghost, var(--Border-Radius-0));
   gap: var(--Button-Gap, var(--Space-200-8));
@@ -46,5 +46,5 @@
 .link-btn:focus,
 .link-btn.focused {
   outline: 2px solid var(--Link-Button-Link-Focused-Border);
-  border-radius: var(--Border-Radius-400-24);
+  border-radius: var(--Radius-400-24);
 }

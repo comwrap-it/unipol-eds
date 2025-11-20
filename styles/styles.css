@@ -11,6 +11,9 @@
  */
 
 /* Base tokens */
+@import url("./index.css");
+
+/* cssTokens tokens */
 @import url("./cssTokens/string.css");
 @import url("./cssTokens/dimension.css");
 @import url("./cssTokens/border-radius.css");
