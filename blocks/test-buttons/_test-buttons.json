@@ -89,6 +89,26 @@
               "...": "../atoms/navigation-pill/_navigation-pill.json#/models/navigation-pill/fields"
             }
           ]
+        },
+        {
+          "component": "container",
+          "name": "test-button-container-radio",
+          "label": "Configurazione Radio Button",
+          "fields": [
+            {
+              "...": "../atoms/radio-button/standard-radio-button/_radio-button.json#/models/radio/fields"
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "test-button-container-radio-field",
+          "label": "Configurazione Radio Button Field",
+          "fields": [
+            {
+              "...": "../atoms/radio-button/radio-button-field/_radio-button-field.json#/models/radio-button-field/fields"
+            }
+          ]
         }
       ]
     }

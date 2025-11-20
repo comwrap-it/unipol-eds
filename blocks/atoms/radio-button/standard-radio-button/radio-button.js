@@ -1,75 +1,125 @@
-/**
- * Radio - Utility Component
- */
-
 export const RADIO_TYPES = {
-  UNCHECKED: 'unchecked',
   CHECKED: 'checked',
+  UNCHECKED: 'unchecked',
 };
 
 /**
- * Create radio button
+ * Extracts AEM instrumentation attributes
+ */
+export function extractInstrumentationAttributes(element) {
+  const instrumentation = {};
+  if (!element) return instrumentation;
+
+  [...element.attributes].forEach((attr) => {
+    if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-')) {
+      instrumentation[attr.name] = attr.value;
+    }
+  });
+
+  return instrumentation;
+}
+
+/**
+ * Create Radio Element
  *
- * @param {string} typeStatus - "unchecked", "checked"
- * @param {boolean} disabled - disables radio button if true
+ * @param {string} type - "checked" | "unchecked"
+ * @param {boolean} disabled - whether radio is disabled
+ * @param {Object} instrumentation - AEM props
  * @returns {HTMLElement}
  */
-export function createRadio(typeStatus = RADIO_TYPES.UNCHECKED, disabled = false) {
-  let type = typeStatus;
+export function createRadio(type, disabled, instrumentation = {}) {
+  const wrapper = document.createElement('label');
+  wrapper.className = 'radio';
 
-  const wrapper = document.createElement('span');
-  wrapper.className = 'radio-wrapper';
-  wrapper.tabIndex = disabled ? -1 : 0;
+  const input = document.createElement('input');
+  input.type = 'radio';
 
-  const radio = document.createElement('span');
-  radio.className = ['radio', `radio-${type}`].join(' ');
-  radio.setAttribute('role', 'radio');
-  radio.setAttribute('aria-checked', type === RADIO_TYPES.CHECKED);
+  const uniqueId = `radio-${Math.random().toString(36).substring(2, 9)}`;
+  input.id = uniqueId;
+  input.name = 'radio-group';
 
-  if (disabled) {
-    radio.classList.add('disabled');
-    radio.setAttribute('aria-disabled', 'true');
+  if (type === RADIO_TYPES.CHECKED) {
+    input.checked = true;
+    input.classList.add('circle-icon');
   }
 
-  wrapper.appendChild(radio);
-
-  const toggle = () => {
-    if (disabled) return;
-
-    type = (type === RADIO_TYPES.UNCHECKED)
-      ? RADIO_TYPES.CHECKED
-      : RADIO_TYPES.UNCHECKED;
-
-    radio.className = ['radio', `radio-${type}`].join(' ');
-    radio.setAttribute('aria-checked', type === RADIO_TYPES.CHECKED);
-  };
-
-  wrapper.addEventListener('click', toggle);
-  wrapper.addEventListener('keydown', (e) => {
-    if (e.key === ' ' || e.key === 'Enter') {
-      e.preventDefault();
-      toggle();
+  input.addEventListener('change', () => {
+    if (input.checked) {
+      input.classList.add('circle-icon');
+    } else {
+      input.classList.remove('circle-icon');
     }
+  });
+
+  if (disabled) {
+    input.classList.add('custom-disabled');
+    wrapper.style.pointerEvents = 'none';
+  }
+
+  wrapper.appendChild(input);
+
+  Object.entries(instrumentation).forEach(([attr, value]) => {
+    wrapper.setAttribute(attr, value);
   });
 
   return wrapper;
 }
 
 /**
- * Decorate Radio
+ * Reads UE rows and extracts values
+ *
+ * @param {Array<HTMLElement>} rows
+ */
+function extractValuesFromRows(rows) {
+  const type = rows[0]?.textContent?.trim().toLowerCase()
+    || RADIO_TYPES.UNCHECKED;
+
+  const disabled = rows[1]?.textContent?.trim().toLowerCase() === 'true';
+
+  const instrumentation = extractInstrumentationAttributes(rows[0]);
+
+  return {
+    type,
+    disabled,
+    instrumentation,
+  };
+}
+
+/**
+ * Decorator for Radio Button
  *
  * @param {HTMLElement} block
  */
 export default function decorateRadio(block) {
   if (!block) return;
 
-  const rows = Array.from(block.children);
-  const typeStatus = rows[0]?.textContent?.trim() || RADIO_TYPES.UNCHECKED;
-  const disabled = rows[1]?.textContent?.trim() === 'true';
+  let rows = [...block.children];
+  const wrapper = block.querySelector('.default-content-wrapper');
+  if (wrapper) rows = [...wrapper.children];
 
-  const radioElement = createRadio(typeStatus, disabled);
+  const { type, disabled, instrumentation } = extractValuesFromRows(rows);
 
-  block.textContent = '';
-  block.appendChild(radioElement);
+  const hasInstrumentation = block.hasAttribute('data-aue-resource')
+    || block.querySelector('[data-aue-resource]')
+    || block.querySelector('[data-richtext-prop]');
+
+  let radioElement;
+
+  if (hasInstrumentation) {
+    radioElement = block.querySelector('label.radio');
+
+    if (!radioElement) {
+      radioElement = createRadio(type, disabled, instrumentation);
+      rows[0].textContent = '';
+      rows[0].appendChild(radioElement);
+    } else {
+      radioElement.replaceWith(createRadio(type, disabled, instrumentation));
+    }
+  } else {
+    block.textContent = '';
+    radioElement = createRadio(type, disabled);
+    block.appendChild(radioElement);
+  }
+
   block.classList.add('radio-block');
 }

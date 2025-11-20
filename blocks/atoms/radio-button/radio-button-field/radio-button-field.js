@@ -1,94 +1,84 @@
-/**
- * Radio Button Field - Utility Component
- */
-
-export const RADIO_TYPES = {
-  UNCHECKED: 'unchecked',
-  CHECKED: 'checked',
-};
+import { createRadio, RADIO_TYPES, extractInstrumentationAttributes } from '../standard-radio-button/radio-button.js';
 
 /**
- * Create radio button field
+ * Crete Radio Button Field Component
  *
- * @param {string} typeStatus - "unchecked", "checked"
- * @param {boolean} disabled - disables radio if true
- * @param {string} labelText - radio label
- * @param {string} descriptionText - radio description
+ * @param {Object} options
+ * @param {string} options.type - "checked" | "unchecked"
+ * @param {boolean} options.disabled
+ * @param {string} options.label - main text
+ * @param {string} options.description - secondary text
+ * @param {Object} options.instrumentation - AEM props
  * @returns {HTMLElement}
  */
-export function createRadio(typeStatus = RADIO_TYPES.UNCHECKED, disabled = false, labelText = '', descriptionText = '') {
-  let type = typeStatus;
+export function createRadioButtonField(
+  type,
+  disabled,
+  label,
+  description,
+  instrumentation = {},
+) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'radio-button-field';
+  wrapper.style.display = 'inline-flex';
+  wrapper.style.alignItems = 'flex-start';
+  wrapper.style.gap = '0.5rem';
 
-  const wrapper = document.createElement('span');
-  wrapper.className = 'radio-wrapper';
-  wrapper.tabIndex = disabled ? -1 : 0;
+  const radioElement = createRadio(type, disabled, instrumentation);
 
-  const radio = document.createElement('span');
-  radio.className = ['radio', `radio-${type}`].join(' ');
-  radio.setAttribute('role', 'radio');
-  radio.setAttribute('aria-checked', type === RADIO_TYPES.CHECKED);
+  const textBox = document.createElement('div');
+  textBox.className = 'radio-button-text-box';
+
+  const labelEl = document.createElement('div');
+  labelEl.className = 'radio-button-label';
+  labelEl.textContent = label || '';
+
+  const descriptionEl = document.createElement('div');
+  descriptionEl.className = 'radio-button-description';
+  descriptionEl.textContent = description || '';
 
   if (disabled) {
-    radio.classList.add('disabled');
-    radio.setAttribute('aria-disabled', 'true');
+    labelEl.classList.add('disabled-label');
+    descriptionEl.classList.add('disabled-description');
   }
 
-  wrapper.appendChild(radio);
+  textBox.appendChild(labelEl);
+  textBox.appendChild(descriptionEl);
 
-  const textContainer = document.createElement('span');
-  textContainer.className = 'radio-text-container';
-
-  const labelEl = document.createElement('span');
-  labelEl.className = 'radio-label';
-  labelEl.textContent = labelText;
-
-  const descEl = document.createElement('span');
-  descEl.className = 'radio-description';
-  descEl.textContent = descriptionText;
-
-  textContainer.appendChild(labelEl);
-  textContainer.appendChild(descEl);
-  wrapper.appendChild(textContainer);
-
-  const toggle = () => {
-    if (disabled) return;
-
-    type = (type === RADIO_TYPES.UNCHECKED)
-      ? RADIO_TYPES.CHECKED
-      : RADIO_TYPES.UNCHECKED;
-
-    radio.className = ['radio', `radio-${type}`].join(' ');
-    radio.setAttribute('aria-checked', type === RADIO_TYPES.CHECKED);
-  };
-
-  wrapper.addEventListener('click', toggle);
-  wrapper.addEventListener('keydown', (e) => {
-    if (e.key === ' ' || e.key === 'Enter') {
-      e.preventDefault();
-      toggle();
-    }
-  });
+  wrapper.appendChild(radioElement);
+  wrapper.appendChild(textBox);
 
   return wrapper;
 }
 
 /**
- * Decorate Radio Button Field
+ * Decorator
  *
  * @param {HTMLElement} block
  */
-export default function decorateRadio(block) {
+export default function decorateRadioButtonField(block) {
   if (!block) return;
 
-  const rows = Array.from(block.children);
-  const typeStatus = rows[0]?.textContent?.trim() || RADIO_TYPES.UNCHECKED;
-  const disabled = rows[1]?.textContent?.trim() === 'true';
-  const labelText = rows[2]?.textContent?.trim() || '';
-  const descriptionText = rows[3]?.textContent?.trim() || '';
+  let rows = [...block.children];
+  const wrapper = block.querySelector('.default-content-wrapper');
+  if (wrapper) rows = [...wrapper.children];
 
-  const radioElement = createRadio(typeStatus, disabled, labelText, descriptionText);
+  const type = rows[0]?.textContent?.trim().toLowerCase() || RADIO_TYPES.UNCHECKED;
+  const disabled = rows[1]?.textContent?.trim().toLowerCase() === 'true';
+  const label = rows[2]?.textContent?.trim() || '';
+  const description = rows[3]?.textContent?.trim() || '';
+  const instrumentation = extractInstrumentationAttributes(rows[0]);
 
   block.textContent = '';
-  block.appendChild(radioElement);
-  block.classList.add('radio-block');
+
+  const radioButtonField = createRadioButtonField({
+    type,
+    disabled,
+    label,
+    description,
+    instrumentation,
+  });
+
+  block.appendChild(radioButtonField);
+  block.classList.add('radio-button-field-block');
 }

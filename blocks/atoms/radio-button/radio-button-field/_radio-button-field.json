@@ -21,33 +21,28 @@
       "id": "radio-button-field",
       "fields": [
         {
-          "component": "select",
-          "name": "type",
-          "label": "Type",
-          "value": "unchecked",
-          "options": [
-            { "name": "Unchecked", "value": "unchecked" },
-            { "name": "Checked", "value": "checked" }
+          "component": "text",
+          "name": "radioButtonlabel",
+          "label": "Radio Button Label",
+          "description": "Primary text displayed next to the radio",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "name": "radioButtonDescription",
+          "label": "Radio Button Description",
+          "description": "Secondary text displayed below the label",
+          "value": ""
+        },
+        {
+          "component": "container",
+          "name": "radio-button-field-radio",
+          "label": "Radio Button Of The Field",
+          "fields": [
+            {
+              "...": "../standard-radio-button/_radio-button.json#/models/radio/fields"
+            }
           ]
-        },
-        {
-          "component": "switch",
-          "name": "disabled",
-          "label": "Disabled",
-          "description": "Toggle to disable the radio button",
-          "value": false
-        },
-        {
-          "component": "text",
-          "name": "label",
-          "label": "Label",
-          "value": "Label"
-        },
-        {
-          "component": "text",
-          "name": "description",
-          "label": "Description",
-          "value": "Description"
         }
       ]
     }
