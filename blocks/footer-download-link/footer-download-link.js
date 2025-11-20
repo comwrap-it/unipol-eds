@@ -2,10 +2,6 @@ export default function decorate(block) {
   const rows = [...block.children];
 
   if (rows.length < 8) return;
-
-  // ================================
-  // Container 1: Row 0, Row 1, Row 3
-  // ================================
   const imgRow0 = rows[0].querySelector(':scope > div')?.firstElementChild;
   const row1Text = rows[1].querySelector(':scope > div')?.textContent.trim();
   const imgRow3 = rows[3].querySelector(':scope > div')?.firstElementChild;
@@ -26,9 +22,6 @@ export default function decorate(block) {
 
   if (imgRow3) container1.appendChild(imgRow3.cloneNode(true));
 
-  // ================================
-  // Container 2: Row 4 (img) + Row 5
-  // ================================
   const imgRow4 = rows[4].querySelector(':scope > div')?.firstElementChild;
   const row5Text = rows[5].querySelector(':scope > div')?.textContent.trim();
 
@@ -43,10 +36,6 @@ export default function decorate(block) {
   const textSpan = document.createElement('span');
   textSpan.textContent = row5Text || '';
   container2.appendChild(textSpan);
-
-  // ================================
-  // Container 3: Row 6 & Row 7
-  // ================================
   const imgRow6 = rows[6].querySelector(':scope > div')?.firstElementChild;
   const row7Href = rows[7].querySelector(':scope > div')?.textContent.trim();
 
@@ -67,10 +56,6 @@ export default function decorate(block) {
 
     container3.appendChild(link2);
   }
-
-  // ================================
-  // Container 4: Row 8 & Row 9
-  // ================================
   const imgRow8 = rows[8].querySelector(':scope > div')?.firstElementChild;
   const row9Href = rows[9].querySelector(':scope > div')?.textContent.trim();
 
@@ -86,9 +71,6 @@ export default function decorate(block) {
     container3.appendChild(link3);
   }
 
-  // ================================
-  // NEW WRAPPER: container2 + container3
-  // ================================
   const downloadWrapper = document.createElement('div');
   downloadWrapper.className = 'footer-link-download-container';
   downloadWrapper.style.display = 'flex';
@@ -98,9 +80,6 @@ export default function decorate(block) {
   downloadWrapper.appendChild(container2);
   downloadWrapper.appendChild(container3);
 
-  // ================================
-  // Append final structure
-  // ================================
   block.innerHTML = '';
   block.appendChild(container1);
   block.appendChild(downloadWrapper);
