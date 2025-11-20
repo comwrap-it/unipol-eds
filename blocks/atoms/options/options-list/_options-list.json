@@ -39,6 +39,7 @@
           "component": "container",
           "name": "option-checkbox-container",
           "label": "Configurazione Option Checkbox",
+          "multi": true,
           "fields": [
             {
               "...": "../../checkbox/standard-checkbox/_checkbox.json#/models/checkbox/fields"
