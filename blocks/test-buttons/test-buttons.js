@@ -13,6 +13,7 @@ import createOption from '../atoms/options/option/option.js';
 import { createOptionsList } from '../atoms/options/options-list/options-list.js';
 import { createTag } from '../atoms/tag/tag.js';
 import { createButtonGroup } from '../molecules/button-group/button-group.js';
+import { createScrollIndicator } from '../molecules/scroll-indicator/scroll-indicator.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -50,6 +51,9 @@ async function ensureStylesLoaded() {
     ),
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/molecules/banners/mini-banner/mini-banner.css`,
+    ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/molecules/scroll-indicator/scroll-indicator.css`,
     ),
   ]);
   isStylesLoaded = true;
@@ -258,6 +262,14 @@ export default async function decorate(block) {
 
   miniBannerContainer.appendChild(miniBanner);
   testButtons.appendChild(miniBannerContainer);
+
+  // Create scroll indicator
+  const scrollIndicatorContainer = document.createElement('div');
+  scrollIndicatorContainer.style = 'width: 100%; display: flex; justify-content: center; margin-top: 40px;';
+
+  const scrollIndicator = createScrollIndicator();
+  scrollIndicatorContainer.appendChild(scrollIndicator);
+  testButtons.appendChild(scrollIndicatorContainer);
 
   // Clear block and append test buttons
   block.textContent = '';

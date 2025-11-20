@@ -1,0 +1,28 @@
+/**
+ * Scroll Indicator Styles
+ *
+ * Navigation controls for carousels with prev/next buttons and indicator bar
+ */
+
+.scroll-indicator {
+  display: flex;
+  padding: 3rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--Space-350---20, 1.25rem);
+  align-self: stretch;
+  background: var(--Blue-700, #00408f);
+}
+
+/* Indicator bar - visual separator between buttons */
+.scroll-indicator .indicator-bar {
+  width: 100%;
+  height: 0.25rem;
+  background: var(--Blue-500, #06c);
+  border-radius: 0.125rem;
+}
+
+/* Button spacing */
+.scroll-indicator .btn-icon {
+  flex-shrink: 0;
+}
