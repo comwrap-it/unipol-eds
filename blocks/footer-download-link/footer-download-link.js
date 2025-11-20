@@ -14,7 +14,7 @@ export default function decorate(block) {
   container1.className = 'footer-unipol-button-container';
   container1.style.display = 'flex';
   container1.style.alignItems = 'center';
-  container1.style.gap = '10px';
+  container1.style.gap = '8px';
 
   if (imgRow0) container1.appendChild(imgRow0.cloneNode(true));
 
@@ -33,10 +33,10 @@ export default function decorate(block) {
   const row5Text = rows[5].querySelector(':scope > div')?.textContent.trim();
 
   const container2 = document.createElement('div');
-  container2.className = 'footer-download-link-container';
+  container2.className = 'footer-download-qr-container';
   container2.style.display = 'flex';
   container2.style.alignItems = 'center';
-  container2.style.gap = '10px';
+  container2.style.gap = '8px';
 
   if (imgRow4) container2.appendChild(imgRow4.cloneNode(true));
 
@@ -54,13 +54,17 @@ export default function decorate(block) {
   container3.className = 'footer-download-store-container';
   container3.style.display = 'flex';
   container3.style.alignItems = 'center';
-  container3.style.gap = '10px';
+  container3.style.gap = '8px';
 
   if (imgRow6) {
     const link2 = document.createElement('a');
-    link2.href = row7Href || '#';
+    const href2 = row7Href || '#';
+
+    link2.href = href2;
+    link2.setAttribute('aria-label', href2);
     link2.appendChild(imgRow6.cloneNode(true));
     link2.className = 'footer-link-google';
+
     container3.appendChild(link2);
   }
 
@@ -72,9 +76,13 @@ export default function decorate(block) {
 
   if (imgRow8) {
     const link3 = document.createElement('a');
-    link3.href = row9Href || '#';
+    const href3 = row9Href || '#';
+
+    link3.href = href3;
+    link3.setAttribute('aria-label', href3);
     link3.appendChild(imgRow8.cloneNode(true));
     link3.className = 'footer-link-app-store';
+
     container3.appendChild(link3);
   }
 
@@ -85,7 +93,7 @@ export default function decorate(block) {
   downloadWrapper.className = 'footer-link-download-container';
   downloadWrapper.style.display = 'flex';
   downloadWrapper.style.flexDirection = 'column';
-  downloadWrapper.style.gap = '10px';
+  downloadWrapper.style.gap = '8px';
 
   downloadWrapper.appendChild(container2);
   downloadWrapper.appendChild(container3);

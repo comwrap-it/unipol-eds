@@ -4,6 +4,7 @@
 
 .footer-privacy-link-list-wrapper .footer-privacy-link-list {
     display: flex;
+    gap: var(--Space-500-32);
 }
 
 .footer-privacy-link-list-wrapper .footer-privacy-link-list a {

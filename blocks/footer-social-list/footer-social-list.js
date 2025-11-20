@@ -1,21 +1,23 @@
 export default function decorate(block) {
   [...block.children].forEach((row) => {
-    const children = [...row.children];
-    const hideTitle = children[0]; // div che contiene <picture>
-    const titleDiv = children[1]; // contiene la URL
+    const cells = [...row.children];
+    if (cells.length < 2) return;
 
-    const url = titleDiv?.textContent?.trim();
-    const picture = hideTitle.querySelector('picture');
+    const imgWrapper = cells[0];
+    const urlWrapper = cells[1];
+
+    const url = urlWrapper?.textContent?.trim();
+    const picture = imgWrapper?.querySelector('picture');
 
     if (!url || !picture) return;
 
-    const a = document.createElement('a');
-    a.href = url;
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('aria-label', url);
 
-    const clonedPicture = picture.cloneNode(true);
-    a.appendChild(clonedPicture);
+    link.appendChild(picture.cloneNode(true));
 
     row.innerHTML = '';
-    row.appendChild(a);
+    row.appendChild(link);
   });
 }

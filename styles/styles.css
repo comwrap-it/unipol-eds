@@ -180,10 +180,6 @@ main .section.text-block-container.number-block-container.bg-white {
     font-family: var(--Family-Font-2);
 }
 
-main .section.footer-text-container {
-    margin-bottom: 40px;
-}
-
 .section.footer-download-link-container {
     padding-bottom: 80px; /* var(--Space-1000-80) */
 }
