@@ -1,0 +1,67 @@
+/**
+ * This file was generated automatically by Supernova.io and should not be changed manually.
+ * To modify the format or content of this file, please contact your design system team. 
+ */
+
+.theme-tablet {
+  --Layout-Page-Width: 80rem;
+  --Layout-Page-Min-Height: 50rem;
+  --Layout-Container-Horizontal-Gap: 1.5rem;
+  --Layout-Container-Vertical-Gap: 1.5rem;
+  --Column-Size-Col-1: 5.375rem;
+  --Column-Size-Col-2: 11.813rem;
+  --Column-Size-Col-3: 18.25rem;
+  --Column-Size-Col-4: 24.688rem;
+  --Column-Size-Col-5: 31.063rem;
+  --Column-Size-Col-6: 37.5rem;
+  --Column-Size-Col-7: 43.875rem;
+  --Column-Size-Col-8: 50.313rem;
+  --Column-Size-Col-9: 56.75rem;
+  --Column-Size-Col-10: 63.125rem;
+  --Column-Size-Col-11: 69.563rem;
+  --Column-Size-Col-12: 76rem;
+  --Padding-C-72-56-24: 3.5rem;
+  --Padding-C-64-48-24: 3rem;
+  --Layout-Page-Gap: var(--Space-1100-96);
+  --Layout-Section-Margin-Horizontal-Padding: var(--Space-500-32);
+  --Layout-Section-Vertical-Padding: var(--Space-0);
+  --Layout-Section-Vertical-Gap: 1.5rem;
+  --Layout-Section-Horizontal-Gap: 1.5rem;
+  --Layout-Row-Horizontal-Padding: var(--Space-0);
+  --Layout-Row-Vertical-Padding: var(--Space-0);
+  --Layout-Row-Gutter-Horizontal-Gap: var(--Space-300-16);
+  --Layout-Row-Gutter-Vertical-Gap: var(--Space-300-16);
+  --Layout-Container-Vertical-Padding: var(--Space-0);
+  --Layout-Container-Horizontal-Padding: var(--Space-0);
+  --Container-Width-L6-M6-S12: var(--Column-Size-Col-6);
+  --Container-Width-L4-M4-S12: var(--Column-Size-Col-4);
+  --Container-Width-L3-M6-S12: var(--Column-Size-Col-6);
+  --Container-Width-L3-M4-S12: var(--Column-Size-Col-4);
+  --Container-Width-L6-M3-S12: var(--Column-Size-Col-3);
+  --Container-Width-L9-M6-S12: var(--Column-Size-Col-6);
+  --Container-Width-L4-M6-S12: var(--Column-Size-Col-6);
+  --Font-Size-Title-Hero-Apex-New: 3.5rem;
+  --Spacing-Padding-24-16: var(--Space-400-24);
+  --Spacing-Gap-24-16: var(--Space-400-24);
+  --Font-Size-Title-Extra-Large: 5rem;
+  --Font-Size-Title-Page: 3.5rem;
+  --Font-Size-Subtitle-Manrope: 1.5rem;
+  --Font-Size-Heading: 1.5rem;
+  --Spacing-Padding-4-2: var(--Space-100-4);
+  --Spacing-Padding-16-12: var(--Space-300-16);
+  --Spacing-Padding-32-16: 1.5rem;
+  --Spacing-Gap-16-8: var(--Space-300-16);
+  --Spacing-Gap-8-4: var(--Space-200-8);
+  --Font-Size-Body-2: 1.5rem;
+  --Spacing-Padding-32-24: var(--Space-500-32);
+  --Spacing-Gap-32-24: var(--Space-500-32);
+  --Spacing-Gap-48-40: var(--Space-700-48);
+  --Spacing-Gap-80-48: var(--Space-1000-80);
+  --Container-Width-L7-M7-S12: var(--Column-Size-Col-7);
+  --Container-Width-L5-M5-S12: var(--Column-Size-Col-5);
+  --Dimension-Icon-Size-Icon-32-24: var(--Space-500-32);
+  --Dimension-Icon-Size-Bg-Icon-56-48: var(--Space-800-56);
+  --Dimension-Icon-Size-Icon-64-56: var(--Space-900-64);
+  --Dimension-Icon-Size-Logo-120-80: var(--Space-1200-120);
+  --Spacing-Padding-8-4: var(--Space-200-8);
+}
