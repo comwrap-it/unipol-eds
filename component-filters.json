@@ -3,7 +3,8 @@
     "id": "main",
     "components": [
       "section",
-      "kpi-highlights-widget"
+      "kpi-highlights-widget",
+      "insurance-product-carousel"
     ]
   },
   {
@@ -24,6 +25,12 @@
   {
     "id": "kpi-highlights-widget",
     "components": []
+  },
+  {
+    "id": "insurance-product-carousel",
+    "components": [
+      "insurance-product-card"
+    ]
   },
   {
     "id": "cards",

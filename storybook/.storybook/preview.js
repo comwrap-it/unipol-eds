@@ -1,9 +1,14 @@
-// Import global EDS styles
-import '../src/styles/storybook-globals.css';
+/**
+ * Storybook Preview Configuration
+ * 
+ * IMPORTANT: All CSS is loaded via preview-head.html as static <link> tags.
+ * Do NOT import CSS files here - Vite will transform them into JS modules.
+ */
 
 /** @type { import('@storybook/web-components-vite').Preview } */
 const preview = {
   parameters: {
+    // Controls addon configuration
     controls: {
       matchers: {
         color: /(background|color)$/i,
@@ -11,32 +16,28 @@ const preview = {
       },
     },
 
+    // Accessibility addon configuration
     a11y: {
-      // 'todo' - show a11y violations in the test UI only
-      // 'error' - fail CI on a11y violations
-      // 'off' - skip a11y checks entirely
-      test: "todo",
+      test: 'todo', // Show a11y violations in UI only (don't fail builds)
     },
 
+    // Story organization and sorting
     options: {
       storySort: {
         order: [
-          'Atoms', 
-          ['Buttons', ['Standard Button', 'Icon Button', 'Link Button']],
+          'Atoms',
+          ['Buttons', 'Inputs', 'Form Elements', 'Content Elements'],
+          'Molecules',
           'Organisms',
-          ['Cards', 'Header', 'Footer', 'Hero', 'Columns', 'Fragment'],
-          'Layout',
-          'Components',
-          'Development',
-          'Example'
+          'Blocks',
         ],
       },
     },
 
-    // Add layout options
+    // Default layout for stories
     layout: 'padded',
 
-    // Add background options
+    // Background options for testing components
     backgrounds: {
       default: 'light',
       values: [

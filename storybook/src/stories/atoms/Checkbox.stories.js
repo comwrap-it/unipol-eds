@@ -3,7 +3,7 @@ import { html } from 'lit';
 
 // Import EDS Checkbox components
 import { createCheckbox, CHECKBOX_TYPES } from '@blocks/atoms/checkbox/standard-checkbox/checkbox.js';
-import '@blocks/atoms/checkbox/standard-checkbox/checkbox.css';
+// CSS imported globally in preview.js
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 export default {

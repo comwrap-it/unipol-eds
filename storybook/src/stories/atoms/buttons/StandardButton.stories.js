@@ -3,7 +3,7 @@ import { html } from 'lit';
 
 // Import EDS Button components
 import { createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '@blocks/atoms/buttons/standard-button/standard-button.js';
-import '@blocks/atoms/buttons/standard-button/standard-button.css';
+// CSS is imported globally in storybook-globals.css
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 export default {

@@ -4,8 +4,7 @@ import { html } from 'lit';
 // Import EDS Icon Button components
 import { createIconButton } from '@blocks/atoms/buttons/icon-button/icon-button.js';
 import { BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '@blocks/atoms/buttons/standard-button/standard-button.js';
-import '@blocks/atoms/buttons/icon-button/icon-button.css';
-import '@blocks/atoms/buttons/standard-button/standard-button.css';
+// CSS imported globally in preview.js
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 export default {

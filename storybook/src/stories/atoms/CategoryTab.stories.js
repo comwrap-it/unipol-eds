@@ -4,7 +4,7 @@ import { html } from 'lit';
 // Import EDS Category Tab components
 import { createCategoryTab } from '@blocks/atoms/category-tab/category-tab.js';
 import { BUTTON_ICON_SIZES } from '@blocks/atoms/buttons/standard-button/standard-button.js';
-import '@blocks/atoms/category-tab/category-tab.css';
+// CSS imported globally in preview.js
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 export default {

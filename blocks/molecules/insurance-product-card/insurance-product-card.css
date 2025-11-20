@@ -1,0 +1,9 @@
+.insurance-product-card-container {
+    display: flex;
+    width: var(--Column-Size-Col-3, 19.75rem);
+    flex-direction: column;
+    align-items: flex-start;
+    border-radius: var(--Card-Radius, 1.5rem);
+    background: var(--Card-Insurance-Product-Card-Background, #FFF);
+    box-shadow: var(--Depth-050-2, 2px) var(--Depth-050-2, 2px) var(--Blur-200-8, 8px) 0 rgb(0 0 0 / 8%);
+}

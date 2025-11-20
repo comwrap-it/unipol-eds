@@ -4,7 +4,7 @@ import { html } from 'lit';
 // Import EDS Textfield components
 import { createTextfield } from '@blocks/atoms/inputs/textfield/textfield.js';
 import { BUTTON_ICON_SIZES } from '@blocks/atoms/buttons/standard-button/standard-button.js';
-import '@blocks/atoms/inputs/inputs.css';
+// CSS imported globally in preview.js
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 export default {
