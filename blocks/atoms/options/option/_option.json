@@ -21,7 +21,14 @@
       "id": "option",
       "fields": [
         {
-          "...": "../../checkbox/standard-checkbox/_checkbox.json#/models/checkbox/fields"
+          "component": "container",
+          "name": "option-checkbox-container",
+          "label": "Configurazione Option Checkbox",
+          "fields": [
+            {
+              "...": "../../checkbox/standard-checkbox/_checkbox.json#/models/checkbox/fields"
+            }
+          ]
         },
         {
           "component": "text",
