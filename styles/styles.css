@@ -165,19 +165,21 @@ main .section.text-block-container.number-block-container.bg-dark-gray {
 main .section.text-block-container.number-block-container.bg-white {
     background-color: var(--color-neutral-50);
 }
-/* section Unipol footer */
-main .section.footer-text-container {
-    margin-bottom: 40px;
-}
 
+/* section Unipol footer */
 .section.footer-download-link-container,
 .section.footer-privacy-link-list-container,
 .section.footer-social-list-container,
-.section.footer-text-container
+.section.footer-text-container,
 .footer-text p{
     background-color: var(--color-background-default-tertiary);
     margin: 0;
     font-family: var(--Family-Font-2);
+}
+
+
+main .section.footer-text-container {
+    margin-bottom: 40px;
 }
 
 .section.footer-download-link-container {
@@ -209,17 +211,16 @@ main .section.footer-text-container {
     color: #001C35; /* cambiare */
 }
 
-.footer .section.text-list-container h1,
-.footer .section.text-list-container h2,
-.footer .section.text-list-container h3,
-.footer .section.text-list-container h4,
-.footer .section.text-list-container h5,
-.footer .section.text-list-container h6,
-.footer .section.text-list-container p {
+.section.text-list-container.footer-download-link-container h1,
+.section.text-list-container.footer-download-link-container h2,
+.section.text-list-container.footer-download-link-container h3,
+.section.text-list-container.footer-download-link-container h4,
+.section.text-list-container.footer-download-link-container h5,
+.section.text-list-container.footer-download-link-container h6,
+.section.text-list-container.footer-download-link-container p {
     color: #F9F9F7; /* cambiare */
 }
 
-.footer .section.text-list-container a {
+.section.text-list-container.footer-download-link-container a {
     color: #F9F9F7; /* cambiare */
 }
-
