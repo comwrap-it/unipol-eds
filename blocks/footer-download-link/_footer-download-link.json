@@ -28,7 +28,7 @@
         },
         {
           "component": "text",
-          "name": "UnipolButtonText",
+          "name": "UnipolButtonGroup",
           "label": "Testo Unipol Group"
         },
         {
@@ -50,7 +50,7 @@
         },
         {
           "component": "richtext",
-          "name": "qrCodeImgText",
+          "name": "qrCodeImg",
           "value": "",
           "label": "Testo immagine codice qr",
           "valueType": "string"

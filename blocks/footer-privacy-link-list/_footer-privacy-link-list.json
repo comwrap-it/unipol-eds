@@ -37,7 +37,7 @@
       "fields": [
         {
           "component": "text",
-          "name": "footerPrivacyLinkText",
+          "name": "footerPrivacyLink",
           "label": "Testo Link",
           "required": true
         },

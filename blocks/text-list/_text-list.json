@@ -45,7 +45,7 @@
         {
           "component": "richtext",
           "label": "Testo Elenco",
-          "name": "listLinkText",
+          "name": "listLinks",
           "valueType": "string",
           "condition": { "===": [{"var" : "hideTextLinkList"}, true] }
         },

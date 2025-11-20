@@ -228,7 +228,7 @@
       },
       {
         "component": "text",
-        "name": "UnipolButtonText",
+        "name": "UnipolButtonGroup",
         "label": "Testo Unipol Group"
       },
       {
@@ -250,7 +250,7 @@
       },
       {
         "component": "richtext",
-        "name": "qrCodeImgText",
+        "name": "qrCodeImg",
         "value": "",
         "label": "Testo immagine codice qr",
         "valueType": "string"
@@ -284,7 +284,7 @@
     "fields": [
       {
         "component": "text",
-        "name": "footerPrivacyLinkText",
+        "name": "footerPrivacyLink",
         "label": "Testo Link",
         "required": true
       },
@@ -1180,7 +1180,7 @@
       {
         "component": "richtext",
         "label": "Testo Elenco",
-        "name": "listLinkText",
+        "name": "listLinks",
         "valueType": "string",
         "condition": {
           "===": [
