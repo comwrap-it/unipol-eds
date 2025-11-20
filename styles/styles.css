@@ -165,7 +165,7 @@ main .section.text-block-container.number-block-container.bg-dark-gray {
 main .section.text-block-container.number-block-container.bg-white {
     background-color: var(--color-neutral-50);
 }
-
+/* section Unipol footer */
 main .section.footer-text-container {
     margin-bottom: 40px;
 }
@@ -205,4 +205,5 @@ main .section.footer-text-container {
 .section.footer-privacy-link-list-container.footer-social-list-container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
