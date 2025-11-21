@@ -125,10 +125,5 @@
       ]
     }
   ],
-  "filters": [
-    {
-      "id": "text-list",
-      "components": []
-    }
-  ]
+  "filters": []
 }

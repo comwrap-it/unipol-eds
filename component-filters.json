@@ -61,10 +61,6 @@
     ]
   },
   {
-    "id": "text-list",
-    "components": []
-  },
-  {
     "id": "options",
     "components": [
       "unipol-option"
