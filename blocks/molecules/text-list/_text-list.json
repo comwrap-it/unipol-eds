@@ -20,7 +20,13 @@
     {
       "id": "text-list",
       "fields": [
-
+        {
+          "component": "text",
+          "name": "texListLinkt",
+          "label": "Testo Link",
+          "valueType": "string",
+          "muli": true
+        }
       ]
     }
   ],

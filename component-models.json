@@ -3222,6 +3222,14 @@
   },
   {
     "id": "text-list",
-    "fields": []
+    "fields": [
+      {
+        "component": "text",
+        "name": "texListLinkt",
+        "label": "Testo Link",
+        "valueType": "string",
+        "muli": true
+      }
+    ]
   }
 ]
