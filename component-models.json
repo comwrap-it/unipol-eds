@@ -1383,6 +1383,18 @@
     ]
   },
   {
+    "id": "text-list",
+    "fields": [
+      {
+        "component": "text",
+        "name": "texListLinkt",
+        "label": "Testo Link",
+        "valueType": "string",
+        "multi": true
+      }
+    ]
+  },
+  {
     "id": "3D-icons",
     "fields": [
       {
@@ -3217,18 +3229,6 @@
             "value": false
           }
         ]
-      }
-    ]
-  },
-  {
-    "id": "text-list",
-    "fields": [
-      {
-        "component": "text",
-        "name": "texListLinkt",
-        "label": "Testo Link",
-        "valueType": "string",
-        "multi": true
       }
     ]
   }
