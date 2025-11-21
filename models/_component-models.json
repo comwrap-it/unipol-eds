@@ -24,6 +24,9 @@
     "...": "../blocks/organisms/carousel/insurance-product-carousel/_insurance-product-carousel.json#/models"
   },
   {
+    "...": "../blocks/molecules/insurance-product-card/_insurance-product-card.json#/models"
+  },
+  {
     "...": "../blocks/*/_*.json#/models"
   }
 ]

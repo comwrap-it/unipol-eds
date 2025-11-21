@@ -41,7 +41,7 @@
           "collapsible": true,
           "fields": [
             {
-              "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
+              "...": "../../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
             }
           ]
         },
