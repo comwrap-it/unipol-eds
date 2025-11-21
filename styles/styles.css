@@ -193,6 +193,7 @@ main .section.text-block-container.number-block-container.bg-white {
 .section.text-list-container.footer-download-link-container,
 .section.footer-privacy-link-list-container.footer-social-list-container {
     display: flex;
+    flex-wrap: nowrap;
 }
 
 .section.text-list-container h1,
@@ -217,4 +218,15 @@ main .section.text-block-container.number-block-container.bg-white {
 .section.text-list-container.footer-download-link-container a,
 .section.text-list-container.footer-download-link-container p.button-container {
     color: #F9F9F7;
+}
+
+@media (width < 768px) {
+    .section.text-list-container.footer-download-link-container {
+        height: fit-content;
+        flex-wrap: wrap;
+    }
+
+    .section.text-list-container.footer-download-link-container .footer-download-link-wrapper:last-child {
+        flex-basis: 100%;
+    }
 }

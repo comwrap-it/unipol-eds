@@ -10,4 +10,6 @@
 .footer-privacy-link-list-wrapper .footer-privacy-link-list a {
     color: #F9F9F7; /* cambiare */
     text-decoration: none;
+    font-size: var(--Size-14, 14px);
+    font-weight: 400;
 }

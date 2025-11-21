@@ -1,4 +1,9 @@
 .footer-text {
     color: #A4AFB7; /* var(--Text-Neutral-Primary); */
-    margin-top: var(--Space-400-24);
+    padding-top: var(--Space-400-24);
+}
+
+.footer-text p {
+    font-size: var(--Size-12, 12px);
+    font-weight: 400;
 }
