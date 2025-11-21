@@ -1,0 +1,81 @@
+{
+  "definitions": [
+    {
+      "title": "Footer Download Section",
+      "id": "footer-download-section",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Footer Download Section",
+              "model": "footer-download-section"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "footer-download-section",
+      "fields": [
+        {
+          "component": "reference",
+          "name": "logoUnipolFooter",
+          "label": "Logo Unipol Footer",
+          "required": true
+        },
+        {
+          "component": "text",
+          "name": "UnipolButtonGroup",
+          "label": "Testo Unipol Group"
+        },
+        {
+          "component": "aem-content",
+          "name": "UnipolButtonHref",
+          "label": "Link URL Unipol Group"
+        },
+        {
+          "component": "reference",
+          "name": "buttonIconUnipolGroup",
+          "label": "Icona Button Unipol Group"
+        },
+        {
+          "component": "reference",
+          "name": "qrCodeFooterImg",
+          "label": "Immagine QR CODE",
+          "required": true
+        },
+        {
+          "component": "richtext",
+          "name": "qrCodeImg",
+          "label": "Testo immagine codice qr",
+          "valueType": "string"
+        },
+        {
+          "component": "reference",
+          "name": "googlePlayImg",
+          "label": "Immagine GooglePlay"
+        },
+        {
+          "component": "aem-content",
+          "name": "googlePlayHref",
+          "label": "GooglePlay Link URL"
+        },
+        {
+          "component": "reference",
+          "name": "appStoreImg",
+          "label": "Immagine AppleStore"
+        },
+        {
+          "component": "aem-content",
+          "name": "appStoreHref",
+          "label": "appStore Link URL"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
+

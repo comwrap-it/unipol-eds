@@ -1,0 +1,20 @@
+/* Footer Link Column - Molecule */
+.footer-link-column {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 220px;
+}
+
+.footer-link-column .text-list-wrapper {
+  width: 100%;
+}
+
+/* Mobile */
+@media (width < 768px) {
+  .footer-link-column {
+    max-width: 100%;
+    margin-bottom: 32px;
+  }
+}
+

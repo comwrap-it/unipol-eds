@@ -1,0 +1,73 @@
+/* Footer Unipol - Organism */
+.footer-unipol {
+  width: 100%;
+  background-color: var(--color-background-default-tertiary, #001C35);
+  color: var(--color-neutral-100, #F9F9F7);
+}
+
+.footer-unipol-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 48px 64px;
+}
+
+/* Top Section: Link Columns + Download */
+.footer-unipol-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 48px;
+  margin-bottom: 32px;
+}
+
+.footer-unipol-link-columns {
+  display: flex;
+  gap: 48px;
+  flex: 1;
+}
+
+/* Utility Links Section */
+.footer-unipol-utility {
+  margin-bottom: 24px;
+  padding-top: 24px;
+  border-top: 1px solid var(--Border-Default-Tertiary, rgba(255, 255, 255, 0.2));
+}
+
+/* Bottom Section */
+.footer-unipol-bottom {
+  /* Styles handled by footer-bottom molecule */
+}
+
+/* Tablet */
+@media (width >= 768px) and (width < 1024px) {
+  .footer-unipol-container {
+    padding: 48px 32px;
+  }
+
+  .footer-unipol-top {
+    gap: 32px;
+  }
+
+  .footer-unipol-link-columns {
+    gap: 32px;
+  }
+}
+
+/* Mobile */
+@media (width < 768px) {
+  .footer-unipol-container {
+    padding: 32px 16px;
+  }
+
+  .footer-unipol-top {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .footer-unipol-link-columns {
+    flex-direction: column;
+    gap: 32px;
+    width: 100%;
+  }
+}
+

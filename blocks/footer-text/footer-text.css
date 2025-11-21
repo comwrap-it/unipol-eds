@@ -1,9 +1,14 @@
+/* Footer Text - Atom */
 .footer-text {
-    color: #A4AFB7; /* var(--Text-Neutral-Primary); */
-    padding-top: var(--Space-400-24);
+  margin: 0;
+  padding: 0;
+  color: var(--color-neutral-100, #F9F9F7);
+  font-size: var(--font-size-12, 12px);
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 .footer-text p {
-    font-size: var(--Size-12, 12px);
-    font-weight: 400;
+  margin: 0;
+  padding: 0;
 }

@@ -1,0 +1,104 @@
+/* Footer Download Section - Molecule */
+.footer-download-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 280px;
+  gap: 8px;
+}
+
+.footer-download-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: 1px solid var(--Border-Default-Tertiary, rgba(255, 255, 255, 0.2));
+  border-radius: 0 var(--Radius-300-16, 16px);
+  padding: var(--Space-250-12, 12px);
+  gap: 8px;
+}
+
+.footer-download-brand > img,
+.footer-download-brand > picture {
+  display: flex;
+  align-items: center;
+}
+
+.footer-download-brand-button {
+  margin-left: auto;
+  color: var(--color-neutral-100, #F9F9F7);
+  font-weight: 600;
+  font-size: var(--font-size-16, 16px);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-download-brand-button:hover {
+  opacity: 0.8;
+}
+
+.footer-download-brand-icon {
+  width: 16px;
+  height: 16px;
+}
+
+.footer-download-qr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  border: 1px solid var(--Border-Default-Tertiary, rgba(255, 255, 255, 0.2));
+  border-radius: var(--Radius-300-16, 16px);
+  padding: var(--Space-250-12, 12px);
+  gap: 8px;
+  color: var(--color-neutral-100, #F9F9F7);
+  font-weight: 400;
+  font-size: var(--font-size-14, 14px);
+}
+
+.footer-download-qr-img {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+}
+
+.footer-download-qr-text {
+  flex: 1;
+}
+
+.footer-download-apps {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.footer-download-app-link {
+  display: block;
+  text-decoration: none;
+}
+
+.footer-download-app-link img {
+  display: block;
+  height: 40px;
+  width: auto;
+}
+
+/* Mobile */
+@media (width < 768px) {
+  .footer-download-section {
+    max-width: 100%;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .footer-download-brand,
+  .footer-download-qr {
+    flex: 1;
+  }
+}
+

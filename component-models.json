@@ -326,6 +326,37 @@
     ]
   },
   {
+    "id": "footer-unipol",
+    "fields": [
+      {
+        "component": "container",
+        "name": "linkColumns",
+        "label": "Link Columns",
+        "description": "Add text-list blocks for footer link columns",
+        "multi": true,
+        "fields": []
+      },
+      {
+        "component": "reference",
+        "name": "downloadSection",
+        "label": "Download Section",
+        "description": "Select footer-download-section block"
+      },
+      {
+        "component": "reference",
+        "name": "utilityLinks",
+        "label": "Utility Links",
+        "description": "Select footer-utility-links block"
+      },
+      {
+        "component": "reference",
+        "name": "bottom",
+        "label": "Bottom Section",
+        "description": "Select footer-bottom block"
+      }
+    ]
+  },
+  {
     "id": "fragment",
     "fields": [
       {
@@ -2209,6 +2240,62 @@
     ]
   },
   {
+    "id": "footer-link",
+    "fields": [
+      {
+        "component": "text",
+        "name": "footerLinkLabel",
+        "label": "Link Text",
+        "required": true
+      },
+      {
+        "component": "aem-content",
+        "name": "footerLinkHref",
+        "label": "Link URL",
+        "required": true
+      },
+      {
+        "component": "select",
+        "name": "footerLinkVariant",
+        "label": "Variant",
+        "value": "default",
+        "options": [
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Utility",
+            "value": "utility"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "footer-social-icon",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "socialIconImage",
+        "label": "Social Icon Image",
+        "required": true
+      },
+      {
+        "component": "aem-content",
+        "name": "socialIconHref",
+        "label": "Social Media URL",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "socialIconAriaLabel",
+        "label": "Accessibility Label",
+        "description": "Screen reader text for the icon"
+      }
+    ]
+  },
+  {
     "id": "select",
     "fields": [
       {
@@ -3129,6 +3216,64 @@
             "value": "custom"
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "footer-download-section",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "logoUnipolFooter",
+        "label": "Logo Unipol Footer",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "UnipolButtonGroup",
+        "label": "Testo Unipol Group"
+      },
+      {
+        "component": "aem-content",
+        "name": "UnipolButtonHref",
+        "label": "Link URL Unipol Group"
+      },
+      {
+        "component": "reference",
+        "name": "buttonIconUnipolGroup",
+        "label": "Icona Button Unipol Group"
+      },
+      {
+        "component": "reference",
+        "name": "qrCodeFooterImg",
+        "label": "Immagine QR CODE",
+        "required": true
+      },
+      {
+        "component": "richtext",
+        "name": "qrCodeImg",
+        "label": "Testo immagine codice qr",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "name": "googlePlayImg",
+        "label": "Immagine GooglePlay"
+      },
+      {
+        "component": "aem-content",
+        "name": "googlePlayHref",
+        "label": "GooglePlay Link URL"
+      },
+      {
+        "component": "reference",
+        "name": "appStoreImg",
+        "label": "Immagine AppleStore"
+      },
+      {
+        "component": "aem-content",
+        "name": "appStoreHref",
+        "label": "appStore Link URL"
       }
     ]
   },
