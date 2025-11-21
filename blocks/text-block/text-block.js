@@ -7,8 +7,9 @@
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
 
-import { createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
-import { createButtonFromRows } from '../atoms/buttons/standard-button/standard-button.js';
+import {
+  createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES, createButtonFromRows,
+} from '../atoms/buttons/standard-button/standard-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 // Export constants for external use
@@ -43,7 +44,7 @@ function extractTitleElement(titleRow) {
     title.appendChild(titleRow.firstChild);
   }
   moveInstrumentation(titleRow, title);
-  
+
   return title.textContent?.trim() ? title : null;
 }
 
@@ -75,7 +76,7 @@ function extractTextElement(textRow) {
     text.appendChild(textRow.firstChild);
   }
   moveInstrumentation(textRow, text);
-  
+
   return (hasInstrumentation || text.textContent?.trim()) ? text : null;
 }
 
@@ -108,72 +109,22 @@ function preserveBlockAttributes(sourceBlock, targetBlock) {
 }
 
 /**
- * Decorates a text-block element
- * 
- * This function extracts data from Universal Editor structure and delegates
- * the actual component creation to createTextBlock().
- * 
- * @param {HTMLElement} block - The text-block element
- */
-export default async function decorate(block) {
-  if (!block) return;
-  ensureBtnStylesLoaded();
-
-  // === STEP 1: Extract rows from Universal Editor ===
-  let rows = Array.from(block.children);
-  const wrapper = block.querySelector('.default-content-wrapper');
-  if (wrapper) {
-    rows = Array.from(wrapper.children);
-  }
-
-  // === STEP 2: Extract data from rows ===
-  
-  // ROW 0: Title
-  const titleRow = rows[0];
-  const titleElement = extractTitleElement(titleRow);
-
-  // ROW 1: Content Alignment (boolean)
-  const alignmentRow = rows[1];
-  const centered = alignmentRow?.querySelector('p')?.textContent.trim().toLowerCase() === 'true';
-
-  // ROW 2: Text (subtitle/description)
-  const textRow = rows[2];
-  const textElement = centered ? extractTextElement(textRow) : null;
-
-  // ROWS 3-8: Button fields (from button-container)
-  // Note: Container fields are flattened at the parent level in Universal Editor
-  const buttonRows = rows.slice(3, 9);
-  const buttonElement = createButtonFromRows(buttonRows);
-
-  // === STEP 3: Create the text block using the centralized function ===
-  const textBlock = createTextBlock(
-    titleElement,
-    centered,
-    textElement,
-    buttonElement
-  );
-
-  // === STEP 4: Preserve AEM instrumentation and metadata ===
-  preserveBlockAttributes(block, textBlock);
-
-  // === STEP 5: Replace the original block ===
-  block.replaceWith(textBlock);
-}
-
-/**
  * Create a text block element programmatically
- * 
+ *
  * This is the SINGLE SOURCE OF TRUTH for text block creation.
  * Used by both the decorate() function (AEM EDS) and Storybook.
- * 
+ *
  * @param {HTMLElement|string} titleContent - Title element or text
  * @param {boolean} centered - Whether to center content and show text
- * @param {HTMLElement|string} textContent - Text element or string (visible only if centered is true)
+ * @param {HTMLElement|string} textContent - Text element or string
+ *   (visible only if centered is true)
  * @param {HTMLElement} buttonElement - Pre-created button element (optional)
- * @param {Object} buttonConfig - Button configuration object (alternative to buttonElement, for Storybook)
+ * @param {Object} buttonConfig - Button configuration object
+ *   (alternative to buttonElement, for Storybook)
  * @param {string} buttonConfig.label - Button label
  * @param {string} buttonConfig.href - Button URL
- * @param {string} buttonConfig.variant - Button variant (primary, secondary, accent)
+ * @param {string} buttonConfig.variant - Button variant
+ *   (primary, secondary, accent)
  * @param {string} buttonConfig.iconSize - Icon size
  * @param {string} buttonConfig.leftIcon - Left icon
  * @param {string} buttonConfig.rightIcon - Right icon
@@ -184,7 +135,7 @@ export function createTextBlock(
   centered = true,
   textContent = '',
   buttonElement = null,
-  buttonConfig = null
+  buttonConfig = null,
 ) {
   // Create text block container
   const textBlock = document.createElement('div');
@@ -198,7 +149,7 @@ export function createTextBlock(
   // Add title
   if (titleContent) {
     let titleElement;
-    
+
     if (titleContent instanceof HTMLElement) {
       // Use existing element (from AEM EDS)
       titleElement = titleContent;
@@ -209,14 +160,14 @@ export function createTextBlock(
       titleElement.className = 'text-block-title';
       titleElement.textContent = titleContent;
     }
-    
+
     textContentContainer.appendChild(titleElement);
   }
 
   // Add text (only if centered)
   if (centered && textContent) {
     let textElement;
-    
+
     if (textContent instanceof HTMLElement) {
       // Use existing element (from AEM EDS)
       textElement = textContent;
@@ -227,13 +178,13 @@ export function createTextBlock(
       textElement.className = 'text-block-text';
       textElement.textContent = textContent;
     }
-    
+
     textContentContainer.appendChild(textElement);
   }
 
   // Add button
   let finalButtonElement = buttonElement;
-  
+
   // If no button element provided but config is, create button from config (for Storybook)
   if (!finalButtonElement && buttonConfig && buttonConfig.label) {
     finalButtonElement = createButton(
@@ -243,10 +194,10 @@ export function createTextBlock(
       buttonConfig.iconSize || BUTTON_ICON_SIZES.MEDIUM,
       buttonConfig.leftIcon || '',
       buttonConfig.rightIcon || '',
-      buttonConfig.instrumentation || {}
+      buttonConfig.instrumentation || {},
     );
   }
-  
+
   if (finalButtonElement) {
     const buttonContainer = document.createElement('div');
     buttonContainer.className = 'text-block-button';
