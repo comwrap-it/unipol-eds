@@ -1393,157 +1393,97 @@
       },
       {
         "component": "text",
-        "name": "texListLink",
+        "name": "texListLink1",
         "label": "Testo Link",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "name": "listLinkHref",
+        "name": "listLinkHref1",
         "label": "Link URL",
         "description": "Url del link "
       },
       {
         "component": "text",
-        "name": "linkList",
-        "label": "Titolo Elenco",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "texListLink",
+        "name": "texListLink2",
         "label": "Testo Link",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "name": "listLinkHref",
+        "name": "listLinkHref2",
         "label": "Link URL",
         "description": "Url del link "
       },
       {
         "component": "text",
-        "name": "linkList",
-        "label": "Titolo Elenco",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "texListLink",
+        "name": "texListLink3",
         "label": "Testo Link",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "name": "listLinkHref",
+        "name": "listLinkHref3",
         "label": "Link URL",
         "description": "Url del link "
       },
       {
         "component": "text",
-        "name": "linkList",
-        "label": "Titolo Elenco",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "texListLink",
+        "name": "texListLink4",
         "label": "Testo Link",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "name": "listLinkHref",
+        "name": "listLinkHref4",
         "label": "Link URL",
         "description": "Url del link "
       },
       {
         "component": "text",
-        "name": "linkList",
-        "label": "Titolo Elenco",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "texListLink",
+        "name": "texListLink5",
         "label": "Testo Link",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "name": "listLinkHref",
+        "name": "listLinkHref5",
         "label": "Link URL",
         "description": "Url del link "
       },
       {
         "component": "text",
-        "name": "linkList",
-        "label": "Titolo Elenco",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "texListLink",
+        "name": "texListLink6",
         "label": "Testo Link",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "name": "listLinkHref",
+        "name": "listLinkHref6",
         "label": "Link URL",
         "description": "Url del link "
       },
       {
         "component": "text",
-        "name": "linkList",
-        "label": "Titolo Elenco",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "texListLink",
+        "name": "texListLink7",
         "label": "Testo Link",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "name": "listLinkHref",
+        "name": "listLinkHref7",
         "label": "Link URL",
         "description": "Url del link "
       },
       {
         "component": "text",
-        "name": "linkList",
-        "label": "Titolo Elenco",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "texListLink",
+        "name": "texListLink8",
         "label": "Testo Link",
         "valueType": "string"
       },
       {
         "component": "aem-content",
-        "name": "listLinkHref",
-        "label": "Link URL",
-        "description": "Url del link "
-      },
-      {
-        "component": "text",
-        "name": "linkList",
-        "label": "Titolo Elenco",
-        "valueType": "string"
-      },
-      {
-        "component": "text",
-        "name": "texListLink",
-        "label": "Testo Link",
-        "valueType": "string"
-      },
-      {
-        "component": "aem-content",
-        "name": "listLinkHref",
+        "name": "listLinkHref8",
         "label": "Link URL",
         "description": "Url del link "
       }
