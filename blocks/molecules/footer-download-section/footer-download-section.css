@@ -14,7 +14,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  border: 1px solid var(--Border-Default-Tertiary, rgba(255, 255, 255, 0.2));
+  border: 1px solid var(--Border-Default-Tertiary, rgb(255 255 255 / 20%));
   border-radius: 0 var(--Radius-300-16, 16px);
   padding: var(--Space-250-12, 12px);
   gap: 8px;
@@ -51,7 +51,7 @@
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  border: 1px solid var(--Border-Default-Tertiary, rgba(255, 255, 255, 0.2));
+  border: 1px solid var(--Border-Default-Tertiary, rgb(255 255 255 / 20%));
   border-radius: var(--Radius-300-16, 16px);
   padding: var(--Space-250-12, 12px);
   gap: 8px;

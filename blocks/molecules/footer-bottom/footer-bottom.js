@@ -3,7 +3,7 @@
  * Bottom section with copyright text and social icons
  */
 
-import { createFooterText } from '../../atoms/footer-text/footer-text.js';
+import { createFooterText } from '../../footer-text/footer-text.js';
 import { createFooterSocialIcon } from '../../atoms/footer-social-icon/footer-social-icon.js';
 
 /**
@@ -127,4 +127,3 @@ export default function decorate(block) {
 
   block.replaceWith(bottom);
 }
-

@@ -3,7 +3,6 @@
  * Organism that combines all footer sections
  */
 
-import { createFooterLinkColumn } from '../molecules/footer-link-column/footer-link-column.js';
 import { createFooterDownloadSection } from '../molecules/footer-download-section/footer-download-section.js';
 import { createFooterUtilityLinks } from '../molecules/footer-utility-links/footer-utility-links.js';
 import { createFooterBottom } from '../molecules/footer-bottom/footer-bottom.js';
@@ -137,39 +136,31 @@ export default async function decorate(block) {
   const config = {};
 
   // Extract link columns (text-list blocks)
-  const linkColumnBlocks = actualSections.filter((section) => {
-    return section.classList.contains('text-list')
+  const linkColumnBlocks = actualSections.filter((section) => section.classList.contains('text-list')
       || section.querySelector('.text-list')
-      || section.classList.contains('footer-link-column');
-  });
+      || section.classList.contains('footer-link-column'));
   config.linkColumns = extractLinkColumns(linkColumnBlocks);
 
   // Extract download section
-  const downloadBlock = actualSections.find((section) => {
-    return section.classList.contains('footer-download-section')
-      || section.querySelector('.footer-download-section');
-  });
+  const downloadBlock = actualSections.find((section) => section.classList.contains('footer-download-section')
+      || section.querySelector('.footer-download-section'));
   if (downloadBlock) {
     const downloadElement = downloadBlock.querySelector('.footer-download-section') || downloadBlock;
     config.downloadSection = downloadElement;
   }
 
   // Extract utility links
-  const utilityBlock = actualSections.find((section) => {
-    return section.classList.contains('footer-utility-links')
+  const utilityBlock = actualSections.find((section) => section.classList.contains('footer-utility-links')
       || section.classList.contains('footer-privacy-link-list')
-      || section.querySelector('.footer-utility-links');
-  });
+      || section.querySelector('.footer-utility-links'));
   if (utilityBlock) {
     const utilityElement = utilityBlock.querySelector('.footer-utility-links') || utilityBlock;
     config.utilityLinks = utilityElement;
   }
 
   // Extract bottom section
-  const bottomBlock = actualSections.find((section) => {
-    return section.classList.contains('footer-bottom')
-      || (section.querySelector('.footer-text') && section.querySelector('.footer-social-icon, .footer-social-list'));
-  });
+  const bottomBlock = actualSections.find((section) => section.classList.contains('footer-bottom')
+      || (section.querySelector('.footer-text') && section.querySelector('.footer-social-icon, .footer-social-list')));
   if (bottomBlock) {
     const bottomElement = bottomBlock.querySelector('.footer-bottom') || bottomBlock;
     config.bottom = bottomElement;
@@ -184,4 +175,3 @@ export default async function decorate(block) {
   // Replace the original block
   block.replaceWith(footer);
 }
-

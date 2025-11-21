@@ -48,7 +48,7 @@ function extractSocialIconData(row) {
   const picture = row.querySelector('picture');
   const img = row.querySelector('img');
   const link = row.querySelector('a');
-  
+
   const iconUrl = img?.src || picture?.querySelector('img')?.src || '';
   const href = link?.href || row.querySelector('a')?.href || '#';
   const ariaLabel = img?.alt || link?.textContent?.trim() || href;
@@ -60,7 +60,9 @@ function extractSocialIconData(row) {
     }
   });
 
-  return { iconUrl, href, ariaLabel, instrumentation };
+  return {
+    iconUrl, href, ariaLabel, instrumentation,
+  };
 }
 
 /**
@@ -71,7 +73,9 @@ function extractSocialIconData(row) {
 export default function decorate(block) {
   if (!block) return;
 
-  const { iconUrl, href, ariaLabel, instrumentation } = extractSocialIconData(block);
+  const {
+    iconUrl, href, ariaLabel, instrumentation,
+  } = extractSocialIconData(block);
   const icon = createFooterSocialIcon(iconUrl, href, ariaLabel, instrumentation);
 
   // Preserve block attributes
@@ -83,4 +87,3 @@ export default function decorate(block) {
 
   block.replaceWith(icon);
 }
-

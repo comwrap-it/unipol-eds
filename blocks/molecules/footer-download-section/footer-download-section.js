@@ -31,11 +31,11 @@ export function createFooterDownloadSection(config = {}) {
     const logoElement = config.logo instanceof HTMLElement
       ? config.logo.cloneNode(true)
       : (() => {
-          const img = document.createElement('img');
-          img.src = config.logo;
-          img.alt = 'Unipol Logo';
-          return img;
-        })();
+        const img = document.createElement('img');
+        img.src = config.logo;
+        img.alt = 'Unipol Logo';
+        return img;
+      })();
     brandContainer.appendChild(logoElement);
   }
 
@@ -49,12 +49,12 @@ export function createFooterDownloadSection(config = {}) {
       const iconElement = config.brandIcon instanceof HTMLElement
         ? config.brandIcon.cloneNode(true)
         : (() => {
-            const img = document.createElement('img');
-            img.src = config.brandIcon;
-            img.alt = '';
-            img.className = 'footer-download-brand-icon';
-            return img;
-          })();
+          const img = document.createElement('img');
+          img.src = config.brandIcon;
+          img.alt = '';
+          img.className = 'footer-download-brand-icon';
+          return img;
+        })();
       brandButton.appendChild(iconElement);
     }
 
@@ -71,12 +71,12 @@ export function createFooterDownloadSection(config = {}) {
     const qrElement = config.qrCode instanceof HTMLElement
       ? config.qrCode.cloneNode(true)
       : (() => {
-          const img = document.createElement('img');
-          img.src = config.qrCode;
-          img.alt = 'QR Code';
-          img.className = 'footer-download-qr-img';
-          return img;
-        })();
+        const img = document.createElement('img');
+        img.src = config.qrCode;
+        img.alt = 'QR Code';
+        img.className = 'footer-download-qr-img';
+        return img;
+      })();
     qrContainer.appendChild(qrElement);
   }
 
@@ -102,11 +102,11 @@ export function createFooterDownloadSection(config = {}) {
     const googlePlayImg = config.googlePlayImage instanceof HTMLElement
       ? config.googlePlayImage.cloneNode(true)
       : (() => {
-          const img = document.createElement('img');
-          img.src = config.googlePlayImage;
-          img.alt = 'Get it on Google Play';
-          return img;
-        })();
+        const img = document.createElement('img');
+        img.src = config.googlePlayImage;
+        img.alt = 'Get it on Google Play';
+        return img;
+      })();
     googlePlayLink.appendChild(googlePlayImg);
     appButtonsContainer.appendChild(googlePlayLink);
   }
@@ -120,11 +120,11 @@ export function createFooterDownloadSection(config = {}) {
     const appStoreImg = config.appStoreImage instanceof HTMLElement
       ? config.appStoreImage.cloneNode(true)
       : (() => {
-          const img = document.createElement('img');
-          img.src = config.appStoreImage;
-          img.alt = 'Download on the App Store';
-          return img;
-        })();
+        const img = document.createElement('img');
+        img.src = config.appStoreImage;
+        img.alt = 'Download on the App Store';
+        return img;
+      })();
     appStoreLink.appendChild(appStoreImg);
     appButtonsContainer.appendChild(appStoreLink);
   }
@@ -222,4 +222,3 @@ export default function decorate(block) {
 
   block.replaceWith(section);
 }
-

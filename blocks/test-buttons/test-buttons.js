@@ -243,6 +243,7 @@ function buildSingleOption() {
   return createOption(
     'Sample Option',
     'sample_option_value',
+    // eslint-disable-next-line no-console
     (e) => console.log('Option clicked', e.detail),
     'This is a description for the option.',
     true,
@@ -256,6 +257,7 @@ function buildOptionsList() {
   return createOptionsList(
     optionsData,
     (e) => {
+      // eslint-disable-next-line no-console
       console.log('Options list selection event:', e.detail);
     },
     true,
@@ -266,6 +268,7 @@ function buildSelect() {
   return createSelect(
     'Sample Select',
     optionsData,
+    // eslint-disable-next-line no-console
     (values) => console.log('Selected values:', values),
     'Hint text',
     'search-icon',
@@ -285,6 +288,7 @@ function build3DIconsSets() {
 
 /* -------- Main Decorator -------- */
 export default async function decorate(block) {
+  // eslint-disable-next-line no-console
   console.log('Decorating test-buttons block...');
   if (!block) return;
 
