@@ -186,9 +186,19 @@
                   "name": "Footer Section",
                   "model": "footer-section",
                   "style": "footer-section",
-                  "text-list": {
+                  "text-list-1": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
-                    "name": "Text List",
+                    "name": "Text List 1",
+                    "model": "text-list",
+                    "filter": "text-list",
+                    "text-link": {
+                      "name": "Text Link",
+                      "model": "text-link"
+                    }
+                  },
+                  "text-list-2": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Text List 2",
                     "model": "text-list",
                     "filter": "text-list",
                     "text-link": {
