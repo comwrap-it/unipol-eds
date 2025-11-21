@@ -32,8 +32,14 @@
           "label": "Variant",
           "value": "primary",
           "options": [
-            { "name": "Primary", "value": "primary" },
-            { "name": "Secondary", "value": "secondary" }
+            {
+              "name": "Primary",
+              "value": "primary"
+            },
+            {
+              "name": "Secondary",
+              "value": "secondary"
+            }
           ]
         },
         {
@@ -48,10 +54,22 @@
           "label": "Left Icon",
           "description": "Optional icon on the left",
           "options": [
-            { "name": "None", "value": "" },
-            { "name": "Chevron Left", "value": "chevron-left" },
-            { "name": "Chevron Right", "value": "chevron-right" },
-            { "name": "Search", "value": "search-icon" }
+            {
+              "name": "None",
+              "value": ""
+            },
+            {
+              "name": "Chevron Left",
+              "value": "un-icon-chevron-left"
+            },
+            {
+              "name": "Chevron Right",
+              "value": "un-icon-chevron-right"
+            },
+            {
+              "name": "Search Icon",
+              "value": "un-icon-search"
+            }
           ]
         },
         {
@@ -60,22 +78,22 @@
           "label": "Size",
           "value": "medium",
           "options": [
-              {
-                  "name": "Small",
-                  "value": "small"
-              },
-              {
-                  "name": "Medium",
-                  "value": "medium"
-              },
-              {
-                  "name": "Large",
-                  "value": "large"
-              },
-              {
-                  "name": "Extra Large",
-                  "value": "extra-large"
-              }
+            {
+              "name": "Small",
+              "value": "small"
+            },
+            {
+              "name": "Medium",
+              "value": "medium"
+            },
+            {
+              "name": "Large",
+              "value": "large"
+            },
+            {
+              "name": "Extra Large",
+              "value": "extra-large"
+            }
           ]
         },
         {
@@ -84,10 +102,22 @@
           "label": "Right Icon",
           "description": "Optional icon on the right",
           "options": [
-            { "name": "None", "value": "" },
-            { "name": "Chevron Left", "value": "chevron-left" },
-            { "name": "Chevron Right", "value": "chevron-right" },
-            { "name": "Search", "value": "search-icon" }
+            {
+              "name": "None",
+              "value": ""
+            },
+            {
+              "name": "Chevron Left",
+              "value": "chevron-left"
+            },
+            {
+              "name": "Chevron Right",
+              "value": "chevron-right"
+            },
+            {
+              "name": "Search",
+              "value": "search-icon"
+            }
           ]
         },
         {
@@ -96,22 +126,22 @@
           "label": "Size",
           "value": "medium",
           "options": [
-              {
-                  "name": "Small",
-                  "value": "small"
-              },
-              {
-                  "name": "Medium",
-                  "value": "medium"
-              },
-              {
-                  "name": "Large",
-                  "value": "large"
-              },
-              {
-                  "name": "Extra Large",
-                  "value": "extra-large"
-              }
+            {
+              "name": "Small",
+              "value": "small"
+            },
+            {
+              "name": "Medium",
+              "value": "medium"
+            },
+            {
+              "name": "Large",
+              "value": "large"
+            },
+            {
+              "name": "Extra Large",
+              "value": "extra-large"
+            }
           ]
         }
       ]

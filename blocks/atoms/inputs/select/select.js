@@ -63,7 +63,7 @@ export default function createSelect(
   inputContainer.appendChild(labelElem);
 
   const dropdownIcon = document.createElement('span');
-  dropdownIcon.className = 'icon icon-small dropdown-icon';
+  dropdownIcon.className = 'icon icon-small un-icon-chevron-down';
   inputContainer.appendChild(dropdownIcon);
 
   function updateFloatingLabel() {
