@@ -1,98 +1,84 @@
-/**
- * Checkbox - Utility Component
- */
-
-export const CHECKBOX_TYPES = {
-  UNCHECKED: 'unchecked',
-  CHECKED: 'checked',
-  INDETERMINATE: 'indeterminate',
-};
+import { createCheckbox, CHECKBOX_TYPES, extractInstrumentationAttributes } from '../standard-checkbox/checkbox.js';
 
 /**
- * Create checkbox
+ * Create Checkbox Field Component
  *
- * @param {string} typeStatus - "unchecked", "checked", "indeterminate"
- * @param {boolean} disabled - disables checkbox if true
- * @param {string} labelText - checkbox label
- * @param {boolean} descriptionText - checkbox description
+ * @param {Object} options
+ * @param {string} options.typeStatus - "checked" | "unchecked" | "indeterminate"
+ * @param {boolean} options.disabled
+ * @param {string} options.label - main text
+ * @param {string} options.description - secondary text
+ * @param {Object} options.instrumentation - AEM props
  * @returns {HTMLElement}
  */
-export function createCheckbox(typeStatus = CHECKBOX_TYPES.UNCHECKED, disabled = false, labelText = '', descriptionText = '') {
-  let type = typeStatus;
+export function createCheckboxField(
+  typeStatus,
+  disabled,
+  label,
+  description,
+  instrumentation = {},
+) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'checkbox-field';
+  wrapper.style.display = 'inline-flex';
+  wrapper.style.alignItems = 'flex-start';
+  wrapper.style.gap = '0.5rem';
 
-  const wrapper = document.createElement('span');
-  wrapper.className = 'checkbox-wrapper';
-  wrapper.tabIndex = disabled ? -1 : 0;
+  const checkboxElement = createCheckbox(typeStatus, disabled, instrumentation);
 
-  const checkbox = document.createElement('span');
-  checkbox.className = ['checkbox', `checkbox-${type}`].join(' ');
-  checkbox.setAttribute('role', 'checkbox');
-  checkbox.setAttribute('aria-checked', type === CHECKBOX_TYPES.CHECKED);
+  const textBox = document.createElement('div');
+  textBox.className = 'checkbox-field-text-box';
+
+  const labelEl = document.createElement('div');
+  labelEl.className = 'checkbox-field-label';
+  labelEl.textContent = label || '';
+
+  const descriptionEl = document.createElement('div');
+  descriptionEl.className = 'checkbox-field-description';
+  descriptionEl.textContent = description || '';
+
   if (disabled) {
-    checkbox.classList.add('disabled');
-    checkbox.setAttribute('aria-disabled', 'true');
+    labelEl.classList.add('disabled-label');
+    descriptionEl.classList.add('disabled-description');
   }
 
-  wrapper.appendChild(checkbox);
+  textBox.appendChild(labelEl);
+  textBox.appendChild(descriptionEl);
 
-  const textContainer = document.createElement('span');
-  textContainer.className = 'checkbox-text-container';
-
-  const labelEl = document.createElement('span');
-  labelEl.className = 'checkbox-label';
-  labelEl.textContent = labelText;
-
-  const descEl = document.createElement('span');
-  descEl.className = 'checkbox-description';
-  descEl.textContent = descriptionText;
-
-  textContainer.appendChild(labelEl);
-  textContainer.appendChild(descEl);
-  wrapper.appendChild(textContainer);
-
-  const toggle = () => {
-    if (disabled) return;
-
-    if (type === CHECKBOX_TYPES.UNCHECKED) type = CHECKBOX_TYPES.CHECKED;
-    else if (type === CHECKBOX_TYPES.CHECKED) type = CHECKBOX_TYPES.UNCHECKED;
-    else if (type === CHECKBOX_TYPES.INDETERMINATE) type = CHECKBOX_TYPES.CHECKED;
-
-    checkbox.className = ['checkbox', `checkbox-${type}`].join(' ');
-    checkbox.classList.remove('checked-icon', 'minus-icon');
-    if (type === CHECKBOX_TYPES.CHECKED) checkbox.classList.add('checked-icon');
-    else if (type === CHECKBOX_TYPES.INDETERMINATE) checkbox.classList.add('minus-icon');
-
-    checkbox.setAttribute('aria-checked', type === CHECKBOX_TYPES.CHECKED);
-  };
-
-  wrapper.addEventListener('click', toggle);
-  wrapper.addEventListener('keydown', (e) => {
-    if (e.key === ' ' || e.key === 'Enter') {
-      e.preventDefault();
-      toggle();
-    }
-  });
+  wrapper.appendChild(checkboxElement);
+  wrapper.appendChild(textBox);
 
   return wrapper;
 }
 
 /**
- * Decorate Checkbox
+ * Decorator for Checkbox Field
  *
  * @param {HTMLElement} block
  */
-export default function decorateCheckbox(block) {
+export default function decorateCheckboxField(block) {
   if (!block) return;
 
-  const rows = Array.from(block.children);
-  const typeStatus = rows[0]?.textContent?.trim() || CHECKBOX_TYPES.UNCHECKED;
-  const disabled = rows[1]?.textContent?.trim() === 'true';
-  const labelText = rows[2]?.textContent?.trim() || '';
-  const descriptionText = rows[3]?.textContent?.trim() || '';
+  let rows = [...block.children];
+  const wrapper = block.querySelector('.default-content-wrapper');
+  if (wrapper) rows = [...wrapper.children];
 
-  const checkboxElement = createCheckbox(typeStatus, disabled, labelText, descriptionText);
+  const typeStatus = rows[0]?.textContent?.trim().toLowerCase() || CHECKBOX_TYPES.UNCHECKED;
+  const disabled = rows[1]?.textContent?.trim().toLowerCase() === 'true';
+  const label = rows[2]?.textContent?.trim() || '';
+  const description = rows[3]?.textContent?.trim() || '';
+  const instrumentation = extractInstrumentationAttributes(rows[0]);
 
   block.textContent = '';
-  block.appendChild(checkboxElement);
-  block.classList.add('checkbox-block');
+
+  const checkboxField = createCheckboxField(
+    typeStatus,
+    disabled,
+    label,
+    description,
+    instrumentation,
+  );
+
+  block.appendChild(checkboxField);
+  block.classList.add('checkbox-field-block');
 }

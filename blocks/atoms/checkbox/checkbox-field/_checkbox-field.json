@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Checkbox",
+      "title": "Checkbox Field",
       "id": "checkbox-field",
       "plugins": {
         "xwalk": {
@@ -18,37 +18,31 @@
   ],
   "models": [
     {
-      "id": "checkbox",
+      "id": "checkbox-field",
       "fields": [
         {
-          "component": "select",
-          "name": "type",
-          "label": "Type",
-          "value": "unchecked",
-          "options": [
-            { "name": "Unchecked", "value": "unchecked" },
-            { "name": "Checked", "value": "checked" },
-            { "name": "Indeterminate", "value": "indeterminate" }
+          "component": "text",
+          "name": "checkboxLabel",
+          "label": "Checkbox Label",
+          "description": "Primary text displayed next to the checkbox",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "name": "checkboxDescription",
+          "label": "Checkbox Description",
+          "description": "Secondary text displayed below the label",
+          "value": ""
+        },
+        {
+          "component": "container",
+          "name": "checkbox-field-checkbox",
+          "label": "Checkbox Of The Field",
+          "fields": [
+            {
+              "...": "../standard-checkbox/_checkbox.json#/models/checkbox/fields"
+            }
           ]
-        },
-        {
-          "component": "switch",
-          "name": "disabled",
-          "label": "Disabled",
-          "description": "Toggle to disable the checkbox",
-          "value": false
-        },
-        {
-          "component": "text",
-          "name": "label",
-          "label": "Label",
-          "value": "Label"
-        },
-        {
-          "component": "text",
-          "name": "description",
-          "label": "Description",
-          "value": "Description"
         }
       ]
     }
