@@ -170,6 +170,16 @@
     ]
   },
   {
+    "id": "insurance-product-carousel-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "insurance-product-carousel-widget-name",
+        "label": "Nome sezione Insurance Product Carousel Widget"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
