@@ -6,6 +6,27 @@
 
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
+// Character limits for number block fields
+const MAX_TITLE_LENGTH = 7;
+const MAX_DESCRIPTION_LENGTH = 40;
+
+/**
+ * Truncate text content to specified length
+ * @param {HTMLElement} element - The element to truncate
+ * @param {number} maxLength - Maximum allowed length
+ */
+function truncateTextContent(element, maxLength) {
+  if (!element) return;
+
+  const textContent = element.textContent || '';
+  if (textContent.length > maxLength) {
+    const truncated = textContent.substring(0, maxLength);
+    element.textContent = truncated;
+    // eslint-disable-next-line no-console
+    console.warn(`Text truncated to ${maxLength} characters: "${truncated}"`);
+  }
+}
+
 /**
  * Decorates a number-block element
  * @param {HTMLElement} block - The number-block element
@@ -44,6 +65,7 @@ export default async function decorate(block) {
         if (hasInstrumentation || hasContent) {
           const inner = document.createElement('div');
 
+          // Add class for title rows (numeric values)
           if (rowIndex === 0 || rowIndex === 2 || rowIndex === 4) {
             inner.classList.add('text-block-number');
           }
@@ -52,6 +74,16 @@ export default async function decorate(block) {
             inner.appendChild(row.firstChild);
           }
           moveInstrumentation(row, inner);
+
+          // Apply character limits
+          // Titles (rows 0, 2, 4): max 7 characters
+          // Descriptions (rows 1, 3, 5): max 40 characters
+          if (rowIndex === 0 || rowIndex === 2 || rowIndex === 4) {
+            truncateTextContent(inner, MAX_TITLE_LENGTH);
+          } else if (rowIndex === 1 || rowIndex === 3 || rowIndex === 5) {
+            truncateTextContent(inner, MAX_DESCRIPTION_LENGTH);
+          }
+
           itemWrapper.appendChild(inner);
         }
       };
