@@ -1,5 +1,3 @@
-import createOptionsList from '../../options/options-list/options-list.js';
-
 /**
  * @typedef {Object} OptionConfig
  * @property {string} labelText
@@ -10,6 +8,8 @@ import createOptionsList from '../../options/options-list/options-list.js';
  * @property {boolean} [disabled=false]
  * @property {Record<string,string>} [instrumentation={}]
  */
+
+import { createOptionsList } from '../../options/options-list/options-list.js';
 
 /**
  * @param {string} label

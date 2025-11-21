@@ -31,7 +31,7 @@ async function ensureStylesLoaded() {
  * @param {Object} instrumentation - Instrumentation attributes for the options list (optional).
  * @returns {HTMLDivElement} Root element with class `options-list`.
  */
-export default function createOptionsList(
+export function createOptionsList(
   optionsArray,
   setSelectedOption,
   canSelectMultiple = false,

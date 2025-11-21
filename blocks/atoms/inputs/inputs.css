@@ -192,6 +192,20 @@
             transform: translateY(-50%);
         }
 
+        &.has-value {
+            label {
+                top: 0;
+                font-size: var(--font-size-12);
+                padding: var(--dimension-label-input-fields-vertical-padding, 0)
+                    var(--dimension-input-fields-label-padding, 4px);
+                background-color: var(
+                    --color-label-input-fields-secondary-background
+                );
+                border-radius: var(--dimension-label-input-fields-radius, 4px);
+                color: var(--color-label-input-fields-secondary-text);
+            }
+        }
+
         .textarea {
             border-radius: var(--dimension-input-fields-radius-text-area);
             resize: none;
@@ -277,20 +291,6 @@
 
         &:has(.textarea) {
             height: var(--dimension-space-1100-96);
-        }
-
-        &.has-value {
-            label {
-                top: 0;
-                font-size: var(--font-size-12);
-                padding: var(--dimension-label-input-fields-vertical-padding, 0)
-                    var(--dimension-input-fields-label-padding, 4px);
-                background-color: var(
-                    --color-label-input-fields-secondary-background
-                );
-                border-radius: var(--dimension-label-input-fields-radius, 4px);
-                color: var(--color-label-input-fields-secondary-text);
-            }
         }
 
         &:has(.select-value:hover) {
