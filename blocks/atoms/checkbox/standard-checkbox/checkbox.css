@@ -1,42 +1,55 @@
-
 .checkbox {
-  width: var(--dimension-checkbox-dimentions);
-  height: var(--dimension-checkbox-dimentions);
-  border: var(--dimension-checkbox-border-width) solid var(--color-text-default-primary);
-  border-radius: var(--dimension-checkbox-radius);
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  transition: border-color 0.2s, transform 0.1s;
-  background-color: transparent;
+  gap: var(--Space-200-8);
+  cursor: pointer;
+  font-family: var(--Family-Font-2);
+  font-size: var(--Text-Styles-Body-Small);
+  line-height: 1.4;
+  user-select: none;
+}
+
+.checkbox input[type="checkbox"] {
+  appearance: none;
+  width: var(--Checkbox-Dimensions, 16px);
+  height: var(--Checkbox-Dimensions, 16px);
+  border-radius: var(--Checkbox-Radius, 4px);
+  border: var(--Checkbox-Border-Width, 1px) solid var(--Checkbox-Unchecked-Border, #001C35);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 12px 12px;
+  flex-shrink: 0;
   cursor: pointer;
 }
 
-/* Unhecked status */
-.checkbox-unchecked {
-  background-color: transparent;
+/* CHECKED */
+.checkbox input[type="checkbox"].checked-icon {
+  border-color: var(--Checkbox-Checked-Border, #001C35);
 }
 
-/* Hover status */
-.checkbox-wrapper:hover .checkbox {
-  border-color: var(--color-brand-600);
+/* INDETERMINATE */
+.checkbox input[type="checkbox"].minus-icon {
+  border-color: var(--Checkbox-Checked-Border, #001C35);
 }
 
-/* Pressed status */
-.checkbox-wrapper:active .checkbox {
-  transform: scale(0.95);
+/* Hover */
+.checkbox input[type="checkbox"]:not(:disabled):hover {
+  border-color: var(--Checkbox-Hover-Border, #005299);
 }
 
-/* Focused status */
-.checkbox-wrapper:focus .checkbox {
-  outline: 2px solid var(--color-brand-200);
-  outline-offset: 2px;
+/* Focused */
+.checkbox input[type="checkbox"]:focus-visible {
+  outline: var(--Checkbox-Focus-Width, 2px) solid var(--Checkbox-Focus-Border, #99CFFF);
 }
 
-/* Disabled status */
-.checkbox.disabled {
-  color: var(--color-grayscale-700);
-  border-color: var(--color-grayscale-700);
-  cursor: not-allowed;
+/* Disabled */
+.checkbox input[type="checkbox"].custom-disabled {
+  border-color: var(--Checkbox-Disabled-Border, #63727D);
+  background: var(--Checkbox-Disabled-Background, #DFE2E5);
   pointer-events: none;
+  cursor: not-allowed;
+}
+
+.checkbox-block {
+  margin: 1rem 0;
 }

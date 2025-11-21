@@ -21,6 +21,8 @@ import { createTag } from '../atoms/tag/tag.js';
 import { RADIO_TYPES, createRadio } from '../atoms/radio-button/standard-radio-button/radio-button.js';
 import { create3Dicons } from '../atoms/3D-icons/3D-icons.js';
 import { createRadioButtonField } from '../atoms/radio-button/radio-button-field/radio-button-field.js';
+import { createCheckboxField } from '../atoms/checkbox/checkbox-field/checkbox-field.js';
+import { CHECKBOX_TYPES } from '../atoms/checkbox/standard-checkbox/checkbox.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -52,6 +54,9 @@ async function ensureStylesLoaded() {
     ),
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/atoms/checkbox/standard-checkbox/checkbox.css`,
+    ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/checkbox/checkbox-field/checkbox-field.css`,
     ),
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/atoms/navigation-pill/navigation-pill.css`,
@@ -228,6 +233,15 @@ export default async function decorate(block) {
     'longText',
   );
   testButtons.appendChild(radioButtonField);
+
+    // Create checkbox Field
+  const checkboxField = createCheckboxField(
+    CHECKBOX_TYPES.UNCHECKED,
+    false,
+    'LabelTest',
+    'longText',
+  );
+  testButtons.appendChild(checkboxField);
 
   // Create textfield
   const textfieldContainer = document.createElement('div');
