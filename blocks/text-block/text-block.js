@@ -185,7 +185,7 @@ export function createTextBlock(
   // Add button
   let finalButtonElement = buttonElement;
 
-  // If no button element provided but config is, create button from config (for Storybook)
+  // If no button element provided but config is, create button from config
   if (!finalButtonElement && buttonConfig && buttonConfig.label) {
     finalButtonElement = createButton(
       buttonConfig.label || 'Button',
@@ -209,4 +209,58 @@ export function createTextBlock(
   textBlock.appendChild(textContentContainer);
 
   return textBlock;
+}
+
+/**
+ * Decorates a text-block element
+ *
+ * This function extracts data from Universal Editor structure and delegates
+ * the actual component creation to createTextBlock().
+ *
+ * @param {HTMLElement} block - The text-block element
+ */
+export default async function decorate(block) {
+  if (!block) return;
+  ensureBtnStylesLoaded();
+
+  // === STEP 1: Extract rows from Universal Editor ===
+  let rows = Array.from(block.children);
+  const wrapper = block.querySelector('.default-content-wrapper');
+  if (wrapper) {
+    rows = Array.from(wrapper.children);
+  }
+
+  // === STEP 2: Extract data from rows ===
+
+  // ROW 0: Title
+  const titleRow = rows[0];
+  const titleElement = extractTitleElement(titleRow);
+
+  // ROW 1: Content Alignment (boolean)
+  const alignmentRow = rows[1];
+  const centered = alignmentRow?.querySelector('p')?.textContent
+    .trim().toLowerCase() === 'true';
+
+  // ROW 2: Text (subtitle/description)
+  const textRow = rows[2];
+  const textElement = centered ? extractTextElement(textRow) : null;
+
+  // ROWS 3-8: Button fields (from button-container)
+  // Note: Container fields are flattened at the parent level in Universal Editor
+  const buttonRows = rows.slice(3, 9);
+  const buttonElement = createButtonFromRows(buttonRows);
+
+  // === STEP 3: Create the text block using the centralized function ===
+  const textBlock = createTextBlock(
+    titleElement,
+    centered,
+    textElement,
+    buttonElement,
+  );
+
+  // === STEP 4: Preserve AEM instrumentation and metadata ===
+  preserveBlockAttributes(block, textBlock);
+
+  // === STEP 5: Replace the original block ===
+  block.replaceWith(textBlock);
 }
