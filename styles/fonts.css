@@ -1,6 +1,34 @@
 /* stylelint-disable max-line-length */
 
-/* Manrope (primary) */
+/* Apex New (primary) */
+@font-face {
+  font-family: 'Apex New';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Apex New Book'), local('Apex-New-Book'),
+       url('../fonts/Apex-New-Book.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Apex New';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: local('Apex New Medium'), local('Apex-New-Medium'),
+       url('../fonts/Apex-New-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Apex New';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Apex New Bold'), local('Apex-New-Bold'),
+       url('../fonts/Apex-New-Bold.ttf') format('truetype');
+}
+
+/* Manrope (secondary) */
 @font-face {
   font-family: Manrope;
   font-style: normal;
@@ -63,5 +91,3 @@
   src: local('Manrope ExtraBold'), local('Manrope-ExtraBold'),
        url('../fonts/Manrope-ExtraBold.ttf') format('truetype');
 }
-
-/* Apex New when it will be available goes here */

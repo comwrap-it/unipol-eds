@@ -28,97 +28,101 @@
 }
 
 .search-icon {
-    background-image: url("/icons/Search.svg");
+    background-image: url("../icons/search.svg");
 }
 
 .checked-icon {
-    background-image: url("/icons/checked.svg");
+    background-image: url("../icons/checked.svg");
 }
 
 .minus-icon {
-    background-image: url("/icons/minus.svg");
+    background-image: url("../icons/minus.svg");
 }
 
 .chevron-left-icon {
-    background-image: url("/icons/ChevronLeft.svg");
+    background-image: url("../icons/ChevronLeft.svg");
 }
 
 .chevron-right-icon {
-    background-image: url("/icons/ChevronRight.svg");
+    background-image: url("../icons/ChevronRight.svg");
 }
 
 .phone-icon {
-    background-image: url("/icons/Phone.svg");
+    background-image: url("../icons/Phone.svg");
 }
 
 .phone-call-icon {
-    background-image: url("/icons/PhoneCall.svg");
+    background-image: url("../icons/PhoneCall.svg");
 }
 
 .placeholder-icon {
-    background-image: url("/icons/Placeholder.svg");
+    background-image: url("../icons/Placeholder.svg");
 }
 
 .plant-icon {
-    background-image: url("/icons/Plant.svg");
+    background-image: url("../icons/Plant.svg");
 }
 
 .play-circle-icon {
-    background-image: url("/icons/PlayCircle.svg");
+    background-image: url("../icons/PlayCircle.svg");
 }
 
 .play-pause-icon {
-    background-image: url("/icons/PlayPause.svg");
+    background-image: url("../icons/PlayPause.svg");
 }
 
 .plus-icon {
-    background-image: url("/icons/Plus.svg");
+    background-image: url("../icons/Plus.svg");
 }
 
 .prohibit-icon {
-    background-image: url("/icons/Prohibit.svg");
+    background-image: url("../icons/Prohibit.svg");
 }
 
 .push-pin-icon {
-    background-image: url("/icons/PushPin.svg");
+    background-image: url("../icons/PushPin.svg");
 }
 
 .question-icon {
-    background-image: url("/icons/Question.svg");
+    background-image: url("../icons/Question.svg");
 }
 
 .quotes-icon {
-    background-image: url("/icons/Quotes.svg");
+    background-image: url("../icons/Quotes.svg");
 }
 
 .share-icon {
-    background-image: url("/icons/Share.svg");
+    background-image: url("../icons/Share.svg");
 }
 
 .share-big-icon {
-    background-image: url("/icons/ShareBig.svg");
+    background-image: url("../icons/ShareBig.svg");
 }
 
 .shield-check-icon {
-    background-image: url("/icons/ShieldCheck.svg");
+    background-image: url("../icons/ShieldCheck.svg");
 }
 
 .shield-plus-icon {
-    background-image: url("/icons/ShieldPlus.svg");
+    background-image: url("../icons/ShieldPlus.svg");
 }
 
 .shield-slash-icon {
-    background-image: url("/icons/ShieldSlash.svg");
+    background-image: url("../icons/ShieldSlash.svg");
 }
 
 .sign-in-icon {
-    background-image: url("/icons/Signin.svg");
+    background-image: url("../icons/SignIn.svg");
 }
 
 .sign-out-icon {
-    background-image: url("/icons/Signout.svg");
+    background-image: url("../icons/SignOut.svg");
 }
 
 .skip-back-circle-icon {
-    background-image: url("/icons/SkipBackCircle.svg");
+    background-image: url("../icons/SkipBackCircle.svg");
+}
+
+.dropdown-icon {
+    background-image: url("../icons/Dropdown.svg");
 }

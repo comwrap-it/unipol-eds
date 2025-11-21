@@ -41,8 +41,8 @@
     --link-hover-color: #1d3ecf;
 
     /* fonts */
-    --body-font-family: var(--font-family-font-2), arial, sans-serif; /* Manrope primary */
-    --heading-font-family: var(--font-family-font-2), var(--font-family-font-1),
+    --body-font-family: var(--Family-Font-2), arial, sans-serif; /* Manrope primary */
+    --heading-font-family: var(--Family-Font-2), var(--Family-Font-1),
         arial, sans-serif; /* Manrope primary, Apex New prepared */
 
     /* body sizes */
