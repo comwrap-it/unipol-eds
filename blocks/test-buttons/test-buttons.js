@@ -12,6 +12,7 @@ import {
 } from '../atoms/navigation-pill/navigation-pill.js';
 import { createCategoryChip } from '../atoms/category-chip/category-chip.js';
 import { createCategoryTab } from '../atoms/category-tab/category-tab.js';
+import createSelect from '../atoms/inputs/select/select.js';
 import { createTextarea } from '../atoms/inputs/textarea/textarea.js';
 import { createTextfield } from '../atoms/inputs/textfield/textfield.js';
 import createOption from '../atoms/options/option/option.js';
@@ -71,6 +72,7 @@ async function ensureStylesLoaded() {
 const optionsData = [
   {
     labelText: 'Email notifications',
+    optionValue: 'email_notifications',
     descriptionText: 'Get updates about account activity',
     shouldShowCheckbox: true,
     typeStatus: 'checked',
@@ -79,6 +81,7 @@ const optionsData = [
   },
   {
     labelText: 'SMS alerts',
+    optionValue: 'sms_alerts',
     descriptionText: 'Security and login alerts via SMS',
     shouldShowCheckbox: true,
     typeStatus: 'unchecked',
@@ -87,6 +90,7 @@ const optionsData = [
   },
   {
     labelText: 'Weekly digest',
+    optionValue: 'weekly_digest',
     descriptionText: 'Summary of product updates',
     shouldShowCheckbox: true,
     typeStatus: 'indeterminate',
@@ -95,6 +99,7 @@ const optionsData = [
   },
   {
     labelText: 'Beta features',
+    optionValue: 'beta_features',
     descriptionText: 'Access experimental features',
     shouldShowCheckbox: false,
     typeStatus: 'unchecked',
@@ -267,6 +272,19 @@ export default async function decorate(block) {
   const optionsList = createOptionsList(optionsData);
   optionsListContainer.appendChild(optionsList);
   testButtons.appendChild(optionsListContainer);
+  // create select
+  const selectContainer = document.createElement('div');
+  selectContainer.style = 'width: 100%; display: flex; justify-content: center; margin-top: 20px;';
+  const select = createSelect(
+    'Sample Select',
+    optionsData,
+    (value) => { console.log('Selected value:', value); },
+    'Hint text',
+    'search-icon',
+    true,
+  );
+  selectContainer.appendChild(select);
+  testButtons.appendChild(selectContainer);
 
   // Clear block and append test buttons
   block.textContent = '';

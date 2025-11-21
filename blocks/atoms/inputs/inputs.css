@@ -90,6 +90,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: var(--dimension-input-fields-vertical-gap, 4px);
+    position: relative;
 
     .input-container {
         position: relative;
@@ -175,11 +176,34 @@
             line-height: 1.4;
         }
 
+        .select-value {
+            color: var(--color-input-fields-placeholder-text-value);
+            position: absolute;
+            left: var(--dimension-input-fields-horizontal-padding, 24px);
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
         .icon {
             position: absolute;
             top: 50%;
             right: var(--dimension-input-fields-horizontal-padding-icon, 20px);
             transform: translateY(-50%);
+        }
+
+        &.has-value {
+            label {
+                top: 0;
+                font-size: var(--font-size-12);
+                padding: var(--dimension-label-input-fields-vertical-padding, 0)
+                    var(--dimension-input-fields-label-padding, 4px);
+                background-color: var(
+                    --color-label-input-fields-secondary-background
+                );
+                border-radius: var(--dimension-label-input-fields-radius, 4px);
+                color: var(--color-label-input-fields-secondary-text);
+            }
         }
 
         .textarea {
@@ -210,32 +234,44 @@
         }
 
         /* if i have the icon i increase the padding-right of the icon width + 5px */
-        &:has(.icon .icon-small) .input {
-            padding-right: calc(
-                var(--dimension-input-fields-horizontal-padding-icon, 20px) +
-                    var(--dimension-space-300-16) + 5px
-            );
+        &:has(.icon.icon-small) {
+            & .input,
+            & .select-value {
+                padding-right: calc(
+                    var(--dimension-input-fields-horizontal-padding-icon, 20px) +
+                        var(--dimension-space-300-16) + 5px
+                );
+            }
         }
 
-        &:has(.icon .icon-medium) .input {
-            padding-right: calc(
-                var(--dimension-input-fields-horizontal-padding-icon, 20px) +
-                    var(--dimension-space-350-20) + 5px
-            );
+        &:has(.icon.icon-medium) {
+            & .input,
+            & .select-value {
+                padding-right: calc(
+                    var(--dimension-input-fields-horizontal-padding-icon, 20px) +
+                        var(--dimension-space-350-20) + 5px
+                );
+            }
         }
 
-        &:has(.icon .icon-large) .input {
-            padding-right: calc(
-                var(--dimension-input-fields-horizontal-padding-icon, 20px) +
-                    var(--dimension-space-400-24) + 5px
-            );
+        &:has(.icon.icon-large) {
+            & .input,
+            & .select-value {
+                padding-right: calc(
+                    var(--dimension-input-fields-horizontal-padding-icon, 20px) +
+                        var(--dimension-space-400-24) + 5px
+                );
+            }
         }
 
-        &:has(.icon .icon-extra-large) .input {
-            padding-right: calc(
-                var(--dimension-input-fields-horizontal-padding-icon, 20px) +
-                    var(--dimension-space-500-32) + 5px
-            );
+        &:has(.icon.icon-extra-large) {
+            & .input,
+            & .select-value {
+                padding-right: calc(
+                    var(--dimension-input-fields-horizontal-padding-icon, 20px) +
+                        var(--dimension-space-500-32) + 5px
+                );
+            }
         }
 
         .input:not(:placeholder-shown),
@@ -255,6 +291,30 @@
 
         &:has(.textarea) {
             height: var(--dimension-space-1100-96);
+        }
+
+        &:has(.select-value:hover) {
+            .input:enabled {
+                border-color: var(--color-input-fields-hover-border);
+                background-color: var(--color-input-fields-hover-background);
+                color: var(--color-input-fields-hover-text-value);
+            }
+        }
+    }
+
+    .options-list {
+        position: absolute;
+        opacity: 0;
+        top: calc(
+            var(--dimension-input-fields-text-field-height, 48px) +
+                var(--dimension-input-fields-vertical-gap, 4px)
+        );
+        z-index: 30;
+        background-color: var(--color-white-1100);
+        transition: opacity 0.3s ease-in-out;
+
+        &.options-list-visible {
+            opacity: 1;
         }
     }
 
