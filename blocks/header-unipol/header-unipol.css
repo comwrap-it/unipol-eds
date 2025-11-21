@@ -1,0 +1,126 @@
+/* Header Unipol - Base styles (Mobile first) */
+.header-unipol {
+  width: 100%;
+  background-color: var(--color-neutral-100, #F5F5F5);
+  border-bottom: 1px solid var(--color-neutral-300, #E0E0E0);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.header-unipol-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+/* Logo Section */
+.header-unipol-logo {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.header-unipol-logo-img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+.header-unipol-logo picture {
+  display: flex;
+  align-items: center;
+}
+
+.header-unipol-logo img {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+/* Navigation Section */
+.header-unipol-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  flex: 1;
+}
+
+.header-unipol-nav .navigation-pill {
+  margin: 0;
+}
+
+/* Mobile - Hide some pills if too many */
+@media (width < 768px) {
+  .header-unipol-container {
+    padding: 12px 16px;
+  }
+
+  .header-unipol-logo-img,
+  .header-unipol-logo img {
+    height: 32px;
+  }
+
+  .header-unipol-nav {
+    gap: 4px;
+  }
+
+  /* Show only first 3 pills on mobile */
+  .header-unipol-nav .navigation-pill:nth-child(n + 4) {
+    display: none;
+  }
+}
+
+/* Tablet */
+@media (width >= 768px) and (width < 1024px) {
+  .header-unipol-container {
+    padding: 16px 32px;
+  }
+
+  .header-unipol-logo-img,
+  .header-unipol-logo img {
+    height: 36px;
+  }
+
+  .header-unipol-nav {
+    gap: 8px;
+  }
+}
+
+/* Desktop */
+@media (width >= 1024px) {
+  .header-unipol-container {
+    padding: 20px 48px;
+  }
+
+  .header-unipol-logo-img,
+  .header-unipol-logo img {
+    height: 44px;
+  }
+
+  .header-unipol-nav {
+    gap: 12px;
+    flex-wrap: nowrap;
+  }
+}
+
+/* Accessibility */
+.header-unipol:focus-within {
+  outline: 2px solid var(--color-primary, #007acc);
+  outline-offset: -2px;
+}
+
+/* Print styles */
+@media print {
+  .header-unipol {
+    position: static;
+    border-bottom: 1px solid #000;
+  }
+}
+
