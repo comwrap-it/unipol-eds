@@ -16,7 +16,7 @@
         aspect-ratio: 316.00/177.75;
         border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem) var(--Radius-0, 0) var(--Radius-0, 0);
 
-        & img {
+        & img, picture {
             width: 19.75rem;
             height: 11.1095rem;
         }
@@ -101,7 +101,7 @@
             height: 8.43763rem;
             aspect-ratio: 240.00/135.00;
 
-            & img {
+            & img, picture {
                 width: 15rem;
                 height: 8.43763rem;
             }
@@ -131,7 +131,7 @@
             aspect-ratio: 343.00/192.94;
             border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem) var(--Radius-0, 0) var(--Radius-0, 0);
 
-            & img {
+            & img, picture {
                 width: 21.4375rem;
                 height: 12.05875rem;
             }
