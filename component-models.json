@@ -1387,10 +1387,165 @@
     "fields": [
       {
         "component": "text",
-        "name": "texListLinkt",
+        "name": "linkList",
+        "label": "Titolo Elenco",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "texListLink",
         "label": "Testo Link",
-        "valueType": "string",
-        "multi": true
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "listLinkHref",
+        "label": "Link URL",
+        "description": "Url del link "
+      },
+      {
+        "component": "text",
+        "name": "linkList",
+        "label": "Titolo Elenco",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "texListLink",
+        "label": "Testo Link",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "listLinkHref",
+        "label": "Link URL",
+        "description": "Url del link "
+      },
+      {
+        "component": "text",
+        "name": "linkList",
+        "label": "Titolo Elenco",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "texListLink",
+        "label": "Testo Link",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "listLinkHref",
+        "label": "Link URL",
+        "description": "Url del link "
+      },
+      {
+        "component": "text",
+        "name": "linkList",
+        "label": "Titolo Elenco",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "texListLink",
+        "label": "Testo Link",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "listLinkHref",
+        "label": "Link URL",
+        "description": "Url del link "
+      },
+      {
+        "component": "text",
+        "name": "linkList",
+        "label": "Titolo Elenco",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "texListLink",
+        "label": "Testo Link",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "listLinkHref",
+        "label": "Link URL",
+        "description": "Url del link "
+      },
+      {
+        "component": "text",
+        "name": "linkList",
+        "label": "Titolo Elenco",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "texListLink",
+        "label": "Testo Link",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "listLinkHref",
+        "label": "Link URL",
+        "description": "Url del link "
+      },
+      {
+        "component": "text",
+        "name": "linkList",
+        "label": "Titolo Elenco",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "texListLink",
+        "label": "Testo Link",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "listLinkHref",
+        "label": "Link URL",
+        "description": "Url del link "
+      },
+      {
+        "component": "text",
+        "name": "linkList",
+        "label": "Titolo Elenco",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "texListLink",
+        "label": "Testo Link",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "listLinkHref",
+        "label": "Link URL",
+        "description": "Url del link "
+      },
+      {
+        "component": "text",
+        "name": "linkList",
+        "label": "Titolo Elenco",
+        "valueType": "string"
+      },
+      {
+        "component": "text",
+        "name": "texListLink",
+        "label": "Testo Link",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "listLinkHref",
+        "label": "Link URL",
+        "description": "Url del link "
       }
     ]
   },
