@@ -327,34 +327,7 @@
   },
   {
     "id": "footer-unipol",
-    "fields": [
-      {
-        "component": "container",
-        "name": "linkColumns",
-        "label": "Link Columns",
-        "description": "Add text-list blocks for footer link columns",
-        "multi": true,
-        "fields": []
-      },
-      {
-        "component": "reference",
-        "name": "downloadSection",
-        "label": "Download Section",
-        "description": "Select footer-download-section block"
-      },
-      {
-        "component": "reference",
-        "name": "utilityLinks",
-        "label": "Utility Links",
-        "description": "Select footer-utility-links block"
-      },
-      {
-        "component": "reference",
-        "name": "bottom",
-        "label": "Bottom Section",
-        "description": "Select footer-bottom block"
-      }
-    ]
+    "fields": []
   },
   {
     "id": "fragment",

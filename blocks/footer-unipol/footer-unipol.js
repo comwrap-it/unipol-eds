@@ -75,28 +75,6 @@ export function createFooterUnipol(config = {}) {
 }
 
 /**
- * Extracts link columns from AEM blocks
- *
- * @param {Array<HTMLElement>} blocks - Array of block elements
- * @returns {Array<HTMLElement>} Array of link column elements
- */
-function extractLinkColumns(blocks) {
-  const columns = [];
-
-  blocks.forEach((block) => {
-    // Look for footer-link-column or text-list blocks
-    const column = block.querySelector('.footer-link-column') || block.querySelector('.text-list');
-    if (column) {
-      columns.push(column);
-    } else if (block.classList.contains('footer-link-column') || block.classList.contains('text-list')) {
-      columns.push(block);
-    }
-  });
-
-  return columns;
-}
-
-/**
  * Preserves AEM Universal Editor instrumentation and metadata
  *
  * @param {HTMLElement} originalBlock - Original block with AEM attributes
@@ -122,49 +100,66 @@ function preserveBlockAttributes(originalBlock, newBlock) {
 
 /**
  * Decorator for footer-unipol block (AEM EDS)
+ * Extracts child components in order and builds footer structure
  *
  * @param {HTMLElement} block - The block element to decorate
  */
 export default async function decorate(block) {
   if (!block) return;
 
-  // Extract sections from block
-  const sections = Array.from(block.children);
+  // Extract child blocks from block
+  const childBlocks = Array.from(block.children);
   const wrapper = block.querySelector('.default-content-wrapper');
-  const actualSections = wrapper ? Array.from(wrapper.children) : sections;
+  const actualBlocks = wrapper ? Array.from(wrapper.children) : childBlocks;
 
   const config = {};
 
-  // Extract link columns (text-list blocks)
-  const linkColumnBlocks = actualSections.filter((section) => section.classList.contains('text-list')
-      || section.querySelector('.text-list')
-      || section.classList.contains('footer-link-column'));
-  config.linkColumns = extractLinkColumns(linkColumnBlocks);
+  // Process blocks in order
+  // Link columns (text-list) come prima, poi download, utility, bottom
+  const linkColumns = [];
+  let downloadSection = null;
+  let utilityLinks = null;
+  let bottom = null;
 
-  // Extract download section
-  const downloadBlock = actualSections.find((section) => section.classList.contains('footer-download-section')
-      || section.querySelector('.footer-download-section'));
-  if (downloadBlock) {
-    const downloadElement = downloadBlock.querySelector('.footer-download-section') || downloadBlock;
-    config.downloadSection = downloadElement;
-  }
+  actualBlocks.forEach((childBlock) => {
+    // Check if it's a text-list (link column)
+    if (childBlock.classList.contains('text-list')
+        || childBlock.querySelector('.text-list')
+        || childBlock.classList.contains('footer-link-column')
+        || childBlock.querySelector('.footer-link-column')) {
+      // Extract the actual text-list element
+      const textList = childBlock.querySelector('.text-list') || childBlock.querySelector('.footer-link-column') || childBlock;
+      linkColumns.push(textList);
+    } else if (childBlock.classList.contains('footer-download-section')
+        || childBlock.querySelector('.footer-download-section')
+        || childBlock.classList.contains('footer-download-link')
+        || childBlock.querySelector('.footer-download-link')) {
+      // Check if it's download section
+      const download = childBlock.querySelector('.footer-download-section')
+        || childBlock.querySelector('.footer-download-link')
+        || childBlock;
+      downloadSection = download;
+    } else if (childBlock.classList.contains('footer-utility-links')
+        || childBlock.querySelector('.footer-utility-links')
+        || childBlock.classList.contains('footer-privacy-link-list')
+        || childBlock.querySelector('.footer-privacy-link-list')) {
+      // Check if it's utility links
+      const utility = childBlock.querySelector('.footer-utility-links')
+        || childBlock.querySelector('.footer-privacy-link-list')
+        || childBlock;
+      utilityLinks = utility;
+    } else if (childBlock.classList.contains('footer-bottom')
+        || childBlock.querySelector('.footer-bottom')) {
+      // Check if it's bottom section
+      const bottomElement = childBlock.querySelector('.footer-bottom') || childBlock;
+      bottom = bottomElement;
+    }
+  });
 
-  // Extract utility links
-  const utilityBlock = actualSections.find((section) => section.classList.contains('footer-utility-links')
-      || section.classList.contains('footer-privacy-link-list')
-      || section.querySelector('.footer-utility-links'));
-  if (utilityBlock) {
-    const utilityElement = utilityBlock.querySelector('.footer-utility-links') || utilityBlock;
-    config.utilityLinks = utilityElement;
-  }
-
-  // Extract bottom section
-  const bottomBlock = actualSections.find((section) => section.classList.contains('footer-bottom')
-      || (section.querySelector('.footer-text') && section.querySelector('.footer-social-icon, .footer-social-list')));
-  if (bottomBlock) {
-    const bottomElement = bottomBlock.querySelector('.footer-bottom') || bottomBlock;
-    config.bottom = bottomElement;
-  }
+  config.linkColumns = linkColumns;
+  if (downloadSection) config.downloadSection = downloadSection;
+  if (utilityLinks) config.utilityLinks = utilityLinks;
+  if (bottom) config.bottom = bottom;
 
   // Create footer using factory function
   const footer = createFooterUnipol(config);
