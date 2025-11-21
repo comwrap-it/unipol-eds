@@ -59,7 +59,7 @@
       ]
     },
     {
-      "title": "Sections",
+      "title": "Widgets",
       "id": "sections",
       "components": [
         {
@@ -75,13 +75,7 @@
               }
             }
           }
-        }
-      ]
-    },
-    {
-      "title": "Widgets",
-      "id": "sections",
-      "components": [
+        },
         {
           "title": "KPI Highlights Widget",
           "id": "kpi-highlights-widget",
