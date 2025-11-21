@@ -9,6 +9,7 @@
   justify-content: center;
   transition: border-color 0.2s, transform 0.1s;
   background-color: transparent;
+  cursor: pointer;
 }
 
 /* Unhecked status */

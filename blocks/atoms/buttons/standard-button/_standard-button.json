@@ -24,7 +24,7 @@
           "component": "text",
           "name": "standardButtonLabel",
           "label": "Button Text",
-          "required": true
+          "required": false
         },
         {
           "component": "select",

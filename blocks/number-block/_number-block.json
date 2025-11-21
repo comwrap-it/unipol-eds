@@ -26,17 +26,17 @@
           "name": "numberBlock1"
         },
         {
-          "component": "text-input",
+          "component": "text",
           "label": "Titolo blocco 1",
           "name": "numberBlockText1",
-          "maxlength": 7,
-          "valueType": "string"
+          "maxlength": 7
         },
         {
           "component": "richtext",
           "name": "numberBlockSubText1",
           "label": "Descrizione blocco 1",
-          "valueType": "string"
+          "valueType": "string",
+          "maxlength": 40
         },
         {
           "component": "tab",
@@ -44,17 +44,17 @@
           "name": "numberBlock2"
         },
         {
-          "component": "text-input",
+          "component": "text",
           "label": "Titolo blocco 2",
           "name": "numberBlockText2",
-          "maxlength": 7,
-          "valueType": "string"
+          "maxlength": 7
         },
         {
           "component": "richtext",
           "name": "numberBlockSubText2",
           "label": "Descrizione blocco 2",
-          "valueType": "string"
+          "valueType": "string",
+          "maxlength": 40
         },
         {
           "component": "tab",
@@ -62,17 +62,17 @@
           "name": "numberBlock3"
         },
         {
-          "component": "text-input",
+          "component": "text",
           "label": "Titolo blocco 3",
           "name": "numberBlockText3",
-          "maxlength": 7,
-          "valueType": "string"
+          "maxlength": 7
         },
         {
           "component": "richtext",
           "name": "numberBlockSubText3",
           "label": "Descrizione blocco 3",
-          "valueType": "string"
+          "valueType": "string",
+          "maxlength": 40
         }
       ]
     }

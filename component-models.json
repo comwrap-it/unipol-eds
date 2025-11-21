@@ -170,6 +170,16 @@
     ]
   },
   {
+    "id": "insurance-product-carousel-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "insurance-product-carousel-widget-name",
+        "label": "Nome sezione Insurance Product Carousel Widget"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -360,17 +370,17 @@
         "name": "numberBlock1"
       },
       {
-        "component": "text-input",
+        "component": "text",
         "label": "Titolo blocco 1",
         "name": "numberBlockText1",
-        "maxlength": 7,
-        "valueType": "string"
+        "maxlength": 7
       },
       {
         "component": "richtext",
         "name": "numberBlockSubText1",
         "label": "Descrizione blocco 1",
-        "valueType": "string"
+        "valueType": "string",
+        "maxlength": 40
       },
       {
         "component": "tab",
@@ -378,17 +388,17 @@
         "name": "numberBlock2"
       },
       {
-        "component": "text-input",
+        "component": "text",
         "label": "Titolo blocco 2",
         "name": "numberBlockText2",
-        "maxlength": 7,
-        "valueType": "string"
+        "maxlength": 7
       },
       {
         "component": "richtext",
         "name": "numberBlockSubText2",
         "label": "Descrizione blocco 2",
-        "valueType": "string"
+        "valueType": "string",
+        "maxlength": 40
       },
       {
         "component": "tab",
@@ -396,17 +406,17 @@
         "name": "numberBlock3"
       },
       {
-        "component": "text-input",
+        "component": "text",
         "label": "Titolo blocco 3",
         "name": "numberBlockText3",
-        "maxlength": 7,
-        "valueType": "string"
+        "maxlength": 7
       },
       {
         "component": "richtext",
         "name": "numberBlockSubText3",
         "label": "Descrizione blocco 3",
-        "valueType": "string"
+        "valueType": "string",
+        "maxlength": 40
       }
     ]
   },
@@ -422,7 +432,7 @@
             "component": "text",
             "name": "standardButtonLabel",
             "label": "Button Text",
-            "required": true
+            "required": false
           },
           {
             "component": "select",
@@ -1267,7 +1277,7 @@
             "component": "text",
             "name": "standardButtonLabel",
             "label": "Button Text",
-            "required": true
+            "required": false
           },
           {
             "component": "select",
@@ -1652,7 +1662,7 @@
         "component": "text",
         "name": "standardButtonLabel",
         "label": "Button Text",
-        "required": true
+        "required": false
       },
       {
         "component": "select",
@@ -2085,6 +2095,120 @@
         "label": "Disabled",
         "description": "Toggle to disable the checkbox",
         "value": false
+      }
+    ]
+  },
+  {
+    "id": "select",
+    "fields": [
+      {
+        "component": "text",
+        "name": "selectLabel",
+        "label": "Label",
+        "required": true,
+        "value": "Select Label"
+      },
+      {
+        "component": "text",
+        "name": "textareaHint",
+        "label": "Hint Text",
+        "value": "Textarea Hint Text"
+      },
+      {
+        "component": "select",
+        "name": "textareaHintIcon",
+        "label": "Textarea hint icon",
+        "description": "Select the icon",
+        "options": [
+          {
+            "name": "Search",
+            "value": "search-icon"
+          },
+          {
+            "name": "Chevron Left",
+            "value": "chevron-left-icon"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "chevron-right-icon"
+          },
+          {
+            "name": "Phone",
+            "value": "phone-icon"
+          },
+          {
+            "name": "Phone Call",
+            "value": "phone-call-icon"
+          },
+          {
+            "name": "Placeholder",
+            "value": "placeholder-icon"
+          },
+          {
+            "name": "Plant",
+            "value": "plant-icon"
+          },
+          {
+            "name": "Play Circle",
+            "value": "play-circle-icon"
+          },
+          {
+            "name": "Play Pause",
+            "value": "play-pause-icon"
+          },
+          {
+            "name": "Plus",
+            "value": "plus-icon"
+          },
+          {
+            "name": "Prohibit",
+            "value": "prohibit-icon"
+          },
+          {
+            "name": "Push Pin",
+            "value": "push-pin-icon"
+          },
+          {
+            "name": "Question",
+            "value": "question-icon"
+          },
+          {
+            "name": "Quotes",
+            "value": "quotes-icon"
+          },
+          {
+            "name": "Share",
+            "value": "share-icon"
+          },
+          {
+            "name": "Share Big",
+            "value": "share-big-icon"
+          },
+          {
+            "name": "Shield Check",
+            "value": "shield-check-icon"
+          },
+          {
+            "name": "Shield Plus",
+            "value": "shield-plus-icon"
+          },
+          {
+            "name": "Shield Slash",
+            "value": "shield-slash-icon"
+          },
+          {
+            "name": "Sign In",
+            "value": "sign-in-icon"
+          },
+          {
+            "name": "Sign Out",
+            "value": "sign-out-icon"
+          },
+          {
+            "name": "Skip Back Circle",
+            "value": "skip-back-circle-icon"
+          }
+        ]
       }
     ]
   },
@@ -2905,7 +3029,7 @@
             "component": "text",
             "name": "standardButtonLabel",
             "label": "Button Text",
-            "required": true
+            "required": false
           },
           {
             "component": "select",
