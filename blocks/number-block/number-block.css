@@ -18,11 +18,14 @@
 }
 
 .number-block {
-    text-align: center;
-    margin-bottom: 32px;
+  display: flex;
+  width: 21.4375rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--KPI-Highlights-Widget-Gap---M---TP, 2.5rem);
 }
 
-.number-block p{
+.number-block p {
     margin: 0;
 }
 
