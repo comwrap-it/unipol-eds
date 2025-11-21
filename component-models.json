@@ -3211,7 +3211,7 @@
       },
       {
         "component": "container",
-        "name": "icons",
+        "name": "icons-3D",
         "label": "Configurazione Icone 3D",
         "collapsible": true,
         "required": true,
