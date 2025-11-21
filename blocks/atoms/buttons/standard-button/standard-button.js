@@ -148,7 +148,7 @@ export const extractInstrumentationAttributes = (element) => {
  * rows[5]: standardButtonRightIcon (select)
  */
 const extractValuesFromRows = (rows) => {
-  const text = rows[0]?.textContent?.trim() || 'Button';
+  const text = rows[0]?.textContent?.trim() || '';
   const variant = rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
   const href = rows[2]?.querySelector('a')?.href || rows[2]?.textContent?.trim() || '';
   const iconSize = rows[3]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
@@ -171,7 +171,7 @@ const extractValuesFromRows = (rows) => {
  * Used when button is rendered from Universal Editor data structure
  *
  * @param {Array} rows - Array of rows from block children
- * @returns {HTMLElement} The button element
+ * @returns {HTMLElement|null} The button element, or null if no label is provided
  */
 export function createButtonFromRows(rows) {
   if (!rows || rows.length === 0) return null;
@@ -185,6 +185,9 @@ export function createButtonFromRows(rows) {
     rightIcon,
     instrumentation,
   } = extractValuesFromRows(rows);
+
+  // Don't create button if there's no label text
+  if (!text) return null;
 
   return createButton(
     text,
