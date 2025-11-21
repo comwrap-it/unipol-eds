@@ -11,7 +11,32 @@
               "filter": "footer-section",
               "name": "Footer Section",
               "model": "footer-section",
-              "style": "footer-section"
+              "style": "footer-section",
+              "text-list": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Text List",
+                "model": "text-list"
+              },
+              "footer-download-link": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Footer Download Link",
+                "model": "footer-download-link"
+              },
+              "footer-privacy-link-list": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Footer Privacy Link List",
+                "model": "footer-privacy-link-list"
+              },
+              "footer-social-list": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Footer Social List",
+                "model": "footer-social-list"
+              },
+              "footer-text": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Footer Text",
+                "model": "footer-text"
+              }
             }
           }
         }
