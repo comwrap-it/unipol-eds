@@ -14,12 +14,15 @@
     "...": "./_kpi-highlights-widget.json#/filters"
   },
   {
-    "...": "../blocks/organisms/carousel/insurance-product-carousel/_insurance-product-carousel.json#/filters"
-  },
-  {
-    "...": "../blocks/molecules/insurance-product-card/_insurance-product-card.json#/filters"
-  },
-  {
     "...": "../blocks/*/_*.json#/filters"
+  },
+  {
+    "...": "../blocks/atoms/**/_*.json#/filters"
+  },
+  {
+    "...": "../blocks/molecules/**/_*.json#/filters"
+  },
+  {
+    "...": "../blocks/organisms/**/_*.json#/filters"
   }
 ]
