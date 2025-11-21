@@ -7,7 +7,6 @@ export default function initUnipolFooter() {
     '.section.footer-text-container',
   ];
 
-  // Trova il primo footerRoot che esiste tra i selettori
   const footerRoot = selectors
     .map((selector) => document.querySelector(selector))
     .find((el) => el !== null);
