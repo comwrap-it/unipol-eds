@@ -218,15 +218,15 @@ export default async function decorate(block) {
     const titleRow = rows[i];
     const descRow = rows[i + 1];
 
-    if (!titleRow || !descRow) continue;
+    if (titleRow && descRow) {
+      const item = extractNumberItem(titleRow, descRow);
 
-    const item = extractNumberItem(titleRow, descRow);
-
-    if (item.titleElement || item.descriptionElement) {
-      items.push({
-        title: item.titleElement,
-        description: item.descriptionElement,
-      });
+      if (item.titleElement || item.descriptionElement) {
+        items.push({
+          title: item.titleElement,
+          description: item.descriptionElement,
+        });
+      }
     }
   }
 
