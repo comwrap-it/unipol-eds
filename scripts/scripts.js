@@ -11,7 +11,6 @@ import {
   loadSections,
   loadCSS,
 } from './aem.js';
-import initUnipolFooter from './unipol-footer.js';
 
 /**
  * Moves all the attributes from a given elmenet to another given element.
@@ -123,8 +122,7 @@ async function loadLazy(doc) {
   if (hash && element) element.scrollIntoView();
 
   loadHeader(doc.querySelector('header'));
-  await loadFooter(doc.querySelector('footer'));
-  initUnipolFooter();
+  loadFooter(doc.querySelector('footer'));
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
