@@ -11,7 +11,13 @@ import { createCheckbox, CHECKBOX_TYPES, extractInstrumentationAttributes } from
  * @param {Object} options.instrumentation - AEM props
  * @returns {HTMLElement}
  */
-export function createCheckboxField(typeStatus, disabled, label, description, instrumentation = {}) {
+export function createCheckboxField(
+  typeStatus,
+  disabled,
+  label,
+  description,
+  instrumentation = {},
+) {
   const wrapper = document.createElement('div');
   wrapper.className = 'checkbox-field';
   wrapper.style.display = 'inline-flex';
@@ -65,7 +71,13 @@ export default function decorateCheckboxField(block) {
 
   block.textContent = '';
 
-  const checkboxField = createCheckboxField(typeStatus, disabled, label, description, instrumentation);
+  const checkboxField = createCheckboxField(
+    typeStatus,
+    disabled,
+    label,
+    description,
+    instrumentation,
+  );
 
   block.appendChild(checkboxField);
   block.classList.add('checkbox-field-block');

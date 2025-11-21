@@ -32,14 +32,14 @@
   border-color: var(--Checkbox-Checked-Border, #001C35);
 }
 
-/* Hover */
-.checkbox input[type="checkbox"]:not(:disabled):hover {
-  border-color: var(--Checkbox-Hover-Border, #005299);
-}
-
 /* Focused */
 .checkbox input[type="checkbox"]:focus-visible {
   outline: var(--Checkbox-Focus-Width, 2px) solid var(--Checkbox-Focus-Border, #99CFFF);
+}
+
+/* Hover */
+.checkbox input[type="checkbox"]:not(:disabled):hover {
+  border-color: var(--Checkbox-Hover-Border, #005299);
 }
 
 /* Disabled */
