@@ -34,8 +34,5 @@
   },
   {
     "...": "../blocks/organisms/**/_*.json#/models"
-  },
-  {
-    "...": "./_footer-section.json#/models"
   }
 ]

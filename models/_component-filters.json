@@ -4,8 +4,7 @@
     "components": [
       "section",
       "kpi-highlights-widget",
-      "insurance-product-carousel-widget",
-      "footer-section"
+      "insurance-product-carousel-widget"
     ]
   },
   {
@@ -28,8 +27,5 @@
   },
   {
     "...": "../blocks/organisms/**/_*.json#/filters"
-  },
-  {
-    "...": "./_footer-section.json#/filters"
   }
 ]

@@ -218,114 +218,6 @@
     ]
   },
   {
-    "id": "footer-download-link",
-    "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "logoUnipolFooter",
-        "label": "Logo Unipol Footer"
-      },
-      {
-        "component": "text",
-        "name": "UnipolButtonGroup",
-        "label": "Testo Unipol Group"
-      },
-      {
-        "component": "aem-content",
-        "name": "UnipolButtonHref",
-        "label": "Link URL Unipol Group"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "buttonIconUnipolGroup",
-        "label": "Icona Button Unipol Group"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "qrCodeFooterImg",
-        "label": "Immagine QR CODE"
-      },
-      {
-        "component": "richtext",
-        "name": "qrCodeImg",
-        "value": "",
-        "label": "Testo immagine codice qr",
-        "valueType": "string"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "googlePlayImg",
-        "label": "Immagine GooglePlay"
-      },
-      {
-        "component": "aem-content",
-        "name": "googlePlayHref",
-        "label": "GooglePlay Link URL"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "appStoreImg",
-        "label": "Immagine AppleStore"
-      },
-      {
-        "component": "aem-content",
-        "name": "appStoreHref",
-        "label": "appStore Link URL"
-      }
-    ]
-  },
-  {
-    "id": "footer-privacy-link",
-    "fields": [
-      {
-        "component": "text",
-        "name": "footerPrivacyLink",
-        "label": "Testo Link",
-        "required": true
-      },
-      {
-        "component": "aem-content",
-        "name": "footerPrivacyLinkHref",
-        "label": "Link URL",
-        "required": true
-      }
-    ]
-  },
-  {
-    "id": "footer-social-link",
-    "fields": [
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "socialFooterImg",
-        "label": "Logo Social Footer",
-        "multi": false
-      },
-      {
-        "component": "aem-content",
-        "name": "logoSocialHref",
-        "label": "Social Link URL"
-      }
-    ]
-  },
-  {
-    "id": "footer-text",
-    "fields": [
-      {
-        "component": "richtext",
-        "name": "footer-text",
-        "value": "",
-        "label": "Configurazione dei testi del footer",
-        "valueType": "string"
-      }
-    ]
-  },
-  {
     "id": "fragment",
     "fields": [
       {
@@ -1487,58 +1379,6 @@
             ]
           }
         ]
-      }
-    ]
-  },
-  {
-    "id": "text-link",
-    "fields": [
-      {
-        "component": "boolean",
-        "label": "Mostra Testo o Link",
-        "description": "Attivo: mostra la configurazione Titolo/ Testo. Disattivo: mostra la configurazione link.",
-        "name": "hideTextLinkList",
-        "valueType": "boolean"
-      },
-      {
-        "component": "richtext",
-        "label": "Testo Elenco",
-        "name": "listLinks",
-        "valueType": "string",
-        "condition": {
-          "===": [
-            {
-              "var": "hideTextLinkList"
-            },
-            true
-          ]
-        }
-      },
-      {
-        "component": "text",
-        "name": "linkTextComp",
-        "label": "Testo Link",
-        "condition": {
-          "===": [
-            {
-              "var": "hideTextLinkList"
-            },
-            false
-          ]
-        }
-      },
-      {
-        "component": "aem-content",
-        "name": "linkHrefComp",
-        "label": "Link URL",
-        "condition": {
-          "===": [
-            {
-              "var": "hideTextLinkList"
-            },
-            false
-          ]
-        }
       }
     ]
   },
@@ -3381,13 +3221,7 @@
     ]
   },
   {
-    "id": "footer-section",
-    "fields": [
-      {
-        "component": "text",
-        "name": "footer-section-name",
-        "label": "Nome sezione Unipol Footer"
-      }
-    ]
+    "id": "text-list",
+    "fields": []
   }
 ]
