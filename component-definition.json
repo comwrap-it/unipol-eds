@@ -188,7 +188,7 @@
                   "style": "footer-section",
                   "text-list-1": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
-                    "name": "Text List 1",
+                    "name": "Text List colonna 1",
                     "model": "text-list",
                     "filter": "text-list",
                     "text-link": {
@@ -198,7 +198,27 @@
                   },
                   "text-list-2": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
-                    "name": "Text List 2",
+                    "name": "Text List colonna 2",
+                    "model": "text-list",
+                    "filter": "text-list",
+                    "text-link": {
+                      "name": "Text Link",
+                      "model": "text-link"
+                    }
+                  },
+                  "text-list-3": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Text List colonna 3",
+                    "model": "text-list",
+                    "filter": "text-list",
+                    "text-link": {
+                      "name": "Text Link",
+                      "model": "text-link"
+                    }
+                  },
+                  "text-list-4": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Text List colonna 4",
                     "model": "text-list",
                     "filter": "text-list",
                     "text-link": {
