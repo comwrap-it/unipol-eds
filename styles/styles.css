@@ -169,17 +169,20 @@ main .section.text-block-container.number-block-container.bg-white {
     background-color: var(--color-neutral-50);
 }
 
-/* Section Unipol footer */
-.section.text-list-container.footer-download-link-container.footer-privacy-link-list-container.footer-social-list-container.footer-text-container {
+.section.text-list-colonna-1-container,
+.section.footer-download-link-container,
+.section.footer-privacy-link-list-container,
+.section.footer-social-list-container,
+.section.footer-text-container {
     background-color: var(--color-background-default-tertiary);
     margin: 0;
     font-family: var(--Family-Font-2);
 }
 
-.section.text-list-container.footer-download-link-container.footer-privacy-link-list-container.footer-social-list-container.footer-text-container .unipol-top-footer {
-    display: flex;
-}
 
-.section.text-list-container.footer-download-link-container.footer-privacy-link-list-container.footer-social-list-container.footer-text-container .unipol-text-list-container {
-    display: flex;
+.section.text-list-colonna-1-container .unipol-top-footer,
+.section.footer-download-link-container .unipol-top-footer {
+    background-color: var(--color-background-default-tertiary);
+    margin: 0;
+    font-family: var(--Family-Font-2);
 }

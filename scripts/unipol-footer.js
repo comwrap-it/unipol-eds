@@ -1,7 +1,16 @@
 export default function initUnipolFooter() {
-  const footerRoot = document.querySelector(
-    '.section.text-list-container.footer-download-link-container.footer-privacy-link-list-container.footer-social-list-container.footer-text-container',
-  );
+  const selectors = [
+    '.section.text-list-colonna-1-container',
+    '.section.footer-download-link-container',
+    '.section.footer-privacy-link-list-container',
+    '.section.footer-social-list-container',
+    '.section.footer-text-container',
+  ];
+
+  // Trova il primo footerRoot che esiste tra i selettori
+  const footerRoot = selectors
+    .map((selector) => document.querySelector(selector))
+    .find((el) => el !== null);
 
   if (!footerRoot) {
     return;
