@@ -266,3 +266,17 @@ header nav .nav-sections ul > li > ul > li {
 header nav .nav-tools {
   grid-area: tools;
 }
+
+/* header-unipol integration */
+header .nav-wrapper .header-unipol {
+  width: 100%;
+  position: relative;
+
+  /* Override sticky positioning when inside nav-wrapper */
+  position: static;
+}
+
+header .nav-wrapper .header-unipol .header-unipol-container {
+  max-width: 1440px;
+  margin: 0 auto;
+}
