@@ -234,7 +234,7 @@ export default async function decorate(block) {
     (value) => { console.log('Selected value:', value); },
     'Hint text',
     'search-icon',
-    false,
+    true,
   );
   selectContainer.appendChild(select);
   testButtons.appendChild(selectContainer);
