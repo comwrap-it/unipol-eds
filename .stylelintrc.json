@@ -1,6 +1,7 @@
 {
   "extends": ["stylelint-config-standard"],
   "rules": {
-    "custom-property-pattern": [".*", {}]
+    "custom-property-pattern": [".*", {}],
+    "number-max-precision": [5, {}]
   }
 }

@@ -1,4 +1,4 @@
-import { getMetadata } from '../../scripts/aem.js';
+import { getMetadata, loadBlock } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 // media query match that indicates mobile/tablet width
@@ -113,6 +113,41 @@ export default async function decorate(block) {
   const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(navPath);
 
+  if (!fragment) {
+    // eslint-disable-next-line no-console
+    console.warn('Nav fragment not found');
+    return;
+  }
+
+  // Check if fragment contains header-unipol block
+  // Look for both decorated (.header-unipol) and undecorated ([data-block-name="header-unipol"])
+  let headerUnipolBlock = fragment.querySelector('.header-unipol');
+  const undecoratedBlock = fragment.querySelector('[data-block-name="header-unipol"]');
+
+  if (undecoratedBlock && !headerUnipolBlock) {
+    // Block exists but not yet decorated - decorate it
+    await loadBlock(undecoratedBlock);
+    // After decoration, find the decorated block (it replaces the original)
+    // The decorated block should be in the same parent
+    const parent = undecoratedBlock.parentElement;
+    headerUnipolBlock = parent?.querySelector('.header-unipol') || fragment.querySelector('.header-unipol');
+  }
+
+  if (headerUnipolBlock) {
+    // Use header-unipol component directly
+    // Clear block and append header-unipol
+    block.textContent = '';
+
+    // Create wrapper for header-unipol to maintain header structure
+    const navWrapper = document.createElement('div');
+    navWrapper.className = 'nav-wrapper';
+    navWrapper.append(headerUnipolBlock);
+    block.append(navWrapper);
+
+    return;
+  }
+
+  // Fallback to default AEM EDS nav structure
   // decorate nav DOM
   block.textContent = '';
   const nav = document.createElement('nav');
@@ -126,7 +161,7 @@ export default async function decorate(block) {
   });
 
   const navBrand = nav.querySelector('.nav-brand');
-  const brandLink = navBrand.querySelector('.button');
+  const brandLink = navBrand?.querySelector('.button');
   if (brandLink) {
     brandLink.className = '';
     brandLink.closest('.button-container').className = '';
