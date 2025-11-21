@@ -17,52 +17,62 @@ export const CHECKBOX_TYPES = {
  * @returns {HTMLElement}
  */
 export function createCheckbox(typeStatus, disabled, instrumentation = {}) {
+  const wrapper = document.createElement('label');
+  wrapper.className = 'checkbox';
+  wrapper.setAttribute('role', 'checkbox');
 
   const checkbox = document.createElement('input');
-  checkbox.name = 'checkbox';
   checkbox.type = 'checkbox';
-  checkbox.className = ['checkbox', `checkbox-${typeStatus}`].join(' ');
-  checkbox.setAttribute('role', 'checkbox');
+  checkbox.name = 'checkbox';
 
-  if (typeStatus === CHECKBOX_TYPES.INDETERMINATE) {
-    checkbox.indeterminate = true;
-    checkbox.classList.add('minus-icon');
-    checkbox.setAttribute('aria-checked', 'mixed');
-  } else if (typeStatus === CHECKBOX_TYPES.CHECKED) {
+  if (typeStatus === CHECKBOX_TYPES.CHECKED) {
     checkbox.checked = true;
-    checkbox.classList.add('checked-icon');
     checkbox.setAttribute('aria-checked', 'true');
+  } else if (typeStatus === CHECKBOX_TYPES.INDETERMINATE) {
+    checkbox.indeterminate = true;
+    checkbox.setAttribute('aria-checked', 'mixed');
   } else {
     checkbox.setAttribute('aria-checked', 'false');
   }
 
-
   if (disabled) {
-    checkbox.classList.add('disabled');
+    checkbox.disabled = true;
+    wrapper.classList.add('disabled');
     checkbox.setAttribute('aria-disabled', 'true');
   }
-
-  checkbox.addEventListener('change', () => {
-    checkbox.indeterminate = false;
-    checkbox.classList.remove('checked-icon', 'minus-icon');
-
-    if (checkbox.checked) {
-      checkbox.classList.add('checked-icon');
-      checkbox.setAttribute('aria-checked', 'true');
-    } else {
-      checkbox.setAttribute('aria-checked', 'false');
-    }
-  });
-
-  checkbox.onclick = (e) => {
-    e.stopPropagation();
-  };
 
   Object.entries(instrumentation).forEach(([attr, value]) => {
     checkbox.setAttribute(attr, value);
   });
 
-  return checkbox;
+  const customSpan = document.createElement('span');
+  customSpan.className = 'checkbox-custom';
+
+  customSpan.tabIndex = 0;
+  customSpan.setAttribute('role', 'checkbox');
+  customSpan.setAttribute('aria-checked', checkbox.checked ? 'true' : 'false');
+
+  checkbox.addEventListener('change', () => {
+    if (checkbox.checked) {
+      customSpan.classList.remove('minus-icon');
+      customSpan.classList.add('checked-icon');
+      checkbox.setAttribute('aria-checked', 'true');
+    } else {
+      customSpan.classList.remove('checked-icon', 'minus-icon');
+      checkbox.setAttribute('aria-checked', 'false');
+    }
+  });
+
+  if (typeStatus === CHECKBOX_TYPES.CHECKED) {
+    customSpan.classList.add('checked-icon');
+  } else if (typeStatus === CHECKBOX_TYPES.INDETERMINATE) {
+    customSpan.classList.add('minus-icon');
+  }
+
+  wrapper.appendChild(checkbox);
+  wrapper.appendChild(customSpan);
+
+  return wrapper;
 }
 
 /**
@@ -115,10 +125,9 @@ export default function decorateCheckbox(block) {
 
   const { typeStatus, disabled, instrumentation } = extractValuesFromRows(rows);
 
-  const hasInstrumentation =
-    block.hasAttribute('data-aue-resource') ||
-    block.querySelector('[data-aue-resource]') ||
-    block.querySelector('[data-richtext-prop]');
+  const hasInstrumentation = block.hasAttribute('data-aue-resource')
+    || block.querySelector('[data-aue-resource]')
+    || block.querySelector('[data-richtext-prop]');
 
   let checkboxElement;
 
@@ -142,4 +151,3 @@ export default function decorateCheckbox(block) {
 
   block.classList.add('checkbox-block');
 }
-
