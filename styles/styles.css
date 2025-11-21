@@ -180,9 +180,13 @@ main .section.text-block-container.number-block-container.bg-white {
 }
 
 
-.section.text-list-colonna-1-container .unipol-top-footer,
+.section.text-list-container .unipol-top-footer,
 .section.footer-download-link-container .unipol-top-footer {
-    background-color: var(--color-background-default-tertiary);
-    margin: 0;
-    font-family: var(--Family-Font-2);
+    display: flex;
+    color: #F9F9F7;
+}
+
+.section.text-list-container .unipol-top-footer a,
+.section.footer-download-link-container .unipol-top-footer a {
+    color: #F9F9F7;
 }

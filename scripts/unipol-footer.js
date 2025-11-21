@@ -1,6 +1,6 @@
 export default function initUnipolFooter() {
   const selectors = [
-    '.section.text-list-colonna-1-container',
+    '.section.text-list-container',
     '.section.footer-download-link-container',
     '.section.footer-privacy-link-list-container',
     '.section.footer-social-list-container',
