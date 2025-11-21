@@ -189,7 +189,12 @@
                   "text-list": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
                     "name": "Text List",
-                    "model": "text-link"
+                    "model": "text-list",
+                    "filter": "text-list",
+                    "text-link": {
+                      "name": "Text Link",
+                      "model": "text-link"
+                    }
                   },
                   "footer-download-link": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
