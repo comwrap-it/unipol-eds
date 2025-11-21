@@ -231,8 +231,10 @@ export default async function decorate(block) {
   const select = createSelect(
     'Sample Select',
     optionsData,
+    (value) => { console.log('Selected value:', value); },
     'Hint text',
     'search-icon',
+    false,
   );
   selectContainer.appendChild(select);
   testButtons.appendChild(selectContainer);
