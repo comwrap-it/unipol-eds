@@ -1507,6 +1507,55 @@
         "component": "text",
         "label": "Testo Unipol Group Button",
         "name": "unipolGroupTextFooter"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolQRcode",
+        "label": "Img QRcode"
+      },
+      {
+        "component": "text",
+        "label": "Testo Unipol Group Button",
+        "name": "unipolQRcodeFooter"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolGooglePlay",
+        "label": "Img GooglePlay"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkGooglePlay",
+        "label": "Link GooglePlay"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolAppStore",
+        "label": "Img Apple Store"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkAppStore",
+        "label": "LinkAppStore"
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Privacy Link",
+        "name": "footerPrivacySection"
+      },
+      {
+        "component": "text",
+        "name": "texPrivacyLink",
+        "label": "Testo Link Privacy",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkPrivacyLink",
+        "label": "Link Privacy"
       }
     ]
   },
