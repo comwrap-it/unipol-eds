@@ -18,12 +18,20 @@ export const MAX_DESCRIPTION_LENGTH = 40;
 function truncateTextContent(element, maxLength) {
   if (!element) return;
 
-  const textContent = element.textContent || '';
+  // Get text content and trim whitespace/newlines
+  const textContent = (element.textContent || '').trim();
+  
+  // Only process if there's actual content
+  if (!textContent) return;
+
   if (textContent.length > maxLength) {
     const truncated = textContent.substring(0, maxLength);
     element.textContent = truncated;
     // eslint-disable-next-line no-console
     console.warn(`Text truncated to ${maxLength} characters: "${truncated}"`);
+  } else {
+    // Set trimmed content even if not truncated to remove whitespace
+    element.textContent = textContent;
   }
 }
 
