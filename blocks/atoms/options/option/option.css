@@ -41,7 +41,7 @@
 
             & .title {
                 color: var(--color-options-default-text-label, #001c35);
-                font-family: var(--font-family-font-2, Manrope);
+                font-family: var(--Family-Font-2, Manrope);
                 font-size: var(--font-size-14, 14px);
                 font-style: normal;
                 font-weight: var(--font-weight-medium);
@@ -52,7 +52,7 @@
                 color: var(--color-options-default-text-description, #63727d);
 
                 /* Text styles/Body Small */
-                font-family: var(--font-family-font-2, Manrope);
+                font-family: var(--Family-Font-2, Manrope);
                 font-size: var(--font-size-14, 14px);
                 font-style: normal;
                 font-weight: var(--font-weight-italic);

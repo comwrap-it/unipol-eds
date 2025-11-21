@@ -113,7 +113,7 @@
                 var(--color-input-fields-placeholder-border);
             background-color: var(--color-input-fields-enabled-background);
             color: var(--color-input-fields-placeholder-text-value);
-            font-family: var(--font-family-font-2);
+            font-family: var(--Family-Font-2);
             font-size: var(--font-size-16);
             font-weight: var(--font-weight-italic);
             line-height: 1.4;
@@ -170,7 +170,7 @@
             transform: translateY(-50%);
             pointer-events: none;
             transition: all 0.2s ease-in-out;
-            font-family: var(--font-family-font-2);
+            font-family: var(--Family-Font-2);
             font-size: var(--font-size-16);
             font-weight: var(--font-weight-italic);
             line-height: 1.4;
@@ -324,7 +324,7 @@
         padding-left: var(--dimension-input-fields-horizontal-padding, 24px);
         gap: var(--dimension-space-200-8, 8px);
         align-self: stretch;
-        font-family: var(--font-family-font-2);
+        font-family: var(--Family-Font-2);
         font-size: var(--font-size-12);
         font-weight: var(--font-weight-italic);
         line-height: 1.4;

@@ -30,8 +30,10 @@ const config = {
   // Serve parent EDS directories as static files
   // This allows preview-head.html to load CSS via <link> tags
   staticDirs: [
-    { from: '../../styles', to: '/styles' },  // Design tokens, fonts, icons
+    { from: '../../styles', to: '/styles' },  // Design tokens and CSS
     { from: '../../blocks', to: '/blocks' },  // Component CSS
+    { from: '../../fonts', to: '/fonts' },    // Font files (TTF)
+    { from: '../../icons', to: '/icons' },    // Icon files (SVG/PNG)
   ],
   
   viteFinal: async (config) => {
