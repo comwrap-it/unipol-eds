@@ -24,9 +24,18 @@
       "components": [
         {
           "...": "./_section.json#/definitions"
-        },
+        }
+      ]
+    },
+    {
+      "title": "Widgets",
+      "id": "sections",
+      "components": [
         {
           "...": "./_kpi-highlights-widget.json#/definitions"
+        },
+        {
+          "...": "../blocks/widgets/insurance-product-carousel/_insurance-product-carousel.json#/definitions"
         },
         {
           "...": "../blocks/organisms/carousel/insurance-product-carousel/_insurance-product-carousel.json#/definitions"

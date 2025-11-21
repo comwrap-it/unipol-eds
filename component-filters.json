@@ -29,22 +29,6 @@
     "components": []
   },
   {
-    "id": "insurance-product-carousel",
-    "components": [
-      "insurance-product-card"
-    ]
-  },
-  {
-    "id": "footer-section",
-    "components": [
-      "text-list",
-      "footer-download-link",
-      "footer-social-list",
-      "footer-text",
-      "footer-privacy-link-list"
-    ]
-  },
-  {
     "id": "cards",
     "components": [
       "card"
@@ -87,6 +71,30 @@
     "id": "text-list",
     "components": [
       "text-link"
+    ]
+  },
+  {
+    "id": "options",
+    "components": [
+      "unipol-option"
+    ]
+  },
+  {
+    "id": "insurance-product-carousel",
+    "components": [
+      "insurance-product-card"
+    ],
+    "min": 1,
+    "max": 8
+  },
+  {
+    "id": "footer-section",
+    "components": [
+      "text-list",
+      "footer-download-link",
+      "footer-social-list",
+      "footer-text",
+      "footer-privacy-link-list"
     ]
   }
 ]
