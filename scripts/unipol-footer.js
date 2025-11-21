@@ -23,7 +23,7 @@ export default function initUnipolFooter() {
   }
 
   const textListContainer = document.createElement('div');
-  textListContainer.classList.add('unipol-text-list-container');
+  textListContainer.classList.add('unipol-footer-text-list-container');
 
   textListWrappers.forEach((el) => textListContainer.appendChild(el));
 
