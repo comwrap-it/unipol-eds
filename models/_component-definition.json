@@ -29,6 +29,12 @@
           "...": "./_kpi-highlights-widget.json#/definitions"
         },
         {
+          "...": "../blocks/organisms/carousel/insurance-product-carousel/_insurance-product-carousel.json#/definitions"
+        },
+        {
+          "...": "../blocks/molecules/insurance-product-card/_insurance-product-card.json#/definitions"
+        },
+        {
           "...": "./_footer-section.json#/definitions"
         }
       ]

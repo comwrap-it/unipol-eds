@@ -4,6 +4,7 @@
     "components": [
       "section",
       "kpi-highlights-widget",
+      "insurance-product-carousel",
       "footer-section"
     ]
   },
@@ -12,6 +13,12 @@
   },
   {
     "...": "./_kpi-highlights-widget.json#/filters"
+  },
+  {
+    "...": "../blocks/organisms/carousel/insurance-product-carousel/_insurance-product-carousel.json#/filters"
+  },
+  {
+    "...": "../blocks/molecules/insurance-product-card/_insurance-product-card.json#/filters"
   },
   {
   "...": "./_footer-section.json#/filters"

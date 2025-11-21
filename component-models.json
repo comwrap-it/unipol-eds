@@ -170,6 +170,255 @@
     ]
   },
   {
+    "id": "insurance-product-carousel",
+    "fields": [
+      {
+        "component": "text",
+        "name": "insurance-product-carousel-name",
+        "label": "Nome sezione Insurance Product Carousel Widget"
+      }
+    ]
+  },
+  {
+    "id": "insurance-product-card",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Titolo",
+        "maxlength": 15,
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "description",
+        "label": "Descrizione",
+        "maxlength": 130,
+        "required": true
+      },
+      {
+        "component": "container",
+        "name": "button-container",
+        "label": "Configurazione Bottone",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "standardButtonLabel",
+            "label": "Button Text",
+            "required": true
+          },
+          {
+            "component": "select",
+            "name": "standardButtonVariant",
+            "label": "Variant",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Accent",
+                "value": "accent"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          },
+          {
+            "component": "select",
+            "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
+            "label": "Size",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonLeftIcon",
+            "label": "Left Icon",
+            "description": "Select the left icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left-icon"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right-icon"
+              },
+              {
+                "name": "Search Icon",
+                "value": "search-icon"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonRightIcon",
+            "label": "Right Icon",
+            "description": "Select the right icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left-icon"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right-icon"
+              },
+              {
+                "name": "Search Icon",
+                "value": "search-icon"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "note",
+        "label": "Note",
+        "maxlength": 60,
+        "required": true
+      },
+      {
+        "component": "container",
+        "name": "tag",
+        "label": "Configurazione Tag",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "tagLabel",
+            "label": "Tag text",
+            "required": true
+          },
+          {
+            "component": "select",
+            "name": "tagCategory",
+            "label": "Tag Category",
+            "required": true,
+            "value": "mobility",
+            "options": [
+              {
+                "name": "Mobility",
+                "value": "mobility"
+              },
+              {
+                "name": "Welfare",
+                "value": "welfare"
+              },
+              {
+                "name": "Property",
+                "value": "property"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "tagVariant",
+            "label": "Tag type",
+            "required": true,
+            "value": "default",
+            "options": [
+              {
+                "name": "Default",
+                "value": "default"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Neutral",
+                "value": "neutral"
+              },
+              {
+                "name": "Custom",
+                "value": "custom"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false,
+        "required": true
+      },
+      {
+        "component": "container",
+        "name": "icons",
+        "label": "Configurazione Icone 3D",
+        "collapsible": true,
+        "required": true,
+        "fields": [
+          {
+            "component": "switch",
+            "name": "vehiclesShowIcon",
+            "label": "Show Vehicles & Mobility icon",
+            "description": "Toggle to display the Vehicles & Mobility icon",
+            "value": false
+          },
+          {
+            "component": "switch",
+            "name": "homeShowIcon",
+            "label": "Show Home & Family icon",
+            "description": "Toggle to display the Home & Family icon",
+            "value": false
+          },
+          {
+            "component": "switch",
+            "name": "personalShowIcon",
+            "label": "Show Personal Protection icon",
+            "description": "Toggle to display the Personal Protection icon",
+            "value": false
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "footer-section",
     "fields": [
       {
@@ -1178,6 +1427,57 @@
               {
                 "name": "Extra Large",
                 "value": "extra-large"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "test-button-container-radio-field",
+        "label": "Configurazione Radio Button Field",
+        "fields": [
+          {
+            "component": "text",
+            "name": "radioButtonlabel",
+            "label": "Radio Button Label",
+            "description": "Primary text displayed next to the radio",
+            "value": ""
+          },
+          {
+            "component": "text",
+            "name": "radioButtonDescription",
+            "label": "Radio Button Description",
+            "description": "Secondary text displayed below the label",
+            "value": ""
+          },
+          {
+            "component": "container",
+            "name": "radio-button-field-radio",
+            "label": "Radio Button Of The Field",
+            "fields": [
+              {
+                "component": "select",
+                "name": "type",
+                "label": "Type",
+                "value": "unchecked",
+                "options": [
+                  {
+                    "name": "Unchecked",
+                    "value": "unchecked"
+                  },
+                  {
+                    "name": "Checked",
+                    "value": "checked"
+                  }
+                ]
+              },
+              {
+                "component": "switch",
+                "name": "disabled",
+                "label": "Disabled",
+                "description": "Toggle to disable the radio button",
+                "value": false
               }
             ]
           }
