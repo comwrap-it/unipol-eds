@@ -170,6 +170,16 @@
     ]
   },
   {
+    "id": "insurance-product-carousel-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "insurance-product-carousel-widget-name",
+        "label": "Nome sezione Insurance Product Carousel Widget"
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -204,6 +214,114 @@
         "name": "rows",
         "value": "",
         "label": "Rows"
+      }
+    ]
+  },
+  {
+    "id": "footer-download-link",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "logoUnipolFooter",
+        "label": "Logo Unipol Footer"
+      },
+      {
+        "component": "text",
+        "name": "UnipolButtonGroup",
+        "label": "Testo Unipol Group"
+      },
+      {
+        "component": "aem-content",
+        "name": "UnipolButtonHref",
+        "label": "Link URL Unipol Group"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "buttonIconUnipolGroup",
+        "label": "Icona Button Unipol Group"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "qrCodeFooterImg",
+        "label": "Immagine QR CODE"
+      },
+      {
+        "component": "richtext",
+        "name": "qrCodeImg",
+        "value": "",
+        "label": "Testo immagine codice qr",
+        "valueType": "string"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "googlePlayImg",
+        "label": "Immagine GooglePlay"
+      },
+      {
+        "component": "aem-content",
+        "name": "googlePlayHref",
+        "label": "GooglePlay Link URL"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "appStoreImg",
+        "label": "Immagine AppleStore"
+      },
+      {
+        "component": "aem-content",
+        "name": "appStoreHref",
+        "label": "appStore Link URL"
+      }
+    ]
+  },
+  {
+    "id": "footer-privacy-link",
+    "fields": [
+      {
+        "component": "text",
+        "name": "footerPrivacyLink",
+        "label": "Testo Link",
+        "required": true
+      },
+      {
+        "component": "aem-content",
+        "name": "footerPrivacyLinkHref",
+        "label": "Link URL",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "footer-social-link",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "socialFooterImg",
+        "label": "Logo Social Footer",
+        "multi": false
+      },
+      {
+        "component": "aem-content",
+        "name": "logoSocialHref",
+        "label": "Social Link URL"
+      }
+    ]
+  },
+  {
+    "id": "footer-text",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "footer-text",
+        "value": "",
+        "label": "Configurazione dei testi del footer",
+        "valueType": "string"
       }
     ]
   },
@@ -252,17 +370,17 @@
         "name": "numberBlock1"
       },
       {
-        "component": "text-input",
+        "component": "text",
         "label": "Titolo blocco 1",
         "name": "numberBlockText1",
-        "maxlength": 7,
-        "valueType": "string"
+        "maxlength": 7
       },
       {
         "component": "richtext",
         "name": "numberBlockSubText1",
         "label": "Descrizione blocco 1",
-        "valueType": "string"
+        "valueType": "string",
+        "maxlength": 40
       },
       {
         "component": "tab",
@@ -270,17 +388,17 @@
         "name": "numberBlock2"
       },
       {
-        "component": "text-input",
+        "component": "text",
         "label": "Titolo blocco 2",
         "name": "numberBlockText2",
-        "maxlength": 7,
-        "valueType": "string"
+        "maxlength": 7
       },
       {
         "component": "richtext",
         "name": "numberBlockSubText2",
         "label": "Descrizione blocco 2",
-        "valueType": "string"
+        "valueType": "string",
+        "maxlength": 40
       },
       {
         "component": "tab",
@@ -288,17 +406,17 @@
         "name": "numberBlock3"
       },
       {
-        "component": "text-input",
+        "component": "text",
         "label": "Titolo blocco 3",
         "name": "numberBlockText3",
-        "maxlength": 7,
-        "valueType": "string"
+        "maxlength": 7
       },
       {
         "component": "richtext",
         "name": "numberBlockSubText3",
         "label": "Descrizione blocco 3",
-        "valueType": "string"
+        "valueType": "string",
+        "maxlength": 40
       }
     ]
   },
@@ -314,7 +432,7 @@
             "component": "text",
             "name": "standardButtonLabel",
             "label": "Button Text",
-            "required": true
+            "required": false
           },
           {
             "component": "select",
@@ -337,8 +455,15 @@
             ]
           },
           {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          },
+          {
             "component": "select",
             "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
             "label": "Size",
             "value": "medium",
             "options": [
@@ -361,17 +486,16 @@
             ]
           },
           {
-            "component": "aem-content",
-            "name": "standardButtonHref",
-            "label": "Link URL",
-            "description": "Optional URL to make this a link button"
-          },
-          {
             "component": "select",
             "name": "standardButtonLeftIcon",
             "label": "Left Icon",
             "description": "Select the left icon",
+            "value": "",
             "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
               {
                 "name": "Chevron Left",
                 "value": "chevron-left-icon"
@@ -391,7 +515,12 @@
             "name": "standardButtonRightIcon",
             "label": "Right Icon",
             "description": "Select the right icon",
+            "value": "",
             "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
               {
                 "name": "Chevron Left",
                 "value": "chevron-left-icon"
@@ -501,72 +630,107 @@
             "required": true
           },
           {
-            "component": "switch",
-            "name": "linkButtonShowLeftIcon",
-            "label": "Show Left Icon",
-            "description": "Toggle to display a left icon",
-            "value": false
+            "component": "select",
+            "name": "linkButtonLeftIcon",
+            "label": "Link Button Left Icon",
+            "description": "Optional icon on the left",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right"
+              },
+              {
+                "name": "Search",
+                "value": "search-icon"
+              }
+            ]
           },
           {
-            "component": "switch",
-            "name": "linkButtonShowRightIcon",
-            "label": "Show Right Icon",
-            "description": "Toggle to display a right icon",
-            "value": false
+            "component": "select",
+            "name": "linkButtonRightIcon",
+            "label": "Right Button Right Icon",
+            "description": "Optional icon on the right",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right"
+              },
+              {
+                "name": "Search",
+                "value": "search-icon"
+              }
+            ]
           },
           {
             "component": "select",
             "name": "linkButtonLeftIconSize",
-            "label": "Left Icon Size",
-            "if": {
-              "linkButtonShowLeftIcon": true
-            },
-            "value": "m",
+            "label": "Size",
+            "value": "medium",
             "options": [
               {
                 "name": "Small",
-                "value": "s"
+                "value": "small"
               },
               {
                 "name": "Medium",
-                "value": "m"
+                "value": "medium"
               },
               {
                 "name": "Large",
-                "value": "l"
+                "value": "large"
               },
               {
-                "name": "ExtraLarge",
-                "value": "xl"
+                "name": "Extra Large",
+                "value": "extra-large"
               }
             ]
           },
           {
             "component": "select",
             "name": "linkButtonRightIconSize",
-            "label": "Right Icon Size",
-            "if": {
-              "linkButtonShowRightIcon": true
-            },
-            "value": "m",
+            "label": "Size",
+            "value": "medium",
             "options": [
               {
                 "name": "Small",
-                "value": "s"
+                "value": "small"
               },
               {
                 "name": "Medium",
-                "value": "m"
+                "value": "medium"
               },
               {
                 "name": "Large",
-                "value": "l"
+                "value": "large"
               },
               {
-                "name": "ExtraLarge",
-                "value": "xl"
+                "name": "Extra Large",
+                "value": "extra-large"
               }
             ]
+          },
+          {
+            "component": "switch",
+            "name": "linkButtonDisabled",
+            "label": "Disabled",
+            "description": "Toggle to disable the link button",
+            "value": false
           }
         ]
       },
@@ -890,66 +1054,180 @@
       },
       {
         "component": "container",
-        "name": "test-button-container-options-list",
-        "label": "Configurazione Options List",
+        "name": "test-button-container-navigation-pill",
+        "label": "Configurazione Navigation Pill",
         "fields": [
           {
+            "component": "text",
+            "name": "navigationPillLabel",
+            "label": "Label",
+            "required": true
+          },
+          {
+            "component": "select",
+            "name": "navigationPillVariant",
+            "label": "Variant",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "navigationPillHref",
+            "label": "Link URL",
+            "description": "Optional URL the pill points to"
+          },
+          {
+            "component": "select",
+            "name": "navigationPillLeftIcon",
+            "label": "Left Icon",
+            "description": "Optional icon on the left",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right"
+              },
+              {
+                "name": "Search",
+                "value": "search-icon"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "navigationPillLeftIconSize",
+            "label": "Size",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "navigationPillRightIcon",
+            "label": "Right Icon",
+            "description": "Optional icon on the right",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right"
+              },
+              {
+                "name": "Search",
+                "value": "search-icon"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "navigationPillRightIconSize",
+            "label": "Size",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "test-button-container-radio-field",
+        "label": "Configurazione Radio Button Field",
+        "fields": [
+          {
+            "component": "text",
+            "name": "radioButtonlabel",
+            "label": "Radio Button Label",
+            "description": "Primary text displayed next to the radio",
+            "value": ""
+          },
+          {
+            "component": "text",
+            "name": "radioButtonDescription",
+            "label": "Radio Button Description",
+            "description": "Secondary text displayed below the label",
+            "value": ""
+          },
+          {
             "component": "container",
-            "name": "options-list-option-container",
-            "label": "Config Options List's Option",
+            "name": "radio-button-field-radio",
+            "label": "Radio Button Of The Field",
             "fields": [
               {
-                "component": "container",
-                "name": "option-checkbox-container",
-                "label": "Configurazione Option Checkbox",
-                "fields": [
+                "component": "select",
+                "name": "type",
+                "label": "Type",
+                "value": "unchecked",
+                "options": [
                   {
-                    "component": "select",
-                    "name": "type",
-                    "label": "Type",
-                    "value": "unchecked",
-                    "options": [
-                      {
-                        "name": "Unchecked",
-                        "value": "unchecked"
-                      },
-                      {
-                        "name": "Checked",
-                        "value": "checked"
-                      },
-                      {
-                        "name": "Indeterminate",
-                        "value": "indeterminate"
-                      }
-                    ]
+                    "name": "Unchecked",
+                    "value": "unchecked"
                   },
                   {
-                    "component": "switch",
-                    "name": "disabled",
-                    "label": "Disabled",
-                    "description": "Toggle to disable the checkbox",
-                    "value": false
+                    "name": "Checked",
+                    "value": "checked"
                   }
                 ]
               },
               {
-                "component": "text",
-                "name": "label",
-                "label": "Label",
-                "value": "Label",
-                "required": true
-              },
-              {
-                "component": "text",
-                "name": "description",
-                "label": "Description",
-                "value": "Description"
-              },
-              {
                 "component": "switch",
-                "name": "showCheckbox",
-                "label": "Show Checkbox",
-                "description": "Toggle to show or hide the checkbox",
+                "name": "disabled",
+                "label": "Disabled",
+                "description": "Toggle to disable the radio button",
                 "value": false
               }
             ]
@@ -999,7 +1277,7 @@
             "component": "text",
             "name": "standardButtonLabel",
             "label": "Button Text",
-            "required": true
+            "required": false
           },
           {
             "component": "select",
@@ -1022,8 +1300,15 @@
             ]
           },
           {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          },
+          {
             "component": "select",
             "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
             "label": "Size",
             "value": "medium",
             "options": [
@@ -1046,17 +1331,16 @@
             ]
           },
           {
-            "component": "aem-content",
-            "name": "standardButtonHref",
-            "label": "Link URL",
-            "description": "Optional URL to make this a link button"
-          },
-          {
             "component": "select",
             "name": "standardButtonLeftIcon",
             "label": "Left Icon",
             "description": "Select the left icon",
+            "value": "",
             "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
               {
                 "name": "Chevron Left",
                 "value": "chevron-left-icon"
@@ -1076,7 +1360,12 @@
             "name": "standardButtonRightIcon",
             "label": "Right Icon",
             "description": "Select the right icon",
+            "value": "",
             "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
               {
                 "name": "Chevron Left",
                 "value": "chevron-left-icon"
@@ -1092,6 +1381,1873 @@
             ]
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "text-link",
+    "fields": [
+      {
+        "component": "boolean",
+        "label": "Mostra Testo o Link",
+        "description": "Attivo: mostra la configurazione Titolo/ Testo. Disattivo: mostra la configurazione link.",
+        "name": "hideTextLinkList",
+        "valueType": "boolean"
+      },
+      {
+        "component": "richtext",
+        "label": "Testo Elenco",
+        "name": "listLinks",
+        "valueType": "string",
+        "condition": {
+          "===": [
+            {
+              "var": "hideTextLinkList"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "linkTextComp",
+        "label": "Testo Link",
+        "condition": {
+          "===": [
+            {
+              "var": "hideTextLinkList"
+            },
+            false
+          ]
+        }
+      },
+      {
+        "component": "aem-content",
+        "name": "linkHrefComp",
+        "label": "Link URL",
+        "condition": {
+          "===": [
+            {
+              "var": "hideTextLinkList"
+            },
+            false
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "3D-icons",
+    "fields": [
+      {
+        "component": "switch",
+        "name": "vehiclesShowIcon",
+        "label": "Show Vehicles & Mobility icon",
+        "description": "Toggle to display the Vehicles & Mobility icon",
+        "value": false
+      },
+      {
+        "component": "switch",
+        "name": "homeShowIcon",
+        "label": "Show Home & Family icon",
+        "description": "Toggle to display the Home & Family icon",
+        "value": false
+      },
+      {
+        "component": "switch",
+        "name": "personalShowIcon",
+        "label": "Show Personal Protection icon",
+        "description": "Toggle to display the Personal Protection icon",
+        "value": false
+      }
+    ]
+  },
+  {
+    "id": "icon-button",
+    "fields": [
+      {
+        "component": "select",
+        "name": "iconButtonIcon",
+        "label": "Icon",
+        "required": true,
+        "description": "Select the icon",
+        "options": [
+          {
+            "name": "Chevron Left",
+            "value": "chevron-left"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "chevron-right"
+          },
+          {
+            "name": "Search Icon",
+            "value": "search-icon"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "iconButtonVariant",
+        "label": "Variant",
+        "value": "primary",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "iconButtonSize",
+        "label": "Size",
+        "value": "medium",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          },
+          {
+            "name": "Extra Large",
+            "value": "extra-large"
+          }
+        ]
+      },
+      {
+        "component": "aem-content",
+        "name": "iconButtonHref",
+        "label": "Link URL",
+        "description": "Optional URL to make this a link button"
+      }
+    ]
+  },
+  {
+    "id": "link-button",
+    "fields": [
+      {
+        "component": "text",
+        "name": "linkButtonLabel",
+        "label": "Link Text",
+        "required": true
+      },
+      {
+        "component": "aem-content",
+        "name": "linkButtonHref",
+        "label": "Link URL",
+        "description": "Destination URL for this link button",
+        "required": true
+      },
+      {
+        "component": "select",
+        "name": "linkButtonLeftIcon",
+        "label": "Link Button Left Icon",
+        "description": "Optional icon on the left",
+        "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
+          {
+            "name": "Chevron Left",
+            "value": "chevron-left"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "chevron-right"
+          },
+          {
+            "name": "Search",
+            "value": "search-icon"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "linkButtonRightIcon",
+        "label": "Right Button Right Icon",
+        "description": "Optional icon on the right",
+        "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
+          {
+            "name": "Chevron Left",
+            "value": "chevron-left"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "chevron-right"
+          },
+          {
+            "name": "Search",
+            "value": "search-icon"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "linkButtonLeftIconSize",
+        "label": "Size",
+        "value": "medium",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          },
+          {
+            "name": "Extra Large",
+            "value": "extra-large"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "linkButtonRightIconSize",
+        "label": "Size",
+        "value": "medium",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          },
+          {
+            "name": "Extra Large",
+            "value": "extra-large"
+          }
+        ]
+      },
+      {
+        "component": "switch",
+        "name": "linkButtonDisabled",
+        "label": "Disabled",
+        "description": "Toggle to disable the link button",
+        "value": false
+      }
+    ]
+  },
+  {
+    "id": "standard-button",
+    "fields": [
+      {
+        "component": "text",
+        "name": "standardButtonLabel",
+        "label": "Button Text",
+        "required": false
+      },
+      {
+        "component": "select",
+        "name": "standardButtonVariant",
+        "label": "Variant",
+        "value": "primary",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          },
+          {
+            "name": "Accent",
+            "value": "accent"
+          }
+        ]
+      },
+      {
+        "component": "aem-content",
+        "name": "standardButtonHref",
+        "label": "Link URL",
+        "description": "Optional URL to make this a link button"
+      },
+      {
+        "component": "select",
+        "name": "standardButtonSize",
+        "description": "Modifica la dimensione delle icone del bottone",
+        "label": "Size",
+        "value": "medium",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          },
+          {
+            "name": "Extra Large",
+            "value": "extra-large"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "standardButtonLeftIcon",
+        "label": "Left Icon",
+        "description": "Select the left icon",
+        "value": "",
+        "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
+          {
+            "name": "Chevron Left",
+            "value": "chevron-left-icon"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "chevron-right-icon"
+          },
+          {
+            "name": "Search Icon",
+            "value": "search-icon"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "standardButtonRightIcon",
+        "label": "Right Icon",
+        "description": "Select the right icon",
+        "value": "",
+        "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
+          {
+            "name": "Chevron Left",
+            "value": "chevron-left-icon"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "chevron-right-icon"
+          },
+          {
+            "name": "Search Icon",
+            "value": "search-icon"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "category-chip",
+    "fields": [
+      {
+        "component": "select",
+        "name": "categoryChipCategory",
+        "label": "Category",
+        "required": true,
+        "value": "mobility",
+        "options": [
+          {
+            "name": "Mobility",
+            "value": "mobility"
+          },
+          {
+            "name": "Welfare",
+            "value": "welfare"
+          },
+          {
+            "name": "Property",
+            "value": "property"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "categoryChipIcon",
+        "label": "Icon",
+        "required": true,
+        "description": "Select the icon",
+        "options": [
+          {
+            "name": "Search",
+            "value": "search-icon"
+          },
+          {
+            "name": "Chevron Left",
+            "value": "chevron-left-icon"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "chevron-right-icon"
+          },
+          {
+            "name": "Phone",
+            "value": "phone-icon"
+          },
+          {
+            "name": "Phone Call",
+            "value": "phone-call-icon"
+          },
+          {
+            "name": "Placeholder",
+            "value": "placeholder-icon"
+          },
+          {
+            "name": "Plant",
+            "value": "plant-icon"
+          },
+          {
+            "name": "Play Circle",
+            "value": "play-circle-icon"
+          },
+          {
+            "name": "Play Pause",
+            "value": "play-pause-icon"
+          },
+          {
+            "name": "Plus",
+            "value": "plus-icon"
+          },
+          {
+            "name": "Prohibit",
+            "value": "prohibit-icon"
+          },
+          {
+            "name": "Push Pin",
+            "value": "push-pin-icon"
+          },
+          {
+            "name": "Question",
+            "value": "question-icon"
+          },
+          {
+            "name": "Quotes",
+            "value": "quotes-icon"
+          },
+          {
+            "name": "Share",
+            "value": "share-icon"
+          },
+          {
+            "name": "Share Big",
+            "value": "share-big-icon"
+          },
+          {
+            "name": "Shield Check",
+            "value": "shield-check-icon"
+          },
+          {
+            "name": "Shield Plus",
+            "value": "shield-plus-icon"
+          },
+          {
+            "name": "Shield Slash",
+            "value": "shield-slash-icon"
+          },
+          {
+            "name": "Sign In",
+            "value": "sign-in-icon"
+          },
+          {
+            "name": "Sign Out",
+            "value": "sign-out-icon"
+          },
+          {
+            "name": "Skip Back Circle",
+            "value": "skip-back-circle-icon"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "category-tab",
+    "fields": [
+      {
+        "component": "text",
+        "name": "categoryTabLabel",
+        "label": "Category tab text",
+        "required": true
+      },
+      {
+        "component": "select",
+        "name": "categoryTabIcon",
+        "label": "Icon",
+        "required": true,
+        "description": "Select the icon",
+        "options": [
+          {
+            "name": "Search",
+            "value": "search-icon"
+          },
+          {
+            "name": "Chevron Left",
+            "value": "chevron-left-icon"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "chevron-right-icon"
+          },
+          {
+            "name": "Phone",
+            "value": "phone-icon"
+          },
+          {
+            "name": "Phone Call",
+            "value": "phone-call-icon"
+          },
+          {
+            "name": "Placeholder",
+            "value": "placeholder-icon"
+          },
+          {
+            "name": "Plant",
+            "value": "plant-icon"
+          },
+          {
+            "name": "Play Circle",
+            "value": "play-circle-icon"
+          },
+          {
+            "name": "Play Pause",
+            "value": "play-pause-icon"
+          },
+          {
+            "name": "Plus",
+            "value": "plus-icon"
+          },
+          {
+            "name": "Prohibit",
+            "value": "prohibit-icon"
+          },
+          {
+            "name": "Push Pin",
+            "value": "push-pin-icon"
+          },
+          {
+            "name": "Question",
+            "value": "question-icon"
+          },
+          {
+            "name": "Quotes",
+            "value": "quotes-icon"
+          },
+          {
+            "name": "Share",
+            "value": "share-icon"
+          },
+          {
+            "name": "Share Big",
+            "value": "share-big-icon"
+          },
+          {
+            "name": "Shield Check",
+            "value": "shield-check-icon"
+          },
+          {
+            "name": "Shield Plus",
+            "value": "shield-plus-icon"
+          },
+          {
+            "name": "Shield Slash",
+            "value": "shield-slash-icon"
+          },
+          {
+            "name": "Sign In",
+            "value": "sign-in-icon"
+          },
+          {
+            "name": "Sign Out",
+            "value": "sign-out-icon"
+          },
+          {
+            "name": "Skip Back Circle",
+            "value": "skip-back-circle-icon"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "categoryTabIconSize",
+        "label": "Icon size",
+        "value": "medium",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          },
+          {
+            "name": "Extra Large",
+            "value": "extra-large"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "checkbox",
+    "fields": [
+      {
+        "component": "select",
+        "name": "type",
+        "label": "Type",
+        "value": "unchecked",
+        "options": [
+          {
+            "name": "Unchecked",
+            "value": "unchecked"
+          },
+          {
+            "name": "Checked",
+            "value": "checked"
+          },
+          {
+            "name": "Indeterminate",
+            "value": "indeterminate"
+          }
+        ]
+      },
+      {
+        "component": "switch",
+        "name": "disabled",
+        "label": "Disabled",
+        "description": "Toggle to disable the checkbox",
+        "value": false
+      },
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Label",
+        "value": "Label"
+      },
+      {
+        "component": "text",
+        "name": "description",
+        "label": "Description",
+        "value": "Description"
+      }
+    ]
+  },
+  {
+    "id": "checkbox",
+    "fields": [
+      {
+        "component": "select",
+        "name": "type",
+        "label": "Type",
+        "value": "unchecked",
+        "options": [
+          {
+            "name": "Unchecked",
+            "value": "unchecked"
+          },
+          {
+            "name": "Checked",
+            "value": "checked"
+          },
+          {
+            "name": "Indeterminate",
+            "value": "indeterminate"
+          }
+        ]
+      },
+      {
+        "component": "switch",
+        "name": "disabled",
+        "label": "Disabled",
+        "description": "Toggle to disable the checkbox",
+        "value": false
+      }
+    ]
+  },
+  {
+    "id": "select",
+    "fields": [
+      {
+        "component": "text",
+        "name": "selectLabel",
+        "label": "Label",
+        "required": true,
+        "value": "Select Label"
+      },
+      {
+        "component": "text",
+        "name": "textareaHint",
+        "label": "Hint Text",
+        "value": "Textarea Hint Text"
+      },
+      {
+        "component": "select",
+        "name": "textareaHintIcon",
+        "label": "Textarea hint icon",
+        "description": "Select the icon",
+        "options": [
+          {
+            "name": "Search",
+            "value": "search-icon"
+          },
+          {
+            "name": "Chevron Left",
+            "value": "chevron-left-icon"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "chevron-right-icon"
+          },
+          {
+            "name": "Phone",
+            "value": "phone-icon"
+          },
+          {
+            "name": "Phone Call",
+            "value": "phone-call-icon"
+          },
+          {
+            "name": "Placeholder",
+            "value": "placeholder-icon"
+          },
+          {
+            "name": "Plant",
+            "value": "plant-icon"
+          },
+          {
+            "name": "Play Circle",
+            "value": "play-circle-icon"
+          },
+          {
+            "name": "Play Pause",
+            "value": "play-pause-icon"
+          },
+          {
+            "name": "Plus",
+            "value": "plus-icon"
+          },
+          {
+            "name": "Prohibit",
+            "value": "prohibit-icon"
+          },
+          {
+            "name": "Push Pin",
+            "value": "push-pin-icon"
+          },
+          {
+            "name": "Question",
+            "value": "question-icon"
+          },
+          {
+            "name": "Quotes",
+            "value": "quotes-icon"
+          },
+          {
+            "name": "Share",
+            "value": "share-icon"
+          },
+          {
+            "name": "Share Big",
+            "value": "share-big-icon"
+          },
+          {
+            "name": "Shield Check",
+            "value": "shield-check-icon"
+          },
+          {
+            "name": "Shield Plus",
+            "value": "shield-plus-icon"
+          },
+          {
+            "name": "Shield Slash",
+            "value": "shield-slash-icon"
+          },
+          {
+            "name": "Sign In",
+            "value": "sign-in-icon"
+          },
+          {
+            "name": "Sign Out",
+            "value": "sign-out-icon"
+          },
+          {
+            "name": "Skip Back Circle",
+            "value": "skip-back-circle-icon"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "textarea",
+    "fields": [
+      {
+        "component": "text",
+        "name": "textareaLabel",
+        "label": "Label",
+        "required": true,
+        "value": "Textarea Label"
+      },
+      {
+        "component": "select",
+        "name": "textareaIcon",
+        "label": "Textarea icon",
+        "description": "Select the icon",
+        "options": [
+          {
+            "name": "Search",
+            "value": "search-icon"
+          },
+          {
+            "name": "Chevron Left",
+            "value": "chevron-left-icon"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "chevron-right-icon"
+          },
+          {
+            "name": "Phone",
+            "value": "phone-icon"
+          },
+          {
+            "name": "Phone Call",
+            "value": "phone-call-icon"
+          },
+          {
+            "name": "Placeholder",
+            "value": "placeholder-icon"
+          },
+          {
+            "name": "Plant",
+            "value": "plant-icon"
+          },
+          {
+            "name": "Play Circle",
+            "value": "play-circle-icon"
+          },
+          {
+            "name": "Play Pause",
+            "value": "play-pause-icon"
+          },
+          {
+            "name": "Plus",
+            "value": "plus-icon"
+          },
+          {
+            "name": "Prohibit",
+            "value": "prohibit-icon"
+          },
+          {
+            "name": "Push Pin",
+            "value": "push-pin-icon"
+          },
+          {
+            "name": "Question",
+            "value": "question-icon"
+          },
+          {
+            "name": "Quotes",
+            "value": "quotes-icon"
+          },
+          {
+            "name": "Share",
+            "value": "share-icon"
+          },
+          {
+            "name": "Share Big",
+            "value": "share-big-icon"
+          },
+          {
+            "name": "Shield Check",
+            "value": "shield-check-icon"
+          },
+          {
+            "name": "Shield Plus",
+            "value": "shield-plus-icon"
+          },
+          {
+            "name": "Shield Slash",
+            "value": "shield-slash-icon"
+          },
+          {
+            "name": "Sign In",
+            "value": "sign-in-icon"
+          },
+          {
+            "name": "Sign Out",
+            "value": "sign-out-icon"
+          },
+          {
+            "name": "Skip Back Circle",
+            "value": "skip-back-circle-icon"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "textareaIconSize",
+        "label": "Icon size",
+        "value": "medium",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          },
+          {
+            "name": "Extra Large",
+            "value": "extra-large"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "textareaHint",
+        "label": "Hint Text",
+        "value": "Textarea Hint Text"
+      },
+      {
+        "component": "select",
+        "name": "textareaHintIcon",
+        "label": "Textarea hint icon",
+        "description": "Select the icon",
+        "options": [
+          {
+            "name": "Search",
+            "value": "search-icon"
+          },
+          {
+            "name": "Chevron Left",
+            "value": "chevron-left-icon"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "chevron-right-icon"
+          },
+          {
+            "name": "Phone",
+            "value": "phone-icon"
+          },
+          {
+            "name": "Phone Call",
+            "value": "phone-call-icon"
+          },
+          {
+            "name": "Placeholder",
+            "value": "placeholder-icon"
+          },
+          {
+            "name": "Plant",
+            "value": "plant-icon"
+          },
+          {
+            "name": "Play Circle",
+            "value": "play-circle-icon"
+          },
+          {
+            "name": "Play Pause",
+            "value": "play-pause-icon"
+          },
+          {
+            "name": "Plus",
+            "value": "plus-icon"
+          },
+          {
+            "name": "Prohibit",
+            "value": "prohibit-icon"
+          },
+          {
+            "name": "Push Pin",
+            "value": "push-pin-icon"
+          },
+          {
+            "name": "Question",
+            "value": "question-icon"
+          },
+          {
+            "name": "Quotes",
+            "value": "quotes-icon"
+          },
+          {
+            "name": "Share",
+            "value": "share-icon"
+          },
+          {
+            "name": "Share Big",
+            "value": "share-big-icon"
+          },
+          {
+            "name": "Shield Check",
+            "value": "shield-check-icon"
+          },
+          {
+            "name": "Shield Plus",
+            "value": "shield-plus-icon"
+          },
+          {
+            "name": "Shield Slash",
+            "value": "shield-slash-icon"
+          },
+          {
+            "name": "Sign In",
+            "value": "sign-in-icon"
+          },
+          {
+            "name": "Sign Out",
+            "value": "sign-out-icon"
+          },
+          {
+            "name": "Skip Back Circle",
+            "value": "skip-back-circle-icon"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "textfield",
+    "fields": [
+      {
+        "component": "text",
+        "name": "textfieldLabel",
+        "label": "Label",
+        "required": true,
+        "value": "Textfield Label"
+      },
+      {
+        "component": "select",
+        "name": "textfieldIcon",
+        "label": "Textfield icon",
+        "description": "Select the icon",
+        "options": [
+          {
+            "name": "Search",
+            "value": "search-icon"
+          },
+          {
+            "name": "Chevron Left",
+            "value": "chevron-left-icon"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "chevron-right-icon"
+          },
+          {
+            "name": "Phone",
+            "value": "phone-icon"
+          },
+          {
+            "name": "Phone Call",
+            "value": "phone-call-icon"
+          },
+          {
+            "name": "Placeholder",
+            "value": "placeholder-icon"
+          },
+          {
+            "name": "Plant",
+            "value": "plant-icon"
+          },
+          {
+            "name": "Play Circle",
+            "value": "play-circle-icon"
+          },
+          {
+            "name": "Play Pause",
+            "value": "play-pause-icon"
+          },
+          {
+            "name": "Plus",
+            "value": "plus-icon"
+          },
+          {
+            "name": "Prohibit",
+            "value": "prohibit-icon"
+          },
+          {
+            "name": "Push Pin",
+            "value": "push-pin-icon"
+          },
+          {
+            "name": "Question",
+            "value": "question-icon"
+          },
+          {
+            "name": "Quotes",
+            "value": "quotes-icon"
+          },
+          {
+            "name": "Share",
+            "value": "share-icon"
+          },
+          {
+            "name": "Share Big",
+            "value": "share-big-icon"
+          },
+          {
+            "name": "Shield Check",
+            "value": "shield-check-icon"
+          },
+          {
+            "name": "Shield Plus",
+            "value": "shield-plus-icon"
+          },
+          {
+            "name": "Shield Slash",
+            "value": "shield-slash-icon"
+          },
+          {
+            "name": "Sign In",
+            "value": "sign-in-icon"
+          },
+          {
+            "name": "Sign Out",
+            "value": "sign-out-icon"
+          },
+          {
+            "name": "Skip Back Circle",
+            "value": "skip-back-circle-icon"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "textfieldIconSize",
+        "label": "Icon size",
+        "value": "medium",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          },
+          {
+            "name": "Extra Large",
+            "value": "extra-large"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "textfieldHint",
+        "label": "Hint Text",
+        "value": "Textfield Hint Text"
+      },
+      {
+        "component": "select",
+        "name": "textfieldHintIcon",
+        "label": "Textfield hint icon",
+        "description": "Select the icon",
+        "options": [
+          {
+            "name": "Search",
+            "value": "search-icon"
+          },
+          {
+            "name": "Chevron Left",
+            "value": "chevron-left-icon"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "chevron-right-icon"
+          },
+          {
+            "name": "Phone",
+            "value": "phone-icon"
+          },
+          {
+            "name": "Phone Call",
+            "value": "phone-call-icon"
+          },
+          {
+            "name": "Placeholder",
+            "value": "placeholder-icon"
+          },
+          {
+            "name": "Plant",
+            "value": "plant-icon"
+          },
+          {
+            "name": "Play Circle",
+            "value": "play-circle-icon"
+          },
+          {
+            "name": "Play Pause",
+            "value": "play-pause-icon"
+          },
+          {
+            "name": "Plus",
+            "value": "plus-icon"
+          },
+          {
+            "name": "Prohibit",
+            "value": "prohibit-icon"
+          },
+          {
+            "name": "Push Pin",
+            "value": "push-pin-icon"
+          },
+          {
+            "name": "Question",
+            "value": "question-icon"
+          },
+          {
+            "name": "Quotes",
+            "value": "quotes-icon"
+          },
+          {
+            "name": "Share",
+            "value": "share-icon"
+          },
+          {
+            "name": "Share Big",
+            "value": "share-big-icon"
+          },
+          {
+            "name": "Shield Check",
+            "value": "shield-check-icon"
+          },
+          {
+            "name": "Shield Plus",
+            "value": "shield-plus-icon"
+          },
+          {
+            "name": "Shield Slash",
+            "value": "shield-slash-icon"
+          },
+          {
+            "name": "Sign In",
+            "value": "sign-in-icon"
+          },
+          {
+            "name": "Sign Out",
+            "value": "sign-out-icon"
+          },
+          {
+            "name": "Skip Back Circle",
+            "value": "skip-back-circle-icon"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "navigation-pill",
+    "fields": [
+      {
+        "component": "text",
+        "name": "navigationPillLabel",
+        "label": "Label",
+        "required": true
+      },
+      {
+        "component": "select",
+        "name": "navigationPillVariant",
+        "label": "Variant",
+        "value": "primary",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          }
+        ]
+      },
+      {
+        "component": "aem-content",
+        "name": "navigationPillHref",
+        "label": "Link URL",
+        "description": "Optional URL the pill points to"
+      },
+      {
+        "component": "select",
+        "name": "navigationPillLeftIcon",
+        "label": "Left Icon",
+        "description": "Optional icon on the left",
+        "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
+          {
+            "name": "Chevron Left",
+            "value": "chevron-left"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "chevron-right"
+          },
+          {
+            "name": "Search",
+            "value": "search-icon"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "navigationPillLeftIconSize",
+        "label": "Size",
+        "value": "medium",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          },
+          {
+            "name": "Extra Large",
+            "value": "extra-large"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "navigationPillRightIcon",
+        "label": "Right Icon",
+        "description": "Optional icon on the right",
+        "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
+          {
+            "name": "Chevron Left",
+            "value": "chevron-left"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "chevron-right"
+          },
+          {
+            "name": "Search",
+            "value": "search-icon"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "navigationPillRightIconSize",
+        "label": "Size",
+        "value": "medium",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          },
+          {
+            "name": "Extra Large",
+            "value": "extra-large"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "unipol-option",
+    "fields": [
+      {
+        "component": "container",
+        "name": "option-checkbox-container",
+        "label": "Configurazione Option Checkbox",
+        "fields": [
+          {
+            "component": "select",
+            "name": "type",
+            "label": "Type",
+            "value": "unchecked",
+            "options": [
+              {
+                "name": "Unchecked",
+                "value": "unchecked"
+              },
+              {
+                "name": "Checked",
+                "value": "checked"
+              },
+              {
+                "name": "Indeterminate",
+                "value": "indeterminate"
+              }
+            ]
+          },
+          {
+            "component": "switch",
+            "name": "disabled",
+            "label": "Disabled",
+            "description": "Toggle to disable the checkbox",
+            "value": false
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Label",
+        "value": "Label",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "description",
+        "label": "Description",
+        "value": "Description"
+      },
+      {
+        "component": "switch",
+        "name": "showCheckbox",
+        "label": "Show Checkbox",
+        "description": "Toggle to show or hide the checkbox",
+        "value": false
+      }
+    ]
+  },
+  {
+    "id": "radio-button-field",
+    "fields": [
+      {
+        "component": "text",
+        "name": "radioButtonlabel",
+        "label": "Radio Button Label",
+        "description": "Primary text displayed next to the radio",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "radioButtonDescription",
+        "label": "Radio Button Description",
+        "description": "Secondary text displayed below the label",
+        "value": ""
+      },
+      {
+        "component": "container",
+        "name": "radio-button-field-radio",
+        "label": "Radio Button Of The Field",
+        "fields": [
+          {
+            "component": "select",
+            "name": "type",
+            "label": "Type",
+            "value": "unchecked",
+            "options": [
+              {
+                "name": "Unchecked",
+                "value": "unchecked"
+              },
+              {
+                "name": "Checked",
+                "value": "checked"
+              }
+            ]
+          },
+          {
+            "component": "switch",
+            "name": "disabled",
+            "label": "Disabled",
+            "description": "Toggle to disable the radio button",
+            "value": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "radio",
+    "fields": [
+      {
+        "component": "select",
+        "name": "type",
+        "label": "Type",
+        "value": "unchecked",
+        "options": [
+          {
+            "name": "Unchecked",
+            "value": "unchecked"
+          },
+          {
+            "name": "Checked",
+            "value": "checked"
+          }
+        ]
+      },
+      {
+        "component": "switch",
+        "name": "disabled",
+        "label": "Disabled",
+        "description": "Toggle to disable the radio button",
+        "value": false
+      }
+    ]
+  },
+  {
+    "id": "tag",
+    "fields": [
+      {
+        "component": "text",
+        "name": "tagLabel",
+        "label": "Tag text",
+        "required": true
+      },
+      {
+        "component": "select",
+        "name": "tagCategory",
+        "label": "Tag Category",
+        "required": true,
+        "value": "mobility",
+        "options": [
+          {
+            "name": "Mobility",
+            "value": "mobility"
+          },
+          {
+            "name": "Welfare",
+            "value": "welfare"
+          },
+          {
+            "name": "Property",
+            "value": "property"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "tagVariant",
+        "label": "Tag type",
+        "required": true,
+        "value": "default",
+        "options": [
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          },
+          {
+            "name": "Neutral",
+            "value": "neutral"
+          },
+          {
+            "name": "Custom",
+            "value": "custom"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "insurance-product-card",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Titolo",
+        "maxlength": 15,
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "description",
+        "label": "Descrizione",
+        "maxlength": 130,
+        "required": true
+      },
+      {
+        "component": "container",
+        "name": "button-container",
+        "label": "Configurazione Bottone",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "standardButtonLabel",
+            "label": "Button Text",
+            "required": false
+          },
+          {
+            "component": "select",
+            "name": "standardButtonVariant",
+            "label": "Variant",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Accent",
+                "value": "accent"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          },
+          {
+            "component": "select",
+            "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
+            "label": "Size",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonLeftIcon",
+            "label": "Left Icon",
+            "description": "Select the left icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left-icon"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right-icon"
+              },
+              {
+                "name": "Search Icon",
+                "value": "search-icon"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonRightIcon",
+            "label": "Right Icon",
+            "description": "Select the right icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left-icon"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right-icon"
+              },
+              {
+                "name": "Search Icon",
+                "value": "search-icon"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "note",
+        "label": "Note",
+        "maxlength": 60,
+        "required": true
+      },
+      {
+        "component": "container",
+        "name": "tag",
+        "label": "Configurazione Tag",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "tagLabel",
+            "label": "Tag text",
+            "required": true
+          },
+          {
+            "component": "select",
+            "name": "tagCategory",
+            "label": "Tag Category",
+            "required": true,
+            "value": "mobility",
+            "options": [
+              {
+                "name": "Mobility",
+                "value": "mobility"
+              },
+              {
+                "name": "Welfare",
+                "value": "welfare"
+              },
+              {
+                "name": "Property",
+                "value": "property"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "tagVariant",
+            "label": "Tag type",
+            "required": true,
+            "value": "default",
+            "options": [
+              {
+                "name": "Default",
+                "value": "default"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Neutral",
+                "value": "neutral"
+              },
+              {
+                "name": "Custom",
+                "value": "custom"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false,
+        "required": true
+      },
+      {
+        "component": "container",
+        "name": "icons",
+        "label": "Configurazione Icone 3D",
+        "collapsible": true,
+        "required": true,
+        "fields": [
+          {
+            "component": "switch",
+            "name": "vehiclesShowIcon",
+            "label": "Show Vehicles & Mobility icon",
+            "description": "Toggle to display the Vehicles & Mobility icon",
+            "value": false
+          },
+          {
+            "component": "switch",
+            "name": "homeShowIcon",
+            "label": "Show Home & Family icon",
+            "description": "Toggle to display the Home & Family icon",
+            "value": false
+          },
+          {
+            "component": "switch",
+            "name": "personalShowIcon",
+            "label": "Show Personal Protection icon",
+            "description": "Toggle to display the Personal Protection icon",
+            "value": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "footer-section",
+    "fields": [
+      {
+        "component": "text",
+        "name": "footer-section-name",
+        "label": "Nome sezione Unipol Footer"
       }
     ]
   }

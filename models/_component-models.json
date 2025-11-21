@@ -21,6 +21,21 @@
     "...": "./_kpi-highlights-widget.json#/models"
   },
   {
+    "...": "../blocks/widgets/insurance-product-carousel/_insurance-product-carousel.json#/models"
+  },
+  {
     "...": "../blocks/*/_*.json#/models"
+  },
+  {
+    "...": "../blocks/atoms/**/_*.json#/models"
+  },
+  {
+    "...": "../blocks/molecules/**/_*.json#/models"
+  },
+  {
+    "...": "../blocks/organisms/**/_*.json#/models"
+  },
+  {
+    "...": "./_footer-section.json#/models"
   }
 ]

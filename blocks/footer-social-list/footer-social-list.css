@@ -1,0 +1,8 @@
+.footer-social-list-wrapper {
+    margin-left: auto;
+}
+
+.footer-social-list {
+    display: flex;
+    gap: var(--Space-250-12);
+}

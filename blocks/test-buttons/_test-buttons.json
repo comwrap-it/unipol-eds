@@ -82,16 +82,31 @@
         },
         {
           "component": "container",
-          "name": "test-button-container-options-list",
-          "label": "Configurazione Options List",
+          "name": "test-button-container-navigation-pill",
+          "label": "Configurazione Navigation Pill",
           "fields": [
             {
-              "...": "../atoms/options/options-list/_options-list.json#/models/option/fields"
+              "...": "../atoms/navigation-pill/_navigation-pill.json#/models/navigation-pill/fields"
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "test-button-container-radio-field",
+          "label": "Configurazione Radio Button Field",
+          "fields": [
+            {
+              "...": "../atoms/radio-button/radio-button-field/_radio-button-field.json#/models/radio-button-field/fields"
             }
           ]
         }
       ]
     }
   ],
-  "filters": []
+  "filters": [{
+    "id": "options-list",
+    "components": [
+      "unipol-option"
+    ]
+  }]
 }

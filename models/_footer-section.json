@@ -1,0 +1,45 @@
+{
+  "definitions": [
+    {
+      "title": "Footer Section",
+      "id": "footer-section",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/section/v1/section",
+            "template": {
+              "filter": "footer-section",
+              "name": "Footer Section",
+              "model": "footer-section",
+              "style": "footer-section"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "footer-section",
+      "fields": [
+        {
+          "component": "text",
+          "name": "footer-section-name",
+          "label": "Nome sezione Unipol Footer"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "footer-section",
+      "components": [
+        "text-list",
+        "footer-download-link",
+        "footer-social-list",
+        "footer-text",
+        "footer-privacy-link-list"
+      ]
+    }
+  ]
+}

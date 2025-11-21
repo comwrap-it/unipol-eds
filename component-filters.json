@@ -3,7 +3,9 @@
     "id": "main",
     "components": [
       "section",
-      "kpi-highlights-widget"
+      "kpi-highlights-widget",
+      "insurance-product-carousel-widget",
+      "footer-section"
     ]
   },
   {
@@ -17,12 +19,20 @@
       "cards",
       "columns",
       "fragment",
-      "test-buttons"
+      "test-buttons",
+      "options-list",
+      "text-list"
     ]
   },
   {
     "id": "kpi-highlights-widget",
     "components": []
+  },
+  {
+    "id": "insurance-product-carousel-widget",
+    "components": [
+      "insurance-product-carousel"
+    ]
   },
   {
     "id": "cards",
@@ -43,6 +53,54 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "footer-privacy-link-list",
+    "components": [
+      "footer-privacy-link"
+    ]
+  },
+  {
+    "id": "footer-social-list",
+    "components": [
+      "footer-social-link"
+    ]
+  },
+  {
+    "id": "options-list",
+    "components": [
+      "unipol-option"
+    ]
+  },
+  {
+    "id": "text-list",
+    "components": [
+      "text-link"
+    ]
+  },
+  {
+    "id": "options",
+    "components": [
+      "unipol-option"
+    ]
+  },
+  {
+    "id": "insurance-product-carousel",
+    "components": [
+      "insurance-product-card"
+    ],
+    "min": 1,
+    "max": 8
+  },
+  {
+    "id": "footer-section",
+    "components": [
+      "text-list",
+      "footer-download-link",
+      "footer-social-list",
+      "footer-text",
+      "footer-privacy-link-list"
     ]
   }
 ]

@@ -75,7 +75,13 @@
               }
             }
           }
-        },
+        }
+      ]
+    },
+    {
+      "title": "Widgets",
+      "id": "sections",
+      "components": [
         {
           "title": "KPI Highlights Widget",
           "id": "kpi-highlights-widget",
@@ -98,6 +104,88 @@
                     "name": "Number Block",
                     "model": "number-block"
                   }
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Insurance Product Carousel Widget",
+          "id": "insurance-product-carousel-widget",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {
+                  "filter": "insurance-product-carousel",
+                  "name": "Insurance Product Carousel Widget",
+                  "model": "insurance-product-carousel-widget",
+                  "style": "insurance-product-carousel-widget",
+                  "text-block": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Text Block",
+                    "model": "text-block"
+                  },
+                  "insurance-product-carousel": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Insurance Product Carousel",
+                    "filter": "insurance-product-carousel",
+                    "insurance-product-card": {
+                      "card": {
+                        "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                        "name": "Insurance Product Card",
+                        "filter": "insurance-product-card",
+                        "model": "insurance-product-card"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Insurance Product Carousel",
+          "id": "insurance-product-carousel",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "insurance-product-carousel",
+                  "name": "Insurance Product Carousel"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Insurance Product Card",
+          "id": "insurance-product-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Insurance Product card",
+                  "model": "insurance-product-card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer Section",
+          "id": "footer-section",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {
+                  "filter": "footer-section",
+                  "name": "Footer Section",
+                  "model": "footer-section",
+                  "style": "footer-section"
                 }
               }
             }
@@ -149,6 +237,96 @@
                 "template": {
                   "columns": "2",
                   "rows": "1"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer Download Link",
+          "id": "footer-download-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Footer Download Link",
+                  "model": "footer-download-link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer Privacy Link List",
+          "id": "footer-privacy-link-list",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Footer Privacy Link List",
+                  "filter": "footer-privacy-link-list"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer Privacy Link",
+          "id": "footer-privacy-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Footer Privacy Link",
+                  "model": "footer-privacy-link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer Social List",
+          "id": "footer-social-list",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Footer Social List",
+                  "filter": "footer-social-list"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer Social Link",
+          "id": "footer-social-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Footer Social Link",
+                  "model": "footer-social-link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer Text",
+          "id": "footer-text",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Footer Text",
+                  "model": "footer-text"
                 }
               }
             }
@@ -224,6 +402,66 @@
                 "template": {
                   "name": "Text Block",
                   "model": "text-block"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Text List",
+          "id": "text-list",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Text List",
+                  "filter": "text-list"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Text-Link",
+          "id": "text-link",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Text-Link",
+                  "model": "text-link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Options list",
+          "id": "options-list",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Options List",
+                  "filter": "options"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Option",
+          "id": "unipol-option",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Option",
+                  "model": "unipol-option"
                 }
               }
             }

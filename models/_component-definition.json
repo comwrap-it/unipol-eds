@@ -24,9 +24,27 @@
       "components": [
         {
           "...": "./_section.json#/definitions"
-        },
+        }
+      ]
+    },
+    {
+      "title": "Widgets",
+      "id": "sections",
+      "components": [
         {
           "...": "./_kpi-highlights-widget.json#/definitions"
+        },
+        {
+          "...": "../blocks/widgets/insurance-product-carousel/_insurance-product-carousel.json#/definitions"
+        },
+        {
+          "...": "../blocks/organisms/carousel/insurance-product-carousel/_insurance-product-carousel.json#/definitions"
+        },
+        {
+          "...": "../blocks/molecules/insurance-product-card/_insurance-product-card.json#/definitions"
+        },
+        {
+          "...": "./_footer-section.json#/definitions"
         }
       ]
     },
@@ -36,6 +54,9 @@
       "components": [
         {
           "...": "../blocks/*/_*.json#/definitions"
+        },
+        {
+          "...": "../blocks/atoms/options/options-list/_options-list.json#/definitions"
         }
       ]
     }
