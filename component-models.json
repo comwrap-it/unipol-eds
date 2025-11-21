@@ -1490,6 +1490,27 @@
     ]
   },
   {
+    "id": "unipol-footer",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Configurazione Sezione Download",
+        "name": "footerDownloadSection"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolGroupFooter",
+        "label": "Path Unipol Group"
+      },
+      {
+        "component": "text",
+        "label": "Testo Unipol Group Button",
+        "name": "unipolGroupTextFooter"
+      }
+    ]
+  },
+  {
     "id": "3D-icons",
     "fields": [
       {
@@ -3324,27 +3345,6 @@
             "value": false
           }
         ]
-      }
-    ]
-  },
-  {
-    "id": "unipol-footer",
-    "fields": [
-      {
-        "component": "tab",
-        "label": "Configurazione Sezione Download",
-        "name": "footerDownloadSection"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "unipolGroupFooter",
-        "label": "Path Unipol Group"
-      },
-      {
-        "component": "text",
-        "label": "Testo Unipol Group Button",
-        "name": "unipolGroupTextFooter"
       }
     ]
   }
