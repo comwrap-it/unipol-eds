@@ -53,7 +53,8 @@
         "fragment",
         "test-buttons",
         "options-list",
-        "text-list"
+        "text-list",
+        "unipol-footer"
       ]
     }
   ]

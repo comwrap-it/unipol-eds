@@ -20,7 +20,8 @@
       "fragment",
       "test-buttons",
       "options-list",
-      "text-list"
+      "text-list",
+      "unipol-footer"
     ]
   },
   {
@@ -73,5 +74,11 @@
     ],
     "min": 1,
     "max": 8
+  },
+  {
+    "id": "unipol-footer",
+    "components": [
+      "text-list"
+    ]
   }
 ]

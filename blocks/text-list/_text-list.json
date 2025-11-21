@@ -21,7 +21,7 @@
       "id": "text-list",
       "fields": [
         {
-          "component": "text",
+          "component": "richtext",
           "name": "linkList",
           "label": "Titolo Elenco",
           "valueType": "string"

@@ -1386,7 +1386,7 @@
     "id": "text-list",
     "fields": [
       {
-        "component": "text",
+        "component": "richtext",
         "name": "linkList",
         "label": "Titolo Elenco",
         "valueType": "string"
@@ -3324,6 +3324,27 @@
             "value": false
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "number-block",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Configurazione Sezione Download",
+        "name": "footerDownloadSection"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolGroupFooter",
+        "label": "Path Unipol Group"
+      },
+      {
+        "component": "text",
+        "label": "Testo Unipol Group Button",
+        "name": "unipolGroupTextFooter"
       }
     ]
   }

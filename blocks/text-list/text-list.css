@@ -1,3 +1,25 @@
-.text-list-container {
-    margin: 0;
+.text-list {
+    width: 220px;
+}
+
+.text-list h1,
+.text-list h2,
+.text-list h3,
+.text-list h4,
+.text-list h5,
+.text-list h6,
+.text-list p {
+    width: 220px;
+    font-family: var(--Family-Font-2);
+    font-size: var(--Size-16);
+    font-weight: 500;
+    color: var(--color-accordion-title-open,#001C35);
+}
+
+.text-list a {
+    width: 220px;
+    font-family: var(--Family-Font-2);
+    font-size: var(--Size-14);
+    font-weight: 400;
+    color:var(--color-link-button-link-default-text, #001C35);
 }
