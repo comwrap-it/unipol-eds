@@ -20,7 +20,7 @@ function truncateTextContent(element, maxLength) {
 
   // Get text content and trim whitespace/newlines
   const textContent = (element.textContent || '').trim();
-  
+
   // Only process if there's actual content
   if (!textContent) return;
 

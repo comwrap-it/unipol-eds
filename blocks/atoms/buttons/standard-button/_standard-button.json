@@ -91,15 +91,15 @@
             },
             {
               "name": "Chevron Left",
-              "value": "chevron-left-icon"
+              "value": "un-icon-chevron-left"
             },
             {
               "name": "Chevron Right",
-              "value": "chevron-right-icon"
+              "value": "un-icon-chevron-right"
             },
             {
               "name": "Search Icon",
-              "value": "search-icon"
+              "value": "un-icon-search"
             }
           ]
         },
@@ -116,15 +116,15 @@
             },
             {
               "name": "Chevron Left",
-              "value": "chevron-left-icon"
+              "value": "un-icon-chevron-left"
             },
             {
               "name": "Chevron Right",
-              "value": "chevron-right-icon"
+              "value": "un-icon-chevron-right"
             },
             {
               "name": "Search Icon",
-              "value": "search-icon"
+              "value": "un-icon-search"
             }
           ]
         }

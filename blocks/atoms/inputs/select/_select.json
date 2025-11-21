@@ -40,92 +40,96 @@
                     "description": "Select the icon",
                     "options": [
                         {
+                            "name": "None",
+                            "value": ""
+                        },
+                        {
                             "name": "Search",
-                            "value": "search-icon"
+                            "value": "un-icon-search"
                         },
                         {
                             "name": "Chevron Left",
-                            "value": "chevron-left-icon"
+                            "value": "un-icon-chevron-left"
                         },
                         {
                             "name": "Chevron Right",
-                            "value": "chevron-right-icon"
+                            "value": "un-icon-chevron-right"
                         },
                         {
                             "name": "Phone",
-                            "value": "phone-icon"
+                            "value": "un-icon-phone"
                         },
                         {
                             "name": "Phone Call",
-                            "value": "phone-call-icon"
+                            "value": "un-icon-phone-call"
                         },
                         {
                             "name": "Placeholder",
-                            "value": "placeholder-icon"
+                            "value": "un-icon-placeholder"
                         },
                         {
                             "name": "Plant",
-                            "value": "plant-icon"
+                            "value": "un-icon-plant"
                         },
                         {
                             "name": "Play Circle",
-                            "value": "play-circle-icon"
+                            "value": "un-icon-play-circle"
                         },
                         {
                             "name": "Play Pause",
-                            "value": "play-pause-icon"
+                            "value": "un-icon-play-pause"
                         },
                         {
                             "name": "Plus",
-                            "value": "plus-icon"
+                            "value": "un-icon-plus"
                         },
                         {
                             "name": "Prohibit",
-                            "value": "prohibit-icon"
+                            "value": "un-icon-prohibit"
                         },
                         {
                             "name": "Push Pin",
-                            "value": "push-pin-icon"
+                            "value": "un-icon-push-pin"
                         },
                         {
                             "name": "Question",
-                            "value": "question-icon"
+                            "value": "un-icon-question"
                         },
                         {
                             "name": "Quotes",
-                            "value": "quotes-icon"
+                            "value": "un-icon-quotes"
                         },
                         {
                             "name": "Share",
-                            "value": "share-icon"
+                            "value": "un-icon-share"
                         },
                         {
                             "name": "Share Big",
-                            "value": "share-big-icon"
+                            "value": "un-icon-share-big"
                         },
                         {
                             "name": "Shield Check",
-                            "value": "shield-check-icon"
+                            "value": "un-icon-shield-check"
                         },
                         {
                             "name": "Shield Plus",
-                            "value": "shield-plus-icon"
+                            "value": "un-icon-shield-plus"
                         },
                         {
                             "name": "Shield Slash",
-                            "value": "shield-slash-icon"
+                            "value": "un-icon-shield-slash"
                         },
                         {
                             "name": "Sign In",
-                            "value": "sign-in-icon"
+                            "value": "un-icon-sign-in"
                         },
                         {
                             "name": "Sign Out",
-                            "value": "sign-out-icon"
+                            "value": "un-icon-sign-out"
                         },
                         {
                             "name": "Skip Back Circle",
-                            "value": "skip-back-circle-icon"
+                            "value": "un-icon-skip-back-circle"
                         }
                     ]
                 }
