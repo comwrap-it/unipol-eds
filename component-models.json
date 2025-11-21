@@ -336,6 +336,108 @@
     ]
   },
   {
+    "id": "header-unipol",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "logo",
+        "label": "Logo Image",
+        "description": "Upload or select the header logo",
+        "required": true
+      },
+      {
+        "component": "container",
+        "name": "navigationItems",
+        "label": "Navigation Items",
+        "description": "Add navigation pills to the header",
+        "multi": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "navLabel",
+            "label": "Label",
+            "required": true,
+            "maxlength": 25
+          },
+          {
+            "component": "aem-content",
+            "name": "navHref",
+            "label": "Link URL",
+            "required": true
+          },
+          {
+            "component": "select",
+            "name": "navVariant",
+            "label": "Variant",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "navLeftIcon",
+            "label": "Left Icon",
+            "description": "Optional icon on the left",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left-icon"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right-icon"
+              },
+              {
+                "name": "Search",
+                "value": "search-icon"
+              },
+              {
+                "name": "Phone",
+                "value": "phone-icon"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "navRightIcon",
+            "label": "Right Icon",
+            "description": "Optional icon on the right",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left-icon"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right-icon"
+              },
+              {
+                "name": "Dropdown",
+                "value": "dropdown-icon"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "hero",
     "fields": [
       {
@@ -3211,7 +3313,7 @@
       },
       {
         "component": "container",
-        "name": "icons",
+        "name": "icons-3D",
         "label": "Configurazione Icone 3D",
         "collapsible": true,
         "required": true,

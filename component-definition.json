@@ -59,7 +59,7 @@
       ]
     },
     {
-      "title": "Sections",
+      "title": "Widgets",
       "id": "sections",
       "components": [
         {
@@ -75,13 +75,7 @@
               }
             }
           }
-        }
-      ]
-    },
-    {
-      "title": "Widgets",
-      "id": "sections",
-      "components": [
+        },
         {
           "title": "KPI Highlights Widget",
           "id": "kpi-highlights-widget",
@@ -131,12 +125,10 @@
                     "name": "Insurance Product Carousel",
                     "filter": "insurance-product-carousel",
                     "insurance-product-card": {
-                      "card": {
-                        "sling:resourceType": "core/franklin/components/block/v1/block/item",
-                        "name": "Insurance Product Card",
-                        "filter": "insurance-product-card",
-                        "model": "insurance-product-card"
-                      }
+                      "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                      "name": "Insurance Product Card",
+                      "filter": "insurance-product-card",
+                      "model": "insurance-product-card"
                     }
                   }
                 }
@@ -412,6 +404,21 @@
                 "template": {
                   "name": "Fragment",
                   "model": "fragment"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Header Unipol",
+          "id": "header-unipol",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Header Unipol",
+                  "model": "header-unipol"
                 }
               }
             }

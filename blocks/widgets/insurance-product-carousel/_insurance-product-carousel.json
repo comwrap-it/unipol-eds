@@ -22,12 +22,10 @@
                 "name": "Insurance Product Carousel",
                 "filter": "insurance-product-carousel",
                 "insurance-product-card": {
-                  "card": {
-                    "sling:resourceType": "core/franklin/components/block/v1/block/item",
-                    "name": "Insurance Product Card",
-                    "filter": "insurance-product-card",
-                    "model": "insurance-product-card"
-                  }
+                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                  "name": "Insurance Product Card",
+                  "filter": "insurance-product-card",
+                  "model": "insurance-product-card"
                 }
               }
             }
@@ -51,7 +49,9 @@
   "filters": [
     {
       "id": "insurance-product-carousel-widget",
-      "components": ["insurance-product-carousel"]
+      "components": [
+        "insurance-product-carousel"
+      ]
     }
   ]
 }
