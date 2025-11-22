@@ -53,12 +53,9 @@ export default async function decorate(section) {
 
   // Extract blocks from section
   // Blocks are wrapped in divs by decorateSections
-  const childBlocks = Array.from(section.children).filter((child) => {
-    // Look for blocks (they have data-block-name or are .block elements)
-    return child.querySelector('[data-block-name]')
+  const childBlocks = Array.from(section.children).filter((child) => child.querySelector('[data-block-name]')
       || child.querySelector('.block')
-      || (child.classList.contains('block') && child.hasAttribute('data-block-name'));
-  });
+      || (child.classList.contains('block') && child.hasAttribute('data-block-name')));
 
   const config = {};
 
