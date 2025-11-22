@@ -30,7 +30,7 @@
           "name": "footerTitleTextList1Container",
           "fields": [
             {
-              "...": "../atoms/buttons/text-list/_text-list.json#/models/text-list/fields"
+              "...": "../text-list/_text-list.json#/models/text-list/fields"
             }
           ]
         },
@@ -44,7 +44,7 @@
           "name": "footerTitleTextList2container",
           "fields": [
             {
-              "...": "../atoms/buttons/text-list/_text-list.json#/models/text-list/fields"
+              "...": "../text-list/_text-list.json#/models/text-list/fields"
             }
           ]
         },
@@ -58,7 +58,7 @@
           "name": "footerTitleTextList3container",
           "fields": [
             {
-              "...": "../atoms/buttons/text-list/_text-list.json#/models/text-list/fields"
+              "...": "../text-list/_text-list.json#/models/text-list/fields"
             }
           ]
         },
@@ -72,7 +72,7 @@
           "name": "footerTitleTextList4container",
           "fields": [
             {
-              "...": "../atoms/buttons/text-list/_text-list.json#/models/text-list/fields"
+              "...": "../text-list/_text-list.json#/models/text-list/fields"
             }
           ]
         },
