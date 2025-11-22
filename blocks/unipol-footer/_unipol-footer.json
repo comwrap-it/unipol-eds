@@ -8,22 +8,241 @@
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "filter": "unipol-footer",
-              "models": "unipol-footer",
-              "name": "Unipol Footer"
+              "name": "Unipol Footer",
+              "model": "unipol-footer"
             }
           }
         }
       }
     }
   ],
-  "models": [],
-  "filters": [
+  "models": [
     {
       "id": "unipol-footer",
-      "components": [
-        "text-list"
+      "fields": [
+        {
+          "component": "tab",
+          "label": "Configurazione Titolo ed elenco link Colonna 1",
+          "name": "footerTitleTextList1"
+        },
+        {
+          "component": "container",
+          "name": "footerTitleTextList1Container",
+          "fields": [
+            {
+              "...": "../atoms/buttons/text-list/_text-list.json#/models/text-list/fields"
+            }
+          ]
+        },
+        {
+          "component": "tab",
+          "label": "Configurazione Titolo ed elenco link Colonna 2",
+          "name": "footerTitleTextList2"
+        },
+        {
+          "component": "container",
+          "name": "footerTitleTextList2container",
+          "fields": [
+            {
+              "...": "../atoms/buttons/text-list/_text-list.json#/models/text-list/fields"
+            }
+          ]
+        },
+        {
+          "component": "tab",
+          "label": "Configurazione Titolo ed elenco link Colonna 3",
+          "name": "footerTitleTextList3"
+        },
+        {
+          "component": "container",
+          "name": "footerTitleTextList3container",
+          "fields": [
+            {
+              "...": "../atoms/buttons/text-list/_text-list.json#/models/text-list/fields"
+            }
+          ]
+        },
+        {
+          "component": "tab",
+          "label": "Configurazione Titolo ed elenco link Colonna 4",
+          "name": "footerTitleTextList4"
+        },
+        {
+          "component": "container",
+          "name": "footerTitleTextList4container",
+          "fields": [
+            {
+              "...": "../atoms/buttons/text-list/_text-list.json#/models/text-list/fields"
+            }
+          ]
+        },
+        {
+          "component": "tab",
+          "label": "Configurazione Sezione Download",
+          "name": "footerDownloadSection"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "unipolGroupFooter",
+          "label": "Path Unipol Group"
+        },
+        {
+          "component": "text",
+          "label": "Testo Unipol Group Button",
+          "name": "unipolGroupTextFooter"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "unipolQRcode",
+          "label": "Img QRcode"
+        },
+        {
+          "component": "text",
+          "label": "Testo Unipol Group Button",
+          "name": "unipolQRcodeFooter"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "unipolGooglePlay",
+          "label": "Img GooglePlay"
+        },
+        {
+          "component": "aem-content",
+          "name": "linkGooglePlay",
+          "label": "Link GooglePlay"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "unipolAppStore",
+          "label": "Img Apple Store"
+        },
+        {
+          "component": "aem-content",
+          "name": "linkAppStore",
+          "label": "LinkAppStore"
+        },
+        {
+          "component": "tab",
+          "label": "Configurazione Privacy Link",
+          "name": "footerPrivacySection"
+        },
+        {
+          "component": "text",
+          "name": "texPrivacyLink1",
+          "label": "Testo Link Privacy",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "linkPrivacyLink1",
+          "label": "Link Privacy"
+        },
+        {
+          "component": "text",
+          "name": "texPrivacyLink2",
+          "label": "Testo Link Privacy",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "linkPrivacyLink2",
+          "label": "Link Privacy"
+        },
+        {
+          "component": "text",
+          "name": "texPrivacyLink3",
+          "label": "Testo Link Privacy",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "linkPrivacyLink3",
+          "label": "Link Privacy"
+        },
+        {
+          "component": "text",
+          "name": "texPrivacyLink4",
+          "label": "Testo Link Privacy",
+          "valueType": "string"
+        },
+        {
+          "component": "aem-content",
+          "name": "linkPrivacyLink4",
+          "label": "Link Privacy"
+        },
+        {
+          "component": "tab",
+          "label": "Configurazione Social Link",
+          "name": "footerPrivacySection"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "unipolFacebook",
+          "label": "Logo Facebook"
+        },
+        {
+          "component": "aem-content",
+          "name": "linkUnipolFacebook",
+          "label": "Link Facebook"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "unipolInstagram",
+          "label": "Logo Instagram"
+        },
+        {
+          "component": "aem-content",
+          "name": "linkUnipolInstagram",
+          "label": "Link Instagram"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "unipolLinkedIn",
+          "label": "Logo LinkedIn"
+        },
+        {
+          "component": "aem-content",
+          "name": "linkUnipolLinkedIn",
+          "label": "Link LinkedIn"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "unipolYoutube",
+          "label": "Logo Youtube"
+        },
+        {
+          "component": "aem-content",
+          "name": "linkUnipolYoutube",
+          "label": "Link Youtube"
+        },      {
+          "component": "tab",
+          "label": "Configurazione Note Legali",
+          "name": "footerPrivacySection"
+        },
+        {
+          "component": "richtext",
+          "name": "legalNotesText",
+          "value": "",
+          "label": "Testo note legali",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "legalNotesText2",
+          "value": "",
+          "label": "Testo note legali",
+          "valueType": "string"
+        }
       ]
     }
-  ]
+  ],
+  "filters": []
 }

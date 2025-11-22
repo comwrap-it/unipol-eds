@@ -1490,6 +1490,629 @@
     ]
   },
   {
+    "id": "unipol-footer",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Configurazione Titolo ed elenco link Colonna 1",
+        "name": "footerTitleTextList1"
+      },
+      {
+        "component": "container",
+        "name": "footerTitleTextList1Container",
+        "fields": [
+          {
+            "component": "richtext",
+            "name": "linkList",
+            "label": "Titolo Elenco",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "texListLink1",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref1",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink2",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref2",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink3",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref3",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink4",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref4",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink5",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref5",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink6",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref6",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink7",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref7",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink8",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref8",
+            "label": "Link URL",
+            "description": "Url del link "
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Titolo ed elenco link Colonna 2",
+        "name": "footerTitleTextList2"
+      },
+      {
+        "component": "container",
+        "name": "footerTitleTextList2container",
+        "fields": [
+          {
+            "component": "richtext",
+            "name": "linkList",
+            "label": "Titolo Elenco",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "texListLink1",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref1",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink2",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref2",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink3",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref3",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink4",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref4",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink5",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref5",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink6",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref6",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink7",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref7",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink8",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref8",
+            "label": "Link URL",
+            "description": "Url del link "
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Titolo ed elenco link Colonna 3",
+        "name": "footerTitleTextList3"
+      },
+      {
+        "component": "container",
+        "name": "footerTitleTextList3container",
+        "fields": [
+          {
+            "component": "richtext",
+            "name": "linkList",
+            "label": "Titolo Elenco",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "texListLink1",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref1",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink2",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref2",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink3",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref3",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink4",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref4",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink5",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref5",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink6",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref6",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink7",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref7",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink8",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref8",
+            "label": "Link URL",
+            "description": "Url del link "
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Titolo ed elenco link Colonna 4",
+        "name": "footerTitleTextList4"
+      },
+      {
+        "component": "container",
+        "name": "footerTitleTextList4container",
+        "fields": [
+          {
+            "component": "richtext",
+            "name": "linkList",
+            "label": "Titolo Elenco",
+            "valueType": "string"
+          },
+          {
+            "component": "text",
+            "name": "texListLink1",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref1",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink2",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref2",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink3",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref3",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink4",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref4",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink5",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref5",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink6",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref6",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink7",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref7",
+            "label": "Link URL",
+            "description": "Url del link "
+          },
+          {
+            "component": "text",
+            "name": "texListLink8",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref8",
+            "label": "Link URL",
+            "description": "Url del link "
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Sezione Download",
+        "name": "footerDownloadSection"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolGroupFooter",
+        "label": "Path Unipol Group"
+      },
+      {
+        "component": "text",
+        "label": "Testo Unipol Group Button",
+        "name": "unipolGroupTextFooter"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolQRcode",
+        "label": "Img QRcode"
+      },
+      {
+        "component": "text",
+        "label": "Testo Unipol Group Button",
+        "name": "unipolQRcodeFooter"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolGooglePlay",
+        "label": "Img GooglePlay"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkGooglePlay",
+        "label": "Link GooglePlay"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolAppStore",
+        "label": "Img Apple Store"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkAppStore",
+        "label": "LinkAppStore"
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Privacy Link",
+        "name": "footerPrivacySection"
+      },
+      {
+        "component": "text",
+        "name": "texPrivacyLink1",
+        "label": "Testo Link Privacy",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkPrivacyLink1",
+        "label": "Link Privacy"
+      },
+      {
+        "component": "text",
+        "name": "texPrivacyLink2",
+        "label": "Testo Link Privacy",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkPrivacyLink2",
+        "label": "Link Privacy"
+      },
+      {
+        "component": "text",
+        "name": "texPrivacyLink3",
+        "label": "Testo Link Privacy",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkPrivacyLink3",
+        "label": "Link Privacy"
+      },
+      {
+        "component": "text",
+        "name": "texPrivacyLink4",
+        "label": "Testo Link Privacy",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkPrivacyLink4",
+        "label": "Link Privacy"
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Social Link",
+        "name": "footerPrivacySection"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolFacebook",
+        "label": "Logo Facebook"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkUnipolFacebook",
+        "label": "Link Facebook"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolInstagram",
+        "label": "Logo Instagram"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkUnipolInstagram",
+        "label": "Link Instagram"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolLinkedIn",
+        "label": "Logo LinkedIn"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkUnipolLinkedIn",
+        "label": "Link LinkedIn"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolYoutube",
+        "label": "Logo Youtube"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkUnipolYoutube",
+        "label": "Link Youtube"
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Note Legali",
+        "name": "footerPrivacySection"
+      },
+      {
+        "component": "richtext",
+        "name": "legalNotesText",
+        "value": "",
+        "label": "Testo note legali",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "legalNotesText2",
+        "value": "",
+        "label": "Testo note legali",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "3D-icons",
     "fields": [
       {
