@@ -65,7 +65,7 @@ export default async function decorate(section) {
   // Find all blocks by their data-block-name attribute
   // After loadSection, blocks are decorated and may be replaced
   const allBlocks = section.querySelectorAll('[data-block-name]');
-  
+
   Array.from(allBlocks).forEach((block) => {
     const blockName = block.getAttribute('data-block-name');
 
@@ -76,24 +76,21 @@ export default async function decorate(section) {
       if (!linkColumns.includes(block)) {
         linkColumns.push(block);
       }
-    }
-    // footer-download-section or footer-download-link
-    else if (blockName === 'footer-download-section' || blockName === 'footer-download-link') {
+    } else if (blockName === 'footer-download-section' || blockName === 'footer-download-link') {
+      // footer-download-section or footer-download-link
       // These blocks are replaced, so find the decorated element
-      const decorated = section.querySelector(`.footer-download-section, .footer-download-link`);
+      const decorated = section.querySelector('.footer-download-section, .footer-download-link');
       if (decorated && !downloadSection) {
         downloadSection = decorated;
       }
-    }
-    // footer-utility-links or footer-privacy-link-list
-    else if (blockName === 'footer-utility-links' || blockName === 'footer-privacy-link-list') {
-      const decorated = section.querySelector(`.footer-utility-links, .footer-privacy-link-list`);
+    } else if (blockName === 'footer-utility-links' || blockName === 'footer-privacy-link-list') {
+      // footer-utility-links or footer-privacy-link-list
+      const decorated = section.querySelector('.footer-utility-links, .footer-privacy-link-list');
       if (decorated && !utilityLinks) {
         utilityLinks = decorated;
       }
-    }
-    // footer-bottom
-    else if (blockName === 'footer-bottom') {
+    } else if (blockName === 'footer-bottom') {
+      // footer-bottom
       const decorated = section.querySelector('.footer-bottom');
       if (decorated && !bottom) {
         bottom = decorated;
