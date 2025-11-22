@@ -1,0 +1,12 @@
+/* Footer Section - Section Container Styles */
+.footer-section {
+  background-color: var(--color-dark-blue, #003366);
+  color: var(--color-white, #ffffff);
+  padding: 0;
+  margin: 0;
+}
+
+.footer-section-decorated {
+  display: block;
+}
+

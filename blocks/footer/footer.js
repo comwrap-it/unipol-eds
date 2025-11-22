@@ -1,5 +1,6 @@
-import { getMetadata, loadBlock } from '../../scripts/aem.js';
+import { getMetadata, loadBlock, loadSection } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
+import decorateFooterSection from '../footer-section/footer-section.js';
 
 /**
  * loads and decorates the footer
@@ -17,7 +18,21 @@ export default async function decorate(block) {
     return;
   }
 
-  // Check if fragment contains footer-unipol block
+  // Check if fragment contains footer-section
+  const footerSection = fragment.querySelector('.footer-section');
+
+  if (footerSection) {
+    // Load all blocks in the section first
+    await loadSection(footerSection);
+    // Then decorate the section to organize blocks
+    await decorateFooterSection(footerSection);
+    // Append the decorated section to the footer block
+    block.textContent = '';
+    block.appendChild(footerSection);
+    return;
+  }
+
+  // Legacy: Check if fragment contains footer-unipol block
   let footerUnipolBlock = fragment.querySelector('.footer-unipol');
   const undecoratedBlock = fragment.querySelector('[data-block-name="footer-unipol"]');
 

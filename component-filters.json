@@ -68,16 +68,6 @@
     ]
   },
   {
-    "id": "footer-unipol",
-    "components": [
-      "text-list",
-      "footer-link-column",
-      "footer-download-section",
-      "footer-utility-links",
-      "footer-bottom"
-    ]
-  },
-  {
     "id": "options-list",
     "components": [
       "unipol-option"
@@ -129,10 +119,7 @@
       "footer-link-column",
       "footer-download-section",
       "footer-utility-links",
-      "footer-bottom",
-      "footer-text",
-      "footer-social-icon",
-      "footer-unipol"
+      "footer-bottom"
     ]
   }
 ]

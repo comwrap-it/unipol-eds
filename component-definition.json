@@ -167,7 +167,7 @@
           }
         },
         {
-          "title": "Footer Section",
+          "title": "Footer Unipol",
           "id": "footer-section",
           "plugins": {
             "xwalk": {
@@ -177,7 +177,32 @@
                   "filter": "footer-section",
                   "name": "Footer Section",
                   "model": "footer-section",
-                  "style": "footer-section"
+                  "style": "footer-section",
+                  "text-list": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Text List",
+                    "filter": "text-list"
+                  },
+                  "footer-link-column": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Footer Link Column",
+                    "filter": "footer-link-column"
+                  },
+                  "footer-download-section": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Footer Download Section",
+                    "model": "footer-download-section"
+                  },
+                  "footer-utility-links": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Footer Utility Links",
+                    "filter": "footer-utility-links"
+                  },
+                  "footer-bottom": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Footer Bottom",
+                    "filter": "footer-bottom"
+                  }
                 }
               }
             }
@@ -319,21 +344,6 @@
                 "template": {
                   "name": "Footer Text",
                   "model": "footer-text"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Footer Unipol",
-          "id": "footer-unipol",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Footer Unipol",
-                  "filter": "footer-unipol"
                 }
               }
             }
