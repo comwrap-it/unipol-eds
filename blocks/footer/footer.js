@@ -19,9 +19,27 @@ export default async function decorate(block) {
   }
 
   // Check if fragment contains footer-section
-  const footerSection = fragment.querySelector('.footer-section');
+  // Footer section may not have .footer-section class yet (added by section metadata)
+  // Look for section with footer-related container classes or check section metadata
+  let footerSection = fragment.querySelector('.footer-section');
+  // eslint-disable-next-line no-console
+  console.log('footerSection', footerSection);
+
+  // If not found by class, look for section with footer blocks
+  if (!footerSection) {
+    const sections = fragment.querySelectorAll('.section, div[data-section-status]');
+    footerSection = Array.from(sections).find((section) => section.querySelector('[data-block-name="text-list"]')
+        || section.querySelector('[data-block-name="footer-download-section"]')
+        || section.querySelector('[data-block-name="footer-utility-links"]')
+        || section.querySelector('[data-block-name="footer-bottom"]')
+        || section.classList.contains('footer-section'));
+  }
 
   if (footerSection) {
+    // Ensure footer-section class is present (from section metadata style)
+    if (!footerSection.classList.contains('footer-section')) {
+      footerSection.classList.add('footer-section');
+    }
     // Load all blocks in the section first
     await loadSection(footerSection);
     // Then decorate the section to organize blocks

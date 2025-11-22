@@ -62,72 +62,46 @@ export default async function decorate(section) {
   let utilityLinks = null;
   let bottom = null;
 
-  // Find all blocks by their data-block-name attribute
-  // After loadSection, blocks are decorated and may be replaced
-  const allBlocks = section.querySelectorAll('[data-block-name]');
+  // Find blocks by walking through section children (wrappers created by decorateSections)
+  // Each wrapper contains a block
+  Array.from(section.children).forEach((wrapper) => {
+    // Find the block element inside the wrapper
+    const block = wrapper.querySelector('[data-block-name]') || wrapper.querySelector('.block');
+    if (!block) return;
 
-  Array.from(allBlocks).forEach((block) => {
     const blockName = block.getAttribute('data-block-name');
 
-    // text-list blocks (link columns)
+    // text-list blocks (link columns) - these modify in-place
     if (blockName === 'text-list' || blockName === 'footer-link-column') {
-      // text-list modifies in-place, so the block itself is what we need
-      // But we need to ensure it has the right structure
+      // Use the block itself (text-list doesn't replace, it modifies)
       if (!linkColumns.includes(block)) {
         linkColumns.push(block);
       }
     } else if (blockName === 'footer-download-section' || blockName === 'footer-download-link') {
-      // footer-download-section or footer-download-link
-      // These blocks are replaced, so find the decorated element
-      const decorated = section.querySelector('.footer-download-section, .footer-download-link');
+      // footer-download-section - these are replaced
+      // Look for decorated element (replaced block)
+      const decorated = wrapper.querySelector('.footer-download-section') || wrapper.querySelector('.footer-download-link');
       if (decorated && !downloadSection) {
         downloadSection = decorated;
+      } else if (!downloadSection && block.classList.contains('footer-download-section')) {
+        // Block might not be decorated yet, use it anyway
+        downloadSection = block;
       }
     } else if (blockName === 'footer-utility-links' || blockName === 'footer-privacy-link-list') {
-      // footer-utility-links or footer-privacy-link-list
-      const decorated = section.querySelector('.footer-utility-links, .footer-privacy-link-list');
+      // footer-utility-links - these are replaced
+      const decorated = wrapper.querySelector('.footer-utility-links') || wrapper.querySelector('.footer-privacy-link-list');
       if (decorated && !utilityLinks) {
         utilityLinks = decorated;
+      } else if (!utilityLinks && (block.classList.contains('footer-utility-links') || block.classList.contains('footer-privacy-link-list'))) {
+        utilityLinks = block;
       }
     } else if (blockName === 'footer-bottom') {
-      // footer-bottom
-      const decorated = section.querySelector('.footer-bottom');
+      // footer-bottom - these are replaced
+      const decorated = wrapper.querySelector('.footer-bottom');
       if (decorated && !bottom) {
         bottom = decorated;
-      }
-    }
-  });
-
-  // Fallback: also check section children directly for decorated elements
-  // (in case blocks were replaced and data-block-name is lost)
-  Array.from(section.children).forEach((child) => {
-    // Check for decorated download section
-    if (!downloadSection) {
-      const download = child.querySelector('.footer-download-section') || child.querySelector('.footer-download-link');
-      if (download) {
-        downloadSection = download;
-      } else if (child.classList.contains('footer-download-section') || child.classList.contains('footer-download-link')) {
-        downloadSection = child;
-      }
-    }
-
-    // Check for decorated utility links
-    if (!utilityLinks) {
-      const utility = child.querySelector('.footer-utility-links') || child.querySelector('.footer-privacy-link-list');
-      if (utility) {
-        utilityLinks = utility;
-      } else if (child.classList.contains('footer-utility-links') || child.classList.contains('footer-privacy-link-list')) {
-        utilityLinks = child;
-      }
-    }
-
-    // Check for decorated bottom
-    if (!bottom) {
-      const bottomEl = child.querySelector('.footer-bottom');
-      if (bottomEl) {
-        bottom = bottomEl;
-      } else if (child.classList.contains('footer-bottom')) {
-        bottom = child;
+      } else if (!bottom && block.classList.contains('footer-bottom')) {
+        bottom = block;
       }
     }
   });
