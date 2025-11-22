@@ -38,6 +38,18 @@
           "...": "../blocks/molecules/insurance-product-card/_insurance-product-card.json#/definitions"
         },
         {
+          "...": "../blocks/molecules/footer-link-column/_footer-link-column.json#/definitions"
+        },
+        {
+          "...": "../blocks/molecules/footer-download-section/_footer-download-section.json#/definitions"
+        },
+        {
+          "...": "../blocks/molecules/footer-utility-links/_footer-utility-links.json#/definitions"
+        },
+        {
+          "...": "../blocks/molecules/footer-bottom/_footer-bottom.json#/definitions"
+        },
+        {
           "...": "./_footer-section.json#/definitions"
         }
       ]
