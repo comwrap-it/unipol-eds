@@ -52,11 +52,8 @@ export default async function decorate(section) {
   }
 
   // Extract blocks from section
-  // Blocks are wrapped in divs by decorateSections
-  const childBlocks = Array.from(section.children).filter((child) => child.querySelector('[data-block-name]')
-      || child.querySelector('.block')
-      || (child.classList.contains('block') && child.hasAttribute('data-block-name')));
-
+  // After decoration, some blocks are replaced, others are modified in-place
+  // We need to find blocks by their data-block-name attribute
   const config = {};
 
   // Process blocks in order
@@ -65,51 +62,84 @@ export default async function decorate(section) {
   let utilityLinks = null;
   let bottom = null;
 
-  childBlocks.forEach((childBlock) => {
-    // Find the actual block element (might be nested in wrapper)
-    const blockElement = childBlock.querySelector('[data-block-name]')
-      || childBlock.querySelector('.block')
-      || childBlock;
+  // Find all blocks by their data-block-name attribute
+  // After loadSection, blocks are decorated and may be replaced
+  const allBlocks = section.querySelectorAll('[data-block-name]');
+  
+  Array.from(allBlocks).forEach((block) => {
+    const blockName = block.getAttribute('data-block-name');
 
-    // Check if it's a text-list (link column)
-    if (blockElement.classList.contains('text-list')
-        || blockElement.querySelector('.text-list')
-        || blockElement.classList.contains('footer-link-column')
-        || blockElement.querySelector('.footer-link-column')) {
-      const textList = blockElement.querySelector('.text-list')
-        || blockElement.querySelector('.footer-link-column')
-        || blockElement;
-      linkColumns.push(textList);
-    } else if (blockElement.classList.contains('footer-download-section')
-        || blockElement.querySelector('.footer-download-section')
-        || blockElement.classList.contains('footer-download-link')
-        || blockElement.querySelector('.footer-download-link')) {
-      // Download section
-      const download = blockElement.querySelector('.footer-download-section')
-        || blockElement.querySelector('.footer-download-link')
-        || blockElement;
-      downloadSection = download;
-    } else if (blockElement.classList.contains('footer-utility-links')
-        || blockElement.querySelector('.footer-utility-links')
-        || blockElement.classList.contains('footer-privacy-link-list')
-        || blockElement.querySelector('.footer-privacy-link-list')) {
-      // Utility links
-      const utility = blockElement.querySelector('.footer-utility-links')
-        || blockElement.querySelector('.footer-privacy-link-list')
-        || blockElement;
-      utilityLinks = utility;
-    } else if (blockElement.classList.contains('footer-bottom')
-        || blockElement.querySelector('.footer-bottom')) {
-      // Bottom section
-      const bottomElement = blockElement.querySelector('.footer-bottom') || blockElement;
-      bottom = bottomElement;
+    // text-list blocks (link columns)
+    if (blockName === 'text-list' || blockName === 'footer-link-column') {
+      // text-list modifies in-place, so the block itself is what we need
+      // But we need to ensure it has the right structure
+      if (!linkColumns.includes(block)) {
+        linkColumns.push(block);
+      }
+    }
+    // footer-download-section or footer-download-link
+    else if (blockName === 'footer-download-section' || blockName === 'footer-download-link') {
+      // These blocks are replaced, so find the decorated element
+      const decorated = section.querySelector(`.footer-download-section, .footer-download-link`);
+      if (decorated && !downloadSection) {
+        downloadSection = decorated;
+      }
+    }
+    // footer-utility-links or footer-privacy-link-list
+    else if (blockName === 'footer-utility-links' || blockName === 'footer-privacy-link-list') {
+      const decorated = section.querySelector(`.footer-utility-links, .footer-privacy-link-list`);
+      if (decorated && !utilityLinks) {
+        utilityLinks = decorated;
+      }
+    }
+    // footer-bottom
+    else if (blockName === 'footer-bottom') {
+      const decorated = section.querySelector('.footer-bottom');
+      if (decorated && !bottom) {
+        bottom = decorated;
+      }
     }
   });
 
-  config.linkColumns = linkColumns;
-  if (downloadSection) config.downloadSection = downloadSection;
-  if (utilityLinks) config.utilityLinks = utilityLinks;
-  if (bottom) config.bottom = bottom;
+  // Fallback: also check section children directly for decorated elements
+  // (in case blocks were replaced and data-block-name is lost)
+  Array.from(section.children).forEach((child) => {
+    // Check for decorated download section
+    if (!downloadSection) {
+      const download = child.querySelector('.footer-download-section') || child.querySelector('.footer-download-link');
+      if (download) {
+        downloadSection = download;
+      } else if (child.classList.contains('footer-download-section') || child.classList.contains('footer-download-link')) {
+        downloadSection = child;
+      }
+    }
+
+    // Check for decorated utility links
+    if (!utilityLinks) {
+      const utility = child.querySelector('.footer-utility-links') || child.querySelector('.footer-privacy-link-list');
+      if (utility) {
+        utilityLinks = utility;
+      } else if (child.classList.contains('footer-utility-links') || child.classList.contains('footer-privacy-link-list')) {
+        utilityLinks = child;
+      }
+    }
+
+    // Check for decorated bottom
+    if (!bottom) {
+      const bottomEl = child.querySelector('.footer-bottom');
+      if (bottomEl) {
+        bottom = bottomEl;
+      } else if (child.classList.contains('footer-bottom')) {
+        bottom = child;
+      }
+    }
+  });
+
+  // Clone elements before clearing section (they will be moved, not copied)
+  config.linkColumns = linkColumns.map((col) => col.cloneNode(true));
+  if (downloadSection) config.downloadSection = downloadSection.cloneNode(true);
+  if (utilityLinks) config.utilityLinks = utilityLinks.cloneNode(true);
+  if (bottom) config.bottom = bottom.cloneNode(true);
 
   // Create footer structure
   const footer = createFooterUnipol(config);

@@ -1,7 +1,7 @@
 /* Footer Section - Section Container Styles */
 .footer-section {
-  background-color: var(--color-dark-blue, #003366);
-  color: var(--color-white, #ffffff);
+  background-color: var(--color-dark-blue, #036);
+  color: var(--color-white, #fff);
   padding: 0;
   margin: 0;
 }
