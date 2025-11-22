@@ -1400,8 +1400,7 @@
       {
         "component": "aem-content",
         "name": "listLinkHref1",
-        "label": "Link URL",
-        "description": "Url del link "
+        "label": "Link URL"
       },
       {
         "component": "text",
@@ -1412,8 +1411,7 @@
       {
         "component": "aem-content",
         "name": "listLinkHref2",
-        "label": "Link URL",
-        "description": "Url del link "
+        "label": "Link URL"
       },
       {
         "component": "text",
@@ -1424,8 +1422,7 @@
       {
         "component": "aem-content",
         "name": "listLinkHref3",
-        "label": "Link URL",
-        "description": "Url del link "
+        "label": "Link URL"
       },
       {
         "component": "text",
@@ -1436,8 +1433,7 @@
       {
         "component": "aem-content",
         "name": "listLinkHref4",
-        "label": "Link URL",
-        "description": "Url del link "
+        "label": "Link URL"
       },
       {
         "component": "text",
@@ -1448,8 +1444,7 @@
       {
         "component": "aem-content",
         "name": "listLinkHref5",
-        "label": "Link URL",
-        "description": "Url del link "
+        "label": "Link URL"
       },
       {
         "component": "text",
@@ -1460,8 +1455,7 @@
       {
         "component": "aem-content",
         "name": "listLinkHref6",
-        "label": "Link URL",
-        "description": "Url del link "
+        "label": "Link URL"
       },
       {
         "component": "text",
@@ -1472,8 +1466,7 @@
       {
         "component": "aem-content",
         "name": "listLinkHref7",
-        "label": "Link URL",
-        "description": "Url del link "
+        "label": "Link URL"
       },
       {
         "component": "text",
@@ -1484,8 +1477,7 @@
       {
         "component": "aem-content",
         "name": "listLinkHref8",
-        "label": "Link URL",
-        "description": "Url del link "
+        "label": "Link URL"
       }
     ]
   },
@@ -1516,8 +1508,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref1",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1528,8 +1519,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref2",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1540,8 +1530,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref3",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1552,8 +1541,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref4",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1564,8 +1552,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref5",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1576,8 +1563,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref6",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1588,8 +1574,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref7",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1600,8 +1585,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref8",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           }
         ]
       },
@@ -1629,8 +1613,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref1",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1641,8 +1624,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref2",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1653,8 +1635,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref3",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1665,8 +1646,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref4",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1677,8 +1657,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref5",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1689,8 +1668,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref6",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1701,8 +1679,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref7",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1713,8 +1690,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref8",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           }
         ]
       },
@@ -1742,8 +1718,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref1",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1754,8 +1729,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref2",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1766,8 +1740,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref3",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1778,8 +1751,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref4",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1790,8 +1762,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref5",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1802,8 +1773,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref6",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1814,8 +1784,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref7",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1826,8 +1795,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref8",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           }
         ]
       },
@@ -1855,8 +1823,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref1",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1867,8 +1834,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref2",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1879,8 +1845,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref3",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1891,8 +1856,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref4",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1903,8 +1867,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref5",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1915,8 +1878,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref6",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1927,8 +1889,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref7",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           },
           {
             "component": "text",
@@ -1939,8 +1900,7 @@
           {
             "component": "aem-content",
             "name": "listLinkHref8",
-            "label": "Link URL",
-            "description": "Url del link "
+            "label": "Link URL"
           }
         ]
       },
@@ -2098,7 +2058,7 @@
       },
       {
         "component": "richtext",
-        "name": "legalNotesText",
+        "name": "legalNotes",
         "value": "",
         "label": "Testo note legali",
         "valueType": "string"

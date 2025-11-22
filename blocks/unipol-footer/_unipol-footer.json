@@ -229,7 +229,7 @@
         },
         {
           "component": "richtext",
-          "name": "legalNotesText",
+          "name": "legalNotes",
           "value": "",
           "label": "Testo note legali",
           "valueType": "string"
