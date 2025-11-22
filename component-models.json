@@ -2045,7 +2045,7 @@
       {
         "component": "tab",
         "label": "Configurazione Social Link",
-        "name": "footerPrivacySection"
+        "name": "footerSocialSection"
       },
       {
         "component": "reference",
@@ -2094,7 +2094,7 @@
       {
         "component": "tab",
         "label": "Configurazione Note Legali",
-        "name": "footerPrivacySection"
+        "name": "footerLegalNotesSection"
       },
       {
         "component": "richtext",
