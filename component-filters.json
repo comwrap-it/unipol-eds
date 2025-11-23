@@ -62,6 +62,21 @@
     ]
   },
   {
+    "id": "unipol-footer-columns",
+    "components": [
+      "unipol-footer-column"
+    ]
+  },
+  {
+    "id": "unipol-footer-column",
+    "components": [
+      "text",
+      "image",
+      "button",
+      "title"
+    ]
+  },
+  {
     "id": "options",
     "components": [
       "unipol-option"
