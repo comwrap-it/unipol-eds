@@ -1383,7 +1383,7 @@
     ]
   },
   {
-    "id": "text-list-content",
+    "id": "text-list",
     "fields": [
       {
         "component": "text",

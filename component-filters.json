@@ -62,21 +62,9 @@
     ]
   },
   {
-    "id": "text-list",
-    "components": [
-      "text-list-content"
-    ]
-  },
-  {
     "id": "unipol-footer",
     "components": [
       "text-list"
-    ]
-  },
-  {
-    "id": "text-list",
-    "components": [
-      "text-list-content"
     ]
   },
   {

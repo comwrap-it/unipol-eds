@@ -323,21 +323,6 @@
           }
         },
         {
-          "title": "Text List Content",
-          "id": "text-list-content",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Text List Content",
-                  "model": "text-list-content"
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Unipol Footer",
           "id": "unipol-footer",
           "plugins": {
