@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Text List",
+      "title": "Text list",
       "id": "text-list",
       "plugins": {
         "xwalk": {
@@ -9,7 +9,22 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Text List",
-              "model": "text-list"
+              "filter": "text-list"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Text List Content",
+      "id": "text-list-content",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Text List Content",
+              "model": "text-list-content"
             }
           }
         }
@@ -18,104 +33,105 @@
   ],
   "models": [
     {
-      "id": "text-list",
+      "id": "text-list-content",
       "fields": [
         {
-          "component": "richtext",
-          "name": "linkList",
-          "label": "Titolo Elenco",
-          "valueType": "string"
-        },
-        {
           "component": "text",
-          "name": "texListLink1",
+          "name": "texListLink1List2",
           "label": "Testo Link",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "name": "listLinkHref1",
+          "name": "listLinkHref1List2",
           "label": "Link URL"
         },
         {
           "component": "text",
-          "name": "texListLink2",
+          "name": "texListLink2List2",
           "label": "Testo Link",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "name": "listLinkHref2",
+          "name": "listLinkHref2List2",
           "label": "Link URL"
         },
         {
           "component": "text",
-          "name": "texListLink3",
+          "name": "texListLink3List2",
           "label": "Testo Link",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "name": "listLinkHref3",
+          "name": "listLinkHref3List2",
           "label": "Link URL"
         },
         {
           "component": "text",
-          "name": "texListLink4",
+          "name": "texListLink4List2",
           "label": "Testo Link",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "name": "listLinkHref4",
+          "name": "listLinkHref4List2",
           "label": "Link URL"
         },
         {
           "component": "text",
-          "name": "texListLink5",
+          "name": "texListLink5List2",
           "label": "Testo Link",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "name": "listLinkHref5",
+          "name": "listLinkHref5List2",
           "label": "Link URL"
         },
         {
           "component": "text",
-          "name": "texListLink6",
+          "name": "texListLink6List2",
           "label": "Testo Link",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "name": "listLinkHref6",
+          "name": "listLinkHref6List2",
           "label": "Link URL"
         },
         {
           "component": "text",
-          "name": "texListLink7",
+          "name": "texListLink7List2",
           "label": "Testo Link",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "name": "listLinkHref7",
+          "name": "listLinkHref7List2",
           "label": "Link URL"
         },
         {
           "component": "text",
-          "name": "texListLink8",
+          "name": "texListLink8List2",
           "label": "Testo Link",
           "valueType": "string"
         },
         {
           "component": "aem-content",
-          "name": "listLinkHref8",
+          "name": "listLinkHref8List2",
           "label": "Link URL"
         }
       ]
     }
   ],
-  "filters": []
+  "filters": [
+    {
+      "id": "text-lists",
+      "components": [
+        "text-list-content"
+      ]
+    }
+  ]
 }
