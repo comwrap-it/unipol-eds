@@ -1387,7 +1387,8 @@
     "fields": [
       {
         "component": "reference",
-        "name": "text-list-tests",
+        "valueType": "string",
+        "name": "text-list-img",
         "label": "img",
         "multi": true
       }
