@@ -62,12 +62,6 @@
     ]
   },
   {
-    "id": "text-list",
-    "components": [
-      "text-list-link"
-    ]
-  },
-  {
     "id": "unipol-footer",
     "components": [
       "text-list"
