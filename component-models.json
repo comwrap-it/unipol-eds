@@ -1489,14 +1489,14 @@
         "valueType": "number",
         "name": "unipol-footer-columns",
         "value": "",
-        "label": "Columns"
+        "label": "Footer Columns"
       },
       {
         "component": "text",
         "valueType": "number",
         "name": "unipol-footer-rows",
         "value": "",
-        "label": "Rows"
+        "label": "Footer Rows"
       }
     ]
   },
