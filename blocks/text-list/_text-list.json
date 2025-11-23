@@ -21,9 +21,9 @@
       "id": "text-list",
       "fields": [
         {
-          "component": "text",
+          "component": "reference",
           "name": "text-list-tests",
-          "label": "Titolo",
+          "label": "img",
           "multi": true
         }
       ]
