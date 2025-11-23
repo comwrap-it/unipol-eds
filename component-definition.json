@@ -324,7 +324,7 @@
         },
         {
           "title": "Unipol Footer",
-          "id": "unipol-footer-columns",
+          "id": "unipol-footer",
           "plugins": {
             "xwalk": {
               "page": {

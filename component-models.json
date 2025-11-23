@@ -1482,7 +1482,7 @@
     ]
   },
   {
-    "id": "unipol-footer-columns",
+    "id": "unipol-footer",
     "fields": [
       {
         "component": "text",
