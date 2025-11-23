@@ -9,7 +9,8 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Unipol Footer",
-              "model": "unipol-footer"
+              "model": "unipol-footer",
+              "filter": "unipol-footer"
             }
           }
         }
@@ -20,20 +21,6 @@
     {
       "id": "unipol-footer",
       "fields": [
-        {
-          "component": "tab",
-          "label": "Configurazione Text List",
-          "name": "footerTextList"
-        },
-        {
-          "component": "container",
-          "name": "footerTextListContainer",
-          "fields": [
-            {
-              "...": "../text-list/_text-list.json#/models/text-list-content/fields"
-            }
-          ]
-        },
         {
           "component": "tab",
           "label": "Configurazione Sezione Download",
@@ -180,7 +167,8 @@
           "component": "aem-content",
           "name": "linkUnipolYoutube",
           "label": "Link Youtube"
-        },      {
+        },
+        {
           "component": "tab",
           "label": "Configurazione Note Legali",
           "name": "footerLegalNotesSection"
@@ -202,5 +190,12 @@
       ]
     }
   ],
-  "filters": []
+  "filters": [
+    {
+      "id": "unipol-footer",
+      "components": [
+        "text-list"
+      ]
+    }
+  ]
 }

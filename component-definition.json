@@ -346,7 +346,8 @@
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
                   "name": "Unipol Footer",
-                  "model": "unipol-footer"
+                  "model": "unipol-footer",
+                  "filter": "unipol-footer"
                 }
               }
             }

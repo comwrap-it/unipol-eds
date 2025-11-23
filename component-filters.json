@@ -68,6 +68,12 @@
     ]
   },
   {
+    "id": "unipol-footer",
+    "components": [
+      "text-list"
+    ]
+  },
+  {
     "id": "options",
     "components": [
       "unipol-option"
