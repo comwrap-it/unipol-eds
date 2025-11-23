@@ -128,7 +128,7 @@
   ],
   "filters": [
     {
-      "id": "text-lists",
+      "id": "text-list",
       "components": [
         "text-list-content"
       ]

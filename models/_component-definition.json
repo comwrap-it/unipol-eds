@@ -48,9 +48,6 @@
         },
         {
           "...": "../blocks/atoms/options/options-list/_options-list.json#/definitions"
-        },
-        {
-          "...": "../blocks/text-lists/text-list/_text-list.json#/definitions"
         }
       ]
     }
