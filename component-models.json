@@ -1479,18 +1479,269 @@
     "id": "unipol-footer",
     "fields": [
       {
-        "component": "text",
-        "valueType": "number",
-        "name": "unipol-footer-columns",
-        "value": "",
-        "label": "Footer Columns"
+        "component": "tab",
+        "label": "Configurazione Text List",
+        "name": "footerTextList"
+      },
+      {
+        "component": "container",
+        "name": "footerTextListContainer",
+        "fields": [
+          {
+            "component": "text",
+            "name": "texListLink1List2",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref1List2",
+            "label": "Link URL"
+          },
+          {
+            "component": "text",
+            "name": "texListLink2List2",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref2List2",
+            "label": "Link URL"
+          },
+          {
+            "component": "text",
+            "name": "texListLink3List2",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref3List2",
+            "label": "Link URL"
+          },
+          {
+            "component": "text",
+            "name": "texListLink4List2",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref4List2",
+            "label": "Link URL"
+          },
+          {
+            "component": "text",
+            "name": "texListLink5List2",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref5List2",
+            "label": "Link URL"
+          },
+          {
+            "component": "text",
+            "name": "texListLink6List2",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref6List2",
+            "label": "Link URL"
+          },
+          {
+            "component": "text",
+            "name": "texListLink7List2",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref7List2",
+            "label": "Link URL"
+          },
+          {
+            "component": "text",
+            "name": "texListLink8List2",
+            "label": "Testo Link",
+            "valueType": "string"
+          },
+          {
+            "component": "aem-content",
+            "name": "listLinkHref8List2",
+            "label": "Link URL"
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Sezione Download",
+        "name": "footerDownloadSection"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolGroupFooter",
+        "label": "Path Unipol Group"
       },
       {
         "component": "text",
-        "valueType": "number",
-        "name": "unipol-footer-rows",
+        "label": "Testo Unipol Group Button",
+        "name": "unipolGroupTextFooter"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolQRcode",
+        "label": "Img QRcode"
+      },
+      {
+        "component": "text",
+        "label": "Testo Unipol Group Button",
+        "name": "unipolQRcodeFooter"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolGooglePlay",
+        "label": "Img GooglePlay"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkGooglePlay",
+        "label": "Link GooglePlay"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolAppStore",
+        "label": "Img Apple Store"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkAppStore",
+        "label": "LinkAppStore"
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Privacy Link",
+        "name": "footerPrivacySection"
+      },
+      {
+        "component": "text",
+        "name": "texPrivacyLink1",
+        "label": "Testo Link Privacy",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkPrivacyLink1",
+        "label": "Link Privacy"
+      },
+      {
+        "component": "text",
+        "name": "texPrivacyLink2",
+        "label": "Testo Link Privacy",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkPrivacyLink2",
+        "label": "Link Privacy"
+      },
+      {
+        "component": "text",
+        "name": "texPrivacyLink3",
+        "label": "Testo Link Privacy",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkPrivacyLink3",
+        "label": "Link Privacy"
+      },
+      {
+        "component": "text",
+        "name": "texPrivacyLink4",
+        "label": "Testo Link Privacy",
+        "valueType": "string"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkPrivacyLink4",
+        "label": "Link Privacy"
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Social Link",
+        "name": "footerSocialSection"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolFacebook",
+        "label": "Logo Facebook"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkUnipolFacebook",
+        "label": "Link Facebook"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolInstagram",
+        "label": "Logo Instagram"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkUnipolInstagram",
+        "label": "Link Instagram"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolLinkedIn",
+        "label": "Logo LinkedIn"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkUnipolLinkedIn",
+        "label": "Link LinkedIn"
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolYoutube",
+        "label": "Logo Youtube"
+      },
+      {
+        "component": "aem-content",
+        "name": "linkUnipolYoutube",
+        "label": "Link Youtube"
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Note Legali",
+        "name": "footerLegalNotesSection"
+      },
+      {
+        "component": "richtext",
+        "name": "legalNotes",
         "value": "",
-        "label": "Footer Rows"
+        "label": "Testo note legali",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "legalNotesText2",
+        "value": "",
+        "label": "Testo note legali",
+        "valueType": "string"
       }
     ]
   },

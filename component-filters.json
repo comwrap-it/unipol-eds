@@ -68,20 +68,6 @@
     ]
   },
   {
-    "id": "unipol-footer",
-    "components": [
-      "column"
-    ]
-  },
-  {
-    "id": "column",
-    "components": [
-      "text",
-      "image",
-      "button"
-    ]
-  },
-  {
     "id": "options",
     "components": [
       "unipol-option"
