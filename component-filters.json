@@ -62,13 +62,13 @@
     ]
   },
   {
-    "id": "unipol-footer-columns",
+    "id": "columns",
     "components": [
-      "unipol-footer-column"
+      "column"
     ]
   },
   {
-    "id": "unipol-footer-column",
+    "id": "column",
     "components": [
       "text",
       "image",
