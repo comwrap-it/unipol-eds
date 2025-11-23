@@ -74,6 +74,12 @@
     ]
   },
   {
+    "id": "text-list",
+    "components": [
+      "text-list-content"
+    ]
+  },
+  {
     "id": "options",
     "components": [
       "unipol-option"

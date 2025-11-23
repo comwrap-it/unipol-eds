@@ -196,6 +196,12 @@
       "components": [
         "text-list"
       ]
+    },
+    {
+      "id": "text-list",
+      "components": [
+        "text-list-content"
+      ]
     }
   ]
 }
