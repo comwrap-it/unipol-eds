@@ -25,7 +25,7 @@
           "valueType": "string",
           "name": "logoUnipolFooter",
           "label": "Logo Unipol Footer",
-          "defaultValue": "/content/dam/unipol/logo/Unipol-Logo-OnDark.svg"
+          "value": "/content/dam/unipol/logo/Unipol-Logo-OnDark.svg"
         },
         {
           "component": "text",
