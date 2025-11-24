@@ -32,10 +32,10 @@
                 "name": "Text List",
                 "filter": "text-list"
               },
-              "footer-download-link": {
+              "footer-download-section": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Footer Download Link",
-                "model": "footer-download-link"
+                "name": "Footer Download section",
+                "model": "footer-download-section"
               },
               "footer-privacy-link-list": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
