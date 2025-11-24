@@ -27,7 +27,7 @@ async function ensureStylesLoaded() {
   await Promise.all([
     loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`),
     loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`),
-    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/3D-icons/3D-icons.css`),
+    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/icons-3D/icons-3D.css`),
   ]);
   isStylesLoaded = true;
 }
