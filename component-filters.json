@@ -97,7 +97,7 @@
     "id": "footer-section",
     "components": [
       "text-list",
-      "footer-download-link",
+      "footer-download-section",
       "footer-privacy-link-list",
       "footer-social-list",
       "footer-text"
