@@ -86,25 +86,6 @@
     ]
   },
   {
-    "id": "footer-bottom",
-    "components": [
-      "footer-text",
-      "footer-social-icon"
-    ]
-  },
-  {
-    "id": "footer-link-column",
-    "components": [
-      "text-list"
-    ]
-  },
-  {
-    "id": "footer-utility-links",
-    "components": [
-      "footer-privacy-link"
-    ]
-  },
-  {
     "id": "insurance-product-carousel",
     "components": [
       "insurance-product-card"
@@ -117,9 +98,9 @@
     "components": [
       "text-list",
       "footer-download-link",
+      "footer-privacy-link-list",
       "footer-social-list",
-      "footer-text",
-      "footer-privacy-link-list"
+      "footer-text"
     ]
   }
 ]
