@@ -1,8 +1,5 @@
-.footer-copyright-section {
-    color: var(--color-footer-secondary-text, #A4AFB7);
-}
-
-.footer-copyright-section p {
+.footer-copyright-section-wrapper .footer-copyright-section p {
     font-size: var(--Size-12, 12px);
+    color: var(--color-footer-secondary-text, #A4AFB7);
     font-weight: 400;
 }

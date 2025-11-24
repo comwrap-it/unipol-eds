@@ -177,29 +177,15 @@ main .section.text-block-container.number-block-container.bg-white {
 .section.footer-copyright-section-container {
     background-color: var(--color-background-default-tertiary, #001C35);
     margin: 0;
-    font-family: var(--Family-Font-2);
+    font-family: var(--Family-Font-2, Manrope);
 }
 
-.section.text-list-container h1,
-.section.text-list-container h2,
-.section.text-list-container h3,
-.section.text-list-container h4,
-.section.text-list-container h5,
-.section.text-list-container h6,
-.section.text-list-container p,
-.section.text-list-container a,
-.section.text-list-container p.button-container {
+.section.text-list-container .text-link-list,
+.section.text-list-container .text-link-list a {
     color: var(--color-text-default-primary, #001C35);
 }
 
-.section.text-list-container.footer-download-section-container h1,
-.section.text-list-container.footer-download-section-container h2,
-.section.text-list-container.footer-download-section-container h3,
-.section.text-list-container.footer-download-section-container h4,
-.section.text-list-container.footer-download-section-container h5,
-.section.text-list-container.footer-download-section-container h6,
-.section.text-list-container.footer-download-section-container p,
-.section.text-list-container.footer-download-section-container a,
-.section.text-list-container.footer-download-section-container p.button-container {
+.section.text-list-container.footer-download-section-container .text-link-list,
+.section.text-list-container.footer-download-section-container .text-link-list a{
     color: var(--color-footer-primary-text, #F9F9F7);
 }

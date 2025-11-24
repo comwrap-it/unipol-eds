@@ -4,11 +4,11 @@
 
 .footer-privacy-section-wrapper .footer-privacy-section {
     display: flex;
-    gap: var(--Space-500-32);
+    gap: var(--Footer-Secondary-Link-Horizontal-Gap-D-Tl-Tp, 32px);
 }
 
-.footer-privacy-section-wrapper .footer-privacy-section a {
-    color: #F9F9F7; /* cambiare */
+.footer-privacy-section-wrapper .footer-privacy-section .footer-privacy-link {
+    color: var(--color-footer-primary-text, #F9F9F7);
     text-decoration: none;
     font-size: var(--Size-14, 14px);
     font-weight: 400;
