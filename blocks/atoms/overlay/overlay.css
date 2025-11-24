@@ -3,7 +3,7 @@
     height: 860px;
     flex-shrink: 0;
     border-radius: var(--Overlay-Radius, 0);
-    background: var(--Overlay-Default-Background, rgba(0, 0, 0, 0.4));
+    background: var(--Overlay-Default-Background, rgb(0 0 0 / 40%));
 
     /* Background Blur/400 - 24 */
     backdrop-filter: blur(calc(var(--Blur-400---24, 24px) / 2));
