@@ -224,8 +224,7 @@
         "component": "reference",
         "valueType": "string",
         "name": "logoUnipolFooter",
-        "label": "Logo Unipol Footer",
-        "value": "/content/dam/unipol/logo/Unipol-Logo-OnDark.svg"
+        "label": "Logo Unipol Footer"
       },
       {
         "component": "text",
