@@ -21,10 +21,22 @@
       "id": "text-list",
       "fields": [
         {
-          "component": "reference",
+          "component": "text",
           "valueType": "string",
-          "name": "text-list-img",
-          "label": "img",
+          "name": "text-list-content-top",
+          "label": "Contenuto testuale titolo"
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "text-list-content",
+          "label": "Contenuti testuali Link",
+          "multi": true
+        },
+        {
+          "component": "aem-content",
+          "name": "text-list-href",
+          "label": "URL dei Link",
           "multi": true
         }
       ]
