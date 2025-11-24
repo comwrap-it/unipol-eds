@@ -24,6 +24,7 @@ import {
 } from '../atoms/radio-button/standard-radio-button/radio-button.js';
 import { create3Dicons } from '../atoms/3D-icons/3D-icons.js';
 import { createRadioButtonField } from '../atoms/radio-button/radio-button-field/radio-button-field.js';
+import createOverlay from '../atoms/overlay/overlay.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -46,6 +47,7 @@ async function ensureStylesLoaded() {
       'blocks/atoms/radio-button/standard-radio-button/radio-button.css',
       'blocks/atoms/radio-button/radio-button-field/radio-button-field.css',
       'blocks/atoms/3D-icons/3D-icons.css',
+      'blocks/atoms/overlay/overlay.css',
     ].map((p) => loadCSS(`${base}/${p}`)),
   );
   isStylesLoaded = true;
@@ -312,6 +314,8 @@ export default async function decorate(block) {
   testButtons.appendChild(centeredRow(buildOptionsList()));
   testButtons.appendChild(centeredRow(buildSelect()));
   testButtons.appendChild(build3DIconsSets());
+  // Overlay
+  testButtons.appendChild(createOverlay());
 
   // Mount
   block.innerHTML = '';
