@@ -178,18 +178,3 @@ main .section.text-block-container.number-block-container.bg-white {
     margin: 0;
     font-family: var(--Family-Font-2);
 }
-
-
-.section.text-list-container.footer-download-link-container .unipol-top-footer {
-    display: flex;
-    color: #F9F9F7;
-}
-
-.section.text-list-container.footer-download-link-container .unipol-footer-text-list-container {
-    display: flex;
-}
-
-.section.text-list-container .unipol-top-footer a,
-.section.footer-download-link-container .unipol-top-footer a {
-    color: #F9F9F7;
-}
