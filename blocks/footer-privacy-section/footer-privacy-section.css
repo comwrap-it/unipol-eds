@@ -10,6 +10,6 @@
 .footer-privacy-section-wrapper .footer-privacy-section .footer-privacy-link {
     color: var(--color-footer-primary-text, #F9F9F7);
     text-decoration: none;
-    font-size: var(--Size-14, 14px);
+    font-size: var(--Size-14, 0.875rem);
     font-weight: 400;
 }

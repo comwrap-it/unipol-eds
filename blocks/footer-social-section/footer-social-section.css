@@ -1,8 +1,8 @@
-.footer-social-list-wrapper {
+.footer-social-section-wrapper {
     margin-left: auto;
 }
 
-.footer-social-list {
+.footer-social-section {
     display: flex;
-    gap: var(--Space-250-12);
+    gap: var(--Footer-Icon-Gap, 12px);
 }

@@ -2,7 +2,7 @@
     margin: 0;
     padding: 0;
     margin-bottom: var(--dimension-space-300-16, 16px);
-    font-size: var(--Size-16, 16px);
+    font-size: var(--Size-16, 1rem);
     font-weight: 500;
 }
 
@@ -14,7 +14,7 @@
     padding: 0;
     margin: 0;
     text-decoration: none;
-    font-size: var(--Size-14, 14px);
+    font-size: var(--Size-14, 0.875rem);
     font-weight: 400;
 }
 
