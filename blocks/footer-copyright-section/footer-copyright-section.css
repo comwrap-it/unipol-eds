@@ -1,9 +1,8 @@
-.footer-copyright {
-    color: #A4AFB7; /* var(--Text-Neutral-Primary); */
-    padding-top: var(--Space-400-24);
+.footer-copyright-section {
+    color: var(--color-footer-secondary-text, #A4AFB7);
 }
 
-.footer-copyright p {
+.footer-copyright-section p {
     font-size: var(--Size-12, 12px);
     font-weight: 400;
 }
