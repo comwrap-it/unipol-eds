@@ -68,6 +68,20 @@
     ]
   },
   {
+    "id": "insurance-product-carousel-widget",
+    "components": [
+      "insurance-product-carousel"
+    ]
+  },
+  {
+    "id": "insurance-product-carousel",
+    "components": [
+      "insurance-product-card"
+    ],
+    "min": 1,
+    "max": 8
+  },
+  {
     "id": "options-list",
     "components": [
       "unipol-option"
@@ -84,14 +98,6 @@
     "components": [
       "unipol-option"
     ]
-  },
-  {
-    "id": "insurance-product-carousel",
-    "components": [
-      "insurance-product-card"
-    ],
-    "min": 1,
-    "max": 8
   },
   {
     "id": "footer-section",

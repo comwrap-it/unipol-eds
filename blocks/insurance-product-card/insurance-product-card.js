@@ -15,18 +15,18 @@ import {
   BUTTON_VARIANTS,
   BUTTON_ICON_SIZES,
 }
-  from '../../atoms/buttons/standard-button/standard-button.js';
+  from '../atoms/buttons/standard-button/standard-button.js';
 // eslint-disable-next-line no-unused-vars
-import { createTag } from '../../atoms/tag/tag.js';
+import { createTag } from '../atoms/tag/tag.js';
 // eslint-disable-next-line no-unused-vars
-import { create3Dicons } from '../../atoms/3D-icons/3D-icons.js';
-import { createOptimizedPicture } from '../../../scripts/aem.js';
-import { moveInstrumentation } from '../../../scripts/scripts.js';
+import { create3Dicons } from '../atoms/3D-icons/3D-icons.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
-  const { loadCSS } = await import('../../../scripts/aem.js');
+  const { loadCSS } = await import('../../scripts/aem.js');
   await Promise.all([
     loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`),
     loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`),
