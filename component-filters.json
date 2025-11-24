@@ -86,6 +86,25 @@
     ]
   },
   {
+    "id": "footer-bottom",
+    "components": [
+      "footer-text",
+      "footer-social-icon"
+    ]
+  },
+  {
+    "id": "footer-link-column",
+    "components": [
+      "text-list"
+    ]
+  },
+  {
+    "id": "footer-utility-links",
+    "components": [
+      "footer-privacy-link"
+    ]
+  },
+  {
     "id": "insurance-product-carousel",
     "components": [
       "insurance-product-card"
