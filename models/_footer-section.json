@@ -15,22 +15,22 @@
               "text-list-1": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Text List",
-                "model": "text-list"
+                "filter": "text-link"
               },
               "text-list-2": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Text List",
-                "model": "text-list"
+                "filter": "text-link"
               },
               "text-list-3": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Text List",
-                "model": "text-list"
+                "filter": "text-link"
               },
               "text-list-4": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Text List",
-                "model": "text-list"
+                "filter": "text-link"
               },
               "footer-download-link": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
@@ -40,22 +40,12 @@
               "footer-privacy-link-list": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Footer Privacy Link List",
-                "model": "footer-privacy-link-list",
-                "filter": "footer-privacy-link",
-                "footer-privacy-link": {
-                  "name": "Footer Privacy Link",
-                  "model": "footer-privacy-link"
-                }
+                "filter": "footer-privacy-link"
               },
               "footer-social-list": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Footer Social List",
-                "model": "footer-social-list",
-                "filter": "footer-social-link",
-                "footer-social-link": {
-                  "name": "Footer Social Link",
-                  "model": "footer-social-link"
-                }
+                "filter": "footer-social-link"
               },
               "footer-text": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
