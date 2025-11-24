@@ -102,7 +102,9 @@ export default async function decorateInsuranceProductCard(block) {
 
     const tagRows = rows.slice(9, 12);
     const tagElement = createTagFromRows(tagRows);
-    tagElement.classList.add('insurance-product-card-tag');
+
+    if (tagElement && tagElement.classList)
+      tagElement.classList.add('insurance-product-card-tag');
 
     if (tagRows && tagRows.length > 0) {
       cardImage.appendChild(tagElement);
