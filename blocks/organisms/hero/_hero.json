@@ -78,7 +78,7 @@
                 {
                     "component": "text",
                     "label": "Hero Title",
-                    "name": "heroTitle",
+                    "name": "heroMainLabel",
                     "required": true,
                     "maxlength": 50
                 },
