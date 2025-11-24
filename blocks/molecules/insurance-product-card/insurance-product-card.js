@@ -15,18 +15,18 @@ import {
   BUTTON_VARIANTS,
   BUTTON_ICON_SIZES,
 }
-  from '../atoms/buttons/standard-button/standard-button.js';
+  from '../../atoms/buttons/standard-button/standard-button.js';
 // eslint-disable-next-line no-unused-vars
-import { createTag } from '../atoms/tag/tag.js';
+import { createTag } from '../../atoms/tag/tag.js';
 // eslint-disable-next-line no-unused-vars
-import { create3Dicons } from '../atoms/3D-icons/3D-icons.js';
-import { createOptimizedPicture } from '../../scripts/aem.js';
-import { moveInstrumentation } from '../../scripts/scripts.js';
+import { create3Dicons } from '../../atoms/3D-icons/3D-icons.js';
+import { createOptimizedPicture } from '../../../scripts/aem.js';
+import { moveInstrumentation } from '../../../scripts/scripts.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
-  const { loadCSS } = await import('../../scripts/aem.js');
+  const { loadCSS } = await import('../../../scripts/aem.js');
   await Promise.all([
     loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`),
     loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`),
@@ -44,14 +44,6 @@ export default async function decorate(block) {
 
   // Ensure CSS is loaded
   await ensureStylesLoaded();
-
-  // Check if card is already decorated (has card-block class)
-  // This happens when Universal Editor re-renders after an edit
-  if (block.classList.contains('card-block')) {
-    // eslint-disable-next-line no-console
-    console.log('🔄 Card already decorated, skipping re-decoration');
-    return;
-  }
 
   // Create card structure
   const card = document.createElement('div');
@@ -147,24 +139,24 @@ export default async function decorate(block) {
     }
   }
 
-  // Card Content
-  const cardContent = document.createElement('div');
-  cardContent.className = 'card-content';
+  // Card Text Content
+  const cardTextContent = document.createElement('div');
+  cardTextContent.className = 'insurance-product-card-text';
 
   // Card Title - preserve original element and instrumentation
-  const titleRow = rows[1];
+  const titleRow = rows[0];
   if (titleRow) {
     // Try to preserve existing heading element
     const existingHeading = titleRow.querySelector('h1, h2, h3, h4, h5, h6');
     if (existingHeading) {
       // Move existing heading and preserve instrumentation
-      existingHeading.className = 'card-title';
+      existingHeading.className = 'title';
       moveInstrumentation(titleRow, existingHeading);
-      cardContent.appendChild(existingHeading);
+      cardTextContent.appendChild(existingHeading);
     } else {
       // Create new heading but preserve instrumentation
       const title = document.createElement('h3');
-      title.className = 'card-title';
+      title.className = 'title';
       // Clone child nodes to preserve richtext instrumentation
       while (titleRow.firstChild) {
         title.appendChild(titleRow.firstChild);
@@ -172,13 +164,13 @@ export default async function decorate(block) {
       // Move instrumentation from row to title
       moveInstrumentation(titleRow, title);
       if (title.textContent?.trim()) {
-        cardContent.appendChild(title);
+        cardTextContent.appendChild(title);
       }
     }
   }
 
   // Card Subtitle - preserve original element and instrumentation
-  const subtitleRow = rows[2];
+  const subtitleRow = rows[1];
   // eslint-disable-next-line no-console
   console.log('📝 Card Subtitle Row:', {
     exists: !!subtitleRow,
@@ -192,30 +184,38 @@ export default async function decorate(block) {
     // Try to preserve existing paragraph
     const existingPara = subtitleRow.querySelector('p');
     if (existingPara) {
-      existingPara.className = 'card-subtitle';
+      existingPara.className = 'description';
       moveInstrumentation(subtitleRow, existingPara);
-      cardContent.appendChild(existingPara);
+      cardTextContent.appendChild(existingPara);
     } else if (subtitleRow.textContent?.trim()) {
       // Create new paragraph but preserve instrumentation
       const subtitle = document.createElement('p');
-      subtitle.className = 'card-subtitle';
+      subtitle.className = 'description';
       // Clone child nodes to preserve richtext instrumentation
       while (subtitleRow.firstChild) {
         subtitle.appendChild(subtitleRow.firstChild);
       }
       // Move instrumentation from row to subtitle
       moveInstrumentation(subtitleRow, subtitle);
-      cardContent.appendChild(subtitle);
+      cardTextContent.appendChild(subtitle);
     }
   }
+
+  // Card Content
+  const cardContent = document.createElement('div');
+  cardContent.className = 'insurance-product-card-content';
+
+  cardContent.appendChild(cardTextContent);
 
   // Card Button - Rows 3-6 (optional)
   // Universal Editor creates separate rows for each button field:
   // Row 3 = text, Row 4 = variant, Row 5 = size, Row 6 = href
-  const buttonTextRow = rows[3];
-  const buttonVariantRow = rows[4];
+  const buttonTextRow = rows[2];
+  const buttonVariantRow = rows[3];
+  const buttonHrefRow = rows[4];
   const buttonSizeRow = rows[5];
-  const buttonHrefRow = rows[6];
+  const buttonLeftIcon = rows[6]?.textContent?.trim() === 'true';
+  const buttonRightIcon = rows[7]?.textContent?.trim() === 'true';
 
   // eslint-disable-next-line no-console
   console.log('🔘 Card Button Rows:', {
@@ -229,7 +229,7 @@ export default async function decorate(block) {
 
   if (buttonTextRow && buttonTextRow.textContent?.trim()) {
     const buttonsContainer = document.createElement('div');
-    buttonsContainer.className = 'card-buttons';
+    buttonsContainer.className = 'button-subdescription';
 
     // Check if button row has instrumentation (Universal Editor)
     // Universal Editor uses data-aue-prop on the fields
@@ -271,7 +271,7 @@ export default async function decorate(block) {
       }
 
       // Create button with extracted values
-      const button = createButton(label, href, variant, size);
+      const button = createButton(label, href, variant, size, buttonLeftIcon, buttonRightIcon);
       // eslint-disable-next-line no-console
       console.log('✅ Button created:', button);
       if (button) {
@@ -280,7 +280,7 @@ export default async function decorate(block) {
     } else {
       // No instrumentation - simple button creation
       const label = buttonTextRow.textContent?.trim() || 'Button';
-      const button = createButton(label, '', BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM);
+      const button = createButton(label, '', BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM, buttonLeftIcon, buttonRightIcon);
       if (button) {
         buttonsContainer.appendChild(button);
       }
@@ -293,13 +293,13 @@ export default async function decorate(block) {
 
   // eslint-disable-next-line no-console
   console.log('📦 Card Content Children:', {
-    count: cardContent.children.length,
-    children: Array.from(cardContent.children).map((c) => c.className),
+    count: cardTextContent.children.length,
+    children: Array.from(cardTextContent.children).map((c) => c.className),
   });
 
   // Append card content
-  if (cardContent.children.length > 0) {
-    card.appendChild(cardContent);
+  if (cardTextContent.children.length > 0) {
+    card.appendChild(cardTextContent);
   }
 
   // Preserve block instrumentation before replacing content

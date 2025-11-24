@@ -370,21 +370,6 @@
           }
         },
         {
-          "title": "Insurance Product Card",
-          "id": "insurance-product-card",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Insurance Product card",
-                  "model": "insurance-product-card"
-                }
-              }
-            }
-          }
-        },
-        {
           "title": "Insurance Product Carousel Widget",
           "id": "insurance-product-carousel-widget",
           "plugins": {
