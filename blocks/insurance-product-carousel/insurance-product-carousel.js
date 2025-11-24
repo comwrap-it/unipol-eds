@@ -90,7 +90,7 @@ export default async function decorate(block) {
   await ensureStylesLoaded();
 
   // Import card component dynamically
-  const cardModule = await import('../molecules/insurance-product-card/insurance-product-card.js');
+  const cardModule = await import('../insurance-product-card/insurance-product-card.js');
   const decorateCard = cardModule.default;
 
   // Create carousel container structure
