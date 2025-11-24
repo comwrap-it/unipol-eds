@@ -205,8 +205,7 @@ export default function decorate(block) {
   const actualRows = wrapper ? Array.from(wrapper.children) : rows;
 
   if (actualRows.length < 10) {
-    // eslint-disable-next-line no-console
-    console.warn('footer-download-section: insufficient rows');
+    console.warn('footer-download-section: insufficient rows'); // esline warning
     return;
   }
 

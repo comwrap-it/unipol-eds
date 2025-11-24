@@ -1,13 +1,12 @@
 import { html } from 'lit';
 
 // Import Footer Unipol component
-import { createFooterUnipol } from '@blocks/footer-unipol/footer-unipol.js';
-import { createFooterDownloadSection } from '@blocks/molecules/footer-download-section/footer-download-section.js';
-import { createFooterUtilityLinks } from '@blocks/molecules/footer-utility-links/footer-utility-links.js';
-import { createFooterBottom } from '@blocks/molecules/footer-bottom/footer-bottom.js';
-import { createFooterLink } from '@blocks/atoms/footer-link/footer-link.js';
-import { createFooterSocialIcon } from '@blocks/atoms/footer-social-icon/footer-social-icon.js';
-import { createFooterText } from '@blocks/footer-text/footer-text.js';
+import { createTextLinkComponent } from '@blocks/text-list/text-list.js';
+import { createFooterDownloadSection } from '@blocks/footer-download-section/footer-download-section.js';
+import { createFooterPrivacyComponent } from '@blocks/footer-privacy-section/footer-privacy-section.js';
+import { createFooterSocialComponent } from '@blocks/footer-social-section/footer-social-section.js';
+import { createFooterCopyrightComponent } from '@blocks/footer-copyright-section/footer-copyright-section.js';
+
 
 // CSS is loaded globally in preview-head.html
 
@@ -17,9 +16,14 @@ import { createFooterText } from '@blocks/footer-text/footer-text.js';
  * Footer Unipol is an organism component that displays:
  * - Link columns (using text-list)
  * - Download section (brand, QR code, app stores)
- * - Utility links (privacy, terms, etc.)
- * - Bottom section (copyright + social icons)
- */
+ * - Privacy Section (privacy links)
+ * - Social section (social icons)
+ * - Copyright section (Copyright Text)
+ *
+ **/
+
+
+ /* RIFARE
 export default {
   title: 'Organisms/Footer Unipol',
   tags: ['autodocs'],
@@ -161,9 +165,11 @@ export default {
   },
 };
 
-/**
+
+*/
+/** RIFARE
  * Helper function to create a text-list column
- */
+
 function createTextListColumn(title, links) {
   const column = document.createElement('div');
   column.className = 'text-list';
@@ -261,3 +267,4 @@ export const NoSocialIcons = {
   },
 };
 
+ */

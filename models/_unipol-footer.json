@@ -47,10 +47,10 @@
                 "name": "Footer Social Section",
                 "filter": "footer-social-section"
               },
-              "footer-text": {
+              "footer-copyright-section": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Footer Text",
-                "model": "footer-text"
+                "name": "Footer Copyright Section",
+                "model": "footer-copyright-section"
               }
             }
           }
@@ -78,7 +78,7 @@
         "footer-download-section",
         "footer-privacy-section",
         "footer-social-section",
-        "footer-text"
+        "footer-copyright-section"
       ]
     }
   ]

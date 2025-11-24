@@ -218,6 +218,25 @@
     ]
   },
   {
+    "id": "footer-copyright-section",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "footer-copyright-top",
+        "value": "",
+        "label": "Contenuto testuale copyright (testo superiore)",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "footer-copyright-bottom",
+        "value": "",
+        "label": "Contenuto testuale copyright (testo inferiore)",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
     "id": "footer-download-section",
     "fields": [
       {
@@ -310,18 +329,6 @@
         "component": "aem-content",
         "name": "logoSocialHref",
         "label": "Social Link URL"
-      }
-    ]
-  },
-  {
-    "id": "footer-text",
-    "fields": [
-      {
-        "component": "richtext",
-        "name": "footer-text",
-        "value": "",
-        "label": "Configurazione dei testi del footer",
-        "valueType": "string"
       }
     ]
   },

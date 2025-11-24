@@ -1,0 +1,42 @@
+{
+  "definitions": [
+    {
+      "title": "Footer Copyright Section",
+      "id": "footer-copyright-section",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Footer Copyright Section",
+              "model": "footer-copyright-section"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "footer-copyright-section",
+      "fields": [
+        {
+          "component": "richtext",
+          "name": "footer-copyright-top",
+          "value": "",
+          "label": "Contenuto testuale copyright (testo superiore)",
+          "valueType": "string"
+        },
+        {
+          "component": "richtext",
+          "name": "footer-copyright-bottom",
+          "value": "",
+          "label": "Contenuto testuale copyright (testo inferiore)",
+          "valueType": "string"
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
+
