@@ -31,7 +31,7 @@ export default async function decorate(block) {
     if (isStylesLoaded) return;
     const { loadCSS } = await import('../../scripts/aem.js');
     await Promise.all([
-      loadCSS(`${window.hlx.codeBasePath}/blocks/molecules/insurance-product-card/insurance-product-card.css`),
+      loadCSS(`${window.hlx.codeBasePath}/blocks/insurance-product-card/insurance-product-card.css`),
     ]);
     isStylesLoaded = true;
   }
@@ -40,18 +40,18 @@ export default async function decorate(block) {
 
   // Import card component dynamically
   const cardModule = await import('../insurance-product-card/insurance-product-card.js');
-  const decorateCard = cardModule.default;
+  const decorateInsuranceProductCard = cardModule.default;
 
   // Create carousel container structure
   const carousel = document.createElement('div');
-  carousel.className = 'insurance-product-carousel';
+  carousel.className = 'insurance-product-carousel-container';
   carousel.setAttribute('role', 'region');
   carousel.setAttribute('aria-label', 'Product carousel');
   carousel.setAttribute('tabindex', '0');
 
   // Create carousel track (scrollable container)
   const track = document.createElement('div');
-  track.className = 'carousel-track';
+  track.className = 'insurance-product-carousel';
   track.setAttribute('role', 'list');
 
   // Get all rows (each row will be a card)
@@ -66,7 +66,7 @@ export default async function decorate(block) {
   // Process each row as a card
   const cardPromises = rows.map(async (row) => {
     const slide = document.createElement('div');
-    slide.className = 'carousel-slide';
+    slide.className = 'insurance-product-card-wrapper';
     slide.setAttribute('role', 'listitem');
 
     // Preserve instrumentation from row to slide
@@ -97,10 +97,10 @@ export default async function decorate(block) {
     slide.appendChild(cardBlock);
 
     // Decorate the card using card component
-    await decorateCard(cardBlock);
+    await decorateInsuranceProductCard(cardBlock);
 
     // Load card styles
-    const decoratedCard = slide.querySelector('.insurance-product-card-container') || slide.firstElementChild;
+    const decoratedCard = slide.querySelector('.insurance-product-card-container, .card') || slide.firstElementChild;
     if (decoratedCard && decoratedCard.dataset.blockName) {
       await loadBlock(decoratedCard);
     }
@@ -113,6 +113,8 @@ export default async function decorate(block) {
   cardElements.forEach((slide) => {
     track.appendChild(slide);
   });
+
+  carousel.appendChild(track);
 
   // Preserve block instrumentation
   if (block.hasAttribute('data-aue-resource')) {

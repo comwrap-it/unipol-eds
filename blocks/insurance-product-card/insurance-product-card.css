@@ -8,6 +8,7 @@
     box-shadow: var(--Depth-050-2, 2px) var(--Depth-050-2, 2px) var(--Blur-200-8, 8px) 0 rgb(0 0 0 / 8%);
 
     & .insurance-product-card-image {
+        position: relative;
         display: flex;
         height: 11.1095rem;
         justify-content: center;
@@ -19,6 +20,19 @@
         & img, picture {
             width: 19.75rem;
             height: 11.1095rem;
+            border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem) var(--Radius-0, 0) var(--Radius-0, 0);
+        }
+
+        & .insurance-product-card-tag {
+            display: flex;
+            padding: var(--Tag-Vertical-Padding, 0.25rem) var(--Tag-Horizontal-Padding, 0.75rem);
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+            left: 1rem;
+            top: 1rem;
+            border-radius: var(--Tag-Radius, 0.5rem);
+            border: var(--Tag-Border, 1px) solid var(--Tag-Neutral-Border, rgb(17 17 17 / 0%));
         }
     }
 

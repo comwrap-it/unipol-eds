@@ -79,7 +79,7 @@
           "required": true,
           "fields": [
             {
-              "...": "../atoms/3D-icons/_3D-icons.json#/models/3D-icons/fields"
+              "...": "../atoms/icons-3D/_icons-3D.json#/models/icons-3D/fields"
             }
           ]
         }

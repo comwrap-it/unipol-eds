@@ -9,17 +9,14 @@
  */
 
 import {
-  createButton,
+  createButtonFromRows,
   // eslint-disable-next-line no-unused-vars
   extractInstrumentationAttributes,
-  BUTTON_VARIANTS,
-  BUTTON_ICON_SIZES,
 }
   from '../atoms/buttons/standard-button/standard-button.js';
+import { createTagFromRows } from '../atoms/tag/tag.js';
 // eslint-disable-next-line no-unused-vars
-import { createTag } from '../atoms/tag/tag.js';
-// eslint-disable-next-line no-unused-vars
-import { create3Dicons } from '../atoms/3D-icons/3D-icons.js';
+import { create3Dicons } from '../atoms/icons-3D/icons-3D.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
@@ -39,11 +36,19 @@ async function ensureStylesLoaded() {
  * Decorates a card block element
  * @param {HTMLElement} block - The card block element
  */
-export default async function decorate(block) {
+export default async function decorateInsuranceProductCard(block) {
   if (!block) return;
 
   // Ensure CSS is loaded
   await ensureStylesLoaded();
+
+  // Check if card is already decorated (has card-block class)
+  // This happens when Universal Editor re-renders after an edit
+  if (block.classList.contains('card-block')) {
+    // eslint-disable-next-line no-console
+    console.log('🔄 Card already decorated, skipping re-decoration');
+    return;
+  }
 
   // Create card structure
   const card = document.createElement('div');
@@ -83,17 +88,25 @@ export default async function decorate(block) {
   // Row 8:  Note
   // Row 9:  Tag Label
   // Row 10: Tag Category
-  // Row 12: Tag Variant
-  // Row 13: Image
-  // Row 14: 3D Icon showVehicle
-  // Row 15: 3D Icon showProperty
-  // Row 16: 3D Icon showWelfare
+  // Row 11: Tag Variant
+  // Row 12: Image
+  // Row 13: 3D Icon showVehicle
+  // Row 14: 3D Icon showProperty
+  // Row 15: 3D Icon showWelfare
 
   // Card Image
-  const imageRow = rows[13];
+  const imageRow = rows[12];
   if (imageRow) {
     const cardImage = document.createElement('div');
     cardImage.className = 'insurance-product-card-image';
+
+    const tagRows = rows.slice(9, 12);
+    const tagElement = createTagFromRows(tagRows);
+    tagElement.classList.add('insurance-product-card-tag');
+
+    if (tagRows && tagRows.length > 0) {
+      cardImage.appendChild(tagElement);
+    }
 
     const picture = imageRow.querySelector('picture');
     if (picture) {
@@ -207,82 +220,36 @@ export default async function decorate(block) {
 
   cardContent.appendChild(cardTextContent);
 
-  // Card Button - Rows 3-6 (optional)
-  // Universal Editor creates separate rows for each button field:
-  // Row 3 = text, Row 4 = variant, Row 5 = size, Row 6 = href
-  const buttonTextRow = rows[2];
-  const buttonVariantRow = rows[3];
-  const buttonHrefRow = rows[4];
-  const buttonSizeRow = rows[5];
-  const buttonLeftIcon = rows[6]?.textContent?.trim() === 'true';
-  const buttonRightIcon = rows[7]?.textContent?.trim() === 'true';
+  // Card Button - Rows 2-7 (optional)
+  // Universal Editor creates separate rows for each button field
+  const buttonRows = rows.slice(2, 8);
+  const buttonElement = createButtonFromRows(buttonRows);
 
-  // eslint-disable-next-line no-console
-  console.log('🔘 Card Button Rows:', {
-    totalRows: rows.length,
-    buttonTextRow,
-    buttonVariantRow,
-    buttonSizeRow,
-    buttonHrefRow,
-    hasContent: buttonTextRow?.textContent?.trim(),
-  });
-
-  if (buttonTextRow && buttonTextRow.textContent?.trim()) {
+  if (buttonElement && buttonElement.children.length > 0) {
     const buttonsContainer = document.createElement('div');
     buttonsContainer.className = 'button-subdescription';
 
-    // Check if button row has instrumentation (Universal Editor)
-    // Universal Editor uses data-aue-prop on the fields
-    const hasInstrumentation = buttonTextRow.hasAttribute('data-aue-resource')
-      || buttonTextRow.querySelector('[data-aue-resource]')
-      || buttonTextRow.querySelector('[data-richtext-prop]')
-      || buttonTextRow.querySelector('[data-aue-prop]'); // Universal Editor field marker
+    buttonsContainer.appendChild(buttonElement);
 
-    // eslint-disable-next-line no-console
-    console.log('🎯 Button has instrumentation?', hasInstrumentation);
-
-    if (hasInstrumentation) {
-      // Universal Editor creates separate rows for each button field
-      // Read values from each row's data-aue-prop element
-      const textField = buttonTextRow.querySelector('[data-aue-prop="text"]');
-      const variantField = buttonVariantRow?.querySelector('[data-aue-prop="variant"]');
-      const sizeField = buttonSizeRow?.querySelector('[data-aue-prop="size"]');
-      const hrefField = buttonHrefRow?.querySelector('a');
-
-      const label = textField?.textContent?.trim() || 'Button';
-      let variant = variantField?.textContent?.trim()?.toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-      let size = sizeField?.textContent?.trim()?.toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
-      const href = hrefField?.getAttribute('href')?.replace('.html', '') || '';
-
-      // eslint-disable-next-line no-console
-      console.log('🎯 Button values extracted:', {
-        label,
-        variant,
-        size,
-        href,
-      });
-
-      // Validate variant and size
-      if (!Object.values(BUTTON_VARIANTS).includes(variant)) {
-        variant = BUTTON_VARIANTS.PRIMARY;
-      }
-      if (!Object.values(BUTTON_ICON_SIZES).includes(size)) {
-        size = BUTTON_ICON_SIZES.MEDIUM;
-      }
-
-      // Create button with extracted values
-      const button = createButton(label, href, variant, size, buttonLeftIcon, buttonRightIcon);
-      // eslint-disable-next-line no-console
-      console.log('✅ Button created:', button);
-      if (button) {
-        buttonsContainer.appendChild(button);
-      }
-    } else {
-      // No instrumentation - simple button creation
-      const label = buttonTextRow.textContent?.trim() || 'Button';
-      const button = createButton(label, '', BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM, buttonLeftIcon, buttonRightIcon);
-      if (button) {
-        buttonsContainer.appendChild(button);
+    const note = rows[8];
+    if (note) {
+      // Try to preserve existing paragraph
+      const existingPara = note.querySelector('p');
+      if (existingPara) {
+        existingPara.className = 'subdescription';
+        moveInstrumentation(note, existingPara);
+        buttonsContainer.appendChild(existingPara);
+      } else if (note.textContent?.trim()) {
+        // Create new paragraph but preserve instrumentation
+        const noteFromHTML = document.createElement('p');
+        noteFromHTML.className = 'subdescription';
+        // Clone child nodes to preserve richtext instrumentation
+        while (note.firstChild) {
+          noteFromHTML.appendChild(note.firstChild);
+        }
+        // Move instrumentation from row to note
+        moveInstrumentation(note, noteFromHTML);
+        buttonsContainer.appendChild(noteFromHTML);
       }
     }
 
@@ -293,13 +260,13 @@ export default async function decorate(block) {
 
   // eslint-disable-next-line no-console
   console.log('📦 Card Content Children:', {
-    count: cardTextContent.children.length,
-    children: Array.from(cardTextContent.children).map((c) => c.className),
+    count: cardContent.children.length,
+    children: Array.from(cardContent.children).map((c) => c.className),
   });
 
   // Append card content
-  if (cardTextContent.children.length > 0) {
-    card.appendChild(cardTextContent);
+  if (cardContent.children.length > 0) {
+    card.appendChild(cardContent);
   }
 
   // Preserve block instrumentation before replacing content

@@ -1,31 +1,43 @@
-.insurance-product-carousel {
+.insurance-product-carousel-container {
     display: flex;
-    width: 82rem;
     flex-direction: column;
     align-items: center;
-    gap: var(--Carousel-Widget-Gap-D-Tl, 3rem);
+
+    .insurance-product-carousel {
+        display: flex;
+        width: 82rem;
+        align-items: flex-start;
+        gap: var(--Carousel-Insurance-Product-Gap, 1rem);
+    }
 }
 
 /* Tablet Landscape */
 @media (768px <= width < 1280px) {
-    .insurance-product-carousel {
-        width: 76rem;
+    .insurance-product-carousel-container{
+        & .insurance-product-carousel {
+            width: 76rem;
+        }
     }
 }
 
 /* Tablet Portrait */
 @media (393px <= width < 768px) {
-    .insurance-product-carousel {
-        width: 46rem;
-        gap: var(--Carousel-Widget-Gap-M-Tp, 2.5rem);
+    .insurance-product-carousel-container {
+        & .insurance-product-carousel {
+            width: 46rem;
+            gap: var(--Carousel-Widget-Gap-M-Tp, 2.5rem);
+        }
     }
 }
 
 /* Mobile */
 @media (width < 393px) {
-    .insurance-product-carousel {
-        display: flex;
-        width: 21.4375rem;
-        gap: var(--Carousel-Widget-Gap-M-Tp, 2.5rem);
+    .insurance-product-carousel-container {
+        & .insurance-product-carousel {
+            display: flex;
+            width: 21.4375rem;
+            gap: var(--Carousel-Widget-Gap-M-Tp, 2.5rem);
+
+        }
     }
 }
