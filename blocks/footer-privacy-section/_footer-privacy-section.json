@@ -1,15 +1,15 @@
 {
   "definitions": [
     {
-      "title": "Footer Privacy Link List",
-      "id": "footer-privacy-link-list",
+      "title": "Footer Privacy Section",
+      "id": "footer-privacy-section",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "name": "Footer Privacy Link List",
-              "filter": "footer-privacy-link-list"
+              "name": "Footer Privacy Section",
+              "filter": "footer-privacy-section"
             }
           }
         }
@@ -52,7 +52,7 @@
   ],
   "filters": [
     {
-      "id": "footer-privacy-link-list",
+      "id": "footer-privacy-section",
       "components": [
         "footer-privacy-link"
       ]

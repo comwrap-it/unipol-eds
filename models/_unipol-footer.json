@@ -1,17 +1,17 @@
 {
   "definitions": [
     {
-      "title": "Footer Section",
-      "id": "footer-section",
+      "title": "Unipol Footer",
+      "id": "unipol-footer",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/section/v1/section",
             "template": {
-              "filter": "footer-section",
-              "name": "Footer Section",
-              "model": "footer-section",
-              "style": "footer-section",
+              "filter": "unipol-footer",
+              "name": "Unipol Footer",
+              "model": "unipol-footer",
+              "style": "unipol-footer",
               "text-list-1": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Text List",
@@ -37,15 +37,15 @@
                 "name": "Footer Download section",
                 "model": "footer-download-section"
               },
-              "footer-privacy-link-list": {
+              "footer-privacy-section": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Footer Privacy Link List",
-                "filter": "footer-privacy-link-list"
+                "name": "Footer Privacy Section",
+                "filter": "footer-privacy-section"
               },
-              "footer-social-list": {
+              "footer-social-section": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Footer Social List",
-                "filter": "footer-social-list"
+                "name": "Footer Social Section",
+                "filter": "footer-social-section"
               },
               "footer-text": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
@@ -60,24 +60,24 @@
   ],
   "models": [
     {
-      "id": "footer-section",
+      "id": "unipol-footer",
       "fields": [
         {
           "component": "text",
-          "name": "footer-section-name",
-          "label": "Nome sezione Unipol Footer"
+          "name": "unipol-footer-name",
+          "label": "Nome sezione Footer"
         }
       ]
     }
   ],
   "filters": [
     {
-      "id": "footer-section",
+      "id": "unipol-footer",
       "components": [
         "text-list",
         "footer-download-section",
-        "footer-privacy-link-list",
-        "footer-social-list",
+        "footer-privacy-section",
+        "footer-social-section",
         "footer-text"
       ]
     }

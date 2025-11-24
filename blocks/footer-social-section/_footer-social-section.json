@@ -1,15 +1,15 @@
 {
   "definitions": [
     {
-      "title": "Footer Social List",
-      "id": "footer-social-list",
+      "title": "Footer Social Section",
+      "id": "footer-social-section",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "name": "Footer Social List",
-              "filter": "footer-social-list"
+              "name": "Footer Social Section",
+              "filter": "footer-social-section"
             }
           }
         }
@@ -52,7 +52,7 @@
   ],
   "filters": [
     {
-      "id": "footer-social-list",
+      "id": "footer-social-section",
       "components": [
         "footer-social-link"
       ]

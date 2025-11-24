@@ -3381,12 +3381,12 @@
     ]
   },
   {
-    "id": "footer-section",
+    "id": "unipol-footer",
     "fields": [
       {
         "component": "text",
-        "name": "footer-section-name",
-        "label": "Nome sezione Unipol Footer"
+        "name": "unipol-footer-name",
+        "label": "Nome sezione Footer"
       }
     ]
   }

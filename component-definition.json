@@ -167,17 +167,17 @@
           }
         },
         {
-          "title": "Footer Section",
-          "id": "footer-section",
+          "title": "Unipol Footer",
+          "id": "unipol-footer",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/section/v1/section",
                 "template": {
-                  "filter": "footer-section",
-                  "name": "Footer Section",
-                  "model": "footer-section",
-                  "style": "footer-section",
+                  "filter": "unipol-footer",
+                  "name": "Unipol Footer",
+                  "model": "unipol-footer",
+                  "style": "unipol-footer",
                   "text-list-1": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
                     "name": "Text List",
@@ -203,15 +203,15 @@
                     "name": "Footer Download section",
                     "model": "footer-download-section"
                   },
-                  "footer-privacy-link-list": {
+                  "footer-privacy-section": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
-                    "name": "Footer Privacy Link List",
-                    "filter": "footer-privacy-link-list"
+                    "name": "Footer Privacy Section",
+                    "filter": "footer-privacy-section"
                   },
-                  "footer-social-list": {
+                  "footer-social-section": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
-                    "name": "Footer Social List",
-                    "filter": "footer-social-list"
+                    "name": "Footer Social Section",
+                    "filter": "footer-social-section"
                   },
                   "footer-text": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
@@ -290,15 +290,15 @@
           }
         },
         {
-          "title": "Footer Privacy Link List",
-          "id": "footer-privacy-link-list",
+          "title": "Footer Privacy Section",
+          "id": "footer-privacy-section",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Footer Privacy Link List",
-                  "filter": "footer-privacy-link-list"
+                  "name": "Footer Privacy Section",
+                  "filter": "footer-privacy-section"
                 }
               }
             }
@@ -320,15 +320,15 @@
           }
         },
         {
-          "title": "Footer Social List",
-          "id": "footer-social-list",
+          "title": "Footer Social Section",
+          "id": "footer-social-section",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Footer Social List",
-                  "filter": "footer-social-list"
+                  "name": "Footer Social Section",
+                  "filter": "footer-social-section"
                 }
               }
             }

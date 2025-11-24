@@ -38,7 +38,7 @@
           "...": "../blocks/molecules/insurance-product-card/_insurance-product-card.json#/definitions"
         },
         {
-          "...": "./_footer-section.json#/definitions"
+          "...": "./_unipol-footer.json#/definitions"
         }
       ]
     },
