@@ -39,10 +39,22 @@
           "label": "Link Button Left Icon",
           "description": "Optional icon on the left",
           "options": [
-            { "name": "None", "value": "" },
-            { "name": "Chevron Left", "value": "chevron-left" },
-            { "name": "Chevron Right", "value": "chevron-right" },
-            { "name": "Search", "value": "search-icon" }
+            {
+              "name": "None",
+              "value": ""
+            },
+            {
+              "name": "Chevron Left",
+              "value": "un-icon-chevron-left"
+            },
+            {
+              "name": "Chevron Right",
+              "value": "un-icon-chevron-right"
+            },
+            {
+              "name": "Search Icon",
+              "value": "un-icon-search"
+            }
           ]
         },
         {
@@ -51,10 +63,22 @@
           "label": "Right Button Right Icon",
           "description": "Optional icon on the right",
           "options": [
-            { "name": "None", "value": "" },
-            { "name": "Chevron Left", "value": "chevron-left" },
-            { "name": "Chevron Right", "value": "chevron-right" },
-            { "name": "Search", "value": "search-icon" }
+            {
+              "name": "None",
+              "value": ""
+            },
+            {
+              "name": "Chevron Left",
+              "value": "un-icon-chevron-left"
+            },
+            {
+              "name": "Chevron Right",
+              "value": "un-icon-chevron-right"
+            },
+            {
+              "name": "Search Icon",
+              "value": "un-icon-search"
+            }
           ]
         },
         {

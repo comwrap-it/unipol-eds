@@ -28,16 +28,20 @@
                     "description": "Select the icon",
                     "options": [
                         {
+                            "name": "None",
+                            "value": ""
+                        },
+                        {
                             "name": "Chevron Left",
-                            "value": "chevron-left"
+                            "value": "un-icon-chevron-left"
                         },
                         {
                             "name": "Chevron Right",
-                            "value": "chevron-right"
+                            "value": "un-icon-chevron-right"
                         },
                         {
                             "name": "Search Icon",
-                            "value": "search-icon"
+                            "value": "un-icon-search"
                         }
                     ]
                 },
