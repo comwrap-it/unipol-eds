@@ -1788,32 +1788,6 @@
     ]
   },
   {
-    "id": "3D-icons",
-    "fields": [
-      {
-        "component": "switch",
-        "name": "vehiclesShowIcon",
-        "label": "Show Vehicles & Mobility icon",
-        "description": "Toggle to display the Vehicles & Mobility icon",
-        "value": false
-      },
-      {
-        "component": "switch",
-        "name": "homeShowIcon",
-        "label": "Show Home & Family icon",
-        "description": "Toggle to display the Home & Family icon",
-        "value": false
-      },
-      {
-        "component": "switch",
-        "name": "personalShowIcon",
-        "label": "Show Personal Protection icon",
-        "description": "Toggle to display the Personal Protection icon",
-        "value": false
-      }
-    ]
-  },
-  {
     "id": "icon-button",
     "fields": [
       {
@@ -2445,6 +2419,32 @@
         "name": "disabled",
         "label": "Disabled",
         "description": "Toggle to disable the checkbox",
+        "value": false
+      }
+    ]
+  },
+  {
+    "id": "icons-3D",
+    "fields": [
+      {
+        "component": "switch",
+        "name": "vehiclesShowIcon",
+        "label": "Show Vehicles & Mobility icon",
+        "description": "Toggle to display the Vehicles & Mobility icon",
+        "value": false
+      },
+      {
+        "component": "switch",
+        "name": "homeShowIcon",
+        "label": "Show Home & Family icon",
+        "description": "Toggle to display the Home & Family icon",
+        "value": false
+      },
+      {
+        "component": "switch",
+        "name": "personalShowIcon",
+        "label": "Show Personal Protection icon",
+        "description": "Toggle to display the Personal Protection icon",
         "value": false
       }
     ]
