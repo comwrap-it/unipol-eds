@@ -20,57 +20,6 @@ import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /**
- * Create carousel navigation (prev/next arrows)
- * @returns {Object} Object with navContainer, prevBtn and nextBtn elements
- */
-function createNavigationButtons() {
-}
-
-/**
- * Create carousel dots indicator
- * @param {number} totalSlides - Total number of slides
- * @returns {Object} Object with dotsContainer and updateDots function
- */
-function createDotsIndicator(totalSlides) {
-}
-
-/**
- * Update navigation button states based on scroll position
- * @param {HTMLElement} track - The carousel track
- * @param {HTMLElement} prevBtn - Previous button
- * @param {HTMLElement} nextBtn - Next button
- */
-function updateNavigationState(track, prevBtn, nextBtn) {
-}
-
-/**
- * Update dots indicator based on scroll position
- * @param {HTMLElement} track - The carousel track
- * @param {HTMLElement} dotsContainer - Dots container
- */
-function updateDotsIndicator(track, dotsContainer) {
-}
-
-/**
- * Scroll to a specific slide
- * @param {HTMLElement} track - The carousel track
- * @param {number} index - Slide index
- */
-function scrollToSlide(track, index) {
-}
-
-/**
- * Initialize carousel interactions (navigation, keyboard, scroll)
- * @param {HTMLElement} carousel - The carousel container
- * @param {HTMLElement} track - The carousel track
- * @param {HTMLElement} prevBtn - Previous button
- * @param {HTMLElement} nextBtn - Next button
- * @param {HTMLElement} dotsContainer - Dots container
- */
-function initializeCarouselInteractions(carousel, track, prevBtn, nextBtn, dotsContainer) {
-}
-
-/**
  * Decorates the insurance product carousel block
  * @param {HTMLElement} block - The carousel block element
  */
@@ -164,20 +113,6 @@ export default async function decorate(block) {
   cardElements.forEach((slide) => {
     track.appendChild(slide);
   });
-
-  // Create navigation
-  //const { navContainer, prevBtn, nextBtn } = createNavigationButtons(carousel);
-
-  // Create dots indicator
-  //const dotsContainer = createDotsIndicator(cardElements.length);
-
-  // Assemble carousel
-  //carousel.appendChild(track);
-  //carousel.appendChild(navContainer);
-  //carousel.appendChild(dotsContainer);
-
-  // Initialize interactions
-  //initializeCarouselInteractions(carousel, track, prevBtn, nextBtn, dotsContainer);
 
   // Preserve block instrumentation
   if (block.hasAttribute('data-aue-resource')) {
