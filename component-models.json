@@ -218,7 +218,7 @@
     ]
   },
   {
-    "id": "footer-download-link",
+    "id": "footer-download-section",
     "fields": [
       {
         "component": "reference",
