@@ -118,12 +118,22 @@ export default function decorate(block) {
   const config = extractFooterBottomData(actualRows);
   const bottom = createFooterBottom(config);
 
-  // Preserve block attributes
+  // Preserve block attributes for Universal Editor
   [...block.attributes].forEach((attr) => {
-    if (attr.name.startsWith('data-') || attr.name === 'id') {
+    if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
       bottom.setAttribute(attr.name, attr.value);
     }
   });
+
+  // Preserve blockName if present (needed for loadBlock)
+  if (block.dataset.blockName) {
+    bottom.dataset.blockName = block.dataset.blockName;
+  }
+
+  // Preserve id if present
+  if (block.id) {
+    bottom.id = block.id;
+  }
 
   block.replaceWith(bottom);
 }

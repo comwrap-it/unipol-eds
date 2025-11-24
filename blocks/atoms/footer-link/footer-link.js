@@ -67,12 +67,22 @@ export default function decorate(block) {
 
   const link = createFooterLink(label, href, variant, instrumentation);
 
-  // Preserve block attributes
+  // Preserve block attributes for Universal Editor
   [...block.attributes].forEach((attr) => {
-    if (attr.name.startsWith('data-') || attr.name === 'id') {
+    if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
       link.setAttribute(attr.name, attr.value);
     }
   });
+
+  // Preserve blockName if present (needed for loadBlock)
+  if (block.dataset.blockName) {
+    link.dataset.blockName = block.dataset.blockName;
+  }
+
+  // Preserve id if present
+  if (block.id) {
+    link.id = block.id;
+  }
 
   block.replaceWith(link);
 }

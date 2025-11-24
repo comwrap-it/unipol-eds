@@ -107,6 +107,7 @@ export default async function decorate(section) {
   });
 
   // Clone elements before clearing section (they will be moved, not copied)
+  // cloneNode(true) preserves all attributes including data-aue-* and data-block-name
   config.linkColumns = linkColumns.map((col) => col.cloneNode(true));
   if (downloadSection) config.downloadSection = downloadSection.cloneNode(true);
   if (utilityLinks) config.utilityLinks = utilityLinks.cloneNode(true);
@@ -115,8 +116,23 @@ export default async function decorate(section) {
   // Create footer structure
   const footer = createFooterUnipol(config);
 
+  // Preserve section attributes for Universal Editor before replacing content
+  // This ensures the section remains editable in Universal Editor
+  const sectionAttributes = {};
+  [...section.attributes].forEach((attr) => {
+    if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-')) {
+      sectionAttributes[attr.name] = attr.value;
+    }
+  });
+
   // Replace section content with footer
   section.innerHTML = '';
   section.appendChild(footer);
+
+  // Restore section attributes after content replacement
+  Object.entries(sectionAttributes).forEach(([name, value]) => {
+    section.setAttribute(name, value);
+  });
+
   section.classList.add('footer-section-decorated');
 }

@@ -85,12 +85,22 @@ export default function decorate(block) {
   const linkElements = extractUtilityLinks(actualRows);
   const container = createFooterUtilityLinks(null, linkElements);
 
-  // Preserve block attributes
+  // Preserve block attributes for Universal Editor
   [...block.attributes].forEach((attr) => {
-    if (attr.name.startsWith('data-') || attr.name === 'id') {
+    if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
       container.setAttribute(attr.name, attr.value);
     }
   });
+
+  // Preserve blockName if present (needed for loadBlock)
+  if (block.dataset.blockName) {
+    container.dataset.blockName = block.dataset.blockName;
+  }
+
+  // Preserve id if present
+  if (block.id) {
+    container.id = block.id;
+  }
 
   block.replaceWith(container);
 }

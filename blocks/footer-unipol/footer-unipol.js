@@ -81,18 +81,26 @@ export function createFooterUnipol(config = {}) {
  * @param {HTMLElement} newBlock - New block to receive attributes
  */
 function preserveBlockAttributes(originalBlock, newBlock) {
+  // Preserve ALL block instrumentation attributes
   [...originalBlock.attributes].forEach((attr) => {
-    if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-')) {
+    if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
       newBlock.setAttribute(attr.name, attr.value);
     }
   });
 
+  // Preserve blockName if present (needed for loadBlock)
+  if (originalBlock.dataset.blockName) {
+    newBlock.dataset.blockName = originalBlock.dataset.blockName;
+  }
+
+  // Preserve id if present
   if (originalBlock.id) {
     newBlock.id = originalBlock.id;
   }
 
+  // Preserve block classes
   [...originalBlock.classList].forEach((className) => {
-    if (!className.startsWith('footer-unipol') && className !== 'block') {
+    if (className !== 'block' && !className.startsWith('footer-unipol')) {
       newBlock.classList.add(className);
     }
   });

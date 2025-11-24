@@ -57,12 +57,22 @@ export default function decorate(block) {
 
   const textElement = createFooterText(content, instrumentation);
 
-  // Preserve block attributes
+  // Preserve block attributes for Universal Editor
   [...block.attributes].forEach((attr) => {
-    if (attr.name.startsWith('data-') || attr.name === 'id') {
+    if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
       textElement.setAttribute(attr.name, attr.value);
     }
   });
+
+  // Preserve blockName if present (needed for loadBlock)
+  if (block.dataset.blockName) {
+    textElement.dataset.blockName = block.dataset.blockName;
+  }
+
+  // Preserve id if present
+  if (block.id) {
+    textElement.id = block.id;
+  }
 
   block.replaceWith(textElement);
 }

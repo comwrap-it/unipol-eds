@@ -213,12 +213,22 @@ export default function decorate(block) {
   const config = extractDownloadSectionData(actualRows);
   const section = createFooterDownloadSection(config);
 
-  // Preserve block attributes
+  // Preserve block attributes for Universal Editor
   [...block.attributes].forEach((attr) => {
-    if (attr.name.startsWith('data-') || attr.name === 'id') {
+    if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
       section.setAttribute(attr.name, attr.value);
     }
   });
+
+  // Preserve blockName if present (needed for loadBlock)
+  if (block.dataset.blockName) {
+    section.dataset.blockName = block.dataset.blockName;
+  }
+
+  // Preserve id if present
+  if (block.id) {
+    section.id = block.id;
+  }
 
   block.replaceWith(section);
 }
