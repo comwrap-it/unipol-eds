@@ -52,8 +52,13 @@
           "component": "richtext",
           "name": "qrCodeImg",
           "value": "",
-          "label": "Testo immagine codice qr",
-          "valueType": "string"
+          "label": "Testo sezione QR Code",
+          "maxlength": 30,
+          "valueType": "string",
+          "validation": {
+            "maxLength": 30,
+            "customErrorMsg": "Testo troppo lungo"
+          }
         },
         {
           "component": "reference",

@@ -39,7 +39,12 @@
           "component": "text",
           "name": "footerPrivacyLink",
           "label": "Testo Link",
-          "required": true
+          "maxlength": 35,
+          "required": true,
+          "validation": {
+            "maxLength": 35,
+            "customErrorMsg": "Testo troppo lungo"
+          }
         },
         {
           "component": "aem-content",

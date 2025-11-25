@@ -271,8 +271,13 @@
         "component": "richtext",
         "name": "qrCodeImg",
         "value": "",
-        "label": "Testo immagine codice qr",
-        "valueType": "string"
+        "label": "Testo sezione QR Code",
+        "maxlength": 30,
+        "valueType": "string",
+        "validation": {
+          "maxLength": 30,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "reference",
@@ -305,7 +310,12 @@
         "component": "text",
         "name": "footerPrivacyLink",
         "label": "Testo Link",
-        "required": true
+        "maxlength": 35,
+        "required": true,
+        "validation": {
+          "maxLength": 35,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "aem-content",
@@ -1789,7 +1799,12 @@
         "component": "richtext",
         "label": "Testo Elenco",
         "name": "listLinks",
+        "maxlength": 25,
         "valueType": "string",
+        "validation": {
+          "maxLength": 25,
+          "customErrorMsg": "Testo troppo lungo"
+        },
         "condition": {
           "===": [
             {
@@ -1803,6 +1818,11 @@
         "component": "text",
         "name": "linkTextComp",
         "label": "Testo Link",
+        "maxlength": 25,
+        "validation": {
+          "maxLength": 25,
+          "customErrorMsg": "Testo troppo lungo"
+        },
         "condition": {
           "===": [
             {
