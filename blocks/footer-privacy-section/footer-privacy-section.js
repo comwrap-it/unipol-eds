@@ -1,28 +1,52 @@
 /**
- * Footer Privacy Section Component — UE-safe (Text Link style)
+ * Footer Privacy Section Component — UE-safe
  */
 
 /**
  * Extracts footer privacy link data from block children
  *
  * @param {HTMLElement[]} rows - Array of row elements
- * @returns {Array<Object>} - Array of items with text and href
+ * @returns {Array<Object>} - Array of items with text, href, and original row
  */
-function extractFooterPrivacyData(rows) {
+export function extractFooterPrivacyData(rows) {
   return rows.map((row) => {
     const children = [...row.children];
     const titleDiv = children[0];
     const linkDiv = children[1];
 
-    const linkText = titleDiv?.querySelector('p')?.textContent.trim() || '';
-    const linkHref = linkDiv?.querySelector('a')?.href || '';
+    const text = titleDiv?.querySelector('p')?.textContent.trim() || '';
+    const href = linkDiv?.querySelector('a')?.href || '';
 
-    return {
-      text: linkText,
-      href: linkHref,
-      row, // keep reference to original row
-    };
+    return { text, href, row };
   });
+}
+
+/**
+ * Creates a Footer Privacy Section component
+ *
+ * @param {Array<Object>} items - Array of items with text and href
+ * @returns {HTMLElement} - Container element
+ */
+export function createFooterPrivacyComponent(items = []) {
+  const container = document.createElement('div');
+  container.className = 'footer-privacy-section';
+
+  items.forEach(({ text, href }) => {
+    const row = document.createElement('div');
+    row.className = 'footer-privacy-row';
+
+    if (text && href) {
+      const link = document.createElement('a');
+      link.className = 'footer-privacy-link';
+      link.href = href;
+      link.textContent = text;
+      row.appendChild(link);
+    }
+
+    container.appendChild(row);
+  });
+
+  return container;
 }
 
 /**
@@ -36,18 +60,14 @@ export default async function decorate(block) {
   const rows = Array.from(block.children);
   const items = extractFooterPrivacyData(rows);
 
-  items.forEach((item) => {
-    const { row, text, href } = item;
-
-    // Svuotiamo solo il contenuto del row
+  // Aggiorniamo in-place ogni row originale
+  items.forEach(({ row, text, href }) => {
     row.innerHTML = '';
-
     if (text && href) {
       const link = document.createElement('a');
       link.className = 'footer-privacy-link';
       link.href = href;
       link.textContent = text;
-
       row.appendChild(link);
     }
   });

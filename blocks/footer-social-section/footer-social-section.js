@@ -1,15 +1,14 @@
 /**
- * Footer Social Section Component
- *
+ * Footer Social Section Component — UE-safe
  */
 
 /**
  * Extracts footer social link data from block children
  *
  * @param {HTMLElement[]} rows - Array of row elements
- * @returns {Array<Object>} - Array of items with img (picture element) and href
+ * @returns {Array<Object>} - Array of items with picture, href, and original row
  */
-function extractFooterSocialData(rows) {
+export function extractFooterSocialData(rows) {
   return rows.map((row) => {
     const cells = [...row.children];
     if (cells.length < 2) return null;
@@ -22,47 +21,32 @@ function extractFooterSocialData(rows) {
 
     if (!picture || !href) return null;
 
-    return { picture: picture.cloneNode(true), href };
+    return { picture, href, row };
   }).filter(Boolean);
-}
-
-/**
- * Preserves attributes from the original block
- *
- * @param {HTMLElement} source - Original block
- * @param {HTMLElement} target - New block
- */
-function preserveBlockAttributes(source, target) {
-  [...source.attributes].forEach((attr) => {
-    if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
-      target.setAttribute(attr.name, attr.value);
-    }
-  });
-
-  if (source.dataset.blockName) target.dataset.blockName = source.dataset.blockName;
-  if (source.id) target.id = source.id;
 }
 
 /**
  * Creates a Footer Social Section component
  *
  * @param {Array<Object>} items - Array of items with picture and href
- * @returns {HTMLElement} - Footer Social Section element
+ * @returns {HTMLElement} - Container element
  */
 export function createFooterSocialComponent(items = []) {
   const container = document.createElement('div');
   container.className = 'footer-social-section';
 
-  items.forEach((item) => {
+  items.forEach(({ picture, href }) => {
     const row = document.createElement('div');
     row.className = 'footer-social-row';
 
-    const link = document.createElement('a');
-    link.href = item.href;
-    link.setAttribute('aria-label', item.href);
-    link.appendChild(item.picture);
+    if (picture && href) {
+      const link = document.createElement('a');
+      link.href = href;
+      link.setAttribute('aria-label', href);
+      link.appendChild(picture.cloneNode(true));
+      row.appendChild(link);
+    }
 
-    row.appendChild(link);
     container.appendChild(row);
   });
 
@@ -70,18 +54,28 @@ export function createFooterSocialComponent(items = []) {
 }
 
 /**
- * Decorates the Footer Social Section block
+ * Decorates the Footer Social Section block — UE-safe
  *
- * @param {HTMLElement} block - Original block element
+ * @param {HTMLElement} block
  */
 export default async function decorate(block) {
   if (!block) return;
 
   const rows = Array.from(block.children);
   const items = extractFooterSocialData(rows);
-  const component = createFooterSocialComponent(items);
 
-  preserveBlockAttributes(block, component);
+  // Aggiorniamo in-place ogni row originale
+  items.forEach(({ row, picture, href }) => {
+    row.innerHTML = '';
+    if (picture && href) {
+      const link = document.createElement('a');
+      link.href = href;
+      link.setAttribute('aria-label', href);
+      link.appendChild(picture.cloneNode(true));
+      row.appendChild(link);
+    }
+  });
 
-  block.replaceWith(component);
+  // Aggiungiamo classe per styling
+  block.classList.add('footer-social-section');
 }
