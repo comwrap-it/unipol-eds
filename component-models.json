@@ -717,7 +717,11 @@
         "component": "text",
         "label": "Titolo blocco 1",
         "name": "numberBlockText1",
-        "maxlength": 7
+        "maxlength": 7,
+        "validation": {
+          "maxLength": 7,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "richtext",
@@ -735,7 +739,11 @@
         "component": "text",
         "label": "Titolo blocco 2",
         "name": "numberBlockText2",
-        "maxlength": 7
+        "maxlength": 7,
+        "validation": {
+          "maxLength": 7,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "richtext",
@@ -753,7 +761,11 @@
         "component": "text",
         "label": "Titolo blocco 3",
         "name": "numberBlockText3",
-        "maxlength": 7
+        "maxlength": 7,
+        "validation": {
+          "maxLength": 7,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "richtext",
@@ -1615,7 +1627,6 @@
         "component": "text",
         "name": "title",
         "label": "Titolo",
-        "maxlength": 60,
         "required": true,
         "validation": {
           "maxLength": 60,
@@ -1633,6 +1644,7 @@
         "component": "richtext",
         "label": "Testo",
         "name": "subtitle",
+        "value": "",
         "valueType": "string",
         "condition": {
           "===": [

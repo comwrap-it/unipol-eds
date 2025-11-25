@@ -24,7 +24,6 @@
           "component": "text",
           "name": "title",
           "label": "Titolo",
-          "maxlength": 60,
           "required": true,
           "validation": {
             "maxLength": 60,
@@ -42,6 +41,7 @@
           "component": "richtext",
           "label": "Testo",
           "name": "subtitle",
+          "value": "",
           "valueType": "string",
           "condition": { "===": [{"var" : "contentAlignment"}, true] }
         },
