@@ -193,8 +193,7 @@ const createHeroButtonSection = (
  * Creates a Hero component
  *
  * @param {string} variant default | carousel
- * @param {HTMLElement|string|null} heroBackground - the background media source
- *   (picture/video element or URL string)
+ * @param {HTMLElement|string|null} heroBackground - the background media source (picture/video element or URL string)
  * @param {boolean} isVideoBackground
  * @param {boolean} showHeroButton
  * @param {boolean} showHeroLogo
@@ -272,33 +271,30 @@ export function createHero(
  *
  * @param {HTMLElement} row - The row element
  * @param {boolean} isVideo - Flag to indicate if media is video
- * @returns {HTMLElement|string|null} The media element (video or picture),
- *   URL string, or null if not found
+ * @returns {HTMLElement|string|null} The media element (video or picture), URL string, or null if not found
  */
 const extractMediaFromRow = (row, isVideo = false) => {
   if (!row) return null;
-
+  
   // First, try to find a picture or video element
   const mediaElement = row.querySelector(isVideo ? 'video' : 'picture');
   if (mediaElement) return mediaElement;
-
+  
   // If not found, try to find an img element (for images)
   if (!isVideo) {
     const imgElement = row.querySelector('img');
     if (imgElement) return imgElement;
   }
-
+  
   // If still not found, check if there's a URL string in the text content or href
   const linkElement = row.querySelector('a');
   if (linkElement?.href) {
     const url = linkElement.href.trim();
-    // Check if URL is valid (not empty, not anchor, not script)
-    const isScriptUrl = /^javascript:/i.test(url);
-    if (url && url !== '#' && !isScriptUrl) {
+    if (url && url !== '#' && !url.startsWith('javascript:')) {
       return url;
     }
   }
-
+  
   // Check text content for URL
   const textContent = row.textContent?.trim();
   if (textContent) {
@@ -312,7 +308,7 @@ const extractMediaFromRow = (row, isVideo = false) => {
       // Not a valid URL, continue
     }
   }
-
+  
   return null;
 };
 
