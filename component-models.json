@@ -469,18 +469,18 @@
         "description": "URL of the background image or video"
       },
       {
-        "component": "switch",
+        "component": "boolean",
         "name": "isVideoBackground",
         "label": "Is Video Background",
         "description": "Toggle to enable or disable video background",
-        "value": false
+        "valueType": "boolean"
       },
       {
-        "component": "switch",
+        "component": "boolean",
         "name": "showHeroLogo",
         "label": "Show Hero Logo",
         "description": "Toggle to show or hide the hero logo",
-        "value": false
+        "valueType": "boolean"
       },
       {
         "component": "reference",
@@ -498,11 +498,11 @@
         }
       },
       {
-        "component": "switch",
+        "component": "boolean",
         "name": "showHeroPauseIcon",
         "label": "Show Hero Pause Icon",
         "description": "Toggle to show or hide the hero pause icon",
-        "value": false
+        "valueType": "boolean"
       },
       {
         "component": "text",
@@ -525,11 +525,11 @@
         "maxlength": 150
       },
       {
-        "component": "switch",
+        "component": "boolean",
         "name": "showHeroBulletList",
         "label": "Show Hero Bullet List",
         "description": "Enable up to 3 bullet points",
-        "value": false
+        "valueType": "boolean"
       },
       {
         "component": "text",
@@ -574,11 +574,11 @@
         }
       },
       {
-        "component": "switch",
+        "component": "boolean",
         "name": "showHeroButton",
         "label": "Show Hero Button",
         "description": "Toggle to show or hide the hero button",
-        "value": false
+        "valueType": "boolean"
       },
       {
         "component": "container",
