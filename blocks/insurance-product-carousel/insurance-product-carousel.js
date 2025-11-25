@@ -18,7 +18,6 @@
 
 import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import { extractInstrumentationAttributes } from '../atoms/buttons/standard-button/standard-button.js';
 
 /**
  * Decorates the insurance product carousel block
@@ -63,8 +62,6 @@ export default async function decorate(block) {
     console.warn('Insurance Product Carousel: No cards found');
     return;
   }
-
-  const instrumentation = extractInstrumentationAttributes(rows[0]);
 
   // Process each row as a card
   const cardPromises = rows.map(async (row) => {
@@ -115,11 +112,6 @@ export default async function decorate(block) {
   const cardElements = await Promise.all(cardPromises);
   cardElements.forEach((slide) => {
     track.appendChild(slide);
-  });
-
-  // Restore instrumentation to button element
-  Object.entries(instrumentation).forEach(([name, value]) => {
-    carousel.setAttribute(name, value);
   });
 
   carousel.appendChild(track);
