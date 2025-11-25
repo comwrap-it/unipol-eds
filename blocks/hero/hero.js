@@ -58,6 +58,7 @@ const setupHeroWithBg = (isVideoBackground, mediaSrc, showHeroPauseIcon) => {
 /**
  * Builds the main textual/logo section of a Hero.
  * @param {boolean} showHeroLogo
+ * @param {string} heroLogoSrc
  * @param {string} title
  * @param {string} subtitleBold
  * @param {string} subtitle
@@ -67,6 +68,7 @@ const setupHeroWithBg = (isVideoBackground, mediaSrc, showHeroPauseIcon) => {
  */
 const createHeroMainSection = (
   showHeroLogo,
+  heroLogoSrc,
   title,
   subtitleBold,
   subtitle,
@@ -79,7 +81,7 @@ const createHeroMainSection = (
     const logo = document.createElement('img');
     logo.className = 'hero-logo';
     logo.alt = 'Hero Logo';
-    logo.src = '../../../assets/unica.webp';
+    logo.src = heroLogoSrc;
     mainSection.appendChild(logo);
   }
   const titleEl = document.createElement('h2');
@@ -167,6 +169,7 @@ const createHeroButtonSection = (
  * @param {boolean} isVideoBackground
  * @param {boolean} showHeroButton
  * @param {boolean} showHeroLogo
+ * @param {string} heroLogoSrc
  * @param {boolean} showHeroPauseIcon
  * @param {string} title (required)
  * @param {string} subtitleBold
@@ -187,6 +190,7 @@ export function createHero(
   isVideoBackground,
   showHeroButton,
   showHeroLogo,
+  heroLogoSrc,
   showHeroPauseIcon,
   title,
   subtitleBold,
@@ -205,6 +209,7 @@ export function createHero(
   heroContent.className = 'hero-content';
   const mainSection = createHeroMainSection(
     showHeroLogo,
+    heroLogoSrc,
     title,
     subtitleBold,
     subtitle,
@@ -308,6 +313,7 @@ export default async function decorateHero(block) {
     isVideoBackground,
     showHeroButton,
     showHeroLogo,
+    heroLogoSrc,
     showHeroPauseIcon,
     title,
     subtitleBold,
@@ -328,6 +334,7 @@ export default async function decorateHero(block) {
     isVideoBackground,
     showHeroButton,
     showHeroLogo,
+    heroLogoSrc,
     showHeroPauseIcon,
     title,
     subtitleBold,
