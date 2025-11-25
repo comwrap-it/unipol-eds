@@ -68,14 +68,7 @@
                     "name": "heroLogoMediaSrc",
                     "label": "Hero Logo Media",
                     "description": "URL of the logo image",
-                    "condition": {
-                        "===": [
-                            {
-                                "var": "showHeroLogo"
-                            },
-                            true
-                        ]
-                    }
+                    "condition": {"===": [{"var": "showHeroLogo"}, true]}
                 },
                 {
                     "component": "boolean",
