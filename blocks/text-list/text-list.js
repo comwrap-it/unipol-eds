@@ -1,5 +1,5 @@
 /**
- * Text Link / Text List Component — AEM EDS Compatible
+ * Text Link / Text List Component — AEM EDS Compatible (FIXED)
  */
 
 import { moveInstrumentation } from '../../scripts/scripts.js';
@@ -51,32 +51,24 @@ export function createTextLinkComponent(items = []) {
     const row = document.createElement('div');
     row.className = 'text-link-row';
 
-    /**
-     * === YOUR LOGIC (confirmed correct) ===
-     * hideTitle = true  → show title
-     * hideTitle = false → show link
-     */
-
-    // TITLE (shown only if hideTitle = true)
+    // TITLE (visible only if hideTitle = true)
     if (item.hideTitle && item.title) {
       const titleDiv = document.createElement('div');
       titleDiv.className = 'text-link-title';
       titleDiv.textContent = item.title;
 
-      // Move instrumentation from original row to new node
       moveInstrumentation(item.titleRow, titleDiv);
 
       row.appendChild(titleDiv);
     }
 
-    // LINK (shown only if hideTitle = false)
+    // LINK (visible only if hideTitle = false)
     if (!item.hideTitle && item.linkText && item.linkHref) {
       const link = document.createElement('a');
       link.className = 'text-link';
       link.href = item.linkHref;
       link.textContent = item.linkText;
 
-      // Both textRow (p) and hrefRow (a) can contain instrumentation
       moveInstrumentation(item.textRow, link);
       moveInstrumentation(item.hrefRow, link);
 
@@ -90,7 +82,7 @@ export function createTextLinkComponent(items = []) {
 }
 
 /**
- * Decorate the block — applies instrumentation + replaces original
+ * Decorate the block — AEM Universal Editor safe / idempotent
  *
  * @param {HTMLElement} block
  */
@@ -100,13 +92,13 @@ export default async function decorate(block) {
   // STEP 1 — Extract rows from block
   const rows = Array.from(block.children);
 
-  // STEP 2 — Extract usable items with raw instrumentation references
+  // STEP 2 — Extract items
   const items = extractTextLinkItems(rows);
 
-  // STEP 3 — Create final component using the standardized creator
+  // STEP 3 — Create final component
   const component = createTextLinkComponent(items);
 
-  // STEP 4 — Preserve block-level instrumentation and metadata
+  // STEP 4 — Preserve block-level attributes
   [...block.attributes].forEach((attr) => {
     if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
       component.setAttribute(attr.name, attr.value);
@@ -121,6 +113,15 @@ export default async function decorate(block) {
     component.id = block.id;
   }
 
-  // STEP 5 — Replace original block
-  block.replaceWith(component);
+  // STEP 5 — Clear block BUT DO NOT REPLACE IT
+  block.innerHTML = '';
+
+  // STEP 6 — Inject new content into the existing block
+  // (this preserves Universal Editor bindings)
+  while (component.firstChild) {
+    block.appendChild(component.firstChild);
+  }
+
+  // Add correct class to the block so styles still apply
+  block.className = 'block text-list-block';
 }
