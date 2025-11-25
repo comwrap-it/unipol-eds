@@ -111,7 +111,7 @@ export default async function decorate(block) {
   // Wait for all cards to be processed
   const cardElements = await Promise.all(cardPromises);
   cardElements.forEach((slide) => {
-    if (slide && slide.innerText) {
+    if (slide && !slide.editContext && slide.innerText) {
       track.appendChild(slide);
     }
   });
