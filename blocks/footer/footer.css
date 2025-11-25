@@ -8,6 +8,7 @@ footer {
 .footer .unipol-footer {
     background-color: var(--Background-Default-Tertiary);
     padding: var(--Footer-Vertical-Padding-D-Tl, 48px) var(--Footer-Horizontal-Padding-D, 64px);
+    font-family: var(--Family-Font-2, Manrope);
 }
 
 footer .footer p {

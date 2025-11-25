@@ -83,25 +83,3 @@ main .section.text-block-container.number-block-container.bg-white {
     background-color: var(--Neutral-50);
 }
 
-/* Unipol Footer Section */
-.section.text-list-container ,
-.section.footer-download-section-container ,
-.section.footer-privacy-section-container ,
-.section.footer-social-section-container ,
-.section.footer-copyright-section-container {
-    background-color: var(--Background-Default-Tertiary, #001C35);
-    margin: 0;
-    font-family: var(--Family-Font-2, Manrope);
-}
-
-
-.unipol-footer-top .text-link-title,
-.unipol-footer-top .text-link {
-    color: var(--Footer-Primary-Text, #F9F9F7);
-}
-
-.section.text-list-container .text-link-title,
-.section.text-list-container .text-link {
-    color: var(--Text-Default-Primary, #001C35);
-}
-
