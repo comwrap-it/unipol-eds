@@ -180,12 +180,12 @@ main .section.text-block-container.number-block-container.bg-white {
     font-family: var(--Family-Font-2, Manrope);
 }
 
-.section.text-list-container .text-link-list,
-.section.text-list-container .text-link-list a {
+.section.text-list-container .text-link-title,
+.section.text-list-container .text-link {
     color: var(--color-text-default-primary, #001C35);
 }
 
-.section.text-list-container.footer-download-section-container .text-link-list,
-.section.text-list-container.footer-download-section-container .text-link-list a{
+.section.text-list-container.footer-download-section-container .text-link-title,
+.section.text-list-container.footer-download-section-container .text-link {
     color: var(--color-footer-primary-text, #F9F9F7);
 }

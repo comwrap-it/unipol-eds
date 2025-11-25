@@ -1,4 +1,8 @@
-.section.text-list-container .text-link-title {
+.section.text-list-container .text-list div {
+    margin-bottom: var(--dimension-space-200-8, 8px);
+}
+
+.section.text-list-container .text-list div .text-link-title {
     margin: 0;
     padding: 0;
     margin-bottom: var(--dimension-space-300-16, 16px);
@@ -6,11 +10,7 @@
     font-weight: 500;
 }
 
-.section.text-list-container .text-link-row {
-    margin-bottom: var(--dimension-space-200-8, 8px);
-}
-
-.section.text-list-container .text-link-row .text-link {
+.section.text-list-container .text-list .text-link {
     padding: 0;
     margin: 0;
     text-decoration: none;
