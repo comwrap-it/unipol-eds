@@ -1,0 +1,38 @@
+.scroll-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--Scroll-Indicator-Gap, 2rem);
+
+    & .expanding-dots {
+        display: flex;
+        align-items: center;
+        gap: var(--Expanding-Dots-Gap, 0.5rem);
+
+        & .rectangle {
+            width: 3rem;
+            height: 0.5rem;
+            border-radius: var(--Expanding-Dots-Radius, 624.9375rem);
+            background: var(--Expanding-Dots-Background, #001C35);
+        }
+
+        & .ellipse-one {
+            width: 0.5rem;
+            height: 0.5rem;
+            fill: var(--Expanding-Dots-Background, #001C35);
+        }
+
+        & .ellipse-two {
+            width: 0.5rem;
+            height: 0.5rem;
+            fill: var(--Expanding-Dots-Background, #001C35);
+        }
+    }
+}
+
+@media (width < 393px) {
+    .scroll-indicator {
+        display: flex;
+        width: 21.4375rem;
+        justify-content: space-between;
+    }
+}
