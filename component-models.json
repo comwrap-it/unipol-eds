@@ -585,14 +585,6 @@
         "name": "button-container",
         "label": "Configurazione Bottone",
         "collapsible": true,
-        "condition": {
-          "===": [
-            {
-              "var": "showHeroButton"
-            },
-            true
-          ]
-        },
         "fields": [
           {
             "component": "text",

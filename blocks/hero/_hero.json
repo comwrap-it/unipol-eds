@@ -165,14 +165,6 @@
                     "name": "button-container",
                     "label": "Configurazione Bottone",
                     "collapsible": true,
-                    "condition": {
-                        "===": [
-                            {
-                                "var": "showHeroButton"
-                            },
-                            true
-                        ]
-                    },
                     "fields": [
                         {
                             "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
