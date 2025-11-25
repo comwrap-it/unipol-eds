@@ -26,19 +26,19 @@
 }
 
 .icon-small {
-    font-size: var(--size-icon-100-16);
+    font-size: var(--Icon-100-16);
 }
 
 .icon-medium {
-    font-size: var(--size-icon-200-20);
+    font-size: var(--Icon-200-20);
 }
 
 .icon-large {
-    font-size: var(--size-icon-300-24);
+    font-size: var(--Icon-300-24);
 }
 
 .icon-extra-large {
-    font-size: var(--size-icon-400-32);
+    font-size: var(--Icon-400-32);
 }
 
 .un-icon-address-book-tabs::before {

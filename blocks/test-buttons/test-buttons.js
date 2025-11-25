@@ -24,6 +24,8 @@ import {
 } from '../atoms/radio-button/standard-radio-button/radio-button.js';
 import { create3Dicons } from '../atoms/3D-icons/3D-icons.js';
 import { createRadioButtonField } from '../atoms/radio-button/radio-button-field/radio-button-field.js';
+import createOverlay from '../atoms/overlay/overlay.js';
+import { createHero } from '../hero/hero.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -46,6 +48,8 @@ async function ensureStylesLoaded() {
       'blocks/atoms/radio-button/standard-radio-button/radio-button.css',
       'blocks/atoms/radio-button/radio-button-field/radio-button-field.css',
       'blocks/atoms/3D-icons/3D-icons.css',
+      'blocks/atoms/overlay/overlay.css',
+      'blocks/hero/hero.css',
     ].map((p) => loadCSS(`${base}/${p}`)),
   );
   isStylesLoaded = true;
@@ -312,6 +316,55 @@ export default async function decorate(block) {
   testButtons.appendChild(centeredRow(buildOptionsList()));
   testButtons.appendChild(centeredRow(buildSelect()));
   testButtons.appendChild(build3DIconsSets());
+  // Overlay
+  testButtons.appendChild(createOverlay());
+  // Hero
+  testButtons.appendChild(
+    createHero(
+      'default',
+      'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&w=1600&q=80',
+      false,
+      true,
+      true,
+      true,
+      'Sample Title',
+      'Sample Bold Subtitle',
+      'Sample Subtitle',
+      false,
+      [],
+      'Get Started',
+      '#',
+      'primary',
+      'medium',
+      'un-icon-chevron-left',
+      'un-icon-chevron-right',
+    ),
+  );
+  testButtons.appendChild(
+    createHero(
+      'default',
+      'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
+      true,
+      true,
+      true,
+      true,
+      'Sample Title',
+      'Sample Bold Subtitle',
+      'Sample Subtitle',
+      true,
+      [
+        'First bullet point',
+        'Second bullet point',
+        'Third bullet point',
+      ],
+      'Get Started',
+      '#',
+      'primary',
+      'medium',
+      'un-icon-chevron-left',
+      'un-icon-chevron-right',
+    ),
+  );
 
   // Mount
   block.innerHTML = '';

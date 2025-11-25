@@ -1,0 +1,21 @@
+{
+    "definitions": [
+        {
+            "title": "Overlay",
+            "id": "overlay",
+            "plugins": {
+                "xwalk": {
+                    "page": {
+                        "resourceType": "core/franklin/components/block/v1/block/item",
+                        "template": {
+                            "name": "Overlay",
+                            "model": "overlay"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "models": [],
+    "filters": []
+}
