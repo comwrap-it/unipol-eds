@@ -11,6 +11,7 @@ import {
   createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES, createButtonFromRows,
 } from '../atoms/buttons/standard-button/standard-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { decorateRichtext } from '../../scripts/editor-support-rte.js';
 
 // Export constants for external use
 export { BUTTON_VARIANTS, BUTTON_ICON_SIZES };
@@ -65,17 +66,36 @@ function extractTextElement(textRow) {
     return null;
   }
 
+  // Check if there's an existing paragraph with richtext instrumentation
   const existingPara = textRow.querySelector('p');
   if (existingPara) {
+    // Move instrumentation from row to paragraph
     moveInstrumentation(textRow, existingPara);
+    // Also check for richtext attributes on child elements and move them
+    const richtextChild = textRow.querySelector('[data-richtext-prop]');
+    if (richtextChild && richtextChild !== existingPara) {
+      moveInstrumentation(richtextChild, existingPara);
+    }
     return existingPara;
   }
 
+  // Check if there's a child element with richtext instrumentation BEFORE moving children
+  const richtextChild = textRow.querySelector('[data-richtext-prop]');
+
   const text = document.createElement('p');
+
+  // Move instrumentation from row to paragraph first
+  moveInstrumentation(textRow, text);
+
+  // If there was a child with richtext attributes, move those too
+  if (richtextChild && richtextChild !== text) {
+    moveInstrumentation(richtextChild, text);
+  }
+
+  // Now move all children to the paragraph
   while (textRow.firstChild) {
     text.appendChild(textRow.firstChild);
   }
-  moveInstrumentation(textRow, text);
 
   return (hasInstrumentation || text.textContent?.trim()) ? text : null;
 }
@@ -263,4 +283,8 @@ export default async function decorate(block) {
 
   // === STEP 5: Replace the original block ===
   block.replaceWith(textBlock);
+
+  // === STEP 6: Decorate richtext elements for inline editing ===
+  // This ensures richtext fields are properly wrapped for Universal Editor
+  decorateRichtext(textBlock);
 }

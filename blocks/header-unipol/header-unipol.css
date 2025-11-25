@@ -9,13 +9,20 @@
 }
 
 .header-unipol-container {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 16px 24px;
   display: flex;
-  align-items: center;
+  width: 90rem;
+  height: 2.75rem;
+  padding: 0 var(--Header-Horizontal-Padding---D---TL, 1.5rem);
   justify-content: space-between;
-  gap: 24px;
+  align-items: center;
+  
+  /* Inherit header tokens */
+  max-width: var(--Header-Width, 1440px);
+  margin: 0 auto;
+  gap: var(--Header-Gap, 24px);
+  
+  /* Ensure container doesn't overflow on smaller screens */
+  box-sizing: border-box;
 }
 
 /* Logo Section */
@@ -59,6 +66,7 @@
 /* Mobile - Hide some pills if too many */
 @media (width < 768px) {
   .header-unipol-container {
+    width: 100%;
     padding: 12px 16px;
   }
 
@@ -80,6 +88,7 @@
 /* Tablet */
 @media (width >= 768px) and (width < 1024px) {
   .header-unipol-container {
+    width: 100%;
     padding: 16px 32px;
   }
 

@@ -343,7 +343,8 @@
         "name": "logo",
         "label": "Logo Image",
         "description": "Upload or select the header logo",
-        "required": true
+        "required": true,
+        "valueType": "string"
       },
       {
         "component": "container",
@@ -354,20 +355,13 @@
         "fields": [
           {
             "component": "text",
-            "name": "navLabel",
+            "name": "navigationPillLabel",
             "label": "Label",
-            "required": true,
-            "maxlength": 25
-          },
-          {
-            "component": "aem-content",
-            "name": "navHref",
-            "label": "Link URL",
             "required": true
           },
           {
             "component": "select",
-            "name": "navVariant",
+            "name": "navigationPillVariant",
             "label": "Variant",
             "value": "primary",
             "options": [
@@ -382,8 +376,14 @@
             ]
           },
           {
+            "component": "aem-content",
+            "name": "navigationPillHref",
+            "label": "Link URL",
+            "description": "Optional URL the pill points to"
+          },
+          {
             "component": "select",
-            "name": "navLeftIcon",
+            "name": "navigationPillLeftIcon",
             "label": "Left Icon",
             "description": "Optional icon on the left",
             "options": [
@@ -393,25 +393,45 @@
               },
               {
                 "name": "Chevron Left",
-                "value": "chevron-left-icon"
+                "value": "un-icon-chevron-left"
               },
               {
                 "name": "Chevron Right",
-                "value": "chevron-right-icon"
+                "value": "un-icon-chevron-right"
               },
               {
-                "name": "Search",
-                "value": "search-icon"
-              },
-              {
-                "name": "Phone",
-                "value": "phone-icon"
+                "name": "Search Icon",
+                "value": "un-icon-search"
               }
             ]
           },
           {
             "component": "select",
-            "name": "navRightIcon",
+            "name": "navigationPillLeftIconSize",
+            "label": "Size",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "navigationPillRightIcon",
             "label": "Right Icon",
             "description": "Optional icon on the right",
             "options": [
@@ -421,15 +441,39 @@
               },
               {
                 "name": "Chevron Left",
-                "value": "chevron-left-icon"
+                "value": "chevron-left"
               },
               {
                 "name": "Chevron Right",
-                "value": "chevron-right-icon"
+                "value": "chevron-right"
               },
               {
-                "name": "Dropdown",
-                "value": "dropdown-icon"
+                "name": "Search",
+                "value": "search-icon"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "navigationPillRightIconSize",
+            "label": "Size",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
               }
             ]
           }

@@ -122,50 +122,57 @@ function extractLogoElement(row) {
 }
 
 /**
- * Extracts navigation pill configurations from AEM rows
+ * Extracts navigation pill elements from referenced blocks
  *
- * @param {Array<HTMLElement>} rows - Array of rows containing navigation data
- * @returns {Array<HTMLElement>} Array of navigation pill elements
+ * @param {HTMLElement} block - The header-unipol block
+ * @returns {Promise<Array<HTMLElement>>} Array of navigation pill elements
  */
-function extractNavigationElements(rows) {
-  const navElements = [];
+async function extractNavigationElements(block) {
+  // Find all navigation-pill blocks (references)
+  const navPillBlocks = Array.from(block.querySelectorAll('[data-block-name="navigation-pill"]'));
 
-  rows.forEach((row) => {
-    // Look for already decorated navigation pills
-    const navPill = row.querySelector('.navigation-pill');
-    if (navPill) {
-      navElements.push(navPill.cloneNode(true));
-      return;
-    }
+  // If no blocks found, check for already decorated pills (fallback)
+  if (navPillBlocks.length === 0) {
+    const decoratedPills = Array.from(block.querySelectorAll('.navigation-pill'));
+    return decoratedPills;
+  }
 
-    // Look for links that should become navigation pills
-    const link = row.querySelector('a');
-    if (link) {
-      const label = link.textContent?.trim() || 'Navigation Pill';
-      const href = link.href || '';
+  // Load and decorate each navigation-pill block
+  const { loadBlock } = await import('../../scripts/aem.js');
+  const decorateNavigationPill = (await import('../atoms/navigation-pill/navigation-pill.js')).default;
 
-      const instrumentation = {};
-      [...link.attributes].forEach((attr) => {
-        if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-')) {
-          instrumentation[attr.name] = attr.value;
-        }
-      });
+  // Process all blocks in parallel using Promise.all
+  const processedPills = await Promise.all(
+    navPillBlocks.map(async (navPillBlock) => {
+      // Check if already decorated
+      let decoratedPill = navPillBlock.querySelector('.navigation-pill');
+      if (decoratedPill) {
+        return decoratedPill;
+      }
 
-      const pill = createNavigationPill(
-        label,
-        href,
-        NAVIGATION_PILL_VARIANTS.PRIMARY,
-        '',
-        '',
-        '',
-        '',
-        instrumentation,
-      );
-      navElements.push(pill);
-    }
-  });
+      // Load the block (loads CSS and JS)
+      await loadBlock(navPillBlock);
 
-  return navElements;
+      // Decorate the navigation pill
+      await decorateNavigationPill(navPillBlock);
+
+      // Extract the decorated navigation pill element
+      // The decorator adds the pill inside the block
+      decoratedPill = navPillBlock.querySelector('.navigation-pill');
+
+      if (decoratedPill) {
+        // Move the pill (not clone) to preserve event handlers and functionality
+        return decoratedPill;
+      }
+
+      // Fallback: try to find any link or button that might be the pill
+      const pill = navPillBlock.querySelector('a, button');
+      return pill || null;
+    }),
+  );
+
+  // Filter out null values and return
+  return processedPills.filter((pill) => pill !== null);
 }
 
 /**
@@ -209,13 +216,21 @@ export default async function decorate(block) {
     rows = Array.from(wrapper.children);
   }
 
-  // === STEP 2: Extract logo (first row) ===
-  const logoRow = rows[0];
-  const logoElement = extractLogoElement(logoRow);
+  // === STEP 2: Extract logo (first row or reference) ===
+  // Look for logo reference first, then fallback to row-based extraction
+  let logoElement = null;
+  const logoReference = block.querySelector('[data-block-name]:not([data-block-name="navigation-pill"])');
+  if (logoReference) {
+    // Logo is a reference - extract image/picture from it
+    logoElement = extractLogoElement(logoReference);
+  } else {
+    // Fallback to row-based extraction
+    const logoRow = rows[0];
+    logoElement = extractLogoElement(logoRow);
+  }
 
-  // === STEP 3: Extract navigation pills (remaining rows) ===
-  const navigationRows = rows.slice(1);
-  const navigationElements = extractNavigationElements(navigationRows);
+  // === STEP 3: Extract navigation pills from references ===
+  const navigationElements = await extractNavigationElements(block);
 
   // === STEP 4: Create the header using the centralized function ===
   const header = createHeaderUnipol(
