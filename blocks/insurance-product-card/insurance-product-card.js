@@ -298,3 +298,7 @@ export default async function decorateInsuranceProductCard(block) {
   card.classList.add('card-block');
   block.replaceWith(card);
 }
+
+export async function decorate(block) {
+  await decorateInsuranceProductCard(block);
+}
