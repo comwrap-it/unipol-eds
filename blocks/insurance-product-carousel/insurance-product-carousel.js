@@ -18,6 +18,7 @@
 
 import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
 
 /**
  * Decorates the insurance product carousel block
@@ -123,7 +124,15 @@ export default async function decorate(block) {
     }
   });
 
+  let scrollIndicator;
+  if (cardElements && cardElements.length > 4) {
+    scrollIndicator = await createScrollIndicator();
+  }
+
   carousel.appendChild(track);
+  if (scrollIndicator) {
+    carousel.appendChild(scrollIndicator);
+  }
 
   // Preserve blockName if present
   if (block.dataset.blockName) {
