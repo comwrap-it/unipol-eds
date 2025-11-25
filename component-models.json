@@ -1616,7 +1616,11 @@
         "name": "title",
         "label": "Titolo",
         "maxlength": 60,
-        "required": true
+        "required": true,
+        "validation": {
+          "maxLength": 60,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "boolean",
