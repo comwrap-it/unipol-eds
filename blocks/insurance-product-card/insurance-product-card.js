@@ -14,7 +14,6 @@ import {
 }
   from '../atoms/buttons/standard-button/standard-button.js';
 import { createTagFromRows } from '../atoms/tag/tag.js';
-// eslint-disable-next-line no-unused-vars
 import { create3DiconsFromRows } from '../atoms/icons-3D/icons-3D.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
