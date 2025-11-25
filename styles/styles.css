@@ -84,13 +84,11 @@ main .section.text-block-container.number-block-container.bg-white {
 }
 
 /* Unipol Footer Section */
-.section.text-list-container ,
 .section.footer-download-section-container ,
 .section.footer-privacy-section-container ,
 .section.footer-social-section-container ,
 .section.footer-copyright-section-container {
     background-color: var(--Background-Default-Tertiary, #001C35);
-    margin: 0;
     font-family: var(--Family-Font-2, Manrope);
 }
 

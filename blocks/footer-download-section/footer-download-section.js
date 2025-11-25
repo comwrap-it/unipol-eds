@@ -149,9 +149,12 @@ function extractDownloadSectionData(rows) {
   // Row 0: Logo
   const logoRow = rows[0];
   const logoElement = logoRow?.querySelector('img, picture');
-  if (logoElement) {
-    config.logo = logoElement;
-  }
+  config.logo = logoElement || (() => {
+    const img = document.createElement('img');
+    img.src = '/content/dam/unipol/logo/Unipol-Logo-OnDark.svg';
+    img.alt = 'Logo Unipol Footer';
+    return img;
+  })();
 
   // Row 1: Brand Text
   config.brandText = rows[1]?.textContent?.trim() || '';
@@ -167,9 +170,13 @@ function extractDownloadSectionData(rows) {
 
   // Row 4: QR Code
   const qrElement = rows[4]?.querySelector('img, picture');
-  if (qrElement) {
-    config.qrCode = qrElement;
-  }
+  config.qrCode = qrElement || (() => {
+    const img = document.createElement('img');
+    img.src = '/adobe/dynamicmedia/deliver/dm-aid--2e6c8182-b270-4535-9693-3e9d64ca51ee/qrcode.png?quality=85&preferwebp=true&width=1280';
+    img.alt = 'QR Code';
+    img.className = 'footer-download-qr-img';
+    return img;
+  })();
 
   // Row 5: QR Code Text
   config.qrCodeText = rows[5]?.textContent?.trim() || '';
