@@ -108,7 +108,7 @@ export default async function decorateInsuranceProductCard(block) {
       tagElement.classList.add('insurance-product-card-tag');
     }
 
-    if (tagRows && tagRows.length > 0) {
+    if (cardImage && tagElement && tagRows && tagRows.length > 0) {
       cardImage.appendChild(tagElement);
     }
 
