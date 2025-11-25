@@ -1653,6 +1653,105 @@
             },
             true
           ]
+        },
+        "rte": {
+          "plugins": {
+            "table": {
+              "features": [
+                "table",
+                "tableproperties",
+                "tablecellproperties",
+                "tablerow",
+                "tablecolumn"
+              ]
+            },
+            "misctools": {
+              "features": [
+                "specialchars",
+                "sourceedit"
+              ]
+            },
+            "edit": {
+              "features": [
+                "cut",
+                "copy",
+                "paste-default",
+                "paste-plaintext",
+                "paste-wordhtml"
+              ]
+            },
+            "format": {
+              "features": [
+                "bold",
+                "italic",
+                "underline",
+                "strikethrough",
+                "subscript",
+                "superscript"
+              ]
+            },
+            "styles": {
+              "features": [
+                "styles"
+              ],
+              "styles": [
+                {
+                  "name": "Highlight",
+                  "element": "span",
+                  "classes": [
+                    "highlight"
+                  ]
+                },
+                {
+                  "name": "Code",
+                  "element": "code"
+                }
+              ]
+            },
+            "lists": {
+              "features": [
+                "ordered",
+                "unordered",
+                "indent",
+                "outdent"
+              ]
+            },
+            "links": {
+              "features": [
+                "modifylink",
+                "unlink",
+                "anchor"
+              ]
+            }
+          },
+          "specialCharsConfig": {
+            "chars": [
+              {
+                "name": "copyright",
+                "entity": "&copy;"
+              },
+              {
+                "name": "registered",
+                "entity": "&reg;"
+              },
+              {
+                "name": "trademark",
+                "entity": "&trade;"
+              },
+              {
+                "name": "euro",
+                "entity": "&euro;"
+              },
+              {
+                "name": "pound",
+                "entity": "&pound;"
+              },
+              {
+                "name": "yen",
+                "entity": "&yen;"
+              }
+            ]
+          }
         }
       },
       {
