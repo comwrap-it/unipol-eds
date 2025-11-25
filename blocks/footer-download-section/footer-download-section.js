@@ -87,8 +87,6 @@ export function createFooterDownloadSection(config = {}) {
     qrContainer.appendChild(qrText);
   }
 
-  section.appendChild(qrContainer);
-
   // App Store Buttons Container
   const appButtonsContainer = document.createElement('div');
   appButtonsContainer.className = 'footer-download-apps';
@@ -129,7 +127,12 @@ export function createFooterDownloadSection(config = {}) {
     appButtonsContainer.appendChild(appStoreLink);
   }
 
-  section.appendChild(appButtonsContainer);
+  const bottomAppContainer = document.createElement('div');
+  bottomAppContainer.className = 'footer-download-bottom-app';
+  bottomAppContainer.appendChild(qrContainer);
+  bottomAppContainer.appendChild(appButtonsContainer);
+
+  section.appendChild(bottomAppContainer);
 
   return section;
 }
@@ -205,7 +208,6 @@ export default function decorate(block) {
   const actualRows = wrapper ? Array.from(wrapper.children) : rows;
 
   if (actualRows.length < 10) {
-    console.warn('footer-download-section: insufficient rows');
     return;
   }
 
