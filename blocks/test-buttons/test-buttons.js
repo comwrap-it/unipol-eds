@@ -25,7 +25,7 @@ import {
 import { create3Dicons } from '../atoms/3D-icons/3D-icons.js';
 import { createRadioButtonField } from '../atoms/radio-button/radio-button-field/radio-button-field.js';
 import createOverlay from '../atoms/overlay/overlay.js';
-import { createHero } from '../organisms/hero/hero.js';
+import { createHero } from '../hero/hero.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -49,7 +49,7 @@ async function ensureStylesLoaded() {
       'blocks/atoms/radio-button/radio-button-field/radio-button-field.css',
       'blocks/atoms/3D-icons/3D-icons.css',
       'blocks/atoms/overlay/overlay.css',
-      'blocks/organisms/hero/hero.css',
+      'blocks/hero/hero.css',
     ].map((p) => loadCSS(`${base}/${p}`)),
   );
   isStylesLoaded = true;

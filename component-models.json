@@ -441,25 +441,267 @@
     "id": "hero",
     "fields": [
       {
+        "component": "select",
+        "name": "heroVariant",
+        "label": "Hero Variant",
+        "description": "Select the variant of the hero block",
+        "value": "default",
+        "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Carousel",
+            "value": "carousel"
+          }
+        ]
+      },
+      {
         "component": "reference",
         "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false
+        "name": "heroBackgroundMediaSrc",
+        "label": "Hero Background Media",
+        "description": "URL of the background image or video"
+      },
+      {
+        "component": "switch",
+        "name": "isVideoBackground",
+        "label": "Is Video Background",
+        "description": "Toggle to enable or disable video background",
+        "value": false
+      },
+      {
+        "component": "switch",
+        "name": "showHeroLogo",
+        "label": "Show Hero Logo",
+        "description": "Toggle to show or hide the hero logo",
+        "value": false
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "heroLogoMediaSrc",
+        "label": "Hero Logo Media",
+        "description": "URL of the logo image",
+        "condition": {
+          "===": [
+            {
+              "var": "showHeroLogo"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "switch",
+        "name": "showHeroPauseIcon",
+        "label": "Show Hero Pause Icon",
+        "description": "Toggle to show or hide the hero pause icon",
+        "value": false
       },
       {
         "component": "text",
-        "valueType": "string",
-        "name": "imageAlt",
-        "label": "Alt",
-        "value": ""
+        "label": "Hero Title",
+        "name": "heroMainLabel",
+        "required": true,
+        "maxlength": 50
+      },
+      {
+        "component": "text",
+        "name": "heroSubtitleBold",
+        "label": "Hero Subtitle Bold",
+        "maxlength": 50
       },
       {
         "component": "richtext",
-        "name": "text",
-        "value": "",
-        "label": "Text",
-        "valueType": "string"
+        "name": "heroSubtitle",
+        "label": "Hero Subtitle",
+        "valueType": "string",
+        "maxlength": 150
+      },
+      {
+        "component": "switch",
+        "name": "showHeroBulletList",
+        "label": "Show Hero Bullet List",
+        "description": "Enable up to 3 bullet points",
+        "value": false
+      },
+      {
+        "component": "text",
+        "name": "heroBullet1",
+        "label": "Bullet 1",
+        "maxlength": 40,
+        "condition": {
+          "===": [
+            {
+              "var": "showHeroBulletList"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "heroBullet2",
+        "label": "Bullet 2",
+        "maxlength": 40,
+        "condition": {
+          "===": [
+            {
+              "var": "showHeroBulletList"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "heroBullet3",
+        "label": "Bullet 3",
+        "maxlength": 40,
+        "condition": {
+          "===": [
+            {
+              "var": "showHeroBulletList"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "switch",
+        "name": "showHeroButton",
+        "label": "Show Hero Button",
+        "description": "Toggle to show or hide the hero button",
+        "value": false
+      },
+      {
+        "component": "container",
+        "name": "button-container",
+        "label": "Configurazione Bottone",
+        "collapsible": true,
+        "condition": {
+          "===": [
+            {
+              "var": "showHeroButton"
+            },
+            true
+          ]
+        },
+        "fields": [
+          {
+            "component": "text",
+            "name": "standardButtonLabel",
+            "label": "Button Text",
+            "required": false
+          },
+          {
+            "component": "select",
+            "name": "standardButtonVariant",
+            "label": "Variant",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Accent",
+                "value": "accent"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          },
+          {
+            "component": "select",
+            "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
+            "label": "Size",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonLeftIcon",
+            "label": "Left Icon",
+            "description": "Select the left icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonRightIcon",
+            "label": "Right Icon",
+            "description": "Select the right icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -3375,252 +3617,6 @@
             "label": "Show Personal Protection icon",
             "description": "Toggle to display the Personal Protection icon",
             "value": false
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "hero",
-    "fields": [
-      {
-        "component": "select",
-        "name": "heroVariant",
-        "label": "Hero Variant",
-        "description": "Select the variant of the hero block",
-        "value": "default",
-        "options": [
-          {
-            "name": "None",
-            "value": ""
-          },
-          {
-            "name": "Default",
-            "value": "default"
-          },
-          {
-            "name": "Carousel",
-            "value": "carousel"
-          }
-        ]
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "heroBackgroundMediaSrc",
-        "label": "Hero Background Media",
-        "description": "URL of the background image or video"
-      },
-      {
-        "component": "switch",
-        "name": "isVideoBackground",
-        "label": "Is Video Background",
-        "description": "Toggle to enable or disable video background",
-        "value": false
-      },
-      {
-        "component": "switch",
-        "name": "showHeroButton",
-        "label": "Show Hero Button",
-        "description": "Toggle to show or hide the hero button",
-        "value": false
-      },
-      {
-        "component": "switch",
-        "name": "showHeroLogo",
-        "label": "Show Hero Logo",
-        "description": "Toggle to show or hide the hero logo",
-        "value": false
-      },
-      {
-        "component": "switch",
-        "name": "showHeroPauseIcon",
-        "label": "Show Hero Pause Icon",
-        "description": "Toggle to show or hide the hero pause icon",
-        "value": false
-      },
-      {
-        "component": "text",
-        "label": "Hero Title",
-        "name": "heroMainLabel",
-        "required": true,
-        "maxlength": 50
-      },
-      {
-        "component": "text",
-        "name": "heroSubtitleBold",
-        "label": "Hero Subtitle Bold",
-        "maxlength": 50
-      },
-      {
-        "component": "richtext",
-        "name": "heroSubtitle",
-        "label": "Hero Subtitle",
-        "valueType": "string",
-        "maxlength": 150
-      },
-      {
-        "component": "switch",
-        "name": "showHeroBulletList",
-        "label": "Show Hero Bullet List",
-        "description": "Enable up to 3 bullet points",
-        "value": false
-      },
-      {
-        "component": "text",
-        "name": "heroBullet1",
-        "label": "Bullet 1",
-        "maxlength": 40,
-        "required": true,
-        "condition": {
-          "===": [
-            {
-              "var": "showHeroBulletList"
-            },
-            true
-          ]
-        }
-      },
-      {
-        "component": "text",
-        "name": "heroBullet2",
-        "label": "Bullet 2",
-        "maxlength": 40,
-        "condition": {
-          "===": [
-            {
-              "var": "showHeroBulletList"
-            },
-            true
-          ]
-        }
-      },
-      {
-        "component": "text",
-        "name": "heroBullet3",
-        "label": "Bullet 3",
-        "maxlength": 40,
-        "condition": {
-          "===": [
-            {
-              "var": "showHeroBulletList"
-            },
-            true
-          ]
-        }
-      },
-      {
-        "component": "container",
-        "name": "button-container",
-        "label": "Configurazione Bottone",
-        "collapsible": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "standardButtonLabel",
-            "label": "Button Text",
-            "required": false
-          },
-          {
-            "component": "select",
-            "name": "standardButtonVariant",
-            "label": "Variant",
-            "value": "primary",
-            "options": [
-              {
-                "name": "Primary",
-                "value": "primary"
-              },
-              {
-                "name": "Secondary",
-                "value": "secondary"
-              },
-              {
-                "name": "Accent",
-                "value": "accent"
-              }
-            ]
-          },
-          {
-            "component": "aem-content",
-            "name": "standardButtonHref",
-            "label": "Link URL",
-            "description": "Optional URL to make this a link button"
-          },
-          {
-            "component": "select",
-            "name": "standardButtonSize",
-            "description": "Modifica la dimensione delle icone del bottone",
-            "label": "Size",
-            "value": "medium",
-            "options": [
-              {
-                "name": "Small",
-                "value": "small"
-              },
-              {
-                "name": "Medium",
-                "value": "medium"
-              },
-              {
-                "name": "Large",
-                "value": "large"
-              },
-              {
-                "name": "Extra Large",
-                "value": "extra-large"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "standardButtonLeftIcon",
-            "label": "Left Icon",
-            "description": "Select the left icon",
-            "value": "",
-            "options": [
-              {
-                "name": "None",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "un-icon-chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "un-icon-chevron-right"
-              },
-              {
-                "name": "Search Icon",
-                "value": "un-icon-search"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "standardButtonRightIcon",
-            "label": "Right Icon",
-            "description": "Select the right icon",
-            "value": "",
-            "options": [
-              {
-                "name": "None",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "un-icon-chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "un-icon-chevron-right"
-              },
-              {
-                "name": "Search Icon",
-                "value": "un-icon-search"
-              }
-            ]
           }
         ]
       }
