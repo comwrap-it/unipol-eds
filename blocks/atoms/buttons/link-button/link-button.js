@@ -12,15 +12,18 @@ import { BUTTON_ICON_SIZES } from '../standard-button/standard-button.js';
  *
  * @param {string} label - Link text
  * @param {string} href - URL for the link
+ * @param {boolean} openInNewTab - Open link in new tab (optional)
  * @param {boolean} leftIcon - left icon class
  * @param {boolean} rightIcon - right icon class
  * @param {string} leftIconSize - size of left icon
  * @param {string} rightIconSize - size of right icon
+ * @param {boolean} disabled - Disabled state (optional)
  * @returns {HTMLElement} link element
  */
 export function createLinkButton(
   label,
   href,
+  openInNewTab,
   leftIcon,
   rightIcon,
   leftIconSize = BUTTON_ICON_SIZES.M,
@@ -33,6 +36,12 @@ export function createLinkButton(
   link.className = ['link-btn'].join(' ');
   link.setAttribute('role', 'link');
   link.setAttribute('tabindex', '0');
+
+  // Set target="_blank" if openInNewTab is true
+  if (openInNewTab) {
+    link.setAttribute('target', '_blank');
+    link.setAttribute('rel', 'noopener noreferrer');
+  }
 
   if (disabled) {
     link.classList.add('disabled');
@@ -80,18 +89,22 @@ export function createLinkButtonFromRows(rows) {
 
   const text = rows[0]?.textContent?.trim() || 'Link';
   const href = rows[1]?.querySelector('a')?.href || rows[1]?.textContent?.trim() || '#';
-  const leftIcon = rows[2]?.textContent?.trim() === 'true';
-  const rightIcon = rows[3]?.textContent?.trim() === 'true';
-  const leftIconSize = (rows[4]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM).toLowerCase();
-  const rightIconSize = (rows[5]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM).toLowerCase();
+  const openInNewTab = rows[2]?.textContent?.trim() === 'true';
+  const leftIcon = rows[3]?.textContent?.trim() || '';
+  const rightIcon = rows[4]?.textContent?.trim() || '';
+  const leftIconSize = (rows[5]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM).toLowerCase();
+  const rightIconSize = (rows[6]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM).toLowerCase();
+  const disabled = rows[7]?.textContent?.trim() === 'true';
 
   return createLinkButton(
     text,
     href,
+    openInNewTab,
     leftIcon,
     rightIcon,
     leftIconSize,
     rightIconSize,
+    disabled,
   );
 }
 
@@ -113,10 +126,12 @@ export default function decorateLinkButton(block) {
 
   const text = rows[0]?.textContent?.trim() || 'Link';
   const href = rows[1]?.querySelector('a')?.href || rows[1]?.textContent?.trim() || '#';
-  const leftIcon = rows[2]?.textContent?.trim() === 'true';
-  const rightIcon = rows[3]?.textContent?.trim() === 'true';
-  const leftIconSize = (rows[4]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM).toLowerCase();
-  const rightIconSize = (rows[5]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM).toLowerCase();
+  const openInNewTab = rows[2]?.textContent?.trim() === 'true';
+  const leftIcon = rows[3]?.textContent?.trim() || '';
+  const rightIcon = rows[4]?.textContent?.trim() || '';
+  const leftIconSize = (rows[5]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM).toLowerCase();
+  const rightIconSize = (rows[6]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM).toLowerCase();
+  const disabled = rows[7]?.textContent?.trim() === 'true';
 
   if (hasInstrumentation) {
     let linkElement = block.querySelector('a');
@@ -124,10 +139,12 @@ export default function decorateLinkButton(block) {
       linkElement = createLinkButton(
         text,
         href,
+        openInNewTab,
         leftIcon,
         rightIcon,
         leftIconSize,
         rightIconSize,
+        disabled,
       );
       block.textContent = '';
       block.appendChild(linkElement);
@@ -135,6 +152,15 @@ export default function decorateLinkButton(block) {
       linkElement.textContent = text;
       linkElement.href = href;
       linkElement.className = ['link-btn'].join(' ');
+
+      // Set target="_blank" if openInNewTab is true
+      if (openInNewTab) {
+        linkElement.setAttribute('target', '_blank');
+        linkElement.setAttribute('rel', 'noopener noreferrer');
+      } else {
+        linkElement.removeAttribute('target');
+        linkElement.removeAttribute('rel');
+      }
 
       linkElement.querySelectorAll('.link-btn-icon').forEach((icon) => icon.remove());
       if (leftIcon) {
@@ -153,10 +179,12 @@ export default function decorateLinkButton(block) {
     const link = createLinkButton(
       text,
       href,
+      openInNewTab,
       leftIcon,
       rightIcon,
       leftIconSize,
       rightIconSize,
+      disabled,
     );
     block.textContent = '';
     block.appendChild(link);

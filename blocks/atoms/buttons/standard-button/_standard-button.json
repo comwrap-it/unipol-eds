@@ -50,7 +50,15 @@
           "component": "aem-content",
           "name": "standardButtonHref",
           "label": "Link URL",
-          "description": "Optional URL to make this a link button"
+          "description": "URL del bottone"
+        },
+        {
+          "component": "boolean",
+          "label": "Apri in una nuova scheda",
+          "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+          "name": "standardButtonOpenInNewTab",
+          "valueType": "boolean",
+          "value": false
         },
         {
           "component": "select",

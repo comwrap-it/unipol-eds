@@ -1,186 +1,178 @@
 {
-    "definitions": [
-        {
-            "title": "Hero",
-            "id": "hero",
-            "plugins": {
-                "xwalk": {
-                    "page": {
-                        "resourceType": "core/franklin/components/block/v1/block",
-                        "template": {
-                            "filter": "hero",
-                            "name": "Hero"
-                        }
-                    }
-                }
+  "definitions": [
+    {
+      "title": "Hero",
+      "id": "hero",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Hero",
+              "model": "hero"
             }
+          }
         }
-    ],
-    "models": [
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "hero",
+      "fields": [
         {
-            "id": "hero",
-            "fields": [
-                {
-                    "component": "select",
-                    "name": "heroVariant",
-                    "label": "Hero Variant",
-                    "description": "Select the variant of the hero block",
-                    "value": "default",
-                    "options": [
-                        {
-                            "name": "None",
-                            "value": ""
-                        },
-                        {
-                            "name": "Default",
-                            "value": "default"
-                        },
-                        {
-                            "name": "Carousel",
-                            "value": "carousel"
-                        }
-                    ]
-                },
-                {
-                    "component": "reference",
-                    "valueType": "string",
-                    "name": "heroBackgroundMediaSrc",
-                    "label": "Hero Background Media",
-                    "description": "URL of the background image or video"
-                },
-                {
-                    "component": "switch",
-                    "name": "isVideoBackground",
-                    "label": "Is Video Background",
-                    "description": "Toggle to enable or disable video background",
-                    "value": false
-                },
-                {
-                    "component": "switch",
-                    "name": "showHeroLogo",
-                    "label": "Show Hero Logo",
-                    "description": "Toggle to show or hide the hero logo",
-                    "value": false
-                },
-                {
-                    "component": "reference",
-                    "valueType": "string",
-                    "name": "heroLogoMediaSrc",
-                    "label": "Hero Logo Media",
-                    "description": "URL of the logo image",
-                    "condition": {
-                        "===": [
-                            {
-                                "var": "showHeroLogo"
-                            },
-                            true
-                        ]
-                    }
-                },
-                {
-                    "component": "switch",
-                    "name": "showHeroPauseIcon",
-                    "label": "Show Hero Pause Icon",
-                    "description": "Toggle to show or hide the hero pause icon",
-                    "value": false
-                },
-                {
-                    "component": "text",
-                    "label": "Hero Title",
-                    "name": "heroMainLabel",
-                    "required": true,
-                    "maxlength": 50
-                },
-                {
-                    "component": "text",
-                    "name": "heroSubtitleBold",
-                    "label": "Hero Subtitle Bold",
-                    "maxlength": 50
-                },
-                {
-                    "component": "richtext",
-                    "name": "heroSubtitle",
-                    "label": "Hero Subtitle",
-                    "valueType": "string",
-                    "maxlength": 150
-                },
-                {
-                    "component": "switch",
-                    "name": "showHeroBulletList",
-                    "label": "Show Hero Bullet List",
-                    "description": "Enable up to 3 bullet points",
-                    "value": false
-                },
-                {
-                    "component": "text",
-                    "name": "heroBullet1",
-                    "label": "Bullet 1",
-                    "maxlength": 40,
-                    "condition": {
-                        "===": [
-                            {
-                                "var": "showHeroBulletList"
-                            },
-                            true
-                        ]
-                    }
-                },
-                {
-                    "component": "text",
-                    "name": "heroBullet2",
-                    "label": "Bullet 2",
-                    "maxlength": 40,
-                    "condition": {
-                        "===": [
-                            {
-                                "var": "showHeroBulletList"
-                            },
-                            true
-                        ]
-                    }
-                },
-                {
-                    "component": "text",
-                    "name": "heroBullet3",
-                    "label": "Bullet 3",
-                    "maxlength": 40,
-                    "condition": {
-                        "===": [
-                            {
-                                "var": "showHeroBulletList"
-                            },
-                            true
-                        ]
-                    }
-                },
-                {
-                    "component": "switch",
-                    "name": "showHeroButton",
-                    "label": "Show Hero Button",
-                    "description": "Toggle to show or hide the hero button",
-                    "value": false
-                },
-                {
-                    "component": "container",
-                    "name": "button-container",
-                    "label": "Configurazione Bottone",
-                    "collapsible": true,
-                    "condition": {
-                        "===": [
-                            {
-                                "var": "showHeroButton"
-                            },
-                            true
-                        ]
-                    },
-                    "fields": [
-                        {
-                            "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
-                        }
-                    ]
-                }
+          "component": "select",
+          "name": "heroVariant",
+          "label": "Hero Variant",
+          "description": "Select the variant of the hero block",
+          "value": "default",
+          "options": [
+            {
+              "name": "None",
+              "value": ""
+            },
+            {
+              "name": "Default",
+              "value": "default"
+            },
+            {
+              "name": "Carousel",
+              "value": "carousel"
+            }
+          ]
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "heroBackgroundMediaSrc",
+          "label": "Hero Background Media",
+          "description": "URL of the background image or video"
+        },
+        {
+          "component": "boolean",
+          "name": "isVideoBackground",
+          "label": "Is Video Background",
+          "description": "Toggle to enable or disable video background",
+          "valueType": "boolean"
+        },
+        {
+          "component": "boolean",
+          "name": "showHeroLogo",
+          "label": "Show Hero Logo",
+          "description": "Toggle to show or hide the hero logo",
+          "valueType": "boolean"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "heroLogoMediaSrc",
+          "label": "Hero Logo Media",
+          "description": "URL of the logo image",
+          "condition": {
+            "===": [
+              {
+                "var": "showHeroLogo"
+              },
+              true
             ]
+          }
+        },
+        {
+          "component": "boolean",
+          "name": "showHeroPauseIcon",
+          "label": "Show Hero Pause Icon",
+          "description": "Toggle to show or hide the hero pause icon",
+          "valueType": "boolean"
+        },
+        {
+          "component": "text",
+          "label": "Hero Title",
+          "name": "heroMainLabel",
+          "required": true,
+          "maxlength": 50
+        },
+        {
+          "component": "text",
+          "name": "heroSubtitleBold",
+          "label": "Hero Subtitle Bold",
+          "maxlength": 50
+        },
+        {
+          "component": "richtext",
+          "name": "heroSubtitle",
+          "label": "Hero Subtitle",
+          "valueType": "string",
+          "maxlength": 150
+        },
+        {
+          "component": "boolean",
+          "name": "showHeroBulletList",
+          "label": "Show Hero Bullet List",
+          "description": "Enable up to 3 bullet points",
+          "valueType": "boolean"
+        },
+        {
+          "component": "text",
+          "name": "heroBullet1",
+          "label": "Bullet 1",
+          "maxlength": 40,
+          "condition": {
+            "===": [
+              {
+                "var": "showHeroBulletList"
+              },
+              true
+            ]
+          }
+        },
+        {
+          "component": "text",
+          "name": "heroBullet2",
+          "label": "Bullet 2",
+          "maxlength": 40,
+          "condition": {
+            "===": [
+              {
+                "var": "showHeroBulletList"
+              },
+              true
+            ]
+          }
+        },
+        {
+          "component": "text",
+          "name": "heroBullet3",
+          "label": "Bullet 3",
+          "maxlength": 40,
+          "condition": {
+            "===": [
+              {
+                "var": "showHeroBulletList"
+              },
+              true
+            ]
+          }
+        },
+        {
+          "component": "boolean",
+          "name": "showHeroButton",
+          "label": "Show Hero Button",
+          "description": "Toggle to show or hide the hero button",
+          "valueType": "boolean"
+        },
+        {
+          "component": "container",
+          "name": "hero-button-container",
+          "label": "Configurazione Bottone",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
+            }
+          ]
         }
-    ],
-    "filters": []
+      ]
+    }
+  ],
+  "filters": []
 }

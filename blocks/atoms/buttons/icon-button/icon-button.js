@@ -15,6 +15,7 @@ import { BUTTON_ICON_SIZES, BUTTON_VARIANTS, extractInstrumentationAttributes } 
  * @param {string} variant - Button variant (primary, secondary)
  * @param {string} iconSize - Icon size (small, medium, large, extra-large)
  * @param {string} href - Button URL (optional)
+ * @param {boolean} openInNewTab - Open link in new tab (optional)
  * @param {Object} instrumentation - Instrumentation attributes (optional)
  * @returns {HTMLElement} The button or link element
  *
@@ -24,6 +25,7 @@ export function createIconButton(
   variant,
   iconSize,
   href,
+  openInNewTab,
   instrumentation = {},
 ) {
   // Decide if it's a link or button
@@ -46,6 +48,12 @@ export function createIconButton(
   if (isLink) {
     element.href = href;
     element.setAttribute('role', 'button');
+
+    // Set target="_blank" if openInNewTab is true
+    if (openInNewTab) {
+      element.setAttribute('target', '_blank');
+      element.setAttribute('rel', 'noopener noreferrer');
+    }
   }
 
   // Add accessibility attributes
@@ -71,18 +79,27 @@ export function createIconButton(
  *
  * @param {Array} rows - Array of rows from block children
  * @returns {Object} An object containing button properties
+ *
+ * Row mapping (based on _icon-button.json field order):
+ * rows[0]: iconButtonIcon (select)
+ * rows[1]: iconButtonVariant (select)
+ * rows[2]: iconButtonSize (select)
+ * rows[3]: iconButtonHref (aem-content)
+ * rows[4]: iconButtonOpenInNewTab (boolean)
  */
 const extractValuesFromRows = (rows) => {
   const icon = rows[0]?.textContent?.trim() || '';
   const variant = rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
   const iconSize = rows[2]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
   const href = rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || '';
+  const openInNewTab = rows[4]?.textContent?.trim() === 'true';
   const instrumentation = extractInstrumentationAttributes(rows[0]);
   return {
     icon,
     variant,
     iconSize,
     href,
+    openInNewTab,
     instrumentation,
   };
 };
@@ -98,10 +115,10 @@ export function createButtonFromRows(rows) {
   if (!rows || rows.length === 0) return null;
 
   const {
-    icon, variant, iconSize, href, instrumentation,
+    icon, variant, iconSize, href, openInNewTab, instrumentation,
   } = extractValuesFromRows(rows);
 
-  return createIconButton(icon, variant, iconSize, href, instrumentation);
+  return createIconButton(icon, variant, iconSize, href, openInNewTab, instrumentation);
 }
 
 /**
@@ -126,7 +143,7 @@ export default function decorateButton(block) {
 
   // Extract button properties
   const {
-    icon, variant, iconSize, href, instrumentation,
+    icon, variant, iconSize, href, openInNewTab, instrumentation,
   } = extractValuesFromRows(rows);
 
   if (hasInstrumentation) {
@@ -138,9 +155,10 @@ export default function decorateButton(block) {
       // Create button/link element preserving instrumentation from first row
       buttonElement = createIconButton(
         icon,
-        href,
         variant,
         iconSize,
+        href,
+        openInNewTab,
         instrumentation,
       );
       if (rows[0]) {
@@ -154,19 +172,20 @@ export default function decorateButton(block) {
       // Update existing button with text and href
       buttonElement = createIconButton(
         icon,
-        href,
         variant,
         iconSize,
+        href,
+        openInNewTab,
         instrumentation,
       );
     }
 
     // Apply button classes
-    buttonElement.className = ['btn', `btn-${variant}`].join(' ');
+    buttonElement.className = ['btn-icon', `btn-icon-${variant}`].join(' ');
     buttonElement.setAttribute('tabindex', '0');
   } else {
     // No instrumentation - create button normally
-    const button = createIconButton(icon, href, variant, iconSize);
+    const button = createIconButton(icon, variant, iconSize, href, openInNewTab);
     block.textContent = '';
     block.appendChild(button);
   }

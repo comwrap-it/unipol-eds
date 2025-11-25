@@ -13,21 +13,6 @@
 /* Base tokens */
 @import url("./index.css");
 
-/* cssTokens tokens */
-@import url("./cssTokens/string.css");
-@import url("./cssTokens/dimension.css");
-@import url("./cssTokens/border-radius.css");
-@import url("./cssTokens/border-width.css");
-@import url("./cssTokens/size.css");
-@import url("./cssTokens/font-family.css");
-@import url("./cssTokens/font-size.css");
-@import url("./cssTokens/font-weight.css");
-@import url("./cssTokens/color.css");
-@import url("./cssTokens/typography.css");
-@import url("./cssTokens/gradient.css");
-@import url("./cssTokens/shadow.css");
-@import url("./cssTokens/blur.css");
-
 /* Icons */
 @import url("./icons.css");
 
@@ -91,11 +76,11 @@ main .section.text-block-container.number-block-container {
 }
 
 main .section.text-block-container.number-block-container.bg-dark-gray {
-    background-color: var(--color-grayscale-50);
+    background-color: var(--Grayscale-50);
 }
 
 main .section.text-block-container.number-block-container.bg-white {
-    background-color: var(--color-neutral-50);
+    background-color: var(--Neutral-50);
 }
 
 /* Unipol Footer Section */
