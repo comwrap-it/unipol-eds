@@ -89,39 +89,31 @@ export function createTextLinkComponent(items = []) {
 export default async function decorate(block) {
   if (!block) return;
 
-  // STEP 1 — Extract rows from block
   const rows = Array.from(block.children);
 
-  // STEP 2 — Extract items
   const items = extractTextLinkItems(rows);
 
-  // STEP 3 — Create final component
-  const component = createTextLinkComponent(items);
+  rows.forEach((row, index) => {
+    const item = items[index];
 
-  // STEP 4 — Preserve block-level attributes
-  [...block.attributes].forEach((attr) => {
-    if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
-      component.setAttribute(attr.name, attr.value);
+    row.innerHTML = '';
+
+    if (item.hideTitle && item.title) {
+      const titleDiv = document.createElement('div');
+      titleDiv.className = 'text-link-title';
+      titleDiv.textContent = item.title;
+      moveInstrumentation(item.titleRow, titleDiv);
+      row.appendChild(titleDiv);
+    }
+
+    if (!item.hideTitle && item.linkText && item.linkHref) {
+      const link = document.createElement('a');
+      link.className = 'text-link';
+      link.href = item.linkHref;
+      link.textContent = item.linkText;
+      moveInstrumentation(item.textRow, link);
+      moveInstrumentation(item.hrefRow, link);
+      row.appendChild(link);
     }
   });
-
-  if (block.dataset.blockName) {
-    component.dataset.blockName = block.dataset.blockName;
-  }
-
-  if (block.id) {
-    component.id = block.id;
-  }
-
-  // STEP 5 — Clear block BUT DO NOT REPLACE IT
-  block.innerHTML = '';
-
-  // STEP 6 — Inject new content into the existing block
-  // (this preserves Universal Editor bindings)
-  while (component.firstChild) {
-    block.appendChild(component.firstChild);
-  }
-
-  // Add correct class to the block so styles still apply
-  block.className = 'block text-list-block';
 }
