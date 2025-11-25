@@ -1,5 +1,5 @@
 /**
- * Footer Privacy Section Component
+ * Footer Privacy Section Component — UE-safe (Text Link style)
  */
 
 /**
@@ -17,68 +17,41 @@ function extractFooterPrivacyData(rows) {
     const linkText = titleDiv?.querySelector('p')?.textContent.trim() || '';
     const linkHref = linkDiv?.querySelector('a')?.href || '';
 
-    return { text: linkText, href: linkHref };
+    return {
+      text: linkText,
+      href: linkHref,
+      row, // keep reference to original row
+    };
   });
 }
 
 /**
- * Preserves attributes from the original block
+ * Decorates the Footer Privacy Section block — UE-safe
  *
- * @param {HTMLElement} source - Original block
- * @param {HTMLElement} target - New block
- */
-function preserveBlockAttributes(source, target) {
-  [...source.attributes].forEach((attr) => {
-    if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
-      target.setAttribute(attr.name, attr.value);
-    }
-  });
-
-  if (source.dataset.blockName) target.dataset.blockName = source.dataset.blockName;
-  if (source.id) target.id = source.id;
-}
-
-/**
- * Creates a Footer Privacy Section component
- *
- * @param {Array<Object>} items - Array of items with text and href
- * @returns {HTMLElement} - Footer Privacy Section element
- */
-export function createFooterPrivacyComponent(items = []) {
-  const container = document.createElement('div');
-  container.className = 'footer-privacy-section';
-
-  items.forEach((item) => {
-    const row = document.createElement('div');
-    row.className = 'footer-privacy-row';
-
-    if (item.text && item.href) {
-      const link = document.createElement('a');
-      link.className = 'footer-privacy-link';
-      link.href = item.href;
-      link.textContent = item.text;
-      row.appendChild(link);
-    }
-
-    container.appendChild(row);
-  });
-
-  return container;
-}
-
-/**
- * Decorates the Footer Privacy Section block
- *
- * @param {HTMLElement} block - Original block element
+ * @param {HTMLElement} block
  */
 export default async function decorate(block) {
   if (!block) return;
 
   const rows = Array.from(block.children);
   const items = extractFooterPrivacyData(rows);
-  const component = createFooterPrivacyComponent(items);
 
-  preserveBlockAttributes(block, component);
+  items.forEach((item) => {
+    const { row, text, href } = item;
 
-  block.replaceWith(component);
+    // Svuotiamo solo il contenuto del row
+    row.innerHTML = '';
+
+    if (text && href) {
+      const link = document.createElement('a');
+      link.className = 'footer-privacy-link';
+      link.href = href;
+      link.textContent = text;
+
+      row.appendChild(link);
+    }
+  });
+
+  // Aggiungiamo classe per styling
+  block.classList.add('footer-privacy-section');
 }
