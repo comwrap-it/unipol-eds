@@ -3,11 +3,12 @@ import {
   BUTTON_VARIANTS,
   createButton,
 } from '../atoms/buttons/standard-button/standard-button.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
 
 /**
  * Sets up the Hero container with background media (image or video).
  * @param {boolean} isVideoBackground
- * @param {HTMLElement} mediaSrc - The media element (video or picture)
+ * @param {HTMLElement|string|null} mediaSrc - The media element (video or picture) or URL string
  * @param {boolean} showHeroPauseIcon
  * @returns {HTMLDivElement}
  */
@@ -16,35 +17,54 @@ const setupHeroWithBg = (isVideoBackground, mediaSrc, showHeroPauseIcon) => {
   hero.className = 'hero';
   hero.setAttribute('aria-hidden', 'true');
   // Background media
-  if (!isVideoBackground) {
-    const pictureBg = mediaSrc.cloneNode(true);
-    pictureBg.className = 'hero-bg';
-    hero.appendChild(pictureBg);
-  } else {
-    const videoBg = mediaSrc.cloneNode(true);
-    videoBg.className = 'hero-bg';
-    videoBg.src = mediaSrc;
-    videoBg.autoplay = true;
-    videoBg.muted = true;
-    videoBg.loop = true;
-    videoBg.playsInline = true;
-    hero.appendChild(videoBg);
+  if (mediaSrc) {
+    if (!isVideoBackground) {
+      let pictureBg;
+      if (typeof mediaSrc === 'string') {
+        // If mediaSrc is a URL string, create a picture element
+        pictureBg = createOptimizedPicture(mediaSrc, '', true);
+      } else if (mediaSrc.tagName === 'IMG') {
+        // If mediaSrc is an img element, create a picture element from it
+        pictureBg = createOptimizedPicture(mediaSrc.src, mediaSrc.alt || '', true);
+      } else {
+        // If mediaSrc is already a picture element, clone it
+        pictureBg = mediaSrc.cloneNode(true);
+      }
+      pictureBg.className = 'hero-bg';
+      hero.appendChild(pictureBg);
+    } else {
+      let videoBg;
+      if (typeof mediaSrc === 'string') {
+        // If mediaSrc is a URL string, create a video element
+        videoBg = document.createElement('video');
+        videoBg.src = mediaSrc;
+      } else {
+        // If mediaSrc is a video element, clone it
+        videoBg = mediaSrc.cloneNode(true);
+      }
+      videoBg.className = 'hero-bg';
+      videoBg.autoplay = true;
+      videoBg.muted = true;
+      videoBg.loop = true;
+      videoBg.playsInline = true;
+      hero.appendChild(videoBg);
 
-    if (showHeroPauseIcon) {
-      const pauseIcon = document.createElement('button');
-      pauseIcon.className = 'hero-icon un-icon-pause-circle icon-extra-large';
-      hero.appendChild(pauseIcon);
-      pauseIcon.onclick = () => {
-        if (pauseIcon.classList.contains('un-icon-play-circle')) {
-          videoBg.play();
-          pauseIcon.classList.remove('un-icon-play-circle');
-          pauseIcon.classList.add('un-icon-pause-circle');
-        } else {
-          videoBg.pause();
-          pauseIcon.classList.remove('un-icon-pause-circle');
-          pauseIcon.classList.add('un-icon-play-circle');
-        }
-      };
+      if (showHeroPauseIcon) {
+        const pauseIcon = document.createElement('button');
+        pauseIcon.className = 'hero-icon un-icon-pause-circle icon-extra-large';
+        hero.appendChild(pauseIcon);
+        pauseIcon.onclick = () => {
+          if (pauseIcon.classList.contains('un-icon-play-circle')) {
+            videoBg.play();
+            pauseIcon.classList.remove('un-icon-play-circle');
+            pauseIcon.classList.add('un-icon-pause-circle');
+          } else {
+            videoBg.pause();
+            pauseIcon.classList.remove('un-icon-pause-circle');
+            pauseIcon.classList.add('un-icon-play-circle');
+          }
+        };
+      }
     }
   }
   const heroOverlay = document.createElement('div');
@@ -56,7 +76,7 @@ const setupHeroWithBg = (isVideoBackground, mediaSrc, showHeroPauseIcon) => {
 /**
  * Builds the main textual/logo section of a Hero.
  * @param {boolean} showHeroLogo
- * @param {HTMLElement} heroLogo - the hero logo element
+ * @param {HTMLElement|string|null} heroLogo - the hero logo element or URL string
  * @param {string} title
  * @param {string} subtitleBold
  * @param {string} subtitle
@@ -75,8 +95,18 @@ const createHeroMainSection = (
 ) => {
   const mainSection = document.createElement('div');
   mainSection.className = 'main-section';
-  if (showHeroLogo) {
-    const logo = heroLogo.cloneNode(true);
+  if (showHeroLogo && heroLogo) {
+    let logo;
+    if (typeof heroLogo === 'string') {
+      // If heroLogo is a URL string, create a picture element
+      logo = createOptimizedPicture(heroLogo, '', true);
+    } else if (heroLogo.tagName === 'IMG') {
+      // If heroLogo is an img element, create a picture element from it
+      logo = createOptimizedPicture(heroLogo.src, heroLogo.alt || '', true);
+    } else {
+      // If heroLogo is already a picture element, clone it
+      logo = heroLogo.cloneNode(true);
+    }
     logo.className = 'hero-logo';
     mainSection.appendChild(logo);
   }
@@ -163,11 +193,11 @@ const createHeroButtonSection = (
  * Creates a Hero component
  *
  * @param {string} variant default | carousel
- * @param {HTMLElement} heroBackground - the background media source
+ * @param {HTMLElement|string|null} heroBackground - the background media source (picture/video element or URL string)
  * @param {boolean} isVideoBackground
  * @param {boolean} showHeroButton
  * @param {boolean} showHeroLogo
- * @param {HTMLElement} heroLogo - the hero logo element
+ * @param {HTMLElement|string|null} heroLogo - the hero logo element or URL string
  * @param {boolean} showHeroPauseIcon
  * @param {string} title (required)
  * @param {string} subtitleBold
@@ -241,11 +271,44 @@ export function createHero(
  *
  * @param {HTMLElement} row - The row element
  * @param {boolean} isVideo - Flag to indicate if media is video
- * @returns {HTMLElement|null} The media element (video or picture) or null if not found
+ * @returns {HTMLElement|string|null} The media element (video or picture), URL string, or null if not found
  */
 const extractMediaFromRow = (row, isVideo = false) => {
-  const mediaElement = row?.querySelector(isVideo ? 'video' : 'picture');
+  if (!row) return null;
+  
+  // First, try to find a picture or video element
+  const mediaElement = row.querySelector(isVideo ? 'video' : 'picture');
   if (mediaElement) return mediaElement;
+  
+  // If not found, try to find an img element (for images)
+  if (!isVideo) {
+    const imgElement = row.querySelector('img');
+    if (imgElement) return imgElement;
+  }
+  
+  // If still not found, check if there's a URL string in the text content or href
+  const linkElement = row.querySelector('a');
+  if (linkElement?.href) {
+    const url = linkElement.href.trim();
+    if (url && url !== '#' && !url.startsWith('javascript:')) {
+      return url;
+    }
+  }
+  
+  // Check text content for URL
+  const textContent = row.textContent?.trim();
+  if (textContent) {
+    // Check if it looks like a URL
+    try {
+      const url = new URL(textContent, window.location.href);
+      if (url.protocol === 'http:' || url.protocol === 'https:') {
+        return textContent;
+      }
+    } catch (e) {
+      // Not a valid URL, continue
+    }
+  }
+  
   return null;
 };
 
