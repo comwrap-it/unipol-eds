@@ -96,4 +96,28 @@ main .section.text-list-container.footer-download-section-container .text-link-t
 main .section.text-list-container.footer-download-section-container .text-link {
     color: var(--Footer-Primary-Text, #F9F9F7);
 }
+/* Footer Section In Author Mode */
+main .section.footer-download-section-container ,
+main .section.footer-privacy-section-container ,
+main .section.footer-social-section-container ,
+main .section.footer-copyright-section-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+main .text-list-wrapper,
+main .footer-download-section-wrapper {
+  flex: 1 1 auto;
+}
+
+main .footer-privacy-section-wrapper,
+main .footer-social-section-wrapper {
+  flex: 1 1 auto;
+  width: calc(50% - 5px);
+}
+
+main .footer-copyright-section-wrapper {
+  flex: 1 1 100%
+}
 
