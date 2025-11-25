@@ -1,13 +1,13 @@
 /* section Unipol Footer */
 footer {
-    background-color: var(--color-background-default-tertiary);
+    background-color: var(--Background-Default-Tertiary);
     margin: auto;
     max-width: 100%;
 }
 
 .footer .unipol-footer {
-    background-color: var(--color-background-default-tertiary);
-    padding: 48px 64px;
+    background-color: var(--Background-Default-Tertiary);
+    padding: var(--Footer-Vertical-Padding-D-Tl, 48px) var(--Footer-Horizontal-Padding-D, 64px);
 }
 
 footer .footer p {
@@ -15,22 +15,15 @@ footer .footer p {
 }
 
 /* Tablet */
-@media (width >= 768px) and (width <= 1279px) {
+@media (width >= 768px) and (width < 1280px) {
     footer .footer > div {
-        padding: 48px 32px; /* cambiare */
+        padding: var(--Footer-Vertical-Padding-D-Tl, 48px) var(--Footer-Horizontal-Padding-Tl, 32px);
     }
 }
 
 /* Mobile */
-@media (width >= 375px) and (width <= 767px) {
+@media (width < 768px) {
     footer .footer > div {
-        padding: 32px 16px; /* cambiare */
-    }
-}
-
-/* Mobile */
-@media (width <= 374px) {
-    footer .footer > div {
-        padding: 32px 16px; /* cambiare */
+        padding: var(--Footer-Vertical-Padding-M-Tp, 32px)  var(--Footer-Horizontal-Padding-M-Tp, 16px);
     }
 }

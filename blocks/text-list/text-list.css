@@ -1,11 +1,11 @@
 .section.text-list-container .text-list div {
-    margin-bottom: var(--dimension-space-200-8, 8px);
+    margin-bottom: var(--Space-200-8, 8px);
 }
 
 .section.text-list-container .text-list div .text-link-title {
     margin: 0;
     padding: 0;
-    margin-bottom: var(--dimension-space-300-16, 16px);
+    margin-bottom: var(--Space-300-16, 16px);
     font-size: var(--Size-16, 1rem);
     font-weight: 500;
 }

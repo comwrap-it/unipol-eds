@@ -89,17 +89,50 @@ main .section.text-block-container.number-block-container.bg-white {
 .section.footer-privacy-section-container ,
 .section.footer-social-section-container ,
 .section.footer-copyright-section-container {
-    background-color: var(--color-background-default-tertiary, #001C35);
+    background-color: var(--Background-Default-Tertiary, #001C35);
     margin: 0;
     font-family: var(--Family-Font-2, Manrope);
 }
 
 .section.text-list-container .text-link-title,
 .section.text-list-container .text-link {
-    color: var(--color-text-default-primary, #001C35);
+    color: var(--Text-Default-Primary, #001C35);
 }
 
 .section.text-list-container.footer-download-section-container .text-link-title,
 .section.text-list-container.footer-download-section-container .text-link {
-    color: var(--color-footer-primary-text, #F9F9F7);
+    color: var(--Footer-Primary-Text, #F9F9F7);
+}
+
+
+main .section.footer-download-section-container,
+main .section.footer-privacy-section-container ,
+main .section.footer-social-section-container ,
+main .section.footer-copyright-section-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+main .section.footer-download-section-container .text-list-wrapper,
+main .section.footer-privacy-section-container .text-list-wrapper,
+main .section.footer-social-section-container .text-list-wrapper,
+main .section.footer-copyright-section-container .text-list-wrapper {
+  order: 1;
+}
+
+main .section.footer-download-section-container .footer-download-section-wrapper {
+  order: 2;
+}
+
+main .section.footer-privacy-section-container .footer-privacy-section-wrapper {
+  order: 3;
+}
+
+main .section.footer-social-section-container .footer-social-section-wrapper {
+  order: 4;
+}
+
+main .section.footer-copyright-section-container .footer-copyright-section-wrapper {
+  order: 5;
 }

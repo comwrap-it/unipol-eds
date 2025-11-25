@@ -23,7 +23,7 @@
     border: 1px solid var(--Footer-Primary-Border, #F9F9F7);
     border-radius: var(--Footer-Radius, 16px);
     padding: var(--Footer-Box-Padding, 12px);
-    color: var(--color-footer-primary-text, #F9F9F7);
+    color: var(--Footer-Primary-Text, #F9F9F7);
     font-weight: 400;
     font-size: var(--font-size-14, 0.875rem);
 }
@@ -50,7 +50,7 @@
 .footer-download-section-wrapper .footer-download-brand a {
     font-size: var(--Size-16, 1rem);
     font-weight: 600;
-    color: var(--color-footer-primary-text, #F9F9F7);
+    color: var(--Footer-Primary-Text, #F9F9F7);
 }
 
 .footer-download-brand-button {
@@ -60,9 +60,9 @@
 
 .footer-download-brand-button picture {
     display: flex;
-    margin-left: var(--dimension-button-gap, 8px);
+    margin-left: var(--Button-Gap, 8px);
 }
 
 .footer-download-brand-button img {
-    width: var(--size-icon-100-16, 16px);
+    width: var(--Icon-100-16, 16px);
 }
