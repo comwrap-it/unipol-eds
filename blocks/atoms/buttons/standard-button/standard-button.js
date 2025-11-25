@@ -34,6 +34,7 @@ export const BUTTON_STATES = {
  *
  * @param {string} label - Button text/label
  * @param {string} href - Button URL (optional)
+ * @param {boolean} openInNewTab - Open link in new tab (optional)
  * @param {string} variant - Button variant (primary, secondary, accent)
  * @param {string} iconSize - Icon size (small, medium, large, extra-large)
  * @param {string} leftIcon - Left icon (optional)
@@ -42,12 +43,13 @@ export const BUTTON_STATES = {
  * @returns {HTMLElement} The button or link element
  *
  * @example
- * const btn = createButton('Click me', 'https://example.com', 'primary', 'medium');
+ * const btn = createButton('Click me', 'https://example.com', false, 'primary', 'medium');
  * container.appendChild(btn);
  */
 export function createButton(
   label,
   href,
+  openInNewTab,
   variant,
   iconSize,
   leftIcon,
@@ -69,6 +71,12 @@ export function createButton(
   if (isLink) {
     element.href = href;
     element.setAttribute('role', 'button');
+    
+    // Set target="_blank" if openInNewTab is true
+    if (openInNewTab) {
+      element.setAttribute('target', '_blank');
+      element.setAttribute('rel', 'noopener noreferrer');
+    }
   }
 
   // Add accessibility attributes
@@ -143,23 +151,26 @@ export const extractInstrumentationAttributes = (element) => {
  * rows[0]: standardButtonLabel (text)
  * rows[1]: standardButtonVariant (select)
  * rows[2]: standardButtonHref (aem-content)
- * rows[3]: standardButtonSize (select)
- * rows[4]: standardButtonLeftIcon (select)
- * rows[5]: standardButtonRightIcon (select)
+ * rows[3]: standardButtonOpenInNewTab (boolean)
+ * rows[4]: standardButtonSize (select)
+ * rows[5]: standardButtonLeftIcon (select)
+ * rows[6]: standardButtonRightIcon (select)
  */
 const extractValuesFromRows = (rows) => {
   const text = rows[0]?.textContent?.trim() || '';
   const variant = rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
   const href = rows[2]?.querySelector('a')?.href || rows[2]?.textContent?.trim() || '';
-  const iconSize = rows[3]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
-  const leftIcon = rows[4]?.textContent?.trim() || '';
-  const rightIcon = rows[5]?.textContent?.trim() || '';
+  const openInNewTab = rows[3]?.textContent?.trim() === 'true';
+  const iconSize = rows[4]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
+  const leftIcon = rows[5]?.textContent?.trim() || '';
+  const rightIcon = rows[6]?.textContent?.trim() || '';
   const instrumentation = extractInstrumentationAttributes(rows[0]);
   return {
     text,
     variant,
     iconSize,
     href,
+    openInNewTab,
     leftIcon,
     rightIcon,
     instrumentation,
@@ -181,6 +192,7 @@ export function createButtonFromRows(rows) {
     variant,
     iconSize,
     href,
+    openInNewTab,
     leftIcon,
     rightIcon,
     instrumentation,
@@ -192,6 +204,7 @@ export function createButtonFromRows(rows) {
   return createButton(
     text,
     href,
+    openInNewTab,
     variant,
     iconSize,
     leftIcon,
@@ -227,6 +240,7 @@ export default function decorateButton(block) {
     variant,
     iconSize,
     href,
+    openInNewTab,
     leftIcon,
     rightIcon,
     instrumentation,
@@ -242,6 +256,7 @@ export default function decorateButton(block) {
       buttonElement = createButton(
         text,
         href,
+        openInNewTab,
         variant,
         iconSize,
         leftIcon,
@@ -260,6 +275,7 @@ export default function decorateButton(block) {
       buttonElement = createButton(
         text,
         href,
+        openInNewTab,
         variant,
         iconSize,
         leftIcon,
@@ -276,6 +292,7 @@ export default function decorateButton(block) {
     const button = createButton(
       text,
       href,
+      openInNewTab,
       variant,
       iconSize,
       leftIcon,
