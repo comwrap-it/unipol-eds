@@ -1,90 +1,3 @@
-/* Updated color token references (legacy commented block replaced):
-    --Input-Field-Hint-Helper-Text-Icon: var(--Icon-Neutral-Secondary);
-    --Input-Field-Hint-Helper-Text: var(--Text-Neutral-Secondary);
-    --Input-Field-Hint-Error-Text-Icon: var(--Icon-Error-Primary);
-    --Input-Field-Hint-Error-Text: var(--Text-Error-Default);
-    --Input-Field-Hint-Checkbox-Icon: var(--Icon-Default-Primary);
-    --Input-Field-Hint-Checkbox-Text: var(--Text-Default-Primary);
-    --Input-Fields-Placeholder-Background: var(--Null-000);
-    --Input-Fields-Placeholder-Border: var(--Border-Neutral-Secondary);
-    --Input-Fields-Placeholder-Text-Label: var(--Text-Default-Primary);
-    --Input-Fields-Placeholder-Text-Value: var(--Text-Neutral-Secondary);
-    --Input-Fields-Placeholder-Icon: var(--Icon-Default-Primary);
-    --Input-Fields-Enabled-Background: var(--Null-000);
-    --Input-Fields-Enabled-Border: var(--Border-Neutral-Secondary);
-    --Input-Fields-Enabled-Text-Title: var(--Text-Default-Primary);
-    --Input-Fields-Enabled-Text-Value: var(--Text-Default-Primary);
-    --Input-Fields-Enabled-Icon: var(--Icon-Default-Primary);
-    --Input-Fields-Disabled-Background: var(--Background-Disabled-Primary);
-    --Input-Fields-Disabled-Border: var(--Null-000);
-    --Input-Fields-Disabled-Text-Title: var(--Text-Default-Primary);
-    --Input-Fields-Disabled-Text-Value: var(--Text-Disabled-Secondary);
-    --Input-Fields-Disabled-Icon: var(--Icon-Default-Primary);
-    --Input-Fields-Hover-Background: var(--Background-Neutral-Primary);
-    --Input-Fields-Hover-Border: var(--Border-Neutral-Secondary);
-    --Input-Fields-Hover-Text-Title: var(--Text-Default-Primary);
-    --Input-Fields-Hover-Text-Value: var(--Text-Default-Primary);
-    --Input-Fields-Hover-Icon: var(--Icon-Default-Primary);
-    --Input-Fields-Pressed-Background: var(--Background-Neutral-Primary);
-    --Input-Fields-Pressed-Border: var(--Border-Neutral-Secondary);
-    --Input-Fields-Pressed-Text-Title: var(--Text-Default-Primary);
-    --Input-Fields-Pressed-Text-Value: var(--Text-Default-Primary);
-    --Input-Fields-Pressed-Icon: var(--Icon-Default-Primary);
-    --Input-Fields-Focused-Background: var(--Null-000);
-    --Input-Fields-Focused-Border-Default: var(--Border-Disabled-Primary);
-    --Input-Fields-Focused-Border-Focused: var(--Border-Default-Focused);
-    --Input-Fields-Focused-Text-Title: var(--Text-Default-Primary);
-    --Input-Fields-Focused-Text-Value: var(--Text-Default-Primary);
-    --Input-Fields-Focused-Icon: var(--Icon-Default-Primary);
-    --Input-Fields-Error-Background: var(--Null-000);
-    --Input-Fields-Error-Border: var(--Border-Error-Primary);
-    --Input-Fields-Error-Text-Label: var(--Text-Default-Primary);
-    --Input-Fields-Error-Text-Value: var(--Text-Default-Primary);
-    --Input-Fields-Error-Icon: var(--Icon-Default-Primary);
-    --Input-Field-Hint-Radio-Button-Icon: var(--Icon-Default-Primary);
-    --Input-Field-Hint-Radio-Button-Text: var(--Text-Default-Primary);
-    --Input-Field-Hint-Warning-Text-Icon: var(--Icon-Warning-Primary);
-    --Input-Field-Hint-Warning-Text: var(--Text-Warning-Default);
-    --Input-Field-Hint-Success-Text-Icon: var(--Icon-Success-Primary);
-    --Input-Field-Hint-Success-Text: var(--Text-Success-Default);
-    --Input-Fields-Disabled-Background-2: var(--Background-Disabled-Primary);
-    --Label-Input-Fields-Primary-Background: var(--Background-Default-Primary);
-    --Label-Input-Fields-Primary-Text: var(--Text-Default-Primary);
-    --Label-Input-Fields-Secondary-Background: var(--Background-Default-Secondary);
-    --Label-Input-Fields-Secondary-Text: var(--Text-Default-Primary);
-    --Input-Fields-Warning-Background: var(--Null-000);
-    --Input-Fields-Warning-Border: var(--Border-Warning-Primary);
-    --Input-Fields-Warning-Text-Label: var(--Text-Default-Primary);
-    --Input-Fields-Warning-Text-Value: var(--Text-Default-Primary);
-    --Input-Fields-Warning-Icon: var(--Icon-Default-Primary);
-    --Input-Fields-Success-Background: var(--Null-000);
-    --Input-Fields-Success-Border: var(--Border-Success-Primary);
-    --Input-Fields-Success-Text-Label: var(--Text-Default-Primary);
-    --Input-Fields-Success-Text-Value: var(--Text-Default-Primary);
-    --Input-Fields-Success-Icon: var(--Icon-Default-Primary); */
-
-/* Updated dimension tokens:
-    --Input-Fields-Radius-Default: var(--Radius-9999);
-    --Input-Fields-Radius-Text-Area: var(--Radius-300-16);
-    --Input-Fields-Border-Default: var(--Stroke-100-1);
-    --Input-Fields-Border-Focused: var(--Stroke-200-2);
-    --Input-Fields-Vertical-Gap: var(--Space-100-4);
-    --Input-Fields-Vertical-Gap-Select: var(--Space-50-2);
-    --Input-Fields-Horizontal-Gap: var(--Space-200-8);
-    --Input-Fields-Min-Height-Text-Area: var(--Space-900-64);
-    --Input-Fields-Vertical-Padding: var(--Space-300-16);
-    --Input-Fields-Horizontal-Padding: var(--Space-400-24);
-    --Input-Fields-Horizontal-Padding-Icon: var(--Space-350-20);
-    --Label-Input-Fields-Vertical-Padding: var(--Space-0);
-    --Input-Field-Hint-Vertical-Padding-Selection-Control: var(--Space-100-4);
-    --Input-Field-Hint-Horizontal-Gap-Icon: var(--Space-100-4);
-    --Input-Field-Hint-Horizontal-Gap-Selection-Control: var(--Space-200-8);
-    --Input-Fields-Text-Field-Height: var(--Space-700-48);
-    --Label-Input-Fields-Horizontal-Padding: var(--Space-350-20);
-    --Input-Fields-Horizontal-Padding-Text-Area: var(--Space-400-24);
-    --Input-Fields-Label-Padding: var(--Space-100-4);
-    --Label-Input-Fields-Radius: var(--Radius-100-4); */
-
 .input-main-wrapper {
     display: flex;
     width: 350px;
@@ -219,8 +132,8 @@
             & .input,
             & .select-value {
                 padding-right: calc(
-                    var(--dimension-input-fields-horizontal-padding-icon, 20px) +
-                        var(--dimension-space-300-16) + 5px
+                    var(--Input-Fields-Horizontal-Padding-Icon, 20px) +
+                        var(--Space-300-16) + 5px
                 );
             }
         }
@@ -229,8 +142,8 @@
             & .input,
             & .select-value {
                 padding-right: calc(
-                    var(--dimension-input-fields-horizontal-padding-icon, 20px) +
-                        var(--dimension-space-350-20) + 5px
+                    var(--Input-Fields-Horizontal-Padding-Icon, 20px) +
+                        var(--Space-350-20) + 5px
                 );
             }
         }
@@ -239,8 +152,8 @@
             & .input,
             & .select-value {
                 padding-right: calc(
-                    var(--dimension-input-fields-horizontal-padding-icon, 20px) +
-                        var(--dimension-space-400-24) + 5px
+                    var(--Input-Fields-Horizontal-Padding-Icon, 20px) +
+                        var(--Space-400-24) + 5px
                 );
             }
         }
@@ -249,8 +162,8 @@
             & .input,
             & .select-value {
                 padding-right: calc(
-                    var(--dimension-input-fields-horizontal-padding-icon, 20px) +
-                        var(--dimension-space-500-32) + 5px
+                    var(--Input-Fields-Horizontal-Padding-Icon, 20px) +
+                        var(--Space-500-32) + 5px
                 );
             }
         }
@@ -284,11 +197,11 @@
         position: absolute;
         opacity: 0;
         top: calc(
-            var(--dimension-input-fields-text-field-height, 48px) +
-                var(--dimension-input-fields-vertical-gap, 4px)
+            var(--Input-Fields-Text-Field-Height, 48px) +
+                var(--Input-Fields-Vertical-Gap, 4px)
         );
         z-index: 30;
-        background-color: var(--color-white-1100);
+        background-color: var(--White-1100);
         transition: opacity 0.3s ease-in-out;
 
         &.options-list-visible {

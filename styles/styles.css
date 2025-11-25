@@ -91,11 +91,11 @@ main .section.text-block-container.number-block-container {
 }
 
 main .section.text-block-container.number-block-container.bg-dark-gray {
-    background-color: var(--color-grayscale-50);
+    background-color: var(--Grayscale-50);
 }
 
 main .section.text-block-container.number-block-container.bg-white {
-    background-color: var(--color-neutral-50);
+    background-color: var(--Neutral-50);
 }
 
 /* Section Unipol footer */
@@ -104,7 +104,7 @@ main .section.text-block-container.number-block-container.bg-white {
 .section.footer-social-list-container,
 .section.footer-text-container,
 .footer-text p {
-    background-color: var(--color-background-default-tertiary);
+    background-color: var(--Background-Default-Tertiary);
     margin: 0;
     font-family: var(--Family-Font-2);
 }
