@@ -1,7 +1,6 @@
 /**
  * Text Link / Text List Component
  *
- * Refactor secondo le linee guida AEM EDS
  */
 
 /**
@@ -17,28 +16,12 @@ function extractTextLinkData(rows) {
     const titleDiv = children[1]?.textContent.trim() || '';
     const linkText = children[2]?.querySelector('p')?.textContent.trim() || '';
     const linkHref = children[3]?.querySelector('a')?.href || '';
+    console.log(titleDiv);
 
     return {
       hideTitle, title: titleDiv, linkText, linkHref,
     };
   });
-}
-
-/**
- * Preserves attributes from the original block
- *
- * @param {HTMLElement} source - Original block
- * @param {HTMLElement} target - New block
- */
-function preserveBlockAttributes(source, target) {
-  [...source.attributes].forEach((attr) => {
-    if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
-      target.setAttribute(attr.name, attr.value);
-    }
-  });
-
-  if (source.dataset.blockName) target.dataset.blockName = source.dataset.blockName;
-  if (source.id) target.id = source.id;
 }
 
 /**
@@ -88,7 +71,21 @@ export default async function decorate(block) {
   const items = extractTextLinkData(rows);
   const component = createTextLinkComponent(items);
 
-  preserveBlockAttributes(block, component);
+  // --- FIX: preserva gli attributi del block originale ---
+  [...block.attributes].forEach((attr) => {
+    if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
+      component.setAttribute(attr.name, attr.value);
+    }
+  });
+
+  if (block.dataset.blockName) {
+    component.dataset.blockName = block.dataset.blockName;
+  }
+
+  if (block.id) {
+    component.id = block.id;
+  }
+  // --------------------------------------------------------
 
   block.replaceWith(component);
 }
