@@ -60,7 +60,6 @@ export default async function decorate(block) {
   const rows = Array.from(block.children);
   const items = extractFooterPrivacyData(rows);
 
-  // Aggiorniamo in-place ogni row originale
   items.forEach(({ row, text, href }) => {
     row.innerHTML = '';
     if (text && href) {
@@ -72,6 +71,5 @@ export default async function decorate(block) {
     }
   });
 
-  // Aggiungiamo classe per styling
   block.classList.add('footer-privacy-section');
 }

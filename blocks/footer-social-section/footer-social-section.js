@@ -64,7 +64,6 @@ export default async function decorate(block) {
   const rows = Array.from(block.children);
   const items = extractFooterSocialData(rows);
 
-  // Aggiorniamo in-place ogni row originale
   items.forEach(({ row, picture, href }) => {
     row.innerHTML = '';
     if (picture && href) {
@@ -76,6 +75,5 @@ export default async function decorate(block) {
     }
   });
 
-  // Aggiungiamo classe per styling
   block.classList.add('footer-social-section');
 }

@@ -225,6 +225,5 @@ export default function decorate(block) {
     }
   });
 
-  // Aggiungi classe per styling
   block.classList.add('footer-download-section');
 }

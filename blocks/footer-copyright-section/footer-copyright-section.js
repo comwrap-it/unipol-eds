@@ -1,43 +1,30 @@
 /**
- * Footer Copyright Section Component
- *
+ * Footer Copyright Section Component — UE-safe
  */
 
 /**
  * Extracts copyright text data from the block
  *
  * @param {HTMLElement} block - Original block
- * @returns {Object} - Object with top and bottom text
+ * @returns {Object} - Object with top and bottom text, plus references to original children
  */
-function extractFooterCopyrightData(block) {
+export function extractFooterCopyrightData(block) {
   const children = [...block.children];
   const topText = children[0]?.textContent.trim() || '';
   const bottomText = children[1]?.textContent.trim() || '';
-  return { topText, bottomText };
-}
-
-/**
- * Preserves attributes from the original block
- *
- * @param {HTMLElement} source - Original block
- * @param {HTMLElement} target - New block
- */
-function preserveBlockAttributes(source, target) {
-  [...source.attributes].forEach((attr) => {
-    if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
-      target.setAttribute(attr.name, attr.value);
-    }
-  });
-
-  if (source.dataset.blockName) target.dataset.blockName = source.dataset.blockName;
-  if (source.id) target.id = source.id;
+  return {
+    topText,
+    bottomText,
+    topNode: children[0] || null,
+    bottomNode: children[1] || null,
+  };
 }
 
 /**
  * Creates a Footer Copyright component
  *
  * @param {Object} data - Object with topText and bottomText
- * @returns {HTMLElement} - Footer Copyright element
+ * @returns {HTMLElement} - Container element
  */
 export function createFooterCopyrightComponent(data = {}) {
   const container = document.createElement('div');
@@ -61,17 +48,46 @@ export function createFooterCopyrightComponent(data = {}) {
 }
 
 /**
- * Decorates the Footer Copyright block
+ * Decorates the Footer Copyright block — UE-safe
  *
  * @param {HTMLElement} block - Original block element
  */
 export default async function decorate(block) {
   if (!block) return;
 
-  const data = extractFooterCopyrightData(block);
-  const component = createFooterCopyrightComponent(data);
+  const {
+    topText, bottomText, topNode, bottomNode,
+  } = extractFooterCopyrightData(block);
 
-  preserveBlockAttributes(block, component);
+  if (topNode) {
+    topNode.textContent = topText;
+    topNode.classList.add('footer-copyright-top');
+  }
 
-  block.replaceWith(component);
+  if (bottomNode) {
+    bottomNode.textContent = bottomText;
+    bottomNode.classList.add('footer-copyright-bottom');
+  }
+
+  if (!topNode && topText) {
+    const pTop = document.createElement('p');
+    pTop.className = 'footer-copyright-top';
+    pTop.textContent = topText;
+    block.prepend(pTop);
+  }
+
+  if (!bottomNode && bottomText) {
+    const pBottom = document.createElement('p');
+    pBottom.className = 'footer-copyright-bottom';
+    pBottom.textContent = bottomText;
+    block.appendChild(pBottom);
+  }
+
+  [...block.attributes].forEach((attr) => {
+    if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
+      block.setAttribute(attr.name, attr.value);
+    }
+  });
+
+  block.classList.add('footer-copyright-section');
 }
