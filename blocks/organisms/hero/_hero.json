@@ -42,9 +42,10 @@
                     ]
                 },
                 {
-                    "component": "text",
+                    "component": "reference",
+                    "valueType": "string",
                     "name": "heroBackgroundMediaSrc",
-                    "label": "Hero Background Media Src",
+                    "label": "Hero Background Media",
                     "description": "URL of the background image or video"
                 },
                 {

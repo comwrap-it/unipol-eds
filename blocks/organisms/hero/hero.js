@@ -274,12 +274,20 @@ const extractValuesFromRows = (rows) => {
     btnRightIcon,
   };
 };
+let isStyleAlreadyLoaded = false;
+const ensureStylesLoaded = async () => {
+  if (isStyleAlreadyLoaded) return;
+  const { loadCSS } = await import('../../../scripts/aem.js');
+  loadCSS('./hero.css');
+  isStyleAlreadyLoaded = true;
+};
 
 /**
  * @param {HTMLElement} block
  */
 export default async function decorateHero(block) {
   if (!block) return;
+  ensureStylesLoaded();
 
   // Get rows from block
   let rows = Array.from(block.children);
