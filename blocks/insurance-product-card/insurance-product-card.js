@@ -15,7 +15,7 @@ import {
   from '../atoms/buttons/standard-button/standard-button.js';
 import { createTagFromRows } from '../atoms/tag/tag.js';
 // eslint-disable-next-line no-unused-vars
-import { create3Dicons } from '../atoms/icons-3D/icons-3D.js';
+import { create3DiconsFromRows } from '../atoms/icons-3D/icons-3D.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
@@ -260,6 +260,17 @@ export default async function decorateInsuranceProductCard(block) {
     if (buttonsContainer.children.length > 0) {
       cardContent.appendChild(buttonsContainer);
     }
+  }
+
+  // Card 3D-icons - Rows 13-15
+  const iconsRows = rows.slice(13, 16);
+  const iconsElement = create3DiconsFromRows(iconsRows);
+
+  if (iconsElement && iconsElement.children.length > 0) {
+    const imgVector = document.createElement('div');
+    imgVector.className = 'img-vector';
+    imgVector.appendChild(iconsElement);
+    cardContent.appendChild(imgVector);
   }
 
   // eslint-disable-next-line no-console
