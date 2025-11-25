@@ -678,21 +678,21 @@
         "required": true,
         "fields": [
           {
-            "component": "switch",
+            "component": "boolean",
             "name": "vehiclesShowIcon",
             "label": "Show Vehicles & Mobility icon",
             "description": "Toggle to display the Vehicles & Mobility icon",
             "value": false
           },
           {
-            "component": "switch",
+            "component": "boolean",
             "name": "homeShowIcon",
             "label": "Show Home & Family icon",
             "description": "Toggle to display the Home & Family icon",
             "value": false
           },
           {
-            "component": "switch",
+            "component": "boolean",
             "name": "personalShowIcon",
             "label": "Show Personal Protection icon",
             "description": "Toggle to display the Personal Protection icon",
@@ -2444,21 +2444,21 @@
     "id": "icons-3D",
     "fields": [
       {
-        "component": "switch",
+        "component": "boolean",
         "name": "vehiclesShowIcon",
         "label": "Show Vehicles & Mobility icon",
         "description": "Toggle to display the Vehicles & Mobility icon",
         "value": false
       },
       {
-        "component": "switch",
+        "component": "boolean",
         "name": "homeShowIcon",
         "label": "Show Home & Family icon",
         "description": "Toggle to display the Home & Family icon",
         "value": false
       },
       {
-        "component": "switch",
+        "component": "boolean",
         "name": "personalShowIcon",
         "label": "Show Personal Protection icon",
         "description": "Toggle to display the Personal Protection icon",
