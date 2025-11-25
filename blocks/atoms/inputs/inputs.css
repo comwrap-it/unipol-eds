@@ -1,95 +1,96 @@
-/* --color-input-field-hint-helper-text-icon: var(--color-icon-neutral-secondary);
-  --color-input-field-hint-helper-text: var(--color-text-neutral-secondary);
-  --color-input-field-hint-error-text-icon: var(--color-icon-error-primary);
-  --color-input-field-hint-error-text: var(--color-text-error-default);
-  --color-input-field-hint-checkbox-icon: var(--color-icon-default-primary);
-  --color-input-field-hint-checkbox-text: var(--color-text-default-primary);
-  --color-input-fields-placeholder-background: var(--color-null-000);
-  --color-input-fields-placeholder-border: var(--color-border-neutral-secondary);
-  --color-input-fields-placeholder-text-label: var(--color-text-default-primary);
-  --color-input-fields-placeholder-text-value: var(--color-text-neutral-secondary);
-  --color-input-fields-placeholder-icon: var(--color-icon-default-primary);
-  --color-input-fields-enabled-background: var(--color-null-000);
-  --color-input-fields-enabled-border: var(--color-border-neutral-secondary);
-  --color-input-fields-enabled-text-title: var(--color-text-default-primary);
-  --color-input-fields-enabled-text-value: var(--color-text-default-primary);
-  --color-input-fields-enabled-icon: var(--color-icon-default-primary);
-  --color-input-fields-disabled-background: var(--color-background-disabled-primary);
-  --color-input-fields-disabled-border: var(--color-null-000);
-  --color-input-fields-disabled-text-title: var(--color-text-default-primary);
-  --color-input-fields-disabled-text-value: var(--color-text-disabled-secondary);
-  --color-input-fields-disabled-icon: var(--color-icon-default-primary);
-  --color-input-fields-hover-background: var(--color-background-neutral-primary);
-  --color-input-fields-hover-border: var(--color-border-neutral-secondary);
-  --color-input-fields-hover-text-title: var(--color-text-default-primary);
-  --color-input-fields-hover-text-value: var(--color-text-default-primary);
-  --color-input-fields-hover-icon: var(--color-icon-default-primary);
-  --color-input-fields-pressed-background: var(--color-background-neutral-primary);
-  --color-input-fields-pressed-border: var(--color-border-neutral-secondary);
-  --color-input-fields-pressed-text-title: var(--color-text-default-primary);
-  --color-input-fields-pressed-text-value: var(--color-text-default-primary);
-  --color-input-fields-pressed-icon: var(--color-icon-default-primary);
-  --color-input-fields-focused-background: var(--color-null-000);
-  --color-input-fields-focused-border-default: var(--color-border-disabled-primary);
-  --color-input-fields-focused-border-focused: var(--color-border-default-focused);
-  --color-input-fields-focused-text-title: var(--color-text-default-primary);
-  --color-input-fields-focused-text-value: var(--color-text-default-primary);
-  --color-input-fields-focused-icon: var(--color-icon-default-primary);
-  --color-input-fields-error-background: var(--color-null-000);
-  --color-input-fields-error-border: var(--color-border-error-primary);
-  --color-input-fields-error-text-label: var(--color-text-default-primary);
-  --color-input-fields-error-text-value: var(--color-text-default-primary);
-  --color-input-fields-error-icon: var(--color-icon-default-primary);
-  --color-input-field-hint-radio-button-icon: var(--color-icon-default-primary);
-  --color-input-field-hint-radio-button-text: var(--color-text-default-primary);
-  --color-input-field-hint-warning-text-icon: var(--color-icon-warning-primary);
-  --color-input-field-hint-warning-text: var(--color-text-warning-default);
-  --color-input-field-hint-success-text-icon: var(--color-icon-success-primary);
-  --color-input-field-hint-success-text: var(--color-text-success-default);
-  --color-input-fields-disabled-background-2: var(--color-background-disabled-primary);
-  --color-label-input-fields-primary-background: var(--color-background-default-primary);
-  --color-label-input-fields-primary-text: var(--color-text-default-primary);
-  --color-label-input-fields-secondary-background: var(--color-background-default-secondary);
-  --color-label-input-fields-secondary-text: var(--color-text-default-primary);
-  --color-input-fields-warning-background: var(--color-null-000);
-  --color-input-fields-warning-border: var(--color-border-warning-primary);
-  --color-input-fields-warning-text-label: var(--color-text-default-primary);
-  --color-input-fields-warning-text-value: var(--color-text-default-primary);
-  --color-input-fields-warning-icon: var(--color-icon-default-primary);
-  --color-input-fields-success-background: var(--color-null-000);
-  --color-input-fields-success-border: var(--color-border-success-primary);
-  --color-input-fields-success-text-label: var(--color-text-default-primary);
-  --color-input-fields-success-text-value: var(--color-text-default-primary);
-  --color-input-fields-success-icon: var(--color-icon-default-primary); */
+/* Updated color token references (legacy commented block replaced):
+    --Input-Field-Hint-Helper-Text-Icon: var(--Icon-Neutral-Secondary);
+    --Input-Field-Hint-Helper-Text: var(--Text-Neutral-Secondary);
+    --Input-Field-Hint-Error-Text-Icon: var(--Icon-Error-Primary);
+    --Input-Field-Hint-Error-Text: var(--Text-Error-Default);
+    --Input-Field-Hint-Checkbox-Icon: var(--Icon-Default-Primary);
+    --Input-Field-Hint-Checkbox-Text: var(--Text-Default-Primary);
+    --Input-Fields-Placeholder-Background: var(--Null-000);
+    --Input-Fields-Placeholder-Border: var(--Border-Neutral-Secondary);
+    --Input-Fields-Placeholder-Text-Label: var(--Text-Default-Primary);
+    --Input-Fields-Placeholder-Text-Value: var(--Text-Neutral-Secondary);
+    --Input-Fields-Placeholder-Icon: var(--Icon-Default-Primary);
+    --Input-Fields-Enabled-Background: var(--Null-000);
+    --Input-Fields-Enabled-Border: var(--Border-Neutral-Secondary);
+    --Input-Fields-Enabled-Text-Title: var(--Text-Default-Primary);
+    --Input-Fields-Enabled-Text-Value: var(--Text-Default-Primary);
+    --Input-Fields-Enabled-Icon: var(--Icon-Default-Primary);
+    --Input-Fields-Disabled-Background: var(--Background-Disabled-Primary);
+    --Input-Fields-Disabled-Border: var(--Null-000);
+    --Input-Fields-Disabled-Text-Title: var(--Text-Default-Primary);
+    --Input-Fields-Disabled-Text-Value: var(--Text-Disabled-Secondary);
+    --Input-Fields-Disabled-Icon: var(--Icon-Default-Primary);
+    --Input-Fields-Hover-Background: var(--Background-Neutral-Primary);
+    --Input-Fields-Hover-Border: var(--Border-Neutral-Secondary);
+    --Input-Fields-Hover-Text-Title: var(--Text-Default-Primary);
+    --Input-Fields-Hover-Text-Value: var(--Text-Default-Primary);
+    --Input-Fields-Hover-Icon: var(--Icon-Default-Primary);
+    --Input-Fields-Pressed-Background: var(--Background-Neutral-Primary);
+    --Input-Fields-Pressed-Border: var(--Border-Neutral-Secondary);
+    --Input-Fields-Pressed-Text-Title: var(--Text-Default-Primary);
+    --Input-Fields-Pressed-Text-Value: var(--Text-Default-Primary);
+    --Input-Fields-Pressed-Icon: var(--Icon-Default-Primary);
+    --Input-Fields-Focused-Background: var(--Null-000);
+    --Input-Fields-Focused-Border-Default: var(--Border-Disabled-Primary);
+    --Input-Fields-Focused-Border-Focused: var(--Border-Default-Focused);
+    --Input-Fields-Focused-Text-Title: var(--Text-Default-Primary);
+    --Input-Fields-Focused-Text-Value: var(--Text-Default-Primary);
+    --Input-Fields-Focused-Icon: var(--Icon-Default-Primary);
+    --Input-Fields-Error-Background: var(--Null-000);
+    --Input-Fields-Error-Border: var(--Border-Error-Primary);
+    --Input-Fields-Error-Text-Label: var(--Text-Default-Primary);
+    --Input-Fields-Error-Text-Value: var(--Text-Default-Primary);
+    --Input-Fields-Error-Icon: var(--Icon-Default-Primary);
+    --Input-Field-Hint-Radio-Button-Icon: var(--Icon-Default-Primary);
+    --Input-Field-Hint-Radio-Button-Text: var(--Text-Default-Primary);
+    --Input-Field-Hint-Warning-Text-Icon: var(--Icon-Warning-Primary);
+    --Input-Field-Hint-Warning-Text: var(--Text-Warning-Default);
+    --Input-Field-Hint-Success-Text-Icon: var(--Icon-Success-Primary);
+    --Input-Field-Hint-Success-Text: var(--Text-Success-Default);
+    --Input-Fields-Disabled-Background-2: var(--Background-Disabled-Primary);
+    --Label-Input-Fields-Primary-Background: var(--Background-Default-Primary);
+    --Label-Input-Fields-Primary-Text: var(--Text-Default-Primary);
+    --Label-Input-Fields-Secondary-Background: var(--Background-Default-Secondary);
+    --Label-Input-Fields-Secondary-Text: var(--Text-Default-Primary);
+    --Input-Fields-Warning-Background: var(--Null-000);
+    --Input-Fields-Warning-Border: var(--Border-Warning-Primary);
+    --Input-Fields-Warning-Text-Label: var(--Text-Default-Primary);
+    --Input-Fields-Warning-Text-Value: var(--Text-Default-Primary);
+    --Input-Fields-Warning-Icon: var(--Icon-Default-Primary);
+    --Input-Fields-Success-Background: var(--Null-000);
+    --Input-Fields-Success-Border: var(--Border-Success-Primary);
+    --Input-Fields-Success-Text-Label: var(--Text-Default-Primary);
+    --Input-Fields-Success-Text-Value: var(--Text-Default-Primary);
+    --Input-Fields-Success-Icon: var(--Icon-Default-Primary); */
 
-/* dimension-input-fields-radius-default: var(--border-radius-9999);
-  dimension-input-fields-radius-text-area: var(--border-radius-300-16);
-  --dimension-input-fields-border-default: var(--border-width-stroke-100-1);
-  --dimension-input-fields-border-focused: var(--border-width-stroke-200-2);
-  --dimension-input-fields-vertical-gap: var(--dimension-space-100-4);
-  --dimension-input-fields-vertical-gap-select: var(--dimension-space-50-2);
-  --dimension-input-fields-horizontal-gap: var(--dimension-space-200-8);
-  --dimension-input-fields-min-height-text-area: var(--dimension-space-900-64);
-  --dimension-input-fields-vertical-padding: var(--dimension-space-300-16);
-  --dimension-input-fields-horizontal-padding: var(--dimension-space-400-24);
-  --dimension-input-fields-horizontal-padding-icon: var(--dimension-space-350-20);
-  --dimension-label-input-fields-vertical-padding: var(--dimension-space-0);
-  --dimension-input-field-hint-vertical-padding-selection-control: var(--dimension-space-100-4);
-  --dimension-input-field-hint-horizontal-gap-icon: var(--dimension-space-100-4);
-  --dimension-input-field-hint-horizontal-gap-selection-control: var(--dimension-space-200-8);
-  dimension-input-field-hint-vertical-padding: var(--dimension-space-0);
-  --dimension-input-fields-text-field-height: var(--dimension-space-700-48);
-  --dimension-label-input-fields-horizontal-padding: var(--dimension-space-350-20);
-  --dimension-input-fields-horizontal-padding-text-area: var(--dimension-space-400-24);
-  --dimension-input-fields-label-padding: var(--dimension-space-100-4);
-  --dimension-label-input-fields-radius: var(--border-radius-100-4); */
+/* Updated dimension tokens:
+    --Input-Fields-Radius-Default: var(--Radius-9999);
+    --Input-Fields-Radius-Text-Area: var(--Radius-300-16);
+    --Input-Fields-Border-Default: var(--Stroke-100-1);
+    --Input-Fields-Border-Focused: var(--Stroke-200-2);
+    --Input-Fields-Vertical-Gap: var(--Space-100-4);
+    --Input-Fields-Vertical-Gap-Select: var(--Space-50-2);
+    --Input-Fields-Horizontal-Gap: var(--Space-200-8);
+    --Input-Fields-Min-Height-Text-Area: var(--Space-900-64);
+    --Input-Fields-Vertical-Padding: var(--Space-300-16);
+    --Input-Fields-Horizontal-Padding: var(--Space-400-24);
+    --Input-Fields-Horizontal-Padding-Icon: var(--Space-350-20);
+    --Label-Input-Fields-Vertical-Padding: var(--Space-0);
+    --Input-Field-Hint-Vertical-Padding-Selection-Control: var(--Space-100-4);
+    --Input-Field-Hint-Horizontal-Gap-Icon: var(--Space-100-4);
+    --Input-Field-Hint-Horizontal-Gap-Selection-Control: var(--Space-200-8);
+    --Input-Fields-Text-Field-Height: var(--Space-700-48);
+    --Label-Input-Fields-Horizontal-Padding: var(--Space-350-20);
+    --Input-Fields-Horizontal-Padding-Text-Area: var(--Space-400-24);
+    --Input-Fields-Label-Padding: var(--Space-100-4);
+    --Label-Input-Fields-Radius: var(--Radius-100-4); */
 
 .input-main-wrapper {
     display: flex;
     width: 350px;
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--dimension-input-fields-vertical-gap, 4px);
+    gap: var(--Input-Fields-Vertical-Gap, 4px);
     position: relative;
 
     .input-container {
@@ -98,88 +99,74 @@
 
         .input {
             width: 100%;
-            height: var(--dimension-input-fields-text-field-height, 48px);
-            padding-block: var(--dimension-input-fields-vertical-padding, 16px);
-            padding-left: var(
-                --dimension-input-fields-horizontal-padding,
-                24px
-            );
-            padding-right: var(
-                --dimension-input-fields-horizontal-padding-icon,
-                20px
-            );
-            border-radius: var(--dimension-input-fields-radius-default, 9999px);
-            border: var(--dimension-input-fields-border-default, 1px) solid
-                var(--color-input-fields-placeholder-border);
-            background-color: var(--color-input-fields-enabled-background);
-            color: var(--color-input-fields-placeholder-text-value);
+            height: var(--Input-Fields-Text-Field-Height, 48px);
+            padding-block: var(--Input-Fields-Vertical-Padding, 16px);
+            padding-left: var(--Input-Fields-Horizontal-Padding, 24px);
+            padding-right: var(--Input-Fields-Horizontal-Padding-Icon, 20px);
+            border-radius: var(--Input-Fields-Radius-Default, 9999px);
+            border: var(--Input-Fields-Border-Default, 1px) solid var(--Input-Fields-Placeholder-Border);
+            background-color: var(--Input-Fields-Enabled-Background);
+            color: var(--Input-Fields-Placeholder-Text-Value);
             font-family: var(--Family-Font-2);
-            font-size: var(--font-size-16);
-            font-weight: var(--font-weight-italic);
+            font-size: var(--Size-16);
+            font-weight: var(--Weight-Italic);
             line-height: 1.4;
 
             &::placeholder {
-                color: var(--color-input-fields-placeholder-text-value);
+                color: var(--Input-Fields-Placeholder-Text-Value);
             }
 
             &:disabled {
-                background-color: var(--color-input-fields-disabled-background);
-                border-color: var(--color-input-fields-disabled-border);
-                color: var(--color-input-fields-disabled-text-value);
+                background-color: var(--Input-Fields-Disabled-Background);
+                border-color: var(--Input-Fields-Disabled-Border);
+                color: var(--Input-Fields-Disabled-Text-Value);
                 cursor: not-allowed;
             }
 
             &:enabled {
-                color: var(--color-input-fields-enabled-text-value);
-                border-color: var(--color-input-fields-enabled-border);
-                background-color: var(--color-input-fields-enabled-background);
+                color: var(--Input-Fields-Enabled-Text-Value);
+                border-color: var(--Input-Fields-Enabled-Border);
+                background-color: var(--Input-Fields-Enabled-Background);
 
                 &:hover {
-                    border-color: var(--color-input-fields-hover-border);
-                    background-color: var(
-                        --color-input-fields-hover-background
-                    );
-                    color: var(--color-input-fields-hover-text-value);
+                    border-color: var(--Input-Fields-Hover-Border);
+                    background-color: var(--Input-Fields-Hover-Background);
+                    color: var(--Input-Fields-Hover-Text-Value);
                 }
 
                 &:focus {
-                    outline: var(--dimension-input-fields-border-focused) solid
-                        var(--color-input-fields-focused-border-focused);
-                    background-color: var(
-                        --color-input-fields-focused-background
-                    );
-                    color: var(--color-input-fields-focused-text-value);
+                    outline: var(--Input-Fields-Border-Focused) solid var(--Input-Fields-Focused-Border-Focused);
+                    background-color: var(--Input-Fields-Focused-Background);
+                    color: var(--Input-Fields-Focused-Text-Value);
                 }
 
                 &:active {
-                    border-color: var(--color-input-fields-pressed-border);
-                    background-color: var(
-                        --color-input-fields-pressed-background
-                    );
-                    color: var(--color-input-fields-pressed-text-value);
+                    border-color: var(--Input-Fields-Pressed-Border);
+                    background-color: var(--Input-Fields-Pressed-Background);
+                    color: var(--Input-Fields-Pressed-Text-Value);
                 }
             }
         }
 
         label {
-            color: var(--color-input-fields-placeholder-text-value);
-            padding: var(--dimension-input-fields-label-padding, 4px) 0;
+            color: var(--Input-Fields-Placeholder-Text-Value);
+            padding: var(--Input-Fields-Label-Padding, 4px) 0;
             position: absolute;
-            left: var(--dimension-input-fields-horizontal-padding, 24px);
+            left: var(--Input-Fields-Horizontal-Padding, 24px);
             top: 50%;
             transform: translateY(-50%);
             pointer-events: none;
             transition: all 0.2s ease-in-out;
             font-family: var(--Family-Font-2);
-            font-size: var(--font-size-16);
-            font-weight: var(--font-weight-italic);
+            font-size: var(--Size-16);
+            font-weight: var(--Weight-Italic);
             line-height: 1.4;
         }
 
         .select-value {
-            color: var(--color-input-fields-placeholder-text-value);
+            color: var(--Input-Fields-Placeholder-Text-Value);
             position: absolute;
-            left: var(--dimension-input-fields-horizontal-padding, 24px);
+            left: var(--Input-Fields-Horizontal-Padding, 24px);
             top: 50%;
             transform: translateY(-50%);
             cursor: pointer;
@@ -188,35 +175,29 @@
         .icon {
             position: absolute;
             top: 50%;
-            right: var(--dimension-input-fields-horizontal-padding-icon, 20px);
+            right: var(--Input-Fields-Horizontal-Padding-Icon, 20px);
             transform: translateY(-50%);
         }
 
         &.has-value {
             label {
                 top: 0;
-                font-size: var(--font-size-12);
-                padding: var(--dimension-label-input-fields-vertical-padding, 0)
-                    var(--dimension-input-fields-label-padding, 4px);
-                background-color: var(
-                    --color-label-input-fields-secondary-background
-                );
-                border-radius: var(--dimension-label-input-fields-radius, 4px);
-                color: var(--color-label-input-fields-secondary-text);
+                font-size: var(--Size-12);
+                padding: var(--Label-Input-Fields-Vertical-Padding, 0) var(--Input-Fields-Label-Padding, 4px);
+                background-color: var(--Label-Input-Fields-Secondary-Background);
+                border-radius: var(--Label-Input-Fields-Radius, 4px);
+                color: var(--Label-Input-Fields-Secondary-Text);
             }
         }
 
         .textarea {
-            border-radius: var(--dimension-input-fields-radius-text-area);
+            border-radius: var(--Input-Fields-Radius-Text-Area);
             resize: none;
             height: 100%;
 
             & + label {
-                top: var(--dimension-input-fields-vertical-padding, 16px);
-                padding-block: var(
-                    --dimension-label-input-fields-vertical-padding,
-                    0
-                );
+                top: var(--Input-Fields-Vertical-Padding, 16px);
+                padding-block: var(--Label-Input-Fields-Vertical-Padding, 0);
                 transform: translateY(0);
             }
 
@@ -228,7 +209,7 @@
             }
 
             & ~ .icon {
-                top: var(--dimension-input-fields-vertical-padding, 16px);
+                top: var(--Input-Fields-Vertical-Padding, 16px);
                 transform: translateY(0);
             }
         }
@@ -278,26 +259,23 @@
         .input:focus {
             & + label {
                 top: 0;
-                font-size: var(--font-size-12);
-                padding: var(--dimension-label-input-fields-vertical-padding, 0)
-                    var(--dimension-input-fields-label-padding, 4px);
-                background-color: var(
-                    --color-label-input-fields-secondary-background
-                );
-                border-radius: var(--dimension-label-input-fields-radius, 4px);
-                color: var(--color-label-input-fields-secondary-text);
+                    font-size: var(--Size-12);
+                    padding: var(--Label-Input-Fields-Vertical-Padding, 0) var(--Input-Fields-Label-Padding, 4px);
+                    background-color: var(--Label-Input-Fields-Secondary-Background);
+                    border-radius: var(--Label-Input-Fields-Radius, 4px);
+                    color: var(--Label-Input-Fields-Secondary-Text);
             }
         }
 
         &:has(.textarea) {
-            height: var(--dimension-space-1100-96);
+            height: var(--Space-1100-96);
         }
 
         &:has(.select-value:hover) {
             .input:enabled {
-                border-color: var(--color-input-fields-hover-border);
-                background-color: var(--color-input-fields-hover-background);
-                color: var(--color-input-fields-hover-text-value);
+                    border-color: var(--Input-Fields-Hover-Border);
+                    background-color: var(--Input-Fields-Hover-Background);
+                    color: var(--Input-Fields-Hover-Text-Value);
             }
         }
     }
@@ -321,39 +299,39 @@
     .helper-container {
         display: flex;
         align-items: center;
-        padding-left: var(--dimension-input-fields-horizontal-padding, 24px);
-        gap: var(--dimension-space-200-8, 8px);
+        padding-left: var(--Input-Fields-Horizontal-Padding, 24px);
+        gap: var(--Space-200-8, 8px);
         align-self: stretch;
         font-family: var(--Family-Font-2);
-        font-size: var(--font-size-12);
-        font-weight: var(--font-weight-italic);
+        font-size: var(--Size-12);
+        font-weight: var(--Weight-Italic);
         line-height: 1.4;
-        color: var(--color-input-field-hint-helper-text);
+        color: var(--Input-Field-Hint-Helper-Text);
     }
 
     /* handle warning state */
     .input-container:has(.warning) {
         input.warning {
-            border-color: var(--color-input-fields-warning-border);
-            background-color: var(--color-input-fields-warning-background);
-            color: var(--color-input-fields-warning-text-value);
+            border-color: var(--Input-Fields-Warning-Border);
+            background-color: var(--Input-Fields-Warning-Background);
+            color: var(--Input-Fields-Warning-Text-Value);
         }
 
         + .helper-container {
-            color: var(--color-input-field-hint-warning-text);
+            color: var(--Input-Field-Hint-Warning-Text);
         }
     }
 
     /* handle success state */
     .input-container:has(.success) {
         input.success {
-            border-color: var(--color-input-fields-success-border);
-            background-color: var(--color-input-fields-success-background);
-            color: var(--color-input-fields-success-text-value);
+            border-color: var(--Input-Fields-Success-Border);
+            background-color: var(--Input-Fields-Success-Background);
+            color: var(--Input-Fields-Success-Text-Value);
         }
 
         + .helper-container {
-            color: var(--color-input-field-hint-success-text);
+            color: var(--Input-Field-Hint-Success-Text);
         }
     }
 
@@ -362,13 +340,13 @@
     .input-container:has(input:invalid) {
         input:invalid,
         input.error {
-            border-color: var(--color-input-fields-error-border);
-            background-color: var(--color-input-fields-error-background);
-            color: var(--color-input-fields-error-text-value);
+            border-color: var(--Input-Fields-Error-Border);
+            background-color: var(--Input-Fields-Error-Background);
+            color: var(--Input-Fields-Error-Text-Value);
         }
 
         + .helper-container {
-            color: var(--color-input-field-hint-error-text);
+            color: var(--Input-Field-Hint-Error-Text);
         }
     }
 }
