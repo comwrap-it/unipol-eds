@@ -34,6 +34,14 @@
           "required": true
         },
         {
+          "component": "boolean",
+          "label": "Apri in una nuova scheda",
+          "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+          "name": "linkButtonOpenInNewTab",
+          "valueType": "boolean",
+          "value": false
+        },
+        {
           "component": "select",
           "name": "linkButtonLeftIcon",
           "label": "Link Button Left Icon",

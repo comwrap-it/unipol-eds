@@ -71,7 +71,7 @@ export function createButton(
   if (isLink) {
     element.href = href;
     element.setAttribute('role', 'button');
-    
+
     // Set target="_blank" if openInNewTab is true
     if (openInNewTab) {
       element.setAttribute('target', '_blank');
