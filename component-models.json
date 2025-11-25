@@ -583,7 +583,7 @@
       {
         "component": "container",
         "name": "button-container",
-        "label": "Configurazione Bottone",
+        "label": "Configurazione Bottone Hero",
         "collapsible": true,
         "fields": [
           {
