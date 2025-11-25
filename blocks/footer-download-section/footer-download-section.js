@@ -193,7 +193,7 @@ function extractDownloadSectionData(rows) {
 }
 
 /**
- * Decorates a footer-download-section block (AEM EDS)
+ * Decorates a footer-download-section block (AEM EDS) — UE-safe
  *
  * @param {HTMLElement} block - The block element
  */
@@ -205,29 +205,26 @@ export default function decorate(block) {
   const actualRows = wrapper ? Array.from(wrapper.children) : rows;
 
   if (actualRows.length < 10) {
-    console.warn('footer-download-section: insufficient rows'); // esline warning
+    console.warn('footer-download-section: insufficient rows');
     return;
   }
 
   const config = extractDownloadSectionData(actualRows);
+
   const section = createFooterDownloadSection(config);
 
-  // Preserve block attributes for Universal Editor
+  block.innerHTML = '';
+
+  while (section.firstChild) {
+    block.appendChild(section.firstChild);
+  }
+
   [...block.attributes].forEach((attr) => {
     if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
-      section.setAttribute(attr.name, attr.value);
+      block.setAttribute(attr.name, attr.value);
     }
   });
 
-  // Preserve blockName if present (needed for loadBlock)
-  if (block.dataset.blockName) {
-    section.dataset.blockName = block.dataset.blockName;
-  }
-
-  // Preserve id if present
-  if (block.id) {
-    section.id = block.id;
-  }
-
-  block.replaceWith(section);
+  // Aggiungi classe per styling
+  block.classList.add('footer-download-section');
 }
