@@ -152,6 +152,17 @@
                     "label": "Show Hero Button",
                     "description": "Toggle to show or hide the hero button",
                     "valueType": "boolean"
+                },
+                {
+                    "component": "container",
+                    "name": "button-container",
+                    "label": "Configurazione Bottone",
+                    "collapsible": true,
+                    "fields": [
+                        {
+                            "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
+                        }
+                    ]
                 }
             ]
         }
