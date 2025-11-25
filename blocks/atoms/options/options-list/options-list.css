@@ -1,11 +1,11 @@
 .options-list {
     display: flex;
     width: 350px;
-    padding: var(--dimension-options-vertical-padding-list, 8px) 0;
+    padding: var(--Options-Vertical-Padding-List, 8px) 0;
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--dimension-options-vertical-gap, 0);
-    border-radius: var(--dimension-options-radius-box, 24px);
-    border: var(--dimension-options-border, 1px) solid var(--color-options-list-border, #82909c);
-    background: var(--color-options-list-background, rgb(17 17 17 / 0%));
+    gap: var(--Options-Vertical-Gap, 0);
+    border-radius: var(--Options-Radius-Box, 24px);
+    border: var(--Options-Border, 1px) solid var(--Options-List-Border, #82909c);
+    background: var(--Options-List-Background, rgb(17 17 17 / 0%));
 }

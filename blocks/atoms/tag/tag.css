@@ -2,65 +2,64 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: var(--dimension-tag-vertical-padding)
-        var(--dimension-tag-horizontal-padding);
-    border-radius: var(--dimension-tag-radius);
-    border: var(--dimension-tag-border) solid;
-    font-size: var(--font-size-12);
-    font-weight: var(--font-weight-600-semi-bold);
+    padding: var(--Tag-Vertical-Padding) var(--Tag-Horizontal-Padding);
+    border-radius: var(--Tag-Radius);
+    border: var(--Tag-Border) solid; 
+    font-size: var(--Size-12);
+    font-weight: var(--Weight-Semi-Bold);
     line-height: 1.4;
     letter-spacing: 0.24px;
     text-transform: uppercase;
 
     &.default {
         &.mobility {
-            background-color: var(--color-tag-default-mobility-background);
-            border-color: var(--color-tag-default-mobility-border);
-            color: var(--color-tag-default-mobility-text);
+            background-color: var(--Tag-Default-Mobility-Background);
+            border-color: var(--Tag-Default-Mobility-Border);
+            color: var(--Tag-Default-Mobility-Text);
         }
 
         &.welfare {
-            background-color: var(--color-tag-default-welfare-background);
-            border-color: var(--color-tag-default-welfare-border);
-            color: var(--color-tag-default-welfare-text);
+            background-color: var(--Tag-Default-Welfare-Background);
+            border-color: var(--Tag-Default-Welfare-Border);
+            color: var(--Tag-Default-Welfare-Text);
         }
 
         &.property {
-            background-color: var(--color-tag-default-property-background);
-            border-color: var(--color-tag-default-property-border);
-            color: var(--color-tag-default-property-text);
+            background-color: var(--Tag-Default-Property-Background);
+            border-color: var(--Tag-Default-Property-Border);
+            color: var(--Tag-Default-Property-Text);
         }
     }
 
     &.secondary {
         &.mobility {
-            background-color: var(--color-tag-secondary-mobility-background);
-            border-color: var(--color-tag-secondary-mobility-border);
-            color: var(--color-tag-secondary-mobility-text);
+            background-color: var(--Tag-Secondary-Mobility-Background);
+            border-color: var(--Tag-Secondary-Mobility-Border);
+            color: var(--Tag-Secondary-Mobility-Text);
         }
 
         &.welfare {
-            background-color: var(--color-tag-secondary-welfare-background);
-            border-color: var(--color-tag-secondary-welfare-border);
-            color: var(--color-tag-secondary-welfare-text);
+            background-color: var(--Tag-Secondary-Welfare-Background);
+            border-color: var(--Tag-Secondary-Welfare-Border);
+            color: var(--Tag-Secondary-Welfare-Text);
         }
 
         &.property {
-            background-color: var(--color-tag-secondary-property-background);
-            border-color: var(--color-tag-secondary-property-border);
-            color: var(--color-tag-secondary-property-text);
+            background-color: var(--Tag-Secondary-Property-Background);
+            border-color: var(--Tag-Secondary-Property-Border);
+            color: var(--Tag-Secondary-Property-Text);
         }
     }
 
     &.neutral {
-        background-color: var(--color-tag-neutral-background);
-        border-color: var(--color-tag-neutral-border);
-        color: var(--color-tag-neutral-text);
+        background-color: var(--Tag-Neutral-Background);
+        border-color: var(--Tag-Neutral-Border);
+        color: var(--Tag-Neutral-Text);
     }
 
     &.custom {
-        background-color: var(--color-tag-custom-background);
-        border-color: var(--color-tag-custom-border);
-        color: var(--color-tag-custom-text);
+        background-color: var(--Tag-Custom-Background);
+        border-color: var(--Tag-Custom-Border);
+        color: var(--Tag-Custom-Text);
     }
 }

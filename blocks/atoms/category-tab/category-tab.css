@@ -2,17 +2,16 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    height: var(--dimension-category-tabs-height, 40px);
-    padding: 0 var(--dimension-category-tabs-horizontal-padding, 16px);
-    gap: var(--dimension-category-tabs-gap, 8px);
+    height: var(--Category-Tabs-Height, 40px);
+    padding: 0 var(--Category-Tabs-Horizontal-Padding, 16px);
+    gap: var(--Category-Tabs-Gap, 8px);
     flex-shrink: 0;
-    border-radius: var(--dimension-category-tabs-radius);
-    border: var(--dimension-category-tabs-border-width) solid
-        var(--color-category-tabs-default-border);
-    background-color: var(--color-category-tabs-default-background);
-    color: var(--color-category-tabs-default-text);
-    font-size: var(--font-size-14);
-    font-weight: var(--font-weight-medium);
+    border-radius: var(--Category-Tabs-Radius);
+    border: var(--Category-Tabs-Border-Width) solid var(--Category-Tabs-Default-Border);
+    background-color: var(--Category-Tabs-Default-Background);
+    color: var(--Category-Tabs-Default-Text);
+    font-size: var(--Size-14);
+    font-weight: var(--Weight-Medium);
     line-height: 1.4;
 
     /* .icon {
@@ -20,9 +19,9 @@
     } */
 
     &.selected {
-        background-color: var(--color-category-tabs-selected-background);
-        border-color: var(--color-category-tabs-selected-border);
-        color: var(--color-category-tabs-selected-text);
+        background-color: var(--Category-Tabs-Selected-Background);
+        border-color: var(--Category-Tabs-Selected-Border);
+        color: var(--Category-Tabs-Selected-Text);
 
         /* .icon {
             fill: var(--color-category-tabs-selected-icon);
