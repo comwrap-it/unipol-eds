@@ -10,7 +10,6 @@
 
 import {
   createButtonFromRows,
-  // eslint-disable-next-line no-unused-vars
   extractInstrumentationAttributes,
 }
   from '../atoms/buttons/standard-button/standard-button.js';

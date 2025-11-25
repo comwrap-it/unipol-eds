@@ -18,6 +18,7 @@
 
 import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { extractInstrumentationAttributes } from "../atoms/buttons/standard-button/standard-button";
 
 /**
  * Decorates the insurance product carousel block
@@ -62,6 +63,8 @@ export default async function decorate(block) {
     console.warn('Insurance Product Carousel: No cards found');
     return;
   }
+
+  const instrumentation = extractInstrumentationAttributes(rows[0]);
 
   // Process each row as a card
   const cardPromises = rows.map(async (row) => {
@@ -114,16 +117,12 @@ export default async function decorate(block) {
     track.appendChild(slide);
   });
 
-  carousel.appendChild(track);
+  // Restore instrumentation to button element
+  Object.entries(instrumentation).forEach(([name, value]) => {
+    carousel.setAttribute(name, value);
+  });
 
-  // Preserve block instrumentation
-  if (block.hasAttribute('data-aue-resource')) {
-    carousel.setAttribute('data-aue-resource', block.getAttribute('data-aue-resource'));
-    carousel.setAttribute('data-aue-behavior', block.getAttribute('data-aue-behavior') || 'component');
-    carousel.setAttribute('data-aue-type', block.getAttribute('data-aue-type') || 'block');
-    const aueLabel = block.getAttribute('data-aue-label');
-    if (aueLabel) carousel.setAttribute('data-aue-label', aueLabel);
-  }
+  carousel.appendChild(track);
 
   // Preserve blockName if present
   if (block.dataset.blockName) {
