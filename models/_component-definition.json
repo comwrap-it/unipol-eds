@@ -32,6 +32,12 @@
           "...": "../blocks/insurance-product-carousel-widget/_insurance-product-carousel-widget.json#/definitions"
         },
         {
+          "...": "../blocks/insurance-product-carousel/_insurance-product-carousel.json#/definitions"
+        },
+        {
+          "...": "../blocks/insurance-product-card/_insurance-product-card.json#/definitions"
+        },
+        {
           "...": "./_footer-section.json#/definitions"
         }
       ]
