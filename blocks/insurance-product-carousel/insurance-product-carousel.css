@@ -6,14 +6,14 @@
     .insurance-product-carousel {
         display: flex;
         width: 82rem;
-        align-items: flex-start;
+        align-items: stretch;
         gap: var(--Carousel-Insurance-Product-Gap, 1rem);
     }
 }
 
 /* Tablet Landscape */
 @media (768px <= width < 1280px) {
-    .insurance-product-carousel-container{
+    .insurance-product-carousel-container {
         & .insurance-product-carousel {
             width: 76rem;
         }
