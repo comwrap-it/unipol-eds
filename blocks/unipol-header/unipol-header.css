@@ -33,8 +33,10 @@
 }
 
 .unipol-header-logo-img {
-  height: 40px;
-  width: auto;
+  width: 6.256rem;
+  height: var(--Header-Logo-Height, 2.5rem);
+  flex-shrink: 0;
+  aspect-ratio: 100.10/40.00;
   display: block;
 }
 
@@ -44,18 +46,26 @@
 }
 
 .unipol-header-logo img {
-  height: 40px;
-  width: auto;
+  width: 6.256rem;
+  height: var(--Header-Logo-Height, 2.5rem);
+  flex-shrink: 0;
+  aspect-ratio: 100.10/40.00;
   display: block;
 }
 
 /* Navigation Section */
 .unipol-header-nav {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  padding: var(--Header-Navigation-Vertical-Padding, 0.25rem) var(--Header-Navigation-Horizontal-Padding, 0.25rem);
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--Header-Horizontal-Gap, 0.25rem);
+  border-radius: var(--Header-Radius, 624.9375rem);
+  background: var(--Header-Background, rgb(255 255 255 / 65%));
+
+  /* Background Blur/400 - 24 */
+  backdrop-filter: blur(calc(var(--Blur-400---24, 24px) / 2));
   flex-wrap: wrap;
-  justify-content: flex-end;
   flex: 1;
 }
 
@@ -72,11 +82,13 @@
 
   .unipol-header-logo-img,
   .unipol-header-logo img {
-    height: 32px;
+    width: 6.256rem;
+    height: var(--Header-Logo-Height, 2.5rem);
+    aspect-ratio: 100.10/40.00;
   }
 
   .unipol-header-nav {
-    gap: 4px;
+    gap: var(--Header-Horizontal-Gap, 0.25rem);
   }
 
   /* Show only first 3 pills on mobile */
@@ -94,11 +106,13 @@
 
   .unipol-header-logo-img,
   .unipol-header-logo img {
-    height: 36px;
+    width: 6.256rem;
+    height: var(--Header-Logo-Height, 2.5rem);
+    aspect-ratio: 100.10/40.00;
   }
 
   .unipol-header-nav {
-    gap: 8px;
+    gap: var(--Header-Horizontal-Gap, 0.25rem);
   }
 }
 
@@ -110,11 +124,13 @@
 
   .unipol-header-logo-img,
   .unipol-header-logo img {
-    height: 44px;
+    width: 6.256rem;
+    height: var(--Header-Logo-Height, 2.5rem);
+    aspect-ratio: 100.10/40.00;
   }
 
   .unipol-header-nav {
-    gap: 12px;
+    gap: var(--Header-Horizontal-Gap, 0.25rem);
     flex-wrap: nowrap;
   }
 }
