@@ -26,6 +26,7 @@
     color: var(--Footer-Primary-Text, #F9F9F7);
     font-weight: 400;
     font-size: var(--font-size-14, 0.875rem);
+    margin-bottom: var(--Footer-Download-Gap, 8px);
 }
 
 .footer-download-qr img {
