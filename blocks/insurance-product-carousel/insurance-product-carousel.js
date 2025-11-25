@@ -38,6 +38,11 @@ export default async function decorate(block) {
 
   await ensureStylesLoaded();
 
+  // Check if block has instrumentation (Universal Editor)
+  const hasInstrumentation = block.hasAttribute('data-aue-resource')
+    || block.querySelector('[data-aue-resource]')
+    || block.querySelector('[data-richtext-prop]');
+
   // Import card component dynamically
   const cardModule = await import('../insurance-product-card/insurance-product-card.js');
   const decorateInsuranceProductCard = cardModule.default;
@@ -111,7 +116,9 @@ export default async function decorate(block) {
   // Wait for all cards to be processed
   const cardElements = await Promise.all(cardPromises);
   cardElements.forEach((slide) => {
-    if (slide && !slide.editContext && slide.innerText) {
+    if (slide && !hasInstrumentation && slide.innerText) {
+      track.appendChild(slide);
+    } else if (slide && hasInstrumentation) {
       track.appendChild(slide);
     }
   });
