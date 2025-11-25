@@ -5,7 +5,8 @@
       "section",
       "kpi-highlights-widget",
       "insurance-product-carousel-widget",
-      "footer-section"
+      "footer-section",
+      "header-section"
     ]
   },
   {
@@ -31,5 +32,8 @@
   },
   {
     "...": "./_footer-section.json#/filters"
+  },
+  {
+    "...": "./_header-section.json#/filters"
   }
 ]

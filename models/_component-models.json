@@ -37,5 +37,8 @@
   },
   {
     "...": "./_footer-section.json#/models"
+  },
+  {
+    "...": "./_header-section.json#/models"
   }
 ]

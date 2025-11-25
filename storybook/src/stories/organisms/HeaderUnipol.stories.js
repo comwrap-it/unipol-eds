@@ -1,15 +1,15 @@
 import { html } from 'lit';
-import { createHeaderUnipol } from '@blocks/header-unipol/header-unipol.js';
+import { createUnipolHeader } from '@blocks/unipol-header/unipol-header.js';
 import { NAVIGATION_PILL_VARIANTS } from '@blocks/atoms/navigation-pill/navigation-pill.js';
 
 export default {
-  title: 'Organisms/Header Unipol',
+  title: 'Organisms/Unipol Header',
   tags: ['autodocs'],
   parameters: {
     docs: {
       description: {
         component: `
-# Header Unipol
+# Unipol Header
 
 Main navigation header component for the Unipol website. Combines a logo with navigation pills for primary site navigation.
 
@@ -24,7 +24,7 @@ Main navigation header component for the Unipol website. Combines a logo with na
 ## Structure
 
 \`\`\`
-Header Unipol (Organism)
+Unipol Header (Organism)
 ├── Logo (Image)
 └── Navigation Pills (Atoms)
     ├── Navigation Pill 1
@@ -85,7 +85,7 @@ const defaultNavItems = [
 
 // Template
 const Template = (args) => {
-  const element = createHeaderUnipol(
+  const element = createUnipolHeader(
     args.logoUrl,
     args.navItems,
   );

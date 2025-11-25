@@ -119,29 +119,29 @@ export default async function decorate(block) {
     return;
   }
 
-  // Check if fragment contains header-unipol block
-  // Look for both decorated (.header-unipol) and undecorated ([data-block-name="header-unipol"])
-  let headerUnipolBlock = fragment.querySelector('.header-unipol');
-  const undecoratedBlock = fragment.querySelector('[data-block-name="header-unipol"]');
+  // Check if fragment contains unipol-header block
+  // Look for both decorated (.unipol-header) and undecorated ([data-block-name="unipol-header"])
+  let unipolHeaderBlock = fragment.querySelector('.unipol-header');
+  const undecoratedBlock = fragment.querySelector('[data-block-name="unipol-header"]');
 
-  if (undecoratedBlock && !headerUnipolBlock) {
+  if (undecoratedBlock && !unipolHeaderBlock) {
     // Block exists but not yet decorated - decorate it
     await loadBlock(undecoratedBlock);
     // After decoration, find the decorated block (it replaces the original)
     // The decorated block should be in the same parent
     const parent = undecoratedBlock.parentElement;
-    headerUnipolBlock = parent?.querySelector('.header-unipol') || fragment.querySelector('.header-unipol');
+    unipolHeaderBlock = parent?.querySelector('.unipol-header') || fragment.querySelector('.unipol-header');
   }
 
-  if (headerUnipolBlock) {
-    // Use header-unipol component directly
-    // Clear block and append header-unipol
+  if (unipolHeaderBlock) {
+    // Use unipol-header component directly
+    // Clear block and append unipol-header
     block.textContent = '';
 
-    // Create wrapper for header-unipol to maintain header structure
+    // Create wrapper for unipol-header to maintain header structure
     const navWrapper = document.createElement('div');
     navWrapper.className = 'nav-wrapper';
-    navWrapper.append(headerUnipolBlock);
+    navWrapper.append(unipolHeaderBlock);
     block.append(navWrapper);
 
     return;

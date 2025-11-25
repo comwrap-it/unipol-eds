@@ -5,7 +5,8 @@
       "section",
       "kpi-highlights-widget",
       "insurance-product-carousel-widget",
-      "footer-section"
+      "footer-section",
+      "header-section"
     ]
   },
   {
@@ -102,6 +103,12 @@
       "footer-social-list",
       "footer-text",
       "footer-privacy-link-list"
+    ]
+  },
+  {
+    "id": "header-section",
+    "components": [
+      "unipol-header"
     ]
   }
 ]

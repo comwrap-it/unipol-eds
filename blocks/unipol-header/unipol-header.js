@@ -1,12 +1,12 @@
 /**
- * Header Unipol - Main navigation header component
+ * Unipol Header - Main navigation header component
  * Organism that combines logo and navigation pills
  */
 
 import { createNavigationPill, NAVIGATION_PILL_VARIANTS } from '../atoms/navigation-pill/navigation-pill.js';
 
 /**
- * Creates the header-unipol component
+ * Creates the unipol-header component
  *
  * @param {HTMLElement|string} logoContent - Logo image element or URL
  * @param {Array<Object>} navigationItems - Array of navigation pill configs
@@ -15,7 +15,7 @@ import { createNavigationPill, NAVIGATION_PILL_VARIANTS } from '../atoms/navigat
  *
  * @example
  * // Programmatic creation (Storybook)
- * const header = createHeaderUnipol(
+ * const header = createUnipolHeader(
  *   '/logo.png',
  *   [
  *     { label: 'Link 1', href: '#', variant: 'primary' },
@@ -25,26 +25,26 @@ import { createNavigationPill, NAVIGATION_PILL_VARIANTS } from '../atoms/navigat
  *
  * @example
  * // From AEM EDS (with pre-created elements)
- * const header = createHeaderUnipol(
+ * const header = createUnipolHeader(
  *   logoElement,
  *   null,
  *   navigationPillElements
  * );
  */
-export function createHeaderUnipol(
+export function createUnipolHeader(
   logoContent,
   navigationItems = [],
   navigationElements = [],
 ) {
   const header = document.createElement('div');
-  header.className = 'header-unipol block';
+  header.className = 'unipol-header block';
 
   const headerContainer = document.createElement('div');
-  headerContainer.className = 'header-unipol-container';
+  headerContainer.className = 'unipol-header-container';
 
   // === LOGO SECTION ===
   const logoWrapper = document.createElement('div');
-  logoWrapper.className = 'header-unipol-logo';
+  logoWrapper.className = 'unipol-header-logo';
 
   if (logoContent) {
     if (logoContent instanceof HTMLElement) {
@@ -55,7 +55,7 @@ export function createHeaderUnipol(
       const logoImg = document.createElement('img');
       logoImg.src = logoContent;
       logoImg.alt = 'Unipol Logo';
-      logoImg.className = 'header-unipol-logo-img';
+      logoImg.className = 'unipol-header-logo-img';
       logoWrapper.appendChild(logoImg);
     }
   }
@@ -64,7 +64,7 @@ export function createHeaderUnipol(
 
   // === NAVIGATION SECTION ===
   const navWrapper = document.createElement('nav');
-  navWrapper.className = 'header-unipol-nav';
+  navWrapper.className = 'unipol-header-nav';
   navWrapper.setAttribute('role', 'navigation');
   navWrapper.setAttribute('aria-label', 'Main navigation');
 
@@ -124,7 +124,7 @@ function extractLogoElement(row) {
 /**
  * Extracts navigation pill elements from referenced blocks
  *
- * @param {HTMLElement} block - The header-unipol block
+ * @param {HTMLElement} block - The unipol-header block
  * @returns {Promise<Array<HTMLElement>>} Array of navigation pill elements
  */
 async function extractNavigationElements(block) {
@@ -195,14 +195,14 @@ function preserveBlockAttributes(originalBlock, newBlock) {
   }
 
   [...originalBlock.classList].forEach((className) => {
-    if (!className.startsWith('header-unipol') && className !== 'block') {
+    if (!className.startsWith('unipol-header') && className !== 'block') {
       newBlock.classList.add(className);
     }
   });
 }
 
 /**
- * Decorator for header-unipol block (AEM EDS)
+ * Decorator for unipol-header block (AEM EDS)
  *
  * @param {HTMLElement} block - The block element to decorate
  */
@@ -233,7 +233,7 @@ export default async function decorate(block) {
   const navigationElements = await extractNavigationElements(block);
 
   // === STEP 4: Create the header using the centralized function ===
-  const header = createHeaderUnipol(
+  const header = createUnipolHeader(
     logoElement,
     null, // No config objects when using pre-created elements
     navigationElements,

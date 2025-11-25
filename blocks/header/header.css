@@ -267,8 +267,8 @@ header nav .nav-tools {
   grid-area: tools;
 }
 
-/* header-unipol integration */
-header .nav-wrapper .header-unipol {
+/* unipol-header integration */
+header .nav-wrapper .unipol-header {
   width: 100%;
   position: relative;
 
@@ -276,7 +276,7 @@ header .nav-wrapper .header-unipol {
   position: static;
 }
 
-header .nav-wrapper .header-unipol .header-unipol-container {
+header .nav-wrapper .unipol-header .unipol-header-container {
   max-width: 1440px;
   margin: 0 auto;
 }
