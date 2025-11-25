@@ -61,6 +61,8 @@ export default async function decorateInsuranceProductCard(block) {
     rows = Array.from(wrapper.children);
   }
 
+  const instrumentation = extractInstrumentationAttributes(rows[0]);
+
   // eslint-disable-next-line no-console
   console.log('🃏 Card Rows:', {
     totalRows: rows.length,
@@ -103,8 +105,9 @@ export default async function decorateInsuranceProductCard(block) {
     const tagRows = rows.slice(9, 12);
     const tagElement = createTagFromRows(tagRows);
 
-    if (tagElement && tagElement.classList)
+    if (tagElement && tagElement.classList) {
       tagElement.classList.add('insurance-product-card-tag');
+    }
 
     if (tagRows && tagRows.length > 0) {
       cardImage.appendChild(tagElement);
@@ -271,16 +274,10 @@ export default async function decorateInsuranceProductCard(block) {
     card.appendChild(cardContent);
   }
 
-  // Preserve block instrumentation before replacing content
-  if (block.hasAttribute('data-aue-resource')) {
-    card.setAttribute('data-aue-resource', block.getAttribute('data-aue-resource'));
-    card.setAttribute('data-aue-behavior', block.getAttribute('data-aue-behavior') || 'component');
-    card.setAttribute('data-aue-type', block.getAttribute('data-aue-type') || 'block');
-    const aueLabel = block.getAttribute('data-aue-label');
-    if (aueLabel) {
-      card.setAttribute('data-aue-label', aueLabel);
-    }
-  }
+  // Restore instrumentation to button element
+  Object.entries(instrumentation).forEach(([name, value]) => {
+    card.setAttribute(name, value);
+  });
 
   // Preserve blockName if present (needed for loadBlock)
   if (block.dataset.blockName) {
