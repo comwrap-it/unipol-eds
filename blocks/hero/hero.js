@@ -2,7 +2,7 @@ import {
   BUTTON_ICON_SIZES,
   BUTTON_VARIANTS,
   createButton,
-} from "../atoms/buttons/standard-button/standard-button.js";
+} from '../atoms/buttons/standard-button/standard-button.js';
 
 /**
  * Sets up the Hero container with background media (image or video).
@@ -12,17 +12,17 @@ import {
  * @returns {HTMLDivElement}
  */
 const setupHeroWithBg = (isVideoBackground, mediaSrc, showHeroPauseIcon) => {
-  const hero = document.createElement("div");
-  hero.className = "hero";
-  hero.setAttribute("aria-hidden", "true");
+  const hero = document.createElement('div');
+  hero.className = 'hero';
+  hero.setAttribute('aria-hidden', 'true');
   // Background media
   if (!isVideoBackground) {
     const pictureBg = mediaSrc.cloneNode(true);
-    pictureBg.className = "hero-bg";
+    pictureBg.className = 'hero-bg';
     hero.appendChild(pictureBg);
   } else {
     const videoBg = mediaSrc.cloneNode(true);
-    videoBg.className = "hero-bg";
+    videoBg.className = 'hero-bg';
     videoBg.src = mediaSrc;
     videoBg.autoplay = true;
     videoBg.muted = true;
@@ -31,24 +31,24 @@ const setupHeroWithBg = (isVideoBackground, mediaSrc, showHeroPauseIcon) => {
     hero.appendChild(videoBg);
 
     if (showHeroPauseIcon) {
-      const pauseIcon = document.createElement("button");
-      pauseIcon.className = "hero-icon un-icon-pause-circle icon-extra-large";
+      const pauseIcon = document.createElement('button');
+      pauseIcon.className = 'hero-icon un-icon-pause-circle icon-extra-large';
       hero.appendChild(pauseIcon);
       pauseIcon.onclick = () => {
-        if (pauseIcon.classList.contains("un-icon-play-circle")) {
+        if (pauseIcon.classList.contains('un-icon-play-circle')) {
           videoBg.play();
-          pauseIcon.classList.remove("un-icon-play-circle");
-          pauseIcon.classList.add("un-icon-pause-circle");
+          pauseIcon.classList.remove('un-icon-play-circle');
+          pauseIcon.classList.add('un-icon-pause-circle');
         } else {
           videoBg.pause();
-          pauseIcon.classList.remove("un-icon-pause-circle");
-          pauseIcon.classList.add("un-icon-play-circle");
+          pauseIcon.classList.remove('un-icon-pause-circle');
+          pauseIcon.classList.add('un-icon-play-circle');
         }
       };
     }
   }
-  const heroOverlay = document.createElement("div");
-  heroOverlay.className = "hero-overlay";
+  const heroOverlay = document.createElement('div');
+  heroOverlay.className = 'hero-overlay';
   hero.appendChild(heroOverlay);
   return hero;
 };
@@ -71,37 +71,37 @@ const createHeroMainSection = (
   subtitleBold,
   subtitle,
   showHeroBulletList,
-  bulletList
+  bulletList,
 ) => {
-  const mainSection = document.createElement("div");
-  mainSection.className = "main-section";
+  const mainSection = document.createElement('div');
+  mainSection.className = 'main-section';
   if (showHeroLogo) {
     const logo = heroLogo.cloneNode(true);
-    logo.className = "hero-logo";
+    logo.className = 'hero-logo';
     mainSection.appendChild(logo);
   }
-  const titleEl = document.createElement("h2");
-  titleEl.className = "hero-title";
+  const titleEl = document.createElement('h2');
+  titleEl.className = 'hero-title';
   titleEl.textContent = title;
   mainSection.appendChild(titleEl);
   if (subtitleBold) {
-    const subtitleBoldEl = document.createElement("p");
-    subtitleBoldEl.className = "hero-subtitle-bold";
+    const subtitleBoldEl = document.createElement('p');
+    subtitleBoldEl.className = 'hero-subtitle-bold';
     subtitleBoldEl.textContent = subtitleBold;
     mainSection.appendChild(subtitleBoldEl);
   }
   if (subtitle) {
-    const subtitleEl = document.createElement("p");
-    subtitleEl.className = "hero-subtitle";
+    const subtitleEl = document.createElement('p');
+    subtitleEl.className = 'hero-subtitle';
     subtitleEl.textContent = subtitle;
     mainSection.appendChild(subtitleEl);
   }
   if (showHeroBulletList && bulletList?.length > 0) {
-    const bullets = document.createElement("ul");
-    bullets.className = "hero-bullets";
+    const bullets = document.createElement('ul');
+    bullets.className = 'hero-bullets';
     bulletList?.forEach((bullet) => {
       if (!bullet) return;
-      const listItem = document.createElement("li");
+      const listItem = document.createElement('li');
       listItem.innerHTML = bullet;
       bullets.appendChild(listItem);
     });
@@ -133,20 +133,11 @@ const createHeroButtonSection = (
   btnIconSize,
   btnLeftIcon,
   btnRightIcon,
-  mainSection
+  mainSection,
 ) => {
-  const buttonSection = document.createElement("div");
-  buttonSection.className = "button-section";
+  const buttonSection = document.createElement('div');
+  buttonSection.className = 'button-section';
   if (showHeroButton) {
-    console.log('Button properties:', {
-      btnLabel,
-      btnHref,
-      btnOpenInNewTab,
-      btnVariant,
-      btnIconSize,
-      btnLeftIcon,
-      btnRightIcon
-    });
     const button = createButton(
       btnLabel,
       btnHref,
@@ -154,15 +145,15 @@ const createHeroButtonSection = (
       btnVariant,
       btnIconSize,
       btnLeftIcon,
-      btnRightIcon
+      btnRightIcon,
     );
-    if (variant === "carousel") {
+    if (variant === 'carousel') {
       mainSection.appendChild(button);
     } else {
       buttonSection.appendChild(button);
     }
   }
-  if (variant === "carousel") {
+  if (variant === 'carousel') {
     // TODO: Add carousel controls here
   }
   return buttonSection;
@@ -211,15 +202,15 @@ export function createHero(
   btnVariant,
   btnIconSize,
   btnLeftIcon,
-  btnRightIcon
+  btnRightIcon,
 ) {
   const hero = setupHeroWithBg(
     isVideoBackground,
     heroBackground,
-    showHeroPauseIcon
+    showHeroPauseIcon,
   );
-  const heroContent = document.createElement("div");
-  heroContent.className = "hero-content";
+  const heroContent = document.createElement('div');
+  heroContent.className = 'hero-content';
   const mainSection = createHeroMainSection(
     showHeroLogo,
     heroLogo,
@@ -227,7 +218,7 @@ export function createHero(
     subtitleBold,
     subtitle,
     showHeroBulletList,
-    bulletList
+    bulletList,
   );
   heroContent.appendChild(mainSection);
   const buttonSection = createHeroButtonSection(
@@ -240,7 +231,7 @@ export function createHero(
     btnIconSize,
     btnLeftIcon,
     btnRightIcon,
-    mainSection
+    mainSection,
   );
   heroContent.appendChild(buttonSection);
   hero.appendChild(heroContent);
@@ -253,7 +244,7 @@ export function createHero(
  * @returns {HTMLElement|null} The media element (video or picture) or null if not found
  */
 const extractMediaFromRow = (row, isVideo = false) => {
-  const mediaElement = row?.querySelector(isVideo ? "video" : "picture");
+  const mediaElement = row?.querySelector(isVideo ? 'video' : 'picture');
   if (mediaElement) return mediaElement;
   return null;
 };
@@ -265,36 +256,30 @@ const extractMediaFromRow = (row, isVideo = false) => {
  *
  */
 const extractValuesFromRows = (rows) => {
-  const variant = rows[0]?.textContent?.trim() || "";
+  const variant = rows[0]?.textContent?.trim() || '';
   const heroBackground = extractMediaFromRow(rows[1]);
-  const isVideoBackground =
-    rows[2]?.textContent?.trim().toLowerCase() === "true";
-  const showHeroLogo = rows[3]?.textContent?.trim().toLowerCase() === "true";
+  const isVideoBackground = rows[2]?.textContent?.trim().toLowerCase() === 'true';
+  const showHeroLogo = rows[3]?.textContent?.trim().toLowerCase() === 'true';
   const heroLogo = extractMediaFromRow(rows[4]);
-  const showHeroPauseIcon =
-    rows[5]?.textContent?.trim().toLowerCase() === "true";
-  const title = rows[6]?.textContent?.trim() || "";
-  const subtitleBold = rows[7]?.textContent?.trim() || "";
-  const subtitle = rows[8]?.textContent?.trim() || "";
-  const showHeroBulletList =
-    rows[9]?.textContent?.trim().toLowerCase() === "true";
+  const showHeroPauseIcon = rows[5]?.textContent?.trim().toLowerCase() === 'true';
+  const title = rows[6]?.textContent?.trim() || '';
+  const subtitleBold = rows[7]?.textContent?.trim() || '';
+  const subtitle = rows[8]?.textContent?.trim() || '';
+  const showHeroBulletList = rows[9]?.textContent?.trim().toLowerCase() === 'true';
   const bulletList = [
-    rows[10]?.textContent?.trim() || "",
-    rows[11]?.textContent?.trim() || "",
-    rows[12]?.textContent?.trim() || "",
+    rows[10]?.textContent?.trim() || '',
+    rows[11]?.textContent?.trim() || '',
+    rows[12]?.textContent?.trim() || '',
   ].filter(Boolean);
   // Button properties
-  const showHeroButton = rows[13]?.textContent?.trim().toLowerCase() === "true";
-  const btnText = rows[14]?.textContent?.trim() || "";
-  const btnVariant =
-    rows[15]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-  const btnHref =
-    rows[16]?.querySelector("a")?.href || rows[16]?.textContent?.trim() || "";
-  const btnOpenInNewTab = rows[17]?.textContent?.trim().toLowerCase() === "true";
-  const btnIconSize =
-    rows[18]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
-  const btnLeftIcon = rows[19]?.textContent?.trim() || "";
-  const btnRightIcon = rows[20]?.textContent?.trim() || "";
+  const showHeroButton = rows[13]?.textContent?.trim().toLowerCase() === 'true';
+  const btnText = rows[14]?.textContent?.trim() || '';
+  const btnVariant = rows[15]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
+  const btnHref = rows[16]?.querySelector('a')?.href || rows[16]?.textContent?.trim() || '';
+  const btnOpenInNewTab = rows[17]?.textContent?.trim().toLowerCase() === 'true';
+  const btnIconSize = rows[18]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
+  const btnLeftIcon = rows[19]?.textContent?.trim() || '';
+  const btnRightIcon = rows[20]?.textContent?.trim() || '';
   return {
     variant,
     heroBackground,
@@ -320,8 +305,8 @@ const extractValuesFromRows = (rows) => {
 let isStyleAlreadyLoaded = false;
 const ensureStylesLoaded = async () => {
   if (isStyleAlreadyLoaded) return;
-  const { loadCSS } = await import("../../scripts/aem.js");
-  loadCSS("./hero.css");
+  const { loadCSS } = await import('../../scripts/aem.js');
+  loadCSS('./hero.css');
   isStyleAlreadyLoaded = true;
 };
 
@@ -334,7 +319,7 @@ export default async function decorateHero(block) {
 
   // Get rows from block
   let rows = Array.from(block.children);
-  const wrapper = block.querySelector(".default-content-wrapper");
+  const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) {
     rows = Array.from(wrapper.children);
   }
@@ -380,7 +365,7 @@ export default async function decorateHero(block) {
     btnVariant,
     btnIconSize,
     btnLeftIcon,
-    btnRightIcon
+    btnRightIcon,
   );
   block.replaceWith(heroElement);
 }
