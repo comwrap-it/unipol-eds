@@ -84,13 +84,16 @@ main .section.text-block-container.number-block-container.bg-white {
 }
 
 /* Unipol Footer Section */
-.section.footer-download-section-container ,
-.section.footer-privacy-section-container ,
-.section.footer-social-section-container ,
-.section.footer-copyright-section-container {
+main .section.footer-download-section-container ,
+main .section.footer-privacy-section-container ,
+main .section.footer-social-section-container ,
+main .section.footer-copyright-section-container {
     background-color: var(--Background-Default-Tertiary, #001C35);
     font-family: var(--Family-Font-2, Manrope);
     padding: var(--Footer-Vertical-Padding-D-Tl, 48px) var(--Footer-Horizontal-Padding-D, 64px);
+    display:flex;
+    flex-direction: column;
+    width:100%;
 }
 
 main .section.text-list-container.footer-download-section-container .text-link-title ,
@@ -101,20 +104,20 @@ main .section.text-list-container.footer-download-section-container .text-link {
 
 /* Tablet */
 @media (width >= 768px) and (width < 1280px) {
-    .section.footer-download-section-container ,
-    .section.footer-privacy-section-container ,
-    .section.footer-social-section-container ,
-    .section.footer-copyright-section-container {
+    main .section.footer-download-section-container ,
+    main .section.footer-privacy-section-container ,
+    main .section.footer-social-section-container ,
+    main .section.footer-copyright-section-container {
         padding: var(--Footer-Vertical-Padding-D-Tl, 48px) var(--Footer-Horizontal-Padding-Tl, 32px);
     }
 }
 
 /* Mobile */
 @media (width < 768px) {
-    .section.footer-download-section-container ,
-    .section.footer-privacy-section-container ,
-    .section.footer-social-section-container ,
-    .section.footer-copyright-section-container {
+    main .section.footer-download-section-container ,
+    main .section.footer-privacy-section-container ,
+    main .section.footer-social-section-container ,
+    main .section.footer-copyright-section-container {
         padding: var(--Footer-Vertical-Padding-M-Tp, 32px)  var(--Footer-Horizontal-Padding-M-Tp, 16px);
     }
 }
