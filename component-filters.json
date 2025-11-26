@@ -109,11 +109,5 @@
       "footer-social-section",
       "footer-copyright-section"
     ]
-  },
-  {
-    "id": "hero-widget",
-    "components": [
-      "hero"
-    ]
   }
 ]

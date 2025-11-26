@@ -31,8 +31,5 @@
   },
   {
     "...": "./_unipol-footer.json#/filters"
-  },
-  {
-    "...": "../blocks/hero-section/_hero-section.json#/filters"
   }
 ]
