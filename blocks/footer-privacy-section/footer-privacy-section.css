@@ -14,8 +14,8 @@
     font-weight: 400;
 }
 
-/* Mobile */
-@media (width < 768px) {
+/* Tablet */
+@media (width <= 768px) {
     .footer-privacy-section-wrapper {
         display:flex;
         width: 100%;
@@ -35,7 +35,7 @@
 }
 
 /* Mobile */
-@media (width < 395px) {
+@media (width <= 395px) {
     .footer-privacy-section-wrapper .footer-privacy-section > div {
         width: 100%;
     }

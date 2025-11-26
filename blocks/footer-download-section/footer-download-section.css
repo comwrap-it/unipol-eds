@@ -79,8 +79,8 @@
     justify-content: space-between;
 }
 
-/* Mobile */
-@media (width >= 395px) and (width <= 767px) {
+/* Tablet */
+@media (width > 395px) and (width <= 768px) {
     .footer-download-section-wrapper {
         margin-left: unset;
     }
@@ -100,8 +100,7 @@
     }
 }
 
-/* Mobile */
-@media (width >= 395px) and (width <= 565px) {
+@media (width > 395px) and (width <= 565px) {
     .footer-download-app-google img {
         width: 110px;
     }
@@ -109,12 +108,11 @@
     .footer-download-app-apple img {
         width: 90px;
     }
-
 }
 
 
-/* Small Mobile */
-@media (width <= 394px) {
+/* Mobile */
+@media (width <= 395px) {
     .footer-download-section-wrapper {
         margin-left: unset;
     }
@@ -127,5 +125,4 @@
     .footer-download-brand {
         margin-bottom: var(--Footer-Logo-Gap, 40px);
     }
-
 }
