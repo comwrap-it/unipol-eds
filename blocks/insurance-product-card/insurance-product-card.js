@@ -9,18 +9,38 @@
  */
 
 import {
+  createButton,
   createButtonFromRows,
   extractInstrumentationAttributes,
-}
-  from '../atoms/buttons/standard-button/standard-button.js';
-import { createTagFromRows } from '../atoms/tag/tag.js';
-import { create3DiconsFromRows } from '../atoms/icons-3D/icons-3D.js';
+  BUTTON_VARIANTS,
+  BUTTON_ICON_SIZES,
+} from '../atoms/buttons/standard-button/standard-button.js';
+import { createTag, createTagFromRows } from '../atoms/tag/tag.js';
+import { create3Dicons, create3DiconsFromRows } from '../atoms/icons-3D/icons-3D.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+
+// Export constants for external use
+export { BUTTON_VARIANTS, BUTTON_ICON_SIZES };
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
+  
+  // Check if we're in Storybook (CSS should be loaded globally)
+  // In Storybook, window.hlx might not exist or codeBasePath might be empty
+  const isStorybook = !window.hlx?.codeBasePath || 
+    typeof window.STORYBOOK_ENV !== 'undefined' ||
+    document.querySelector('link[href*="standard-button.css"]') !== null;
+  
+  if (isStorybook) {
+    // In Storybook, CSS should already be loaded globally
+    // Just mark as loaded to avoid unnecessary async operations
+    isStylesLoaded = true;
+    return;
+  }
+  
+  // In AEM EDS, load CSS dynamically
   const { loadCSS } = await import('../../scripts/aem.js');
   await Promise.all([
     loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`),
@@ -28,6 +48,355 @@ async function ensureStylesLoaded() {
     loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/icons-3D/icons-3D.css`),
   ]);
   isStylesLoaded = true;
+}
+
+/**
+ * Create an insurance product card element programmatically
+ *
+ * This is the SINGLE SOURCE OF TRUTH for card creation.
+ * Used by both the decorate() function (AEM EDS) and Storybook.
+ *
+ * @param {HTMLElement|string} titleContent - Title element or text
+ * @param {HTMLElement|string} descriptionContent - Description element or text
+ * @param {HTMLElement|Object} buttonElementOrConfig - Pre-created button element or button configuration
+ * @param {string} buttonElementOrConfig.label - Button label (if config)
+ * @param {string} buttonElementOrConfig.href - Button URL (if config)
+ * @param {string} buttonElementOrConfig.variant - Button variant (if config)
+ * @param {string} buttonElementOrConfig.iconSize - Button icon size (if config)
+ * @param {string} buttonElementOrConfig.leftIcon - Button left icon (if config)
+ * @param {string} buttonElementOrConfig.rightIcon - Button right icon (if config)
+ * @param {boolean} buttonElementOrConfig.openInNewTab - Open in new tab (if config)
+ * @param {HTMLElement|string} noteContent - Note element or text
+ * @param {HTMLElement|Object} tagElementOrConfig - Pre-created tag element or tag configuration
+ * @param {string} tagElementOrConfig.label - Tag label (if config)
+ * @param {string} tagElementOrConfig.category - Tag category (if config)
+ * @param {string} tagElementOrConfig.type - Tag type (if config)
+ * @param {HTMLElement|string} imageContent - Image element or URL
+ * @param {string} imageAlt - Image alt text (if imageContent is URL)
+ * @param {HTMLElement|Object} icons3DElementOrConfig - Pre-created 3D icons element or configuration
+ * @param {boolean} icons3DElementOrConfig.showVehicle - Show vehicle icon (if config)
+ * @param {boolean} icons3DElementOrConfig.showProperty - Show property icon (if config)
+ * @param {boolean} icons3DElementOrConfig.showWelfare - Show welfare icon (if config)
+ * @param {Object} instrumentation - Instrumentation attributes (optional)
+ * @returns {HTMLElement} The insurance product card element
+ */
+export async function createInsuranceProductCard(
+  titleContent = '',
+  descriptionContent = '',
+  buttonElementOrConfig = null,
+  noteContent = '',
+  tagElementOrConfig = null,
+  imageContent = '',
+  imageAlt = '',
+  icons3DElementOrConfig = null,
+  instrumentation = {},
+) {
+  // Ensure CSS is loaded
+  await ensureStylesLoaded();
+
+  // Create card structure
+  const card = document.createElement('div');
+  card.className = 'insurance-product-card-container';
+
+  // Card Image Section
+  if (imageContent || tagElementOrConfig) {
+    const cardImage = document.createElement('div');
+    cardImage.className = 'insurance-product-card-image';
+
+    // Add tag if provided
+    let tagElement = null;
+    if (tagElementOrConfig) {
+      if (tagElementOrConfig instanceof HTMLElement) {
+        tagElement = tagElementOrConfig;
+      } else {
+        tagElement = createTag(
+          tagElementOrConfig.label || '',
+          tagElementOrConfig.category || '',
+          tagElementOrConfig.type || '',
+          tagElementOrConfig.instrumentation || {},
+        );
+      }
+      if (tagElement) {
+        tagElement.classList.add('insurance-product-card-tag');
+        cardImage.appendChild(tagElement);
+      }
+    }
+
+    // Add image if provided
+    if (imageContent) {
+      let picture = null;
+      if (imageContent instanceof HTMLElement) {
+        // Use existing picture element
+        picture = imageContent;
+      } else if (typeof imageContent === 'string') {
+        // Create optimized picture from URL
+        picture = createOptimizedPicture(
+          imageContent,
+          imageAlt || '',
+          false,
+          [{ media: '(min-width: 769)', width: '316' }, { media: '(max-width: 768)', width: '240' }, { media: '(max-width: 392)', width: '343' }],
+        );
+      }
+      if (picture) {
+        cardImage.appendChild(picture);
+      }
+    }
+
+    if (cardImage.children.length > 0) {
+      card.appendChild(cardImage);
+    }
+  }
+
+  // Card Text Content
+  const cardTextContent = document.createElement('div');
+  cardTextContent.className = 'insurance-product-card-text';
+
+  // Add title
+  if (titleContent) {
+    let titleElement;
+    if (titleContent instanceof HTMLElement) {
+      titleElement = titleContent;
+      titleElement.className = 'title';
+    } else {
+      titleElement = document.createElement('h3');
+      titleElement.className = 'title';
+      titleElement.textContent = titleContent;
+    }
+    if (titleElement.textContent?.trim()) {
+      cardTextContent.appendChild(titleElement);
+    }
+  }
+
+  // Add description
+  if (descriptionContent) {
+    let descriptionElement;
+    if (descriptionContent instanceof HTMLElement) {
+      descriptionElement = descriptionContent;
+      descriptionElement.className = 'description';
+    } else {
+      descriptionElement = document.createElement('p');
+      descriptionElement.className = 'description';
+      descriptionElement.textContent = descriptionContent;
+    }
+    if (descriptionElement.textContent?.trim()) {
+      cardTextContent.appendChild(descriptionElement);
+    }
+  }
+
+  // Card Content Container
+  const cardContent = document.createElement('div');
+  cardContent.className = 'insurance-product-card-content';
+  cardContent.appendChild(cardTextContent);
+
+  // Card Button and Note Section
+  let buttonElement = null;
+  if (buttonElementOrConfig) {
+    if (buttonElementOrConfig instanceof HTMLElement) {
+      buttonElement = buttonElementOrConfig;
+    } else {
+      // Create button from config
+      buttonElement = createButton(
+        buttonElementOrConfig.label || '',
+        buttonElementOrConfig.href || '',
+        buttonElementOrConfig.openInNewTab || false,
+        buttonElementOrConfig.variant || BUTTON_VARIANTS.PRIMARY,
+        buttonElementOrConfig.iconSize || BUTTON_ICON_SIZES.MEDIUM,
+        buttonElementOrConfig.leftIcon || '',
+        buttonElementOrConfig.rightIcon || '',
+        buttonElementOrConfig.instrumentation || {},
+      );
+    }
+  }
+
+  if (buttonElement && buttonElement.children.length > 0) {
+    const buttonsContainer = document.createElement('div');
+    buttonsContainer.className = 'button-subdescription';
+    buttonsContainer.appendChild(buttonElement);
+
+    // Add note if provided
+    if (noteContent) {
+      let noteElement;
+      if (noteContent instanceof HTMLElement) {
+        noteElement = noteContent;
+        noteElement.className = 'subdescription';
+      } else {
+        noteElement = document.createElement('p');
+        noteElement.className = 'subdescription';
+        noteElement.textContent = noteContent;
+      }
+      if (noteElement.textContent?.trim()) {
+        buttonsContainer.appendChild(noteElement);
+      }
+    }
+
+    if (buttonsContainer.children.length > 0) {
+      cardContent.appendChild(buttonsContainer);
+    }
+  }
+
+  // Card 3D Icons
+  let iconsElement = null;
+  if (icons3DElementOrConfig) {
+    if (icons3DElementOrConfig instanceof HTMLElement) {
+      iconsElement = icons3DElementOrConfig;
+    } else {
+      iconsElement = create3Dicons(
+        icons3DElementOrConfig.showVehicle || false,
+        icons3DElementOrConfig.showProperty || false,
+        icons3DElementOrConfig.showWelfare || false,
+      );
+    }
+  }
+
+  if (iconsElement && iconsElement.children.length > 0) {
+    const imgVector = document.createElement('div');
+    imgVector.className = 'img-vector';
+    imgVector.appendChild(iconsElement);
+    cardContent.appendChild(imgVector);
+  }
+
+  // Append card content
+  if (cardContent.children.length > 0) {
+    card.appendChild(cardContent);
+  }
+
+  // Restore instrumentation
+  Object.entries(instrumentation).forEach(([name, value]) => {
+    card.setAttribute(name, value);
+  });
+
+  // Add card-block class
+  card.classList.add('card-block');
+
+  return card;
+}
+
+/**
+ * Extract card data from rows
+ * @param {HTMLElement[]} rows - Array of rows from block children
+ * @returns {Object} Extracted card data
+ */
+function extractCardDataFromRows(rows) {
+  const instrumentation = extractInstrumentationAttributes(rows[0]);
+
+  // Extract title
+  const titleRow = rows[0];
+  let titleElement = null;
+  if (titleRow) {
+    const existingHeading = titleRow.querySelector('h1, h2, h3, h4, h5, h6');
+    if (existingHeading) {
+      titleElement = existingHeading;
+      moveInstrumentation(titleRow, titleElement);
+    } else {
+      titleElement = document.createElement('h3');
+      while (titleRow.firstChild) {
+        titleElement.appendChild(titleRow.firstChild);
+      }
+      moveInstrumentation(titleRow, titleElement);
+    }
+  }
+
+  // Extract description
+  const subtitleRow = rows[1];
+  let descriptionElement = null;
+  if (subtitleRow) {
+    const existingPara = subtitleRow.querySelector('p');
+    if (existingPara) {
+      descriptionElement = existingPara;
+      moveInstrumentation(subtitleRow, descriptionElement);
+    } else if (subtitleRow.textContent?.trim()) {
+      descriptionElement = document.createElement('p');
+      while (subtitleRow.firstChild) {
+        descriptionElement.appendChild(subtitleRow.firstChild);
+      }
+      moveInstrumentation(subtitleRow, descriptionElement);
+    }
+  }
+
+  // Extract button from rows 2-7
+  const buttonRows = rows.slice(2, 8);
+  const buttonElement = createButtonFromRows(buttonRows);
+
+  // Extract note
+  const noteRow = rows[8];
+  let noteElement = null;
+  if (noteRow) {
+    const existingPara = noteRow.querySelector('p');
+    if (existingPara) {
+      noteElement = existingPara;
+      moveInstrumentation(noteRow, noteElement);
+    } else if (noteRow.textContent?.trim()) {
+      noteElement = document.createElement('p');
+      while (noteRow.firstChild) {
+        noteElement.appendChild(noteRow.firstChild);
+      }
+      moveInstrumentation(noteRow, noteElement);
+    }
+  }
+
+  // Extract tag from rows 9-11
+  const tagRows = rows.slice(9, 12);
+  const tagElement = createTagFromRows(tagRows);
+
+  // Extract image from row 12
+  const imageRow = rows[12];
+  let imageElement = null;
+  let imageAlt = '';
+  if (imageRow) {
+    const picture = imageRow.querySelector('picture');
+    if (picture) {
+      imageElement = picture;
+      moveInstrumentation(imageRow, picture);
+    } else {
+      const img = imageRow.querySelector('img');
+      if (img) {
+        imageAlt = img.alt || '';
+        const optimizedPic = createOptimizedPicture(
+          img.src,
+          imageAlt,
+          false,
+          [{ media: '(min-width: 769)', width: '316' }, { media: '(max-width: 768)', width: '240' }, { media: '(max-width: 392)', width: '343' }],
+        );
+        const newImg = optimizedPic.querySelector('img');
+        if (newImg && img) {
+          moveInstrumentation(img, newImg);
+        }
+        imageElement = optimizedPic;
+      } else {
+        const link = imageRow.querySelector('a');
+        if (link && link.href) {
+          imageAlt = link.textContent?.trim() || '';
+          const optimizedPic = createOptimizedPicture(
+            link.href,
+            imageAlt,
+            false,
+            [{ media: '(min-width: 769)', width: '316' }, { media: '(max-width: 768)', width: '240' }, { media: '(max-width: 392)', width: '343' }],
+          );
+          const newImg = optimizedPic.querySelector('img');
+          if (newImg && link) {
+            moveInstrumentation(link, newImg);
+          }
+          imageElement = optimizedPic;
+        }
+      }
+    }
+  }
+
+  // Extract 3D icons from rows 13-15
+  const iconsRows = rows.slice(13, 16);
+  const iconsElement = create3DiconsFromRows(iconsRows);
+
+  return {
+    titleElement,
+    descriptionElement,
+    buttonElement,
+    noteElement,
+    tagElement,
+    imageElement,
+    imageAlt,
+    iconsElement,
+    instrumentation,
+  };
 }
 
 /**
@@ -48,18 +417,12 @@ export default async function decorateInsuranceProductCard(block) {
     return;
   }
 
-  // Create card structure
-  const card = document.createElement('div');
-  card.className = 'insurance-product-card-container';
-
   // Get rows from block
   let rows = Array.from(block.children);
   const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) {
     rows = Array.from(wrapper.children);
   }
-
-  const instrumentation = extractInstrumentationAttributes(rows[0]);
 
   // eslint-disable-next-line no-console
   console.log('🃏 Card Rows:', {
@@ -76,225 +439,27 @@ export default async function decorateInsuranceProductCard(block) {
     })),
   });
 
-  // Extract card data
-  // Row 0:  Title
-  // Row 1:  Description
-  // Row 2:  Button label
-  // Row 3:  Button variant
-  // Row 4:  Button link
-  // Row 5:  Button size
-  // Row 6:  Button left icon
-  // Row 7:  Button right icon
-  // Row 8:  Note
-  // Row 9:  Tag Label
-  // Row 10: Tag Category
-  // Row 11: Tag Variant
-  // Row 12: Image
-  // Row 13: 3D Icon showVehicle
-  // Row 14: 3D Icon showProperty
-  // Row 15: 3D Icon showWelfare
+  // Extract card data from rows
+  const cardData = extractCardDataFromRows(rows);
 
-  // Card Image
-  const imageRow = rows[12];
-  if (imageRow) {
-    const cardImage = document.createElement('div');
-    cardImage.className = 'insurance-product-card-image';
-
-    const tagRows = rows.slice(9, 12);
-    const tagElement = createTagFromRows(tagRows);
-
-    if (tagElement && tagElement.classList) {
-      tagElement.classList.add('insurance-product-card-tag');
-    }
-
-    if (cardImage && tagElement && tagRows && tagRows.length > 0) {
-      cardImage.appendChild(tagElement);
-    }
-
-    const picture = imageRow.querySelector('picture');
-    if (picture) {
-      // Move existing picture (preserves instrumentation)
-      cardImage.appendChild(picture);
-    } else {
-      const img = imageRow.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(
-          img.src,
-          img.alt || '',
-          false,
-          [{ media: '(min-width: 769)', width: '316' }, { media: '(max-width: 768)', width: '240' }, { media: '(max-width: 392)', width: '343' }],
-        );
-        // Preserve instrumentation from original img
-        const newImg = optimizedPic.querySelector('img');
-        if (newImg && img) {
-          moveInstrumentation(img, newImg);
-        }
-        cardImage.appendChild(optimizedPic);
-      } else {
-        // Try to get image from link
-        const link = imageRow.querySelector('a');
-        if (link && link.href) {
-          const optimizedPic = createOptimizedPicture(
-            link.href,
-            link.textContent?.trim() || '',
-            false,
-            [{ media: '(min-width: 769)', width: '316' }, { media: '(max-width: 768)', width: '240' }, { media: '(max-width: 392)', width: '343' }],
-          );
-          // Preserve instrumentation from link
-          const newImg = optimizedPic.querySelector('img');
-          if (newImg && link) {
-            moveInstrumentation(link, newImg);
-          }
-          cardImage.appendChild(optimizedPic);
-        }
-      }
-    }
-
-    if (cardImage.children.length > 0) {
-      card.appendChild(cardImage);
-    }
-  }
-
-  // Card Text Content
-  const cardTextContent = document.createElement('div');
-  cardTextContent.className = 'insurance-product-card-text';
-
-  // Card Title - preserve original element and instrumentation
-  const titleRow = rows[0];
-  if (titleRow) {
-    // Try to preserve existing heading element
-    const existingHeading = titleRow.querySelector('h1, h2, h3, h4, h5, h6');
-    if (existingHeading) {
-      // Move existing heading and preserve instrumentation
-      existingHeading.className = 'title';
-      moveInstrumentation(titleRow, existingHeading);
-      cardTextContent.appendChild(existingHeading);
-    } else {
-      // Create new heading but preserve instrumentation
-      const title = document.createElement('h3');
-      title.className = 'title';
-      // Clone child nodes to preserve richtext instrumentation
-      while (titleRow.firstChild) {
-        title.appendChild(titleRow.firstChild);
-      }
-      // Move instrumentation from row to title
-      moveInstrumentation(titleRow, title);
-      if (title.textContent?.trim()) {
-        cardTextContent.appendChild(title);
-      }
-    }
-  }
-
-  // Card Subtitle - preserve original element and instrumentation
-  const subtitleRow = rows[1];
-  // eslint-disable-next-line no-console
-  console.log('📝 Card Subtitle Row:', {
-    exists: !!subtitleRow,
-    hasContent: subtitleRow?.textContent?.trim(),
-    html: subtitleRow?.outerHTML?.substring(0, 150),
-  });
-
-  // ALWAYS create subtitle element (even if row doesn't exist or is empty)
-  // This ensures subtitle is always visible in the DOM for editing
-  if (subtitleRow) {
-    // Try to preserve existing paragraph
-    const existingPara = subtitleRow.querySelector('p');
-    if (existingPara) {
-      existingPara.className = 'description';
-      moveInstrumentation(subtitleRow, existingPara);
-      cardTextContent.appendChild(existingPara);
-    } else if (subtitleRow.textContent?.trim()) {
-      // Create new paragraph but preserve instrumentation
-      const subtitle = document.createElement('p');
-      subtitle.className = 'description';
-      // Clone child nodes to preserve richtext instrumentation
-      while (subtitleRow.firstChild) {
-        subtitle.appendChild(subtitleRow.firstChild);
-      }
-      // Move instrumentation from row to subtitle
-      moveInstrumentation(subtitleRow, subtitle);
-      cardTextContent.appendChild(subtitle);
-    }
-  }
-
-  // Card Content
-  const cardContent = document.createElement('div');
-  cardContent.className = 'insurance-product-card-content';
-
-  cardContent.appendChild(cardTextContent);
-
-  // Card Button - Rows 2-7 (optional)
-  // Universal Editor creates separate rows for each button field
-  const buttonRows = rows.slice(2, 8);
-  const buttonElement = createButtonFromRows(buttonRows);
-
-  if (buttonElement && buttonElement.children.length > 0) {
-    const buttonsContainer = document.createElement('div');
-    buttonsContainer.className = 'button-subdescription';
-
-    buttonsContainer.appendChild(buttonElement);
-
-    const note = rows[8];
-    if (note) {
-      // Try to preserve existing paragraph
-      const existingPara = note.querySelector('p');
-      if (existingPara) {
-        existingPara.className = 'subdescription';
-        moveInstrumentation(note, existingPara);
-        buttonsContainer.appendChild(existingPara);
-      } else if (note.textContent?.trim()) {
-        // Create new paragraph but preserve instrumentation
-        const noteFromHTML = document.createElement('p');
-        noteFromHTML.className = 'subdescription';
-        // Clone child nodes to preserve richtext instrumentation
-        while (note.firstChild) {
-          noteFromHTML.appendChild(note.firstChild);
-        }
-        // Move instrumentation from row to note
-        moveInstrumentation(note, noteFromHTML);
-        buttonsContainer.appendChild(noteFromHTML);
-      }
-    }
-
-    if (buttonsContainer.children.length > 0) {
-      cardContent.appendChild(buttonsContainer);
-    }
-  }
-
-  // Card 3D-icons - Rows 13-15
-  const iconsRows = rows.slice(13, 16);
-  const iconsElement = create3DiconsFromRows(iconsRows);
-
-  if (iconsElement && iconsElement.children.length > 0) {
-    const imgVector = document.createElement('div');
-    imgVector.className = 'img-vector';
-    imgVector.appendChild(iconsElement);
-    cardContent.appendChild(imgVector);
-  }
-
-  // eslint-disable-next-line no-console
-  console.log('📦 Card Content Children:', {
-    count: cardContent.children.length,
-    children: Array.from(cardContent.children).map((c) => c.className),
-  });
-
-  // Append card content
-  if (cardContent.children.length > 0) {
-    card.appendChild(cardContent);
-  }
-
-  // Restore instrumentation to button element
-  Object.entries(instrumentation).forEach(([name, value]) => {
-    card.setAttribute(name, value);
-  });
+  // Create card using the centralized function
+  const card = await createInsuranceProductCard(
+    cardData.titleElement,
+    cardData.descriptionElement,
+    cardData.buttonElement,
+    cardData.noteElement,
+    cardData.tagElement,
+    cardData.imageElement,
+    cardData.imageAlt,
+    cardData.iconsElement,
+    cardData.instrumentation,
+  );
 
   // Preserve blockName if present (needed for loadBlock)
   if (block.dataset.blockName) {
     card.dataset.blockName = block.dataset.blockName;
   }
 
-  // Replace block content with card
-  // Preserve block class and instrumentation
-  card.classList.add('card-block');
+  // Replace block with card
   block.replaceWith(card);
 }

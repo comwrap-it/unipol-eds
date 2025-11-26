@@ -192,3 +192,18 @@ export function decorateIcons(element, prefix = '') {
     }
   });
 }
+
+/**
+ * Mock loadBlock function for Storybook
+ * In Storybook, CSS is loaded globally and components are already imported,
+ * so we just mark the block as loaded without doing anything else.
+ * @param {Element} block The block element
+ * @returns {Promise<Element>} The block element
+ */
+export async function loadBlock(block) {
+  const status = block.dataset.blockStatus;
+  if (status !== 'loading' && status !== 'loaded') {
+    block.dataset.blockStatus = 'loaded';
+  }
+  return block;
+}

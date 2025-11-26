@@ -22,6 +22,16 @@ import { createFooterCopyrightComponent } from '@blocks/footer-copyright-section
  *
  **/
 
+// Temporary export default to fix Storybook error
+// TODO: Uncomment and fix the actual stories below
+export default {
+  title: 'Organisms/Footer Unipol',
+  tags: ['autodocs'],
+  render: () => html`<div style="padding: 2rem; text-align: center; color: #666;">
+    <p>Footer Unipol stories are currently being refactored.</p>
+    <p>Please check back later.</p>
+  </div>`,
+};
 
  /* RIFARE
 export default {
