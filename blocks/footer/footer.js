@@ -58,6 +58,20 @@ export default async function decorate(block) {
 
   function toggleAccordion(e) {
     const title = e.currentTarget;
+    const wrapper = title.closest('.text-list-wrapper');
+    const links = wrapper.querySelectorAll('.text-link');
+    function escCloseHandler(event) {
+      if (event.key === 'Escape') {
+        title.setAttribute('aria-expanded', 'false');
+        links.forEach((l) => {
+          l.style.display = 'none';
+          l.style.opacity = '';
+          l.style.transform = '';
+          l.style.transition = '';
+          l.removeEventListener('keydown', escCloseHandler);
+        });
+      }
+    }
 
     if (!window.matchMedia('(max-width: 768px)').matches) return;
 
@@ -65,9 +79,6 @@ export default async function decorate(block) {
     const newState = !expanded;
 
     title.setAttribute('aria-expanded', newState);
-
-    const wrapper = title.closest('.text-list-wrapper');
-    const links = wrapper.querySelectorAll('.text-link');
 
     links.forEach((link) => {
       if (newState) {
@@ -80,6 +91,8 @@ export default async function decorate(block) {
           link.style.opacity = 1;
           link.style.transform = 'translateY(0)';
         });
+
+        link.addEventListener('keydown', escCloseHandler);
       } else {
         link.style.opacity = 0;
         link.style.transform = 'translateY(-4px)';
@@ -88,6 +101,8 @@ export default async function decorate(block) {
         setTimeout(() => {
           link.style.display = 'none';
         }, 250);
+
+        link.removeEventListener('keydown', escCloseHandler);
       }
     });
   }

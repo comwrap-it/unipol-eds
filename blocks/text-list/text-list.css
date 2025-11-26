@@ -38,6 +38,7 @@
         border-bottom: 1px solid var(--Accordion-Footer-Border, #82909C);
         padding: var(--Accordion-Footer-Vertical-Padding,20px) 0;
         position: relative;
+        cursor: pointer;
     }
 
     .unipol-footer .text-list-wrapper .text-link-title::after {
@@ -71,6 +72,10 @@
     }
 
     .text-list-wrapper {
+        width: 100%;
+    }
+
+    .unipol-footer .text-list-wrapper{
         width: 100%;
     }
 }
