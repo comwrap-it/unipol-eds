@@ -14,7 +14,7 @@
                             "style": "hero-widget",
                             "hero": {
                                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                                "name": "hero",
+                                "name": "Hero",
                                 "model": "hero"
                             }
                         }
