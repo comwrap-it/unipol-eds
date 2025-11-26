@@ -20,6 +20,12 @@
         height: 100%;
         object-fit: cover;
         z-index: 0;
+
+        & img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
     }
 
     & .hero-overlay {
@@ -37,11 +43,7 @@
                 rgb(0 0 0 / 0%) 24.94%,
                 rgb(0 0 0 / 40%) 69.83%
             ),
-            linear-gradient(
-                0deg,
-                rgb(0 0 0 / 7%) 0%,
-                rgb(0 0 0 / 7%) 100%
-            );
+            linear-gradient(0deg, rgb(0 0 0 / 7%) 0%, rgb(0 0 0 / 7%) 100%);
     }
 
     & .hero-content {
@@ -61,8 +63,14 @@
 
             & .hero-logo {
                 width: 90px;
-                height: auto;
+                height: 57px;
                 aspect-ratio: 30/19;
+
+                & img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: contain;
+                }
             }
 
             & .hero-title {
