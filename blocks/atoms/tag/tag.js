@@ -43,6 +43,34 @@ const extractValuesFromRows = (rows) => {
 };
 
 /**
+ * Process tag data from rows and create tag element
+ * Used when tag is rendered from Universal Editor data structure
+ *
+ * @param {Array} rows - Array of rows from block children
+ * @returns {HTMLElement|null} The tag element, or null if no label is provided
+ */
+export function createTagFromRows(rows) {
+  if (!rows || rows.length === 0) return null;
+
+  const {
+    label,
+    category,
+    type,
+    instrumentation,
+  } = extractValuesFromRows(rows);
+
+  // Don't tag if there's no label text
+  if (!label) return null;
+
+  return createTag(
+    label,
+    category,
+    type,
+    instrumentation,
+  );
+}
+
+/**
  * Decorate Tag Block
  * @param {HTMLElement} block The Tag block element
  */

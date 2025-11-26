@@ -1,0 +1,21 @@
+{
+  "definitions": [
+    {
+      "title": "Scroll Indicator",
+      "id": "scroll-indicator",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Scroll Indicator",
+              "model": "scroll-indicator"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [],
+  "filters": []
+}
