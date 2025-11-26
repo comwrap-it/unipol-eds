@@ -55,6 +55,7 @@ export default async function decorate() {
     });
     on('fromEdge', () => {
       endReached = false;
+      startReached = false;
     });
     on('reachBeginning', () => {
       startReached = true;
