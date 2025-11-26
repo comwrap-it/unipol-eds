@@ -100,28 +100,24 @@ main .section.footer-download-section-container .text-list-wrapper,
 main .section.footer-privacy-section-container .text-list-wrapper,
 main .section.footer-social-section-container .text-list-wrapper,
 main .section.footer-copyright-section-container .text-list-wrapper {
-    width: 20%;
+    width: 12%;
 }
 
-main .section.footer-download-section-container .footer-download-section-wrapper,
-main .section.footer-privacy-section-container .footer-download-section-wrapper,
-main .section.footer-social-section-container .footer-download-section-wrapper,
-main .section.footer-copyright-section-container .footer-download-section-wrapper {
-    width: 20%;
+main .section.footer-privacy-section-container .footer-download-section-wrapper {
+    width: 50%;
+    margin-left: auto;
 }
 
-main .section.footer-download-section-container .footer-privacy-section-wrapper,
-main .section.footer-privacy-section-container .footer-privacy-section-wrapper,
-main .section.footer-social-section-container .footer-privacy-section-wrapper,
-main .section.footer-copyright-section-container .footer-privacy-section-wrapper {
+main .section.footer-privacy-section-container .footer-privacy-section-wrapper {
     width: 50%;
 }
 
-main .section.footer-download-section-container .footer-social-section-wrapper,
-main .section.footer-privacy-section-container .footer-social-section-wrapper,
-main .section.footer-social-section-container .footer-social-section-wrapper,
-main .section.footer-copyright-section-container .footer-social-section-wrapper {
+main .section.footer-social-section-container .footer-social-section-wrapper {
     width: 50%;
+}
+
+main .section.footer-copyright-section-container .footer-copyright-section-wrapper {
+    width: 100%;
 }
 
 main .section.text-list-container.footer-download-section-container .text-link-title ,
@@ -155,29 +151,21 @@ main .section.text-list-container.footer-download-section-container .text-link {
         width: 50%;
     }
 
-    main .section.footer-download-section-container .footer-download-section-wrapper,
-    main .section.footer-privacy-section-container .footer-download-section-wrapper,
-    main .section.footer-social-section-container .footer-download-section-wrapper,
-    main .section.footer-copyright-section-container .footer-download-section-wrapper {
+    main .section.footer-download-section-container .footer-download-section-wrapper {
+        width: 100%;
+        margin-left: unset;
+    }
+
+    main .section.footer-privacy-section-container .footer-privacy-section-wrapper {
         width: 100%;
     }
 
-    main .section.footer-download-section-container .footer-privacy-section-wrapper,
-    main .section.footer-privacy-section-container .footer-privacy-section-wrapper,
-    main .section.footer-social-section-container .footer-privacy-section-wrapper,
-    main .section.footer-copyright-section-container .footer-privacy-section-wrapper {
-        width: 100%;
-    }
-
-    main .section.footer-download-section-container .footer-social-section-wrapper,
-    main .section.footer-privacy-section-container .footer-social-section-wrapper,
-    main .section.footer-social-section-container .footer-social-section-wrapper,
-    main .section.footer-copyright-section-container .footer-social-section-wrapper {
+    main .section.footer-social-section-container .footer-social-section-wrapper {
         width: 100%;
     }
 }
 
-@media (width < 768px) {
+@media (width < 365px) {
     main .section.footer-download-section-container .text-list-wrapper,
     main .section.footer-privacy-section-container .text-list-wrapper,
     main .section.footer-social-section-container .text-list-wrapper,
