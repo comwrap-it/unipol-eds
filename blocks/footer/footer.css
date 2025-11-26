@@ -24,7 +24,8 @@ footer {
 .text-list-container {
     display: flex;
     justify-content: space-between;
-    width: 50%;
+    width: 60%;
+    gap: 5px;
 }
 
 .footer-copyright-bottom {
