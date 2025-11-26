@@ -36,6 +36,7 @@
 .footer-download-qr img {
     width: 80px;
     height: 80px;
+    margin-right: var(--Footer-Box-Gap, 40px);
 }
 
 .footer-download-brand {
@@ -91,7 +92,7 @@
     }
 
     .footer-download-brand {
-        width: 40%;
+        width: 43%;
     }
 
     .footer-download-bottom-app {
