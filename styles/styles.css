@@ -119,6 +119,10 @@ main .section.footer-social-section-container .footer-social-section-wrapper {
     width: 50%;
 }
 
+main .section.footer-social-section-container .footer-social-section-wrapper .footer-social-section {
+    justify-content: flex-end;
+}
+
 main .section.footer-copyright-section-container .footer-copyright-section-wrapper {
     width: 100%;
 }
@@ -165,6 +169,10 @@ main .section.text-list-container.footer-download-section-container .text-link {
 
     main .section.footer-social-section-container .footer-social-section-wrapper {
         width: 100%;
+    }
+
+    main .section.footer-social-section-container .footer-social-section-wrapper .footer-social-section {
+        justify-content: flex-start;
     }
 }
 
