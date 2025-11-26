@@ -19,7 +19,6 @@
 import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
-import { extractInstrumentationAttributes } from '../atoms/buttons/standard-button/standard-button.js';
 
 /**
  * Decorates the insurance product carousel block
