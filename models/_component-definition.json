@@ -41,7 +41,7 @@
           "...": "./_unipol-footer.json#/definitions"
         },
         {
-          "...": "../blocks/widgets/hero-section/_hero-section.json#/definitions"
+          "...": "../blocks/hero-section/_hero-section.json#/definitions"
         }
       ]
     },

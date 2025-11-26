@@ -69,6 +69,12 @@
     ]
   },
   {
+    "id": "hero-widget",
+    "components": [
+      "hero"
+    ]
+  },
+  {
     "id": "options-list",
     "components": [
       "unipol-option"

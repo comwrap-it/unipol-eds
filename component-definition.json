@@ -233,6 +233,7 @@
                 "template": {
                   "name": "Hero Widget",
                   "model": "hero-widget",
+                  "filter": "hero-widget",
                   "style": "hero-widget",
                   "hero": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
@@ -410,6 +411,28 @@
                 "template": {
                   "name": "Header Unipol",
                   "model": "header-unipol"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Hero Widget",
+          "id": "hero-widget",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {
+                  "name": "Hero Widget",
+                  "model": "hero-widget",
+                  "filter": "hero-widget",
+                  "style": "hero-widget",
+                  "hero": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "hero",
+                    "model": "hero"
+                  }
                 }
               }
             }
