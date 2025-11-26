@@ -4,6 +4,8 @@
 
 .number-block-cont {
   display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -32,6 +34,7 @@
         flex-direction: row;
         justify-content: space-around;
     }
+
     .text-block-number {
       font-size: var(--Size-80, 5rem);
     }
