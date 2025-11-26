@@ -32,13 +32,13 @@
           "...": "./_hero-section.json#/definitions"
         },
         {
-          "...": "../blocks/widgets/insurance-product-carousel/_insurance-product-carousel.json#/definitions"
+          "...": "../blocks/insurance-product-carousel-widget/_insurance-product-carousel-widget.json#/definitions"
         },
         {
-          "...": "../blocks/organisms/carousel/insurance-product-carousel/_insurance-product-carousel.json#/definitions"
+          "...": "../blocks/insurance-product-carousel/_insurance-product-carousel.json#/definitions"
         },
         {
-          "...": "../blocks/molecules/insurance-product-card/_insurance-product-card.json#/definitions"
+          "...": "../blocks/insurance-product-card/_insurance-product-card.json#/definitions"
         },
         {
           "...": "./_unipol-footer.json#/definitions"
@@ -51,9 +51,6 @@
       "components": [
         {
           "...": "../blocks/*/_*.json#/definitions"
-        },
-        {
-          "...": "../blocks/atoms/options/options-list/_options-list.json#/definitions"
         }
       ]
     }

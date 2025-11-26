@@ -24,19 +24,13 @@
     "...": "./_hero-section.json#/models"
   },
   {
-    "...": "../blocks/widgets/insurance-product-carousel/_insurance-product-carousel.json#/models"
+    "...": "../blocks/insurance-product-carousel-widget/_insurance-product-carousel-widget.json#/models"
   },
   {
     "...": "../blocks/*/_*.json#/models"
   },
   {
     "...": "../blocks/atoms/**/_*.json#/models"
-  },
-  {
-    "...": "../blocks/molecules/**/_*.json#/models"
-  },
-  {
-    "...": "../blocks/organisms/**/_*.json#/models"
   },
   {
     "...": "./_unipol-footer.json#/models"

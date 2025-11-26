@@ -24,7 +24,8 @@ footer {
 .text-list-container {
     display: flex;
     justify-content: space-between;
-    width: 50%;
+    width: 60%;
+    gap: 5px;
 }
 
 .footer-copyright-bottom {
@@ -36,14 +37,14 @@ footer .footer p {
 }
 
 /* Tablet */
-@media (width >= 768px) and (width < 1280px) {
+@media (width > 768px) and (width <= 1280px) {
     .footer .unipol-footer {
         padding: var(--Footer-Vertical-Padding-D-Tl, 48px) var(--Footer-Horizontal-Padding-Tl, 32px);
     }
 }
 
 /* Mobile */
-@media (width < 768px) {
+@media (width <= 768px) {
     .footer .unipol-footer {
         padding: var(--Footer-Vertical-Padding-M-Tp, 32px)  var(--Footer-Horizontal-Padding-M-Tp, 16px);
     }

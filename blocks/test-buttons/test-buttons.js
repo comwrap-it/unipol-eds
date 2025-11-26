@@ -22,7 +22,7 @@ import {
   RADIO_TYPES,
   createRadio,
 } from '../atoms/radio-button/standard-radio-button/radio-button.js';
-import { create3Dicons } from '../atoms/3D-icons/3D-icons.js';
+import { create3Dicons } from '../atoms/icons-3D/icons-3D.js';
 import { createRadioButtonField } from '../atoms/radio-button/radio-button-field/radio-button-field.js';
 
 let isStylesLoaded = false;
