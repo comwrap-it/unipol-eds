@@ -38,6 +38,19 @@
         border-bottom: 1px solid var(--Accordion-Footer-Border, #82909C);
         padding: var(--Accordion-Footer-Vertical-Padding,20px) 0;
     }
+
+    .unipol-footer .text-list-wrapper .text-link-title::after {
+      content: "";
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      background-image: url("/content/dam/unipol/unipol-footer/Plus.svg");
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
 }
 
 
