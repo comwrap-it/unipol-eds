@@ -70,8 +70,6 @@ export default async function decorate(block) {
     return;
   }
 
-  const instrumentation = extractInstrumentationAttributes(rows[0]);
-
   // Process each row as a card
   const cardPromises = rows.map(async (row) => {
     const slide = document.createElement('div');
@@ -132,11 +130,6 @@ export default async function decorate(block) {
     scrollIndicator = await createScrollIndicator();
   }
 
-  // Restore instrumentation to button element
-  Object.entries(instrumentation).forEach(([name, value]) => {
-    carousel.setAttribute(name, value);
-  });
-
   carousel.appendChild(track);
   if (scrollIndicator) {
     carousel.appendChild(scrollIndicator);
@@ -149,7 +142,7 @@ export default async function decorate(block) {
 
   // Preserve block class
   carousel.classList.add('block', 'insurance-product-carousel-block');
-
+  moveInstrumentation(block, carousel);
   // Replace block with carousel
   block.replaceWith(carousel);
 }
