@@ -311,8 +311,8 @@ const extractValuesFromRows = (rows) => {
 let isBtnStylesLoaded = false;
 const ensureButtonStylesLoaded = async () => {
   if (isBtnStylesLoaded) return;
-  const { loadCss } = await import('../../scripts/aem.js');
-  await loadCss(`${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`);
+  const { loadCSS } = await import('../../scripts/aem.js');
+  await loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`);
   isBtnStylesLoaded = true;
 };
 
