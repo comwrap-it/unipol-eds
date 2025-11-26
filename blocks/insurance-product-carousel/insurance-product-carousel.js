@@ -50,14 +50,14 @@ export default async function decorate(block) {
 
   // Create carousel container structure
   const carousel = document.createElement('div');
-  carousel.className = 'insurance-product-carousel-container';
+  carousel.className = 'insurance-product-carousel-container swiper';
   carousel.setAttribute('role', 'region');
   carousel.setAttribute('aria-label', 'Product carousel');
   carousel.setAttribute('tabindex', '0');
 
   // Create carousel track (scrollable container)
   const track = document.createElement('div');
-  track.className = 'insurance-product-carousel';
+  track.className = 'insurance-product-carousel swiper-wrapper';
   track.setAttribute('role', 'list');
 
   // Get all rows (each row will be a card)
@@ -72,7 +72,7 @@ export default async function decorate(block) {
   // Process each row as a card
   const cardPromises = rows.map(async (row) => {
     const slide = document.createElement('div');
-    slide.className = 'insurance-product-card-wrapper';
+    slide.className = 'insurance-product-card-wrapper swiper-slide';
     slide.setAttribute('role', 'listitem');
 
     // Preserve instrumentation from row to slide

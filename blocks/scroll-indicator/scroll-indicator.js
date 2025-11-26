@@ -35,7 +35,7 @@ export default async function createScrollIndicator() {
   scrollIndicator.className = 'scroll-indicator';
 
   const leftIconButtonContainer = document.createElement('div');
-  leftIconButtonContainer.className = 'left-icon-button';
+  leftIconButtonContainer.className = 'left-icon-button swiper-button-prev';
 
   const leftIconButton = createIconButton('un-icon-chevron-left', BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM, '');
   leftIconButtonContainer.appendChild(leftIconButton);
@@ -44,7 +44,7 @@ export default async function createScrollIndicator() {
   expandingDotsContainer.className = 'expanding-dots';
 
   const rectangle = document.createElement('span');
-  rectangle.className = 'rectangle';
+  rectangle.className = 'rectangle swiper-pagination';
   expandingDotsContainer.appendChild(rectangle);
 
   fetch('../../icons/ellipse.svg')
@@ -59,7 +59,7 @@ export default async function createScrollIndicator() {
     });
 
   const rightIconButtonContainer = document.createElement('div');
-  rightIconButtonContainer.className = 'right-icon-button';
+  rightIconButtonContainer.className = 'right-icon-button swiper-button-next';
 
   const rightIconButton = createIconButton('un-icon-chevron-right', BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM, '');
   rightIconButtonContainer.appendChild(rightIconButton);
