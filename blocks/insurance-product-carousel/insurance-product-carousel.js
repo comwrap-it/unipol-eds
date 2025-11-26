@@ -27,7 +27,8 @@ import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
  * Used by both the decorate() function (AEM EDS) and Storybook.
  *
  * @param {HTMLElement[]} cardElements - Array of already-decorated card elements
- * @param {boolean} showScrollIndicator - Whether to show scroll indicator (default: auto-detect if > 4 cards)
+ * @param {boolean} showScrollIndicator - Whether to show scroll indicator
+ *   (default: auto-detect if > 4 cards)
  * @returns {HTMLElement} The carousel element
  */
 export async function createInsuranceProductCarousel(

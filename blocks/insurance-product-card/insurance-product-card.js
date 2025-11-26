@@ -58,7 +58,8 @@ async function ensureStylesLoaded() {
  *
  * @param {HTMLElement|string} titleContent - Title element or text
  * @param {HTMLElement|string} descriptionContent - Description element or text
- * @param {HTMLElement|Object} buttonElementOrConfig - Pre-created button element or button configuration
+ * @param {HTMLElement|Object} buttonElementOrConfig - Pre-created button element
+ *   or button configuration
  * @param {string} buttonElementOrConfig.label - Button label (if config)
  * @param {string} buttonElementOrConfig.href - Button URL (if config)
  * @param {string} buttonElementOrConfig.variant - Button variant (if config)
@@ -73,7 +74,8 @@ async function ensureStylesLoaded() {
  * @param {string} tagElementOrConfig.type - Tag type (if config)
  * @param {HTMLElement|string} imageContent - Image element or URL
  * @param {string} imageAlt - Image alt text (if imageContent is URL)
- * @param {HTMLElement|Object} icons3DElementOrConfig - Pre-created 3D icons element or configuration
+ * @param {HTMLElement|Object} icons3DElementOrConfig - Pre-created 3D icons element
+ *   or configuration
  * @param {boolean} icons3DElementOrConfig.showVehicle - Show vehicle icon (if config)
  * @param {boolean} icons3DElementOrConfig.showProperty - Show property icon (if config)
  * @param {boolean} icons3DElementOrConfig.showWelfare - Show welfare icon (if config)
