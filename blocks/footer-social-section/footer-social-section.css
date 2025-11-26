@@ -6,3 +6,10 @@
     display: flex;
     gap: var(--Footer-Icon-Gap, 12px);
 }
+
+/* Mobile */
+@media (width < 768px) {
+    .footer-social-section-wrapper {
+        margin-left: unset;
+    }
+}

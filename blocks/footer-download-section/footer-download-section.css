@@ -15,6 +15,10 @@
     margin-bottom: 0;
 }
 
+.footer-download-bottom-app {
+    width: 100%;
+}
+
 .footer-download-section .footer-download-qr {
     width: 100%;
     display: flex;
@@ -66,4 +70,61 @@
 
 .footer-download-brand-button img {
     width: var(--Icon-100-16, 16px);
+}
+
+.footer-download-apps {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Mobile */
+@media (width >= 395px) and (width <= 767px) {
+    .footer-download-section-wrapper {
+        margin-left: unset;
+    }
+
+    .footer-download-section {
+        flex-direction: row;
+        width: 100%;
+        align-items: start;
+    }
+
+    .footer-download-brand {
+        width: 40%;
+    }
+
+    .footer-download-bottom-app {
+        width: 50%;
+    }
+}
+
+/* Mobile */
+@media (width >= 395px) and (width <= 565px) {
+    .footer-download-app-google img {
+        width: 110px;
+    }
+
+    .footer-download-app-apple img {
+        width: 90px;
+    }
+
+}
+
+
+/* Small Mobile */
+@media (width <= 394px) {
+    .footer-download-section-wrapper {
+        margin-left: unset;
+    }
+
+    .footer-download-section {
+        flex-direction: column;
+        width: 100%
+    }
+
+    .footer-download-brand {
+        margin-bottom: var(--Footer-Logo-Gap, 40px);
+    }
+
 }

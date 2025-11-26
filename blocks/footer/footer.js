@@ -28,28 +28,28 @@ export default async function decorate(block) {
   const bottomContainer = document.createElement('div');
   bottomContainer.className = 'unipol-footer-bottom';
 
+  // --- NEW: TEXT LIST CONTAINER ---
+  const textListContainer = document.createElement('div');
+  textListContainer.className = 'text-list-container';
+
   // --- DISTRIBUTE BLOCKS INTO CONTAINERS ---
   const textListWrappers = footerContainer.querySelectorAll('.text-list-wrapper');
-  textListWrappers.forEach((wrapper) => topContainer.append(wrapper));
+  textListWrappers.forEach((wrapper) => textListContainer.append(wrapper));
+
+  // append container into top section
+  topContainer.append(textListContainer);
 
   const downloadWrapper = footerContainer.querySelector('.footer-download-section-wrapper');
-  if (downloadWrapper) {
-    topContainer.append(downloadWrapper);
-  }
+  if (downloadWrapper) topContainer.append(downloadWrapper);
 
   const privacyWrapper = footerContainer.querySelector('.footer-privacy-section-wrapper');
-  if (privacyWrapper) {
-    bottomContainer.append(privacyWrapper);
-  }
+  if (privacyWrapper) bottomContainer.append(privacyWrapper);
 
   const socialWrapper = footerContainer.querySelector('.footer-social-section-wrapper');
-  if (socialWrapper) {
-    bottomContainer.append(socialWrapper);
-  }
+  if (socialWrapper) bottomContainer.append(socialWrapper);
 
   // --- COPYRIGHT SECTION ---
   const copyrightBlock = footerContainer.querySelector('.footer-copyright-section');
-  // clear footerContainer and append organized sections
   footerContainer.textContent = '';
   footerContainer.append(topContainer, bottomContainer);
   if (copyrightBlock) footerContainer.append(copyrightBlock);

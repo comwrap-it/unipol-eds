@@ -21,6 +21,12 @@ footer {
     padding-bottom: var(--Footer-Bottom-Gap-D-Tl, 24px);
 }
 
+.text-list-container {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+}
+
 .footer-copyright-bottom {
     padding-top: var(--Footer-Bottom-Gap-D-Tl, 24px);
 }
@@ -40,5 +46,20 @@ footer .footer p {
 @media (width < 768px) {
     .footer .unipol-footer {
         padding: var(--Footer-Vertical-Padding-M-Tp, 32px)  var(--Footer-Horizontal-Padding-M-Tp, 16px);
+    }
+
+    .unipol-footer-top {
+        flex-direction: column;
+        padding-bottom: var(--Footer-Primary-Gap-M-Tp, 40px);
+     }
+
+    .text-list-container {
+        width: 100%;
+        flex-wrap: wrap;
+        padding-bottom: var(--Footer-Primary-Gap-M-Tp, 40px);
+    }
+
+    .unipol-footer-bottom {
+        flex-direction: column;
     }
 }

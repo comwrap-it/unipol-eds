@@ -13,3 +13,30 @@
     font-size: var(--Size-14, 0.875rem);
     font-weight: 400;
 }
+
+/* Mobile */
+@media (width < 768px) {
+    .footer-privacy-section-wrapper {
+        display:flex;
+        width: 100%;
+    }
+
+    .footer-privacy-section-wrapper .footer-privacy-section {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: unset;
+        padding-bottom: var(--Footer-Bottom-Gap-D-Tl, 24px);
+    }
+
+    .footer-privacy-section-wrapper .footer-privacy-section > div {
+        width: 50%;
+        padding-bottom: var(--Footer-Secondary-Link-Vertical-Gap-Tp, 16px);
+    }
+}
+
+/* Mobile */
+@media (width < 395px) {
+    .footer-privacy-section-wrapper .footer-privacy-section > div {
+        width: 100%;
+    }
+}
