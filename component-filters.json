@@ -30,6 +30,12 @@
     "components": []
   },
   {
+    "id": "hero-widget",
+    "components": [
+      "hero"
+    ]
+  },
+  {
     "id": "insurance-product-carousel-widget",
     "components": [
       "insurance-product-carousel"
@@ -66,12 +72,6 @@
     "id": "footer-social-section",
     "components": [
       "footer-social-link"
-    ]
-  },
-  {
-    "id": "hero-widget",
-    "components": [
-      "hero"
     ]
   },
   {

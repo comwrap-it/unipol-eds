@@ -21,6 +21,9 @@
     "...": "./_kpi-highlights-widget.json#/models"
   },
   {
+    "...": "./_hero-section.json#/models"
+  },
+  {
     "...": "../blocks/widgets/insurance-product-carousel/_insurance-product-carousel.json#/models"
   },
   {

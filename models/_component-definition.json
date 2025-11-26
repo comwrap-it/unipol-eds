@@ -29,6 +29,9 @@
           "...": "./_kpi-highlights-widget.json#/definitions"
         },
         {
+          "...": "./_hero-section.json#/definitions"
+        },
+        {
           "...": "../blocks/widgets/insurance-product-carousel/_insurance-product-carousel.json#/definitions"
         },
         {
@@ -39,9 +42,6 @@
         },
         {
           "...": "./_unipol-footer.json#/definitions"
-        },
-        {
-          "...": "../blocks/hero-section/_hero-section.json#/definitions"
         }
       ]
     },
