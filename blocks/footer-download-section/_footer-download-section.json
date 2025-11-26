@@ -53,12 +53,7 @@
           "name": "qrCodeImg",
           "value": "",
           "label": "Testo sezione QR Code",
-          "maxlength": 30,
-          "valueType": "string",
-          "validation": {
-            "maxLength": 30,
-            "customErrorMsg": "Testo troppo lungo"
-          }
+          "valueType": "string"
         },
         {
           "component": "reference",

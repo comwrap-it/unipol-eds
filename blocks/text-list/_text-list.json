@@ -46,29 +46,21 @@
           "component": "richtext",
           "label": "Testo Elenco",
           "name": "listLinks",
-          "maxlength": 25,
           "valueType": "string",
-          "validation": {
-            "maxLength": 25,
-            "customErrorMsg": "Testo troppo lungo"
-          },
           "condition": { "===": [{"var" : "hideTextLinkList"}, true] }
         },
         {
           "component": "text",
           "name": "linkTextComp",
           "label": "Testo Link",
-          "maxlength": 25,
-          "validation": {
-            "maxLength": 25,
-            "customErrorMsg": "Testo troppo lungo"
-          },
+          "required": true,
           "condition": { "===": [{"var" : "hideTextLinkList"}, false] }
         },
         {
           "component": "aem-content",
           "name": "linkHrefComp",
           "label": "Link URL",
+          "required": true,
           "condition": { "===": [{"var" : "hideTextLinkList"}, false] }
         }
       ]

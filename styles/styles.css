@@ -105,6 +105,9 @@ main .section.footer-copyright-section-container .text-list-wrapper {
 
 main .section.footer-privacy-section-container .footer-download-section-wrapper {
     width: 50%;
+}
+
+main .section.footer-privacy-section-container .footer-download-section-wrapper .footer-download-section {
     margin-left: auto;
 }
 
