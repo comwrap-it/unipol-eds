@@ -308,11 +308,20 @@ const extractValuesFromRows = (rows) => {
   };
 };
 
+let isBtnStylesLoaded = false;
+const ensureButtonStylesLoaded = async () => {
+  if (isBtnStylesLoaded) return;
+  const { loadCss } = await import('../../scripts/aem.js');
+  await loadCss(`${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`);
+  isBtnStylesLoaded = true;
+};
+
 /**
  * @param {HTMLElement} block
  */
 export default async function decorateHero(block) {
   if (!block) return;
+  ensureButtonStylesLoaded();
 
   // Get rows from block
   let rows = Array.from(block.children);
