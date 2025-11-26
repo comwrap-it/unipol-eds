@@ -410,6 +410,69 @@
           }
         },
         {
+          "title": "Insurance Product Card",
+          "id": "insurance-product-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Insurance Product card",
+                  "model": "insurance-product-card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Insurance Product Carousel Widget",
+          "id": "insurance-product-carousel-widget",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {
+                  "filter": "insurance-product-carousel",
+                  "name": "Insurance Product Carousel Widget",
+                  "model": "insurance-product-carousel-widget",
+                  "style": "insurance-product-carousel-widget",
+                  "text-block": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Text Block",
+                    "model": "text-block"
+                  },
+                  "insurance-product-carousel": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Insurance Product Carousel",
+                    "filter": "insurance-product-carousel",
+                    "insurance-product-card": {
+                      "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                      "name": "Insurance Product Card",
+                      "filter": "insurance-product-card",
+                      "model": "insurance-product-card"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Insurance Product Carousel",
+          "id": "insurance-product-carousel",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "insurance-product-carousel",
+                  "name": "Insurance Product Carousel"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Number Block",
           "id": "number-block",
           "plugins": {
@@ -419,6 +482,21 @@
                 "template": {
                   "name": "Number Block",
                   "model": "number-block"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Scroll Indicator",
+          "id": "scroll-indicator",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Scroll Indicator",
+                  "model": "scroll-indicator"
                 }
               }
             }
@@ -479,36 +557,6 @@
                 "template": {
                   "name": "Text-Link",
                   "model": "text-link"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Options list",
-          "id": "options-list",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Options List",
-                  "filter": "options"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Option",
-          "id": "unipol-option",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
-                "template": {
-                  "name": "Option",
-                  "model": "unipol-option"
                 }
               }
             }

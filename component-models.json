@@ -718,6 +718,263 @@
     ]
   },
   {
+    "id": "insurance-product-card",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Titolo",
+        "maxlength": 15,
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "description",
+        "label": "Descrizione",
+        "maxlength": 130,
+        "required": true
+      },
+      {
+        "component": "container",
+        "name": "button-container",
+        "label": "Configurazione Bottone",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "standardButtonLabel",
+            "label": "Button Text",
+            "required": false
+          },
+          {
+            "component": "select",
+            "name": "standardButtonVariant",
+            "label": "Variant",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Accent",
+                "value": "accent"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "URL del bottone"
+          },
+          {
+            "component": "boolean",
+            "label": "Apri in una nuova scheda",
+            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+            "name": "standardButtonOpenInNewTab",
+            "valueType": "boolean",
+            "value": false
+          },
+          {
+            "component": "select",
+            "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
+            "label": "Size",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonLeftIcon",
+            "label": "Left Icon",
+            "description": "Select the left icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonRightIcon",
+            "label": "Right Icon",
+            "description": "Select the right icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "note",
+        "label": "Note",
+        "maxlength": 60,
+        "required": true
+      },
+      {
+        "component": "container",
+        "name": "tag",
+        "label": "Configurazione Tag",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "tagLabel",
+            "label": "Tag text",
+            "required": true
+          },
+          {
+            "component": "select",
+            "name": "tagCategory",
+            "label": "Tag Category",
+            "required": true,
+            "value": "mobility",
+            "options": [
+              {
+                "name": "Mobility",
+                "value": "mobility"
+              },
+              {
+                "name": "Welfare",
+                "value": "welfare"
+              },
+              {
+                "name": "Property",
+                "value": "property"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "tagVariant",
+            "label": "Tag type",
+            "required": true,
+            "value": "default",
+            "options": [
+              {
+                "name": "Default",
+                "value": "default"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Neutral",
+                "value": "neutral"
+              },
+              {
+                "name": "Custom",
+                "value": "custom"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Image",
+        "multi": false,
+        "required": true
+      },
+      {
+        "component": "container",
+        "name": "icons-3D",
+        "label": "Configurazione Icone 3D",
+        "collapsible": true,
+        "required": true,
+        "fields": [
+          {
+            "component": "boolean",
+            "name": "vehiclesShowIcon",
+            "label": "Show Vehicles & Mobility icon",
+            "description": "Toggle to display the Vehicles & Mobility icon",
+            "value": false
+          },
+          {
+            "component": "boolean",
+            "name": "homeShowIcon",
+            "label": "Show Home & Family icon",
+            "description": "Toggle to display the Home & Family icon",
+            "value": false
+          },
+          {
+            "component": "boolean",
+            "name": "personalShowIcon",
+            "label": "Show Personal Protection icon",
+            "description": "Toggle to display the Personal Protection icon",
+            "value": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "insurance-product-carousel-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "insurance-product-carousel-widget-name",
+        "label": "Nome sezione Insurance Product Carousel Widget"
+      }
+    ]
+  },
+  {
     "id": "number-block",
     "fields": [
       {
@@ -1946,32 +2203,6 @@
     ]
   },
   {
-    "id": "3D-icons",
-    "fields": [
-      {
-        "component": "switch",
-        "name": "vehiclesShowIcon",
-        "label": "Show Vehicles & Mobility icon",
-        "description": "Toggle to display the Vehicles & Mobility icon",
-        "value": false
-      },
-      {
-        "component": "switch",
-        "name": "homeShowIcon",
-        "label": "Show Home & Family icon",
-        "description": "Toggle to display the Home & Family icon",
-        "value": false
-      },
-      {
-        "component": "switch",
-        "name": "personalShowIcon",
-        "label": "Show Personal Protection icon",
-        "description": "Toggle to display the Personal Protection icon",
-        "value": false
-      }
-    ]
-  },
-  {
     "id": "icon-button",
     "fields": [
       {
@@ -2640,6 +2871,32 @@
         "name": "disabled",
         "label": "Disabled",
         "description": "Toggle to disable the checkbox",
+        "value": false
+      }
+    ]
+  },
+  {
+    "id": "icons-3D",
+    "fields": [
+      {
+        "component": "boolean",
+        "name": "vehiclesShowIcon",
+        "label": "Show Vehicles & Mobility icon",
+        "description": "Toggle to display the Vehicles & Mobility icon",
+        "value": false
+      },
+      {
+        "component": "boolean",
+        "name": "homeShowIcon",
+        "label": "Show Home & Family icon",
+        "description": "Toggle to display the Home & Family icon",
+        "value": false
+      },
+      {
+        "component": "boolean",
+        "name": "personalShowIcon",
+        "label": "Show Personal Protection icon",
+        "description": "Toggle to display the Personal Protection icon",
         "value": false
       }
     ]
@@ -3563,253 +3820,6 @@
           {
             "name": "Custom",
             "value": "custom"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "insurance-product-card",
-    "fields": [
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Titolo",
-        "maxlength": 15,
-        "required": true
-      },
-      {
-        "component": "text",
-        "name": "description",
-        "label": "Descrizione",
-        "maxlength": 130,
-        "required": true
-      },
-      {
-        "component": "container",
-        "name": "button-container",
-        "label": "Configurazione Bottone",
-        "collapsible": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "standardButtonLabel",
-            "label": "Button Text",
-            "required": false
-          },
-          {
-            "component": "select",
-            "name": "standardButtonVariant",
-            "label": "Variant",
-            "value": "primary",
-            "options": [
-              {
-                "name": "Primary",
-                "value": "primary"
-              },
-              {
-                "name": "Secondary",
-                "value": "secondary"
-              },
-              {
-                "name": "Accent",
-                "value": "accent"
-              }
-            ]
-          },
-          {
-            "component": "aem-content",
-            "name": "standardButtonHref",
-            "label": "Link URL",
-            "description": "URL del bottone"
-          },
-          {
-            "component": "boolean",
-            "label": "Apri in una nuova scheda",
-            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
-            "name": "standardButtonOpenInNewTab",
-            "valueType": "boolean",
-            "value": false
-          },
-          {
-            "component": "select",
-            "name": "standardButtonSize",
-            "description": "Modifica la dimensione delle icone del bottone",
-            "label": "Size",
-            "value": "medium",
-            "options": [
-              {
-                "name": "Small",
-                "value": "small"
-              },
-              {
-                "name": "Medium",
-                "value": "medium"
-              },
-              {
-                "name": "Large",
-                "value": "large"
-              },
-              {
-                "name": "Extra Large",
-                "value": "extra-large"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "standardButtonLeftIcon",
-            "label": "Left Icon",
-            "description": "Select the left icon",
-            "value": "",
-            "options": [
-              {
-                "name": "None",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "un-icon-chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "un-icon-chevron-right"
-              },
-              {
-                "name": "Search Icon",
-                "value": "un-icon-search"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "standardButtonRightIcon",
-            "label": "Right Icon",
-            "description": "Select the right icon",
-            "value": "",
-            "options": [
-              {
-                "name": "None",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "un-icon-chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "un-icon-chevron-right"
-              },
-              {
-                "name": "Search Icon",
-                "value": "un-icon-search"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "component": "text",
-        "name": "note",
-        "label": "Note",
-        "maxlength": 60,
-        "required": true
-      },
-      {
-        "component": "container",
-        "name": "tag",
-        "label": "Configurazione Tag",
-        "collapsible": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "tagLabel",
-            "label": "Tag text",
-            "required": true
-          },
-          {
-            "component": "select",
-            "name": "tagCategory",
-            "label": "Tag Category",
-            "required": true,
-            "value": "mobility",
-            "options": [
-              {
-                "name": "Mobility",
-                "value": "mobility"
-              },
-              {
-                "name": "Welfare",
-                "value": "welfare"
-              },
-              {
-                "name": "Property",
-                "value": "property"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "tagVariant",
-            "label": "Tag type",
-            "required": true,
-            "value": "default",
-            "options": [
-              {
-                "name": "Default",
-                "value": "default"
-              },
-              {
-                "name": "Secondary",
-                "value": "secondary"
-              },
-              {
-                "name": "Neutral",
-                "value": "neutral"
-              },
-              {
-                "name": "Custom",
-                "value": "custom"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "image",
-        "label": "Image",
-        "multi": false,
-        "required": true
-      },
-      {
-        "component": "container",
-        "name": "icons-3D",
-        "label": "Configurazione Icone 3D",
-        "collapsible": true,
-        "required": true,
-        "fields": [
-          {
-            "component": "switch",
-            "name": "vehiclesShowIcon",
-            "label": "Show Vehicles & Mobility icon",
-            "description": "Toggle to display the Vehicles & Mobility icon",
-            "value": false
-          },
-          {
-            "component": "switch",
-            "name": "homeShowIcon",
-            "label": "Show Home & Family icon",
-            "description": "Toggle to display the Home & Family icon",
-            "value": false
-          },
-          {
-            "component": "switch",
-            "name": "personalShowIcon",
-            "label": "Show Personal Protection icon",
-            "description": "Toggle to display the Personal Protection icon",
-            "value": false
           }
         ]
       }
