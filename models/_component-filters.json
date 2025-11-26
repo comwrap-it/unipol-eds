@@ -16,9 +16,6 @@
     "...": "./_kpi-highlights-widget.json#/filters"
   },
   {
-    "...": "./_hero-section.json#/filters"
-  },
-  {
     "...": "../blocks/insurance-product-carousel-widget/_insurance-product-carousel-widget.json#/filters"
   },
   {

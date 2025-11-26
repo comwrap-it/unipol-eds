@@ -170,16 +170,6 @@
     ]
   },
   {
-    "id": "hero-widget",
-    "fields": [
-      {
-        "component": "text",
-        "name": "hero-widget-name",
-        "label": "Nome sezione Hero Widget"
-      }
-    ]
-  },
-  {
     "id": "insurance-product-carousel-widget",
     "fields": [
       {
@@ -456,6 +446,16 @@
             ]
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "hero-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "hero-widget-name",
+        "label": "Nome sezione Hero Widget"
       }
     ]
   },
