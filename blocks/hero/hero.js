@@ -120,6 +120,7 @@ const createHeroMainSection = (
  * @param {boolean} showHeroButton
  * @param {string} btnLabel
  * @param {string} btnHref
+ * @param btnOpenInNewTab
  * @param {string} btnVariant
  * @param {string} btnIconSize
  * @param {string} btnLeftIcon
@@ -321,7 +322,7 @@ const ensureButtonStylesLoaded = async () => {
  */
 export default async function decorateHero(block) {
   if (!block) return;
-  ensureButtonStylesLoaded();
+  await ensureButtonStylesLoaded();
 
   // Get rows from block
   let rows = Array.from(block.children);
