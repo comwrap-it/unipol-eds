@@ -57,6 +57,7 @@
     font-size: var(--Size-16, 1rem);
     font-weight: 600;
     color: var(--Footer-Primary-Text, #F9F9F7);
+    text-align: end;
 }
 
 .footer-download-brand-button {
@@ -92,7 +93,7 @@
     }
 
     .footer-download-brand {
-        width: 43%;
+        width: 45%;
     }
 
     .footer-download-bottom-app {

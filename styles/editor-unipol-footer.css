@@ -15,10 +15,12 @@ main .section.footer-privacy-section-container .text-list-wrapper,
 main .section.footer-social-section-container .text-list-wrapper,
 main .section.footer-copyright-section-container .text-list-wrapper {
     width: 14%;
+    margin-bottom: 40px;
 }
 
 main .section.footer-privacy-section-container .footer-download-section-wrapper {
     width: 40%;
+    margin-bottom: 40px;
 }
 
 main .section.footer-privacy-section-container .footer-download-section-wrapper .footer-download-section {
@@ -79,10 +81,12 @@ main .section.text-list-container.footer-download-section-container .text-link {
 
     main .section.footer-privacy-section-container .footer-privacy-section-wrapper {
         width: 100%;
+        margin-bottom: 40px;
     }
 
     main .section.footer-social-section-container .footer-social-section-wrapper {
         width: 100%;
+        margin-bottom: 40px;
     }
 
     main .section.footer-social-section-container .footer-social-section-wrapper .footer-social-section {
