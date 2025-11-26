@@ -53,12 +53,14 @@
           "component": "text",
           "name": "linkTextComp",
           "label": "Testo Link",
+          "required": true,
           "condition": { "===": [{"var" : "hideTextLinkList"}, false] }
         },
         {
           "component": "aem-content",
           "name": "linkHrefComp",
           "label": "Link URL",
+          "required": true,
           "condition": { "===": [{"var" : "hideTextLinkList"}, false] }
         }
       ]

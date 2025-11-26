@@ -1,12 +1,34 @@
 /* section Unipol Footer */
 footer {
-    background-color: var(--color-background-default-tertiary);
+    background-color: var(--Background-Default-Tertiary);
     margin: auto;
     max-width: 100%;
 }
 
-footer .footer > div {
-    padding: 48px 64px; /* var(--Space-700-48) var(--Space-900-64); */
+.footer .unipol-footer {
+    padding: var(--Footer-Vertical-Padding-D-Tl, 48px) var(--Footer-Horizontal-Padding-D, 64px);
+    font-family: var(--Family-Font-2, Manrope);
+}
+
+.unipol-footer-top {
+    display: flex;
+    padding-bottom: var(--Footer-Primary-Gap-D-Tl, 80px);
+}
+
+.unipol-footer-bottom {
+    display: flex;
+    border-bottom: 1px solid var(--Footer-Secondary-Border, #63727D);
+    padding-bottom: var(--Footer-Bottom-Gap-D-Tl, 24px);
+}
+
+.text-list-container {
+    display: flex;
+    justify-content: space-between;
+    width: 50%;
+}
+
+.footer-copyright-bottom {
+    padding-top: var(--Footer-Bottom-Gap-D-Tl, 24px);
 }
 
 footer .footer p {
@@ -14,22 +36,30 @@ footer .footer p {
 }
 
 /* Tablet */
-@media (width >= 768px) and (width <= 1279px) {
-    footer .footer > div {
-        padding: 48px 32px; /* cambiare */
+@media (width >= 768px) and (width < 1280px) {
+    .footer .unipol-footer {
+        padding: var(--Footer-Vertical-Padding-D-Tl, 48px) var(--Footer-Horizontal-Padding-Tl, 32px);
     }
 }
 
 /* Mobile */
-@media (width >= 375px) and (width <= 767px) {
-    footer .footer > div {
-        padding: 32px 16px; /* cambiare */
+@media (width < 768px) {
+    .footer .unipol-footer {
+        padding: var(--Footer-Vertical-Padding-M-Tp, 32px)  var(--Footer-Horizontal-Padding-M-Tp, 16px);
     }
-}
 
-/* Mobile */
-@media (width <= 374px) {
-    footer .footer > div {
-        padding: 32px 16px; /* cambiare */
+    .unipol-footer-top {
+        flex-direction: column;
+        padding-bottom: var(--Footer-Primary-Gap-M-Tp, 40px);
+     }
+
+    .text-list-container {
+        width: 100%;
+        flex-wrap: wrap;
+        padding-bottom: var(--Footer-Primary-Gap-M-Tp, 40px);
+    }
+
+    .unipol-footer-bottom {
+        flex-direction: column;
     }
 }

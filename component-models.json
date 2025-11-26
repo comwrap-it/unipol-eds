@@ -218,7 +218,26 @@
     ]
   },
   {
-    "id": "footer-download-link",
+    "id": "footer-copyright-section",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "footer-copyright-top",
+        "value": "",
+        "label": "Contenuto testuale copyright (testo superiore)",
+        "valueType": "string"
+      },
+      {
+        "component": "richtext",
+        "name": "footer-copyright-bottom",
+        "value": "",
+        "label": "Contenuto testuale copyright (testo inferiore)",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "footer-download-section",
     "fields": [
       {
         "component": "reference",
@@ -252,7 +271,7 @@
         "component": "richtext",
         "name": "qrCodeImg",
         "value": "",
-        "label": "Testo immagine codice qr",
+        "label": "Testo sezione QR Code",
         "valueType": "string"
       },
       {
@@ -286,7 +305,12 @@
         "component": "text",
         "name": "footerPrivacyLink",
         "label": "Testo Link",
-        "required": true
+        "maxlength": 35,
+        "required": true,
+        "validation": {
+          "maxLength": 35,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "aem-content",
@@ -310,18 +334,6 @@
         "component": "aem-content",
         "name": "logoSocialHref",
         "label": "Social Link URL"
-      }
-    ]
-  },
-  {
-    "id": "footer-text",
-    "fields": [
-      {
-        "component": "richtext",
-        "name": "footer-text",
-        "value": "",
-        "label": "Configurazione dei testi del footer",
-        "valueType": "string"
       }
     ]
   },
@@ -717,7 +729,11 @@
         "component": "text",
         "label": "Titolo blocco 1",
         "name": "numberBlockText1",
-        "maxlength": 7
+        "maxlength": 7,
+        "validation": {
+          "maxLength": 7,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "richtext",
@@ -735,7 +751,11 @@
         "component": "text",
         "label": "Titolo blocco 2",
         "name": "numberBlockText2",
-        "maxlength": 7
+        "maxlength": 7,
+        "validation": {
+          "maxLength": 7,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "richtext",
@@ -753,7 +773,11 @@
         "component": "text",
         "label": "Titolo blocco 3",
         "name": "numberBlockText3",
-        "maxlength": 7
+        "maxlength": 7,
+        "validation": {
+          "maxLength": 7,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "richtext",
@@ -1615,7 +1639,6 @@
         "component": "text",
         "name": "title",
         "label": "Titolo",
-        "maxlength": 60,
         "required": true,
         "validation": {
           "maxLength": 60,
@@ -1633,6 +1656,7 @@
         "component": "richtext",
         "label": "Testo",
         "name": "subtitle",
+        "value": "",
         "valueType": "string",
         "condition": {
           "===": [
@@ -1641,6 +1665,105 @@
             },
             true
           ]
+        },
+        "rte": {
+          "plugins": {
+            "table": {
+              "features": [
+                "table",
+                "tableproperties",
+                "tablecellproperties",
+                "tablerow",
+                "tablecolumn"
+              ]
+            },
+            "misctools": {
+              "features": [
+                "specialchars",
+                "sourceedit"
+              ]
+            },
+            "edit": {
+              "features": [
+                "cut",
+                "copy",
+                "paste-default",
+                "paste-plaintext",
+                "paste-wordhtml"
+              ]
+            },
+            "format": {
+              "features": [
+                "bold",
+                "italic",
+                "underline",
+                "strikethrough",
+                "subscript",
+                "superscript"
+              ]
+            },
+            "styles": {
+              "features": [
+                "styles"
+              ],
+              "styles": [
+                {
+                  "name": "Highlight",
+                  "element": "span",
+                  "classes": [
+                    "highlight"
+                  ]
+                },
+                {
+                  "name": "Code",
+                  "element": "code"
+                }
+              ]
+            },
+            "lists": {
+              "features": [
+                "ordered",
+                "unordered",
+                "indent",
+                "outdent"
+              ]
+            },
+            "links": {
+              "features": [
+                "modifylink",
+                "unlink",
+                "anchor"
+              ]
+            }
+          },
+          "specialCharsConfig": {
+            "chars": [
+              {
+                "name": "copyright",
+                "entity": "&copy;"
+              },
+              {
+                "name": "registered",
+                "entity": "&reg;"
+              },
+              {
+                "name": "trademark",
+                "entity": "&trade;"
+              },
+              {
+                "name": "euro",
+                "entity": "&euro;"
+              },
+              {
+                "name": "pound",
+                "entity": "&pound;"
+              },
+              {
+                "name": "yen",
+                "entity": "&yen;"
+              }
+            ]
+          }
         }
       },
       {
@@ -1796,6 +1919,7 @@
         "component": "text",
         "name": "linkTextComp",
         "label": "Testo Link",
+        "required": true,
         "condition": {
           "===": [
             {
@@ -1809,6 +1933,7 @@
         "component": "aem-content",
         "name": "linkHrefComp",
         "label": "Link URL",
+        "required": true,
         "condition": {
           "===": [
             {
@@ -3691,12 +3816,12 @@
     ]
   },
   {
-    "id": "footer-section",
+    "id": "unipol-footer",
     "fields": [
       {
         "component": "text",
-        "name": "footer-section-name",
-        "label": "Nome sezione Unipol Footer"
+        "name": "unipol-footer-name",
+        "label": "Nome sezione Footer"
       }
     ]
   }

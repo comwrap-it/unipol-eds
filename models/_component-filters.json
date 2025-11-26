@@ -5,7 +5,7 @@
       "section",
       "kpi-highlights-widget",
       "insurance-product-carousel-widget",
-      "footer-section"
+      "unipol-footer"
     ]
   },
   {
@@ -30,6 +30,6 @@
     "...": "../blocks/organisms/**/_*.json#/filters"
   },
   {
-    "...": "./_footer-section.json#/filters"
+    "...": "./_unipol-footer.json#/filters"
   }
 ]

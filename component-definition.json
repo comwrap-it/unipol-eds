@@ -167,17 +167,57 @@
           }
         },
         {
-          "title": "Footer Section",
-          "id": "footer-section",
+          "title": "Unipol Footer",
+          "id": "unipol-footer",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/section/v1/section",
                 "template": {
-                  "filter": "footer-section",
-                  "name": "Footer Section",
-                  "model": "footer-section",
-                  "style": "footer-section"
+                  "filter": "unipol-footer",
+                  "name": "Unipol Footer",
+                  "model": "unipol-footer",
+                  "style": "unipol-footer",
+                  "text-list-1": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Text List",
+                    "filter": "text-list"
+                  },
+                  "text-list-2": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Text List",
+                    "filter": "text-list"
+                  },
+                  "text-list-3": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Text List",
+                    "filter": "text-list"
+                  },
+                  "text-list-4": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Text List",
+                    "filter": "text-list"
+                  },
+                  "footer-download-section": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Footer Download section",
+                    "model": "footer-download-section"
+                  },
+                  "footer-privacy-section": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Footer Privacy Section",
+                    "filter": "footer-privacy-section"
+                  },
+                  "footer-social-section": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Footer Social Section",
+                    "filter": "footer-social-section"
+                  },
+                  "footer-copyright-section": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Footer Copyright Section",
+                    "model": "footer-copyright-section"
+                  }
                 }
               }
             }
@@ -235,30 +275,45 @@
           }
         },
         {
-          "title": "Footer Download Link",
-          "id": "footer-download-link",
+          "title": "Footer Copyright Section",
+          "id": "footer-copyright-section",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Footer Download Link",
-                  "model": "footer-download-link"
+                  "name": "Footer Copyright Section",
+                  "model": "footer-copyright-section"
                 }
               }
             }
           }
         },
         {
-          "title": "Footer Privacy Link List",
-          "id": "footer-privacy-link-list",
+          "title": "Footer Download Section",
+          "id": "footer-download-section",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Footer Privacy Link List",
-                  "filter": "footer-privacy-link-list"
+                  "name": "Footer Download Section",
+                  "model": "footer-download-section"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Footer Privacy Section",
+          "id": "footer-privacy-section",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Footer Privacy Section",
+                  "filter": "footer-privacy-section"
                 }
               }
             }
@@ -280,15 +335,15 @@
           }
         },
         {
-          "title": "Footer Social List",
-          "id": "footer-social-list",
+          "title": "Footer Social Section",
+          "id": "footer-social-section",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Footer Social List",
-                  "filter": "footer-social-list"
+                  "name": "Footer Social Section",
+                  "filter": "footer-social-section"
                 }
               }
             }
@@ -304,21 +359,6 @@
                 "template": {
                   "name": "Footer Social Link",
                   "model": "footer-social-link"
-                }
-              }
-            }
-          }
-        },
-        {
-          "title": "Footer Text",
-          "id": "footer-text",
-          "plugins": {
-            "xwalk": {
-              "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
-                "template": {
-                  "name": "Footer Text",
-                  "model": "footer-text"
                 }
               }
             }

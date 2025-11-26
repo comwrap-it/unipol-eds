@@ -1,3 +1,4 @@
+import { moveInstrumentation } from '../../scripts/scripts.js';
 import {
   BUTTON_ICON_SIZES,
   BUTTON_VARIANTS,
@@ -14,16 +15,18 @@ import {
 const setupHeroWithBg = (isVideoBackground, mediaSrc, showHeroPauseIcon) => {
   const hero = document.createElement('div');
   hero.className = 'hero';
-  hero.setAttribute('aria-hidden', 'true');
   // Background media
   if (!isVideoBackground) {
     const pictureBg = mediaSrc.cloneNode(true);
+    moveInstrumentation(mediaSrc, pictureBg);
     pictureBg.className = 'hero-bg';
+    pictureBg.setAttribute('aria-hidden', 'true');
     hero.appendChild(pictureBg);
   } else {
     const videoBg = mediaSrc.cloneNode(true);
+    moveInstrumentation(mediaSrc, videoBg);
     videoBg.className = 'hero-bg';
-    videoBg.src = mediaSrc;
+    videoBg.setAttribute('aria-hidden', 'true');
     videoBg.autoplay = true;
     videoBg.muted = true;
     videoBg.loop = true;
@@ -49,6 +52,7 @@ const setupHeroWithBg = (isVideoBackground, mediaSrc, showHeroPauseIcon) => {
   }
   const heroOverlay = document.createElement('div');
   heroOverlay.className = 'hero-overlay';
+  heroOverlay.setAttribute('aria-hidden', 'true');
   hero.appendChild(heroOverlay);
   return hero;
 };
@@ -245,6 +249,7 @@ export function createHero(
  */
 const extractMediaFromRow = (row, isVideo = false) => {
   const mediaElement = row?.querySelector(isVideo ? 'video' : 'picture');
+  moveInstrumentation(row, mediaElement);
   if (mediaElement) return mediaElement;
   return null;
 };
@@ -302,20 +307,12 @@ const extractValuesFromRows = (rows) => {
     btnRightIcon,
   };
 };
-let isStyleAlreadyLoaded = false;
-const ensureStylesLoaded = async () => {
-  if (isStyleAlreadyLoaded) return;
-  const { loadCSS } = await import('../../scripts/aem.js');
-  loadCSS('./hero.css');
-  isStyleAlreadyLoaded = true;
-};
 
 /**
  * @param {HTMLElement} block
  */
 export default async function decorateHero(block) {
   if (!block) return;
-  ensureStylesLoaded();
 
   // Get rows from block
   let rows = Array.from(block.children);
@@ -367,5 +364,6 @@ export default async function decorateHero(block) {
     btnLeftIcon,
     btnRightIcon,
   );
+  moveInstrumentation(block, heroElement);
   block.replaceWith(heroElement);
 }
