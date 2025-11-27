@@ -4,7 +4,7 @@
 
 .number-block-cont {
   display: flex;
-  max-width: 1200px;
+  max-width: 1440px;
   margin: 0 auto;
   justify-content: center;
   align-items: center;
@@ -21,7 +21,6 @@
 
 .number-block {
     text-align: center;
-    margin-bottom: 32px;
 }
 
 .number-block p{

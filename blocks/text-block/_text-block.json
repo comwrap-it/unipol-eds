@@ -21,21 +21,32 @@
       "id": "text-block",
       "fields": [
         {
-          "component": "text",
-          "name": "title",
-          "label": "Titolo",
-          "required": true,
-          "validation": {
-            "maxLength": 60,
-            "customErrorMsg": "Testo troppo lungo"
-          }
-        },
-        {
           "component": "boolean",
           "label": "Centra e mostra testo",
           "description": "Attivo: contenuto centrato verticalmente e testo visibile. Disattivo: contenuto allineato orizzontalmente e testo non visibile.",
           "name": "contentAlignment",
           "valueType": "boolean"
+        },
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Titolo",
+          "required": true,
+          "validation": {
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "patterns": [
+            {
+              "pattern": "^.{0,20}$",
+              "customErrorMsg": "Massimo 20 caratteri quando il testo è centrato",
+              "condition": { "===": [ { "var": "contentAlignment" }, true ] }
+            },
+            {
+              "pattern": "^.{0,30}$",
+              "customErrorMsg": "Massimo 30 caratteri quando il testo è allineato a sinistra",
+              "condition": { "===": [ { "var": "contentAlignment" }, false ] }
+            }
+          ]
         },
         {
           "component": "richtext",

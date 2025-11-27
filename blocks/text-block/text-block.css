@@ -1,14 +1,14 @@
 /* Base styles (Mobile first) */
 .text-block {
-  max-width: 1200px;
+  max-width: 1440px;
   margin: 0 auto;
-  padding: 32px 16px;
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--Text-Block-Centered-Gap, 2rem);
   align-self: stretch;
+  margin-bottom: var(--Kpi-Highlights-Widget-Gap-M-Tp, 56px);
 }
 
 .text-block-title {
@@ -59,9 +59,9 @@
 
 /* Tablet */
 @media (width >= 768px) and (width <= 1280px) {
-  .text-block {
-    padding: 36px 20px;
-  }
+    .text-block {
+        margin-bottom: var(--Kpi-Highlights-Widget-Gap-D-Tl, 56px);
+    }
 
   .text-block-title {
     font-size: var(--Size-40, 2.5 rem);
@@ -70,9 +70,9 @@
 
 /* Desktop */
 @media (width >= 1281px) {
-      .text-block {
-        padding: 40px 24px;
-      }
+    .text-block {
+        margin-bottom: var(--Kpi-Highlights-Widget-Gap-D-Tl, 56px);
+    }
 
     .text-block-title {
         margin-bottom: 24px;
