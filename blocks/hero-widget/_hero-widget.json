@@ -8,7 +8,7 @@
                     "page": {
                         "resourceType": "core/franklin/components/section/v1/section",
                         "template": {
-                            "filter": "full-screen-hero-carousel",
+                            "filter": "hero-widget",
                             "name": "Hero Widget",
                             "model": "hero-widget",
                             "style": "hero-widget",

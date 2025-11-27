@@ -24,9 +24,6 @@
     "...": "../blocks/insurance-product-carousel-widget/_insurance-product-carousel-widget.json#/models"
   },
   {
-    "...": "../blocks/hero-widget/_hero-widget.json#/models"
-  },
-  {
     "...": "../blocks/*/_*.json#/models"
   },
   {
