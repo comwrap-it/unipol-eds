@@ -37,6 +37,12 @@
     ]
   },
   {
+    "id": "hero-widget",
+    "components": [
+      "full-screen-hero-carousel"
+    ]
+  },
+  {
     "id": "cards",
     "components": [
       "card"

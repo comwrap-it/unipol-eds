@@ -19,6 +19,9 @@
     "...": "../blocks/insurance-product-carousel-widget/_insurance-product-carousel-widget.json#/filters"
   },
   {
+    "...": "../blocks/hero-widget/_hero-widget.json#/filters"
+  },
+  {
     "...": "../blocks/*/_*.json#/filters"
   },
   {
