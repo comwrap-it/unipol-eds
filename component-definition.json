@@ -419,7 +419,7 @@
                 "template": {
                   "name": "Hero Widget",
                   "model": "hero-widget",
-                  "filter": "hero-widget",
+                  "filter": "full-screen-hero-carousel",
                   "style": "hero-widget",
                   "full-screen-hero-carousel": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
