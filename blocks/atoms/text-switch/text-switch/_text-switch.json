@@ -1,0 +1,59 @@
+{
+  "definitions": [
+    {
+      "title": "Text Switch",
+      "id": "text-switch",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Text Switch",
+              "model": "text-switch"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "text-switch",
+      "fields": [
+        {
+          "component": "text",
+          "name": "labelLeft",
+          "label": "Left Label",
+          "value": "Option A"
+        },
+        {
+          "component": "text",
+          "name": "labelRight",
+          "label": "Right Label",
+          "value": "Option B"
+        },
+        {
+          "component": "select",
+          "name": "initialActive",
+          "label": "Initially Active",
+          "value": "left",
+          "options": [
+            { "name": "Left", "value": "left" },
+            { "name": "Right", "value": "right" }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "text-switch-switch-label",
+          "label": "Button Of The Text Switch",
+          "fields": [
+            {
+              "...": "../switch-label/_switch-label.json#/models/switch-label/fields"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
