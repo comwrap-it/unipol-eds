@@ -3,6 +3,7 @@
     flex-direction: column;
     align-items: center;
     gap: var(--Carousel-Widget-Gap-D-Tl, 3rem);
+    margin: var(--Layout-Container-Horizontal-Gap, 1.5rem);
 
     &.swiper {
         overflow: visible;
@@ -17,8 +18,10 @@
 }
 
 /* Tablet Landscape */
-@media (768px <= width < 1280px) {
+@media (768px <= width < 1440px) {
     .insurance-product-carousel-container {
+        width: 76rem;
+
         & .insurance-product-carousel {
             width: 76rem;
         }

@@ -1,5 +1,8 @@
 .section {
     &.insurance-product-carousel-container {
+        display: flex;
+        padding: var(--Space-700-48, 3rem);
+        align-items: center;
         overflow-x: hidden;
     }
 }
