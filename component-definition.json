@@ -380,6 +380,21 @@
           }
         },
         {
+          "title": "Full Screen Hero Carousel",
+          "id": "full-screen-hero-carousel",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "full-screen-hero-carousel",
+                  "name": "Full Screen Hero Carousel"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Header Unipol",
           "id": "header-unipol",
           "plugins": {
@@ -406,10 +421,16 @@
                   "model": "hero-widget",
                   "filter": "hero-widget",
                   "style": "hero-widget",
-                  "hero": {
+                  "full-screen-hero-carousel": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
-                    "name": "Hero",
-                    "model": "hero"
+                    "name": "Full Screen Hero Carousel",
+                    "model": "full-screen-hero-carousel",
+                    "hero": {
+                      "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                      "name": "Insurance Product Card",
+                      "filter": "hero",
+                      "model": "hero"
+                    }
                   }
                 }
               }
@@ -422,7 +443,7 @@
           "plugins": {
             "xwalk": {
               "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
+                "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "name": "Hero",
                   "model": "hero"

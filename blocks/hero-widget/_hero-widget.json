@@ -12,10 +12,16 @@
                             "model": "hero-widget",
                             "filter": "hero-widget",
                             "style": "hero-widget",
-                            "hero": {
+                            "full-screen-hero-carousel": {
                                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                                "name": "Hero",
-                                "model": "hero"
+                                "name": "Full Screen Hero Carousel",
+                                "model": "full-screen-hero-carousel",
+                                "hero": {
+                                    "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                                    "name": "Insurance Product Card",
+                                    "filter": "hero",
+                                    "model": "hero"
+                                }
                             }
                         }
                     }
@@ -39,7 +45,7 @@
         {
             "id": "hero-widget",
             "components": [
-                "hero"
+                "full-screen-hero-carousel"
             ]
         }
     ]
