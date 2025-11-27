@@ -1,7 +1,11 @@
 .insurance-product-card-wrapper {
     display: flex;
 
-    .insurance-product-card-container {
+    &.swiper-slide {
+        width: auto;
+    }
+
+    & .insurance-product-card-container {
         display: flex;
         width: var(--Column-Size-Col-3, 19.75rem);
         flex-direction: column;
@@ -113,6 +117,40 @@
     }
 }
 
+/* Tablet Landscape */
+@media (768px <= width < 1440px) {
+    .insurance-product-card-wrapper {
+        &.swiper-slide {
+            width: 18.25rem;
+        }
+
+        & .insurance-product-card-container {
+            width: 18.25rem;
+
+            & .insurance-product-card-image {
+                height: 10.26575rem;
+                aspect-ratio: 292.00/164.25;
+
+                & img, picture {
+                    width: 18.25rem;
+                    height: 10.26575rem;
+                }
+            }
+
+            & .insurance-product-card-content {
+                padding: 0 var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem);
+
+                & .img-vector {
+                    width: 16.25rem;
+                    height: 5.1875rem;
+                    position: absolute;
+                    left: 1rem;
+                    top: -2.6095rem;
+                }
+            }
+        }
+    }
+}
 
 /* Tablet Portrait */
 @media (393px <= width < 768px) {

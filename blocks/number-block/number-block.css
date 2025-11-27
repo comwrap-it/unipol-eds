@@ -4,17 +4,19 @@
 
 .number-block-cont {
   display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  font-size: var(--Size-16);
+  font-size: var(--Size-16, 1rem);
   font-family: var(--Family-Font-2);
   font-weight: 400;
 }
 
 .text-block-number {
   font-weight: 600;
-  font-size: var(--Size-56);
+  font-size: var(--Size-56, 3.5rem);
 }
 
 .number-block {
@@ -26,23 +28,14 @@
     margin: 0;
 }
 
-/* Tablet */
-@media (width >= 769px) and (width <= 1024px) {
-  .text-block-number {
-    font-size: var(--Size-56);
-  }
-}
-
-@media (width >= 769px) {
-  .number-block-cont {
-    flex-direction: row;
-    justify-content: space-around;
-  }
-}
-
 /* Desktop */
-@media (width >= 1025px) {
-  .text-block-number {
-    font-size: 5rem;
-  }
+@media (width >= 768px) {
+    .number-block-cont {
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    .text-block-number {
+      font-size: var(--Size-80, 5rem);
+    }
 }
