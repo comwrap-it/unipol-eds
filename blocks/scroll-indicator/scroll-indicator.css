@@ -18,13 +18,13 @@
         & .ellipse-one {
             width: 0.5rem;
             height: 0.5rem;
-            fill: var(--Expanding-Dots-Background, #001C35);
+            fill: var(--Expanding-Dots-Background-Dot, #BFC7CD);
         }
 
         & .ellipse-two {
             width: 0.5rem;
             height: 0.5rem;
-            fill: var(--Expanding-Dots-Background, #001C35);
+            fill: var(--Expanding-Dots-Background-Dot, #BFC7CD);
         }
     }
 }
