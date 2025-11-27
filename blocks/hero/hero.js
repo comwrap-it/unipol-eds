@@ -7,24 +7,30 @@ import {
 
 /**
  * Sets up the Hero container with background media (image or video).
+ * @param {HTMLElement} heroBackground - The media element (video or picture)
  * @param {boolean} isVideoBackground
- * @param {HTMLElement} mediaSrc - The media element (video or picture)
  * @param {boolean} showHeroPauseIcon
  * @returns {HTMLDivElement}
  */
-const setupHeroWithBg = (isVideoBackground, mediaSrc, showHeroPauseIcon) => {
+const setupHeroWithBg = (
+  heroBackground,
+  isVideoBackground = false,
+  showHeroPauseIcon = false,
+) => {
+  if (!heroBackground) return null;
+
   const hero = document.createElement('div');
-  hero.className = 'hero';
+  hero.className = 'hero swiper-slide';
   // Background media
   if (!isVideoBackground) {
-    const pictureBg = mediaSrc.cloneNode(true);
-    moveInstrumentation(mediaSrc, pictureBg);
+    const pictureBg = heroBackground.cloneNode(true);
+    moveInstrumentation(heroBackground, pictureBg);
     pictureBg.className = 'hero-bg';
     pictureBg.setAttribute('aria-hidden', 'true');
     hero.appendChild(pictureBg);
   } else {
-    const videoBg = mediaSrc.cloneNode(true);
-    moveInstrumentation(mediaSrc, videoBg);
+    const videoBg = heroBackground.cloneNode(true);
+    moveInstrumentation(heroBackground, videoBg);
     videoBg.className = 'hero-bg';
     videoBg.setAttribute('aria-hidden', 'true');
     videoBg.autoplay = true;
@@ -120,7 +126,7 @@ const createHeroMainSection = (
  * @param {boolean} showHeroButton
  * @param {string} btnLabel
  * @param {string} btnHref
- * @param btnOpenInNewTab
+ * @param {boolean} btnOpenInNewTab
  * @param {string} btnVariant
  * @param {string} btnIconSize
  * @param {string} btnLeftIcon
@@ -162,6 +168,21 @@ const createHeroButtonSection = (
     // TODO: Add carousel controls here
   }
   return buttonSection;
+};
+
+/**
+ * ensures styles are loaded only once
+ */
+let isStylesAlreadyLoaded = false;
+const ensureStylesLoaded = async () => {
+  if (isStylesAlreadyLoaded) return;
+  const { loadCSS } = await import('../../scripts/aem.js');
+  const cssPromises = [
+    `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`,
+    `${window.hlx.codeBasePath}/blocks/hero/hero.css`,
+  ].map((cssPath) => loadCSS(cssPath));
+  await Promise.all(cssPromises);
+  isStylesAlreadyLoaded = true;
 };
 
 /**
@@ -209,9 +230,10 @@ export function createHero(
   btnLeftIcon,
   btnRightIcon,
 ) {
+  ensureStylesLoaded(); // i intentionally not awaited to not block rendering
   const hero = setupHeroWithBg(
-    isVideoBackground,
     heroBackground,
+    isVideoBackground,
     showHeroPauseIcon,
   );
   const heroContent = document.createElement('div');
@@ -261,7 +283,7 @@ const extractMediaFromRow = (row, isVideo = false) => {
  * @returns {Object} An object containing hero properties
  *
  */
-const extractValuesFromRows = (rows) => {
+export const extractHeroPropertiesFromRows = (rows) => {
   const variant = rows[0]?.textContent?.trim() || '';
   const heroBackground = extractMediaFromRow(rows[1]);
   const isVideoBackground = rows[2]?.textContent?.trim().toLowerCase() === 'true';
@@ -309,20 +331,11 @@ const extractValuesFromRows = (rows) => {
   };
 };
 
-let isBtnStylesLoaded = false;
-const ensureButtonStylesLoaded = async () => {
-  if (isBtnStylesLoaded) return;
-  const { loadCSS } = await import('../../scripts/aem.js');
-  await loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`);
-  isBtnStylesLoaded = true;
-};
-
 /**
  * @param {HTMLElement} block
  */
 export default async function decorateHero(block) {
   if (!block) return;
-  await ensureButtonStylesLoaded();
 
   // Get rows from block
   let rows = Array.from(block.children);
@@ -351,7 +364,7 @@ export default async function decorateHero(block) {
     btnIconSize,
     btnLeftIcon,
     btnRightIcon,
-  } = extractValuesFromRows(rows);
+  } = extractHeroPropertiesFromRows(rows);
 
   const heroElement = createHero(
     variant,
