@@ -57,6 +57,7 @@
     font-size: var(--Size-16, 1rem);
     font-weight: 600;
     color: var(--Footer-Primary-Text, #F9F9F7);
+    text-align: end;
 }
 
 .footer-download-brand-button {
@@ -79,8 +80,8 @@
     justify-content: space-between;
 }
 
-/* Mobile */
-@media (width >= 395px) and (width <= 767px) {
+/* Tablet */
+@media (width > 395px) and (width <= 768px) {
     .footer-download-section-wrapper {
         margin-left: unset;
     }
@@ -92,7 +93,7 @@
     }
 
     .footer-download-brand {
-        width: 43%;
+        width: 45%;
     }
 
     .footer-download-bottom-app {
@@ -100,8 +101,7 @@
     }
 }
 
-/* Mobile */
-@media (width >= 395px) and (width <= 565px) {
+@media (width > 395px) and (width <= 565px) {
     .footer-download-app-google img {
         width: 110px;
     }
@@ -109,12 +109,11 @@
     .footer-download-app-apple img {
         width: 90px;
     }
-
 }
 
 
-/* Small Mobile */
-@media (width <= 394px) {
+/* Mobile */
+@media (width <= 395px) {
     .footer-download-section-wrapper {
         margin-left: unset;
     }
@@ -127,5 +126,4 @@
     .footer-download-brand {
         margin-bottom: var(--Footer-Logo-Gap, 40px);
     }
-
 }

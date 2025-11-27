@@ -4,6 +4,10 @@
     align-items: center;
     gap: var(--Carousel-Widget-Gap-D-Tl, 3rem);
 
+    &.swiper {
+        overflow: visible;
+    }
+
     .insurance-product-carousel {
         display: flex;
         width: 82rem;

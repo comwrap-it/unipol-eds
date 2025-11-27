@@ -1,0 +1,5 @@
+.section {
+    &.insurance-product-carousel-container {
+        overflow-x: hidden;
+    }
+}
