@@ -21,27 +21,6 @@
       "id": "hero",
       "fields": [
         {
-          "component": "select",
-          "name": "heroVariant",
-          "label": "Hero Variant",
-          "description": "Select the variant of the hero block",
-          "value": "default",
-          "options": [
-            {
-              "name": "None",
-              "value": ""
-            },
-            {
-              "name": "Default",
-              "value": "default"
-            },
-            {
-              "name": "Carousel",
-              "value": "carousel"
-            }
-          ]
-        },
-        {
           "component": "reference",
           "valueType": "string",
           "name": "heroBackgroundMediaSrc",

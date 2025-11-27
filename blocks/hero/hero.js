@@ -122,7 +122,6 @@ const createHeroMainSection = (
 
 /**
  * Builds the button section of a Hero, handling carousel placement logic.
- * @param {string} variant
  * @param {boolean} showHeroButton
  * @param {string} btnLabel
  * @param {string} btnHref
@@ -132,10 +131,10 @@ const createHeroMainSection = (
  * @param {string} btnLeftIcon
  * @param {string} btnRightIcon
  * @param {HTMLDivElement} mainSection - reference for carousel variant placement
+ * @param {boolean} isCarousel
  * @returns {HTMLDivElement}
  */
 const createHeroButtonSection = (
-  variant,
   showHeroButton,
   btnLabel,
   btnHref,
@@ -145,6 +144,7 @@ const createHeroButtonSection = (
   btnLeftIcon,
   btnRightIcon,
   mainSection,
+  isCarousel = false,
 ) => {
   const buttonSection = document.createElement('div');
   buttonSection.className = 'button-section';
@@ -158,13 +158,13 @@ const createHeroButtonSection = (
       btnLeftIcon,
       btnRightIcon,
     );
-    if (variant === 'carousel') {
+    if (isCarousel) {
       mainSection.appendChild(button);
     } else {
       buttonSection.appendChild(button);
     }
   }
-  if (variant === 'carousel') {
+  if (isCarousel) {
     // TODO: Add carousel controls here
   }
   return buttonSection;
@@ -188,7 +188,6 @@ const ensureStylesLoaded = async () => {
 /**
  * Creates a Hero component
  *
- * @param {string} variant default | carousel
  * @param {HTMLElement} heroBackground - the background media source
  * @param {boolean} isVideoBackground
  * @param {boolean} showHeroButton
@@ -210,7 +209,6 @@ const ensureStylesLoaded = async () => {
  * @returns {HTMLElement}
  */
 export function createHero(
-  variant,
   heroBackground,
   isVideoBackground,
   showHeroButton,
@@ -249,7 +247,6 @@ export function createHero(
   );
   heroContent.appendChild(mainSection);
   const buttonSection = createHeroButtonSection(
-    variant,
     showHeroButton,
     btnLabel,
     btnHref,
@@ -284,32 +281,30 @@ const extractMediaFromRow = (row, isVideo = false) => {
  *
  */
 export const extractHeroPropertiesFromRows = (rows) => {
-  const variant = rows[0]?.textContent?.trim() || '';
-  const heroBackground = extractMediaFromRow(rows[1]);
-  const isVideoBackground = rows[2]?.textContent?.trim().toLowerCase() === 'true';
-  const showHeroLogo = rows[3]?.textContent?.trim().toLowerCase() === 'true';
-  const heroLogo = extractMediaFromRow(rows[4]);
-  const showHeroPauseIcon = rows[5]?.textContent?.trim().toLowerCase() === 'true';
-  const title = rows[6]?.textContent?.trim() || '';
-  const subtitleBold = rows[7]?.textContent?.trim() || '';
-  const subtitle = rows[8]?.textContent?.trim() || '';
-  const showHeroBulletList = rows[9]?.textContent?.trim().toLowerCase() === 'true';
+  const heroBackground = extractMediaFromRow(rows[0]);
+  const isVideoBackground = rows[1]?.textContent?.trim().toLowerCase() === 'true';
+  const showHeroLogo = rows[2]?.textContent?.trim().toLowerCase() === 'true';
+  const heroLogo = extractMediaFromRow(rows[3]);
+  const showHeroPauseIcon = rows[4]?.textContent?.trim().toLowerCase() === 'true';
+  const title = rows[5]?.textContent?.trim() || '';
+  const subtitleBold = rows[6]?.textContent?.trim() || '';
+  const subtitle = rows[7]?.textContent?.trim() || '';
+  const showHeroBulletList = rows[8]?.textContent?.trim().toLowerCase() === 'true';
   const bulletList = [
+    rows[9]?.textContent?.trim() || '',
     rows[10]?.textContent?.trim() || '',
     rows[11]?.textContent?.trim() || '',
-    rows[12]?.textContent?.trim() || '',
   ].filter(Boolean);
   // Button properties
-  const showHeroButton = rows[13]?.textContent?.trim().toLowerCase() === 'true';
-  const btnText = rows[14]?.textContent?.trim() || '';
-  const btnVariant = rows[15]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-  const btnHref = rows[16]?.querySelector('a')?.href || rows[16]?.textContent?.trim() || '';
-  const btnOpenInNewTab = rows[17]?.textContent?.trim().toLowerCase() === 'true';
-  const btnIconSize = rows[18]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
-  const btnLeftIcon = rows[19]?.textContent?.trim() || '';
-  const btnRightIcon = rows[20]?.textContent?.trim() || '';
+  const showHeroButton = rows[12]?.textContent?.trim().toLowerCase() === 'true';
+  const btnText = rows[13]?.textContent?.trim() || '';
+  const btnVariant = rows[14]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
+  const btnHref = rows[15]?.querySelector('a')?.href || rows[15]?.textContent?.trim() || '';
+  const btnOpenInNewTab = rows[16]?.textContent?.trim().toLowerCase() === 'true';
+  const btnIconSize = rows[17]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
+  const btnLeftIcon = rows[18]?.textContent?.trim() || '';
+  const btnRightIcon = rows[19]?.textContent?.trim() || '';
   return {
-    variant,
     heroBackground,
     isVideoBackground,
     showHeroButton,
@@ -345,7 +340,6 @@ export default async function decorateHero(block) {
   }
 
   const {
-    variant,
     heroBackground,
     isVideoBackground,
     showHeroButton,
@@ -367,7 +361,6 @@ export default async function decorateHero(block) {
   } = extractHeroPropertiesFromRows(rows);
 
   const heroElement = createHero(
-    variant,
     heroBackground,
     isVideoBackground,
     showHeroButton,
