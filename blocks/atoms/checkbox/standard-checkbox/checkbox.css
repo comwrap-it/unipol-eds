@@ -16,6 +16,7 @@
 .checkbox-custom {
   width: var(--Checkbox-Dimensions, 16px);
   height: var(--Checkbox-Dimensions, 16px);
+  font-size: var(--Size-14, 14px);
   border-radius: var(--Checkbox-Radius, 4px);
   border: var(--Checkbox-Border-Width, 1px) solid var(--Checkbox-Unchecked-Border, #001C35);
   background-repeat: no-repeat;
@@ -44,6 +45,7 @@
 /* Disabled */
 .checkbox.disabled .checkbox-custom {
   border-color: var(--Checkbox-Disabled-Border, #63727D);
+  color: var(--Checkbox-Disabled-Icon);
   background: var(--Checkbox-Disabled-Background, #DFE2E5);
   cursor: not-allowed;
 }
@@ -51,6 +53,7 @@
 /* Hover */
 .checkbox:not(.disabled):hover .checkbox-custom {
   border-radius: var(--Checkbox-Radius, 4px);
+  color: var(--Checkbox-Checked-Hover-Icon);
   border: var(--Checkbox-Border-Width, 1px)
           solid var(--Checkbox-Checked-Hover-Border, #005299);
 }

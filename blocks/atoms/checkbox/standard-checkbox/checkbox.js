@@ -53,20 +53,20 @@ export function createCheckbox(typeStatus, disabled, instrumentation = {}) {
   customSpan.setAttribute('aria-checked', checkbox.checked ? 'true' : 'false');
 
   checkbox.addEventListener('change', () => {
+    customSpan.classList.remove('un-icon-check', 'un-icon-minus');
+
     if (checkbox.checked) {
-      customSpan.classList.remove('minus-icon');
-      customSpan.classList.add('checked-icon');
+      customSpan.classList.add('un-icon-check');
       checkbox.setAttribute('aria-checked', 'true');
     } else {
-      customSpan.classList.remove('checked-icon', 'minus-icon');
       checkbox.setAttribute('aria-checked', 'false');
     }
   });
 
   if (typeStatus === CHECKBOX_TYPES.CHECKED) {
-    customSpan.classList.add('checked-icon');
+    customSpan.classList.add('un-icon-check');
   } else if (typeStatus === CHECKBOX_TYPES.INDETERMINATE) {
-    customSpan.classList.add('minus-icon');
+    customSpan.classList.add('un-icon-minus');
   }
 
   wrapper.appendChild(checkbox);
