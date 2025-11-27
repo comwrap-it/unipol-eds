@@ -48,6 +48,19 @@
   transform: translateX(18px);
 }
 
+/* FOCUSED */
+.switch input[type="checkbox"]:focus-visible {
+  border: var(--Switch-Border-Focus, 2px) solid var(--Switch-Checked-Focused-Border-Focus, #99CFFF);
+}
+
+.switch input[type="checkbox"]:focus-visible:not(:checked) {
+  background: var(--Switch-Unchecked-Focused-Background, #BFC7CD);
+}
+
+.switch input[type="checkbox"]:focus-visible:checked {
+  background: var(--Switch-Checked-Focused-Background, #BFC7CD);
+}
+
 /* HOVER */
 .switch input[type="checkbox"]:not(:disabled):hover:not(:checked) {
   background: var(--Switch-Unchecked-Hover-Background, #DFE2E5);
@@ -64,19 +77,6 @@
 
 .switch input[type="checkbox"]:not(:disabled):active:checked {
   background: var(--Switch-Checked-Pressed-Background, #DFE2E5);
-}
-
-/* FOCUSED */
-.switch input[type="checkbox"]:focus-visible {
-  border: var(--Switch-Border-Focus, 2px) solid var(--Switch-Checked-Focused-Border-Focus, #99CFFF);
-}
-
-.switch input[type="checkbox"]:focus-visible:not(:checked) {
-  background: var(--Switch-Unchecked-Focused-Background, #BFC7CD);
-}
-
-.switch input[type="checkbox"]:focus-visible:checked {
-  background: var(--Switch-Checked-Focused-Background, #BFC7CD);
 }
 
 /* DISABLED */
