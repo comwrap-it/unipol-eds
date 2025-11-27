@@ -8,6 +8,8 @@
   cursor: pointer;
   user-select: none;
   gap: 0;
+  height: 2.1875rem;
+  line-height: 0;
 }
 
 /* ACTIVE */
