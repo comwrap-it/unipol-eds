@@ -110,7 +110,10 @@ export function createTextBlock(
   const textContentContainer = document.createElement('div');
   textContentContainer.className = 'text-block-cont';
 
-  // title
+  if (!centered) {
+    textContentContainer.classList.add('text-block-left');
+  }
+
   if (titleContent) {
     let titleElement;
 
@@ -126,7 +129,6 @@ export function createTextBlock(
     textContentContainer.appendChild(titleElement);
   }
 
-  // subtitle only if centered
   if (centered && textContent) {
     let textElement;
 
@@ -142,7 +144,6 @@ export function createTextBlock(
     textContentContainer.appendChild(textElement);
   }
 
-  // button
   let finalButtonElement = buttonElement;
 
   if (!finalButtonElement && buttonConfig && buttonConfig.label) {

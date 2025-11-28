@@ -43,18 +43,20 @@
   flex-shrink: 0;
 }
 
-.text-block.text-block-left .text-block-cont {
+.text-block-wrapper .text-block-left.text-block-cont {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  flex-direction: row;
+  margin-bottom: 0;
 }
 
-.text-block.text-block-left .text-block-title {
+.text-block-left.text-block-cont .text-block-title {
   margin: 0;
 }
 
-.text-block.text-block-left .text-block-text {
+.text-block-wrapper .text-block-left.text-block-cont .text-block-text {
   display: none;
 }
 
