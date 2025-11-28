@@ -67,7 +67,23 @@ function extractTextElement(textRow) {
 
   const existingPara = textRow.querySelector('p');
   if (existingPara) {
+    // If textRow has other children besides the paragraph, move them into the paragraph
+    // This ensures all content and instrumentation from child elements is preserved
+    const children = Array.from(textRow.childNodes);
+    children.forEach((child) => {
+      if (child !== existingPara && child.nodeType === Node.ELEMENT_NODE) {
+        // Move element and its instrumentation into the paragraph
+        existingPara.appendChild(child);
+      } else if (child !== existingPara && child.nodeType === Node.TEXT_NODE && child.textContent.trim()) {
+        // Move text nodes into the paragraph
+        existingPara.appendChild(child);
+      }
+    });
+    
+    // Move instrumentation from textRow to existingPara
+    // This must be done AFTER moving children to preserve their instrumentation
     moveInstrumentation(textRow, existingPara);
+    
     return existingPara;
   }
 

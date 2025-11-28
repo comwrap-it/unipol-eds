@@ -979,7 +979,7 @@
     "fields": [
       {
         "component": "tab",
-        "label": "Configurazione blocco numerico 1",
+        "label": "Configurazione blocco 1",
         "name": "numberBlock1"
       },
       {
@@ -1001,7 +1001,7 @@
       },
       {
         "component": "tab",
-        "label": "Configurazione blocco numerico 2",
+        "label": "Configurazione blocco 2",
         "name": "numberBlock2"
       },
       {
@@ -1023,7 +1023,7 @@
       },
       {
         "component": "tab",
-        "label": "Configurazione blocco numerico 3",
+        "label": "Configurazione blocco 3",
         "name": "numberBlock3"
       },
       {

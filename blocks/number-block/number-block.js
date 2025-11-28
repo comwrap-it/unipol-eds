@@ -75,15 +75,47 @@ function extractNumberItem(titleRow, descRow) {
     const hasContent = descRow.textContent?.trim();
 
     if (hasInstrumentation || hasContent) {
-      const descElement = document.createElement('div');
+      // Check if there's an existing paragraph (common in richtext)
+      const existingPara = descRow.querySelector('p');
+      
+      if (existingPara) {
+        // If textRow has other children besides the paragraph, move them into the paragraph
+        // This ensures all content and instrumentation from child elements is preserved
+        const children = Array.from(descRow.childNodes);
+        children.forEach((child) => {
+          if (child !== existingPara && child.nodeType === Node.ELEMENT_NODE) {
+            // Move element and its instrumentation into the paragraph
+            existingPara.appendChild(child);
+          } else if (child !== existingPara && child.nodeType === Node.TEXT_NODE && child.textContent.trim()) {
+            // Move text nodes into the paragraph
+            existingPara.appendChild(child);
+          }
+        });
+        
+        // Move instrumentation from descRow to existingPara
+        // This must be done AFTER moving children to preserve their instrumentation
+        moveInstrumentation(descRow, existingPara);
+        
+        // Wrap the paragraph in a div for consistent structure
+        const descElement = document.createElement('div');
+        descElement.appendChild(existingPara);
+        
+        item.descriptionElement = descElement;
+      } else {
+        // No existing paragraph, create one and wrap it
+        const descElement = document.createElement('div');
+        const para = document.createElement('p');
+        
+        while (descRow.firstChild) {
+          para.appendChild(descRow.firstChild);
+        }
+        moveInstrumentation(descRow, para);
+        
+        descElement.appendChild(para);
+        // Truncation will be applied in createNumberBlock() if needed
 
-      while (descRow.firstChild) {
-        descElement.appendChild(descRow.firstChild);
+        item.descriptionElement = descElement;
       }
-      moveInstrumentation(descRow, descElement);
-      // Truncation will be applied in createNumberBlock() if needed
-
-      item.descriptionElement = descElement;
     }
   }
 
