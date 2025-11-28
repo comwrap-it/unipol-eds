@@ -1,17 +1,19 @@
-.number-block.block {
-    margin: 0;
+.number-block-wrapper {
+    width: 100%;
+    margin: auto;
+    padding: 0 16px;
 }
 
 .number-block-cont {
   display: flex;
-  max-width: 1440px;
-  margin: 0 auto;
+  max-width: 100%;
   justify-content: center;
   align-items: center;
   flex-direction: column;
   font-size: var(--Size-16, 1rem);
   font-family: var(--Family-Font-2);
   font-weight: 400;
+  gap: var(--Number-Block-Gap-M, 32px);
 }
 
 .text-block-number {
@@ -27,14 +29,26 @@
     margin: 0;
 }
 
-/* Desktop */
+/* Tablet */
 @media (width >= 768px) {
+    .number-block-wrapper {
+        padding: 0 32px;
+    }
+
     .number-block-cont {
         flex-direction: row;
         justify-content: space-around;
+        gap: var(--Number-Block-Gap-D-Tl-Tp, 16px);
     }
 
     .text-block-number {
       font-size: var(--Size-80, 5rem);
+    }
+}
+
+/* Desktop */
+@media (width >= 1281px) {
+    .number-block-wrapper {
+        padding: 0 64px;
     }
 }

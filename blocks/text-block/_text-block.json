@@ -29,24 +29,14 @@
         },
         {
           "component": "text",
-          "name": "title",
+          "name": "text-block-center-align",
           "label": "Titolo",
           "required": true,
           "validation": {
+            "maxLength": 60,
             "customErrorMsg": "Testo troppo lungo"
           },
-          "patterns": [
-            {
-              "pattern": "^.{0,20}$",
-              "customErrorMsg": "Massimo 20 caratteri quando il testo è centrato",
-              "condition": { "===": [ { "var": "contentAlignment" }, true ] }
-            },
-            {
-              "pattern": "^.{0,30}$",
-              "customErrorMsg": "Massimo 30 caratteri quando il testo è allineato a sinistra",
-              "condition": { "===": [ { "var": "contentAlignment" }, false ] }
-            }
-          ]
+          "condition": { "===": [{"var" : "contentAlignment"}, true] }
         },
         {
           "component": "richtext",
@@ -103,6 +93,17 @@
           }
         },
         {
+          "component": "text",
+          "name": "text-block-left-align",
+          "label": "Titolo",
+          "required": true,
+          "validation": {
+            "maxLength": 30,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": { "===": [{"var" : "contentAlignment"}, false] }
+        },
+        {
           "component": "container",
           "name": "button-container",
           "label": "Configurazione Bottone",
@@ -118,4 +119,3 @@
   ],
   "filters": []
 }
-
