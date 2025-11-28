@@ -19,6 +19,7 @@
 import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
+import { createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
 
 /**
  * Decorates the insurance product carousel block
@@ -122,10 +123,15 @@ export default async function decorate(block) {
     return slide;
   });
 
+  const mq = window.matchMedia('(min-width: 393px)');
+
   // Wait for all cards to be processed
   const cardElements = await Promise.all(cardPromises);
-  cardElements.forEach((slide) => {
+  cardElements.forEach((slide, index) => {
     if (slide && !hasInstrumentation && slide.innerText) {
+      if (index >= 4 && !mq.matches) {
+        slide.classList.add('hidden');
+      }
       track.appendChild(slide);
     } else if (slide && hasInstrumentation) {
       track.appendChild(slide);
@@ -133,14 +139,23 @@ export default async function decorate(block) {
   });
 
   let scrollIndicator;
-  if (cardElements && cardElements.length > 4) {
-    const { scrollIndicator: createdScrollIndicator } = await createScrollIndicator();
-    scrollIndicator = createdScrollIndicator;
+  let showMoreButton;
+
+  if (mq.matches) {
+    if (cardElements && cardElements.length > 4) {
+      const { scrollIndicator: createdScrollIndicator } = await createScrollIndicator();
+      scrollIndicator = createdScrollIndicator;
+    }
+  } else {
+    showMoreButton = createButton('Mostra di più', '', false, BUTTON_VARIANTS.SECONDARY, BUTTON_ICON_SIZES.MEDIUM, '', '');
   }
 
   carousel.appendChild(track);
+
   if (scrollIndicator) {
     carousel.appendChild(scrollIndicator);
+  } else if (showMoreButton) {
+    carousel.appendChild(showMoreButton);
   }
 
   // Preserve blockName if present
@@ -154,8 +169,7 @@ export default async function decorate(block) {
   // Replace block with carousel
   block.replaceWith(carousel);
 
-  const mq = window.matchMedia('(min-width: 393px)');
-  if (mq.matches && typeof window.Swiper === 'undefined') {
+  if (mq.matches) {
     const handleInsuranceProductCarouselWidget = await import('../insurance-product-carousel-widget/insurance-product-carousel-widget.js');
     handleInsuranceProductCarouselWidget.default();
   }
