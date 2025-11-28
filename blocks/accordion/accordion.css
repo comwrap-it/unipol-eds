@@ -1,0 +1,85 @@
+.accordion {
+  width: 100%;
+  max-width: 640px;
+  padding: var(--Accordion-Vertical-Padding, 24px)
+           var(--Accordion-Horizontal-Padding, 24px);
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: var(--Accordion-Vertical-Gap, 24px);
+  border-radius: var(--Accordion-Radius, 16px);
+  border: var(--Accordion-Border, 1px) solid
+          var(--Accordion-Border-Close, rgb(17 17 17 / 0%));
+  background: var(--Accordion-Background-Closed, #FFF);
+  box-shadow: var(--Depth-050---2, 2px) var(--Depth-050---2, 2px)
+              var(--Blur-200---8, 8px) 0 rgb(0 0 0 / 8%);
+  cursor: pointer;
+}
+
+.accordion-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.accordion-label {
+  color: var(--Accordion-Title-Close, #001C35);
+  font-family: var(--Family-Font-2, Manrope);
+  font-size: var(--Font-Size-Heading, 24px);
+  font-style: normal;
+  font-weight: 600;
+  line-height: 125%;
+  letter-spacing: -0.24px;
+}
+
+.accordion-icon {
+  width: 24px;
+  height: 24px;
+  font-size: var(--Size-24);
+  flex-shrink: 0;
+  aspect-ratio: 1 / 1;
+}
+
+.accordion-content {
+  width: 100%;
+  color: var(--Accordion-Description-Open, #001C35);
+  font-family: var(--Family-Font-2, Manrope);
+  font-size: var(--Size-16, 16px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  max-height: 0;
+  overflow: hidden;
+  padding-top: 0;
+  padding-bottom: 0;
+  transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.accordion-label,
+.accordion-content {
+  text-align: left;
+}
+
+.accordion.open .accordion-content {
+  opacity: 1;
+}
+
+.accordion:not(.open) .accordion-content {
+  opacity: 0;
+}
+
+/* Mobile */
+@media (width <= 768px) {
+  .accordion {
+    padding: var(--Accordion-Vertical-Padding, 24px)
+             var(--Accordion-Horizontal-Padding, 16px);
+    gap: var(--Accordion-Vertical-Gap, 16px);
+  }
+
+  .accordion-label {
+    font-size: var(--Font-Size-Heading, 20px);
+    letter-spacing: -0.2px;
+  }
+}
+
