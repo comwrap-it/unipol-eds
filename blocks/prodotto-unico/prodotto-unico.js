@@ -9,7 +9,7 @@ export default async function decorate(block) {
   try {
     // Carica il CSS
     await loadCSS('/static/css/styles.css');
-    console.log('CSS caricato per componente Unica');
+    console.log('CSS caricato per componente Prodotto Unico');
 
     // Carica i file JavaScript in ordine (tutti type="module")
     // L'ordine è importante: runtime -> polyfills -> main
@@ -20,8 +20,9 @@ export default async function decorate(block) {
     console.log('polyfills.js caricato');
 
     await loadScript('/static/js/main.js', { type: 'module' });
-    console.log('main.js caricato - Componente Angular Unica pronto');
+    console.log('main.js caricato - Componente Angular Prodotto Unico pronto');
   } catch (error) {
-    console.error('Errore nel caricamento del componente Angular Unica:', error);
+    console.error('Errore nel caricamento del componente Angular Prodotto Unico:', error);
   }
 }
+
