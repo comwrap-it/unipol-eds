@@ -130,9 +130,7 @@
   },
   {
     "id": "unipol-header",
-    "components": [
-      "header-nav-pill-box"
-    ]
+    "components": []
   },
   {
     "id": "unipol-footer",

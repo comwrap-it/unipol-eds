@@ -17,7 +17,7 @@
                 "name": "Header Logo and Hamburger",
                 "model": "header-logo-hamburger"
               },
-              "header-nav-pill-box-1": {
+              "header-nav-pill-box": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Header Navigation pill and box Section",
                 "filter": "header-nav-pill-box"
@@ -25,7 +25,7 @@
               "header-utilities": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Header buttons Section",
-                "model": "header-utilities"
+                "filter": "header-utilities"
               }
             }
           }
@@ -48,9 +48,7 @@
   "filters": [
     {
       "id": "unipol-header",
-      "components": [
-        "header-nav-pill-box"
-      ]
+      "components": []
     }
   ]
 }
