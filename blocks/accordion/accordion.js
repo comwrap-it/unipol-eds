@@ -14,6 +14,38 @@ export function extractInstrumentationAttributes(element) {
   return instrumentation;
 }
 
+// Block to be moved in config file
+
+export const DEV_CONFIG = {
+  domain: 'http://localhost:4502',
+  cloudPublishDomain: 'https://publish-p42403-e1312991.adobeaemcloud.com',
+  cloudAuthorDomain: 'https://author-p42403-e1312991.adobeaemcloud.com',
+  username: 'admin',
+  password: 'admin',
+  isLocalDevelopment: window.location.port === '3000',
+};
+
+export function getAuthHeader() {
+  return `Basic ${btoa(`${DEV_CONFIG.username}:${DEV_CONFIG.password}`)}`;
+}
+
+export function isAuthorInstance() {
+  const currentUrl = window.location.href;
+  return currentUrl.includes('author-');
+}
+
+export function getGraphQLEndpoint(path) {
+  if (DEV_CONFIG.isLocalDevelopment) {
+    return `${DEV_CONFIG.domain}${path}`;
+  }
+
+  const baseUrl = isAuthorInstance()
+    ? DEV_CONFIG.cloudAuthorDomain
+    : DEV_CONFIG.cloudPublishDomain;
+
+  return `${baseUrl}${path}`;
+}
+
 /**
  * Creates Accordion
  *
@@ -96,14 +128,14 @@ export default async function decorateAccordion(block) {
   const rootPath = block.querySelector('[name="accordionRootpath"]')?.value?.trim();
 
   if (rootPath) {
-    // Content Fragment 
+    // Content Fragment
     try {
-      // Line to update with proper endpoint
-      const graphqlEndpoint = getGraphQLEndpoint('/graphql/execute.json/unipol/accordionItemsPerPath') + ';rootPath=' + rootPath;
+      // Block to update with proper endpoint
+      const graphqlEndpoint = `${getGraphQLEndpoint('/graphql/execute.json/unipol/accordionItemsPerPath')};rootPath=${rootPath}`;
 
       const headers = { 'Content-Type': 'application/json' };
       if (DEV_CONFIG.isLocalDevelopment) {
-        headers['Authorization'] = getAuthHeader();
+        headers.Authorization = getAuthHeader();
       }
 
       const response = await fetch(graphqlEndpoint, { method: 'GET', headers });
@@ -129,12 +161,10 @@ export default async function decorateAccordion(block) {
         if (content) content.innerHTML = item.txDescription.html || '';
         block.appendChild(accordionElement);
       }); */
-
     } catch (e) {
       console.error('Error in loading Content Fragment:', e);
       block.innerHTML = '';
     }
-
   } else {
     // Editorial
     let rows = [...block.children];
