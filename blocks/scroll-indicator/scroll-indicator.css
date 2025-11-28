@@ -1,9 +1,9 @@
 .scroll-indicator {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: var(--Scroll-Indicator-Gap, 2rem);
 
-    &.absolute-positioned {
+    &.hero-indicator {
         position: absolute;
         bottom: var(--Hero-Full-Screen-Bottom-Padding-Tl-Tp, 80px);
         right: var(--Hero-Full-Screen-Horizontal-Padding-D, 64px);
@@ -31,13 +31,30 @@
 
 @media (width < 768px) {
     .scroll-indicator {
-        display: flex;
-        /* width: 21.4375rem;
-        justify-content: space-between; */
+        width: 100%;
+        justify-content: flex-start;
+        gap: var(--Scroll-Indicator-Gap-Icon-M, 24px);
 
-        &.absolute-positioned {
+        &.hero-indicator {
             bottom: var(--Hero-Full-Screen-Bottom-Padding-M, 120px);
-            right: var(--Hero-Full-Screen-Horizontal-Padding-M-Tp, 16px);
+            right: 0;
+            padding-inline: var(
+                --Hero-Full-Screen-Horizontal-Padding-M-Tp,
+                16px
+            );
+        }
+
+        & .expanding-dots {
+            order: 1;
+            margin-right: auto;
+        }
+
+        & .left-icon-button {
+            order: 2;
+        }
+
+        & .right-icon-button {
+            order: 3;
         }
 
         & .arrows {
@@ -50,7 +67,7 @@
 
 @media (768px <= width < 1280px) {
     .scroll-indicator {
-        &.absolute-positioned {
+        &.hero-indicator {
             bottom: var(--Hero-Full-Screen-Bottom-Padding-Tl-Tp, 80px);
             right: var(--Hero-Full-Screen-Horizontal-Padding-M-Tp, 16px);
         }

@@ -499,13 +499,6 @@
         }
       },
       {
-        "component": "boolean",
-        "name": "showHeroPauseIcon",
-        "label": "Show Hero Pause Icon",
-        "description": "Toggle to show or hide the hero pause icon",
-        "valueType": "boolean"
-      },
-      {
         "component": "text",
         "label": "Hero Title",
         "name": "heroMainLabel",
