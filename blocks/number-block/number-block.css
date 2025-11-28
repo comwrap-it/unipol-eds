@@ -6,7 +6,7 @@
 
 .number-block-cont {
   display: flex;
-  max-width: 100%;
+  width: 100%;
   justify-content: center;
   align-items: center;
   flex-direction: column;
@@ -23,6 +23,7 @@
 
 .number-block {
     text-align: center;
+    width: 100%;
 }
 
 .number-block p{
