@@ -922,6 +922,13 @@
         "required": true
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageSR",
+        "label": "Image Alternative Text",
+        "required": true
+      },
+      {
         "component": "container",
         "name": "icons-3D",
         "label": "Configurazione Icone 3D",
