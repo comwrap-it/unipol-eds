@@ -633,90 +633,58 @@
     "id": "header-button",
     "fields": [
       {
-        "component": "container",
-        "name": "header-hamburger-container",
-        "label": "Configurazione Header Hamburger",
-        "fields": [
+        "component": "select",
+        "name": "headerIconButtonIcon",
+        "label": "Icon",
+        "required": true,
+        "description": "Select the icon",
+        "options": [
           {
-            "component": "select",
-            "name": "iconButtonIcon",
-            "label": "Icon",
-            "required": true,
-            "description": "Select the icon",
-            "options": [
-              {
-                "name": "None",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "un-icon-chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "un-icon-chevron-right"
-              },
-              {
-                "name": "Search Icon",
-                "value": "un-icon-search"
-              }
-            ]
+            "name": "None",
+            "value": ""
           },
           {
-            "component": "select",
-            "name": "iconButtonVariant",
-            "label": "Variant",
-            "value": "primary",
-            "options": [
-              {
-                "name": "Primary",
-                "value": "primary"
-              },
-              {
-                "name": "Secondary",
-                "value": "secondary"
-              }
-            ]
+            "name": "Chevron Left",
+            "value": "un-icon-chevron-left"
           },
           {
-            "component": "select",
-            "name": "iconButtonSize",
-            "label": "Size",
-            "value": "medium",
-            "options": [
-              {
-                "name": "Small",
-                "value": "small"
-              },
-              {
-                "name": "Medium",
-                "value": "medium"
-              },
-              {
-                "name": "Large",
-                "value": "large"
-              },
-              {
-                "name": "Extra Large",
-                "value": "extra-large"
-              }
-            ]
+            "name": "Chevron Right",
+            "value": "un-icon-chevron-right"
           },
           {
-            "component": "aem-content",
-            "name": "iconButtonHref",
-            "label": "Link URL",
-            "description": "Optional URL to make this a link button"
-          },
-          {
-            "component": "boolean",
-            "label": "Apri in una nuova scheda",
-            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
-            "name": "iconButtonOpenInNewTab",
-            "valueType": "boolean",
-            "value": false
+            "name": "Search Icon",
+            "value": "un-icon-search"
           }
         ]
+      },
+      {
+        "component": "select",
+        "name": "headerIconButtonVariant",
+        "label": "Variant",
+        "value": "primary",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          }
+        ]
+      },
+      {
+        "component": "aem-content",
+        "name": "headerIconButtonHref",
+        "label": "Link URL"
+      },
+      {
+        "component": "boolean",
+        "label": "Apri in una nuova scheda",
+        "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+        "name": "headerIconButtonOpenInNewTab",
+        "valueType": "boolean",
+        "value": false
       }
     ]
   },

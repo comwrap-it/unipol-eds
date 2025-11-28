@@ -22,14 +22,9 @@
                 "name": "Header Navigation pill and box Section",
                 "filter": "header-nav-pill-box"
               },
-              "header-nav-pill-box-2": {
-                "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Header Navigation pill and box Section",
-                "filter": "header-nav-pill-box"
-              },
               "header-utilities": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Header buttons Sectionr",
+                "name": "Header buttons Section",
                 "model": "header-utilities"
               }
             }
