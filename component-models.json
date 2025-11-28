@@ -971,6 +971,17 @@
     ]
   },
   {
+    "id": "insurance-product-carousel",
+    "fields": [
+      {
+        "component": "text",
+        "name": "showMoreButtonLabel",
+        "label": "Show more button label for mobile",
+        "maxlength": 15
+      }
+    ]
+  },
+  {
     "id": "number-block",
     "fields": [
       {
