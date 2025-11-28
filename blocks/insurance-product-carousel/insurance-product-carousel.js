@@ -68,6 +68,9 @@ export default async function decorate(block) {
   // Get all rows (each row will be a card)
   const rows = Array.from(block.children);
 
+  const showMoreButtonLabel = rows[0].textContent?.trim() || 'Mostra di più';
+  rows.shift();
+
   if (rows.length === 0) {
     // eslint-disable-next-line no-console
     console.warn('Insurance Product Carousel: No cards found');
@@ -147,7 +150,19 @@ export default async function decorate(block) {
       scrollIndicator = createdScrollIndicator;
     }
   } else {
-    showMoreButton = createButton('Mostra di più', '', false, BUTTON_VARIANTS.SECONDARY, BUTTON_ICON_SIZES.MEDIUM, '', '');
+    showMoreButton = createButton(showMoreButtonLabel, '', false, BUTTON_VARIANTS.SECONDARY, BUTTON_ICON_SIZES.MEDIUM, '', '');
+
+    function handleShowMoreButton(e) {
+      e.preventDefault();
+      cardElements.forEach((slide, index) => {
+        if (slide.classList.contains('hidden')) {
+          slide.classList.remove('hidden');
+        }
+      });
+      showMoreButton.remove();
+    }
+
+    showMoreButton.addEventListener('click', handleShowMoreButton);
   }
 
   carousel.appendChild(track);
