@@ -236,15 +236,15 @@
                   "name": "Unipol Header",
                   "model": "unipol-header",
                   "style": "unipol-header",
-                  "header-unipol-section-1": {
+                  "header-nav-pill-box-section-1": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
-                    "name": "Header Unipol Section",
-                    "filter": "header-unipol-section"
+                    "name": "Header Navigation pill and box Section",
+                    "filter": "header-nav-pill-box-section"
                   },
-                  "header-unipol-section-2": {
+                  "header-nav-pill-box-section-2": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
-                    "name": "Header Unipol Section",
-                    "filter": "header-unipol-section"
+                    "name": "Header Navigation pill and box Section",
+                    "filter": "header-nav-pill-box-section"
                   }
                 }
               }
@@ -501,29 +501,29 @@
           }
         },
         {
-          "title": "Header Unipol Section",
-          "id": "header-unipol-section",
+          "title": "Header Navigation pill and box Section",
+          "id": "header-nav-pill-box-section",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "name": "Header Unipol Section",
-                  "filter": "header-unipol-section"
+                  "name": "Header Navigation pill and box Section",
+                  "filter": "header-nav-pill-box-section"
                 }
               }
             }
           }
         },
         {
-          "title": "Header Navigation Pill",
+          "title": "Header Navigation pill/ box item",
           "id": "header-nav-pill",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "Header Navigation Pill",
+                  "name": "Header Navigation pill/ box item",
                   "model": "header-nav-pill"
                 }
               }

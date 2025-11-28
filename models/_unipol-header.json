@@ -12,15 +12,15 @@
               "name": "Unipol Header",
               "model": "unipol-header",
               "style": "unipol-header",
-              "header-unipol-section-1": {
+              "header-nav-pill-box-section-1": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Header Unipol Section",
-                "filter": "header-unipol-section"
+                "name": "Header Navigation pill and box Section",
+                "filter": "header-nav-pill-box-section"
               },
-              "header-unipol-section-2": {
+              "header-nav-pill-box-section-2": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Header Unipol Section",
-                "filter": "header-unipol-section"
+                "name": "Header Navigation pill and box Section",
+                "filter": "header-nav-pill-box-section"
               }
             }
           }
@@ -44,7 +44,7 @@
     {
       "id": "unipol-header",
       "components": [
-        "header-unipol-section"
+        "header-nav-pill-box-section"
       ]
     }
   ]
