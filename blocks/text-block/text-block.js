@@ -49,48 +49,59 @@ function extractTitleElement(titleRow) {
 }
 
 /**
- * Extract text element from row with instrumentation
+ * Extract text element from row with instrumentation (richtext support)
  * @param {HTMLElement} textRow - The row containing the text
  * @returns {HTMLElement|null} The text element with instrumentation
  */
 function extractTextElement(textRow) {
   if (!textRow) return null;
 
-  const hasInstrumentation = textRow.hasAttribute('data-aue-resource')
-    || textRow.hasAttribute('data-richtext-prop')
-    || textRow.querySelector('[data-aue-resource]')
-    || textRow.querySelector('[data-richtext-prop]');
+  // Check for instrumentation on textRow or any child element
+  const hasInstrumentationOnRow = textRow.hasAttribute('data-aue-resource')
+    || textRow.hasAttribute('data-aue-prop')
+    || textRow.hasAttribute('data-richtext-prop');
+  const instrumentedChild = textRow.querySelector('[data-aue-resource], [data-aue-prop], [data-richtext-prop]');
+  const hasInstrumentation = hasInstrumentationOnRow || !!instrumentedChild;
+  const hasContent = textRow.textContent?.trim();
 
-  if (!hasInstrumentation && !textRow.textContent?.trim()) {
+  if (!hasInstrumentation && !hasContent) {
     return null;
   }
 
+  // Check if there's an existing paragraph (common in richtext)
   const existingPara = textRow.querySelector('p');
-  if (existingPara) {
-    // If textRow has other children besides the paragraph, move them into the paragraph
-    // This ensures all content and instrumentation from child elements is preserved
-    const children = Array.from(textRow.childNodes);
-    children.forEach((child) => {
-      if (child !== existingPara && child.nodeType === Node.ELEMENT_NODE) {
-        // Move element and its instrumentation into the paragraph
-        existingPara.appendChild(child);
-      } else if (
-        child !== existingPara
+  const existingElement = instrumentedChild || existingPara;
+
+  if (existingElement) {
+    // If there's an element with instrumentation, preserve all content
+    // Move other children into the paragraph if needed
+    if (existingPara) {
+      const children = Array.from(textRow.childNodes);
+      children.forEach((child) => {
+        if (child !== existingPara && child.nodeType === Node.ELEMENT_NODE) {
+          // Move element and its instrumentation into the paragraph
+          existingPara.appendChild(child);
+        } else if (
+          child !== existingPara
           && child.nodeType === Node.TEXT_NODE
           && child.textContent.trim()
-      ) {
-        // Move text nodes into the paragraph
-        existingPara.appendChild(child);
-      }
-    });
+        ) {
+          // Move text nodes into the paragraph
+          existingPara.appendChild(child);
+        }
+      });
+    }
 
-    // Move instrumentation from textRow to existingPara
-    // This must be done AFTER moving children to preserve their instrumentation
-    moveInstrumentation(textRow, existingPara);
+    // Move instrumentation from element to existingPara (or use existingElement if no para)
+    const targetElement = existingPara || existingElement;
+    moveInstrumentation(existingElement, targetElement);
+    // Also move any instrumentation from textRow
+    moveInstrumentation(textRow, targetElement);
 
-    return existingPara;
+    return targetElement;
   }
 
+  // No existing paragraph, create one
   const text = document.createElement('p');
   while (textRow.firstChild) {
     text.appendChild(textRow.firstChild);
