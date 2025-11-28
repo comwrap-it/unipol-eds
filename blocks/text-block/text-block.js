@@ -150,6 +150,7 @@ export function createTextBlock(
     finalButtonElement = createButton(
       buttonConfig.label || 'Button',
       buttonConfig.href || '',
+      buttonConfig.openInNewTab || false,
       buttonConfig.variant || BUTTON_VARIANTS.PRIMARY,
       buttonConfig.iconSize || BUTTON_ICON_SIZES.MEDIUM,
       buttonConfig.leftIcon || '',

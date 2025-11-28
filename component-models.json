@@ -180,6 +180,36 @@
     ]
   },
   {
+    "id": "accordion",
+    "fields": [
+      {
+        "component": "text",
+        "name": "accordionLabel",
+        "label": "Label",
+        "description": "Header label (max 100 characters)",
+        "maxlength": 100,
+        "value": ""
+      },
+      {
+        "component": "textarea",
+        "name": "accordionDescription",
+        "label": "Description",
+        "description": "Accordion content (max 500 characters)",
+        "maxlength": 500,
+        "value": ""
+      },
+      {
+        "component": "aem-content",
+        "valueType": "string",
+        "name": "accordionRootpath",
+        "label": "Percorso CF elementi accordion",
+        "validation": {
+          "rootPath": "/content/dam/unipol/cf"
+        }
+      }
+    ]
+  },
+  {
     "id": "card",
     "fields": [
       {
@@ -961,14 +991,13 @@
     "fields": [
       {
         "component": "tab",
-        "label": "Configurazione blocco numerico 1",
+        "label": "Configurazione blocco 1",
         "name": "numberBlock1"
       },
       {
         "component": "text",
         "label": "Titolo blocco 1",
         "name": "numberBlockText1",
-        "maxlength": 7,
         "validation": {
           "maxLength": 7,
           "customErrorMsg": "Testo troppo lungo"
@@ -979,18 +1008,20 @@
         "name": "numberBlockSubText1",
         "label": "Descrizione blocco 1",
         "valueType": "string",
-        "maxlength": 40
+        "validation": {
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "tab",
-        "label": "Configurazione blocco numerico 2",
+        "label": "Configurazione blocco 2",
         "name": "numberBlock2"
       },
       {
         "component": "text",
         "label": "Titolo blocco 2",
         "name": "numberBlockText2",
-        "maxlength": 7,
         "validation": {
           "maxLength": 7,
           "customErrorMsg": "Testo troppo lungo"
@@ -1001,18 +1032,20 @@
         "name": "numberBlockSubText2",
         "label": "Descrizione blocco 2",
         "valueType": "string",
-        "maxlength": 40
+        "validation": {
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "tab",
-        "label": "Configurazione blocco numerico 3",
+        "label": "Configurazione blocco 3",
         "name": "numberBlock3"
       },
       {
         "component": "text",
         "label": "Titolo blocco 3",
         "name": "numberBlockText3",
-        "maxlength": 7,
         "validation": {
           "maxLength": 7,
           "customErrorMsg": "Testo troppo lungo"
@@ -1023,7 +1056,10 @@
         "name": "numberBlockSubText3",
         "label": "Descrizione blocco 3",
         "valueType": "string",
-        "maxlength": 40
+        "validation": {
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       }
     ]
   },

@@ -1,249 +1,81 @@
-/**
- * Number Block Component
- *
- * Preserves Universal Editor instrumentation for AEM EDS.
- */
-
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-// Character limits for number block fields
-export const MAX_TITLE_LENGTH = 7;
-export const MAX_DESCRIPTION_LENGTH = 40;
-
 /**
- * Truncate text content to specified length
- * @param {HTMLElement} element - The element to truncate
- * @param {number} maxLength - Maximum allowed length
+ * Creates the DOM for a single Number Item
  */
-function truncateTextContent(element, maxLength) {
-  if (!element) return;
+const createNumberItem = (item) => {
+  const itemWrapper = document.createElement('div');
+  itemWrapper.classList.add('number-item');
 
-  // Get text content and trim whitespace/newlines
-  const textContent = (element.textContent || '').trim();
+  // --- 1. Title (Number) ---
+  const titleDiv = document.createElement('div');
+  titleDiv.classList.add('number-item-title');
 
-  // Only process if there's actual content
-  if (!textContent) return;
-
-  if (textContent.length > maxLength) {
-    const truncated = textContent.substring(0, maxLength);
-    element.textContent = truncated;
-    // eslint-disable-next-line no-console
-    console.warn(`Text truncated to ${maxLength} characters: "${truncated}"`);
+  if (item.title instanceof HTMLElement) {
+    moveInstrumentation(item.title, titleDiv);
+    // Move all children (including p, strong, etc.)
+    while (item.title.firstChild) {
+      titleDiv.appendChild(item.title.firstChild);
+    }
   } else {
-    // Set trimmed content even if not truncated to remove whitespace
-    element.textContent = textContent;
+    titleDiv.textContent = item.title || '';
   }
-}
+  itemWrapper.appendChild(titleDiv);
 
-/**
- * Extract number item (title + description) from rows
- * @param {HTMLElement} titleRow - Row containing the numeric value
- * @param {HTMLElement} descRow - Row containing the description
- * @returns {Object} Object with titleElement and descriptionElement
- */
-function extractNumberItem(titleRow, descRow) {
-  const item = { titleElement: null, descriptionElement: null };
+  // --- 2. Description ---
+  const descDiv = document.createElement('div');
+  descDiv.classList.add('number-item-description');
 
-  // Extract title (numeric value)
-  if (titleRow) {
-    const hasInstrumentation = titleRow.hasAttribute('data-aue-resource')
-      || titleRow.hasAttribute('data-richtext-prop')
-      || titleRow.querySelector('[data-aue-resource]')
-      || titleRow.querySelector('[data-richtext-prop]');
-    const hasContent = titleRow.textContent?.trim();
-
-    if (hasInstrumentation || hasContent) {
-      const titleElement = document.createElement('div');
-      titleElement.classList.add('text-block-number');
-
-      while (titleRow.firstChild) {
-        titleElement.appendChild(titleRow.firstChild);
-      }
-      moveInstrumentation(titleRow, titleElement);
-      // Truncation will be applied in createNumberBlock() if needed
-
-      item.titleElement = titleElement;
+  if (item.description instanceof HTMLElement) {
+    moveInstrumentation(item.description, descDiv);
+    while (item.description.firstChild) {
+      descDiv.appendChild(item.description.firstChild);
     }
+  } else {
+    const p = document.createElement('p');
+    p.textContent = item.description || '';
+    descDiv.appendChild(p);
   }
+  itemWrapper.appendChild(descDiv);
 
-  // Extract description
-  if (descRow) {
-    const hasInstrumentation = descRow.hasAttribute('data-aue-resource')
-      || descRow.hasAttribute('data-richtext-prop')
-      || descRow.querySelector('[data-aue-resource]')
-      || descRow.querySelector('[data-richtext-prop]');
-    const hasContent = descRow.textContent?.trim();
+  return itemWrapper;
+};
 
-    if (hasInstrumentation || hasContent) {
-      const descElement = document.createElement('div');
-
-      while (descRow.firstChild) {
-        descElement.appendChild(descRow.firstChild);
-      }
-      moveInstrumentation(descRow, descElement);
-      // Truncation will be applied in createNumberBlock() if needed
-
-      item.descriptionElement = descElement;
-    }
-  }
-
-  return item;
-}
-
-/**
- * Preserve block-level attributes on the new element
- * @param {HTMLElement} sourceBlock - Original block element
- * @param {HTMLElement} targetBlock - New block element
- */
-function preserveBlockAttributes(sourceBlock, targetBlock) {
-  // Preserve ALL block instrumentation attributes
-  [...sourceBlock.attributes].forEach((attr) => {
-    if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
-      targetBlock.setAttribute(attr.name, attr.value);
-    }
-  });
-
-  // Preserve blockName if present (needed for loadBlock)
-  if (sourceBlock.dataset.blockName) {
-    targetBlock.dataset.blockName = sourceBlock.dataset.blockName;
-  }
-
-  // Preserve block classes
-  if (sourceBlock.classList.length > 0) {
-    sourceBlock.classList.forEach((cls) => {
-      if (cls !== 'block' && !targetBlock.classList.contains(cls)) {
-        targetBlock.classList.add(cls);
-      }
-    });
-  }
-}
-
-/**
- * Create a number block element programmatically
- *
- * This is the SINGLE SOURCE OF TRUTH for number block creation.
- * Used by both the decorate() function (AEM EDS) and Storybook.
- *
- * @param {Array} items - Array of number items (up to 3)
- * @param {HTMLElement|string} items[].title - Title element or text (numeric value)
- * @param {HTMLElement|string} items[].description - Description element or text
- * @returns {HTMLElement} The number block element
- */
 export function createNumberBlock(items = []) {
-  // Create number block container
-  const numberBlock = document.createElement('div');
-  numberBlock.className = 'number-block block';
+  const wrapper = document.createElement('div');
+  wrapper.classList.add('number-block-wrapper');
 
-  const numberBlockWrapper = document.createElement('div');
-  numberBlockWrapper.className = 'number-block-cont';
-
-  // Process each item (max 3)
-  items.slice(0, 3).forEach((item) => {
-    if (!item || (!item.title && !item.description)) return;
-
-    const itemWrapper = document.createElement('div');
-    itemWrapper.className = 'number-block';
-
-    // Add title (numeric value)
-    if (item.title) {
-      let titleElement;
-
-      if (item.title instanceof HTMLElement) {
-        // Use existing element (from AEM EDS)
-        titleElement = item.title;
-        if (!titleElement.classList.contains('text-block-number')) {
-          titleElement.classList.add('text-block-number');
-        }
-        // Apply truncation to existing element
-        truncateTextContent(titleElement, MAX_TITLE_LENGTH);
-      } else {
-        // Create new element (for Storybook)
-        titleElement = document.createElement('div');
-        titleElement.className = 'text-block-number';
-        titleElement.textContent = item.title;
-        truncateTextContent(titleElement, MAX_TITLE_LENGTH);
-      }
-
-      itemWrapper.appendChild(titleElement);
-    }
-
-    // Add description
-    if (item.description) {
-      let descElement;
-
-      if (item.description instanceof HTMLElement) {
-        // Use existing element (from AEM EDS)
-        descElement = item.description;
-        // Apply truncation to existing element
-        truncateTextContent(descElement, MAX_DESCRIPTION_LENGTH);
-      } else {
-        // Create new element (for Storybook)
-        descElement = document.createElement('div');
-        const para = document.createElement('p');
-        para.textContent = item.description;
-        descElement.appendChild(para);
-        truncateTextContent(para, MAX_DESCRIPTION_LENGTH);
-      }
-
-      itemWrapper.appendChild(descElement);
-    }
-
-    if (itemWrapper.children.length > 0) {
-      numberBlockWrapper.appendChild(itemWrapper);
-    }
+  items.forEach((item) => {
+    if (!item.title && !item.description) return;
+    const itemEl = createNumberItem(item);
+    wrapper.appendChild(itemEl);
   });
 
-  if (numberBlockWrapper.children.length > 0) {
-    numberBlock.appendChild(numberBlockWrapper);
-  }
-
-  return numberBlock;
+  return wrapper;
 }
 
-/**
- * Decorates a number-block element
- *
- * This function extracts data from Universal Editor structure and delegates
- * the actual component creation to createNumberBlock().
- *
- * @param {HTMLElement} block - The number-block element
- */
-export default async function decorate(block) {
-  if (!block) return;
-
-  // === STEP 1: Extract rows from Universal Editor ===
-  let rows = Array.from(block.children);
-  const wrapper = block.querySelector('.default-content-wrapper');
-  if (wrapper) {
-    rows = Array.from(wrapper.children);
-  }
-
-  // === STEP 2: Extract data from rows ===
+export default function decorate(block) {
+  const rows = [...block.children];
   const items = [];
 
-  // Extract 3 number items (pairs of rows: 0-1, 2-3, 4-5)
-  for (let i = 0; i <= 5; i += 2) {
+  // --- KEY MODIFICATION ---
+  // Iterate by 2 because in AEM/UE flat DOM:
+  // Row i   = Number
+  // Row i+1 = Description
+  for (let i = 0; i < rows.length; i += 2) {
     const titleRow = rows[i];
-    const descRow = rows[i + 1];
+    const descRow = rows[i + 1]; // Can be undefined if odd
 
-    if (titleRow && descRow) {
-      const item = extractNumberItem(titleRow, descRow);
-
-      if (item.titleElement || item.descriptionElement) {
-        items.push({
-          title: item.titleElement,
-          description: item.descriptionElement,
-        });
-      }
-    }
+    // Extract the first child of the row (which contains the value and instrumentation)
+    // If the row is a simple div wrapper, we take that.
+    items.push({
+      title: titleRow ? titleRow.firstElementChild || titleRow : null,
+      description: descRow ? descRow.firstElementChild || descRow : null,
+    });
   }
 
-  // === STEP 3: Create the number block using the centralized function ===
-  const numberBlock = createNumberBlock(items);
+  const numberBlockDOM = createNumberBlock(items);
 
-  // === STEP 4: Preserve AEM instrumentation and metadata ===
-  preserveBlockAttributes(block, numberBlock);
-
-  // === STEP 5: Replace the original block ===
-  block.replaceWith(numberBlock);
+  block.textContent = '';
+  block.appendChild(numberBlockDOM);
 }
