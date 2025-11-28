@@ -36,7 +36,7 @@
   font-size: var(--Size-16);
   font-weight: 400;
   line-height: 1.4rem;
-  word-break: break-word; /* Migliore leggibilità */
+  overflow-wrap: break-word; /* Migliore leggibilità */
 }
 
 /* Reset margini per il <p> generato dal Richtext */
