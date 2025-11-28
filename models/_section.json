@@ -55,7 +55,8 @@
         "test-buttons",
         "options-list",
         "text-list",
-        "prodotto-unico"
+        "prodotto-unico",
+        "prodotto-unico-header"
       ]
     }
   ]

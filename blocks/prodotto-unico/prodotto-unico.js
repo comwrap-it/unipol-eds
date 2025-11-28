@@ -25,4 +25,3 @@ export default async function decorate(block) {
     console.error('Errore nel caricamento del componente Angular Prodotto Unico:', error);
   }
 }
-
