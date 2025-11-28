@@ -79,6 +79,12 @@
     "max": 8
   },
   {
+    "id": "header-unipol-section",
+    "components": [
+      "header-nav-pill"
+    ]
+  },
+  {
     "id": "hero-widget",
     "components": [
       "full-screen-hero-carousel"
@@ -119,7 +125,7 @@
   {
     "id": "unipol-header",
     "components": [
-      "navigation-pill"
+      "header-unipol-section"
     ]
   },
   {
