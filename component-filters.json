@@ -43,6 +43,12 @@
     ]
   },
   {
+    "id": "category-strip",
+    "components": [
+      "tag"
+    ]
+  },
+  {
     "id": "columns",
     "components": [
       "column"

@@ -229,6 +229,233 @@
     ]
   },
   {
+    "id": "unipol-option",
+    "fields": [
+      {
+        "component": "select",
+        "name": "categoryStripVariant",
+        "label": "Variant",
+        "required": true,
+        "value": "mobility",
+        "options": [
+          {
+            "name": "Mobility",
+            "value": "mobility"
+          },
+          {
+            "name": "Welfare",
+            "value": "welfare"
+          },
+          {
+            "name": "Property",
+            "value": "property"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "categoryStripIcon",
+        "label": "Icon",
+        "required": true,
+        "description": "Select the icon",
+        "options": [
+          {
+            "name": "Search",
+            "value": "un-icon-search"
+          },
+          {
+            "name": "Chevron Left",
+            "value": "un-icon-chevron-left"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "un-icon-chevron-right"
+          },
+          {
+            "name": "Phone",
+            "value": "un-icon-phone"
+          },
+          {
+            "name": "Phone Call",
+            "value": "un-icon-phone-call"
+          },
+          {
+            "name": "Placeholder",
+            "value": "un-icon-placeholder"
+          },
+          {
+            "name": "Plant",
+            "value": "un-icon-plant"
+          },
+          {
+            "name": "Play Circle",
+            "value": "un-icon-play-circle"
+          },
+          {
+            "name": "Play Pause",
+            "value": "un-icon-play-pause"
+          },
+          {
+            "name": "Plus",
+            "value": "un-icon-plus"
+          },
+          {
+            "name": "Prohibit",
+            "value": "un-icon-prohibit"
+          },
+          {
+            "name": "Push Pin",
+            "value": "un-icon-push-pin"
+          },
+          {
+            "name": "Question",
+            "value": "un-icon-question"
+          },
+          {
+            "name": "Quotes",
+            "value": "un-icon-quotes"
+          },
+          {
+            "name": "Share",
+            "value": "un-icon-share"
+          },
+          {
+            "name": "Share Big",
+            "value": "un-icon-share-big"
+          },
+          {
+            "name": "Shield Check",
+            "value": "un-icon-shield-check"
+          },
+          {
+            "name": "Shield Plus",
+            "value": "un-icon-shield-plus"
+          },
+          {
+            "name": "Shield Slash",
+            "value": "un-icon-shield-slash"
+          },
+          {
+            "name": "Sign In",
+            "value": "un-icon-sign-in"
+          },
+          {
+            "name": "Sign Out",
+            "value": "un-icon-sign-out"
+          },
+          {
+            "name": "Skip Back Circle",
+            "value": "un-icon-skip-back-circle"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "categoryStripIconSize",
+        "description": "Modifica la dimensione dell'icona",
+        "label": "Icon Size",
+        "value": "medium",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          },
+          {
+            "name": "Extra Large",
+            "value": "extra-large"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "category",
+        "label": "Category",
+        "value": "Category",
+        "required": true
+      },
+      {
+        "component": "container",
+        "name": "tag",
+        "label": "Configurazione Tag",
+        "fields": [
+          {
+            "component": "text",
+            "name": "tagLabel",
+            "label": "Tag text",
+            "required": true
+          },
+          {
+            "component": "select",
+            "name": "tagCategory",
+            "label": "Tag Category",
+            "required": true,
+            "value": "mobility",
+            "options": [
+              {
+                "name": "Mobility",
+                "value": "mobility"
+              },
+              {
+                "name": "Welfare",
+                "value": "welfare"
+              },
+              {
+                "name": "Property",
+                "value": "property"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "tagVariant",
+            "label": "Tag type",
+            "required": true,
+            "value": "default",
+            "options": [
+              {
+                "name": "Default",
+                "value": "default"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Neutral",
+                "value": "neutral"
+              },
+              {
+                "name": "Custom",
+                "value": "custom"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "description",
+        "label": "Description",
+        "value": "Description"
+      },
+      {
+        "component": "switch",
+        "name": "showCheckbox",
+        "label": "Show Checkbox",
+        "description": "Toggle to show or hide the checkbox",
+        "value": false
+      }
+    ]
+  },
+  {
     "id": "columns",
     "fields": [
       {
