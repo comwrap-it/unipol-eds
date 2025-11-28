@@ -144,24 +144,23 @@ export default async function decorate(block) {
   let scrollIndicator;
   let showMoreButton;
 
+  function handleShowMoreButton(e) {
+    e.preventDefault();
+    cardElements.forEach((slide) => {
+      if (slide.classList.contains('hidden')) {
+        slide.classList.remove('hidden');
+      }
+    });
+    showMoreButton.remove();
+  }
+
   if (mq.matches) {
     if (cardElements && cardElements.length > 4) {
       const { scrollIndicator: createdScrollIndicator } = await createScrollIndicator();
       scrollIndicator = createdScrollIndicator;
     }
-  } else {
+  } else if (cardElements && cardElements.length > 4) {
     showMoreButton = createButton(showMoreButtonLabel, '', false, BUTTON_VARIANTS.SECONDARY, BUTTON_ICON_SIZES.MEDIUM, '', '');
-
-    function handleShowMoreButton(e) {
-      e.preventDefault();
-      cardElements.forEach((slide, index) => {
-        if (slide.classList.contains('hidden')) {
-          slide.classList.remove('hidden');
-        }
-      });
-      showMoreButton.remove();
-    }
-
     showMoreButton.addEventListener('click', handleShowMoreButton);
   }
 
