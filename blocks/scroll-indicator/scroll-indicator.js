@@ -7,7 +7,10 @@
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
 
-import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../atoms/buttons/standard-button/standard-button.js';
+import {
+  BUTTON_ICON_SIZES,
+  BUTTON_VARIANTS,
+} from '../atoms/buttons/standard-button/standard-button.js';
 import { createIconButton } from '../atoms/buttons/icon-button/icon-button.js';
 
 let isStylesLoaded = false;
@@ -16,53 +19,73 @@ async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
   await Promise.all([
-    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/icon-button/icon-button.css`),
-    loadCSS(`${window.hlx.codeBasePath}/blocks/scroll-indicator/scroll-indicator.css`),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/buttons/icon-button/icon-button.css`,
+    ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/scroll-indicator/scroll-indicator.css`,
+    ),
   ]);
   isStylesLoaded = true;
 }
 
 /**
+  @typedef {Object} ScrollIndicatorReturnType
+  @property {HTMLElement} leftIconButton: The left navigation button element.
+  @property {HTMLElement} scrollIndicator: The scroll indicator wrapper element.
+  @property {HTMLElement} rightIconButton: The right navigation button element.
+  @property {(state: {isBeginning: boolean, isEnd: boolean}) => void}
+*/
+
+/**
  * Decorates the scroll indicator block element
- * @return {HTMLElement} scrollIndicator - The scroll indicator block element
+ * @param {boolean} isPositionedAbsolute - Whether the scroll indicator is positioned absolutely
+ * @return {ScrollIndicatorReturnType} scrollIndicator
  */
-export default async function createScrollIndicator() {
+export default async function createScrollIndicator(
+  isPositionedAbsolute = false,
+) {
   // Ensure CSS is loaded
   await ensureStylesLoaded();
 
   // Create scrollIndicator structure
   const scrollIndicator = document.createElement('div');
   scrollIndicator.className = 'scroll-indicator';
+  if (isPositionedAbsolute) {
+    scrollIndicator.classList.add('absolute-positioned');
+  }
 
   const leftIconButtonContainer = document.createElement('div');
   leftIconButtonContainer.className = 'left-icon-button';
 
-  const leftIconButton = createIconButton('un-icon-chevron-left', BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM, '');
+  const leftIconButton = createIconButton(
+    'un-icon-chevron-left',
+    BUTTON_VARIANTS.PRIMARY,
+    BUTTON_ICON_SIZES.MEDIUM,
+    '',
+  );
   leftIconButton.classList.add('swiper-button-prev');
   leftIconButtonContainer.appendChild(leftIconButton);
 
   const expandingDotsContainer = document.createElement('div');
   expandingDotsContainer.className = 'expanding-dots';
 
-  const rectangle = document.createElement('span');
-  rectangle.className = 'rectangle';
-  expandingDotsContainer.appendChild(rectangle);
-
-  fetch('../../icons/ellipse.svg')
-    .then((res) => res.text())
-    .then((svgContent) => {
-      const parser = new DOMParser();
-      const svgDoc = parser.parseFromString(svgContent, 'image/svg+xml');
-      const ellipseOne = svgDoc.documentElement.cloneNode(true);
-      const ellipseTwo = svgDoc.documentElement.cloneNode(true);
-      expandingDotsContainer.appendChild(ellipseOne);
-      expandingDotsContainer.appendChild(ellipseTwo);
-    });
+  const dots = [1, 2, 3].map((number) => {
+    const ellipse = document.createElement('span');
+    ellipse.className = `dot ${number === 1 ? 'expanded' : ''}`;
+    expandingDotsContainer.appendChild(ellipse);
+    return ellipse;
+  });
 
   const rightIconButtonContainer = document.createElement('div');
   rightIconButtonContainer.className = 'right-icon-button';
 
-  const rightIconButton = createIconButton('un-icon-chevron-right', BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM, '');
+  const rightIconButton = createIconButton(
+    'un-icon-chevron-right',
+    BUTTON_VARIANTS.PRIMARY,
+    BUTTON_ICON_SIZES.MEDIUM,
+    '',
+  );
   rightIconButton.classList.add('swiper-button-next');
   rightIconButtonContainer.appendChild(rightIconButton);
 
@@ -70,5 +93,20 @@ export default async function createScrollIndicator() {
   scrollIndicator.appendChild(expandingDotsContainer);
   scrollIndicator.appendChild(rightIconButtonContainer);
 
-  return scrollIndicator;
+  function setExpandedDot({ isBeginning, isEnd }) {
+    // Clear previous state
+    dots.forEach((dot) => dot.classList.remove('expanded'));
+    // Decide which to expand
+    if (isBeginning) {
+      dots[0]?.classList.add('expanded');
+    } else if (isEnd) {
+      dots[2]?.classList.add('expanded');
+    } else {
+      dots[1]?.classList.add('expanded');
+    }
+  }
+
+  return {
+    leftIconButton, scrollIndicator, rightIconButton, setExpandedDot,
+  };
 }

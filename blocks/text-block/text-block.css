@@ -1,18 +1,21 @@
 /* Base styles (Mobile first) */
-.text-block {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 32px 16px;
+.text-block-wrapper {
+    width: 100%;
+    margin: auto;
+    padding: 0 16px;
+}
+
+.text-block-cont {
   text-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--Text-Block-Centered-Gap, 2rem);
   align-self: stretch;
+  margin-bottom: var(--Kpi-Highlights-Widget-Gap-M-Tp, 56px);
 }
 
 .text-block-title {
-  margin: 0 0 16px;
   color: var(--Text-Block-Title, #001C35);
   font-family: var(--Family-Font-1);
   font-size: var(--Size-32, 2rem);
@@ -23,7 +26,6 @@
 
 .text-block-text {
   max-width: 800px;
-  margin: 0 auto 24px;
   color: var(--Text-Block-Body, #001C35);
   font-family: var(--Family-Font-2);
   font-size: var(--Size-16);
@@ -35,33 +37,35 @@
 .text-block-button {
   display: flex;
   justify-content: center;
-  margin-top: 20px;
 }
 
 .text-block-button .btn {
   flex-shrink: 0;
 }
 
-.text-block.text-block-left .text-block-container {
+.text-block-wrapper .text-block-left.text-block-cont {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  flex-direction: row;
+  margin-bottom: 0;
 }
 
-.text-block.text-block-left .text-block-title {
+.text-block-left.text-block-cont .text-block-title {
   margin: 0;
 }
 
-.text-block.text-block-left .text-block-text {
+.text-block-wrapper .text-block-left.text-block-cont .text-block-text {
   display: none;
 }
 
 /* Tablet */
 @media (width >= 768px) and (width <= 1280px) {
-  .text-block {
-    padding: 36px 20px;
-  }
+    .text-block-wrapper {
+        padding: 0 32px;
+        margin-bottom: var(--Kpi-Highlights-Widget-Gap-D-Tl, 56px);
+    }
 
   .text-block-title {
     font-size: var(--Size-40, 2.5 rem);
@@ -70,24 +74,16 @@
 
 /* Desktop */
 @media (width >= 1281px) {
-      .text-block {
-        padding: 40px 24px;
-      }
+    .text-block-wrapper {
+        padding: 0 64px;
+        margin-bottom: var(--Kpi-Highlights-Widget-Gap-D-Tl, 56px);
+    }
 
     .text-block-title {
-        margin-bottom: 24px;
         font-size: var(--Font-Size-Title-Page, 3rem);
         line-height: 3.45rem;
         letter-spacing: -0.03rem;
     }
-
-   .text-block-text {
-     margin-bottom: 32px;
-   }
-
-  .text-block-button {
-    margin-top: 0;
-  }
 }
 
 /* Accessibility */

@@ -21,21 +21,22 @@
       "id": "text-block",
       "fields": [
         {
-          "component": "text",
-          "name": "title",
-          "label": "Titolo",
-          "required": true,
-          "validation": {
-            "maxLength": 60,
-            "customErrorMsg": "Testo troppo lungo"
-          }
-        },
-        {
           "component": "boolean",
           "label": "Centra e mostra testo",
           "description": "Attivo: contenuto centrato verticalmente e testo visibile. Disattivo: contenuto allineato orizzontalmente e testo non visibile.",
           "name": "contentAlignment",
           "valueType": "boolean"
+        },
+        {
+          "component": "text",
+          "name": "text-block-center-align",
+          "label": "Titolo",
+          "required": true,
+          "validation": {
+            "maxLength": 60,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": { "===": [{"var" : "contentAlignment"}, true] }
         },
         {
           "component": "richtext",
@@ -92,6 +93,17 @@
           }
         },
         {
+          "component": "text",
+          "name": "text-block-left-align",
+          "label": "Titolo",
+          "required": true,
+          "validation": {
+            "maxLength": 30,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": { "===": [{"var" : "contentAlignment"}, false] }
+        },
+        {
           "component": "container",
           "name": "button-container",
           "label": "Configurazione Bottone",
@@ -107,4 +119,3 @@
   ],
   "filters": []
 }
-

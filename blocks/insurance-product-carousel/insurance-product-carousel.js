@@ -32,7 +32,9 @@ export default async function decorate(block) {
     if (isStylesLoaded) return;
     const { loadCSS } = await import('../../scripts/aem.js');
     await Promise.all([
-      loadCSS(`${window.hlx.codeBasePath}/blocks/insurance-product-card/insurance-product-card.css`),
+      loadCSS(
+        `${window.hlx.codeBasePath}/blocks/insurance-product-card/insurance-product-card.css`,
+      ),
     ]);
     isStylesLoaded = true;
   }
@@ -45,7 +47,9 @@ export default async function decorate(block) {
     || block.querySelector('[data-richtext-prop]');
 
   // Import card component dynamically
-  const cardModule = await import('../insurance-product-card/insurance-product-card.js');
+  const cardModule = await import(
+    '../insurance-product-card/insurance-product-card.js'
+  );
   const decorateInsuranceProductCard = cardModule.default;
 
   // Create carousel container structure
@@ -85,7 +89,10 @@ export default async function decorate(block) {
 
     // Preserve row instrumentation on card block if present
     if (row.hasAttribute('data-aue-resource')) {
-      cardBlock.setAttribute('data-aue-resource', row.getAttribute('data-aue-resource'));
+      cardBlock.setAttribute(
+        'data-aue-resource',
+        row.getAttribute('data-aue-resource'),
+      );
       const aueBehavior = row.getAttribute('data-aue-behavior');
       if (aueBehavior) cardBlock.setAttribute('data-aue-behavior', aueBehavior);
       const aueType = row.getAttribute('data-aue-type');
@@ -106,7 +113,8 @@ export default async function decorate(block) {
     await decorateInsuranceProductCard(cardBlock);
 
     // Load card styles
-    const decoratedCard = slide.querySelector('.insurance-product-card-container, .card') || slide.firstElementChild;
+    const decoratedCard = slide.querySelector('.insurance-product-card-container, .card')
+      || slide.firstElementChild;
     if (decoratedCard && decoratedCard.dataset.blockName) {
       await loadBlock(decoratedCard);
     }
@@ -126,7 +134,8 @@ export default async function decorate(block) {
 
   let scrollIndicator;
   if (cardElements && cardElements.length > 4) {
-    scrollIndicator = await createScrollIndicator();
+    const { scrollIndicator: createdScrollIndicator } = await createScrollIndicator();
+    scrollIndicator = createdScrollIndicator;
   }
 
   carousel.appendChild(track);

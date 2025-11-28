@@ -3,7 +3,7 @@ import { html } from 'lit';
 
 // Import EDS Button components
 import { createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '@blocks/atoms/buttons/standard-button/standard-button.js';
-// CSS is imported globally in storybook-globals.css
+// CSS is loaded globally in preview-head.html
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories
 export default {
@@ -11,9 +11,11 @@ export default {
   tags: ['autodocs'],
   render: (args) => {
     // Create the button element using EDS createButton function
+    // Signature: createButton(label, href, openInNewTab, variant, iconSize, leftIcon, rightIcon, instrumentation)
     const buttonElement = createButton(
       args.label,
       args.href,
+      args.openInNewTab,
       args.variant,
       args.iconSize,
       args.leftIcon,
@@ -38,6 +40,10 @@ export default {
       control: 'text',
       description: 'Optional URL for link button'
     },
+    openInNewTab: {
+      control: 'boolean',
+      description: 'Open link in new tab (only applies when href is provided)'
+    },
     iconSize: {
       control: { type: 'select' },
       options: ['small', 'medium', 'large', 'extra-large'],
@@ -45,12 +51,12 @@ export default {
     },
     leftIcon: {
       control: { type: 'select' },
-      options: ['', 'chevron-left-icon', 'chevron-right-icon', 'search-icon'],
+      options: ['', 'un-icon-chevron-left', 'un-icon-chevron-right', 'un-icon-search'],
       description: 'Left icon'
     },
     rightIcon: {
       control: { type: 'select' },
-      options: ['', 'chevron-left-icon', 'chevron-right-icon', 'search-icon'],
+      options: ['', 'un-icon-chevron-left', 'un-icon-chevron-right', 'un-icon-search'],
       description: 'Right icon'
     }
   },
@@ -59,6 +65,7 @@ export default {
     label: 'Button',
     variant: BUTTON_VARIANTS.PRIMARY,
     href: '',
+    openInNewTab: false,
     iconSize: BUTTON_ICON_SIZES.MEDIUM,
     leftIcon: '',
     rightIcon: '',
@@ -155,7 +162,7 @@ export const WithLeftIcon = {
   args: {
     label: 'Search',
     variant: BUTTON_VARIANTS.PRIMARY,
-    leftIcon: 'search-icon',
+    leftIcon: 'un-icon-search',
     iconSize: BUTTON_ICON_SIZES.MEDIUM,
   },
   parameters: {
@@ -171,7 +178,7 @@ export const WithRightIcon = {
   args: {
     label: 'Continue',
     variant: BUTTON_VARIANTS.PRIMARY,
-    rightIcon: 'chevron-right-icon',
+    rightIcon: 'un-icon-chevron-right',
     iconSize: BUTTON_ICON_SIZES.MEDIUM,
   },
   parameters: {
@@ -187,8 +194,8 @@ export const WithBothIcons = {
   args: {
     label: 'Navigate',
     variant: BUTTON_VARIANTS.ACCENT,
-    leftIcon: 'chevron-left-icon',
-    rightIcon: 'chevron-right-icon',
+    leftIcon: 'un-icon-chevron-left',
+    rightIcon: 'un-icon-chevron-right',
     iconSize: BUTTON_ICON_SIZES.MEDIUM,
   },
   parameters: {
@@ -205,8 +212,8 @@ export const SmallIconSize = {
   args: {
     label: 'Small Icons',
     variant: BUTTON_VARIANTS.PRIMARY,
-    leftIcon: 'search-icon',
-    rightIcon: 'chevron-right-icon',
+    leftIcon: 'un-icon-search',
+    rightIcon: 'un-icon-chevron-right',
     iconSize: BUTTON_ICON_SIZES.SMALL,
   },
 };
@@ -215,8 +222,8 @@ export const MediumIconSize = {
   args: {
     label: 'Medium Icons',
     variant: BUTTON_VARIANTS.PRIMARY,
-    leftIcon: 'search-icon',
-    rightIcon: 'chevron-right-icon',
+    leftIcon: 'un-icon-search',
+    rightIcon: 'un-icon-chevron-right',
     iconSize: BUTTON_ICON_SIZES.MEDIUM,
   },
 };
@@ -225,8 +232,8 @@ export const LargeIconSize = {
   args: {
     label: 'Large Icons',
     variant: BUTTON_VARIANTS.PRIMARY,
-    leftIcon: 'search-icon',
-    rightIcon: 'chevron-right-icon',
+    leftIcon: 'un-icon-search',
+    rightIcon: 'un-icon-chevron-right',
     iconSize: BUTTON_ICON_SIZES.LARGE,
   },
 };
@@ -235,8 +242,8 @@ export const ExtraLargeIconSize = {
   args: {
     label: 'XL Icons',
     variant: BUTTON_VARIANTS.PRIMARY,
-    leftIcon: 'search-icon',
-    rightIcon: 'chevron-right-icon',
+    leftIcon: 'un-icon-search',
+    rightIcon: 'un-icon-chevron-right',
     iconSize: BUTTON_ICON_SIZES.EXTRA_LARGE,
   },
 };
@@ -247,7 +254,7 @@ export const AsLink = {
     label: 'Link Button',
     variant: BUTTON_VARIANTS.PRIMARY,
     href: 'https://example.com',
-    rightIcon: 'chevron-right-icon',
+    rightIcon: 'un-icon-chevron-right',
   },
   parameters: {
     docs: {
@@ -262,9 +269,9 @@ export const AsLink = {
 export const AllVariants = {
   render: () => html`
     <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-      ${createButton('Primary', '', BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM)}
-      ${createButton('Accent', '', BUTTON_VARIANTS.ACCENT, BUTTON_ICON_SIZES.MEDIUM)}
-      ${createButton('Secondary', '', BUTTON_VARIANTS.SECONDARY, BUTTON_ICON_SIZES.MEDIUM)}
+      ${createButton('Primary', '', false, BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM)}
+      ${createButton('Accent', '', false, BUTTON_VARIANTS.ACCENT, BUTTON_ICON_SIZES.MEDIUM)}
+      ${createButton('Secondary', '', false, BUTTON_VARIANTS.SECONDARY, BUTTON_ICON_SIZES.MEDIUM)}
     </div>
   `,
   parameters: {
@@ -280,10 +287,10 @@ export const AllVariants = {
 export const AllIconSizes = {
   render: () => html`
     <div style="display: flex; gap: 1rem; align-items: center; flex-wrap: wrap;">
-      ${createButton('Small', '', BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.SMALL, 'search-icon')}
-      ${createButton('Medium', '', BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM, 'search-icon')}
-      ${createButton('Large', '', BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.LARGE, 'search-icon')}
-      ${createButton('XL', '', BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.EXTRA_LARGE, 'search-icon')}
+      ${createButton('Small', '', false, BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.SMALL, 'un-icon-search')}
+      ${createButton('Medium', '', false, BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM, 'un-icon-search')}
+      ${createButton('Large', '', false, BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.LARGE, 'un-icon-search')}
+      ${createButton('XL', '', false, BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.EXTRA_LARGE, 'un-icon-search')}
     </div>
   `,
   parameters: {
@@ -301,21 +308,21 @@ export const CompleteExample = {
     <div style="display: flex; flex-direction: column; gap: 1.5rem; max-width: 400px;">
       <h3>Primary Actions</h3>
       <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-        ${createButton('Search', '', BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM, 'search-icon')}
-        ${createButton('Save', '', BUTTON_VARIANTS.ACCENT, BUTTON_ICON_SIZES.MEDIUM, 'search-icon')}
-        ${createButton('Cancel', '', BUTTON_VARIANTS.SECONDARY, BUTTON_ICON_SIZES.MEDIUM)}
+        ${createButton('Search', '', false, BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM, 'un-icon-search')}
+        ${createButton('Save', '', false, BUTTON_VARIANTS.ACCENT, BUTTON_ICON_SIZES.MEDIUM, 'un-icon-search')}
+        ${createButton('Cancel', '', false, BUTTON_VARIANTS.SECONDARY, BUTTON_ICON_SIZES.MEDIUM)}
       </div>
       
       <h3>Navigation Actions</h3>
       <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-        ${createButton('Back', '', BUTTON_VARIANTS.SECONDARY, BUTTON_ICON_SIZES.MEDIUM, 'chevron-left-icon')}
-        ${createButton('Next', '', BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM, '', 'chevron-right-icon')}
+        ${createButton('Back', '', false, BUTTON_VARIANTS.SECONDARY, BUTTON_ICON_SIZES.MEDIUM, 'un-icon-chevron-left')}
+        ${createButton('Next', '', false, BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM, '', 'un-icon-chevron-right')}
       </div>
       
       <h3>Link Actions</h3>
       <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-        ${createButton('Learn More', 'https://example.com', BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM, '', 'chevron-right-icon')}
-        ${createButton('Search Products', 'https://example.com', BUTTON_VARIANTS.ACCENT, BUTTON_ICON_SIZES.MEDIUM, 'search-icon')}
+        ${createButton('Learn More', 'https://example.com', false, BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM, '', 'un-icon-chevron-right')}
+        ${createButton('Search Products', 'https://example.com', false, BUTTON_VARIANTS.ACCENT, BUTTON_ICON_SIZES.MEDIUM, 'un-icon-search')}
       </div>
     </div>
   `,

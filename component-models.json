@@ -450,29 +450,18 @@
     ]
   },
   {
-    "id": "hero",
+    "id": "hero-widget",
     "fields": [
       {
-        "component": "select",
-        "name": "heroVariant",
-        "label": "Hero Variant",
-        "description": "Select the variant of the hero block",
-        "value": "default",
-        "options": [
-          {
-            "name": "None",
-            "value": ""
-          },
-          {
-            "name": "Default",
-            "value": "default"
-          },
-          {
-            "name": "Carousel",
-            "value": "carousel"
-          }
-        ]
-      },
+        "component": "text",
+        "name": "hero-widget-name",
+        "label": "Nome sezione Hero Widget"
+      }
+    ]
+  },
+  {
+    "id": "hero",
+    "fields": [
       {
         "component": "reference",
         "valueType": "string",
@@ -979,14 +968,13 @@
     "fields": [
       {
         "component": "tab",
-        "label": "Configurazione blocco numerico 1",
+        "label": "Configurazione blocco 1",
         "name": "numberBlock1"
       },
       {
         "component": "text",
         "label": "Titolo blocco 1",
         "name": "numberBlockText1",
-        "maxlength": 7,
         "validation": {
           "maxLength": 7,
           "customErrorMsg": "Testo troppo lungo"
@@ -997,18 +985,20 @@
         "name": "numberBlockSubText1",
         "label": "Descrizione blocco 1",
         "valueType": "string",
-        "maxlength": 40
+        "validation": {
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "tab",
-        "label": "Configurazione blocco numerico 2",
+        "label": "Configurazione blocco 2",
         "name": "numberBlock2"
       },
       {
         "component": "text",
         "label": "Titolo blocco 2",
         "name": "numberBlockText2",
-        "maxlength": 7,
         "validation": {
           "maxLength": 7,
           "customErrorMsg": "Testo troppo lungo"
@@ -1019,18 +1009,20 @@
         "name": "numberBlockSubText2",
         "label": "Descrizione blocco 2",
         "valueType": "string",
-        "maxlength": 40
+        "validation": {
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "tab",
-        "label": "Configurazione blocco numerico 3",
+        "label": "Configurazione blocco 3",
         "name": "numberBlock3"
       },
       {
         "component": "text",
         "label": "Titolo blocco 3",
         "name": "numberBlockText3",
-        "maxlength": 7,
         "validation": {
           "maxLength": 7,
           "customErrorMsg": "Testo troppo lungo"
@@ -1041,7 +1033,10 @@
         "name": "numberBlockSubText3",
         "label": "Descrizione blocco 3",
         "valueType": "string",
-        "maxlength": 40
+        "validation": {
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       }
     ]
   },
@@ -1893,21 +1888,29 @@
     "id": "text-block",
     "fields": [
       {
-        "component": "text",
-        "name": "title",
-        "label": "Titolo",
-        "required": true,
-        "validation": {
-          "maxLength": 60,
-          "customErrorMsg": "Testo troppo lungo"
-        }
-      },
-      {
         "component": "boolean",
         "label": "Centra e mostra testo",
         "description": "Attivo: contenuto centrato verticalmente e testo visibile. Disattivo: contenuto allineato orizzontalmente e testo non visibile.",
         "name": "contentAlignment",
         "valueType": "boolean"
+      },
+      {
+        "component": "text",
+        "name": "text-block-center-align",
+        "label": "Titolo",
+        "required": true,
+        "validation": {
+          "maxLength": 60,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "contentAlignment"
+            },
+            true
+          ]
+        }
       },
       {
         "component": "richtext",
@@ -2021,6 +2024,24 @@
               }
             ]
           }
+        }
+      },
+      {
+        "component": "text",
+        "name": "text-block-left-align",
+        "label": "Titolo",
+        "required": true,
+        "validation": {
+          "maxLength": 30,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "contentAlignment"
+            },
+            false
+          ]
         }
       },
       {

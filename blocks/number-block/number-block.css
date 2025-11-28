@@ -1,41 +1,94 @@
-.number-block.block {
-    margin: 0;
-}
-
-.number-block-cont {
-  display: flex;
-  max-width: 1200px;
-  margin: 0 auto;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  font-size: var(--Size-16, 1rem);
-  font-family: var(--Family-Font-2);
-  font-weight: 400;
-}
-
-.text-block-number {
-  font-weight: 600;
-  font-size: var(--Size-56, 3.5rem);
-}
-
+/* Mobile First - Base Styles */
 .number-block {
-    text-align: center;
-    margin-bottom: 32px;
+  display: block;
+  width: 100%;
 }
 
-.number-block p{
-    margin: 0;
+.number-block-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  width: 100%;
+  margin: 0 auto;
 }
 
-/* Desktop */
+.number-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: center;
+  width: 100%;
+}
+
+/* --- TITLE (Il Numero) --- */
+.number-item-title {
+  color: var(--Number-Block-Number, #001C35);
+  font-family: var(--Family-Font-2, 'Manrope', sans-serif);
+  font-size: var(--Size-56, 3.5rem); /* Mobile: 56px (3.5rem) */
+  font-style: normal;
+  font-weight: 600;
+  line-height: 100%;
+  letter-spacing: -0.1rem;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+/* Reset per tag <p> o headings che arrivano dal CMS dentro il titolo */
+.number-item-title p,
+.number-item-title h1,
+.number-item-title h2,
+.number-item-title h3 {
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+
+/* --- DESCRIPTION --- */
+.number-item-description {
+  color: var(--Number-Block-Body, #001C35);
+  font-family: var(--Family-Font-2, 'Manrope', sans-serif);
+  font-size: var(--Size-16, 1rem);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* Reset per il RichText dentro la descrizione */
+.number-item-description p {
+  margin: 0;
+  font: inherit;
+  color: inherit;
+}
+
+/* --- TABLET --- */
 @media (width >= 768px) {
-    .number-block-cont {
-        flex-direction: row;
-        justify-content: space-around;
-    }
+  .number-block-wrapper {
+    padding: 0 32px;
+    flex-direction: row;
+    justify-content: space-around;
+    gap: var(--Number-Block-Gap-D-Tl-Tp, 16px);
+  }
+}
 
-    .text-block-number {
-      font-size: var(--Size-80, 5rem);
-    }
+/* Tablet: font size 56px (3.5rem) */
+@media (width >= 768px) and (width <= 1280px) {
+  .number-item-title {
+    font-size: var(--Size-56, 3.5rem);
+  }
+}
+
+/* --- DESKTOP --- */
+@media (width >= 1281px) {
+  .number-block-wrapper {
+    padding: 0 64px;
+  }
+
+  .number-item-title {
+    font-size: var(--Size-80, 5rem);
+  }
 }

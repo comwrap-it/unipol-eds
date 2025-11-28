@@ -167,6 +167,64 @@
           }
         },
         {
+          "title": "Hero Widget",
+          "id": "hero-widget",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {
+                  "filter": "hero-widget",
+                  "name": "Hero Widget",
+                  "model": "hero-widget",
+                  "style": "hero-widget",
+                  "full-screen-hero-carousel": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Full Screen Hero Carousel",
+                    "filter": "full-screen-hero-carousel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Full Screen Hero Carousel",
+          "id": "full-screen-hero-carousel",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "full-screen-hero-carousel",
+                  "name": "Full Screen Hero Carousel",
+                  "hero": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                    "name": "Hero",
+                    "filter": "hero",
+                    "model": "hero"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Hero",
+          "id": "hero",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Hero",
+                  "model": "hero"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Unipol Footer",
           "id": "unipol-footer",
           "plugins": {
@@ -380,6 +438,27 @@
           }
         },
         {
+          "title": "Full Screen Hero Carousel",
+          "id": "full-screen-hero-carousel",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "full-screen-hero-carousel",
+                  "name": "Full Screen Hero Carousel",
+                  "hero": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                    "name": "Hero",
+                    "filter": "hero",
+                    "model": "hero"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Header Unipol",
           "id": "header-unipol",
           "plugins": {
@@ -395,12 +474,34 @@
           }
         },
         {
+          "title": "Hero Widget",
+          "id": "hero-widget",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {
+                  "filter": "hero-widget",
+                  "name": "Hero Widget",
+                  "model": "hero-widget",
+                  "style": "hero-widget",
+                  "full-screen-hero-carousel": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Full Screen Hero Carousel",
+                    "filter": "full-screen-hero-carousel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Hero",
           "id": "hero",
           "plugins": {
             "xwalk": {
               "page": {
-                "resourceType": "core/franklin/components/block/v1/block",
+                "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
                   "name": "Hero",
                   "model": "hero"

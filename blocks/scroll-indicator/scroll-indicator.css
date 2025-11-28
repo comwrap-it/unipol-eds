@@ -3,28 +3,28 @@
     align-items: center;
     gap: var(--Scroll-Indicator-Gap, 2rem);
 
+    &.absolute-positioned {
+        position: absolute;
+        bottom: var(--Hero-Full-Screen-Bottom-Padding-Tl-Tp, 80px);
+        right: var(--Hero-Full-Screen-Horizontal-Padding-D, 64px);
+        z-index: 3;
+    }
+
     & .expanding-dots {
         display: flex;
         align-items: center;
         gap: var(--Expanding-Dots-Gap, 0.5rem);
 
-        & .rectangle {
-            width: 3rem;
+        & .dot {
+            width: 0.5rem;
             height: 0.5rem;
+            background-color: var(--Expanding-Dots-Background, #001c35);
             border-radius: var(--Expanding-Dots-Radius, 624.9375rem);
-            background: var(--Expanding-Dots-Background, #001C35);
-        }
+            transition: width 0.3s ease;
 
-        & .ellipse-one {
-            width: 0.5rem;
-            height: 0.5rem;
-            fill: var(--Expanding-Dots-Background-Dot, #BFC7CD);
-        }
-
-        & .ellipse-two {
-            width: 0.5rem;
-            height: 0.5rem;
-            fill: var(--Expanding-Dots-Background-Dot, #BFC7CD);
+            &.expanded {
+                width: 3rem;
+            }
         }
     }
 }
@@ -32,32 +32,28 @@
 @media (width < 768px) {
     .scroll-indicator {
         display: flex;
-        width: 21.4375rem;
-        justify-content: space-between;
-        align-items: center;
 
-        & .expanding-dots {
-            display: flex;
-            align-items: center;
-            gap: var(--Expanding-Dots-Gap, 0.5rem);
+        /* width: 21.4375rem;
+        justify-content: space-between; */
 
-            & .rectangle {
-                width: 3rem;
-                height: 0.5rem;
-                border-radius: var(--Expanding-Dots-Radius, 624.9375rem);
-                background: var(--Expanding-Dots-Background, #001C35);
-            }
-
-            & .ellipse-one {
-                width: 0.5rem;
-                height: 0.5rem;
-            }
+        &.absolute-positioned {
+            bottom: var(--Hero-Full-Screen-Bottom-Padding-M, 120px);
+            right: var(--Hero-Full-Screen-Horizontal-Padding-M-Tp, 16px);
         }
 
         & .arrows {
             display: flex;
             align-items: center;
             gap: var(--Scroll-Indicator-Gap-Icon-M, 1.5rem);
+        }
+    }
+}
+
+@media (768px <= width < 1280px) {
+    .scroll-indicator {
+        &.absolute-positioned {
+            bottom: var(--Hero-Full-Screen-Bottom-Padding-Tl-Tp, 80px);
+            right: var(--Hero-Full-Screen-Horizontal-Padding-M-Tp, 16px);
         }
     }
 }

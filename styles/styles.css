@@ -19,7 +19,7 @@
 /* Import file footer styling - authoring mode */
 @import url("./editor-unipol-footer.css");
 
-/* import swiper styles */
+/* Import swiper base styles */
 @import url("./swiper.css");
 
 body * {
