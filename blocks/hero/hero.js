@@ -29,7 +29,9 @@ const setupHeroWithBg = (
     pictureBg.setAttribute('aria-hidden', 'true');
     hero.appendChild(pictureBg);
   } else {
-    const videoBg = heroBackground.cloneNode(true);
+    const videoPath = heroBackground.href;
+    const videoBg = document.createElement('video');
+    videoBg.src = videoPath;
     moveInstrumentation(heroBackground, videoBg);
     videoBg.className = 'hero-bg';
     videoBg.setAttribute('aria-hidden', 'true');
@@ -132,9 +134,9 @@ const createHeroMainSection = (
  * @param {string} btnRightIcon
  * @param {HTMLDivElement} mainSection - reference for carousel variant placement
  * @param {boolean} isCarousel
- * @returns {HTMLDivElement}
+ * @returns {HTMLDivElement|null}
  */
-const createHeroButtonSection = (
+const createHeroButtonSection = async (
   showHeroButton,
   btnLabel,
   btnHref,
@@ -160,12 +162,9 @@ const createHeroButtonSection = (
     );
     if (isCarousel) {
       mainSection.appendChild(button);
-    } else {
-      buttonSection.appendChild(button);
+      return null;
     }
-  }
-  if (isCarousel) {
-    // TODO: Add carousel controls here
+    buttonSection.appendChild(button);
   }
   return buttonSection;
 };
@@ -206,9 +205,10 @@ const ensureStylesLoaded = async () => {
  * @param {string} btnIconSize - Icon size (small, medium, large, extra-large)
  * @param {string} btnLeftIcon - Left icon (optional)
  * @param {string} btnRightIcon - Right icon (optional)
+ * @param {boolean} isCarousel - Flag indicating if the hero is part of a carousel
  * @returns {HTMLElement}
  */
-export function createHero(
+export async function createHero(
   heroBackground,
   isVideoBackground,
   showHeroButton,
@@ -227,6 +227,7 @@ export function createHero(
   btnIconSize,
   btnLeftIcon,
   btnRightIcon,
+  isCarousel = false,
 ) {
   ensureStylesLoaded(); // i intentionally not awaited to not block rendering
   const hero = setupHeroWithBg(
@@ -246,18 +247,23 @@ export function createHero(
     bulletList,
   );
   heroContent.appendChild(mainSection);
-  const buttonSection = createHeroButtonSection(
-    showHeroButton,
-    btnLabel,
-    btnHref,
-    btnOpenInNewTab,
-    btnVariant,
-    btnIconSize,
-    btnLeftIcon,
-    btnRightIcon,
-    mainSection,
-  );
-  heroContent.appendChild(buttonSection);
+  if (showHeroButton) {
+    const buttonSection = await createHeroButtonSection(
+      showHeroButton,
+      btnLabel,
+      btnHref,
+      btnOpenInNewTab,
+      btnVariant,
+      btnIconSize,
+      btnLeftIcon,
+      btnRightIcon,
+      mainSection,
+      isCarousel,
+    );
+    if (buttonSection) {
+      heroContent.appendChild(buttonSection);
+    }
+  }
   hero.appendChild(heroContent);
   return hero;
 }
@@ -268,7 +274,7 @@ export function createHero(
  * @returns {HTMLElement|null} The media element (video or picture) or null if not found
  */
 const extractMediaFromRow = (row, isVideo = false) => {
-  const mediaElement = row?.querySelector(isVideo ? 'video' : 'picture');
+  const mediaElement = row?.querySelector(isVideo ? 'a' : 'picture');
   moveInstrumentation(row, mediaElement);
   if (mediaElement) return mediaElement;
   return null;
@@ -281,8 +287,8 @@ const extractMediaFromRow = (row, isVideo = false) => {
  *
  */
 export const extractHeroPropertiesFromRows = (rows) => {
-  const heroBackground = extractMediaFromRow(rows[0]);
   const isVideoBackground = rows[1]?.textContent?.trim().toLowerCase() === 'true';
+  const heroBackground = extractMediaFromRow(rows[0], isVideoBackground);
   const showHeroLogo = rows[2]?.textContent?.trim().toLowerCase() === 'true';
   const heroLogo = extractMediaFromRow(rows[3]);
   const showHeroPauseIcon = rows[4]?.textContent?.trim().toLowerCase() === 'true';

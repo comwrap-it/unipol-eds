@@ -132,6 +132,7 @@
         right: 16px;
         bottom: 16px;
         aspect-ratio: 1/1;
+        z-index: 3;
     }
 }
 
@@ -161,10 +162,6 @@
             & .button-section {
                 width: 100%;
             }
-        }
-
-        & .hero-icon {
-            bottom: var(--Hero-Full-Screen-Bottom-Padding-M, 120px);
         }
     }
 }
@@ -199,10 +196,6 @@
             & .button-section {
                 width: 100%;
             }
-        }
-
-        & .hero-icon {
-            bottom: var(--Hero-Full-Screen-Bottom-Padding-Tp, 100px);
         }
     }
 }
