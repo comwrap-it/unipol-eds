@@ -56,12 +56,16 @@ function extractTitleElement(titleRow) {
 function extractTextElement(textRow) {
   if (!textRow) return null;
 
-  // Check for instrumentation on textRow or any child element
+  // Check for instrumentation on textRow or any text element (richtext)
   const hasInstrumentationOnRow = textRow.hasAttribute('data-aue-resource')
     || textRow.hasAttribute('data-aue-prop')
     || textRow.hasAttribute('data-richtext-prop');
-  const instrumentedChild = textRow.querySelector('[data-aue-resource], [data-aue-prop], [data-richtext-prop]');
-  const hasInstrumentation = hasInstrumentationOnRow || !!instrumentedChild;
+
+  // Only look for instrumentation on text elements (p, span, strong, em, a, etc.)
+  // NOT on button elements (a.btn, button.btn)
+  const textElementSelector = 'p, span, strong, em, a:not(.btn), b, i, u, code, mark, small, sub, sup';
+  const instrumentedTextChild = textRow.querySelector(`${textElementSelector}[data-aue-resource], ${textElementSelector}[data-aue-prop], ${textElementSelector}[data-richtext-prop]`);
+  const hasInstrumentation = hasInstrumentationOnRow || !!instrumentedTextChild;
   const hasContent = textRow.textContent?.trim();
 
   if (!hasInstrumentation && !hasContent) {
@@ -70,42 +74,54 @@ function extractTextElement(textRow) {
 
   // Check if there's an existing paragraph (common in richtext)
   const existingPara = textRow.querySelector('p');
-  const existingElement = instrumentedChild || existingPara;
 
-  if (existingElement) {
-    // If there's an element with instrumentation, preserve all content
-    // Move other children into the paragraph if needed
-    if (existingPara) {
-      const children = Array.from(textRow.childNodes);
-      children.forEach((child) => {
-        if (child !== existingPara && child.nodeType === Node.ELEMENT_NODE) {
-          // Move element and its instrumentation into the paragraph
-          existingPara.appendChild(child);
-        } else if (
-          child !== existingPara
+  if (existingPara) {
+    // If textRow has other children besides the paragraph, move them into the paragraph
+    // This ensures all content and instrumentation from child elements is preserved
+    // BUT exclude button elements
+    const children = Array.from(textRow.childNodes);
+    children.forEach((child) => {
+      // Skip button elements
+      if (child.nodeType === Node.ELEMENT_NODE) {
+        const isButton = child.classList?.contains('btn')
+          || child.tagName === 'BUTTON'
+          || (child.tagName === 'A' && child.classList?.contains('btn'));
+        if (isButton) return;
+      }
+
+      if (child !== existingPara && child.nodeType === Node.ELEMENT_NODE) {
+        // Move element and its instrumentation into the paragraph
+        existingPara.appendChild(child);
+      } else if (
+        child !== existingPara
           && child.nodeType === Node.TEXT_NODE
           && child.textContent.trim()
-        ) {
-          // Move text nodes into the paragraph
-          existingPara.appendChild(child);
-        }
-      });
-    }
+      ) {
+        // Move text nodes into the paragraph
+        existingPara.appendChild(child);
+      }
+    });
 
-    // Move instrumentation from element to existingPara (or use existingElement if no para)
-    const targetElement = existingPara || existingElement;
-    moveInstrumentation(existingElement, targetElement);
-    // Also move any instrumentation from textRow
-    moveInstrumentation(textRow, targetElement);
+    // Move instrumentation from textRow to existingPara
+    // This must be done AFTER moving children to preserve their instrumentation
+    moveInstrumentation(textRow, existingPara);
 
-    return targetElement;
+    return existingPara;
   }
 
   // No existing paragraph, create one
   const text = document.createElement('p');
-  while (textRow.firstChild) {
-    text.appendChild(textRow.firstChild);
-  }
+  const children = Array.from(textRow.childNodes);
+  children.forEach((child) => {
+    // Skip button elements
+    if (child.nodeType === Node.ELEMENT_NODE) {
+      const isButton = child.classList?.contains('btn')
+        || child.tagName === 'BUTTON'
+        || (child.tagName === 'A' && child.classList?.contains('btn'));
+      if (isButton) return;
+    }
+    text.appendChild(child);
+  });
   moveInstrumentation(textRow, text);
 
   return (hasInstrumentation || text.textContent?.trim()) ? text : null;
