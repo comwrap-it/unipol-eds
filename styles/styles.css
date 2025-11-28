@@ -19,6 +19,9 @@
 /* Import file footer styling - authoring mode */
 @import url("./editor-unipol-footer.css");
 
+/* import swiper styles */
+@import url("./swiper.css");
+
 body * {
     box-sizing: border-box;
 }

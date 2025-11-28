@@ -42,9 +42,9 @@
     .insurance-product-carousel-container {
         & .insurance-product-carousel {
             display: flex;
+            flex-direction: column;
             width: 21.4375rem;
-            gap: var(--Carousel-Widget-Gap-M-Tp, 2.5rem);
-
+            gap: var(--Carousel-Insurance-Product-Gap, 1rem);
         }
     }
 }
