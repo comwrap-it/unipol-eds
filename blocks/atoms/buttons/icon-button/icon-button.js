@@ -6,7 +6,11 @@
  *
  */
 
-import { BUTTON_ICON_SIZES, BUTTON_VARIANTS, extractInstrumentationAttributes } from '../standard-button/standard-button.js';
+import {
+  BUTTON_ICON_SIZES,
+  BUTTON_VARIANTS,
+  extractInstrumentationAttributes,
+} from '../standard-button/standard-button.js';
 
 /**
  * Create a button element with styling
@@ -34,15 +38,16 @@ export function createIconButton(
   const element = isLink
     ? document.createElement('a')
     : document.createElement('button');
+  element.className = [
+    'btn-icon',
+    `btn-icon-${variant || BUTTON_VARIANTS.PRIMARY}`,
+  ].join(' ');
 
   const iconSpan = document.createElement('span');
   iconSpan.className = `icon icon-${
     iconSize || BUTTON_ICON_SIZES.MEDIUM
   } ${icon}`;
   element.appendChild(iconSpan);
-  element.className = ['btn-icon', `btn-icon-${variant || BUTTON_VARIANTS.PRIMARY}`].join(
-    ' ',
-  );
 
   // Set href for links
   if (isLink) {
@@ -118,7 +123,14 @@ export function createButtonFromRows(rows) {
     icon, variant, iconSize, href, openInNewTab, instrumentation,
   } = extractValuesFromRows(rows);
 
-  return createIconButton(icon, variant, iconSize, href, openInNewTab, instrumentation);
+  return createIconButton(
+    icon,
+    variant,
+    iconSize,
+    href,
+    openInNewTab,
+    instrumentation,
+  );
 }
 
 /**
@@ -185,7 +197,13 @@ export default function decorateButton(block) {
     buttonElement.setAttribute('tabindex', '0');
   } else {
     // No instrumentation - create button normally
-    const button = createIconButton(icon, variant, iconSize, href, openInNewTab);
+    const button = createIconButton(
+      icon,
+      variant,
+      iconSize,
+      href,
+      openInNewTab,
+    );
     block.textContent = '';
     block.appendChild(button);
   }

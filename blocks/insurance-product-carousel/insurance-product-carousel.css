@@ -3,7 +3,6 @@
     flex-direction: column;
     align-items: center;
     gap: var(--Carousel-Widget-Gap-D-Tl, 3rem);
-    margin: var(--Layout-Container-Horizontal-Gap, 1.5rem);
 
     &.swiper {
         overflow: visible;

@@ -10,17 +10,14 @@
 
 .switch input[type="checkbox"] {
   appearance: none;
-  -webkit-appearance: none;
+  appearance: none;
   display: flex;
-
   width: var(--Switch-Width, 40px);
   height: var(--Switch-Height, 24px);
   padding: var(--Switch-Padding, 2px);
   align-items: center;
-  
   background: var(--Switch-Unchecked-Background, #BFC7CD);
   border-radius: var(--Switch-Radius, 9999px);
-
   cursor: pointer;
   position: relative;
   box-sizing: border-box;
@@ -32,7 +29,6 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-
   background: var(--Switch-Unchecked-Pressed-Icon, #F9F9F7);
   transform: translateX(0);
   transition: transform 0.25s ease, background 0.25s ease;

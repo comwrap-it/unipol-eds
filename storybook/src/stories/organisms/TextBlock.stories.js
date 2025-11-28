@@ -107,7 +107,7 @@ export default {
     },
     buttonLeftIcon: {
       control: { type: 'select' },
-      options: ['', 'chevron-left-icon', 'chevron-right-icon', 'search-icon'],
+      options: ['', 'un-icon-chevron-left', 'un-icon-chevron-right', 'un-icon-search'],
       description: 'Left icon for button',
       if: { arg: 'showButton', eq: true },
       table: {
@@ -116,7 +116,7 @@ export default {
     },
     buttonRightIcon: {
       control: { type: 'select' },
-      options: ['', 'chevron-left-icon', 'chevron-right-icon', 'search-icon'],
+      options: ['', 'un-icon-chevron-left', 'un-icon-chevron-right', 'un-icon-search'],
       description: 'Right icon for button',
       if: { arg: 'showButton', eq: true },
       table: {
@@ -134,7 +134,7 @@ export default {
     buttonVariant: BUTTON_VARIANTS.PRIMARY,
     buttonIconSize: BUTTON_ICON_SIZES.MEDIUM,
     buttonLeftIcon: '',
-    buttonRightIcon: 'chevron-right-icon',
+    buttonRightIcon: 'un-icon-chevron-right',
   },
 };
 
@@ -150,7 +150,7 @@ export const Centered = {
     text: 'Discover amazing features and start your journey with us today. Our platform provides everything you need to succeed.',
     showButton: true,
     buttonLabel: 'Get Started',
-    buttonRightIcon: 'chevron-right-icon',
+    buttonRightIcon: 'un-icon-chevron-right',
   },
   parameters: {
     docs: {
@@ -172,7 +172,7 @@ export const CenteredLongText = {
     showButton: true,
     buttonLabel: 'Learn More',
     buttonVariant: BUTTON_VARIANTS.ACCENT,
-    buttonRightIcon: 'chevron-right-icon',
+    buttonRightIcon: 'un-icon-chevron-right',
   },
   parameters: {
     docs: {
@@ -213,7 +213,7 @@ export const CenteredSecondaryButton = {
     showButton: true,
     buttonLabel: 'Start Tour',
     buttonVariant: BUTTON_VARIANTS.SECONDARY,
-    buttonLeftIcon: 'search-icon',
+    buttonLeftIcon: 'un-icon-search',
   },
   parameters: {
     docs: {
@@ -237,7 +237,7 @@ export const LeftAligned = {
     showButton: true,
     buttonLabel: 'Take Action',
     buttonVariant: BUTTON_VARIANTS.PRIMARY,
-    buttonRightIcon: 'chevron-right-icon',
+    buttonRightIcon: 'un-icon-chevron-right',
   },
   parameters: {
     docs: {
@@ -258,7 +258,7 @@ export const LeftAlignedAccent = {
     showButton: true,
     buttonLabel: 'Sign Up Now',
     buttonVariant: BUTTON_VARIANTS.ACCENT,
-    buttonRightIcon: 'chevron-right-icon',
+    buttonRightIcon: 'un-icon-chevron-right',
   },
   parameters: {
     docs: {
@@ -279,7 +279,7 @@ export const LeftAlignedSearch = {
     showButton: true,
     buttonLabel: 'Search',
     buttonVariant: BUTTON_VARIANTS.PRIMARY,
-    buttonLeftIcon: 'search-icon',
+    buttonLeftIcon: 'un-icon-search',
   },
   parameters: {
     docs: {
@@ -328,7 +328,7 @@ export const LayoutComparison = {
             href: '#',
             variant: BUTTON_VARIANTS.PRIMARY,
             iconSize: BUTTON_ICON_SIZES.MEDIUM,
-            rightIcon: 'chevron-right-icon',
+            rightIcon: 'un-icon-chevron-right',
           }
         )}
       </div>
@@ -345,7 +345,7 @@ export const LayoutComparison = {
             href: '#',
             variant: BUTTON_VARIANTS.PRIMARY,
             iconSize: BUTTON_ICON_SIZES.MEDIUM,
-            rightIcon: 'chevron-right-icon',
+            rightIcon: 'un-icon-chevron-right',
           }
         )}
       </div>
@@ -435,7 +435,7 @@ export const LandingPageHero = {
             href: '#signup',
             variant: BUTTON_VARIANTS.PRIMARY,
             iconSize: BUTTON_ICON_SIZES.MEDIUM,
-            rightIcon: 'chevron-right-icon',
+            rightIcon: 'un-icon-chevron-right',
           }
         )}
       </div>

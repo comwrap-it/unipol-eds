@@ -28,8 +28,35 @@ export default {
       description: 'Category name (defines style and text)'
     },
     icon: {
-      control: 'text',
-      description: 'Icon class name (e.g., mobility-icon, welfare-icon, property-icon)'
+      control: { type: 'select' },
+      options: [
+        'mobility-icon',
+        'welfare-icon',
+        'property-icon',
+        'un-icon-search',
+        'un-icon-chevron-left',
+        'un-icon-chevron-right',
+        'un-icon-phone',
+        'un-icon-phone-call',
+        'un-icon-placeholder',
+        'un-icon-plant',
+        'un-icon-play-circle',
+        'un-icon-play-pause',
+        'un-icon-plus',
+        'un-icon-prohibit',
+        'un-icon-push-pin',
+        'un-icon-question',
+        'un-icon-quotes',
+        'un-icon-share',
+        'un-icon-share-big',
+        'un-icon-shield-check',
+        'un-icon-shield-plus',
+        'un-icon-shield-slash',
+        'un-icon-sign-in',
+        'un-icon-sign-out',
+        'un-icon-skip-back-circle',
+      ],
+      description: 'Icon class name'
     }
   },
   args: { 
@@ -98,9 +125,9 @@ export const PropertyHover = {
 export const AllCategories = {
   render: () => html`
     <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-      ${createCategoryChip('mobility', 'mobility-icon')}
-      ${createCategoryChip('welfare', 'welfare-icon')}
-      ${createCategoryChip('property', 'property-icon')}
+      <div style="width: fit-content;">${createCategoryChip('mobility', 'mobility-icon')}</div>
+      <div style="width: fit-content;">${createCategoryChip('welfare', 'welfare-icon')}</div>
+      <div style="width: fit-content;">${createCategoryChip('property', 'property-icon')}</div>
     </div>
   `,
   parameters: {
@@ -118,24 +145,24 @@ export const CompleteExample = {
     <div style="display: flex; flex-direction: column; gap: 1.5rem; max-width: 600px;">
       <h3>Product Categories</h3>
       <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-        ${createCategoryChip('mobility', 'mobility-icon')}
-        ${createCategoryChip('welfare', 'welfare-icon')}
-        ${createCategoryChip('property', 'property-icon')}
+        <div style="width: fit-content;">${createCategoryChip('mobility', 'mobility-icon')}</div>
+        <div style="width: fit-content;">${createCategoryChip('welfare', 'welfare-icon')}</div>
+        <div style="width: fit-content;">${createCategoryChip('property', 'property-icon')}</div>
       </div>
       
       <h3>Filter Example</h3>
       <div style="display: flex; flex-direction: column; gap: 1rem;">
         <p>Filter products by category:</p>
         <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
-          ${createCategoryChip('mobility', 'mobility-icon')}
-          ${createCategoryChip('welfare', 'welfare-icon')}
-          ${createCategoryChip('property', 'property-icon')}
+          <div style="width: fit-content;">${createCategoryChip('mobility', 'mobility-icon')}</div>
+          <div style="width: fit-content;">${createCategoryChip('welfare', 'welfare-icon')}</div>
+          <div style="width: fit-content;">${createCategoryChip('property', 'property-icon')}</div>
         </div>
       </div>
       
       <h3>Card Header Usage</h3>
       <div style="border: 1px solid #ddd; border-radius: 8px; padding: 1.5rem;">
-        <div style="margin-bottom: 1rem;">
+        <div style="margin-bottom: 1rem; width: fit-content;">
           ${createCategoryChip('mobility', 'mobility-icon')}
         </div>
         <h4 style="margin: 0 0 0.5rem 0;">Insurance Product Title</h4>

@@ -38,6 +38,15 @@
           "...": "../blocks/insurance-product-card/_insurance-product-card.json#/definitions"
         },
         {
+          "...": "../blocks/hero-widget/_hero-widget.json#/definitions"
+        },
+        {
+          "...": "../blocks/full-screen-hero-carousel/_full-screen-hero-carousel.json#/definitions"
+        },
+        {
+          "...": "../blocks/hero/_hero.json#/definitions"
+        },
+        {
           "...": "./_unipol-footer.json#/definitions"
         }
       ]
