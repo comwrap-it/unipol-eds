@@ -61,20 +61,29 @@
           "label": "Hero Title",
           "name": "heroMainLabel",
           "required": true,
-          "maxlength": 50
+          "validation": {
+            "maxLength": 50,
+            "customErrorMsg": "Testo troppo lungo"
+          }
         },
         {
           "component": "text",
           "name": "heroSubtitleBold",
           "label": "Hero Subtitle Bold",
-          "maxlength": 50
+          "validation": {
+            "maxLength": 50,
+            "customErrorMsg": "Testo troppo lungo"
+          }
         },
         {
           "component": "richtext",
           "name": "heroSubtitle",
           "label": "Hero Subtitle",
           "valueType": "string",
-          "maxlength": 150
+          "validation": {
+            "maxLength": 150,
+            "customErrorMsg": "Testo troppo lungo"
+          }
         },
         {
           "component": "boolean",
@@ -87,7 +96,10 @@
           "component": "text",
           "name": "heroBullet1",
           "label": "Bullet 1",
-          "maxlength": 40,
+          "validation": {
+            "maxLength": 40,
+            "customErrorMsg": "Testo troppo lungo"
+          },
           "condition": {
             "===": [
               {
@@ -101,7 +113,10 @@
           "component": "text",
           "name": "heroBullet2",
           "label": "Bullet 2",
-          "maxlength": 40,
+          "validation": {
+            "maxLength": 40,
+            "customErrorMsg": "Testo troppo lungo"
+          },
           "condition": {
             "===": [
               {
@@ -115,7 +130,10 @@
           "component": "text",
           "name": "heroBullet3",
           "label": "Bullet 3",
-          "maxlength": 40,
+          "validation": {
+            "maxLength": 40,
+            "customErrorMsg": "Testo troppo lungo"
+          },
           "condition": {
             "===": [
               {

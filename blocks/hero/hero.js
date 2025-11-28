@@ -22,6 +22,7 @@ const setupHeroWithBg = (heroBackground, isVideoBackground = false) => {
     moveInstrumentation(heroBackground, pictureBg);
     pictureBg.className = 'hero-bg';
     pictureBg.setAttribute('aria-hidden', 'true');
+    pictureBg.fetchPriority = 'high';
     hero.appendChild(pictureBg);
   } else {
     const videoPath = heroBackground.href;

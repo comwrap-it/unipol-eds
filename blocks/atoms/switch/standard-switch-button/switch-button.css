@@ -10,7 +10,6 @@
 
 .switch input[type="checkbox"] {
   appearance: none;
-  appearance: none;
   display: flex;
   width: var(--Switch-Width, 40px);
   height: var(--Switch-Height, 24px);
