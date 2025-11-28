@@ -77,7 +77,7 @@ function extractNumberItem(titleRow, descRow) {
     if (hasInstrumentation || hasContent) {
       // Check if there's an existing paragraph (common in richtext)
       const existingPara = descRow.querySelector('p');
-      
+
       if (existingPara) {
         // If textRow has other children besides the paragraph, move them into the paragraph
         // This ensures all content and instrumentation from child elements is preserved
@@ -95,26 +95,24 @@ function extractNumberItem(titleRow, descRow) {
             existingPara.appendChild(child);
           }
         });
-        
+
         // Move instrumentation from descRow to existingPara
         // This must be done AFTER moving children to preserve their instrumentation
         moveInstrumentation(descRow, existingPara);
-        
-        // Wrap the paragraph in a div for consistent structure
-        const descElement = document.createElement('div');
-        descElement.appendChild(existingPara);
-        
-        item.descriptionElement = descElement;
+
+        // Return the paragraph directly (no wrapper needed)
+        // The CSS .number-block p will work correctly
+        item.descriptionElement = existingPara;
       } else {
-        // No existing paragraph, create one and wrap it
+        // No existing paragraph, create div with paragraph (consistent with Storybook)
         const descElement = document.createElement('div');
         const para = document.createElement('p');
-        
+
         while (descRow.firstChild) {
           para.appendChild(descRow.firstChild);
         }
         moveInstrumentation(descRow, para);
-        
+
         descElement.appendChild(para);
         // Truncation will be applied in createNumberBlock() if needed
 
@@ -209,9 +207,15 @@ export function createNumberBlock(items = []) {
 
       if (item.description instanceof HTMLElement) {
         // Use existing element (from AEM EDS)
+        // Could be a <p> (when existingPara) or a <div> (when no para)
         descElement = item.description;
-        // Apply truncation to existing element
-        truncateTextContent(descElement, MAX_DESCRIPTION_LENGTH);
+
+        // Apply truncation: if it's a div, truncate the p inside; if it's a p, truncate directly
+        if (descElement.tagName === 'DIV' && descElement.querySelector('p')) {
+          truncateTextContent(descElement.querySelector('p'), MAX_DESCRIPTION_LENGTH);
+        } else {
+          truncateTextContent(descElement, MAX_DESCRIPTION_LENGTH);
+        }
       } else {
         // Create new element (for Storybook)
         descElement = document.createElement('div');

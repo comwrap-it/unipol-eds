@@ -1,6 +1,6 @@
 export const SWITCH_LABEL_STATES = {
-  DEFAULT: "default",
-  ACTIVE: "active",
+  DEFAULT: 'default',
+  ACTIVE: 'active',
 };
 
 /**
@@ -11,22 +11,22 @@ export const SWITCH_LABEL_STATES = {
  * @param {string} params.label - text content
  * @returns {HTMLElement}
  */
-export function createSwitchLabel( status, label ) {
-  const wrapper = document.createElement("div");
-  wrapper.className = "switch-label";
+export function createSwitchLabel(status, label) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'switch-label';
 
   const isActive = status === SWITCH_LABEL_STATES.ACTIVE;
-  if (isActive) wrapper.classList.add("active");
+  if (isActive) wrapper.classList.add('active');
 
-  const textEl = document.createElement("div");
-  textEl.className = "switch-label-text";
-  textEl.textContent = label || "";
+  const textEl = document.createElement('div');
+  textEl.className = 'switch-label-text';
+  textEl.textContent = label || '';
 
   wrapper.appendChild(textEl);
 
   if (isActive) {
-    const dot = document.createElement("div");
-    dot.className = "switch-label-dot";
+    const dot = document.createElement('div');
+    dot.className = 'switch-label-dot';
     wrapper.appendChild(dot);
   }
 
@@ -42,8 +42,8 @@ export function extractInstrumentationAttributes(el) {
 
   [...el.attributes].forEach((attr) => {
     if (
-      attr.name.startsWith("data-aue-") ||
-      attr.name.startsWith("data-richtext-")
+      attr.name.startsWith('data-aue-')
+      || attr.name.startsWith('data-richtext-')
     ) {
       attrs[attr.name] = attr.value;
     }
@@ -61,18 +61,17 @@ export default function decorateSwitchLabel(block) {
   if (!block) return;
 
   let rows = [...block.children];
-  const wrapper = block.querySelector(".default-content-wrapper");
+  const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) rows = [...wrapper.children];
 
-  const status =
-    rows[0]?.textContent?.trim().toLowerCase() ||
-    SWITCH_LABEL_STATES.DEFAULT;
+  const status = rows[0]?.textContent?.trim().toLowerCase()
+    || SWITCH_LABEL_STATES.DEFAULT;
 
-  const label = rows[1]?.textContent?.trim() || "";
+  const label = rows[1]?.textContent?.trim() || '';
 
   const instrumentation = extractInstrumentationAttributes(rows[0]);
 
-  block.textContent = "";
+  block.textContent = '';
 
   const switchLabel = createSwitchLabel({
     status,
@@ -81,5 +80,5 @@ export default function decorateSwitchLabel(block) {
   });
 
   block.appendChild(switchLabel);
-  block.classList.add("switch-label-block");
+  block.classList.add('switch-label-block');
 }
