@@ -1,0 +1,42 @@
+/* Base styles for Prodotto Unico Angular component */
+.prodotto-unico {
+  width: 100%;
+  min-height: 400px;
+  position: relative;
+}
+
+/* Angular custom element container */
+.prodotto-unico tpd-interprete-angular-dx-api-pu {
+  display: block;
+  width: 100%;
+  min-height: 400px;
+}
+
+/* Loading state - prevents layout shift */
+.prodotto-unico[data-block-status="loading"] tpd-interprete-angular-dx-api-pu {
+  min-height: 400px;
+  background-color: transparent;
+}
+
+/* Tablet */
+@media (width >= 768px) and (width <= 1280px) {
+  .prodotto-unico {
+    min-height: 500px;
+  }
+
+  .prodotto-unico tpd-interprete-angular-dx-api-pu {
+    min-height: 500px;
+  }
+}
+
+/* Desktop */
+@media (width >= 1281px) {
+  .prodotto-unico {
+    min-height: 600px;
+  }
+
+  .prodotto-unico tpd-interprete-angular-dx-api-pu {
+    min-height: 600px;
+  }
+}
+
