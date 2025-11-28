@@ -90,48 +90,61 @@ function extractValuesFromRows(rows) {
  *
  * @param {HTMLElement} block
  */
-export default function decorateAccordion(block) {
+export default async function decorateAccordion(block) {
   if (!block) return;
 
-  let rows = [...block.children];
-  const wrapper = block.querySelector('.default-content-wrapper');
-  if (wrapper) rows = [...wrapper.children];
+  const rootPath = block.querySelector('[name="accordionRootpath"]')?.value?.trim();
 
-  const {
-    accordionLabel,
-    accordionDescription,
-    instrumentation,
-  } = extractValuesFromRows(rows);
+  if (rootPath) {
+    // Content Fragment 
+    try {
+      // Line to update with proper endpoint
+      const graphqlEndpoint = getGraphQLEndpoint('/graphql/execute.json/unipol/accordionItemsPerPath') + ';rootPath=' + rootPath;
 
-  const hasInstrumentation = block.hasAttribute('data-aue-resource')
-    || block.querySelector('[data-aue-resource]')
-    || block.querySelector('[data-richtext-prop]');
+      const headers = { 'Content-Type': 'application/json' };
+      if (DEV_CONFIG.isLocalDevelopment) {
+        headers['Authorization'] = getAuthHeader();
+      }
 
-  let accordionElement;
+      const response = await fetch(graphqlEndpoint, { method: 'GET', headers });
+      if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json();
+      const accordionItems = data.data?.accordionItemList?.items || [];
 
-  if (hasInstrumentation) {
-    accordionElement = block.querySelector('.accordion');
+      block.innerHTML = '';
 
-    if (!accordionElement) {
-      accordionElement = createAccordion(
-        accordionLabel,
-        accordionDescription,
-        instrumentation,
-      );
-      rows[0].textContent = '';
-      rows[0].appendChild(accordionElement);
-    } else {
-      accordionElement.replaceWith(
-        createAccordion(
-          accordionLabel,
-          accordionDescription,
-          instrumentation,
-        ),
-      );
+      // For a single accordion
+      const firstItem = accordionItems[0];
+      if (firstItem) {
+        const accordionElement = createAccordion(firstItem.txTitle, firstItem.txDescription.html);
+        const content = accordionElement.querySelector('.accordion-content');
+        if (content) content.innerHTML = firstItem.txDescription.html || '';
+        block.appendChild(accordionElement);
+      }
+
+      // For multiple accordions
+      /* accordionItems.forEach(item => {
+        const accordionElement = createAccordion(item.txTitle, item.txDescription.html);
+        const content = accordionElement.querySelector('.accordion-content');
+        if (content) content.innerHTML = item.txDescription.html || '';
+        block.appendChild(accordionElement);
+      }); */
+
+    } catch (e) {
+      console.error('Error in loading Content Fragment:', e);
+      block.innerHTML = '';
     }
+
   } else {
+    // Editorial
+    let rows = [...block.children];
+    const wrapper = block.querySelector('.default-content-wrapper');
+    if (wrapper) rows = [...wrapper.children];
+
+    const { accordionLabel, accordionDescription, instrumentation } = extractValuesFromRows(rows);
+
+    const accordionElement = createAccordion(accordionLabel, accordionDescription, instrumentation);
     block.textContent = '';
-    accordionElement = createAccordion(accordionLabel, accordionDescription);
     block.appendChild(accordionElement);
   }
 

@@ -35,6 +35,15 @@
           "description": "Accordion content (max 500 characters)",
           "maxlength": 500,
           "value": ""
+        },
+        {
+          "component": "aem-content",
+          "valueType": "string",
+          "name": "accordionRootpath",
+          "label": "Percorso CF elementi accordion",
+          "validation": {
+            "rootPath": "/content/dam/unipol/cf"
+          }
         }
       ]
     }
