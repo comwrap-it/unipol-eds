@@ -1,0 +1,66 @@
+.category-strip {
+    display: flex;
+    padding: var(--Category-Strip-Vertical-Padding, 4px)
+        var(--Category-Strip-Horizontal-Padding-Right, 4px)
+        var(--Category-Strip-Vertical-Padding, 4px)
+        var(--Category-Strip-Horizontal-Padding-Left, 16px);
+    align-items: center;
+    gap: var(--Category-Strip-Gap, 16px);
+    border-radius: var(--Category-Strip-Radius, 8px);
+
+    &.category-strip-mobility {
+        background-color: var(
+            --Category-Strip-Background-Color-Mobility,
+            #e0f7fa
+        );
+        color: var(--Category-Strip-Text-Color-Mobility, #006064);
+
+        & .icon {
+            color: var(--Category-Strip-Icon-Color-Mobility, #006064);
+        }
+    }
+
+    &.category-strip-property {
+        background-color: var(
+            --Category-Strip-Background-Color-Property,
+            #e8f5e9
+        );
+        color: var(--Category-Strip-Text-Color-Property, #1b5e20);
+
+        & .icon {
+            color: var(--Category-Strip-Icon-Color-Property, #1b5e20);
+        }
+    }
+
+    &.category-strip-welfare {
+        background-color: var(
+            --Category-Strip-Background-Color-Welfare,
+            #f3e5f5
+        );
+        color: var(--Category-Strip-Text-Color-Welfare, #4a148c);
+
+        & .icon {
+            color: var(--Category-Strip-Icon-Color-Welfare, #4a148c);
+        }
+    }
+
+    & .text-icon-container {
+        display: flex;
+        align-items: center;
+        gap: var(--Category-Strip-Category-Gap, 8px);
+
+        & .category-text {
+            font-family: var(--Family-Font-2, "Manrope");
+            font-size: var(--Size-14, 14px);
+            font-style: normal;
+            font-weight: 500;
+            line-height: 140%;
+        }
+    }
+
+    & .tags-container {
+        display: flex;
+        align-items: center;
+        gap: var(--Category-Strip-Tag-Gap, 4px);
+    }
+}

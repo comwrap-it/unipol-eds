@@ -439,19 +439,6 @@
             ]
           }
         ]
-      },
-      {
-        "component": "text",
-        "name": "description",
-        "label": "Description",
-        "value": "Description"
-      },
-      {
-        "component": "switch",
-        "name": "showCheckbox",
-        "label": "Show Checkbox",
-        "description": "Toggle to show or hide the checkbox",
-        "value": false
       }
     ]
   },
