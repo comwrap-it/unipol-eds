@@ -225,6 +225,28 @@
           }
         },
         {
+          "title": "Unipol Header",
+          "id": "unipol-header",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {
+                  "filter": "unipol-header",
+                  "name": "Unipol Header",
+                  "model": "unipol-header",
+                  "style": "unipol-header",
+                  "navigation-pill": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Header navigation pill Section",
+                    "model": "navigation-pill"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Unipol Footer",
           "id": "unipol-footer",
           "plugins": {

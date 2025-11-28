@@ -30,6 +30,9 @@
     "...": "../blocks/atoms/**/_*.json#/models"
   },
   {
+    "...": "./_unipol-header.json#/models"
+  },
+  {
     "...": "./_unipol-footer.json#/models"
   }
 ]

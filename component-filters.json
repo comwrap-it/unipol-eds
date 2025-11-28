@@ -6,6 +6,7 @@
       "kpi-highlights-widget",
       "insurance-product-carousel-widget",
       "hero-widget",
+      "unipol-header",
       "unipol-footer"
     ]
   },
@@ -113,6 +114,12 @@
     "id": "options",
     "components": [
       "unipol-option"
+    ]
+  },
+  {
+    "id": "unipol-header",
+    "components": [
+      "navigation-pill"
     ]
   },
   {

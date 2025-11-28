@@ -4038,6 +4038,16 @@
     ]
   },
   {
+    "id": "unipol-header",
+    "fields": [
+      {
+        "component": "text",
+        "name": "unipol-header-name",
+        "label": "Nome sezione Header"
+      }
+    ]
+  },
+  {
     "id": "unipol-footer",
     "fields": [
       {
