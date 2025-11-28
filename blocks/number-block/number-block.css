@@ -1,71 +1,88 @@
 .number-block {
   display: block;
+  width: 100%;
 }
 
 .number-block-wrapper {
   display: flex;
-  max-width: 1200px;
-  margin: 0 auto;
-  justify-content: center;
+  flex-direction: column; /* Mobile first: colonna */
   align-items: center;
-  flex-direction: column;
   gap: 32px;
-  font-family: var(--Family-Font-2, sans-serif);
+  width: 100%;
+  margin: 0 auto;
 }
 
 .number-item {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
   text-align: center;
   width: 100%;
 }
 
-/* Titolo / Numero */
+/* --- TITLE (Il Numero) --- */
 .number-item-title {
+  /* Token Figma */
+  color: var(--Number-Block-Number, #001C35);
+  font-family: var(--Family-Font-2, 'Manrope', sans-serif);
+  font-size: var(--Font-Size-Title-Extra-Large, 5rem); /* 80px */
+  font-style: normal;
   font-weight: 600;
-  font-size: var(--Size-56, 3.5rem);
-  line-height: 1.2;
+  line-height: 100%;
+  letter-spacing: -0.1rem;
   
-  /* Troncamento 1 riga */
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  max-width: 100%;
+  /* Layout fix per evitare che p o div interni rompano il layout */
+  width: 100%;
+  margin-bottom: 0;
 }
 
-/* Descrizione */
+/* Reset per tag <p> o headings che arrivano dal CMS dentro il titolo */
+.number-item-title p,
+.number-item-title h1,
+.number-item-title h2,
+.number-item-title h3 {
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+
+/* --- DESCRIPTION --- */
 .number-item-description {
+  /* Token Figma */
+  color: var(--Number-Block-Body, #001C35);
+  font-family: var(--Family-Font-2, 'Manrope', sans-serif);
   font-size: var(--Size-16, 1rem);
+  font-style: normal;
   font-weight: 400;
-  margin-top: 8px;
+  line-height: 140%; /* 1.4rem */
+  
+  width: 100%;
+  margin-top: 8px; /* Un po' di aria tra numero e testo */
 }
 
-/* Troncamento Descrizione (gestisce anche p interni) */
+/* Reset per il RichText dentro la descrizione */
 .number-item-description p {
   margin: 0;
-
-  /* Troncamento 2 righe (~40 char a seconda della width) */
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  font: inherit;
+  color: inherit;
 }
 
-/* Desktop */
-@media (width >= 768px) {
+/* --- DESKTOP --- */
+@media (min-width: 1024px) {
   .number-block-wrapper {
+    /* Token Figma Desktop */
     flex-direction: row;
-    justify-content: space-around;
+    max-width: 82rem; /* width figma */
     align-items: flex-start;
+    justify-content: center; /* Centriamo il blocco nella pagina */
+    gap: var(--Number-Block-Gap---D---DS---TP, 1rem);
   }
 
   .number-item {
-    width: 30%; 
-  }
-
-  .number-item-title {
-    font-size: var(--Size-80, 5rem);
+    /* Distribuisce lo spazio equamente (3 colonne) */
+    flex: 1;
+    max-width: 33%;
   }
 }
