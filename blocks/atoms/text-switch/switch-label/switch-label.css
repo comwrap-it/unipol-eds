@@ -1,0 +1,42 @@
+.switch-label {
+  display: inline-flex;
+  padding: var(--Switch-Label-Vertical-Padding, 8px)
+           var(--Switch-Label-Horizontal-Padding, 16px);
+  align-items: center;
+  border-radius: var(--Switch-Label-Radius, 9999px);
+  background: var(--Switch-Label-Default-Background, rgba(17, 17, 17, 0.00));
+  cursor: pointer;
+  user-select: none;
+  gap: 0;
+  height: 2.1875rem;
+  line-height: 0;
+}
+
+/* ACTIVE */
+.switch-label.active {
+  gap: var(--Switch-Label-Gap, 8px);
+  background: var(--Switch-Label-Active-Background, rgba(17, 17, 17, 0.05));
+}
+
+/* TEXT */
+.switch-label-text {
+  color: var(--Switch-Label-Default-Text, #001C35);
+  font-family: var(--Family-Font-2, Manrope);
+  font-size: var(--Size-14, 14px);
+  font-style: normal;
+  font-weight: 500;
+}
+
+/* TEXT ACTIVE */
+.switch-label.active .switch-label-text {
+  color: var(--Switch-Label-Active-Text, #001C35);
+}
+
+/* DOT */
+.switch-label-dot {
+  width: var(--Switch-Label-Active-Dot, 4px);
+  height: var(--Switch-Label-Active-Dot, 4px);
+  aspect-ratio: 1/1;
+  background: var(--Switch-Label-Active-Dot-Backgroung, #001C35);
+  border-radius: 50%;
+}

@@ -17,8 +17,10 @@
 }
 
 /* Tablet Landscape */
-@media (768px <= width < 1280px) {
+@media (768px <= width < 1440px) {
     .insurance-product-carousel-container {
+        width: 76rem;
+
         & .insurance-product-carousel {
             width: 76rem;
         }

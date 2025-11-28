@@ -144,4 +144,10 @@ export default async function decorate(block) {
   moveInstrumentation(block, carousel);
   // Replace block with carousel
   block.replaceWith(carousel);
+
+  const mq = window.matchMedia('(min-width: 393px)');
+  if (mq.matches && typeof window.Swiper === 'undefined') {
+    const handleInsuranceProductCarouselWidget = await import('../insurance-product-carousel-widget/insurance-product-carousel-widget.js');
+    handleInsuranceProductCarouselWidget.default();
+  }
 }
