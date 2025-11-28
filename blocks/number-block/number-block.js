@@ -53,13 +53,29 @@ function extractNumberItem(titleRow, descRow) {
     const hasContent = titleRow.textContent?.trim();
 
     if (hasInstrumentation || hasContent) {
+      // Check if there's an existing paragraph (common in AEM EDS)
+      const existingPara = titleRow.querySelector('p');
+
       const titleElement = document.createElement('div');
       titleElement.classList.add('text-block-number');
 
-      while (titleRow.firstChild) {
-        titleElement.appendChild(titleRow.firstChild);
+      if (existingPara) {
+        // If there's a paragraph, extract its content and instrumentation
+        // Move all children from paragraph to titleElement
+        while (existingPara.firstChild) {
+          titleElement.appendChild(existingPara.firstChild);
+        }
+        // Move instrumentation from paragraph to titleElement
+        moveInstrumentation(existingPara, titleElement);
+        // Also move any instrumentation from titleRow
+        moveInstrumentation(titleRow, titleElement);
+      } else {
+        // No paragraph, move all children from titleRow
+        while (titleRow.firstChild) {
+          titleElement.appendChild(titleRow.firstChild);
+        }
+        moveInstrumentation(titleRow, titleElement);
       }
-      moveInstrumentation(titleRow, titleElement);
 
       // Only return titleElement if it has actual content after moving children
       if (titleElement.textContent?.trim() || hasInstrumentation) {
@@ -190,7 +206,18 @@ export function createNumberBlock(items = []) {
       if (item.title instanceof HTMLElement) {
         // Use existing element (from AEM EDS)
         titleElement = item.title;
-        if (!titleElement.classList.contains('text-block-number')) {
+        // Ensure it's a div with the correct class
+        if (titleElement.tagName !== 'DIV') {
+          // If it's not a div, create a new div and move content
+          const newDiv = document.createElement('div');
+          newDiv.className = 'text-block-number';
+          while (titleElement.firstChild) {
+            newDiv.appendChild(titleElement.firstChild);
+          }
+          // Move instrumentation
+          moveInstrumentation(titleElement, newDiv);
+          titleElement = newDiv;
+        } else if (!titleElement.classList.contains('text-block-number')) {
           titleElement.classList.add('text-block-number');
         }
         // Apply truncation to existing element
@@ -230,6 +257,7 @@ export function createNumberBlock(items = []) {
       itemWrapper.appendChild(descElement);
     }
 
+    // Only append if itemWrapper has children (title or description)
     if (itemWrapper.children.length > 0) {
       numberBlockWrapper.appendChild(itemWrapper);
     }
@@ -268,9 +296,11 @@ export default async function decorate(block) {
     const titleRow = rows[i];
     const descRow = rows[i + 1];
 
-    if (titleRow && descRow) {
+    // Only process if at least one row exists
+    if (titleRow || descRow) {
       const item = extractNumberItem(titleRow, descRow);
 
+      // Only add item if it has at least one element (title or description)
       if (item.titleElement || item.descriptionElement) {
         items.push({
           title: item.titleElement,
