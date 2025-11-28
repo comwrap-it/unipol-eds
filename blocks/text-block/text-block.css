@@ -1,26 +1,33 @@
 /* Base styles (Mobile first) */
-.text-block {
+.text-block.block {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 32px 16px;
-  text-align: center;
+  padding: 32px 16px; /* Mobile padding */
+}
+
+/* Container del contenuto (Title + Text + Button) */
+.text-block-cont {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; /* Centrato */
+  text-align: center;
   gap: var(--Text-Block-Centered-Gap, 2rem);
-  align-self: stretch;
+  margin-bottom: var(--Kpi-Highlights-Widget-Gap-M-Tp, 56px); /* Mobile margin */
 }
 
 .text-block-title {
-  margin: 0 0 16px;
   color: var(--Text-Block-Title, #001C35);
   font-family: var(--Family-Font-1);
   font-size: var(--Size-32, 2rem);
   font-weight: 550;
   line-height: 115%;
   letter-spacing: -0.02rem;
+  margin: 0 0 16px;
+  width: 100%;
 }
 
+/* Contenuto Testuale (descrizione) - Il div wrapper */
 .text-block-text {
   max-width: 800px;
   margin: 0 auto 24px;
@@ -29,7 +36,12 @@
   font-size: var(--Size-16);
   font-weight: 400;
   line-height: 1.4rem;
-  word-break: break-all;
+  word-break: break-word; /* Migliore leggibilità */
+}
+
+/* Reset margini per il <p> generato dal Richtext */
+.text-block-text p {
+    margin: 0;
 }
 
 .text-block-button {
@@ -42,52 +54,49 @@
   flex-shrink: 0;
 }
 
-.text-block.text-block-left .text-block-container {
+/* Stile per la variante allineata a sinistra (text-block-left) */
+.text-block.text-block-left .text-block-cont {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  flex-direction: row; /* Sovrascrive column */
+  margin-bottom: 0;
+  text-align: left; /* Allinea il contenuto */
 }
 
 .text-block.text-block-left .text-block-title {
   margin: 0;
+  text-align: left;
 }
 
+/* Nella variante 'left', il testo descrittivo è nascosto per logica */
 .text-block.text-block-left .text-block-text {
   display: none;
 }
 
 /* Tablet */
 @media (width >= 768px) and (width <= 1280px) {
-  .text-block {
-    padding: 36px 20px;
-  }
+    .text-block.block {
+        padding: 36px 32px; /* Aumentato padding laterale */
+    }
 
   .text-block-title {
-    font-size: var(--Size-40, 2.5 rem);
+    font-size: var(--Size-40, 2.5rem);
   }
 }
 
 /* Desktop */
 @media (width >= 1281px) {
-      .text-block {
-        padding: 40px 24px;
-      }
+    .text-block.block {
+        padding: 40px 64px;
+    }
 
     .text-block-title {
-        margin-bottom: 24px;
         font-size: var(--Font-Size-Title-Page, 3rem);
         line-height: 3.45rem;
         letter-spacing: -0.03rem;
     }
-
-   .text-block-text {
-     margin-bottom: 32px;
-   }
-
-  .text-block-button {
-    margin-top: 0;
-  }
 }
 
 /* Accessibility */

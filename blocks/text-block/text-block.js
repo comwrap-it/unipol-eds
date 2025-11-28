@@ -1,10 +1,5 @@
 /**
- * Text Block Component
- *
- * A content block component that displays a title, text content, and an optional button.
- * Uses primary-button as an atom component for call-to-action buttons.
- *
- * Preserves Universal Editor instrumentation for AEM EDS.
+ * Text Block Component – Updated for dual titles (center/left) and UE-Safe.
  */
 
 import {
@@ -12,7 +7,6 @@ import {
 } from '../atoms/buttons/standard-button/standard-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-// Export constants for external use
 export { BUTTON_VARIANTS, BUTTON_ICON_SIZES };
 
 let isPrimaryBtnStyleLoaded = false;
@@ -25,11 +19,9 @@ async function ensureBtnStylesLoaded() {
   isPrimaryBtnStyleLoaded = true;
 }
 
-/**
- * Extract title element from row with instrumentation
- * @param {HTMLElement} titleRow - The row containing the title
- * @returns {HTMLElement|null} The title element with instrumentation
- */
+/* -----------------------------
+   TITLE EXTRACTOR
+------------------------------*/
 function extractTitleElement(titleRow) {
   if (!titleRow) return null;
 
@@ -45,164 +37,66 @@ function extractTitleElement(titleRow) {
   }
   moveInstrumentation(titleRow, title);
 
-  return title.textContent?.trim() ? title : null;
+  return title.textContent?.trim() || title.children.length > 0 ? title : null;
 }
 
-/**
- * Extract text element from row with instrumentation (richtext support)
- * @param {HTMLElement} textRow - The row containing the text
- * @returns {HTMLElement|null} The text element with instrumentation
- */
+/* -----------------------------
+  TEXT EXTRACTOR
+------------------------------*/
 function extractTextElement(textRow) {
   if (!textRow) return null;
 
-  // Check for instrumentation on textRow or any text element (richtext)
-  const hasInstrumentationOnRow = textRow.hasAttribute('data-aue-resource')
-    || textRow.hasAttribute('data-aue-prop')
-    || textRow.hasAttribute('data-richtext-prop');
+  let textElement = textRow.querySelector('p');
 
-  // Only look for instrumentation on text elements (p, span, strong, em, a, etc.)
-  // NOT on button elements (a.btn, button.btn)
-  const textElementSelector = 'p, span, strong, em, a:not(.btn), b, i, u, code, mark, small, sub, sup';
-  const instrumentedTextChild = textRow.querySelector(`${textElementSelector}[data-aue-resource], ${textElementSelector}[data-aue-prop], ${textElementSelector}[data-richtext-prop]`);
-  const hasInstrumentation = hasInstrumentationOnRow || !!instrumentedTextChild;
-  const hasContent = textRow.textContent?.trim();
-
-  if (!hasInstrumentation && !hasContent) {
-    return null;
-  }
-
-  // Check if there's an existing paragraph (common in richtext)
-  const existingPara = textRow.querySelector('p');
-
-  if (existingPara) {
-    // If textRow has other children besides the paragraph, move them into the paragraph
-    // This ensures all content and instrumentation from child elements is preserved
-    // BUT exclude button elements
-    const children = Array.from(textRow.childNodes);
-    children.forEach((child) => {
-      // Skip button elements
-      if (child.nodeType === Node.ELEMENT_NODE) {
-        const isButton = child.classList?.contains('btn')
-          || child.tagName === 'BUTTON'
-          || (child.tagName === 'A' && child.classList?.contains('btn'));
-        if (isButton) return;
-      }
-
-      if (child !== existingPara && child.nodeType === Node.ELEMENT_NODE) {
-        // Move element and its instrumentation into the paragraph
-        existingPara.appendChild(child);
-      } else if (
-        child !== existingPara
-          && child.nodeType === Node.TEXT_NODE
-          && child.textContent.trim()
-      ) {
-        // Move text nodes into the paragraph
-        existingPara.appendChild(child);
-      }
-    });
-
-    // Move instrumentation from textRow to existingPara
-    // This must be done AFTER moving children to preserve their instrumentation
-    moveInstrumentation(textRow, existingPara);
-
-    return existingPara;
-  }
-
-  // No existing paragraph, create one
-  const text = document.createElement('p');
-  const children = Array.from(textRow.childNodes);
-  children.forEach((child) => {
-    // Skip button elements
-    if (child.nodeType === Node.ELEMENT_NODE) {
-      const isButton = child.classList?.contains('btn')
-        || child.tagName === 'BUTTON'
-        || (child.tagName === 'A' && child.classList?.contains('btn'));
-      if (isButton) return;
+  // Se non c'è un paragrafo, creiamone uno e muoviamo il contenuto
+  if (!textElement) {
+    textElement = document.createElement('p');
+    while (textRow.firstChild) {
+      textElement.appendChild(textRow.firstChild);
     }
-    text.appendChild(child);
-  });
-  moveInstrumentation(textRow, text);
+  }
 
-  return (hasInstrumentation || text.textContent?.trim()) ? text : null;
+  // Spostiamo l'instrumentation dalla riga genitore al paragrafo
+  moveInstrumentation(textRow, textElement);
+
+  // Il testo viene avvolto in un div per lo styling
+  const textWrapper = document.createElement('div');
+  textWrapper.classList.add('text-block-text');
+  textWrapper.appendChild(textElement);
+
+  const hasInstrumentation = [...textElement.attributes].some((attr) => attr.name.startsWith('data-aue-'));
+
+  return hasInstrumentation || textElement.textContent?.trim() ? textWrapper : null;
 }
 
-/**
- * Preserve block-level attributes on the new element
- * @param {HTMLElement} sourceBlock - Original block element
- * @param {HTMLElement} targetBlock - New block element
- */
-function preserveBlockAttributes(sourceBlock, targetBlock) {
-  // Preserve ALL block instrumentation attributes
-  [...sourceBlock.attributes].forEach((attr) => {
-    if (attr.name.startsWith('data-aue-') || attr.name === 'data-block-name') {
-      targetBlock.setAttribute(attr.name, attr.value);
-    }
-  });
+/* ------------------------------------------
+   PRESERVE BLOCK ATTRIBUTES (RIMOSSA)
+------------------------------------------- */
+// Rimosso: function preserveBlockAttributes(sourceBlock, targetBlock) { ... }
 
-  // Preserve blockName if present (needed for loadBlock)
-  if (sourceBlock.dataset.blockName) {
-    targetBlock.dataset.blockName = sourceBlock.dataset.blockName;
-  }
-
-  // Preserve block classes
-  if (sourceBlock.classList.length > 0) {
-    sourceBlock.classList.forEach((cls) => {
-      if (cls !== 'block' && !targetBlock.classList.contains(cls)) {
-        targetBlock.classList.add(cls);
-      }
-    });
-  }
-}
-
-/**
- * Create a text block element programmatically
- *
- * This is the SINGLE SOURCE OF TRUTH for text block creation.
- * Used by both the decorate() function (AEM EDS) and Storybook.
- *
- * @param {HTMLElement|string} titleContent - Title element or text
- * @param {boolean} centered - Whether to center content and show text
- * @param {HTMLElement|string} textContent - Text element or string
- *   (visible only if centered is true)
- * @param {HTMLElement} buttonElement - Pre-created button element (optional)
- * @param {Object} buttonConfig - Button configuration object
- *   (alternative to buttonElement, for Storybook)
- * @param {string} buttonConfig.label - Button label
- * @param {string} buttonConfig.href - Button URL
- * @param {string} buttonConfig.variant - Button variant
- *   (primary, secondary, accent)
- * @param {string} buttonConfig.iconSize - Icon size
- * @param {string} buttonConfig.leftIcon - Left icon
- * @param {string} buttonConfig.rightIcon - Right icon
- * @returns {HTMLElement} The text block element
- */
+/* ------------------------------------------
+   MAIN CREATOR FUNCTION (Exported per Storybook)
+------------------------------------------- */
 export function createTextBlock(
   titleContent,
   centered = true,
-  textContent = '',
+  textContent = null, // accetta l'HTMLDivElement da extractTextElement
   buttonElement = null,
   buttonConfig = null,
 ) {
-  // Create text block container
-  const textBlock = document.createElement('div');
-  textBlock.className = 'text-block block';
-  textBlock.classList.add(centered ? 'text-block-center' : 'text-block-left');
-
-  // Create main text content container
+  // NOTA: Questa funzione crea il contenuto interno, NON il blocco principale.
   const textContentContainer = document.createElement('div');
-  textContentContainer.className = 'text-block-container';
+  textContentContainer.className = 'text-block-cont';
 
-  // Add title
   if (titleContent) {
     let titleElement;
 
     if (titleContent instanceof HTMLElement) {
-      // Use existing element (from AEM EDS)
+      // Caso AEM EDS
       titleElement = titleContent;
       titleElement.className = 'text-block-title';
     } else {
-      // Create new element (for Storybook)
+      // Caso Storybook
       titleElement = document.createElement('h2');
       titleElement.className = 'text-block-title';
       titleElement.textContent = titleContent;
@@ -211,32 +105,33 @@ export function createTextBlock(
     textContentContainer.appendChild(titleElement);
   }
 
-  // Add text (only if centered)
+  // Aggiungi testo (solo se centered=true)
   if (centered && textContent) {
-    let textElement;
+    let textWrapper;
 
     if (textContent instanceof HTMLElement) {
-      // Use existing element (from AEM EDS)
-      textElement = textContent;
-      textElement.className = 'text-block-text';
+      // Caso AEM EDS (textContent è già il div wrapper creato in extractTextElement)
+      textWrapper = textContent;
     } else {
-      // Create new element (for Storybook)
-      textElement = document.createElement('p');
-      textElement.className = 'text-block-text';
-      textElement.textContent = textContent;
+      // Caso Storybook (crea il wrapper e il paragrafo)
+      textWrapper = document.createElement('div');
+      textWrapper.className = 'text-block-text';
+      const p = document.createElement('p');
+      p.textContent = textContent;
+      textWrapper.appendChild(p);
     }
 
-    textContentContainer.appendChild(textElement);
+    textContentContainer.appendChild(textWrapper);
   }
 
-  // Add button
+  // Aggiungi bottone
   let finalButtonElement = buttonElement;
 
-  // If no button element provided but config is, create button from config
   if (!finalButtonElement && buttonConfig && buttonConfig.label) {
     finalButtonElement = createButton(
       buttonConfig.label || 'Button',
       buttonConfig.href || '',
+      buttonConfig.openInNewTab || false,
       buttonConfig.variant || BUTTON_VARIANTS.PRIMARY,
       buttonConfig.iconSize || BUTTON_ICON_SIZES.MEDIUM,
       buttonConfig.leftIcon || '',
@@ -252,62 +147,69 @@ export function createTextBlock(
     textContentContainer.appendChild(buttonContainer);
   }
 
-  // Append the main text container to textBlock
-  textBlock.appendChild(textContentContainer);
-
-  return textBlock;
+  return textContentContainer;
 }
 
-/**
- * Decorates a text-block element
- *
- * This function extracts data from Universal Editor structure and delegates
- * the actual component creation to createTextBlock().
- *
- * @param {HTMLElement} block - The text-block element
- */
+/* ------------------------------------------
+   DECORATE() (UE-Safe)
+------------------------------------------- */
 export default async function decorate(block) {
   if (!block) return;
   ensureBtnStylesLoaded();
 
-  // === STEP 1: Extract rows from Universal Editor ===
+  // Extract rows
   let rows = Array.from(block.children);
   const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) {
     rows = Array.from(wrapper.children);
   }
 
-  // === STEP 2: Extract data from rows ===
-
-  // ROW 0: Title
-  const titleRow = rows[0];
-  const titleElement = extractTitleElement(titleRow);
-
-  // ROW 1: Content Alignment (boolean)
-  const alignmentRow = rows[1];
+  // 0: contentAlignment (boolean)
+  const alignmentRow = rows[0];
   const centered = alignmentRow?.querySelector('p')?.textContent
     .trim().toLowerCase() === 'true';
 
-  // ROW 2: Text (subtitle/description)
-  const textRow = rows[2];
-  const textElement = centered ? extractTextElement(textRow) : null;
+  // 1: center title (shown only if centered)
+  const centerTitleRow = rows[1];
 
-  // ROWS 3-8: Button fields (from button-container)
-  // Note: Container fields are flattened at the parent level in Universal Editor
-  const buttonRows = rows.slice(3, 9);
+  // 2: subtitle (shown only if centered)
+  const subtitleRow = rows[2];
+
+  // 3: left title (shown only if NOT centered)
+  const leftTitleRow = rows[3];
+
+  // Pick correct title depending on alignment
+  const titleElement = centered
+    ? extractTitleElement(centerTitleRow)
+    : extractTitleElement(leftTitleRow);
+
+  // Extract subtitle ONLY if centered
+  const textElement = centered ? extractTextElement(subtitleRow) : null;
+
+  // Rows after titles/subtitle/left-title → buttons
+  const buttonRows = rows.slice(4, 10);
   const buttonElement = createButtonFromRows(buttonRows);
 
-  // === STEP 3: Create the text block using the centralized function ===
-  const textBlock = createTextBlock(
+  // Create component content
+  const newContentContainer = createTextBlock(
     titleElement,
     centered,
     textElement,
     buttonElement,
   );
 
-  // === STEP 4: Preserve AEM instrumentation and metadata ===
-  preserveBlockAttributes(block, textBlock);
+  // === STEP 4: Iniezione sicura nel blocco originale (UE-Safe) ===
 
-  // === STEP 5: Replace the original block ===
-  block.replaceWith(textBlock);
+  // 1. Applica le classi di allineamento/stile al blocco originale
+  block.classList.remove('text-block-center', 'text-block-left');
+  block.classList.add(centered ? 'text-block-center' : 'text-block-left');
+  block.classList.add('text-block'); // Assicura la classe base
+
+  // 2. Pulisci il blocco originale (mantieni gli attributi UE)
+  block.textContent = '';
+
+  // 3. Trasferisci il contenuto
+  while (newContentContainer.firstChild) {
+    block.appendChild(newContentContainer.firstChild);
+  }
 }
