@@ -89,6 +89,7 @@ export default async function handleInsuranceProductCarouselWidget() {
         const swiper = new Swiper(swiperEl, {
           // Install Plugin To Swiper
           modules: [insuranceProductCarousel],
+          a11y: false,
           navigation: {
             nextEl: carousel.querySelector('.swiper-button-next'),
             prevEl: carousel.querySelector('.swiper-button-prev'),

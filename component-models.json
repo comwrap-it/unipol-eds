@@ -1882,21 +1882,29 @@
     "id": "text-block",
     "fields": [
       {
-        "component": "text",
-        "name": "title",
-        "label": "Titolo",
-        "required": true,
-        "validation": {
-          "maxLength": 60,
-          "customErrorMsg": "Testo troppo lungo"
-        }
-      },
-      {
         "component": "boolean",
         "label": "Centra e mostra testo",
         "description": "Attivo: contenuto centrato verticalmente e testo visibile. Disattivo: contenuto allineato orizzontalmente e testo non visibile.",
         "name": "contentAlignment",
         "valueType": "boolean"
+      },
+      {
+        "component": "text",
+        "name": "text-block-center-align",
+        "label": "Titolo",
+        "required": true,
+        "validation": {
+          "maxLength": 60,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "contentAlignment"
+            },
+            true
+          ]
+        }
       },
       {
         "component": "richtext",
@@ -2010,6 +2018,24 @@
               }
             ]
           }
+        }
+      },
+      {
+        "component": "text",
+        "name": "text-block-left-align",
+        "label": "Titolo",
+        "required": true,
+        "validation": {
+          "maxLength": 30,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "contentAlignment"
+            },
+            false
+          ]
         }
       },
       {
@@ -3758,6 +3784,83 @@
     ]
   },
   {
+    "id": "switch",
+    "fields": [
+      {
+        "component": "select",
+        "name": "type",
+        "label": "Type",
+        "value": "unchecked",
+        "options": [
+          {
+            "name": "Unchecked",
+            "value": "unchecked"
+          },
+          {
+            "name": "Checked",
+            "value": "checked"
+          }
+        ]
+      },
+      {
+        "component": "switch",
+        "name": "disabled",
+        "label": "Disabled",
+        "description": "Toggle to disable the switch",
+        "value": false
+      }
+    ]
+  },
+  {
+    "id": "switch-button-field",
+    "fields": [
+      {
+        "component": "text",
+        "name": "switchLabel",
+        "label": "Switch Label",
+        "description": "Primary text displayed next to the switch",
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "switchDescription",
+        "label": "Switch Description",
+        "description": "Secondary text displayed below the label",
+        "value": ""
+      },
+      {
+        "component": "container",
+        "name": "switch-button-field-switch",
+        "label": "Switch of the Field",
+        "fields": [
+          {
+            "component": "select",
+            "name": "type",
+            "label": "Type",
+            "value": "unchecked",
+            "options": [
+              {
+                "name": "Unchecked",
+                "value": "unchecked"
+              },
+              {
+                "name": "Checked",
+                "value": "checked"
+              }
+            ]
+          },
+          {
+            "component": "switch",
+            "name": "disabled",
+            "label": "Disabled",
+            "description": "Toggle to disable the switch",
+            "value": false
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "tag",
     "fields": [
       {
@@ -3809,6 +3912,97 @@
           {
             "name": "Custom",
             "value": "custom"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "switch-label",
+    "fields": [
+      {
+        "component": "select",
+        "name": "status",
+        "label": "Status",
+        "value": "default",
+        "options": [
+          {
+            "name": "Default",
+            "value": "default"
+          },
+          {
+            "name": "Active",
+            "value": "active"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "label",
+        "label": "Label Text",
+        "description": "Text inside the switch label",
+        "value": ""
+      }
+    ]
+  },
+  {
+    "id": "text-switch",
+    "fields": [
+      {
+        "component": "text",
+        "name": "labelLeft",
+        "label": "Left Label",
+        "value": "Option A"
+      },
+      {
+        "component": "text",
+        "name": "labelRight",
+        "label": "Right Label",
+        "value": "Option B"
+      },
+      {
+        "component": "select",
+        "name": "initialActive",
+        "label": "Initially Active",
+        "value": "left",
+        "options": [
+          {
+            "name": "Left",
+            "value": "left"
+          },
+          {
+            "name": "Right",
+            "value": "right"
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "text-switch-switch-label",
+        "label": "Button Of The Text Switch",
+        "fields": [
+          {
+            "component": "select",
+            "name": "status",
+            "label": "Status",
+            "value": "default",
+            "options": [
+              {
+                "name": "Default",
+                "value": "default"
+              },
+              {
+                "name": "Active",
+                "value": "active"
+              }
+            ]
+          },
+          {
+            "component": "text",
+            "name": "label",
+            "label": "Label Text",
+            "description": "Text inside the switch label",
+            "value": ""
           }
         ]
       }

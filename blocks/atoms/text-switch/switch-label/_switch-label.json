@@ -1,0 +1,44 @@
+{
+  "definitions": [
+    {
+      "title": "Switch Label",
+      "id": "switch-label",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Switch Label",
+              "model": "switch-label"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "switch-label",
+      "fields": [
+        {
+          "component": "select",
+          "name": "status",
+          "label": "Status",
+          "value": "default",
+          "options": [
+            { "name": "Default", "value": "default" },
+            { "name": "Active", "value": "active" }
+          ]
+        },
+        {
+          "component": "text",
+          "name": "label",
+          "label": "Label Text",
+          "description": "Text inside the switch label",
+          "value": ""
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

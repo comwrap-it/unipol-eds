@@ -19,7 +19,6 @@
 import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
-import handleInsuranceProductCarouselWidget from '../insurance-product-carousel-widget/insurance-product-carousel-widget.js';
 
 /**
  * Decorates the insurance product carousel block
@@ -154,5 +153,10 @@ export default async function decorate(block) {
   moveInstrumentation(block, carousel);
   // Replace block with carousel
   block.replaceWith(carousel);
-  await handleInsuranceProductCarouselWidget();
+
+  const mq = window.matchMedia('(min-width: 393px)');
+  if (mq.matches && typeof window.Swiper === 'undefined') {
+    const handleInsuranceProductCarouselWidget = await import('../insurance-product-carousel-widget/insurance-product-carousel-widget.js');
+    handleInsuranceProductCarouselWidget.default();
+  }
 }
