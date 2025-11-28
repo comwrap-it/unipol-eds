@@ -86,7 +86,11 @@ function extractNumberItem(titleRow, descRow) {
           if (child !== existingPara && child.nodeType === Node.ELEMENT_NODE) {
             // Move element and its instrumentation into the paragraph
             existingPara.appendChild(child);
-          } else if (child !== existingPara && child.nodeType === Node.TEXT_NODE && child.textContent.trim()) {
+          } else if (
+            child !== existingPara
+            && child.nodeType === Node.TEXT_NODE
+            && child.textContent.trim()
+          ) {
             // Move text nodes into the paragraph
             existingPara.appendChild(child);
           }
