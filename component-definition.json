@@ -589,6 +589,21 @@
           }
         },
         {
+          "title": "Preventivatore",
+          "id": "preventivatore",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Preventivatore",
+                  "model": "preventivatore"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Scroll Indicator",
           "id": "scroll-indicator",
           "plugins": {
@@ -658,6 +673,21 @@
                 "template": {
                   "name": "Text-Link",
                   "model": "text-link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Unica",
+          "id": "unica",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Unica",
+                  "model": "unica"
                 }
               }
             }

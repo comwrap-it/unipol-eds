@@ -1,0 +1,269 @@
+/* Skeleton Loader Styles */
+main > .section > div.preventivatore-wrapper{
+    margin-bottom: var(--spacing-md);
+    max-width:100%;
+    padding: 0;
+}
+
+.preventivatore-skeleton {
+  width: 100%;
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  padding: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.skeleton-container {
+  display: flex;
+  gap: var(--spacing-xxl);
+  align-items: flex-start;
+}
+
+.skeleton-left {
+  flex: 1;
+  max-width: 500px;
+}
+
+.skeleton-right {
+  flex: 1;
+  max-width: 600px;
+}
+
+.skeleton-form {
+  background: var(--color-gray-light);
+  padding: 30px;
+  border-radius: var(--border-radius-md);
+  border: var(--border-width-thin) solid var(--color-gray-medium);
+}
+
+.skeleton-field {
+  margin-bottom: var(--spacing-md);
+}
+
+/* Ottimizzazione: Rimosse tutte le animazioni background-position costose */
+.skeleton-label,
+.skeleton-input,
+.skeleton-checkbox,
+.skeleton-checkbox-label,
+.skeleton-button,
+.skeleton-link,
+.skeleton-icon,
+.skeleton-promo-title,
+.skeleton-promo-subtitle,
+.skeleton-promo-discount,
+.skeleton-feature,
+.skeleton-mobile-title {
+  position: relative;
+  overflow: hidden;
+  background: #f0f0f0;
+  border-radius: 4px;
+}
+
+/* Dimensioni specifiche per ogni elemento */
+.skeleton-label {
+  height: 16px;
+  width: 120px;
+  margin-bottom: 8px;
+}
+
+.skeleton-input {
+  height: 48px;
+  width: 100%;
+}
+
+.skeleton-checkbox {
+  width: 16px;
+  height: 16px;
+  border-radius: 2px;
+}
+
+.skeleton-checkbox-label {
+  height: 14px;
+  width: 150px;
+}
+
+.skeleton-button {
+  height: 48px;
+}
+
+.skeleton-button-primary {
+  width: 200px;
+  background: #d32f2f;
+}
+
+.skeleton-link {
+  height: 14px;
+  width: 180px;
+}
+
+.skeleton-icon {
+  width: 60px;
+  height: 60px;
+  background: rgb(255 255 255 / 20%);
+  border-radius: 8px;
+}
+
+.skeleton-promo-title {
+  height: 24px;
+  width: 80%;
+  margin: 0 auto 10px;
+  background: rgb(255 255 255 / 30%);
+}
+
+.skeleton-promo-subtitle {
+  height: 18px;
+  width: 60%;
+  margin: 0 auto 20px;
+  background: rgb(255 255 255 / 20%);
+}
+
+.skeleton-promo-discount {
+  height: 48px;
+  width: 120px;
+  margin: 0 auto 20px;
+  background: rgb(255 255 255 / 30%);
+}
+
+.skeleton-feature {
+  height: 16px;
+  width: 90%;
+  background: rgb(255 255 255 / 20%);
+}
+
+.skeleton-mobile-title {
+  height: 20px;
+  width: 200px;
+  margin: 0 auto;
+  background: rgb(255 255 255 / 30%);
+}
+
+/* Animazione ottimizzata con transform - molto più performante */
+.skeleton-label::before,
+.skeleton-input::before,
+.skeleton-checkbox::before,
+.skeleton-checkbox-label::before,
+.skeleton-button::before,
+.skeleton-link::before,
+.skeleton-icon::before,
+.skeleton-promo-title::before,
+.skeleton-promo-subtitle::before,
+.skeleton-promo-discount::before,
+.skeleton-feature::before,
+.skeleton-mobile-title::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgb(255 255 255 / 40%), transparent);
+  animation: skeleton-shimmer 1.5s infinite;
+  will-change: transform; /* Ottimizzazione GPU */
+}
+
+.skeleton-checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.skeleton-actions {
+  margin: 30px 0 20px;
+}
+
+.skeleton-links {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Promo section skeleton */
+.skeleton-promo {
+  background: linear-gradient(135deg, #1565c0, #0d47a1);
+  padding: 30px;
+  border-radius: 8px;
+  color: white;
+}
+
+.skeleton-promo-icons {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.skeleton-promo-features {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Mobile skeleton */
+.skeleton-mobile {
+  display: none;
+}
+
+@media (width <= 768px) {
+  .skeleton-container {
+    display: none;
+  }
+  
+  .skeleton-mobile {
+    display: block;
+  }
+  
+  .skeleton-mobile-header {
+    background: #1565c0;
+    padding: 20px;
+    border-radius: 8px 8px 0 0;
+    text-align: center;
+  }
+  
+  .skeleton-mobile-form {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 0 0 8px 8px;
+  }
+  
+  /* Riduci il numero di elementi animati su mobile per migliori performance */
+  .skeleton-promo-icons .skeleton-icon:nth-child(n+3) {
+    display: none;
+  }
+  
+  /* Su mobile, riduci la frequenza dell'animazione */
+  .skeleton-label::before,
+  .skeleton-input::before,
+  .skeleton-button::before {
+    animation-duration: 2s; /* Più lento su mobile */
+  }
+}
+
+/* Animazione ottimizzata - usa solo transform per massime performance */
+@keyframes skeleton-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Ottimizzazione aggiuntiva: riduci animazioni quando l'utente preferisce meno movimento */
+@media (prefers-reduced-motion: reduce) {
+  .skeleton-label::before,
+  .skeleton-input::before,
+  .skeleton-checkbox::before,
+  .skeleton-checkbox-label::before,
+  .skeleton-button::before,
+  .skeleton-link::before,
+  .skeleton-icon::before,
+  .skeleton-promo-title::before,
+  .skeleton-promo-subtitle::before,
+  .skeleton-promo-discount::before,
+  .skeleton-feature::before,
+  .skeleton-mobile-title::before {
+    animation: none;
+  }
+}

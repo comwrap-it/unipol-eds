@@ -1,0 +1,42 @@
+/* Base styles for Unica Angular component */
+.unica {
+  width: 100%;
+  min-height: 400px;
+  position: relative;
+}
+
+/* Angular custom element container */
+.unica tpd-interprete-angular-dx-api-pu {
+  display: block;
+  width: 100%;
+  min-height: 400px;
+}
+
+/* Loading state - prevents layout shift */
+.unica[data-block-status="loading"] tpd-interprete-angular-dx-api-pu {
+  min-height: 400px;
+  background-color: transparent;
+}
+
+/* Tablet */
+@media (width >= 768px) and (width <= 1280px) {
+  .unica {
+    min-height: 500px;
+  }
+
+  .unica tpd-interprete-angular-dx-api-pu {
+    min-height: 500px;
+  }
+}
+
+/* Desktop */
+@media (width >= 1281px) {
+  .unica {
+    min-height: 600px;
+  }
+
+  .unica tpd-interprete-angular-dx-api-pu {
+    min-height: 600px;
+  }
+}
+
