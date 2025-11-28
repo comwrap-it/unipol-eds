@@ -79,9 +79,15 @@
     "max": 8
   },
   {
-    "id": "header-nav-pill-box-section",
+    "id": "header-nav-pill-box",
     "components": [
-      "header-nav-pill"
+      "header-nav-pill-item"
+    ]
+  },
+  {
+    "id": "header-utilities",
+    "components": [
+      "header-button"
     ]
   },
   {
@@ -125,7 +131,7 @@
   {
     "id": "unipol-header",
     "components": [
-      "header-nav-pill-box-section"
+      "header-nav-pill-box"
     ]
   },
   {

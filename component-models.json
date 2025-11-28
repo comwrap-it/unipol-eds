@@ -378,7 +378,109 @@
     ]
   },
   {
-    "id": "header-nav-pill",
+    "id": "header-logo-hamburger",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "unipolHeaderLogo",
+        "label": "Logo Unipol Header"
+      },
+      {
+        "component": "aem-content",
+        "name": "UnipolHeaderLogoHref",
+        "label": "Link URL Unipol Header Logo"
+      },
+      {
+        "component": "container",
+        "name": "header-hamburger-container",
+        "label": "Configurazione Header Hamburger",
+        "fields": [
+          {
+            "component": "select",
+            "name": "iconButtonIcon",
+            "label": "Icon",
+            "required": true,
+            "description": "Select the icon",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "iconButtonVariant",
+            "label": "Variant",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "iconButtonSize",
+            "label": "Size",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "iconButtonHref",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          },
+          {
+            "component": "boolean",
+            "label": "Apri in una nuova scheda",
+            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+            "name": "iconButtonOpenInNewTab",
+            "valueType": "boolean",
+            "value": false
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "header-nav-pill-item",
     "fields": [
       {
         "component": "tab",
@@ -528,38 +630,41 @@
     ]
   },
   {
-    "id": "header-unipol",
+    "id": "header-button",
     "fields": [
       {
-        "component": "reference",
-        "name": "logo",
-        "label": "Logo Image",
-        "description": "Upload or select the header logo",
-        "required": true
-      },
-      {
         "component": "container",
-        "name": "navigationItems",
-        "label": "Navigation Items",
-        "description": "Add navigation pills to the header",
-        "multi": true,
+        "name": "header-hamburger-container",
+        "label": "Configurazione Header Hamburger",
         "fields": [
           {
-            "component": "text",
-            "name": "navLabel",
-            "label": "Label",
+            "component": "select",
+            "name": "iconButtonIcon",
+            "label": "Icon",
             "required": true,
-            "maxlength": 25
-          },
-          {
-            "component": "aem-content",
-            "name": "navHref",
-            "label": "Link URL",
-            "required": true
+            "description": "Select the icon",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
           },
           {
             "component": "select",
-            "name": "navVariant",
+            "name": "iconButtonVariant",
             "label": "Variant",
             "value": "primary",
             "options": [
@@ -575,55 +680,41 @@
           },
           {
             "component": "select",
-            "name": "navLeftIcon",
-            "label": "Left Icon",
-            "description": "Optional icon on the left",
+            "name": "iconButtonSize",
+            "label": "Size",
+            "value": "medium",
             "options": [
               {
-                "name": "None",
-                "value": ""
+                "name": "Small",
+                "value": "small"
               },
               {
-                "name": "Chevron Left",
-                "value": "chevron-left-icon"
+                "name": "Medium",
+                "value": "medium"
               },
               {
-                "name": "Chevron Right",
-                "value": "chevron-right-icon"
+                "name": "Large",
+                "value": "large"
               },
               {
-                "name": "Search",
-                "value": "search-icon"
-              },
-              {
-                "name": "Phone",
-                "value": "phone-icon"
+                "name": "Extra Large",
+                "value": "extra-large"
               }
             ]
           },
           {
-            "component": "select",
-            "name": "navRightIcon",
-            "label": "Right Icon",
-            "description": "Optional icon on the right",
-            "options": [
-              {
-                "name": "None",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "chevron-left-icon"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "chevron-right-icon"
-              },
-              {
-                "name": "Dropdown",
-                "value": "dropdown-icon"
-              }
-            ]
+            "component": "aem-content",
+            "name": "iconButtonHref",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          },
+          {
+            "component": "boolean",
+            "label": "Apri in una nuova scheda",
+            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+            "name": "iconButtonOpenInNewTab",
+            "valueType": "boolean",
+            "value": false
           }
         ]
       }
