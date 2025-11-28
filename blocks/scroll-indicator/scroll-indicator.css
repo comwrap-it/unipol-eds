@@ -32,6 +32,7 @@
 @media (width < 768px) {
     .scroll-indicator {
         display: flex;
+
         /* width: 21.4375rem;
         justify-content: space-between; */
 
