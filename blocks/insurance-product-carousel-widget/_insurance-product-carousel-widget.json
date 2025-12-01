@@ -20,7 +20,6 @@
               "insurance-product-carousel": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Insurance Product Carousel",
-                "model": "insurance-product-carousel-widget",
                 "filter": "insurance-product-carousel",
                 "model": "insurance-product-carousel",
                 "insurance-product-card": {
