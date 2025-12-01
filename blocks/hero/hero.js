@@ -1,3 +1,4 @@
+import { createTextElementFromRow, extractBooleanValueFromRow } from '../../scripts/domHelpers.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import {
   BUTTON_ICON_SIZES,
@@ -89,7 +90,6 @@ const createHeroMainSection = (
     subtitle: subtitleRow,
     bulletList: bulletRows,
   } = originalRows;
-  console.log('🚀 ~ createHeroMainSection ~ titleRow:', titleRow);
   const mainSection = document.createElement('div');
   mainSection.className = `main-section${isCarousel ? ' carousel' : ''}`;
   if (showHeroLogo) {
@@ -97,27 +97,22 @@ const createHeroMainSection = (
     logo.className = 'hero-logo';
     mainSection.appendChild(logo);
   }
-  const titleEl = document.createElement('h2');
-  titleEl.className = 'hero-title';
-  if (titleRow) {
-    while (titleRow.firstChild) {
-      titleEl.appendChild(titleRow.firstChild);
-    }
-    moveInstrumentation(titleRow, titleEl);
-  }
+  const titleEl = createTextElementFromRow(titleRow, 'hero-title', 'h2');
   mainSection.appendChild(titleEl);
   if (subtitleBold) {
-    const subtitleBoldEl = document.createElement('p');
-    subtitleBoldEl.className = 'hero-subtitle-bold';
-    subtitleBoldEl.textContent = subtitleBold;
-    if (subtitleBoldRow) moveInstrumentation(subtitleBoldRow, subtitleBoldEl);
+    const subtitleBoldEl = createTextElementFromRow(
+      subtitleBoldRow,
+      'hero-subtitle-bold',
+      'p',
+    );
     mainSection.appendChild(subtitleBoldEl);
   }
   if (subtitle) {
-    const subtitleEl = document.createElement('p');
-    subtitleEl.className = 'hero-subtitle';
-    subtitleEl.textContent = subtitle;
-    if (subtitleRow) moveInstrumentation(subtitleRow, subtitleEl);
+    const subtitleEl = createTextElementFromRow(
+      subtitleRow,
+      'hero-subtitle',
+      'p',
+    );
     mainSection.appendChild(subtitleEl);
   }
   if (showHeroBulletList && bulletList?.length > 0) {
@@ -298,25 +293,25 @@ const extractMediaFromRow = (row, isVideo = false) => {
  *
  */
 export const extractHeroPropertiesFromRows = (rows) => {
-  const isVideoBackground = rows[1]?.textContent?.trim().toLowerCase() === 'true';
+  const isVideoBackground = extractBooleanValueFromRow(rows[1]);
   const heroBackground = extractMediaFromRow(rows[0], isVideoBackground);
-  const showHeroLogo = rows[2]?.textContent?.trim().toLowerCase() === 'true';
+  const showHeroLogo = extractBooleanValueFromRow(rows[2]);
   const heroLogo = extractMediaFromRow(rows[3]);
   const title = rows[4]?.textContent?.trim() || '';
   const subtitleBold = rows[5]?.textContent?.trim() || '';
   const subtitle = rows[6]?.textContent?.trim() || '';
-  const showHeroBulletList = rows[7]?.textContent?.trim().toLowerCase() === 'true';
+  const showHeroBulletList = extractBooleanValueFromRow(rows[7]);
   const bulletList = [
     rows[8]?.textContent?.trim() || '',
     rows[9]?.textContent?.trim() || '',
     rows[10]?.textContent?.trim() || '',
   ].filter(Boolean);
   // Button properties
-  const showHeroButton = rows[11]?.textContent?.trim().toLowerCase() === 'true';
+  const showHeroButton = extractBooleanValueFromRow(rows[11]);
   const btnText = rows[12]?.textContent?.trim() || '';
   const btnVariant = rows[13]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
   const btnHref = rows[14]?.querySelector('a')?.href || rows[14]?.textContent?.trim() || '';
-  const btnOpenInNewTab = rows[15]?.textContent?.trim().toLowerCase() === 'true';
+  const btnOpenInNewTab = extractBooleanValueFromRow(rows[15]);
   const btnIconSize = rows[16]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
   const btnLeftIcon = rows[17]?.textContent?.trim() || '';
   const btnRightIcon = rows[18]?.textContent?.trim() || '';
