@@ -37,20 +37,19 @@ export default async function handleInsuranceProductCarouselWidget() {
           let endReached = false;
           let startReached = false;
 
-          function reorderExpandingDots(orderCallback) {
-            const expandingDots = carousel.querySelector('.scroll-indicator .expanding-dots');
-            if (!expandingDots) return;
-
-            const rectangle = expandingDots.querySelector('.rectangle')?.cloneNode(true);
-            const svgs = [...expandingDots.querySelectorAll('svg')].map((svg) => svg.cloneNode(true));
-
-            expandingDots.textContent = '';
-
-            const orderedNodes = orderCallback({ rectangle, svgs });
-
-            orderedNodes.forEach((node) => {
-              if (node) expandingDots.appendChild(node);
-            });
+          function setExpandedDot({ isBeginning, isEnd }) {
+            const expandingDots = carousel.querySelector('.expanding-dots');
+            const dots = expandingDots.querySelectorAll('span');
+            // Clear previous state
+            dots.forEach((dot) => dot.classList.remove('expanded'));
+            // Decide which to expand
+            if (isBeginning) {
+              dots[0]?.classList.add('expanded');
+            } else if (isEnd) {
+              dots[2]?.classList.add('expanded');
+            } else {
+              dots[1]?.classList.add('expanded');
+            }
           }
 
           on('init', () => {
@@ -65,10 +64,7 @@ export default async function handleInsuranceProductCarouselWidget() {
             if (endReached || startReached) return;
             endReached = false;
             startReached = false;
-            reorderExpandingDots(({ rectangle, svgs }) => {
-              const [ellipseOne, ellipseTwo] = svgs;
-              return [ellipseOne, rectangle, ellipseTwo];
-            });
+            setExpandedDot({ isBeginning: false, isEnd: false });
           });
           on('fromEdge', () => {
             endReached = false;
@@ -76,11 +72,11 @@ export default async function handleInsuranceProductCarouselWidget() {
           });
           on('reachBeginning', () => {
             startReached = true;
-            reorderExpandingDots(({ rectangle, svgs }) => [rectangle, ...svgs]);
+            setExpandedDot({ isBeginning: true, isEnd: false });
           });
           on('reachEnd', () => {
             endReached = true;
-            reorderExpandingDots(({ rectangle, svgs }) => [...svgs, rectangle]);
+            setExpandedDot({ isBeginning: false, isEnd: true });
           });
         }
 
@@ -95,12 +91,17 @@ export default async function handleInsuranceProductCarouselWidget() {
             prevEl: carousel.querySelector('.swiper-button-prev'),
           },
           speed: 700,
-          slidesPerView: 'auto',
+          slidesPerView: 3,
           slidesPerGroup: 1,
           breakpoints: {
+            // width >= 1200
+            1200: {
+              slidesPerView: 4,
+              allowTouch: false,
+            },
             // when window width is >= 768px
             768: {
-              slidesPerView: 'auto',
+              slidesPerView: 3,
               allowTouchMove: false,
             },
           },

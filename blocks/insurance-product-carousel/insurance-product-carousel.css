@@ -6,6 +6,18 @@
 
     &.swiper {
         overflow: visible;
+
+        & .scroll-indicator {
+            & .expanding-dots {
+                & .dot {
+                    background-color: var(--Expanding-Dots-Background-Dot, #bfc7cd);
+
+                    &.expanded {
+                        background-color: var(--Expanding-Dots-Background, #001c35);
+                    }
+                }
+            }
+        }
     }
 
     .insurance-product-carousel {
@@ -16,35 +28,56 @@
     }
 }
 
-/* Tablet Landscape */
-@media (768px <= width < 1440px) {
-    .insurance-product-carousel-container {
-        width: 76rem;
-
-        & .insurance-product-carousel {
-            width: 76rem;
-        }
-    }
-}
-
 /* Tablet Portrait */
-@media (393px <= width < 768px) {
+@media (768px <= width < 1200px) {
     .insurance-product-carousel-container {
+        margin-inline: auto;
+
+        &.swiper {
+            overflow: visible;
+
+            & .scroll-indicator {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                align-self: stretch;
+                min-width: 36.4375rem;
+
+                & .expanding-dots {
+                    order: 1;
+                    margin-right: auto;
+                }
+
+                & .left-icon-button {
+                    order: 2;
+                }
+
+                & .right-icon-button {
+                    order: 3;
+                }
+
+                & .arrows {
+                    display: flex;
+                    align-items: center;
+                    gap: var(--Scroll-Indicator-Gap-Icon-M, 1.5rem);
+                }
+            }
+        }
+
         & .insurance-product-carousel {
             width: 46rem;
-            gap: var(--Carousel-Widget-Gap-M-Tp, 2.5rem);
         }
     }
 }
 
 /* Mobile */
-@media (width < 393px) {
+@media (width < 768px) {
     .insurance-product-carousel-container {
         & .insurance-product-carousel {
             display: flex;
+            flex-direction: column;
             width: 21.4375rem;
-            gap: var(--Carousel-Widget-Gap-M-Tp, 2.5rem);
-
+            gap: var(--Carousel-Insurance-Product-Gap, 1rem);
         }
     }
 }

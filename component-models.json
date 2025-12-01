@@ -963,6 +963,13 @@
         "required": true
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageSR",
+        "label": "Image Alternative Text",
+        "required": true
+      },
+      {
         "component": "container",
         "name": "icons-3D",
         "label": "Configurazione Icone 3D",
@@ -1001,6 +1008,17 @@
         "component": "text",
         "name": "insurance-product-carousel-widget-name",
         "label": "Nome sezione Insurance Product Carousel Widget"
+      }
+    ]
+  },
+  {
+    "id": "insurance-product-carousel",
+    "fields": [
+      {
+        "component": "text",
+        "name": "showMoreButtonLabel",
+        "label": "Show more button label for mobile",
+        "maxlength": 15
       }
     ]
   },
