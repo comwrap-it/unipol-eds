@@ -113,6 +113,7 @@ export default async function decorate(block) {
       btnIconSize,
       btnLeftIcon,
       btnRightIcon,
+      originalRows,
     } = extractHeroPropertiesFromRows(childrenRows);
     const hero = await createHero(
       heroBackground,
@@ -133,6 +134,7 @@ export default async function decorate(block) {
       btnLeftIcon,
       btnRightIcon,
       isCarousel,
+      originalRows,
     );
     moveInstrumentation(row, hero);
     track.appendChild(hero);
