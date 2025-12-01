@@ -130,7 +130,11 @@
   },
   {
     "id": "unipol-header",
-    "components": []
+    "components": [
+      "header-logo-hamburger",
+      "header-nav-pill-box",
+      "header-utilities"
+    ]
   },
   {
     "id": "unipol-footer",

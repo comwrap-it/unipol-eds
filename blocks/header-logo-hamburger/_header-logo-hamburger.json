@@ -30,16 +30,6 @@
           "component": "aem-content",
           "name": "UnipolHeaderLogoHref",
           "label": "Link URL Unipol Header Logo"
-        },
-        {
-          "component": "container",
-          "name": "header-hamburger-container",
-          "label": "Configurazione Header Hamburger",
-          "fields": [
-            {
-              "...": "../atoms/buttons/icon-button/_icon-button.json#/models/icon-button/fields"
-            }
-          ]
         }
       ]
     }
