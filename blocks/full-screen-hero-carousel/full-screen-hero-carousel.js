@@ -87,7 +87,7 @@ const ensureStylesLoaded = async () => {
 
 export default async function decorate(block) {
   if (!block) return;
-  ensureStylesLoaded(); // i intentionally not awaited to not block rendering --- IGNORE ---
+  await ensureStylesLoaded();
 
   // Get rows from block
   let rows = Array.from(block.children);
