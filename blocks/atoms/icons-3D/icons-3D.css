@@ -40,7 +40,7 @@
 }
 
 /* Tablet Portrait */
-@media (393px <= width < 1200px) {
+@media (768px <= width < 1200px) {
     .icons-3d {
         width: 13rem;
         height: 4rem;
@@ -60,7 +60,7 @@
 }
 
 /* Mobile */
-@media (width < 393px) {
+@media (width < 768px) {
     .icons-3d {
         width: 16.125rem;
         height: 5rem;
