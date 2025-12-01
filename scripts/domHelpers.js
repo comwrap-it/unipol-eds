@@ -2,8 +2,9 @@ import { moveInstrumentation } from './scripts.js';
 
 /**
 Allowed text tags for authored content.
-@typedef {'p'|'span'|'h1'|'h2'|'h3'|'h4'|'h5'|'h6'} TextTag
+@typedef {'p'|'span'|'h1'|'h2'|'h3'|'h4'|'h5'|'h6'|'li'} TextTag
 */
+const AUTHORIZED_TEXT_TAGS = ['p', 'span', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li'];
 /**
 Creates a text element from an authored row, preserving UE instrumentation.
 @param {HTMLElement | null} originalRow
@@ -16,8 +17,7 @@ export const createTextElementFromRow = (
   classesToApply = [],
   elementTag = 'span',
 ) => {
-  const allowed = new Set(['p', 'span', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6']);
-  const tag = allowed.has(elementTag) ? elementTag : 'span';
+  const tag = AUTHORIZED_TEXT_TAGS.includes(elementTag) ? elementTag : 'span';
   const el = document.createElement(tag);
 
   if (Array.isArray(classesToApply)) {
@@ -36,6 +36,11 @@ export const createTextElementFromRow = (
   return el;
 };
 
+/**
+Extracts a boolean value from the text content of a row.
+@param {HTMLElement | null} row
+@returns {boolean}
+*/
 export const extractBooleanValueFromRow = (row) => {
   if (!row) return false;
   const text = row.textContent.trim().toLowerCase();

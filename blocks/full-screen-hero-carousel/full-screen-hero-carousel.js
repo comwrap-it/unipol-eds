@@ -70,8 +70,24 @@ const setSwiperListeners = (
   });
 };
 
+/**
+ * ensures styles are loaded only once
+ */
+let isStylesAlreadyLoaded = false;
+const ensureStylesLoaded = async () => {
+  if (isStylesAlreadyLoaded) return;
+  const { loadCSS } = await import('../../scripts/aem.js');
+  const cssPromises = [
+    `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`,
+    `${window.hlx.codeBasePath}/blocks/hero/hero.css`,
+  ].map((cssPath) => loadCSS(cssPath));
+  await Promise.all(cssPromises);
+  isStylesAlreadyLoaded = true;
+};
+
 export default async function decorate(block) {
   if (!block) return;
+  ensureStylesLoaded(); // i intentionally not awaited to not block rendering --- IGNORE ---
 
   // Get rows from block
   let rows = Array.from(block.children);
@@ -113,7 +129,6 @@ export default async function decorate(block) {
       btnIconSize,
       btnLeftIcon,
       btnRightIcon,
-      originalRows,
     } = extractHeroPropertiesFromRows(childrenRows);
     const hero = await createHero(
       heroBackground,
@@ -134,7 +149,6 @@ export default async function decorate(block) {
       btnLeftIcon,
       btnRightIcon,
       isCarousel,
-      originalRows,
     );
     moveInstrumentation(row, hero);
     track.appendChild(hero);
