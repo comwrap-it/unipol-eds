@@ -84,8 +84,12 @@ const createHeroMainSection = (
   originalRows = {},
 ) => {
   const {
-    title: titleRow, subtitleBold: subtitleBoldRow, subtitle: subtitleRow, bulletList: bulletRows,
+    title: titleRow,
+    subtitleBold: subtitleBoldRow,
+    subtitle: subtitleRow,
+    bulletList: bulletRows,
   } = originalRows;
+  console.log('🚀 ~ createHeroMainSection ~ titleRow:', titleRow);
   const mainSection = document.createElement('div');
   mainSection.className = `main-section${isCarousel ? ' carousel' : ''}`;
   if (showHeroLogo) {
@@ -95,8 +99,12 @@ const createHeroMainSection = (
   }
   const titleEl = document.createElement('h2');
   titleEl.className = 'hero-title';
-  titleEl.textContent = title;
-  if (titleRow) moveInstrumentation(titleRow, titleEl);
+  if (titleRow) {
+    while (titleRow.firstChild) {
+      titleEl.appendChild(titleRow.firstChild);
+    }
+    moveInstrumentation(titleRow, titleEl);
+  }
   mainSection.appendChild(titleEl);
   if (subtitleBold) {
     const subtitleBoldEl = document.createElement('p');
@@ -339,62 +347,3 @@ export const extractHeroPropertiesFromRows = (rows) => {
     originalRows,
   };
 };
-
-/**
- * @param {HTMLElement} block
- */
-export default async function decorateHero(block) {
-  if (!block) return;
-
-  // Get rows from block
-  let rows = Array.from(block.children);
-  const wrapper = block.querySelector('.default-content-wrapper');
-  if (wrapper) {
-    rows = Array.from(wrapper.children);
-  }
-
-  const {
-    heroBackground,
-    isVideoBackground,
-    showHeroButton,
-    showHeroLogo,
-    heroLogo,
-    title,
-    subtitleBold,
-    subtitle,
-    showHeroBulletList,
-    bulletList,
-    btnText,
-    btnHref,
-    btnOpenInNewTab,
-    btnVariant,
-    btnIconSize,
-    btnLeftIcon,
-    btnRightIcon,
-    originalRows,
-  } = extractHeroPropertiesFromRows(rows);
-
-  const heroElement = createHero(
-    heroBackground,
-    isVideoBackground,
-    showHeroButton,
-    showHeroLogo,
-    heroLogo,
-    title,
-    subtitleBold,
-    subtitle,
-    showHeroBulletList,
-    bulletList,
-    btnText,
-    btnHref,
-    btnOpenInNewTab,
-    btnVariant,
-    btnIconSize,
-    btnLeftIcon,
-    btnRightIcon,
-    false,
-    originalRows,
-  );
-  moveInstrumentation(block, heroElement);
-  block.replaceWith(heroElement);
-}
