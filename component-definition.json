@@ -245,7 +245,12 @@
                     "sling:resourceType": "core/franklin/components/block/v1/block",
                     "name": "Header Navigation pill and box Section",
                     "filter": "header-nav-pill-box",
-                    "header-nav-pill-item": {
+                    "header-nav-pill-item-1": {
+                      "sling:resourceType": "core/franklin/components/block/v1/block",
+                      "name": "Header Navigation pill and box item",
+                      "model": "header-nav-pill-item"
+                    },
+                    "header-nav-pill-item-2": {
                       "sling:resourceType": "core/franklin/components/block/v1/block",
                       "name": "Header Navigation pill and box item",
                       "model": "header-nav-pill-item"
@@ -254,7 +259,22 @@
                   "header-utilities": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
                     "name": "Header buttons Section",
-                    "filter": "header-utilities"
+                    "filter": "header-utilities",
+                    "header-button-1": {
+                      "sling:resourceType": "core/franklin/components/block/v1/block",
+                      "name": "Header Button",
+                      "model": "header-button"
+                    },
+                    "header-button-2": {
+                      "sling:resourceType": "core/franklin/components/block/v1/block",
+                      "name": "Header Button",
+                      "model": "header-button"
+                    },
+                    "header-button-3": {
+                      "sling:resourceType": "core/franklin/components/block/v1/block",
+                      "name": "Header Button",
+                      "model": "header-button"
+                    }
                   }
                 }
               }
