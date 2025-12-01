@@ -191,6 +191,7 @@
                     height: 5rem;
                     position: absolute;
                     right: 2.625rem;
+                    left: auto;
                     top: -2.528rem;
                 }
             }
