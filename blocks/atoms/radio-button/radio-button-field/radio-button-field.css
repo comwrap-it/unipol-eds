@@ -7,6 +7,7 @@
 .radio-button-text-box {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
 }
 
 .radio-button-label {

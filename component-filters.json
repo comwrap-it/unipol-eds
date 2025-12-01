@@ -23,7 +23,9 @@
       "text-block",
       "test-buttons",
       "options-list",
-      "text-list"
+      "text-list",
+      "prodotto-unico",
+      "prodotto-unico-header"
     ]
   },
   {
@@ -96,6 +98,12 @@
     ],
     "min": 1,
     "max": 8
+  },
+  {
+    "id": "prodotto-unico-header",
+    "components": [
+      "prodotto-unico-header"
+    ]
   },
   {
     "id": "options-list",

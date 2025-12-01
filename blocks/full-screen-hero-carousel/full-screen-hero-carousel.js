@@ -83,14 +83,14 @@ export default async function decorate(block) {
   const isCarousel = rows.length > 1;
 
   const carousel = document.createElement('div');
-  carousel.className = 'full-screen-hero-carousel swiper';
+  carousel.className = 'swiper';
   carousel.setAttribute('role', 'region');
   carousel.setAttribute('aria-label', 'Hero carousel');
   carousel.setAttribute('tabindex', '0');
 
   // Create carousel track (scrollable container)
   const track = document.createElement('div');
-  track.className = 'full-screen-hero-carousel-track swiper-wrapper';
+  track.className = 'swiper-wrapper';
   track.setAttribute('role', 'list');
 
   rows.map(async (row) => {
@@ -101,7 +101,6 @@ export default async function decorate(block) {
       showHeroButton,
       showHeroLogo,
       heroLogo,
-      showHeroPauseIcon,
       title,
       subtitleBold,
       subtitle,
@@ -121,7 +120,6 @@ export default async function decorate(block) {
       showHeroButton,
       showHeroLogo,
       heroLogo,
-      showHeroPauseIcon,
       title,
       subtitleBold,
       subtitle,
