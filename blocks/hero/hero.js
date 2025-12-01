@@ -69,6 +69,7 @@ const setupHeroWithBg = (heroBackground, isVideoBackground = false) => {
  * @param {boolean} showHeroBulletList
  * @param {string[]} bulletList
  * @param {boolean} isCarousel
+ * @param {Object} originalRows
  * @returns {HTMLDivElement}
  */
 const createHeroMainSection = (
@@ -79,8 +80,12 @@ const createHeroMainSection = (
   subtitle,
   showHeroBulletList,
   bulletList,
-  isCarousel,
+  isCarousel = false,
+  originalRows = {},
 ) => {
+  const {
+    title: titleRow, subtitleBold: subtitleBoldRow, subtitle: subtitleRow, bulletList: bulletRows,
+  } = originalRows;
   const mainSection = document.createElement('div');
   mainSection.className = `main-section${isCarousel ? ' carousel' : ''}`;
   if (showHeroLogo) {
@@ -91,26 +96,30 @@ const createHeroMainSection = (
   const titleEl = document.createElement('h2');
   titleEl.className = 'hero-title';
   titleEl.textContent = title;
+  if (titleRow) moveInstrumentation(titleRow, titleEl);
   mainSection.appendChild(titleEl);
   if (subtitleBold) {
     const subtitleBoldEl = document.createElement('p');
     subtitleBoldEl.className = 'hero-subtitle-bold';
     subtitleBoldEl.textContent = subtitleBold;
+    if (subtitleBoldRow) moveInstrumentation(subtitleBoldRow, subtitleBoldEl);
     mainSection.appendChild(subtitleBoldEl);
   }
   if (subtitle) {
     const subtitleEl = document.createElement('p');
     subtitleEl.className = 'hero-subtitle';
     subtitleEl.textContent = subtitle;
+    if (subtitleRow) moveInstrumentation(subtitleRow, subtitleEl);
     mainSection.appendChild(subtitleEl);
   }
   if (showHeroBulletList && bulletList?.length > 0) {
     const bullets = document.createElement('ul');
     bullets.className = 'hero-bullets';
-    bulletList?.forEach((bullet) => {
+    bulletList?.forEach((bullet, index) => {
       if (!bullet) return;
       const listItem = document.createElement('li');
       listItem.innerHTML = bullet;
+      if (bulletRows?.[index]) moveInstrumentation(bulletRows[index], listItem);
       bullets.appendChild(listItem);
     });
     mainSection.appendChild(bullets);
@@ -200,7 +209,8 @@ const ensureStylesLoaded = async () => {
  * @param {string} btnIconSize - Icon size (small, medium, large, extra-large)
  * @param {string} btnLeftIcon - Left icon (optional)
  * @param {string} btnRightIcon - Right icon (optional)
- * @param {boolean} isCarousel - Flag indicating if the hero is part of a carousel
+ * @param {boolean} isCarousel - Flag indicating if the hero is part of a carousel (optional)
+ * @param {Object} originalRows - The original rows from which hero properties came (optional)
  * @returns {HTMLElement}
  */
 export async function createHero(
@@ -222,6 +232,7 @@ export async function createHero(
   btnLeftIcon,
   btnRightIcon,
   isCarousel = false,
+  originalRows = {},
 ) {
   ensureStylesLoaded(); // i intentionally not awaited to not block rendering
   const hero = setupHeroWithBg(heroBackground, isVideoBackground);
@@ -236,6 +247,7 @@ export async function createHero(
     showHeroBulletList,
     bulletList,
     isCarousel,
+    originalRows,
   );
   heroContent.appendChild(mainSection);
   if (showHeroButton) {
@@ -300,6 +312,12 @@ export const extractHeroPropertiesFromRows = (rows) => {
   const btnIconSize = rows[16]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
   const btnLeftIcon = rows[17]?.textContent?.trim() || '';
   const btnRightIcon = rows[18]?.textContent?.trim() || '';
+  const originalRows = {
+    title: rows[4],
+    subtitleBold: rows[5],
+    subtitle: rows[6],
+    bulletList: [rows[8], rows[9], rows[10]],
+  };
   return {
     heroBackground,
     isVideoBackground,
@@ -318,6 +336,7 @@ export const extractHeroPropertiesFromRows = (rows) => {
     btnIconSize,
     btnLeftIcon,
     btnRightIcon,
+    originalRows,
   };
 };
 
@@ -352,6 +371,7 @@ export default async function decorateHero(block) {
     btnIconSize,
     btnLeftIcon,
     btnRightIcon,
+    originalRows,
   } = extractHeroPropertiesFromRows(rows);
 
   const heroElement = createHero(
@@ -372,6 +392,8 @@ export default async function decorateHero(block) {
     btnIconSize,
     btnLeftIcon,
     btnRightIcon,
+    false,
+    originalRows,
   );
   moveInstrumentation(block, heroElement);
   block.replaceWith(heroElement);
