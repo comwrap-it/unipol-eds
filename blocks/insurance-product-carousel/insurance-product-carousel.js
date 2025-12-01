@@ -126,7 +126,7 @@ export default async function decorate(block) {
     return slide;
   });
 
-  const mq = window.matchMedia('(min-width: 393px)');
+  const mq = window.matchMedia('(min-width: 768px)');
 
   // Wait for all cards to be processed
   const cardElements = await Promise.all(cardPromises);
