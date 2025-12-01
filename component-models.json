@@ -378,7 +378,7 @@
     ]
   },
   {
-    "id": "header-logo-hamburger",
+    "id": "header-logo",
     "fields": [
       {
         "component": "reference",
@@ -389,7 +389,7 @@
       {
         "component": "aem-content",
         "name": "UnipolHeaderLogoHref",
-        "label": "Link URL Unipol Header Logo"
+        "label": "Link URL logo Unipol header"
       }
     ]
   },
@@ -533,7 +533,7 @@
       },
       {
         "component": "tab",
-        "label": "Configurazione Header Box",
+        "label": "Configurazione Box",
         "name": "header-box-tab"
       },
       {
@@ -549,7 +549,7 @@
       {
         "component": "container",
         "name": "header-button-container-icon",
-        "label": "Configurazione Header Button",
+        "label": "Configurazione Header button",
         "fields": [
           {
             "component": "select",

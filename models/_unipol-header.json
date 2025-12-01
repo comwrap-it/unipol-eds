@@ -12,29 +12,29 @@
               "name": "Unipol Header",
               "model": "unipol-header",
               "style": "unipol-header",
-              "header-logo-hamburger": {
+              "header-logo": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Header Logo and Hamburger",
-                "model": "header-logo-hamburger"
+                "name": "Header Logo",
+                "model": "header-logo"
               },
               "header-nav-pill-box": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Header Navigation pill and box Section",
+                "name": "Header navigation pill and box",
                 "filter": "header-nav-pill-box",
                 "header-nav-pill-item-1": {
                   "sling:resourceType": "core/franklin/components/block/v1/block",
-                  "name": "Header Navigation pill and box item",
+                  "name": "Header navigation pill and box item",
                   "model": "header-nav-pill-item"
                 },
                 "header-nav-pill-item-2": {
                   "sling:resourceType": "core/franklin/components/block/v1/block",
-                  "name": "Header Navigation pill and box item",
+                  "name": "Header navigation pill and box item",
                   "model": "header-nav-pill-item"
                 }
               },
               "header-utilities": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Header buttons Section",
+                "name": "Header buttons",
                 "filter": "header-utilities",
                 "header-button-1": {
                   "sling:resourceType": "core/franklin/components/block/v1/block",
@@ -48,7 +48,7 @@
                 },
                 "header-button-3": {
                   "sling:resourceType": "core/franklin/components/block/v1/block",
-                  "name": "Header Button",
+                  "name": "Header button",
                   "model": "header-button"
                 }
               }
@@ -74,7 +74,7 @@
     {
       "id": "unipol-header",
       "components": [
-        "header-logo-hamburger",
+        "header-logo",
         "header-nav-pill-box",
         "header-utilities"
       ]

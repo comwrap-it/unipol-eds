@@ -131,7 +131,7 @@
   {
     "id": "unipol-header",
     "components": [
-      "header-logo-hamburger",
+      "header-logo",
       "header-nav-pill-box",
       "header-utilities"
     ]
