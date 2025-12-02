@@ -408,7 +408,8 @@
           {
             "component": "select",
             "name": "navigationPillTypology",
-            "default": "custom",
+            "valueType": "string",
+            "value": "custom",
             "label": "Tipologia Destinazione",
             "options": [
               {
@@ -434,13 +435,18 @@
             ]
           },
           {
-            "condition": {
-              "var": "navigationPillTypology",
-              "equals": "custom"
-            },
-            "component": "text",
+            "component": "reference",
+            "valueType": "string",
             "name": "navigationPillCustomField",
-            "label": "Campo visibile solo se Custom"
+            "label": "navigationPillCustomField Label",
+            "condition": {
+              "===": [
+                {
+                  "var": "navigationPillTypology"
+                },
+                "custom"
+              ]
+            }
           },
           {
             "component": "select",
@@ -2017,7 +2023,8 @@
           {
             "component": "select",
             "name": "navigationPillTypology",
-            "default": "custom",
+            "valueType": "string",
+            "value": "custom",
             "label": "Tipologia Destinazione",
             "options": [
               {
@@ -2043,13 +2050,18 @@
             ]
           },
           {
-            "condition": {
-              "var": "navigationPillTypology",
-              "equals": "custom"
-            },
-            "component": "text",
+            "component": "reference",
+            "valueType": "string",
             "name": "navigationPillCustomField",
-            "label": "Campo visibile solo se Custom"
+            "label": "navigationPillCustomField Label",
+            "condition": {
+              "===": [
+                {
+                  "var": "navigationPillTypology"
+                },
+                "custom"
+              ]
+            }
           },
           {
             "component": "select",
@@ -3870,7 +3882,8 @@
       {
         "component": "select",
         "name": "navigationPillTypology",
-        "default": "custom",
+        "valueType": "string",
+        "value": "custom",
         "label": "Tipologia Destinazione",
         "options": [
           {
@@ -3896,13 +3909,18 @@
         ]
       },
       {
-        "condition": {
-          "var": "navigationPillTypology",
-          "equals": "custom"
-        },
-        "component": "text",
+        "component": "reference",
+        "valueType": "string",
         "name": "navigationPillCustomField",
-        "label": "Campo visibile solo se Custom"
+        "label": "navigationPillCustomField Label",
+        "condition": {
+          "===": [
+            {
+              "var": "navigationPillTypology"
+            },
+            "custom"
+          ]
+        }
       },
       {
         "component": "select",
