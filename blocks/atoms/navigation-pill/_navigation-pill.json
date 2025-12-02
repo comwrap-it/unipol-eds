@@ -21,10 +21,28 @@
       "id": "navigation-pill",
       "fields": [
         {
+          "component": "select",
+          "name": "navigationPillTypology",
+          "value": "custom",
+          "label": "Tipologia Destinazione",
+          "options": [
+            { "name": "Custom", "value": "custom" },
+            { "name": "Preventivatore", "value": "preventivatore" },
+            { "name": "Locator", "value": "locator" },
+            { "name": "Login", "value": "login" },
+            { "name": "Link", "value": "link" }
+          ]
+        },
+        {
+          "condition": {
+            "===": [
+              { "var": "navigationPillTypology" },
+              "custom"
+            ]
+          },
           "component": "text",
-          "name": "navigationPillLabel",
-          "label": "Label",
-          "required": true
+          "name": "navigationPillCustomField",
+          "label": "Campo visibile solo se Custom"
         },
         {
           "component": "select",
