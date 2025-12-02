@@ -498,19 +498,30 @@
         "fields": [
           {
             "component": "select",
-            "name": "cta1",
-            "value": "primary",
-            "label": "First CTA Type",
-            "description": "'Primary' will render a filled blue CTA, 'Secondary' will render a white CTA with a black border and black text, 'Tertiary' will render a filled black CTA, and 'Custom' will render a CTA with a custom hex color background.",
+            "name": "navigationPillTypology",
             "valueType": "string",
+            "value": "",
+            "label": "Tipologia Destinazione",
             "options": [
-              {
-                "name": "Primary",
-                "value": "primary"
-              },
               {
                 "name": "Custom",
                 "value": "custom"
+              },
+              {
+                "name": "Preventivatore",
+                "value": "preventivatore"
+              },
+              {
+                "name": "Locator",
+                "value": "locator"
+              },
+              {
+                "name": "Login",
+                "value": "login"
+              },
+              {
+                "name": "Link",
+                "value": "link"
               }
             ]
           },
@@ -518,55 +529,14 @@
             "condition": {
               "===": [
                 {
-                  "var": "cta1"
+                  "var": "navigationPillTypology"
                 },
                 "custom"
               ]
             },
-            "component": "select",
-            "name": "cta1_customBgColor",
-            "value": "",
-            "label": "First CTA Background Color",
-            "description": "Select First CTA background color. Select 'Custom Hexcode' to enter the custom color",
-            "valueType": "string",
-            "options": [
-              {
-                "name": "Adobe Red",
-                "value": "--non-spectrum-adobe-red"
-              },
-              {
-                "name": "Custom Hexcode",
-                "value": "custom-hexcode"
-              }
-            ]
-          },
-          {
-            "condition": {
-              "and": [
-                {
-                  "===": [
-                    {
-                      "var": "cta1_customBgColor"
-                    },
-                    "custom-hexcode"
-                  ]
-                },
-                {
-                  "===": [
-                    {
-                      "var": "cta1"
-                    },
-                    "custom"
-                  ]
-                }
-              ]
-            },
             "component": "text",
-            "valueType": "string",
-            "name": "cta1_customBgHexCode",
-            "value": "",
-            "label": "First CTA Custom Background Hexcode",
-            "description": "Enter the custom hex code, such as FFFFFF (without the # symbol). Please ensure to follow the Adobe style guides when selecting CTA Colors"
+            "name": "navigationPillCustomField",
+            "label": "navigationPillCustomField Label"
           },
           {
             "component": "select",
@@ -2051,19 +2021,30 @@
         "fields": [
           {
             "component": "select",
-            "name": "cta1",
-            "value": "primary",
-            "label": "First CTA Type",
-            "description": "'Primary' will render a filled blue CTA, 'Secondary' will render a white CTA with a black border and black text, 'Tertiary' will render a filled black CTA, and 'Custom' will render a CTA with a custom hex color background.",
+            "name": "navigationPillTypology",
             "valueType": "string",
+            "value": "",
+            "label": "Tipologia Destinazione",
             "options": [
-              {
-                "name": "Primary",
-                "value": "primary"
-              },
               {
                 "name": "Custom",
                 "value": "custom"
+              },
+              {
+                "name": "Preventivatore",
+                "value": "preventivatore"
+              },
+              {
+                "name": "Locator",
+                "value": "locator"
+              },
+              {
+                "name": "Login",
+                "value": "login"
+              },
+              {
+                "name": "Link",
+                "value": "link"
               }
             ]
           },
@@ -2071,55 +2052,14 @@
             "condition": {
               "===": [
                 {
-                  "var": "cta1"
+                  "var": "navigationPillTypology"
                 },
                 "custom"
               ]
             },
-            "component": "select",
-            "name": "cta1_customBgColor",
-            "value": "",
-            "label": "First CTA Background Color",
-            "description": "Select First CTA background color. Select 'Custom Hexcode' to enter the custom color",
-            "valueType": "string",
-            "options": [
-              {
-                "name": "Adobe Red",
-                "value": "--non-spectrum-adobe-red"
-              },
-              {
-                "name": "Custom Hexcode",
-                "value": "custom-hexcode"
-              }
-            ]
-          },
-          {
-            "condition": {
-              "and": [
-                {
-                  "===": [
-                    {
-                      "var": "cta1_customBgColor"
-                    },
-                    "custom-hexcode"
-                  ]
-                },
-                {
-                  "===": [
-                    {
-                      "var": "cta1"
-                    },
-                    "custom"
-                  ]
-                }
-              ]
-            },
             "component": "text",
-            "valueType": "string",
-            "name": "cta1_customBgHexCode",
-            "value": "",
-            "label": "First CTA Custom Background Hexcode",
-            "description": "Enter the custom hex code, such as FFFFFF (without the # symbol). Please ensure to follow the Adobe style guides when selecting CTA Colors"
+            "name": "navigationPillCustomField",
+            "label": "navigationPillCustomField Label"
           },
           {
             "component": "select",
@@ -3939,19 +3879,30 @@
     "fields": [
       {
         "component": "select",
-        "name": "cta1",
-        "value": "primary",
-        "label": "First CTA Type",
-        "description": "'Primary' will render a filled blue CTA, 'Secondary' will render a white CTA with a black border and black text, 'Tertiary' will render a filled black CTA, and 'Custom' will render a CTA with a custom hex color background.",
+        "name": "navigationPillTypology",
         "valueType": "string",
+        "value": "",
+        "label": "Tipologia Destinazione",
         "options": [
-          {
-            "name": "Primary",
-            "value": "primary"
-          },
           {
             "name": "Custom",
             "value": "custom"
+          },
+          {
+            "name": "Preventivatore",
+            "value": "preventivatore"
+          },
+          {
+            "name": "Locator",
+            "value": "locator"
+          },
+          {
+            "name": "Login",
+            "value": "login"
+          },
+          {
+            "name": "Link",
+            "value": "link"
           }
         ]
       },
@@ -3959,55 +3910,14 @@
         "condition": {
           "===": [
             {
-              "var": "cta1"
+              "var": "navigationPillTypology"
             },
             "custom"
           ]
         },
-        "component": "select",
-        "name": "cta1_customBgColor",
-        "value": "",
-        "label": "First CTA Background Color",
-        "description": "Select First CTA background color. Select 'Custom Hexcode' to enter the custom color",
-        "valueType": "string",
-        "options": [
-          {
-            "name": "Adobe Red",
-            "value": "--non-spectrum-adobe-red"
-          },
-          {
-            "name": "Custom Hexcode",
-            "value": "custom-hexcode"
-          }
-        ]
-      },
-      {
-        "condition": {
-          "and": [
-            {
-              "===": [
-                {
-                  "var": "cta1_customBgColor"
-                },
-                "custom-hexcode"
-              ]
-            },
-            {
-              "===": [
-                {
-                  "var": "cta1"
-                },
-                "custom"
-              ]
-            }
-          ]
-        },
         "component": "text",
-        "valueType": "string",
-        "name": "cta1_customBgHexCode",
-        "value": "",
-        "label": "First CTA Custom Background Hexcode",
-        "description": "Enter the custom hex code, such as FFFFFF (without the # symbol). Please ensure to follow the Adobe style guides when selecting CTA Colors"
+        "name": "navigationPillCustomField",
+        "label": "navigationPillCustomField Label"
       },
       {
         "component": "select",
