@@ -44,6 +44,7 @@ export function extractInstrumentationAttributes(element) {
  * @param {string} [rightIcon] - Right Icon className.
  * @param {string} [rightIconSize] - Right Icon size.
  * @param {Object} [instrumentation={}] - AEM attributes.
+ * @param {string} [customLabel] - Optional custom label (tipology "custom").
  * @returns {HTMLElement}
  */
 export function createNavigationPill(
@@ -55,6 +56,7 @@ export function createNavigationPill(
   rightIcon,
   rightIconSize,
   instrumentation = {},
+  customLabel = '',
 ) {
   const isLink = Boolean(href);
   const el = isLink ? document.createElement('a') : document.createElement('button');
@@ -68,6 +70,13 @@ export function createNavigationPill(
   const txt = document.createElement('span');
   txt.textContent = label;
   el.appendChild(txt);
+
+  if (customLabel) {
+    const customSpan = document.createElement('span');
+    customSpan.className = 'navigation-pill-custom-label';
+    customSpan.textContent = customLabel;
+    el.appendChild(customSpan);
+  }
 
   if (rightIcon) {
     const span = document.createElement('span');
@@ -103,26 +112,16 @@ export function createNavigationPill(
  * Retrieves Universal Editor values.
  *
  * @param {Array<HTMLElement>} rows
- * @returns {{
- *   text: string,
- *   variant: string,
- *   href: string,
- *   leftIcon: string,
- *   rightIcon: string,
- *   instrumentation: Object
- * }}
+ * @returns {Object}
  */
 function extractValuesFromRows(rows) {
   const text = rows[0]?.textContent?.trim() || 'Navigation Pill';
-  const variant = rows[1]?.textContent?.trim().toLowerCase()
-    || NAVIGATION_PILL_VARIANTS.PRIMARY;
-
-  const href = rows[2]?.querySelector('a')?.href
-    || rows[2]?.textContent?.trim()
-    || '';
-
+  const variant = rows[1]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_VARIANTS.PRIMARY;
+  const href = rows[2]?.querySelector('a')?.href || rows[2]?.textContent?.trim() || '';
   const leftIcon = rows[3]?.textContent?.trim() || '';
   const rightIcon = rows[4]?.textContent?.trim() || '';
+  const typology = rows[5]?.textContent?.trim() || 'custom';
+  const customField = rows[6]?.textContent?.trim() || '';
 
   const instrumentation = extractInstrumentationAttributes(rows[0]);
 
@@ -132,6 +131,8 @@ function extractValuesFromRows(rows) {
     href,
     leftIcon,
     rightIcon,
+    typology,
+    customField,
     instrumentation,
   };
 }
@@ -140,7 +141,6 @@ function extractValuesFromRows(rows) {
  * Decorator for Navigation Pill
  *
  * @param {HTMLElement} block
- * @returns {void}
  */
 export default function decorateNavigationPill(block) {
   if (!block) return;
@@ -155,6 +155,8 @@ export default function decorateNavigationPill(block) {
     href,
     leftIcon,
     rightIcon,
+    typology,
+    customField,
     instrumentation,
   } = extractValuesFromRows(rows);
 
@@ -173,8 +175,11 @@ export default function decorateNavigationPill(block) {
         href,
         variant,
         leftIcon,
+        undefined,
         rightIcon,
+        undefined,
         instrumentation,
+        typology === 'custom' ? customField : '',
       );
 
       if (rows[0]) {
@@ -190,14 +195,27 @@ export default function decorateNavigationPill(block) {
           href,
           variant,
           leftIcon,
+          undefined,
           rightIcon,
+          undefined,
           instrumentation,
+          typology === 'custom' ? customField : '',
         ),
       );
     }
   } else {
     block.textContent = '';
-    pillElement = createNavigationPill(text, href, variant, leftIcon, rightIcon);
+    pillElement = createNavigationPill(
+      text,
+      href,
+      variant,
+      leftIcon,
+      undefined,
+      rightIcon,
+      undefined,
+      {},
+      typology === 'custom' ? customField : '',
+    );
     block.appendChild(pillElement);
   }
 
