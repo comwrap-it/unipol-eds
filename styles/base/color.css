@@ -537,7 +537,7 @@
   --Checkbox-Field-Unchecked-Focused-Text-Description: var(--Text-Neutral-Secondary);
   --Checkbox-Field-Unchecked-Pressed-Text-Label: var(--Text-Default-Primary);
   --Checkbox-Field-Unchecked-Pressed-Text-Description: var(--Text-Neutral-Secondary);
-  --Icon-Button-Primary-Hover-Background: var(--Background-Default-Tertiary-Hover);
+  --Icon-Button-Primary-Hover-Background: var(--Null-000);
   --Icon-Button-Primary-Hover-Border: var(--Border-Default-Secondary);
   --Icon-Button-Primary-Hover-Icon: var(--Icon-Default-Secondary);
   --Icon-Button-Primary-Disabled-Background: var(--Null-000);
