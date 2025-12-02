@@ -2,14 +2,14 @@
   "definitions": [
     {
       "title": "Header buttons",
-      "id": "header-utilities",
+      "id": "header-buttons",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Header buttons",
-              "filter": "header-utilities"
+              "filter": "header-buttons"
             }
           }
         }
@@ -50,7 +50,7 @@
   ],
   "filters": [
     {
-      "id": "header-utilities",
+      "id": "header-buttons",
       "components": [
         "header-button"
       ]
