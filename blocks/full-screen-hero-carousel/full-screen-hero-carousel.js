@@ -70,8 +70,24 @@ const setSwiperListeners = (
   });
 };
 
+/**
+ * ensures styles are loaded only once
+ */
+let isStylesAlreadyLoaded = false;
+const ensureStylesLoaded = async () => {
+  if (isStylesAlreadyLoaded) return;
+  const { loadCSS } = await import('../../scripts/aem.js');
+  const cssPromises = [
+    `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`,
+    `${window.hlx.codeBasePath}/blocks/hero/hero.css`,
+  ].map((cssPath) => loadCSS(cssPath));
+  await Promise.all(cssPromises);
+  isStylesAlreadyLoaded = true;
+};
+
 export default async function decorate(block) {
   if (!block) return;
+  await ensureStylesLoaded();
 
   // Get rows from block
   let rows = Array.from(block.children);
@@ -83,17 +99,17 @@ export default async function decorate(block) {
   const isCarousel = rows.length > 1;
 
   const carousel = document.createElement('div');
-  carousel.className = 'full-screen-hero-carousel swiper';
+  carousel.className = 'swiper';
   carousel.setAttribute('role', 'region');
   carousel.setAttribute('aria-label', 'Hero carousel');
   carousel.setAttribute('tabindex', '0');
 
   // Create carousel track (scrollable container)
   const track = document.createElement('div');
-  track.className = 'full-screen-hero-carousel-track swiper-wrapper';
+  track.className = 'swiper-wrapper';
   track.setAttribute('role', 'list');
 
-  rows.map(async (row) => {
+  const promises = rows.map(async (row) => {
     const childrenRows = Array.from(row.children);
     const {
       heroBackground,
@@ -101,7 +117,6 @@ export default async function decorate(block) {
       showHeroButton,
       showHeroLogo,
       heroLogo,
-      showHeroPauseIcon,
       title,
       subtitleBold,
       subtitle,
@@ -121,7 +136,6 @@ export default async function decorate(block) {
       showHeroButton,
       showHeroLogo,
       heroLogo,
-      showHeroPauseIcon,
       title,
       subtitleBold,
       subtitle,
@@ -139,10 +153,10 @@ export default async function decorate(block) {
     moveInstrumentation(row, hero);
     track.appendChild(hero);
   });
+  await Promise.all(promises);
 
   carousel.appendChild(track);
-  moveInstrumentation(block, carousel);
-  block.replaceWith(carousel);
+  block.replaceChildren(carousel);
 
   if (isCarousel) {
     const {

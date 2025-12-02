@@ -43,8 +43,6 @@ export default async function decorateInsuranceProductCard(block) {
   // Check if card is already decorated (has card-block class)
   // This happens when Universal Editor re-renders after an edit
   if (block.classList.contains('card-block')) {
-    // eslint-disable-next-line no-console
-    console.log('🔄 Card already decorated, skipping re-decoration');
     return;
   }
 
@@ -61,46 +59,33 @@ export default async function decorateInsuranceProductCard(block) {
 
   const instrumentation = extractInstrumentationAttributes(rows[0]);
 
-  // eslint-disable-next-line no-console
-  console.log('🃏 Card Rows:', {
-    totalRows: rows.length,
-    blockHTML: block.outerHTML,
-    wrapperHTML: wrapper?.outerHTML || 'NO WRAPPER',
-    blockChildren: Array.from(block.children).map((c) => c.className),
-    rows: rows.map((r, i) => ({
-      index: i,
-      className: r.className,
-      html: r.outerHTML,
-      text: r.textContent?.trim(),
-      hasAueProp: r.querySelector('[data-aue-prop]')?.getAttribute('data-aue-prop'),
-    })),
-  });
-
   // Extract card data
   // Row 0:  Title
   // Row 1:  Description
   // Row 2:  Button label
   // Row 3:  Button variant
   // Row 4:  Button link
-  // Row 5:  Button size
-  // Row 6:  Button left icon
-  // Row 7:  Button right icon
-  // Row 8:  Note
-  // Row 9:  Tag Label
-  // Row 10: Tag Category
-  // Row 11: Tag Variant
-  // Row 12: Image
-  // Row 13: 3D Icon showVehicle
-  // Row 14: 3D Icon showProperty
-  // Row 15: 3D Icon showWelfare
+  // Row 5:  Button target
+  // Row 6:  Button size
+  // Row 7:  Button left icon
+  // Row 8:  Button right icon
+  // Row 9:  Note
+  // Row 10:  Tag Label
+  // Row 11: Tag Category
+  // Row 12: Tag Variant
+  // Row 13: Image
+  // Row 14: Image Alternative Text
+  // Row 15: 3D Icon showVehicle
+  // Row 16: 3D Icon showProperty
+  // Row 17: 3D Icon showWelfare
 
   // Card Image
-  const imageRow = rows[12];
+  const imageRow = rows[13];
   if (imageRow) {
     const cardImage = document.createElement('div');
     cardImage.className = 'insurance-product-card-image';
 
-    const tagRows = rows.slice(9, 12);
+    const tagRows = rows.slice(10, 13);
     const tagElement = createTagFromRows(tagRows);
 
     if (tagElement && tagElement.classList) {
@@ -111,16 +96,19 @@ export default async function decorateInsuranceProductCard(block) {
       cardImage.appendChild(tagElement);
     }
 
+    const altText = rows[14].textContent?.trim() || '';
     const picture = imageRow.querySelector('picture');
     if (picture) {
       // Move existing picture (preserves instrumentation)
+
+      picture.querySelector('img').setAttribute('alt', altText);
       cardImage.appendChild(picture);
     } else {
       const img = imageRow.querySelector('img');
       if (img) {
         const optimizedPic = createOptimizedPicture(
           img.src,
-          img.alt || '',
+          altText,
           false,
           [{ media: '(min-width: 769)', width: '316' }, { media: '(max-width: 768)', width: '240' }, { media: '(max-width: 392)', width: '343' }],
         );
@@ -136,7 +124,7 @@ export default async function decorateInsuranceProductCard(block) {
         if (link && link.href) {
           const optimizedPic = createOptimizedPicture(
             link.href,
-            link.textContent?.trim() || '',
+            altText,
             false,
             [{ media: '(min-width: 769)', width: '316' }, { media: '(max-width: 768)', width: '240' }, { media: '(max-width: 392)', width: '343' }],
           );
@@ -187,12 +175,6 @@ export default async function decorateInsuranceProductCard(block) {
 
   // Card Subtitle - preserve original element and instrumentation
   const subtitleRow = rows[1];
-  // eslint-disable-next-line no-console
-  console.log('📝 Card Subtitle Row:', {
-    exists: !!subtitleRow,
-    hasContent: subtitleRow?.textContent?.trim(),
-    html: subtitleRow?.outerHTML?.substring(0, 150),
-  });
 
   // ALWAYS create subtitle element (even if row doesn't exist or is empty)
   // This ensures subtitle is always visible in the DOM for editing
@@ -223,9 +205,9 @@ export default async function decorateInsuranceProductCard(block) {
 
   cardContent.appendChild(cardTextContent);
 
-  // Card Button - Rows 2-7 (optional)
+  // Card Button - Rows 2-9 (optional)
   // Universal Editor creates separate rows for each button field
-  const buttonRows = rows.slice(2, 8);
+  const buttonRows = rows.slice(2, 9);
   const buttonElement = createButtonFromRows(buttonRows);
 
   if (buttonElement && buttonElement.children.length > 0) {
@@ -234,7 +216,7 @@ export default async function decorateInsuranceProductCard(block) {
 
     buttonsContainer.appendChild(buttonElement);
 
-    const note = rows[8];
+    const note = rows[9];
     if (note) {
       // Try to preserve existing paragraph
       const existingPara = note.querySelector('p');
@@ -261,8 +243,8 @@ export default async function decorateInsuranceProductCard(block) {
     }
   }
 
-  // Card 3D-icons - Rows 13-15
-  const iconsRows = rows.slice(13, 16);
+  // Card 3D-icons - Rows 15-17
+  const iconsRows = rows.slice(15, 18);
   const iconsElement = create3DiconsFromRows(iconsRows);
 
   if (iconsElement && iconsElement.children.length > 0) {
@@ -271,12 +253,6 @@ export default async function decorateInsuranceProductCard(block) {
     imgVector.appendChild(iconsElement);
     cardContent.appendChild(imgVector);
   }
-
-  // eslint-disable-next-line no-console
-  console.log('📦 Card Content Children:', {
-    count: cardContent.children.length,
-    children: Array.from(cardContent.children).map((c) => c.className),
-  });
 
   // Append card content
   if (cardContent.children.length > 0) {

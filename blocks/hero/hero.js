@@ -1,3 +1,7 @@
+import {
+  createTextElementFromRow,
+  extractBooleanValueFromRow,
+} from '../../scripts/domHelpers.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import {
   BUTTON_ICON_SIZES,
@@ -9,14 +13,9 @@ import {
  * Sets up the Hero container with background media (image or video).
  * @param {HTMLElement} heroBackground - The media element (video or picture)
  * @param {boolean} isVideoBackground
- * @param {boolean} showHeroPauseIcon
  * @returns {HTMLDivElement}
  */
-const setupHeroWithBg = (
-  heroBackground,
-  isVideoBackground = false,
-  showHeroPauseIcon = false,
-) => {
+const setupHeroWithBg = (heroBackground, isVideoBackground = false) => {
   if (!heroBackground) return null;
 
   const hero = document.createElement('div');
@@ -27,6 +26,7 @@ const setupHeroWithBg = (
     moveInstrumentation(heroBackground, pictureBg);
     pictureBg.className = 'hero-bg';
     pictureBg.setAttribute('aria-hidden', 'true');
+    pictureBg.fetchPriority = 'high';
     hero.appendChild(pictureBg);
   } else {
     const videoPath = heroBackground.href;
@@ -41,22 +41,20 @@ const setupHeroWithBg = (
     videoBg.playsInline = true;
     hero.appendChild(videoBg);
 
-    if (showHeroPauseIcon) {
-      const pauseIcon = document.createElement('button');
-      pauseIcon.className = 'hero-icon un-icon-pause-circle icon-extra-large';
-      hero.appendChild(pauseIcon);
-      pauseIcon.onclick = () => {
-        if (pauseIcon.classList.contains('un-icon-play-circle')) {
-          videoBg.play();
-          pauseIcon.classList.remove('un-icon-play-circle');
-          pauseIcon.classList.add('un-icon-pause-circle');
-        } else {
-          videoBg.pause();
-          pauseIcon.classList.remove('un-icon-pause-circle');
-          pauseIcon.classList.add('un-icon-play-circle');
-        }
-      };
-    }
+    const pauseIcon = document.createElement('button');
+    pauseIcon.className = 'hero-icon un-icon-pause-circle icon-extra-large';
+    hero.appendChild(pauseIcon);
+    pauseIcon.onclick = () => {
+      if (pauseIcon.classList.contains('un-icon-play-circle')) {
+        videoBg.play();
+        pauseIcon.classList.remove('un-icon-play-circle');
+        pauseIcon.classList.add('un-icon-pause-circle');
+      } else {
+        videoBg.pause();
+        pauseIcon.classList.remove('un-icon-pause-circle');
+        pauseIcon.classList.add('un-icon-play-circle');
+      }
+    };
   }
   const heroOverlay = document.createElement('div');
   heroOverlay.className = 'hero-overlay';
@@ -69,52 +67,58 @@ const setupHeroWithBg = (
  * Builds the main textual/logo section of a Hero.
  * @param {boolean} showHeroLogo
  * @param {HTMLElement} heroLogo - the hero logo element
- * @param {string} title
- * @param {string} subtitleBold
- * @param {string} subtitle
+ * @param {HTMLElement} titleRow
+ * @param {HTMLElement} subtitleBoldRow
+ * @param {HTMLElement} subtitleRow
  * @param {boolean} showHeroBulletList
- * @param {string[]} bulletList
+ * @param {HTMLElement[]} bulletListRows
+ * @param {boolean} isCarousel
  * @returns {HTMLDivElement}
  */
 const createHeroMainSection = (
   showHeroLogo,
   heroLogo,
-  title,
-  subtitleBold,
-  subtitle,
+  titleRow,
+  subtitleBoldRow,
+  subtitleRow,
   showHeroBulletList,
-  bulletList,
+  bulletListRows,
+  isCarousel = false,
 ) => {
   const mainSection = document.createElement('div');
-  mainSection.className = 'main-section';
+  mainSection.className = `main-section${isCarousel ? ' carousel' : ''}`;
   if (showHeroLogo) {
     const logo = heroLogo.cloneNode(true);
     logo.className = 'hero-logo';
     mainSection.appendChild(logo);
   }
-  const titleEl = document.createElement('h2');
-  titleEl.className = 'hero-title';
-  titleEl.textContent = title;
+  const titleEl = createTextElementFromRow(titleRow, 'hero-title', 'h2');
   mainSection.appendChild(titleEl);
-  if (subtitleBold) {
-    const subtitleBoldEl = document.createElement('p');
-    subtitleBoldEl.className = 'hero-subtitle-bold';
-    subtitleBoldEl.textContent = subtitleBold;
+  if (subtitleBoldRow.firstChild) {
+    const subtitleBoldEl = createTextElementFromRow(
+      subtitleBoldRow,
+      'hero-subtitle-bold',
+      'p',
+    );
     mainSection.appendChild(subtitleBoldEl);
   }
-  if (subtitle) {
-    const subtitleEl = document.createElement('p');
-    subtitleEl.className = 'hero-subtitle';
-    subtitleEl.textContent = subtitle;
+  if (subtitleRow.firstChild) {
+    const subtitleEl = createTextElementFromRow(
+      subtitleRow,
+      'hero-subtitle',
+      'p',
+    );
     mainSection.appendChild(subtitleEl);
   }
-  if (showHeroBulletList && bulletList?.length > 0) {
+  if (showHeroBulletList && bulletListRows?.length > 0) {
     const bullets = document.createElement('ul');
     bullets.className = 'hero-bullets';
-    bulletList?.forEach((bullet) => {
-      if (!bullet) return;
-      const listItem = document.createElement('li');
-      listItem.innerHTML = bullet;
+    bulletListRows?.forEach((bulletRow) => {
+      const listItem = createTextElementFromRow(
+        bulletRow,
+        '',
+        'li',
+      );
       bullets.appendChild(listItem);
     });
     mainSection.appendChild(bullets);
@@ -170,21 +174,6 @@ const createHeroButtonSection = async (
 };
 
 /**
- * ensures styles are loaded only once
- */
-let isStylesAlreadyLoaded = false;
-const ensureStylesLoaded = async () => {
-  if (isStylesAlreadyLoaded) return;
-  const { loadCSS } = await import('../../scripts/aem.js');
-  const cssPromises = [
-    `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`,
-    `${window.hlx.codeBasePath}/blocks/hero/hero.css`,
-  ].map((cssPath) => loadCSS(cssPath));
-  await Promise.all(cssPromises);
-  isStylesAlreadyLoaded = true;
-};
-
-/**
  * Creates a Hero component
  *
  * @param {HTMLElement} heroBackground - the background media source
@@ -192,12 +181,11 @@ const ensureStylesLoaded = async () => {
  * @param {boolean} showHeroButton
  * @param {boolean} showHeroLogo
  * @param {HTMLElement} heroLogo - the hero logo element
- * @param {boolean} showHeroPauseIcon
- * @param {string} title (required)
- * @param {string} subtitleBold
- * @param {string} subtitle
+ * @param {HTMLElement} title (required)
+ * @param {HTMLElement} subtitleBold
+ * @param {HTMLElement} subtitle
  * @param {boolean} showHeroBulletList
- * @param {string[]} bulletList
+ * @param {HTMLElement[]} bulletList
  * @param {string} btnLabel - Button text/label
  * @param {string} btnHref - Button URL (optional)
  * @param {boolean} btnOpenInNewTab - Open link in new tab (optional)
@@ -205,7 +193,7 @@ const ensureStylesLoaded = async () => {
  * @param {string} btnIconSize - Icon size (small, medium, large, extra-large)
  * @param {string} btnLeftIcon - Left icon (optional)
  * @param {string} btnRightIcon - Right icon (optional)
- * @param {boolean} isCarousel - Flag indicating if the hero is part of a carousel
+ * @param {boolean} isCarousel - Flag indicating if the hero is part of a carousel (optional)
  * @returns {HTMLElement}
  */
 export async function createHero(
@@ -214,10 +202,9 @@ export async function createHero(
   showHeroButton,
   showHeroLogo,
   heroLogo,
-  showHeroPauseIcon,
-  title,
-  subtitleBold,
-  subtitle,
+  titleRow,
+  subtitleBoldRow,
+  subtitleRow,
   showHeroBulletList,
   bulletList,
   btnLabel,
@@ -229,22 +216,18 @@ export async function createHero(
   btnRightIcon,
   isCarousel = false,
 ) {
-  ensureStylesLoaded(); // i intentionally not awaited to not block rendering
-  const hero = setupHeroWithBg(
-    heroBackground,
-    isVideoBackground,
-    showHeroPauseIcon,
-  );
+  const hero = setupHeroWithBg(heroBackground, isVideoBackground);
   const heroContent = document.createElement('div');
   heroContent.className = 'hero-content';
   const mainSection = createHeroMainSection(
     showHeroLogo,
     heroLogo,
-    title,
-    subtitleBold,
-    subtitle,
+    titleRow,
+    subtitleBoldRow,
+    subtitleRow,
     showHeroBulletList,
     bulletList,
+    isCarousel,
   );
   heroContent.appendChild(mainSection);
   if (showHeroButton) {
@@ -287,36 +270,34 @@ const extractMediaFromRow = (row, isVideo = false) => {
  *
  */
 export const extractHeroPropertiesFromRows = (rows) => {
-  const isVideoBackground = rows[1]?.textContent?.trim().toLowerCase() === 'true';
+  const isVideoBackground = extractBooleanValueFromRow(rows[1]);
   const heroBackground = extractMediaFromRow(rows[0], isVideoBackground);
-  const showHeroLogo = rows[2]?.textContent?.trim().toLowerCase() === 'true';
+  const showHeroLogo = extractBooleanValueFromRow(rows[2]);
   const heroLogo = extractMediaFromRow(rows[3]);
-  const showHeroPauseIcon = rows[4]?.textContent?.trim().toLowerCase() === 'true';
-  const title = rows[5]?.textContent?.trim() || '';
-  const subtitleBold = rows[6]?.textContent?.trim() || '';
-  const subtitle = rows[7]?.textContent?.trim() || '';
-  const showHeroBulletList = rows[8]?.textContent?.trim().toLowerCase() === 'true';
+  const title = rows[4];
+  const subtitleBold = rows[5];
+  const subtitle = rows[6];
+  const showHeroBulletList = extractBooleanValueFromRow(rows[7]);
   const bulletList = [
-    rows[9]?.textContent?.trim() || '',
-    rows[10]?.textContent?.trim() || '',
-    rows[11]?.textContent?.trim() || '',
-  ].filter(Boolean);
+    rows[8],
+    rows[9],
+    rows[10],
+  ].filter((row) => row.firstChild);
   // Button properties
-  const showHeroButton = rows[12]?.textContent?.trim().toLowerCase() === 'true';
-  const btnText = rows[13]?.textContent?.trim() || '';
-  const btnVariant = rows[14]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-  const btnHref = rows[15]?.querySelector('a')?.href || rows[15]?.textContent?.trim() || '';
-  const btnOpenInNewTab = rows[16]?.textContent?.trim().toLowerCase() === 'true';
-  const btnIconSize = rows[17]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
-  const btnLeftIcon = rows[18]?.textContent?.trim() || '';
-  const btnRightIcon = rows[19]?.textContent?.trim() || '';
+  const showHeroButton = extractBooleanValueFromRow(rows[11]);
+  const btnText = rows[12]?.textContent?.trim() || '';
+  const btnVariant = rows[13]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
+  const btnHref = rows[14]?.querySelector('a')?.href || rows[14]?.textContent?.trim() || '';
+  const btnOpenInNewTab = extractBooleanValueFromRow(rows[15]);
+  const btnIconSize = rows[16]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
+  const btnLeftIcon = rows[17]?.textContent?.trim() || '';
+  const btnRightIcon = rows[18]?.textContent?.trim() || '';
   return {
     heroBackground,
     isVideoBackground,
     showHeroButton,
     showHeroLogo,
     heroLogo,
-    showHeroPauseIcon,
     title,
     subtitleBold,
     subtitle,
@@ -331,61 +312,3 @@ export const extractHeroPropertiesFromRows = (rows) => {
     btnRightIcon,
   };
 };
-
-/**
- * @param {HTMLElement} block
- */
-export default async function decorateHero(block) {
-  if (!block) return;
-
-  // Get rows from block
-  let rows = Array.from(block.children);
-  const wrapper = block.querySelector('.default-content-wrapper');
-  if (wrapper) {
-    rows = Array.from(wrapper.children);
-  }
-
-  const {
-    heroBackground,
-    isVideoBackground,
-    showHeroButton,
-    showHeroLogo,
-    heroLogo,
-    showHeroPauseIcon,
-    title,
-    subtitleBold,
-    subtitle,
-    showHeroBulletList,
-    bulletList,
-    btnText,
-    btnHref,
-    btnOpenInNewTab,
-    btnVariant,
-    btnIconSize,
-    btnLeftIcon,
-    btnRightIcon,
-  } = extractHeroPropertiesFromRows(rows);
-
-  const heroElement = createHero(
-    heroBackground,
-    isVideoBackground,
-    showHeroButton,
-    showHeroLogo,
-    heroLogo,
-    showHeroPauseIcon,
-    title,
-    subtitleBold,
-    subtitle,
-    showHeroBulletList,
-    bulletList,
-    btnText,
-    btnHref,
-    btnOpenInNewTab,
-    btnVariant,
-    btnIconSize,
-    btnLeftIcon,
-    btnRightIcon,
-  );
-  moveInstrumentation(block, heroElement);
-  block.replaceWith(heroElement);
-}

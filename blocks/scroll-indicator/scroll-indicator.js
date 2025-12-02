@@ -39,11 +39,11 @@ async function ensureStylesLoaded() {
 
 /**
  * Decorates the scroll indicator block element
- * @param {boolean} isPositionedAbsolute - Whether the scroll indicator is positioned absolutely
+ * @param {boolean} isInsideHero - Whether the scroll indicator is inside a hero block
  * @return {ScrollIndicatorReturnType} scrollIndicator
  */
 export default async function createScrollIndicator(
-  isPositionedAbsolute = false,
+  isInsideHero = false,
 ) {
   // Ensure CSS is loaded
   await ensureStylesLoaded();
@@ -51,8 +51,8 @@ export default async function createScrollIndicator(
   // Create scrollIndicator structure
   const scrollIndicator = document.createElement('div');
   scrollIndicator.className = 'scroll-indicator';
-  if (isPositionedAbsolute) {
-    scrollIndicator.classList.add('absolute-positioned');
+  if (isInsideHero) {
+    scrollIndicator.classList.add('hero-indicator');
   }
 
   const leftIconButtonContainer = document.createElement('div');

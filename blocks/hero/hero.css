@@ -153,6 +153,10 @@
                 width: 100%;
                 flex-grow: unset;
 
+                &.carousel {
+                    padding-bottom: calc(var(--Hero-Full-Screen-Button-Gap-M-Tp, 32px) + 40px); /* Space for scroll indicator */
+                }
+
                 & .hero-title {
                     font-size: var(--Size-40, 40px);
                     letter-spacing: -0.4px;
