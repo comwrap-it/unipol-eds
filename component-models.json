@@ -526,7 +526,7 @@
             ]
           },
           {
-            "component": "text-input",
+            "component": "text",
             "name": "navigationPillCustomField",
             "label": "navigationPillCustomField Label",
             "condition": {
@@ -2049,7 +2049,7 @@
             ]
           },
           {
-            "component": "text-input",
+            "component": "text",
             "name": "navigationPillCustomField",
             "label": "navigationPillCustomField Label",
             "condition": {
@@ -3907,7 +3907,7 @@
         ]
       },
       {
-        "component": "text-input",
+        "component": "text",
         "name": "navigationPillCustomField",
         "label": "navigationPillCustomField Label",
         "condition": {

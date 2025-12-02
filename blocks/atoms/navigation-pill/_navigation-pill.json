@@ -35,7 +35,7 @@
           ]
         },
         {
-          "component": "text-input",
+          "component": "text",
           "name": "navigationPillCustomField",
           "label": "navigationPillCustomField Label",
           "condition": {
