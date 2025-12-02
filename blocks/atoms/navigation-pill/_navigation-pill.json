@@ -21,26 +21,10 @@
       "id": "navigation-pill",
       "fields": [
         {
-          "component": "select",
-          "name": "navigationPillTypology",
-          "valueType": "string",
-          "value": "custom",
-          "label": "Tipologia Destinazione",
-          "options": [
-            { "name": "Custom", "value": "custom" },
-            { "name": "Preventivatore", "value": "preventivatore" },
-            { "name": "Locator", "value": "locator" },
-            { "name": "Login", "value": "login" },
-            { "name": "Link", "value": "link" }
-          ]
-        },
-        {
-          "condition": {
-            "===": [{ "var": "navigationPillTypology" }, "custom"]
-          },
           "component": "text",
-          "name": "navigationPillCustomField",
-          "label": "navigationPillCustomField Label"
+          "name": "navigationPillLabel",
+          "label": "Label",
+          "required": true
         },
         {
           "component": "select",
@@ -159,6 +143,28 @@
               "value": "extra-large"
             }
           ]
+        },
+        {
+          "component": "select",
+          "name": "navigationPillTypology",
+          "valueType": "string",
+          "value": "custom",
+          "label": "Tipologia Destinazione",
+          "options": [
+            { "name": "Custom", "value": "custom" },
+            { "name": "Preventivatore", "value": "preventivatore" },
+            { "name": "Locator", "value": "locator" },
+            { "name": "Login", "value": "login" },
+            { "name": "Link", "value": "link" }
+          ]
+        },
+        {
+          "condition": {
+            "===": [{ "var": "navigationPillTypology" }, "custom"]
+          },
+          "component": "text",
+          "name": "navigationPillCustomField",
+          "label": "navigationPillCustomField Label"
         }
       ]
     }
