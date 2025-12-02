@@ -24,7 +24,7 @@
           "component": "select",
           "name": "navigationPillTypology",
           "valueType": "string",
-          "value": "",
+          "value": "custom",
           "label": "Tipologia Destinazione",
           "options": [
             { "name": "Custom", "value": "custom" },
