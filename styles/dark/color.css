@@ -18,8 +18,8 @@
   --Border-Utilities-Swatch: #ffffff3d;
   /* Bg/Default/Default */
   --Background-Default-Primary: var(--Neutral-200);
-  /* Bg/Default/Secondary */
-  --Background-Default-Secondary: var(--Neutral-50);
+  /* Bg/Default/Default */
+  --Background-Default-Secondary: var(--Brand-800);
   /* Bg/Default/Tertiary */
   --Background-Default-Tertiary: var(--Neutral-200);
   /* Bg/Default/Tertiary */
@@ -86,8 +86,8 @@
   --Text-Disabled-Secondary: var(--Grayscale-400);
   --Text-Disabled-Tertiary: var(--Grayscale-400);
   --Text-Utilities-Text-On-Overlay: var(--White-1100);
-  --Text-Neutral-Primary: #e3e3e3;
-  --Text-Neutral-Secondary: #cdcdcd;
+  --Text-Neutral-Primary: var(--Grayscale-500);
+  --Text-Neutral-Secondary: var(--Neutral-200);
   --Text-Neutral-Tertiary: var(--Brand-800);
   --Icon-Default-Primary: var(--Neutral-200);
   --Icon-Default-Secondary: var(--Grayscale-400);
@@ -104,7 +104,7 @@
   --Icon-Disabled-Secondary: var(--Grayscale-500);
   --Icon-Disabled-Tertiary: var(--Grayscale-400);
   --Icon-Neutral-Primary: #e3e3e3;
-  --Icon-Neutral-Secondary: #cdcdcd;
+  --Icon-Neutral-Secondary: var(--Neutral-200);
   --Icon-Neutral-Tertiary: var(--Brand-800);
   --Border-Default-Primary: var(--Neutral-200);
   --Border-Default-Accent: #cdcdcd;
@@ -129,9 +129,12 @@
   --Background-Opacity-Secondary: var(--Black-400);
   /* Bg/Neutral/Tertiary */
   --Background-Opacity-Tertiary: var(--Black-500);
+  /* Bg/Default/Secondary */
+  --Background-Default-Secondary-Fixed: var(--Neutral-50);
   --Text-Neutral-Fixed: var(--Neutral-200);
   --Icon-Neutral-Fixed: var(--Neutral-200);
   --Icon-Default-Fixed: var(--Brand-800);
   --Border-Default-Tertiary: var(--Neutral-200);
   --Border-Neutral-Tertiary: var(--Grayscale-500);
+  --Text-Default-Primary-Fixed: var(--Brand-800);
 }
