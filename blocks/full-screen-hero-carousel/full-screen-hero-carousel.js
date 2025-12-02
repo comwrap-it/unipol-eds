@@ -70,8 +70,24 @@ const setSwiperListeners = (
   });
 };
 
+/**
+ * ensures styles are loaded only once
+ */
+let isStylesAlreadyLoaded = false;
+const ensureStylesLoaded = async () => {
+  if (isStylesAlreadyLoaded) return;
+  const { loadCSS } = await import('../../scripts/aem.js');
+  const cssPromises = [
+    `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`,
+    `${window.hlx.codeBasePath}/blocks/hero/hero.css`,
+  ].map((cssPath) => loadCSS(cssPath));
+  await Promise.all(cssPromises);
+  isStylesAlreadyLoaded = true;
+};
+
 export default async function decorate(block) {
   if (!block) return;
+  await ensureStylesLoaded();
 
   // Get rows from block
   let rows = Array.from(block.children);
@@ -93,7 +109,7 @@ export default async function decorate(block) {
   track.className = 'swiper-wrapper';
   track.setAttribute('role', 'list');
 
-  rows.map(async (row) => {
+  const promises = rows.map(async (row) => {
     const childrenRows = Array.from(row.children);
     const {
       heroBackground,
@@ -137,10 +153,10 @@ export default async function decorate(block) {
     moveInstrumentation(row, hero);
     track.appendChild(hero);
   });
+  await Promise.all(promises);
 
   carousel.appendChild(track);
-  moveInstrumentation(block, carousel);
-  block.replaceWith(carousel);
+  block.replaceChildren(carousel);
 
   if (isCarousel) {
     const {

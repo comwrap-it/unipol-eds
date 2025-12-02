@@ -19,6 +19,7 @@
 import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
+import { createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
 
 /**
  * Decorates the insurance product carousel block
@@ -66,6 +67,9 @@ export default async function decorate(block) {
 
   // Get all rows (each row will be a card)
   const rows = Array.from(block.children);
+
+  const showMoreButtonLabel = rows[0].textContent?.trim() || 'Mostra di più';
+  rows.shift();
 
   if (rows.length === 0) {
     // eslint-disable-next-line no-console
@@ -122,10 +126,15 @@ export default async function decorate(block) {
     return slide;
   });
 
+  const mq = window.matchMedia('(min-width: 768px)');
+
   // Wait for all cards to be processed
   const cardElements = await Promise.all(cardPromises);
-  cardElements.forEach((slide) => {
+  cardElements.forEach((slide, index) => {
     if (slide && !hasInstrumentation && slide.innerText) {
+      if (index >= 4 && !mq.matches) {
+        slide.classList.add('hidden');
+      }
       track.appendChild(slide);
     } else if (slide && hasInstrumentation) {
       track.appendChild(slide);
@@ -133,14 +142,34 @@ export default async function decorate(block) {
   });
 
   let scrollIndicator;
-  if (cardElements && cardElements.length > 4) {
-    const { scrollIndicator: createdScrollIndicator } = await createScrollIndicator();
-    scrollIndicator = createdScrollIndicator;
+  let showMoreButton;
+
+  function handleShowMoreButton(e) {
+    e.preventDefault();
+    cardElements.forEach((slide) => {
+      if (slide.classList.contains('hidden')) {
+        slide.classList.remove('hidden');
+      }
+    });
+    showMoreButton.remove();
+  }
+
+  if (mq.matches) {
+    if (cardElements && cardElements.length > 4) {
+      const { scrollIndicator: createdScrollIndicator } = await createScrollIndicator();
+      scrollIndicator = createdScrollIndicator;
+    }
+  } else if (cardElements && cardElements.length > 4) {
+    showMoreButton = createButton(showMoreButtonLabel, '', false, BUTTON_VARIANTS.SECONDARY, BUTTON_ICON_SIZES.MEDIUM, '', '');
+    showMoreButton.addEventListener('click', handleShowMoreButton);
   }
 
   carousel.appendChild(track);
+
   if (scrollIndicator) {
     carousel.appendChild(scrollIndicator);
+  } else if (showMoreButton) {
+    carousel.appendChild(showMoreButton);
   }
 
   // Preserve blockName if present
@@ -154,8 +183,7 @@ export default async function decorate(block) {
   // Replace block with carousel
   block.replaceWith(carousel);
 
-  const mq = window.matchMedia('(min-width: 393px)');
-  if (mq.matches && typeof window.Swiper === 'undefined') {
+  if (mq.matches) {
     const handleInsuranceProductCarouselWidget = await import('../insurance-product-carousel-widget/insurance-product-carousel-widget.js');
     handleInsuranceProductCarouselWidget.default();
   }

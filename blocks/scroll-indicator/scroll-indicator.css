@@ -3,13 +3,6 @@
     align-items: center;
     gap: var(--Scroll-Indicator-Gap, 2rem);
 
-    &.hero-indicator {
-        position: absolute;
-        bottom: var(--Hero-Full-Screen-Bottom-Padding-Tl-Tp, 80px);
-        right: var(--Hero-Full-Screen-Horizontal-Padding-D, 64px);
-        z-index: 3;
-    }
-
     & .expanding-dots {
         display: flex;
         align-items: center;
@@ -26,6 +19,13 @@
                 width: 3rem;
             }
         }
+    }
+
+    &.hero-indicator {
+        position: absolute;
+        bottom: var(--Hero-Full-Screen-Bottom-Padding-Tl-Tp, 80px);
+        right: var(--Hero-Full-Screen-Horizontal-Padding-D, 64px);
+        z-index: 3;
     }
 }
 

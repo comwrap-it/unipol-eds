@@ -688,20 +688,29 @@
         "label": "Hero Title",
         "name": "heroMainLabel",
         "required": true,
-        "maxlength": 50
+        "validation": {
+          "maxLength": 50,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "text",
         "name": "heroSubtitleBold",
         "label": "Hero Subtitle Bold",
-        "maxlength": 50
+        "validation": {
+          "maxLength": 50,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "richtext",
         "name": "heroSubtitle",
         "label": "Hero Subtitle",
         "valueType": "string",
-        "maxlength": 150
+        "validation": {
+          "maxLength": 150,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "boolean",
@@ -714,7 +723,10 @@
         "component": "text",
         "name": "heroBullet1",
         "label": "Bullet 1",
-        "maxlength": 40,
+        "validation": {
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo"
+        },
         "condition": {
           "===": [
             {
@@ -728,7 +740,10 @@
         "component": "text",
         "name": "heroBullet2",
         "label": "Bullet 2",
-        "maxlength": 40,
+        "validation": {
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo"
+        },
         "condition": {
           "===": [
             {
@@ -742,7 +757,10 @@
         "component": "text",
         "name": "heroBullet3",
         "label": "Bullet 3",
-        "maxlength": 40,
+        "validation": {
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo"
+        },
         "condition": {
           "===": [
             {
@@ -1100,6 +1118,13 @@
         "required": true
       },
       {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageSR",
+        "label": "Image Alternative Text",
+        "required": true
+      },
+      {
         "component": "container",
         "name": "icons-3D",
         "label": "Configurazione Icone 3D",
@@ -1138,6 +1163,17 @@
         "component": "text",
         "name": "insurance-product-carousel-widget-name",
         "label": "Nome sezione Insurance Product Carousel Widget"
+      }
+    ]
+  },
+  {
+    "id": "insurance-product-carousel",
+    "fields": [
+      {
+        "component": "text",
+        "name": "showMoreButtonLabel",
+        "label": "Show more button label for mobile",
+        "maxlength": 15
       }
     ]
   },
@@ -1217,6 +1253,70 @@
         }
       }
     ]
+  },
+  {
+    "id": "preventivatore",
+    "fields": []
+  },
+  {
+    "id": "prodotto-unico-header",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "logoImage",
+        "label": "Logo",
+        "multi": false,
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "logoLink",
+        "label": "Link del Logo",
+        "default": "/"
+      },
+      {
+        "component": "multifield",
+        "name": "actions",
+        "label": "Pulsanti Azione (Destra)",
+        "multi": true,
+        "valueType": "string",
+        "fields": [
+          {
+            "component": "select",
+            "name": "icon",
+            "label": "Nome Icona",
+            "valueType": "string",
+            "options": [
+              {
+                "name": "Carrello",
+                "value": "cart"
+              },
+              {
+                "name": "Telefono",
+                "value": "phone"
+              },
+              {
+                "name": "Utente",
+                "value": "user"
+              }
+            ]
+          },
+          {
+            "component": "text",
+            "name": "link",
+            "label": "Link Destinazione",
+            "valueType": "string",
+            "default": "#"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "prodotto-unico",
+    "fields": []
   },
   {
     "id": "test-buttons",
