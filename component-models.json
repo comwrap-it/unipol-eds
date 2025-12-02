@@ -384,12 +384,14 @@
         "component": "reference",
         "valueType": "string",
         "name": "unipolHeaderLogo",
-        "label": "Logo Unipol Header"
+        "label": "Logo Unipol Header",
+        "key-value": true
       },
       {
         "component": "aem-content",
         "name": "UnipolHeaderLogoHref",
-        "label": "Link URL logo Unipol header"
+        "label": "Link URL logo Unipol header",
+        "key-value": true
       }
     ]
   },
@@ -405,6 +407,14 @@
         "component": "container",
         "name": "header-nav-pill-container",
         "fields": [
+          {
+            "component": "boolean",
+            "label": "Apri in una nuova scheda",
+            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+            "name": "iconButtonOpenInNewTab",
+            "valueType": "boolean",
+            "value": false
+          },
           {
             "component": "text",
             "name": "navigationPillLabel",
@@ -1883,6 +1893,14 @@
         "name": "test-button-container-navigation-pill",
         "label": "Configurazione Navigation Pill",
         "fields": [
+          {
+            "component": "boolean",
+            "label": "Apri in una nuova scheda",
+            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+            "name": "iconButtonOpenInNewTab",
+            "valueType": "boolean",
+            "value": false
+          },
           {
             "component": "text",
             "name": "navigationPillLabel",
@@ -3705,6 +3723,14 @@
   {
     "id": "navigation-pill",
     "fields": [
+      {
+        "component": "boolean",
+        "label": "Apri in una nuova scheda",
+        "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+        "name": "iconButtonOpenInNewTab",
+        "valueType": "boolean",
+        "value": false
+      },
       {
         "component": "text",
         "name": "navigationPillLabel",

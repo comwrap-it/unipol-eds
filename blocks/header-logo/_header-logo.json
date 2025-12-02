@@ -24,12 +24,14 @@
           "component": "reference",
           "valueType": "string",
           "name": "unipolHeaderLogo",
-          "label": "Logo Unipol Header"
+          "label": "Logo Unipol Header",
+          "key-value": true
         },
         {
           "component": "aem-content",
           "name": "UnipolHeaderLogoHref",
-          "label": "Link URL logo Unipol header"
+          "label": "Link URL logo Unipol header",
+          "key-value": true
         }
       ]
     }
