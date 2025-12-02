@@ -435,12 +435,8 @@
           },
           {
             "condition": {
-              "===": [
-                {
-                  "var": "navigationPillTypology"
-                },
-                "custom"
-              ]
+              "var": "navigationPillTypology",
+              "equals": "custom"
             },
             "component": "text",
             "name": "navigationPillCustomField",
@@ -2048,12 +2044,8 @@
           },
           {
             "condition": {
-              "===": [
-                {
-                  "var": "navigationPillTypology"
-                },
-                "custom"
-              ]
+              "var": "navigationPillTypology",
+              "equals": "custom"
             },
             "component": "text",
             "name": "navigationPillCustomField",
@@ -3905,12 +3897,8 @@
       },
       {
         "condition": {
-          "===": [
-            {
-              "var": "navigationPillTypology"
-            },
-            "custom"
-          ]
+          "var": "navigationPillTypology",
+          "equals": "custom"
         },
         "component": "text",
         "name": "navigationPillCustomField",
