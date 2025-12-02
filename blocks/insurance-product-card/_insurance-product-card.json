@@ -67,7 +67,7 @@
           "component": "reference",
           "valueType": "string",
           "name": "image",
-          "label": "Image",
+          "label": "Immagine",
           "multi": false,
           "required": true
         },
@@ -75,7 +75,7 @@
           "component": "text",
           "valueType": "string",
           "name": "imageSR",
-          "label": "Image Alternative Text",
+          "label": "Testo alternativo per l\\'immagine",
           "required": true
         },
         {
