@@ -48,9 +48,7 @@
     "id": "blog-carousel",
     "components": [
       "blog-preview-card"
-    ],
-    "min": 1,
-    "max": 8
+    ]
   },
   {
     "id": "cards",

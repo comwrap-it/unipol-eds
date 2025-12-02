@@ -16,9 +16,51 @@
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
 
-import { loadBlock } from '../../scripts/aem.js';
+import loadSwiper, { handleSlideChange } from '../../scripts/lib/utils.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import {
+  createBlogCard,
+  extractBlogCardDataFromRows,
+} from '../blog-preview-card/blog-preview-card.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
+
+let isStylesLoaded = false;
+async function ensureStylesLoaded() {
+  if (isStylesLoaded) return;
+  const { loadCSS } = await import('../../scripts/aem.js');
+  await Promise.all([
+    loadCSS(`${window.hlx.codeBasePath}/blocks/blog-card/blog-card.css`),
+  ]);
+  isStylesLoaded = true;
+}
+
+/**
+ *
+ * @param {} Swiper the swiper instance
+ * @param {HTMLElement} carousel the carousel element
+ * @param {HTMLElement} leftIconButton the left navigation button
+ * @param {HTMLElement} rightIconButton the right navigation button
+ */
+const initSwiper = (
+  Swiper,
+  carousel,
+  leftIconButton = null,
+  rightIconButton = null,
+) => {
+  // Initialize Swiper after DOM insertion
+  const swiper = new Swiper(carousel || '.swiper', {
+    navigation: {
+      nextEl: rightIconButton || '.swiper-button-next',
+      prevEl: leftIconButton || '.swiper-button-prev',
+      addIcons: false,
+    },
+    slidesPerView: 1,
+    // Optional accessibility tweaks
+    a11y: { enabled: true },
+  });
+
+  return swiper;
+};
 
 /**
  * Decorates the blog carousel block
@@ -27,30 +69,7 @@ import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
 export default async function decorate(block) {
   if (!block) return;
 
-  let isStylesLoaded = false;
-  async function ensureStylesLoaded() {
-    if (isStylesLoaded) return;
-    const { loadCSS } = await import('../../scripts/aem.js');
-    await Promise.all([
-      loadCSS(
-        `${window.hlx.codeBasePath}/blocks/blog-card/blog-card.css`,
-      ),
-    ]);
-    isStylesLoaded = true;
-  }
-
   await ensureStylesLoaded();
-
-  // Check if block has instrumentation (Universal Editor)
-  const hasInstrumentation = block.hasAttribute('data-aue-resource')
-    || block.querySelector('[data-aue-resource]')
-    || block.querySelector('[data-richtext-prop]');
-
-  // Import card component dynamically
-  const cardModule = await import(
-    '../blog-card/blog-card.js'
-  );
-  const decorateBlogPreviewCard = cardModule.default;
 
   // Create carousel container structure
   const carousel = document.createElement('div');
@@ -73,90 +92,54 @@ export default async function decorate(block) {
     return;
   }
 
-  // Process each row as a card
+  const isThereMultipleCards = rows.length > 1;
+
   const cardPromises = rows.map(async (row) => {
-    const slide = document.createElement('div');
-    slide.className = 'blog-card-wrapper swiper-slide';
-    slide.setAttribute('role', 'listitem');
-
-    // Preserve instrumentation from row to slide
-    moveInstrumentation(row, slide);
-
-    // Create a card block element to decorate
-    const cardBlock = document.createElement('div');
-    cardBlock.className = 'blog-card-container';
-    cardBlock.dataset.blockName = 'blog-card';
-
-    // Preserve row instrumentation on card block if present
-    if (row.hasAttribute('data-aue-resource')) {
-      cardBlock.setAttribute(
-        'data-aue-resource',
-        row.getAttribute('data-aue-resource'),
-      );
-      const aueBehavior = row.getAttribute('data-aue-behavior');
-      if (aueBehavior) cardBlock.setAttribute('data-aue-behavior', aueBehavior);
-      const aueType = row.getAttribute('data-aue-type');
-      if (aueType) cardBlock.setAttribute('data-aue-type', aueType);
-      const aueLabel = row.getAttribute('data-aue-label');
-      if (aueLabel) cardBlock.setAttribute('data-aue-label', aueLabel);
-    }
-
-    // Move all children from row to card block (preserves their instrumentation)
-    while (row.firstElementChild) {
-      cardBlock.appendChild(row.firstElementChild);
-    }
-
-    // Temporarily append cardBlock to slide
-    slide.appendChild(cardBlock);
-
-    // Decorate the card using card component
-    await decorateBlogPreviewCard(cardBlock);
-
-    // Load card styles
-    const decoratedCard = slide.querySelector('.blog-card-container, .card')
-      || slide.firstElementChild;
-    if (decoratedCard && decoratedCard.dataset.blockName) {
-      await loadBlock(decoratedCard);
-    }
-
-    return slide;
+    const childrenRows = Array.from(row.children);
+    const {
+      imageEl,
+      titleRow,
+      durationIcon,
+      durationTextRow,
+      label,
+      category,
+      type,
+    } = extractBlogCardDataFromRows(childrenRows);
+    const card = await createBlogCard(
+      imageEl,
+      titleRow,
+      durationIcon,
+      durationTextRow,
+      label,
+      category,
+      type,
+      true, // isSlide
+    );
+    // Move instrumentation from row to card
+    moveInstrumentation(row, card);
+    track.appendChild(card);
   });
-
-  // Wait for all cards to be processed
-  const cardElements = await Promise.all(cardPromises);
-  cardElements.forEach((slide) => {
-    if (slide && !hasInstrumentation && slide.innerText) {
-      track.appendChild(slide);
-    } else if (slide && hasInstrumentation) {
-      track.appendChild(slide);
-    }
-  });
-
-  let scrollIndicator;
-  if (cardElements && cardElements.length > 4) {
-    const { scrollIndicator: createdScrollIndicator } = await createScrollIndicator();
-    scrollIndicator = createdScrollIndicator;
-  }
-
+  await Promise.all(cardPromises);
   carousel.appendChild(track);
-  if (scrollIndicator) {
+
+  if (isThereMultipleCards) {
+    const {
+      leftIconButton, scrollIndicator, rightIconButton, setExpandedDot,
+    } = await createScrollIndicator();
+    const Swiper = await loadSwiper();
+    const swiperInstance = initSwiper(
+      Swiper,
+      carousel,
+      leftIconButton,
+      rightIconButton,
+    );
+    handleSlideChange(
+      swiperInstance,
+      setExpandedDot,
+      leftIconButton,
+      rightIconButton,
+    );
     carousel.appendChild(scrollIndicator);
   }
-
-  // Preserve blockName if present
-  if (block.dataset.blockName) {
-    carousel.dataset.blockName = block.dataset.blockName;
-  }
-
-  // Preserve block class
-  carousel.classList.add('block', 'blog-carousel-block');
-  moveInstrumentation(block, carousel);
-  // Replace block with carousel
-  block.replaceWith(carousel);
-
-  const mq = window.matchMedia('(min-width: 393px)');
-  if (mq.matches && typeof window.Swiper === 'undefined') {
-    const handleBlogCarouselWidget = await import('../blog-carousel-widget/blog-carousel-widget.js');
-    handleBlogCarouselWidget.default();
-  }
+  block.replaceChildren(carousel);
 }

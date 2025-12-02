@@ -1,10 +1,21 @@
+import { BUTTON_ICON_SIZES } from '../blocks/atoms/buttons/standard-button/standard-button.js';
 import { moveInstrumentation } from './scripts.js';
 
 /**
 Allowed text tags for authored content.
 @typedef {'p'|'span'|'h1'|'h2'|'h3'|'h4'|'h5'|'h6'|'li'} TextTag
 */
-const AUTHORIZED_TEXT_TAGS = ['p', 'span', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'li'];
+const AUTHORIZED_TEXT_TAGS = [
+  'p',
+  'span',
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
+  'h6',
+  'li',
+];
 /**
 Creates a text element from an authored row, preserving UE instrumentation.
 @param {HTMLElement | null} originalRow
@@ -34,6 +45,39 @@ export const createTextElementFromRow = (
     moveInstrumentation(originalRow, el);
   }
   return el;
+};
+
+/**
+ * Creates an icon element from a CSS class.
+@param {string} iconClass the CSS class for the icon
+@param {'small'|'medium'|'large'|'extra-large'} iconSize the size of the icon
+@returns {HTMLElement}
+*/
+export const createIconElementFromCssClass = (
+  iconClass,
+  iconSize = BUTTON_ICON_SIZES.MEDIUM,
+) => {
+  const iconEl = document.createElement('span');
+  iconEl.className = `icon ${iconSize} ${iconClass}`;
+  return iconEl;
+};
+
+/**
+ * Extracts media element (picture or video link) from a row.
+ * @param {HTMLElement | null} row
+ * @returns {HTMLPictureElement | HTMLAnchorElement | null}
+ */
+export const extractMediaElementFromRow = (row) => {
+  if (!row) return null;
+  const pictureElement = row.querySelector('picture');
+  if (pictureElement) {
+    moveInstrumentation(row, pictureElement);
+    return pictureElement;
+  }
+  const videoElement = row?.querySelector('a');
+  moveInstrumentation(row, videoElement);
+  if (videoElement) return videoElement;
+  return null;
 };
 
 /**

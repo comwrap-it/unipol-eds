@@ -12,6 +12,7 @@
               "name": "Blog Carousel Widget",
               "model": "blog-carousel-widget",
               "style": "blog-carousel-widget",
+              "classes": "blog-carousel-widget",
               "text-block": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Text Block",

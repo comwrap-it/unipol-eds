@@ -1,300 +1,76 @@
-/**
- * Insurance Product Card - Molecule
- *
- * Uses standard-button as an atom component for call-to-action buttons.
- * Uses primary-button as an atom component for call-to-action buttons.
- * This component can be used as a molecule within insurance-product-carousel.
- *
- * Preserves Universal Editor instrumentation for AEM EDS.
- */
-
 import {
-  createButtonFromRows,
-  extractInstrumentationAttributes,
-}
-  from '../atoms/buttons/standard-button/standard-button.js';
-import { createTagFromRows } from '../atoms/tag/tag.js';
-import { create3DiconsFromRows } from '../atoms/icons-3D/icons-3D.js';
-import { createOptimizedPicture } from '../../scripts/aem.js';
-import { moveInstrumentation } from '../../scripts/scripts.js';
+  createIconElementFromCssClass,
+  createTextElementFromRow,
+  extractMediaElementFromRow,
+} from '../../scripts/domHelpers.js';
+import { createTag } from '../atoms/tag/tag.js';
 
-let isStylesLoaded = false;
-async function ensureStylesLoaded() {
-  if (isStylesLoaded) return;
-  const { loadCSS } = await import('../../scripts/aem.js');
-  await Promise.all([
-    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`),
-    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`),
-    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/icons-3D/icons-3D.css`),
-  ]);
-  isStylesLoaded = true;
-}
+export const extractBlogCardDataFromRows = (rows) => {
+  const imageEl = extractMediaElementFromRow(rows[0]);
+  const titleRow = rows[1];
+  const durationIcon = rows[2]?.textContent.trim();
+  const durationTextRow = rows[3];
+  const label = rows[4]?.textContent.trim();
+  const category = rows[5]?.textContent.trim();
+  const type = rows[6]?.textContent.trim();
+  return {
+    imageEl,
+    titleRow,
+    durationIcon,
+    durationTextRow,
+    label,
+    category,
+    type,
+  };
+};
 
 /**
- * Decorates a card block element
- * @param {HTMLElement} block - The card block element
+ *
+ * @param {HTMLPictureElement} imageEl
+ * @param {HTMLElement} titleRow
+ * @param {string} durationIcon the css class for duration icon
+ * @param {HTMLElement} durationTextRow
+ * @param {string} label - Tag label (optional)
+ * @param {string} category - Category name (optional)
+ * @param {string} type - Tag type (optional)
+ * @param {boolean} isSlide - Whether the card is used in a slide context
  */
-export default async function decorateInsuranceProductCard(block) {
-  if (!block) return;
-
-  // Ensure CSS is loaded
-  await ensureStylesLoaded();
-
-  // Check if card is already decorated (has card-block class)
-  // This happens when Universal Editor re-renders after an edit
-  if (block.classList.contains('card-block')) {
-    // eslint-disable-next-line no-console
-    console.log('🔄 Card already decorated, skipping re-decoration');
-    return;
-  }
-
-  // Create card structure
+export const createBlogCard = (
+  imageEl,
+  titleRow,
+  durationIcon,
+  durationTextRow,
+  label,
+  category,
+  type,
+  isSlide = false,
+) => {
   const card = document.createElement('div');
-  card.className = 'insurance-product-card-container';
+  card.className = `blog-card ${isSlide ? 'swiper-slide' : ''}`;
 
-  // Get rows from block
-  let rows = Array.from(block.children);
-  const wrapper = block.querySelector('.default-content-wrapper');
-  if (wrapper) {
-    rows = Array.from(wrapper.children);
-  }
+  imageEl.classList.add('blog-card-image');
+  card.appendChild(imageEl);
 
-  const instrumentation = extractInstrumentationAttributes(rows[0]);
+  const tag = createTag(label, category, type);
+  tag.classList.add('blog-card-tag');
+  imageEl.appendChild(tag);
 
-  // eslint-disable-next-line no-console
-  console.log('🃏 Card Rows:', {
-    totalRows: rows.length,
-    blockHTML: block.outerHTML,
-    wrapperHTML: wrapper?.outerHTML || 'NO WRAPPER',
-    blockChildren: Array.from(block.children).map((c) => c.className),
-    rows: rows.map((r, i) => ({
-      index: i,
-      className: r.className,
-      html: r.outerHTML,
-      text: r.textContent?.trim(),
-      hasAueProp: r.querySelector('[data-aue-prop]')?.getAttribute('data-aue-prop'),
-    })),
-  });
-
-  // Extract card data
-  // Row 0:  Title
-  // Row 1:  Description
-  // Row 2:  Button label
-  // Row 3:  Button variant
-  // Row 4:  Button link
-  // Row 5:  Button size
-  // Row 6:  Button left icon
-  // Row 7:  Button right icon
-  // Row 8:  Note
-  // Row 9:  Tag Label
-  // Row 10: Tag Category
-  // Row 11: Tag Variant
-  // Row 12: Image
-  // Row 13: 3D Icon showVehicle
-  // Row 14: 3D Icon showProperty
-  // Row 15: 3D Icon showWelfare
-
-  // Card Image
-  const imageRow = rows[12];
-  if (imageRow) {
-    const cardImage = document.createElement('div');
-    cardImage.className = 'insurance-product-card-image';
-
-    const tagRows = rows.slice(9, 12);
-    const tagElement = createTagFromRows(tagRows);
-
-    if (tagElement && tagElement.classList) {
-      tagElement.classList.add('insurance-product-card-tag');
-    }
-
-    if (cardImage && tagElement && tagRows && tagRows.length > 0) {
-      cardImage.appendChild(tagElement);
-    }
-
-    const picture = imageRow.querySelector('picture');
-    if (picture) {
-      // Move existing picture (preserves instrumentation)
-      cardImage.appendChild(picture);
-    } else {
-      const img = imageRow.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(
-          img.src,
-          img.alt || '',
-          false,
-          [{ media: '(min-width: 769)', width: '316' }, { media: '(max-width: 768)', width: '240' }, { media: '(max-width: 392)', width: '343' }],
-        );
-        // Preserve instrumentation from original img
-        const newImg = optimizedPic.querySelector('img');
-        if (newImg && img) {
-          moveInstrumentation(img, newImg);
-        }
-        cardImage.appendChild(optimizedPic);
-      } else {
-        // Try to get image from link
-        const link = imageRow.querySelector('a');
-        if (link && link.href) {
-          const optimizedPic = createOptimizedPicture(
-            link.href,
-            link.textContent?.trim() || '',
-            false,
-            [{ media: '(min-width: 769)', width: '316' }, { media: '(max-width: 768)', width: '240' }, { media: '(max-width: 392)', width: '343' }],
-          );
-          // Preserve instrumentation from link
-          const newImg = optimizedPic.querySelector('img');
-          if (newImg && link) {
-            moveInstrumentation(link, newImg);
-          }
-          cardImage.appendChild(optimizedPic);
-        }
-      }
-    }
-
-    if (cardImage.children.length > 0) {
-      card.appendChild(cardImage);
-    }
-  }
-
-  // Card Text Content
-  const cardTextContent = document.createElement('div');
-  cardTextContent.className = 'insurance-product-card-text';
-
-  // Card Title - preserve original element and instrumentation
-  const titleRow = rows[0];
-  if (titleRow) {
-    // Try to preserve existing heading element
-    const existingHeading = titleRow.querySelector('h1, h2, h3, h4, h5, h6');
-    if (existingHeading) {
-      // Move existing heading and preserve instrumentation
-      existingHeading.className = 'title';
-      moveInstrumentation(titleRow, existingHeading);
-      cardTextContent.appendChild(existingHeading);
-    } else {
-      // Create new heading but preserve instrumentation
-      const title = document.createElement('h3');
-      title.className = 'title';
-      // Clone child nodes to preserve richtext instrumentation
-      while (titleRow.firstChild) {
-        title.appendChild(titleRow.firstChild);
-      }
-      // Move instrumentation from row to title
-      moveInstrumentation(titleRow, title);
-      if (title.textContent?.trim()) {
-        cardTextContent.appendChild(title);
-      }
-    }
-  }
-
-  // Card Subtitle - preserve original element and instrumentation
-  const subtitleRow = rows[1];
-  // eslint-disable-next-line no-console
-  console.log('📝 Card Subtitle Row:', {
-    exists: !!subtitleRow,
-    hasContent: subtitleRow?.textContent?.trim(),
-    html: subtitleRow?.outerHTML?.substring(0, 150),
-  });
-
-  // ALWAYS create subtitle element (even if row doesn't exist or is empty)
-  // This ensures subtitle is always visible in the DOM for editing
-  if (subtitleRow) {
-    // Try to preserve existing paragraph
-    const existingPara = subtitleRow.querySelector('p');
-    if (existingPara) {
-      existingPara.className = 'description';
-      moveInstrumentation(subtitleRow, existingPara);
-      cardTextContent.appendChild(existingPara);
-    } else if (subtitleRow.textContent?.trim()) {
-      // Create new paragraph but preserve instrumentation
-      const subtitle = document.createElement('p');
-      subtitle.className = 'description';
-      // Clone child nodes to preserve richtext instrumentation
-      while (subtitleRow.firstChild) {
-        subtitle.appendChild(subtitleRow.firstChild);
-      }
-      // Move instrumentation from row to subtitle
-      moveInstrumentation(subtitleRow, subtitle);
-      cardTextContent.appendChild(subtitle);
-    }
-  }
-
-  // Card Content
   const cardContent = document.createElement('div');
-  cardContent.className = 'insurance-product-card-content';
+  cardContent.className = 'blog-card-content';
 
-  cardContent.appendChild(cardTextContent);
+  const titleEl = createTextElementFromRow(titleRow, 'blog-card-title', 'h3');
+  cardContent.appendChild(titleEl);
 
-  // Card Button - Rows 2-7 (optional)
-  // Universal Editor creates separate rows for each button field
-  const buttonRows = rows.slice(2, 8);
-  const buttonElement = createButtonFromRows(buttonRows);
+  const durationEl = document.createElement('div');
+  durationEl.className = 'blog-card-duration';
 
-  if (buttonElement && buttonElement.children.length > 0) {
-    const buttonsContainer = document.createElement('div');
-    buttonsContainer.className = 'button-subdescription';
-
-    buttonsContainer.appendChild(buttonElement);
-
-    const note = rows[8];
-    if (note) {
-      // Try to preserve existing paragraph
-      const existingPara = note.querySelector('p');
-      if (existingPara) {
-        existingPara.className = 'subdescription';
-        moveInstrumentation(note, existingPara);
-        buttonsContainer.appendChild(existingPara);
-      } else if (note.textContent?.trim()) {
-        // Create new paragraph but preserve instrumentation
-        const noteFromHTML = document.createElement('p');
-        noteFromHTML.className = 'subdescription';
-        // Clone child nodes to preserve richtext instrumentation
-        while (note.firstChild) {
-          noteFromHTML.appendChild(note.firstChild);
-        }
-        // Move instrumentation from row to note
-        moveInstrumentation(note, noteFromHTML);
-        buttonsContainer.appendChild(noteFromHTML);
-      }
-    }
-
-    if (buttonsContainer.children.length > 0) {
-      cardContent.appendChild(buttonsContainer);
-    }
-  }
-
-  // Card 3D-icons - Rows 13-15
-  const iconsRows = rows.slice(13, 16);
-  const iconsElement = create3DiconsFromRows(iconsRows);
-
-  if (iconsElement && iconsElement.children.length > 0) {
-    const imgVector = document.createElement('div');
-    imgVector.className = 'img-vector';
-    imgVector.appendChild(iconsElement);
-    cardContent.appendChild(imgVector);
-  }
-
-  // eslint-disable-next-line no-console
-  console.log('📦 Card Content Children:', {
-    count: cardContent.children.length,
-    children: Array.from(cardContent.children).map((c) => c.className),
-  });
-
-  // Append card content
-  if (cardContent.children.length > 0) {
-    card.appendChild(cardContent);
-  }
-
-  // Restore instrumentation to button element
-  Object.entries(instrumentation).forEach(([name, value]) => {
-    card.setAttribute(name, value);
-  });
-
-  // Preserve blockName if present (needed for loadBlock)
-  if (block.dataset.blockName) {
-    card.dataset.blockName = block.dataset.blockName;
-  }
-
-  // Replace block content with card
-  // Preserve block class and instrumentation
-  card.classList.add('card-block');
-  block.replaceWith(card);
-}
+  const icon = createIconElementFromCssClass(durationIcon, 'large');
+  durationEl.appendChild(icon);
+  const durationTextEl = createTextElementFromRow(
+    durationTextRow,
+    'blog-card-duration-text',
+    'p',
+  );
+  durationEl.appendChild(durationTextEl);
+  cardContent.appendChild(durationEl);
+};

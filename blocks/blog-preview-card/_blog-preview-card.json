@@ -21,36 +21,41 @@
       "id": "blog-preview-card",
       "fields": [
         {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Card Image",
+          "required": true
+        },
+        {
           "component": "text",
           "name": "title",
           "label": "Titolo",
-          "maxlength": 15,
-          "required": true
+          "required": true,
+          "validation": {
+            "maxLength": 80
+          }
         },
         {
-          "component": "text",
-          "name": "description",
-          "label": "Descrizione",
-          "maxlength": 130,
-          "required": true
-        },
-        {
-          "component": "container",
-          "name": "button-container",
-          "label": "Configurazione Bottone",
-          "collapsible": true,
-          "fields": [
+          "component": "select",
+          "name": "duration-icon",
+          "label": "Icona Durata",
+          "required": true,
+          "value": "un-icon-newspaper",
+          "options": [
             {
-              "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
+              "value": "un-icon-newspaper",
+              "label": "Newspaper"
+            },
+            {
+              "value": "un-icon-headphones",
+              "label": "Headphones"
+            },
+            {
+              "value": "un-icon-play-circle",
+              "label": "Play Circle"
             }
           ]
-        },
-        {
-          "component": "text",
-          "name": "note",
-          "label": "Note",
-          "maxlength": 60,
-          "required": true
         },
         {
           "component": "container",
@@ -60,26 +65,6 @@
           "fields": [
             {
               "...": "../atoms/tag/_tag.json#/models/tag/fields"
-            }
-          ]
-        },
-        {
-          "component": "reference",
-          "valueType": "string",
-          "name": "image",
-          "label": "Image",
-          "multi": false,
-          "required": true
-        },
-        {
-          "component": "container",
-          "name": "icons-3D",
-          "label": "Configurazione Icone 3D",
-          "collapsible": true,
-          "required": true,
-          "fields": [
-            {
-              "...": "../atoms/icons-3D/_icons-3D.json#/models/icons-3D/fields"
             }
           ]
         }
