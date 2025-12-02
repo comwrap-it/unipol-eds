@@ -1,0 +1,57 @@
+{
+  "definitions": [
+    {
+      "title": "Blog Carousel Widget",
+      "id": "blog-carousel-widget",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/section/v1/section",
+            "template": {
+              "filter": "blog-carousel",
+              "name": "Blog Carousel Widget",
+              "model": "blog-carousel-widget",
+              "style": "blog-carousel-widget",
+              "text-block": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Text Block",
+                "model": "text-block"
+              },
+              "blog-carousel": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Blog Carousel",
+                "filter": "blog-carousel",
+                "blog-preview-card": {
+                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                  "name": "Blog Preview Card",
+                  "filter": "blog-preview-card",
+                  "model": "blog-preview-card"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "blog-carousel-widget",
+      "fields": [
+        {
+          "component": "text",
+          "name": "blog-carousel-widget-name",
+          "label": "Nome sezione Blog Carousel Widget"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "blog-carousel-widget",
+      "components": [
+        "blog-carousel"
+      ]
+    }
+  ]
+}

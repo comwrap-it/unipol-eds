@@ -1,0 +1,50 @@
+.blog-carousel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--Carousel-Widget-Gap-D-Tl, 3rem);
+
+    &.swiper {
+        overflow: visible;
+    }
+
+    .blog-carousel {
+        display: flex;
+        width: 82rem;
+        align-items: stretch;
+        gap: var(--Carousel-Blog-Gap, 1rem);
+    }
+}
+
+/* Tablet Landscape */
+@media (768px <= width < 1440px) {
+    .blog-carousel-container {
+        width: 76rem;
+
+        & .blog-carousel {
+            width: 76rem;
+        }
+    }
+}
+
+/* Tablet Portrait */
+@media (393px <= width < 768px) {
+    .blog-carousel-container {
+        & .blog-carousel {
+            width: 46rem;
+            gap: var(--Carousel-Widget-Gap-M-Tp, 2.5rem);
+        }
+    }
+}
+
+/* Mobile */
+@media (width < 393px) {
+    .blog-carousel-container {
+        & .blog-carousel {
+            display: flex;
+            width: 21.4375rem;
+            gap: var(--Carousel-Widget-Gap-M-Tp, 2.5rem);
+
+        }
+    }
+}
