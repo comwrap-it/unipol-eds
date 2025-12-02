@@ -485,7 +485,7 @@
     ]
   },
   {
-    "id": "header-navigation-pill-box-item",
+    "id": "header-navigation-pill-and-box-item",
     "fields": [
       {
         "component": "tab",

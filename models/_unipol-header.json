@@ -17,19 +17,19 @@
                 "name": "Header Logo",
                 "model": "header-logo"
               },
-              "header-navigation-pill-box": {
+              "header-navigation-pill-and-box": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Header navigation pill box",
-                "filter": "header-navigation-pill-box",
-                "header-navigation-pill-box-item-1": {
+                "name": "Header navigation pill and box",
+                "filter": "header-navigation-pill-and-box",
+                "header-navigation-pill-and-box-item-1": {
                   "sling:resourceType": "core/franklin/components/block/v1/block",
-                  "name": "Header navigation pill box item",
-                  "model": "header-navigation-pill-box-item"
+                  "name": "Header navigation pill and box item",
+                  "model": "header-navigation-pill-and-box-item"
                 },
-                "header-navigation-pill-box-item-2": {
+                "header-navigation-pill-and-box-item-2": {
                   "sling:resourceType": "core/franklin/components/block/v1/block",
-                  "name": "Header navigation pill box item",
-                  "model": "header-navigation-pill-box-item"
+                  "name": "Header navigation pill and box item",
+                  "model": "header-navigation-pill-and-box-item"
                 }
               },
               "header-buttons": {
@@ -75,7 +75,7 @@
       "id": "unipol-header",
       "components": [
         "header-logo",
-        "header-navigation-pill-box",
+        "header-navigation-pill-and-box",
         "header-buttons"
       ]
     }

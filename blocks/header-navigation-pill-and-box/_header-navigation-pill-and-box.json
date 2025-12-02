@@ -1,30 +1,30 @@
 {
   "definitions": [
     {
-      "title": "Header navigation pill box",
-      "id": "header-navigation-pill-box",
+      "title": "Header navigation pill and box",
+      "id": "header-navigation-pill-and-box",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
-              "name": "Header navigation pill box",
-              "filter": "header-navigation-pill-box"
+              "name": "Header navigation pill and box",
+              "filter": "header-navigation-pill-and-box"
             }
           }
         }
       }
     },
     {
-      "title": "Header navigation pill box item",
-      "id": "header-navigation-pill-box-item",
+      "title": "Header navigation pill and box item",
+      "id": "header-navigation-pill-and-box-item",
       "plugins": {
         "xwalk": {
           "page": {
             "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
-              "name": "Header navigation pill box item",
-              "model": "header-navigation-pill-box-item"
+              "name": "Header navigation pill and box item",
+              "model": "header-navigation-pill-and-box-item"
             }
           }
         }
@@ -33,7 +33,7 @@
   ],
   "models": [
     {
-      "id": "header-navigation-pill-box-item",
+      "id": "header-navigation-pill-and-box-item",
       "fields": [
         {
           "component": "tab",
@@ -64,9 +64,9 @@
   ],
   "filters": [
     {
-      "id": "header-navigation-pill-box",
+      "id": "header-navigation-pill-and-box",
       "components": [
-        "header-navigation-pill-box-item"
+        "header-navigation-pill-and-box-item"
       ]
     }
   ]
