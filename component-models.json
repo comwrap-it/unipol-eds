@@ -408,7 +408,7 @@
           {
             "component": "select",
             "name": "navigationPillTypology",
-            "value": "custom",
+            "default": "custom",
             "label": "Tipologia Destinazione",
             "options": [
               {
@@ -2021,7 +2021,7 @@
           {
             "component": "select",
             "name": "navigationPillTypology",
-            "value": "custom",
+            "default": "custom",
             "label": "Tipologia Destinazione",
             "options": [
               {
@@ -3878,7 +3878,7 @@
       {
         "component": "select",
         "name": "navigationPillTypology",
-        "value": "custom",
+        "default": "custom",
         "label": "Tipologia Destinazione",
         "options": [
           {

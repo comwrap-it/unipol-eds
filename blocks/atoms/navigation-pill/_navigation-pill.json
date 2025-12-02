@@ -23,7 +23,7 @@
         {
           "component": "select",
           "name": "navigationPillTypology",
-          "value": "custom",
+          "default": "custom",
           "label": "Tipologia Destinazione",
           "options": [
             { "name": "Custom", "value": "custom" },
@@ -35,10 +35,7 @@
         },
         {
           "condition": {
-            "===": [
-              { "var": "navigationPillTypology" },
-              "custom"
-            ]
+            "===": [{ "var": "navigationPillTypology" }, "custom"]
           },
           "component": "text",
           "name": "navigationPillCustomField",
