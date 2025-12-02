@@ -526,8 +526,7 @@
             ]
           },
           {
-            "component": "reference",
-            "valueType": "string",
+            "component": "text-input",
             "name": "navigationPillCustomField",
             "label": "navigationPillCustomField Label",
             "condition": {
@@ -2050,8 +2049,7 @@
             ]
           },
           {
-            "component": "reference",
-            "valueType": "string",
+            "component": "text-input",
             "name": "navigationPillCustomField",
             "label": "navigationPillCustomField Label",
             "condition": {
@@ -3909,8 +3907,7 @@
         ]
       },
       {
-        "component": "reference",
-        "valueType": "string",
+        "component": "text-input",
         "name": "navigationPillCustomField",
         "label": "navigationPillCustomField Label",
         "condition": {

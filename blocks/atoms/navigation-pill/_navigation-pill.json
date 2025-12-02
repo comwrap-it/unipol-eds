@@ -35,12 +35,14 @@
           ]
         },
         {
-          "component": "reference",
-          "valueType": "string",
+          "component": "text-input",
           "name": "navigationPillCustomField",
           "label": "navigationPillCustomField Label",
           "condition": {
-            "===": [{"var": "navigationPillTypology"}, "custom"]
+            "===": [
+              { "var": "navigationPillTypology" },
+              "custom"
+            ]
           }
         },
         {
