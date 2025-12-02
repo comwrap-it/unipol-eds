@@ -22,7 +22,7 @@
       "fields": [
         {
           "component": "select",
-          "name": "cta1_Type",
+          "name": "cta1",
           "value": "primary",
           "label": "First CTA Type",
           "description": "'Primary' will render a filled blue CTA, 'Secondary' will render a white CTA with a black border and black text, 'Tertiary' will render a filled black CTA, and 'Custom' will render a CTA with a custom hex color background.",
@@ -40,7 +40,7 @@
         },
         {
           "condition": {
-            "===": [{ "var": "cta1_Type" }, "custom"]
+            "===": [{ "var": "cta1" }, "custom"]
           },
           "component": "select",
           "name": "cta1_customBgColor",
@@ -63,7 +63,7 @@
           "condition": {
             "and": [
               { "===": [{ "var": "cta1_customBgColor" }, "custom-hexcode"] },
-              { "===": [{ "var": "cta1_Type" }, "custom"] }
+              { "===": [{ "var": "cta1" }, "custom"] }
             ]
           },
           "component": "text",
