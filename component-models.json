@@ -176,6 +176,12 @@
         "component": "text",
         "name": "insurance-product-carousel-widget-name",
         "label": "Nome sezione Insurance Product Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "insurance-product-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
       }
     ]
   },
@@ -1008,6 +1014,12 @@
         "component": "text",
         "name": "insurance-product-carousel-widget-name",
         "label": "Nome sezione Insurance Product Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "insurance-product-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
       }
     ]
   },
