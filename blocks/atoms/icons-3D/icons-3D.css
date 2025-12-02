@@ -1,20 +1,20 @@
 .icons-3d {
     display: flex;
     justify-content: center;
-    width: 260px;
-    height: 83px;
+    width: 16.25rem;
+    height: 5.1875rem;
 }
 
 .icons-3d-icon {
     display: flex;
-    width: var(--Card-Insurance-Product-Card-Bg-Icon-Size, 80px);
-    height: 80px;
+    width: var(--Card-Insurance-Product-Card-Bg-Icon-Size, 5rem);
+    height: 5rem;
     justify-content: center;
     align-items: center;
-    gap: 10px;
+    gap: 0.625rem;
     flex-shrink: 0;
     aspect-ratio: 1/1;
-    border-radius: var(--Radius-9999, 9999px);
+    border-radius: var(--Radius-9999, 624.938rem);
 }
 
 .icons-3d-icon.icon-mobility {
@@ -31,8 +31,8 @@
 
 .icons-3d-icon .icon-img {
     display: flex;
-    width: var(--Card-Insurance-Product-Card-Icon-Size, 48px);
-    height: 48px;
+    width: var(--Card-Insurance-Product-Card-Icon-Size, 3rem);
+    height: 3rem;
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
@@ -40,36 +40,36 @@
 }
 
 /* Tablet Portrait */
-@media (393px <= width < 768px) {
+@media (768px <= width < 1200px) {
     .icons-3d {
-        width: 208px;
-        height: 64px;
+        width: 13rem;
+        height: 4rem;
     }
 
     .icons-3d-icon {
-        width: var(--Card-Insurance-Product-Card-Bg-Icon-Size-Tp, 64px);
-        height: 64px;
-        gap: 8px;
+        width: var(--Card-Insurance-Product-Card-Bg-Icon-Size-Tp, 4rem);
+        height: 4rem;
+        gap: 0.5rem;
         border-radius: 7999.221px;
     }
 
     .icons-3d-icon .icon-img {
-        width: 32px;
-        height: 32px;
+        width: 2rem;
+        height: 2rem;
     }
 }
 
 /* Mobile */
-@media (width < 393px) {
+@media (width < 768px) {
     .icons-3d {
-        width: 258px;
-        height: 80px;
+        width: 16.125rem;
+        height: 5rem;
     }
 
     .icons-3d-icon {
-        width: var(--Card-Insurance-Product-Card-Bg-Icon-Size, 80px);
-        height: 80px;
-        gap: 10px;
+        width: var(--Card-Insurance-Product-Card-Bg-Icon-Size, 5rem);
+        height: 5rem;
+        gap: 0.625rem;
         flex-shrink: 0;
         aspect-ratio: 1/1;
         border-radius: var(--Card-Insurance-Product-Card-Radius-Icon, 9999px);

@@ -117,22 +117,22 @@
     }
 }
 
-/* Tablet Landscape */
-@media (768px <= width < 1440px) {
+/* Tablet Portrait */
+@media (768px <= width < 1200px) {
     .insurance-product-card-wrapper {
         &.swiper-slide {
-            width: 18.25rem;
+            width: 15rem;
         }
 
         & .insurance-product-card-container {
-            width: 18.25rem;
+            width: 15rem;
 
             & .insurance-product-card-image {
                 height: 10.26575rem;
                 aspect-ratio: 292.00/164.25;
 
                 & img, picture {
-                    width: 18.25rem;
+                    width: 15rem;
                     height: 10.26575rem;
                 }
             }
@@ -140,45 +140,23 @@
             & .insurance-product-card-content {
                 padding: 0 var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem);
 
-                & .img-vector {
-                    width: 16.25rem;
-                    height: 5.1875rem;
-                    position: absolute;
-                    left: 1rem;
-                    top: -2.6095rem;
+                & .insurance-product-card-text {
+                    padding-top: 3rem;
+
+                    & .title {
+                        font-size: var(--Size-20, 1.25rem);
+                        font-weight: 600;
+                        line-height: 130%;
+                        letter-spacing: -0.0125rem;
+                    }
                 }
-            }
-        }
-    }
-}
-
-/* Tablet Portrait */
-@media (393px <= width < 768px) {
-    .insurance-product-card-wrapper {
-        width: 15rem;
-
-        .insurance-product-card-container {
-            width: 15rem;
-
-            & .insurance-product-card-image {
-                height: 8.43763rem;
-                aspect-ratio: 240.00/135.00;
-
-                & img, picture {
-                    width: 15rem;
-                    height: 8.43763rem;
-                }
-            }
-
-            & .insurance-product-card-content {
-                padding: 0 var(--Card-Insurance-Product-Card-Horizontal-Padding-M, 1rem) var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Horizontal-Padding-M, 1rem);
 
                 & .img-vector {
                     width: 13rem;
                     height: 4rem;
                     position: absolute;
                     left: 1rem;
-                    top: -1.96931rem;
+                    top: -1.98456rem;
                 }
             }
         }
@@ -186,7 +164,7 @@
 }
 
 /* Mobile */
-@media (width < 393px) {
+@media (width < 768px) {
     .insurance-product-card-wrapper {
         width: 21.4375rem;
 
@@ -212,10 +190,15 @@
                     width: 16.125rem;
                     height: 5rem;
                     position: absolute;
-                    right: 2.625rem;
-                    top: -2.528rem;
+                    right: 2.6875rem;
+                    left: auto;
+                    top: -2.48081rem;
                 }
             }
+        }
+
+        &.hidden {
+            display: none;
         }
     }
 }
