@@ -125,7 +125,7 @@ async function handleInit(event) {
 }
 
 function attachEventInit(containers) {
-  containers.forEach((container) => container?.addEventListener('aue:initialized', async (event) => {
+  containers.forEach((container) => container?.addEventListener('load', async (event) => {
     // eslint-disable-next-line no-unused-vars
     const applied = await handleInit(event);
   }));
