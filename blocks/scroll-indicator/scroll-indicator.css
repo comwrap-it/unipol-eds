@@ -29,7 +29,7 @@
     }
 }
 
-@media (width < 768px) {
+@media (width <= 768px) {
     .scroll-indicator {
         width: 100%;
         justify-content: flex-start;

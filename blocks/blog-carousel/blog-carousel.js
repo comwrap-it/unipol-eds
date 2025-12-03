@@ -17,10 +17,9 @@
  */
 
 import loadSwiper, { handleSlideChange } from '../../scripts/lib/utils.js';
-import { moveInstrumentation } from '../../scripts/scripts.js';
+import mockBlogCards from '../../scripts/mock.js';
 import {
   createBlogCard,
-  extractBlogCardDataFromRows,
 } from '../blog-preview-card/blog-preview-card.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
 
@@ -29,9 +28,7 @@ async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
   await Promise.all([
-    loadCSS(
-      `${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`,
-    ),
+    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`),
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/blog-preview-card/blog-preview-card.css`,
     ),
@@ -59,22 +56,27 @@ const initSwiper = (
       prevEl: leftIconButton || '.swiper-button-prev',
       addIcons: false,
     },
-    slidesPerView: 1.2,
+    slidesPerView: 1.3,
     allowTouchMove: true,
     // Optional accessibility tweaks
     a11y: { enabled: true },
+    slidesOffsetBefore: 0,
+    slidesOffsetAfter: 48,
     breakpoints: {
       // width >= 1312
       1312: {
-        slidesPerView: 3.2,
+        slidesPerView: 3.3,
         allowTouchMove: false,
       },
       // when window width is >= 768px
       768: {
-        slidesPerView: 2.2,
+        slidesPerView: 2.3,
         allowTouchMove: false,
       },
     },
+    touchStartPreventDefault: false,
+    resistanceRatio: 0.85,
+    watchOverflow: true,
   });
 
   return swiper;
@@ -112,29 +114,27 @@ export default async function decorate(block) {
 
   const isThereMultipleCards = rows.length > 1;
 
-  const cardPromises = rows.map(async (row) => {
-    const childrenRows = Array.from(row.children);
+  const cardsData = await mockBlogCards();
+  const cardPromises = cardsData.map(async (cardData) => {
     const {
-      imageEl,
-      titleRow,
+      image,
+      title,
       durationIcon,
-      durationTextRow,
-      label,
-      category,
-      type,
-    } = extractBlogCardDataFromRows(childrenRows);
+      durationText,
+      tagLabel,
+      tagCategory,
+      tagType,
+    } = cardData;
     const card = await createBlogCard(
-      imageEl,
-      titleRow,
+      image,
+      title,
       durationIcon,
-      durationTextRow,
-      label,
-      category,
-      type,
+      durationText,
+      tagLabel,
+      tagCategory,
+      tagType,
       true, // isSlide
     );
-    // Move instrumentation from row to card
-    moveInstrumentation(row, card);
     track.appendChild(card);
   });
   await Promise.all(cardPromises);

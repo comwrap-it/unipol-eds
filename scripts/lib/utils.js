@@ -1,3 +1,39 @@
+// Utils to include libs
+
+// add swiper from CDN
+export default function loadSwiper() {
+  return new Promise((resolve, reject) => {
+    // Check if Swiper is already loaded
+    if (typeof window.Swiper !== 'undefined') {
+      resolve(window.Swiper);
+      return;
+    }
+
+    // Then load JavaScript
+    const scriptRule = document.createElement('script');
+    scriptRule.setAttribute('type', 'text/javascript');
+    scriptRule.src = 'https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js';
+
+    scriptRule.onload = () => {
+      // Give it a moment for the global Swiper to be available
+      setTimeout(() => {
+        if (typeof window.Swiper !== 'undefined') {
+          resolve(window.Swiper);
+        } else {
+          reject(new Error('Swiper not found on window after CDN load'));
+        }
+      }, 100);
+    };
+
+    scriptRule.onerror = () => {
+      reject(new Error('Failed to load Swiper script'));
+    };
+
+    document.head.append(scriptRule);
+  });
+}
+
+// utils functions for swiper carousels
 /**
  * @typedef {Object} DotState
  * @property {boolean} isBeginning - Whether the carousel is at the beginning
@@ -5,13 +41,9 @@
  */
 
 /**
- * @typedef {function(DotState): void} SetExpandedDot
- */
-
-/**
  *
  * @param {swiperInstance} the swiper instance
- * @param {SetExpandedDot} setExpandedDot function returned from createScrollIndicator
+ * @param {function(DotState): void} setExpandedDot function returned from createScrollIndicator
  * @param {HTMLElement} leftIconButton the left navigation button
  * @param {HTMLElement} rightIconButton the right navigation button
  */
@@ -46,37 +78,3 @@ export const handleSlideChange = (
     onSlideChange();
   });
 };
-
-// Utils to include libs
-// add delayed functionality here
-export default function loadSwiper() {
-  return new Promise((resolve, reject) => {
-    // Check if Swiper is already loaded
-    if (typeof window.Swiper !== 'undefined') {
-      resolve(window.Swiper);
-      return;
-    }
-
-    // Then load JavaScript
-    const scriptRule = document.createElement('script');
-    scriptRule.setAttribute('type', 'text/javascript');
-    scriptRule.src = 'https://cdn.jsdelivr.net/npm/swiper@12/swiper-bundle.min.js';
-
-    scriptRule.onload = () => {
-      // Give it a moment for the global Swiper to be available
-      setTimeout(() => {
-        if (typeof window.Swiper !== 'undefined') {
-          resolve(window.Swiper);
-        } else {
-          reject(new Error('Swiper not found on window after CDN load'));
-        }
-      }, 100);
-    };
-
-    scriptRule.onerror = () => {
-      reject(new Error('Failed to load Swiper script'));
-    };
-
-    document.head.append(scriptRule);
-  });
-}

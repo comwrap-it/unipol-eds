@@ -1,10 +1,15 @@
+import { createOptimizedPicture } from '../../scripts/aem.js';
 import {
   createIconElementFromCssClass,
-  createTextElementFromRow,
   extractMediaElementFromRow,
 } from '../../scripts/domHelpers.js';
 import { createTag } from '../atoms/tag/tag.js';
 
+/**
+ *
+ * @param {Array<HTMLElement>} rows array of rows that make up a blog preview card
+ * @returns {Object} extracted data from the rows
+ */
 export const extractBlogCardDataFromRows = (rows) => {
   const imageEl = extractMediaElementFromRow(rows[0]);
   const titleRow = rows[1];
@@ -26,20 +31,20 @@ export const extractBlogCardDataFromRows = (rows) => {
 
 /**
  *
- * @param {HTMLPictureElement} imageEl
- * @param {HTMLElement} titleRow
+ * @param {string} imagePath
+ * @param {string} title
  * @param {string} durationIcon the css class for duration icon
- * @param {HTMLElement} durationTextRow
+ * @param {string} durationText
  * @param {string} label - Tag label (optional)
  * @param {string} category - Category name (optional)
  * @param {string} type - Tag type (optional)
  * @param {boolean} isSlide - Whether the card is used in a slide context
  */
 export const createBlogCard = (
-  imageEl,
-  titleRow,
+  imagePath,
+  title,
   durationIcon,
-  durationTextRow,
+  durationText,
   label,
   category,
   type,
@@ -48,17 +53,19 @@ export const createBlogCard = (
   const card = document.createElement('div');
   card.className = `blog-card ${isSlide ? 'swiper-slide' : ''}`;
 
-  imageEl.classList.add('blog-card-image');
-  card.appendChild(imageEl);
-
+  const picture = createOptimizedPicture(imagePath, `Blog image: ${title}`);
+  picture.classList.add('blog-card-image');
+  card.appendChild(picture);
   const tag = createTag(label, category, type);
   tag.classList.add('blog-card-tag');
-  imageEl.appendChild(tag);
+  picture.appendChild(tag);
 
   const cardContent = document.createElement('div');
   cardContent.className = 'blog-card-content';
 
-  const titleEl = createTextElementFromRow(titleRow, 'blog-card-title', 'h3');
+  const titleEl = document.createElement('h3');
+  titleEl.className = 'blog-card-title';
+  titleEl.textContent = title;
   cardContent.appendChild(titleEl);
 
   const durationEl = document.createElement('div');
@@ -66,11 +73,9 @@ export const createBlogCard = (
 
   const icon = createIconElementFromCssClass(durationIcon, 'large');
   durationEl.appendChild(icon);
-  const durationTextEl = createTextElementFromRow(
-    durationTextRow,
-    'blog-card-duration-text',
-    'p',
-  );
+  const durationTextEl = document.createElement('p');
+  durationTextEl.className = 'blog-card-duration-text';
+  durationTextEl.textContent = durationText;
   durationEl.appendChild(durationTextEl);
   cardContent.appendChild(durationEl);
 
