@@ -119,6 +119,20 @@ function attachEventListners(main) {
 
 attachEventListners(document.querySelector('main'));
 
+async function handleInit(event) {
+  // eslint-disable-next-line no-console
+  console.info('INIT INTERCEPTED: ', event);
+}
+
+function attachEventInit(containers) {
+  containers.forEach((container) => container?.addEventListener('aue:initialized', async (event) => {
+    // eslint-disable-next-line no-unused-vars
+    const applied = await handleInit(event);
+  }));
+}
+
+attachEventInit(document.querySelectorAll('.insurance-product-carousel-container'));
+
 // decorate rich text
 // this has to happen after decorateMain(), and everythime decorateBlocks() is called
 decorateRichtext();
