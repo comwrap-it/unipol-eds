@@ -1,7 +1,7 @@
 import loadSwiper from '../../scripts/lib/utils.js';
 
 export default async function handleInsuranceProductCarouselWidget() {
-  const block = document.querySelector('.insurance-product-carousel-widget');
+  const block = document.querySelector('.insurance-product-carousel-container');
 
   const rows = [...block.children];
   const darkThemeText = rows[1]?.textContent?.trim().toLowerCase();
