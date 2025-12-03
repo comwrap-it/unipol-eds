@@ -47,12 +47,5 @@
       ]
     }
   ],
-  "filters": [
-    {
-      "id": "insurance-product-carousel-widget",
-      "components": [
-        "insurance-product-carousel"
-      ]
-    }
-  ]
+  "filters": []
 }

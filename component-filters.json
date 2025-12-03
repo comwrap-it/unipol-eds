@@ -37,12 +37,6 @@
     "components": []
   },
   {
-    "id": "insurance-product-carousel-widget",
-    "components": [
-      "insurance-product-carousel"
-    ]
-  },
-  {
     "id": "cards",
     "components": [
       "card"
@@ -87,12 +81,6 @@
     "id": "hero-widget",
     "components": [
       "full-screen-hero-carousel"
-    ]
-  },
-  {
-    "id": "insurance-product-carousel-widget",
-    "components": [
-      "insurance-product-carousel"
     ]
   },
   {
