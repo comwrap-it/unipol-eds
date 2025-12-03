@@ -58,6 +58,12 @@
           ]
         },
         {
+          "component": "text",
+          "name": "duration-text",
+          "label": "Testo Durata",
+          "required": true
+        },
+        {
           "component": "container",
           "name": "tag",
           "label": "Configurazione Tag",
