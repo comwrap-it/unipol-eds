@@ -179,9 +179,8 @@ export default async function decorate(block) {
 
   // Preserve block class
   carousel.classList.add('block', 'insurance-product-carousel-block');
-  moveInstrumentation(block, carousel);
   // Replace block with carousel
-  block.replaceWith(carousel);
+  block.appendChild(carousel);
 
   if (mq.matches) {
     const handleInsuranceProductCarouselWidget = await import('../insurance-product-carousel-widget/insurance-product-carousel-widget.js');
