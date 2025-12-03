@@ -1,64 +1,63 @@
 import {
   createTextElementFromRow,
   extractBooleanValueFromRow,
-} from '../../scripts/domHelpers.js';
-import { moveInstrumentation } from '../../scripts/scripts.js';
+} from "../../scripts/domHelpers.js";
+import { moveInstrumentation } from "../../scripts/scripts.js";
 import {
   BUTTON_ICON_SIZES,
   BUTTON_VARIANTS,
   createButton,
-} from '../atoms/buttons/standard-button/standard-button.js';
+} from "../atoms/buttons/standard-button/standard-button.js";
 
 /**
  * Sets up the Hero container with background media (image or video).
  * @param {HTMLElement} heroBackground - The media element (video or picture)
  * @param {boolean} isVideoBackground
+ * @param {boolean} isCarousel
  * @returns {HTMLDivElement}
  */
-const setupHeroWithBg = (heroBackground, isVideoBackground = false) => {
-  if (!heroBackground) return null;
-
-  const hero = document.createElement('div');
-  hero.className = 'hero swiper-slide';
+const setupHeroWithBg = (heroBackground, isVideoBackground = false, isCarousel = false) => {
+  const hero = document.createElement("div");
+  hero.className = `hero${isCarousel ? " swiper-slide" : ""}`;
   // Background media
-  if (!isVideoBackground) {
+  if (!isVideoBackground && heroBackground) {
     const pictureBg = heroBackground.cloneNode(true);
     moveInstrumentation(heroBackground, pictureBg);
-    pictureBg.className = 'hero-bg';
-    pictureBg.setAttribute('aria-hidden', 'true');
-    pictureBg.fetchPriority = 'high';
+    pictureBg.className = "hero-bg";
+    pictureBg.setAttribute("aria-hidden", "true");
+    pictureBg.fetchPriority = "high";
     hero.appendChild(pictureBg);
-  } else {
+  } else if (heroBackground) {
     const videoPath = heroBackground.href;
-    const videoBg = document.createElement('video');
+    const videoBg = document.createElement("video");
     videoBg.src = videoPath;
     moveInstrumentation(heroBackground, videoBg);
-    videoBg.className = 'hero-bg';
-    videoBg.setAttribute('aria-hidden', 'true');
+    videoBg.className = "hero-bg";
+    videoBg.setAttribute("aria-hidden", "true");
     videoBg.autoplay = true;
     videoBg.muted = true;
     videoBg.loop = true;
     videoBg.playsInline = true;
     hero.appendChild(videoBg);
 
-    const pauseIcon = document.createElement('button');
-    pauseIcon.className = 'hero-icon un-icon-pause-circle icon-extra-large';
+    const pauseIcon = document.createElement("button");
+    pauseIcon.className = "hero-icon un-icon-pause-circle icon-extra-large";
     hero.appendChild(pauseIcon);
     pauseIcon.onclick = () => {
-      if (pauseIcon.classList.contains('un-icon-play-circle')) {
+      if (pauseIcon.classList.contains("un-icon-play-circle")) {
         videoBg.play();
-        pauseIcon.classList.remove('un-icon-play-circle');
-        pauseIcon.classList.add('un-icon-pause-circle');
+        pauseIcon.classList.remove("un-icon-play-circle");
+        pauseIcon.classList.add("un-icon-pause-circle");
       } else {
         videoBg.pause();
-        pauseIcon.classList.remove('un-icon-pause-circle');
-        pauseIcon.classList.add('un-icon-play-circle');
+        pauseIcon.classList.remove("un-icon-pause-circle");
+        pauseIcon.classList.add("un-icon-play-circle");
       }
     };
   }
-  const heroOverlay = document.createElement('div');
-  heroOverlay.className = 'hero-overlay';
-  heroOverlay.setAttribute('aria-hidden', 'true');
+  const heroOverlay = document.createElement("div");
+  heroOverlay.className = "hero-overlay";
+  heroOverlay.setAttribute("aria-hidden", "true");
   hero.appendChild(heroOverlay);
   return hero;
 };
@@ -83,42 +82,38 @@ const createHeroMainSection = (
   subtitleRow,
   showHeroBulletList,
   bulletListRows,
-  isCarousel = false,
+  isCarousel = false
 ) => {
-  const mainSection = document.createElement('div');
-  mainSection.className = `main-section${isCarousel ? ' carousel' : ''}`;
+  const mainSection = document.createElement("div");
+  mainSection.className = `main-section${isCarousel ? " carousel" : ""}`;
   if (showHeroLogo) {
     const logo = heroLogo.cloneNode(true);
-    logo.className = 'hero-logo';
+    logo.className = "hero-logo";
     mainSection.appendChild(logo);
   }
-  const titleEl = createTextElementFromRow(titleRow, 'hero-title', 'h2');
+  const titleEl = createTextElementFromRow(titleRow, "hero-title", "h2");
   mainSection.appendChild(titleEl);
   if (subtitleBoldRow.firstChild) {
     const subtitleBoldEl = createTextElementFromRow(
       subtitleBoldRow,
-      'hero-subtitle-bold',
-      'p',
+      "hero-subtitle-bold",
+      "p"
     );
     mainSection.appendChild(subtitleBoldEl);
   }
   if (subtitleRow.firstChild) {
     const subtitleEl = createTextElementFromRow(
       subtitleRow,
-      'hero-subtitle',
-      'p',
+      "hero-subtitle",
+      "p"
     );
     mainSection.appendChild(subtitleEl);
   }
   if (showHeroBulletList && bulletListRows?.length > 0) {
-    const bullets = document.createElement('ul');
-    bullets.className = 'hero-bullets';
+    const bullets = document.createElement("ul");
+    bullets.className = "hero-bullets";
     bulletListRows?.forEach((bulletRow) => {
-      const listItem = createTextElementFromRow(
-        bulletRow,
-        '',
-        'li',
-      );
+      const listItem = createTextElementFromRow(bulletRow, "", "li");
       bullets.appendChild(listItem);
     });
     mainSection.appendChild(bullets);
@@ -150,10 +145,10 @@ const createHeroButtonSection = async (
   btnLeftIcon,
   btnRightIcon,
   mainSection,
-  isCarousel = false,
+  isCarousel = false
 ) => {
-  const buttonSection = document.createElement('div');
-  buttonSection.className = 'button-section';
+  const buttonSection = document.createElement("div");
+  buttonSection.className = "button-section";
   if (showHeroButton) {
     const button = createButton(
       btnLabel,
@@ -162,7 +157,7 @@ const createHeroButtonSection = async (
       btnVariant,
       btnIconSize,
       btnLeftIcon,
-      btnRightIcon,
+      btnRightIcon
     );
     if (isCarousel) {
       mainSection.appendChild(button);
@@ -214,11 +209,11 @@ export async function createHero(
   btnIconSize,
   btnLeftIcon,
   btnRightIcon,
-  isCarousel = false,
+  isCarousel = false
 ) {
-  const hero = setupHeroWithBg(heroBackground, isVideoBackground);
-  const heroContent = document.createElement('div');
-  heroContent.className = 'hero-content';
+  const hero = setupHeroWithBg(heroBackground, isVideoBackground, isCarousel);
+  const heroContent = document.createElement("div");
+  heroContent.className = "hero-content";
   const mainSection = createHeroMainSection(
     showHeroLogo,
     heroLogo,
@@ -227,7 +222,7 @@ export async function createHero(
     subtitleRow,
     showHeroBulletList,
     bulletList,
-    isCarousel,
+    isCarousel
   );
   heroContent.appendChild(mainSection);
   if (showHeroButton) {
@@ -241,7 +236,7 @@ export async function createHero(
       btnLeftIcon,
       btnRightIcon,
       mainSection,
-      isCarousel,
+      isCarousel
     );
     if (buttonSection) {
       heroContent.appendChild(buttonSection);
@@ -257,7 +252,7 @@ export async function createHero(
  * @returns {HTMLElement|null} The media element (video or picture) or null if not found
  */
 const extractMediaFromRow = (row, isVideo = false) => {
-  const mediaElement = row?.querySelector(isVideo ? 'a' : 'picture');
+  const mediaElement = row?.querySelector(isVideo ? "a" : "picture");
   moveInstrumentation(row, mediaElement);
   if (mediaElement) return mediaElement;
   return null;
@@ -278,20 +273,21 @@ export const extractHeroPropertiesFromRows = (rows) => {
   const subtitleBold = rows[5];
   const subtitle = rows[6];
   const showHeroBulletList = extractBooleanValueFromRow(rows[7]);
-  const bulletList = [
-    rows[8],
-    rows[9],
-    rows[10],
-  ].filter((row) => row.firstChild);
+  const bulletList = [rows[8], rows[9], rows[10]].filter(
+    (row) => row.firstChild
+  );
   // Button properties
   const showHeroButton = extractBooleanValueFromRow(rows[11]);
-  const btnText = rows[12]?.textContent?.trim() || '';
-  const btnVariant = rows[13]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-  const btnHref = rows[14]?.querySelector('a')?.href || rows[14]?.textContent?.trim() || '';
+  const btnText = rows[12]?.textContent?.trim() || "";
+  const btnVariant =
+    rows[13]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
+  const btnHref =
+    rows[14]?.querySelector("a")?.href || rows[14]?.textContent?.trim() || "";
   const btnOpenInNewTab = extractBooleanValueFromRow(rows[15]);
-  const btnIconSize = rows[16]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
-  const btnLeftIcon = rows[17]?.textContent?.trim() || '';
-  const btnRightIcon = rows[18]?.textContent?.trim() || '';
+  const btnIconSize =
+    rows[16]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
+  const btnLeftIcon = rows[17]?.textContent?.trim() || "";
+  const btnRightIcon = rows[18]?.textContent?.trim() || "";
   return {
     heroBackground,
     isVideoBackground,
