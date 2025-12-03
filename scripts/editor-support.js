@@ -48,8 +48,9 @@ async function applyChanges(event) {
 
     if (element.classList.contains('insurance-product-carousel-container')) {
       if (element.children[0].children.length >= 8) {
-        // eslint-disable-next-line no-alert
-        window.alert('Superato il limite di card inseribili, puoi cancellarne una per poterne inserire una nuova o modificare una esistente.');
+        if (element.getAttribute('data-aue-filter') === 'insurance-product-carousel') {
+          element.setAttribute('data-aue-filter', 'disable-add');
+        }
         return false;
       }
     }
