@@ -51,7 +51,7 @@ async function applyChanges(event) {
         if (element.getAttribute('data-aue-filter') === 'insurance-product-carousel') {
           element.setAttribute('data-aue-filter', 'disable-add');
         }
-        return false;
+        return true;
       }
     }
 
