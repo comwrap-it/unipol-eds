@@ -17,25 +17,40 @@
                 "name": "Header Logo",
                 "model": "header-logo"
               },
-              "header-navigation-pill-and-box": {
+              "header-navigation-section": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Header navigation pill and box",
-                "filter": "header-navigation-pill-and-box",
-                "header-navigation-pill-and-box-item-1": {
+                "name": "Header navigation section",
+                "filter": "header-navigation-section",
+                "header-navigation-pill-and-box-1": {
                   "sling:resourceType": "core/franklin/components/block/v1/block",
-                  "name": "Header navigation pill and box item",
-                  "model": "header-navigation-pill-and-box-item"
+                  "name": "Header navigation pill and box",
+                  "model": "header-navigation-pill-and-box"
                 },
-                "header-navigation-pill-and-box-item-2": {
+                "header-navigation-pill-and-box-2": {
                   "sling:resourceType": "core/franklin/components/block/v1/block",
-                  "name": "Header navigation pill and box item",
-                  "model": "header-navigation-pill-and-box-item"
+                  "name": "Header navigation pill and box",
+                  "model": "header-navigation-pill-and-box"
                 }
               },
-              "header-buttons": {
+              "header-utilities-section": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Header buttons",
-                "model": "header-buttons"
+                "name": "Header Utilities Section",
+                "filter": "header-utilities-section",
+                "utilities-navigation-pill-1": {
+                  "sling:resourceType": "core/franklin/components/block/v1/block",
+                  "name": "Utilities navigation pill",
+                  "model": "utilities-navigation-pill"
+                },
+                "utilities-navigation-pill-2": {
+                  "sling:resourceType": "core/franklin/components/block/v1/block",
+                  "name": "Utilities navigation pill",
+                  "model": "utilities-navigation-pill"
+                },
+                "utilities-navigation-pill-3": {
+                  "sling:resourceType": "core/franklin/components/block/v1/block",
+                  "name": "Utilities navigation pill",
+                  "model": "utilities-navigation-pill"
+                }
               }
             }
           }
@@ -60,8 +75,8 @@
       "id": "unipol-header",
       "components": [
         "header-logo",
-        "header-navigation-pill-and-box",
-        "header-buttons"
+        "header-navigation-section",
+        "header-utilities-section"
       ]
     }
   ]

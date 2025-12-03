@@ -20,7 +20,7 @@ async function ensureStylesLoaded() {
 function extractNavigationPillValues(row) {
   const rows = Array.from(row.children);
 
-  const text = rows[0]?.textContent?.trim() || 'Navigation Pill';
+  const text = rows[0]?.textContent?.trim() || '';
   const variant = rows[1]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_VARIANTS.PRIMARY;
   const href = rows[2]?.querySelector('a')?.href || rows[2]?.textContent?.trim() || undefined;
   const leftIcon = rows[3]?.textContent?.trim() || '';

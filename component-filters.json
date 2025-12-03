@@ -81,9 +81,15 @@
     "max": 8
   },
   {
-    "id": "header-navigation-pill-and-box",
+    "id": "header-navigation-section",
     "components": [
-      "header-navigation-pill-and-box-item"
+      "header-navigation-pill-and-box"
+    ]
+  },
+  {
+    "id": "header-utilities-section",
+    "components": [
+      "utilities-navigation-pill"
     ]
   },
   {
@@ -134,8 +140,8 @@
     "id": "unipol-header",
     "components": [
       "header-logo",
-      "header-navigation-pill-and-box",
-      "header-buttons"
+      "header-navigation-section",
+      "header-utilities-section"
     ]
   },
   {
