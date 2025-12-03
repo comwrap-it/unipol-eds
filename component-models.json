@@ -381,286 +381,221 @@
     "id": "header-buttons",
     "fields": [
       {
-        "component": "text",
-        "name": "navigationPillLabel",
-        "label": "Label",
-        "required": true
-      },
-      {
-        "component": "select",
-        "name": "navigationPillVariant",
-        "label": "Variant",
-        "value": "primary",
-        "options": [
+        "component": "container",
+        "name": "header-navigation-pill-cont",
+        "label": "Configurazione Navigation Pill Header",
+        "fields": [
           {
-            "name": "Primary",
-            "value": "primary"
+            "component": "text",
+            "name": "navigationPillLabel",
+            "label": "Label",
+            "required": true
           },
           {
-            "name": "Secondary",
-            "value": "secondary"
+            "component": "select",
+            "name": "navigationPillVariant",
+            "label": "Variant",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "navigationPillHref",
+            "label": "Link URL",
+            "description": "Optional URL the pill points to"
+          },
+          {
+            "component": "select",
+            "name": "navigationPillLeftIcon",
+            "label": "Left Icon",
+            "description": "Optional icon on the left",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "navigationPillLeftIconSize",
+            "label": "Size",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "navigationPillRightIcon",
+            "label": "Right Icon",
+            "description": "Optional icon on the right",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "chevron-right"
+              },
+              {
+                "name": "Search",
+                "value": "search-icon"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "navigationPillRightIconSize",
+            "label": "Size",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
           }
         ]
       },
       {
-        "component": "aem-content",
-        "name": "navigationPillHref",
-        "label": "Link URL",
-        "description": "Optional URL the pill points to"
-      },
-      {
-        "component": "select",
-        "name": "navigationPillLeftIcon",
-        "label": "Left Icon",
-        "description": "Optional icon on the left",
-        "options": [
+        "component": "container",
+        "name": "header-icon-button1-cont",
+        "label": "Configurazione Icon Button Header",
+        "fields": [
           {
-            "name": "None",
-            "value": ""
+            "component": "select",
+            "name": "iconButtonIcon",
+            "label": "Icon",
+            "required": true,
+            "description": "Select the icon",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
           },
           {
-            "name": "Chevron Left",
-            "value": "un-icon-chevron-left"
+            "component": "select",
+            "name": "iconButtonVariant",
+            "label": "Variant",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              }
+            ]
           },
           {
-            "name": "Chevron Right",
-            "value": "un-icon-chevron-right"
+            "component": "select",
+            "name": "iconButtonSize",
+            "label": "Size",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
           },
           {
-            "name": "Search Icon",
-            "value": "un-icon-search"
+            "component": "aem-content",
+            "name": "iconButtonHref",
+            "label": "Link URL",
+            "description": "Optional URL to make this a link button"
+          },
+          {
+            "component": "boolean",
+            "label": "Apri in una nuova scheda",
+            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+            "name": "iconButtonOpenInNewTab",
+            "valueType": "boolean",
+            "value": false
           }
         ]
-      },
-      {
-        "component": "select",
-        "name": "navigationPillLeftIconSize",
-        "label": "Size",
-        "value": "medium",
-        "options": [
-          {
-            "name": "Small",
-            "value": "small"
-          },
-          {
-            "name": "Medium",
-            "value": "medium"
-          },
-          {
-            "name": "Large",
-            "value": "large"
-          },
-          {
-            "name": "Extra Large",
-            "value": "extra-large"
-          }
-        ]
-      },
-      {
-        "component": "select",
-        "name": "navigationPillRightIcon",
-        "label": "Right Icon",
-        "description": "Optional icon on the right",
-        "options": [
-          {
-            "name": "None",
-            "value": ""
-          },
-          {
-            "name": "Chevron Left",
-            "value": "chevron-left"
-          },
-          {
-            "name": "Chevron Right",
-            "value": "chevron-right"
-          },
-          {
-            "name": "Search",
-            "value": "search-icon"
-          }
-        ]
-      },
-      {
-        "component": "select",
-        "name": "navigationPillRightIconSize",
-        "label": "Size",
-        "value": "medium",
-        "options": [
-          {
-            "name": "Small",
-            "value": "small"
-          },
-          {
-            "name": "Medium",
-            "value": "medium"
-          },
-          {
-            "name": "Large",
-            "value": "large"
-          },
-          {
-            "name": "Extra Large",
-            "value": "extra-large"
-          }
-        ]
-      },
-      {
-        "component": "select",
-        "name": "iconButtonIcon",
-        "label": "Icon",
-        "required": true,
-        "description": "Select the icon",
-        "options": [
-          {
-            "name": "None",
-            "value": ""
-          },
-          {
-            "name": "Chevron Left",
-            "value": "un-icon-chevron-left"
-          },
-          {
-            "name": "Chevron Right",
-            "value": "un-icon-chevron-right"
-          },
-          {
-            "name": "Search Icon",
-            "value": "un-icon-search"
-          }
-        ]
-      },
-      {
-        "component": "select",
-        "name": "iconButtonVariant",
-        "label": "Variant",
-        "value": "primary",
-        "options": [
-          {
-            "name": "Primary",
-            "value": "primary"
-          },
-          {
-            "name": "Secondary",
-            "value": "secondary"
-          }
-        ]
-      },
-      {
-        "component": "select",
-        "name": "iconButtonSize",
-        "label": "Size",
-        "value": "medium",
-        "options": [
-          {
-            "name": "Small",
-            "value": "small"
-          },
-          {
-            "name": "Medium",
-            "value": "medium"
-          },
-          {
-            "name": "Large",
-            "value": "large"
-          },
-          {
-            "name": "Extra Large",
-            "value": "extra-large"
-          }
-        ]
-      },
-      {
-        "component": "aem-content",
-        "name": "iconButtonHref",
-        "label": "Link URL",
-        "description": "Optional URL to make this a link button"
-      },
-      {
-        "component": "boolean",
-        "label": "Apri in una nuova scheda",
-        "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
-        "name": "iconButtonOpenInNewTab",
-        "valueType": "boolean",
-        "value": false
-      },
-      {
-        "component": "select",
-        "name": "iconButtonIcon",
-        "label": "Icon",
-        "required": true,
-        "description": "Select the icon",
-        "options": [
-          {
-            "name": "None",
-            "value": ""
-          },
-          {
-            "name": "Chevron Left",
-            "value": "un-icon-chevron-left"
-          },
-          {
-            "name": "Chevron Right",
-            "value": "un-icon-chevron-right"
-          },
-          {
-            "name": "Search Icon",
-            "value": "un-icon-search"
-          }
-        ]
-      },
-      {
-        "component": "select",
-        "name": "iconButtonVariant",
-        "label": "Variant",
-        "value": "primary",
-        "options": [
-          {
-            "name": "Primary",
-            "value": "primary"
-          },
-          {
-            "name": "Secondary",
-            "value": "secondary"
-          }
-        ]
-      },
-      {
-        "component": "select",
-        "name": "iconButtonSize",
-        "label": "Size",
-        "value": "medium",
-        "options": [
-          {
-            "name": "Small",
-            "value": "small"
-          },
-          {
-            "name": "Medium",
-            "value": "medium"
-          },
-          {
-            "name": "Large",
-            "value": "large"
-          },
-          {
-            "name": "Extra Large",
-            "value": "extra-large"
-          }
-        ]
-      },
-      {
-        "component": "aem-content",
-        "name": "iconButtonHref",
-        "label": "Link URL",
-        "description": "Optional URL to make this a link button"
-      },
-      {
-        "component": "boolean",
-        "label": "Apri in una nuova scheda",
-        "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
-        "name": "iconButtonOpenInNewTab",
-        "valueType": "boolean",
-        "value": false
       }
     ]
   },

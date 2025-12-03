@@ -21,13 +21,24 @@
       "id": "header-buttons",
       "fields": [
         {
-          "...": "../atoms/navigation-pill/_navigation-pill.json#/models/navigation-pill/fields"
+          "component": "container",
+          "name": "header-navigation-pill-cont",
+          "label": "Configurazione Navigation Pill Header",
+          "fields": [
+            {
+              "...": "../atoms/navigation-pill/_navigation-pill.json#/models/navigation-pill/fields"
+            }
+          ]
         },
         {
-          "...": "../atoms/buttons/icon-button/_icon-button.json#/models/icon-button/fields"
-        },
-        {
-          "...": "../atoms/buttons/icon-button/_icon-button.json#/models/icon-button/fields"
+          "component": "container",
+          "name": "header-icon-button1-cont",
+          "label": "Configurazione Icon Button Header",
+          "fields": [
+            {
+              "...": "../atoms/buttons/icon-button/_icon-button.json#/models/icon-button/fields"
+            }
+          ]
         }
       ]
     }
