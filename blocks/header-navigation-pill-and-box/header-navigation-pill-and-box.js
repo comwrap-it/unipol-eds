@@ -6,6 +6,10 @@ import {
 } from '../atoms/navigation-pill/navigation-pill.js';
 
 let isStylesLoaded = false;
+
+/**
+ * Carica gli stili CSS del navigation pill
+ */
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
@@ -14,56 +18,73 @@ async function ensureStylesLoaded() {
   isStylesLoaded = true;
 }
 
-function getNavigationPillConfig(row) {
+/**
+ * Estrae i valori di un singolo Navigation Pill da un row
+ */
+function extractNavigationPillValues(row) {
   const rows = Array.from(row.children);
+
+  const text = rows[0]?.textContent?.trim() || 'Navigation Pill';
+  const variant = rows[1]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_VARIANTS.PRIMARY;
+  const href = rows[2]?.querySelector('a')?.href || rows[2]?.textContent?.trim();
+  const leftIcon = rows[3]?.textContent?.trim() || '';
+  const lftIcnSz = rows[4]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
+  const rightIcon = rows[5]?.textContent?.trim() || '';
+  const rghtIcnSz = rows[6]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
+  const instrumentation = extractInstrumentationAttributes(rows[0]);
+
   return {
-    text: rows[0]?.textContent?.trim() || 'Navigation Pill',
-    variant: rows[1]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_VARIANTS.PRIMARY,
-    href: rows[2]?.querySelector('a')?.href || rows[1]?.textContent?.trim() || undefined,
-    leftIcon: rows[3]?.textContent?.trim() || '',
-    leftIconSize: rows[4]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM,
-    rightIcon: rows[5]?.textContent?.trim() || '',
-    rightIconSize: rows[6]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM,
-    instrumentation: rows[0] ? extractInstrumentationAttributes(rows[0]) : {},
+    text,
+    variant,
+    href,
+    leftIcon,
+    lftIcnSz,
+    rightIcon,
+    rghtIcnSz,
+    instrumentation,
   };
 }
 
 /**
- * Crea un Navigation Pill dal row
+ * Crea un Navigation Pill da un row
  */
 function buildNavigationPill(row) {
-  const cfg = getNavigationPillConfig(row);
+  const cfg = extractNavigationPillValues(row);
   return createNavigationPill(
     cfg.text,
     cfg.href,
     cfg.variant,
     cfg.leftIcon,
-    cfg.leftIconSize,
+    cfg.lftIcnSz,
     cfg.rightIcon,
-    cfg.rightIconSize,
+    cfg.rghtIcnSz,
     cfg.instrumentation,
   );
 }
 
 /**
- * Main decorator per header-navigation-pill-and-box
+ * Decorator principale per header-navigation-pill-and-box
  */
 export default async function decorate(block) {
   if (!block) return;
   await ensureStylesLoaded();
 
+  // Trova i rows effettivi, supporta wrapper opzionale
   let pillRows = Array.from(block.children);
   const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) pillRows = Array.from(wrapper.children);
 
+  // Contenitore flessibile per i pills
   const pillsContainer = document.createElement('div');
   pillsContainer.className = 'navigation-pill-cont';
 
+  // Costruisci ogni pill dinamicamente dai row
   pillRows.forEach((row) => {
     const pillElement = buildNavigationPill(row);
     pillsContainer.appendChild(pillElement);
   });
 
+  // Sostituisci contenuto originale con i pills ricreati
   block.innerHTML = '';
   block.appendChild(pillsContainer);
   block.classList.add('header-navigation-pill-and-box');
