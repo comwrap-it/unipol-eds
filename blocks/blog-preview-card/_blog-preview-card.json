@@ -45,15 +45,15 @@
           "options": [
             {
               "value": "un-icon-newspaper",
-              "label": "Newspaper"
+              "name": "Newspaper"
             },
             {
               "value": "un-icon-headphones",
-              "label": "Headphones"
+              "name": "Headphones"
             },
             {
               "value": "un-icon-play-circle",
-              "label": "Play Circle"
+              "name": "Play Circle"
             }
           ]
         },

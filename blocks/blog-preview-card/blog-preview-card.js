@@ -73,4 +73,8 @@ export const createBlogCard = (
   );
   durationEl.appendChild(durationTextEl);
   cardContent.appendChild(durationEl);
+
+  card.appendChild(cardContent);
+
+  return card;
 };

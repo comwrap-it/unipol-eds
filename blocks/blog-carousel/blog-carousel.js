@@ -29,7 +29,12 @@ async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
   await Promise.all([
-    loadCSS(`${window.hlx.codeBasePath}/blocks/blog-card/blog-card.css`),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`,
+    ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/blog-preview-card/blog-preview-card.css`,
+    ),
   ]);
   isStylesLoaded = true;
 }
@@ -54,9 +59,22 @@ const initSwiper = (
       prevEl: leftIconButton || '.swiper-button-prev',
       addIcons: false,
     },
-    slidesPerView: 1,
+    slidesPerView: 1.2,
+    allowTouchMove: true,
     // Optional accessibility tweaks
     a11y: { enabled: true },
+    breakpoints: {
+      // width >= 1312
+      1312: {
+        slidesPerView: 3.2,
+        allowTouchMove: false,
+      },
+      // when window width is >= 768px
+      768: {
+        slidesPerView: 2.2,
+        allowTouchMove: false,
+      },
+    },
   });
 
   return swiper;
@@ -126,6 +144,10 @@ export default async function decorate(block) {
     const {
       leftIconButton, scrollIndicator, rightIconButton, setExpandedDot,
     } = await createScrollIndicator();
+    carousel.appendChild(scrollIndicator);
+    block.replaceChildren(carousel);
+
+    // Initialize Swiper after DOM insertion
     const Swiper = await loadSwiper();
     const swiperInstance = initSwiper(
       Swiper,
@@ -139,7 +161,8 @@ export default async function decorate(block) {
       leftIconButton,
       rightIconButton,
     );
-    carousel.appendChild(scrollIndicator);
+  } else {
+    // If only one card, no need for carousel functionality
+    block.replaceChildren(carousel);
   }
-  block.replaceChildren(carousel);
 }
