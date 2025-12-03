@@ -18,9 +18,7 @@
 
 import loadSwiper, { handleSlideChange } from '../../scripts/lib/utils.js';
 import mockBlogCards from '../../scripts/mock.js';
-import {
-  createBlogCard,
-} from '../blog-preview-card/blog-preview-card.js';
+import { createBlogCard } from '../blog-preview-card/blog-preview-card.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
 
 let isStylesLoaded = false;
@@ -56,27 +54,16 @@ const initSwiper = (
       prevEl: leftIconButton || '.swiper-button-prev',
       addIcons: false,
     },
-    slidesPerView: 1.3,
+    slidesPerView: 'auto',
     allowTouchMove: true,
-    // Optional accessibility tweaks
     a11y: { enabled: true },
-    slidesOffsetBefore: 0,
-    slidesOffsetAfter: 48,
-    breakpoints: {
-      // width >= 1312
-      1312: {
-        slidesPerView: 3.3,
-        allowTouchMove: false,
-      },
-      // when window width is >= 768px
-      768: {
-        slidesPerView: 2.3,
-        allowTouchMove: false,
-      },
-    },
     touchStartPreventDefault: false,
     resistanceRatio: 0.85,
     watchOverflow: true,
+    breakpoints: {
+      768: { allowTouchMove: false },
+      1312: { allowTouchMove: false },
+    },
   });
 
   return swiper;
@@ -112,9 +99,9 @@ export default async function decorate(block) {
     return;
   }
 
-  const isThereMultipleCards = rows.length > 1;
-
   const cardsData = await mockBlogCards();
+  const isThereMultipleCards = cardsData.length > 1;
+
   const cardPromises = cardsData.map(async (cardData) => {
     const {
       image,

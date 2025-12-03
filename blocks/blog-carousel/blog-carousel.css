@@ -15,6 +15,29 @@
         display: flex;
         width: 100%;
         align-items: flex-start;
-        gap: var(--Carousel-Blog-Gap-D-Tl, 1rem);
+
+        /* Mobile ~1.3 visible */
+        & .swiper-slide {
+            width: 76.9%;
+            margin-inline-end: var(--Carousel-Blog-Gap-D-Tl, 1rem);
+
+            &:last-child {
+                margin-inline-end: 0;
+            }
+        }
     }
+}
+
+/* Tablet ≥ 768px: ~2.3 visible */
+@media (width >= 768px) {
+  .blog-carousel-container .blog-carousel .swiper-slide {
+    width: 43.5%;
+  }
+}
+
+/* Desktop ≥ 1312px: ~3.3 visible */
+@media (width >= 1312px) {
+  .blog-carousel-container .blog-carousel .swiper-slide {
+    width: 30.3%;
+  }
 }
