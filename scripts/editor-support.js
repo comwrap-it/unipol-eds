@@ -46,6 +46,14 @@ async function applyChanges(event) {
       return true;
     }
 
+    if (element.classList.contains('insurance-product-carousel-container')) {
+      if (element.children[0].children.length === 8) {
+        // eslint-disable-next-line no-alert
+        window.alert('Superato il limite di card inseribili, puoi cancellarne una per poterne inserire una nuova o modificare una esistente.');
+        return true;
+      }
+    }
+
     const block = element.parentElement?.closest('.block[data-aue-resource]') || element?.closest('.block[data-aue-resource]');
     if (block) {
       const blockResource = block.getAttribute('data-aue-resource');
