@@ -3,7 +3,7 @@ import { moveInstrumentation } from './scripts.js';
 
 /**
 Allowed text tags for authored content.
-@typedef {'p'|'span'|'h1'|'h2'|'h3'|'h4'|'h5'|'h6'|'li'} TextTag
+@typedef {'p'|'span'|'h1'|'h2'|'h3'|'h4'|'h5'|'h6'|'li'} AvailableTag
 */
 const AUTHORIZED_TEXT_TAGS = [
   'p',
@@ -20,7 +20,7 @@ const AUTHORIZED_TEXT_TAGS = [
 Creates a text element from an authored row, preserving UE instrumentation.
 @param {HTMLElement | null} originalRow
 @param {string | string[]} classesToApply
-@param {TextTag} elementTag
+@param {AvailableTag} elementTag
 @returns {HTMLElement}
 */
 export const createTextElementFromRow = (
