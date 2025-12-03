@@ -48,15 +48,6 @@
           "value": "",
           "label": "Text",
           "valueType": "string"
-        },
-        {
-          "component": "container",
-          "name": "test-nav-pill-container",
-          "fields": [
-            {
-              "...": "../atoms/navigation-pill/_navigation-pill.json#/models/navigation-pill/fields"
-            }
-          ]
         }
       ]
     }

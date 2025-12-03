@@ -41,6 +41,9 @@
           "name": "header-nav-pill-tab"
         },
         {
+          "...": "../atoms/navigation-pill/_navigation-pill.json#/models/navigation-pill/fields"
+        },
+        {
           "component": "tab",
           "label": "Configurazione Box",
           "name": "header-box-tab"
