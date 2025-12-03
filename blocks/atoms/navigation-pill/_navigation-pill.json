@@ -21,9 +21,21 @@
       "id": "navigation-pill",
       "fields": [
         {
+          "component": "select",
+          "name": "navigationPillTypology",
+          "valueType": "string",
+          "value": "custom",
+          "label": "Tipologia Destinazione",
+          "options": [
+            { "name": "Custom", "value": "custom" },
+            { "name": "Preventivatore", "value": "preventivatore" },
+            { "name": "Locator", "value": "locator" }
+          ]
+        },
+        {
           "component": "text",
           "name": "navigationPillLabel",
-          "label": "Label",
+          "label": "Configurazione label navigation pill",
           "required": true
         },
         {
@@ -46,13 +58,30 @@
           "component": "aem-content",
           "name": "navigationPillHref",
           "label": "Link URL",
-          "description": "Optional URL the pill points to"
+          "condition": {
+            "===": [{ "var": "navigationPillTypology" }, "custom"]
+          }
+        },
+        {
+          "component": "boolean",
+          "label": "Icona Sinistra",
+          "description": "Attivo: mostra la configurazione dell'icona sinistra.",
+          "name": "showNavPillLeftIcon",
+          "valueType": "boolean",
+          "value": false
+        },
+        {
+          "component": "boolean",
+          "label": "Icona Destra",
+          "description": "Attivo: mostra la configurazione dell'icona destra.",
+          "name": "showNavPillRightIcon",
+          "valueType": "boolean",
+          "value": false
         },
         {
           "component": "select",
           "name": "navigationPillLeftIcon",
-          "label": "Left Icon",
-          "description": "Optional icon on the left",
+          "label": "Configurazione icona sinistra",
           "options": [
             {
               "name": "None",
@@ -70,12 +99,15 @@
               "name": "Search Icon",
               "value": "un-icon-search"
             }
-          ]
+          ],
+          "condition": {
+            "===": [{ "var": "showNavPillLeftIcon" }, true]
+          }
         },
         {
           "component": "select",
           "name": "navigationPillLeftIconSize",
-          "label": "Size",
+          "label": "Dimensione icona sinistra",
           "value": "medium",
           "options": [
             {
@@ -94,13 +126,15 @@
               "name": "Extra Large",
               "value": "extra-large"
             }
-          ]
+          ],
+          "condition": {
+            "===": [{ "var": "showNavPillLeftIcon" }, true]
+          }
         },
         {
           "component": "select",
           "name": "navigationPillRightIcon",
-          "label": "Right Icon",
-          "description": "Optional icon on the right",
+          "label": "Configurazione icona destra",
           "options": [
             {
               "name": "None",
@@ -118,12 +152,15 @@
               "name": "Search",
               "value": "search-icon"
             }
-          ]
+          ],
+          "condition": {
+            "===": [{ "var": "showNavPillRightIcon" }, true]
+          }
         },
         {
           "component": "select",
           "name": "navigationPillRightIconSize",
-          "label": "Size",
+          "label": "Dimensione icona destra",
           "value": "medium",
           "options": [
             {
@@ -142,29 +179,10 @@
               "name": "Extra Large",
               "value": "extra-large"
             }
-          ]
-        },
-        {
-          "component": "select",
-          "name": "navigationPillTypology",
-          "valueType": "string",
-          "value": "custom",
-          "label": "Tipologia Destinazione",
-          "options": [
-            { "name": "Custom", "value": "custom" },
-            { "name": "Preventivatore", "value": "preventivatore" },
-            { "name": "Locator", "value": "locator" },
-            { "name": "Login", "value": "login" },
-            { "name": "Link", "value": "link" }
-          ]
-        },
-        {
+          ],
           "condition": {
-            "===": [{ "var": "navigationPillTypology" }, "custom"]
-          },
-          "component": "text",
-          "name": "navigationPillCustomField",
-          "label": "navigationPillCustomField Label"
+            "===": [{ "var": "showNavPillRightIcon" }, true]
+          }
         }
       ]
     }
