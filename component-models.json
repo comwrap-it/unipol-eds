@@ -176,6 +176,12 @@
         "component": "text",
         "name": "insurance-product-carousel-widget-name",
         "label": "Nome sezione Insurance Product Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "insurance-product-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
       }
     ]
   },
@@ -216,6 +222,12 @@
         "component": "text",
         "name": "blog-carousel-widget-name",
         "label": "Nome sezione Blog Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "blog-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
       }
     ]
   },
@@ -604,6 +616,12 @@
         "component": "text",
         "name": "hero-widget-name",
         "label": "Nome sezione Hero Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "hero-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
       }
     ]
   },
@@ -1126,6 +1144,12 @@
         "component": "text",
         "name": "insurance-product-carousel-widget-name",
         "label": "Nome sezione Insurance Product Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "insurance-product-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
       }
     ]
   },
