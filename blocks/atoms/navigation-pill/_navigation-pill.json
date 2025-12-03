@@ -64,6 +64,17 @@
         },
         {
           "component": "boolean",
+          "label": "Apri in una nuova scheda",
+          "description": "Attivo: il bottone aprirà il link in una nuova scheda",
+          "name": "navPillOpenInNewTab",
+          "valueType": "boolean",
+          "value": false,
+          "condition": {
+            "===": [{ "var": "navigationPillTypology" }, "custom"]
+          }
+        },
+        {
+          "component": "boolean",
           "label": "Icona Sinistra",
           "description": "Attivo: mostra la configurazione dell'icona sinistra.",
           "name": "showNavPillLeftIcon",
@@ -83,10 +94,6 @@
           "name": "navigationPillLeftIcon",
           "label": "Configurazione icona sinistra",
           "options": [
-            {
-              "name": "None",
-              "value": ""
-            },
             {
               "name": "Chevron Left",
               "value": "un-icon-chevron-left"
@@ -136,10 +143,6 @@
           "name": "navigationPillRightIcon",
           "label": "Configurazione icona destra",
           "options": [
-            {
-              "name": "None",
-              "value": ""
-            },
             {
               "name": "Chevron Left",
               "value": "chevron-left"
