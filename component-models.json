@@ -222,6 +222,12 @@
         "component": "text",
         "name": "blog-carousel-widget-name",
         "label": "Nome sezione Blog Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "blog-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
       }
     ]
   },
