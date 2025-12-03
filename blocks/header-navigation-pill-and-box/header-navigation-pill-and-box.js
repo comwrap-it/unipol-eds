@@ -1,3 +1,5 @@
+import { loadBlock } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
 import {
   NAVIGATION_PILL_VARIANTS,
   NAVIGATION_PILL_ICON_SIZES,
@@ -5,48 +7,41 @@ import {
   extractInstrumentationAttributes,
 } from '../atoms/navigation-pill/navigation-pill.js';
 
-let isStylesLoaded = false;
-
 /**
- * Carica gli stili CSS del navigation pill
+ * Carica CSS navigation pill
  */
+let isStylesLoaded = false;
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
-  const base = window.hlx.codeBasePath;
-  await loadCSS(`${base}/blocks/atoms/navigation-pill/navigation-pill.css`);
+  await loadCSS(
+    `${window.hlx.codeBasePath}/blocks/atoms/navigation-pill/navigation-pill.css`,
+  );
   isStylesLoaded = true;
 }
 
 /**
- * Estrae i valori di un singolo Navigation Pill da un row
+ * Estrae dati da un row (singolo Navigation Pill)
  */
 function extractNavigationPillValues(row) {
   const rows = Array.from(row.children);
 
   const text = rows[0]?.textContent?.trim() || 'Navigation Pill';
   const variant = rows[1]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_VARIANTS.PRIMARY;
-  const href = rows[2]?.querySelector('a')?.href || rows[2]?.textContent?.trim();
+  const href = rows[2]?.querySelector('a')?.href || rows[2]?.textContent?.trim() || undefined;
   const leftIcon = rows[3]?.textContent?.trim() || '';
-  const lftIcnSz = rows[4]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
+  const lftIcnSze = rows[4]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
   const rightIcon = rows[5]?.textContent?.trim() || '';
-  const rghtIcnSz = rows[6]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
+  const rhtIcnSze = rows[6]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
   const instrumentation = extractInstrumentationAttributes(rows[0]);
 
   return {
-    text,
-    variant,
-    href,
-    leftIcon,
-    lftIcnSz,
-    rightIcon,
-    rghtIcnSz,
-    instrumentation,
+    text, variant, href, leftIcon, lftIcnSze, rightIcon, rhtIcnSze, instrumentation,
   };
 }
 
 /**
- * Crea un Navigation Pill da un row
+ * Crea Navigation Pill
  */
 function buildNavigationPill(row) {
   const cfg = extractNavigationPillValues(row);
@@ -55,9 +50,9 @@ function buildNavigationPill(row) {
     cfg.href,
     cfg.variant,
     cfg.leftIcon,
-    cfg.lftIcnSz,
+    cfg.lftIcnSze,
     cfg.rightIcon,
-    cfg.rghtIcnSz,
+    cfg.rhtIcnSze,
     cfg.instrumentation,
   );
 }
@@ -67,25 +62,46 @@ function buildNavigationPill(row) {
  */
 export default async function decorate(block) {
   if (!block) return;
+
   await ensureStylesLoaded();
 
-  // Trova i rows effettivi, supporta wrapper opzionale
+  // Gestione wrapper opzionale
   let pillRows = Array.from(block.children);
   const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) pillRows = Array.from(wrapper.children);
 
-  // Contenitore flessibile per i pills
-  const pillsContainer = document.createElement('div');
-  pillsContainer.className = 'navigation-pill-cont';
+  // Contenitore flessibile pills
+  const container = document.createElement('div');
+  container.className = 'navigation-pill-container';
+  container.style.display = 'flex';
+  container.style.flexWrap = 'wrap';
+  container.style.gap = '12px';
 
-  // Costruisci ogni pill dinamicamente dai row
-  pillRows.forEach((row) => {
-    const pillElement = buildNavigationPill(row);
-    pillsContainer.appendChild(pillElement);
+  // Flag strumentazione
+  const hasInstrumentation = block.hasAttribute('data-aue-resource')
+    || block.querySelector('[data-aue-resource]')
+    || block.querySelector('[data-richtext-prop]');
+
+  // Processa ogni pill
+  const pillElements = pillRows.map((row) => {
+    const pillEl = buildNavigationPill(row);
+
+    // Mantieni strumentazione
+    if (hasInstrumentation) {
+      moveInstrumentation(row, pillEl);
+    }
+
+    return pillEl;
   });
 
-  // Sostituisci contenuto originale con i pills ricreati
+  // Append pills al container
+  pillElements.forEach((pillEl) => container.appendChild(pillEl));
+
+  // Replace block originale
   block.innerHTML = '';
-  block.appendChild(pillsContainer);
+  block.appendChild(container);
   block.classList.add('header-navigation-pill-and-box');
+
+  // Carica eventuale blocco dinamico (se necessario)
+  await Promise.all(pillElements.map((pillEl) => loadBlock(pillEl)));
 }
