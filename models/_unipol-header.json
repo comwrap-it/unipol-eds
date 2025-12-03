@@ -35,22 +35,7 @@
               "header-buttons": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Header buttons",
-                "filter": "header-buttons",
-                "header-button-1": {
-                  "sling:resourceType": "core/franklin/components/block/v1/block",
-                  "name": "Header Button",
-                  "model": "header-button"
-                },
-                "header-button-2": {
-                  "sling:resourceType": "core/franklin/components/block/v1/block",
-                  "name": "Header Button",
-                  "model": "header-button"
-                },
-                "header-button-3": {
-                  "sling:resourceType": "core/franklin/components/block/v1/block",
-                  "name": "Header button",
-                  "model": "header-button"
-                }
+                "model": "header-buttons"
               }
             }
           }

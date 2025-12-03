@@ -7,9 +7,6 @@ import {
   extractInstrumentationAttributes,
 } from '../atoms/navigation-pill/navigation-pill.js';
 
-/**
- * Carica CSS navigation pill
- */
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
@@ -20,9 +17,6 @@ async function ensureStylesLoaded() {
   isStylesLoaded = true;
 }
 
-/**
- * Estrae dati da un row (singolo Navigation Pill)
- */
 function extractNavigationPillValues(row) {
   const rows = Array.from(row.children);
 
@@ -40,9 +34,6 @@ function extractNavigationPillValues(row) {
   };
 }
 
-/**
- * Crea Navigation Pill
- */
 function buildNavigationPill(row) {
   const cfg = extractNavigationPillValues(row);
   return createNavigationPill(
@@ -57,36 +48,25 @@ function buildNavigationPill(row) {
   );
 }
 
-/**
- * Decorator principale per header-navigation-pill-and-box
- */
 export default async function decorate(block) {
   if (!block) return;
 
   await ensureStylesLoaded();
 
-  // Gestione wrapper opzionale
   let pillRows = Array.from(block.children);
   const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) pillRows = Array.from(wrapper.children);
 
-  // Contenitore flessibile pills
   const container = document.createElement('div');
   container.className = 'navigation-pill-container';
-  container.style.display = 'flex';
-  container.style.flexWrap = 'wrap';
-  container.style.gap = '12px';
 
-  // Flag strumentazione
   const hasInstrumentation = block.hasAttribute('data-aue-resource')
     || block.querySelector('[data-aue-resource]')
     || block.querySelector('[data-richtext-prop]');
 
-  // Processa ogni pill
   const pillElements = pillRows.map((row) => {
     const pillEl = buildNavigationPill(row);
 
-    // Mantieni strumentazione
     if (hasInstrumentation) {
       moveInstrumentation(row, pillEl);
     }
@@ -94,14 +74,11 @@ export default async function decorate(block) {
     return pillEl;
   });
 
-  // Append pills al container
   pillElements.forEach((pillEl) => container.appendChild(pillEl));
 
-  // Replace block originale
   block.innerHTML = '';
   block.appendChild(container);
   block.classList.add('header-navigation-pill-and-box');
 
-  // Carica eventuale blocco dinamico (se necessario)
   await Promise.all(pillElements.map((pillEl) => loadBlock(pillEl)));
 }

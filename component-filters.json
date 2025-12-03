@@ -81,12 +81,6 @@
     "max": 8
   },
   {
-    "id": "header-buttons",
-    "components": [
-      "header-button"
-    ]
-  },
-  {
     "id": "header-navigation-pill-and-box",
     "components": [
       "header-navigation-pill-and-box-item"
