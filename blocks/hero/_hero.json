@@ -151,15 +151,15 @@
           "valueType": "boolean"
         },
         {
-          "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields",
-          "condition": {
-            "===": [
-              {
-                "var": "showHeroButton"
-              },
-              true
-            ]
-          }
+          "component": "container",
+          "name": "hero-button-container",
+          "label": "Configurazione Bottone",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
+            }
+          ]
         }
       ]
     }
