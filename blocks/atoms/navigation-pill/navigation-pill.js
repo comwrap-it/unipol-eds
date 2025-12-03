@@ -1,5 +1,5 @@
 /**
- * Navigation Pill - Updated Version
+ * Navigation Pill
  */
 
 export const NAVIGATION_PILL_VARIANTS = {
