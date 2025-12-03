@@ -41,6 +41,27 @@
           "name": "header-nav-pill-tab"
         },
         {
+          "component": "select",
+          "name": "navigationPill-typology",
+          "valueType": "string",
+          "label": "Tipologia Destinazione",
+          "options": [
+            { "name": "Custom", "value": "custom" },
+            { "name": "Preventivatore", "value": "preventivatore" },
+            { "name": "Locator", "value": "locator" },
+            { "name": "Login", "value": "login" },
+            { "name": "Link", "value": "link" }
+          ]
+        },
+        {
+          "component": "text",
+          "name": "navigationPillCustomField-custom",
+          "label": "navigationPillCustomField Label",
+          "condition": {
+            "==": [{ "var": "navigationPill-typology" }, "custom"]
+          }
+        },
+        {
           "component": "container",
           "name": "header-nav-pill-container",
           "fields": [
