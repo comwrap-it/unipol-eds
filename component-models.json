@@ -493,30 +493,9 @@
         "name": "header-nav-pill-tab"
       },
       {
-        "component": "select",
-        "name": "navigationPillTypology",
-        "valueType": "string",
-        "value": "custom",
-        "label": "Tipologia Destinazione",
-        "options": [
-          {
-            "name": "Custom",
-            "value": "custom"
-          },
-          {
-            "name": "Preventivatore",
-            "value": "preventivatore"
-          },
-          {
-            "name": "Locator",
-            "value": "locator"
-          }
-        ]
-      },
-      {
         "component": "text",
         "name": "navigationPillLabel",
-        "label": "Configurazione label navigation pill",
+        "label": "Label",
         "required": true
       },
       {
@@ -539,52 +518,18 @@
         "component": "aem-content",
         "name": "navigationPillHref",
         "label": "Link URL",
-        "condition": {
-          "===": [
-            {
-              "var": "navigationPillTypology"
-            },
-            "custom"
-          ]
-        }
-      },
-      {
-        "component": "boolean",
-        "label": "Apri in una nuova scheda",
-        "description": "Attivo: il bottone aprirà il link in una nuova scheda",
-        "name": "navPillOpenInNewTab",
-        "valueType": "boolean",
-        "value": false,
-        "condition": {
-          "===": [
-            {
-              "var": "navigationPillTypology"
-            },
-            "custom"
-          ]
-        }
-      },
-      {
-        "component": "boolean",
-        "label": "Icona Sinistra",
-        "description": "Attivo: mostra la configurazione dell'icona sinistra.",
-        "name": "showNavPillLeftIcon",
-        "valueType": "boolean",
-        "value": false
-      },
-      {
-        "component": "boolean",
-        "label": "Icona Destra",
-        "description": "Attivo: mostra la configurazione dell'icona destra.",
-        "name": "showNavPillRightIcon",
-        "valueType": "boolean",
-        "value": false
+        "description": "Optional URL the pill points to"
       },
       {
         "component": "select",
         "name": "navigationPillLeftIcon",
-        "label": "Configurazione icona sinistra",
+        "label": "Left Icon",
+        "description": "Optional icon on the left",
         "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
           {
             "name": "Chevron Left",
             "value": "un-icon-chevron-left"
@@ -597,20 +542,12 @@
             "name": "Search Icon",
             "value": "un-icon-search"
           }
-        ],
-        "condition": {
-          "===": [
-            {
-              "var": "showNavPillLeftIcon"
-            },
-            true
-          ]
-        }
+        ]
       },
       {
         "component": "select",
         "name": "navigationPillLeftIconSize",
-        "label": "Dimensione icona sinistra",
+        "label": "Size",
         "value": "medium",
         "options": [
           {
@@ -629,21 +566,18 @@
             "name": "Extra Large",
             "value": "extra-large"
           }
-        ],
-        "condition": {
-          "===": [
-            {
-              "var": "showNavPillLeftIcon"
-            },
-            true
-          ]
-        }
+        ]
       },
       {
         "component": "select",
         "name": "navigationPillRightIcon",
-        "label": "Configurazione icona destra",
+        "label": "Right Icon",
+        "description": "Optional icon on the right",
         "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
           {
             "name": "Chevron Left",
             "value": "chevron-left"
@@ -656,20 +590,12 @@
             "name": "Search",
             "value": "search-icon"
           }
-        ],
-        "condition": {
-          "===": [
-            {
-              "var": "showNavPillRightIcon"
-            },
-            true
-          ]
-        }
+        ]
       },
       {
         "component": "select",
         "name": "navigationPillRightIconSize",
-        "label": "Dimensione icona destra",
+        "label": "Size",
         "value": "medium",
         "options": [
           {
@@ -688,15 +614,7 @@
             "name": "Extra Large",
             "value": "extra-large"
           }
-        ],
-        "condition": {
-          "===": [
-            {
-              "var": "showNavPillRightIcon"
-            },
-            true
-          ]
-        }
+        ]
       },
       {
         "component": "tab",
@@ -2060,30 +1978,9 @@
         "label": "Configurazione Navigation Pill",
         "fields": [
           {
-            "component": "select",
-            "name": "navigationPillTypology",
-            "valueType": "string",
-            "value": "custom",
-            "label": "Tipologia Destinazione",
-            "options": [
-              {
-                "name": "Custom",
-                "value": "custom"
-              },
-              {
-                "name": "Preventivatore",
-                "value": "preventivatore"
-              },
-              {
-                "name": "Locator",
-                "value": "locator"
-              }
-            ]
-          },
-          {
             "component": "text",
             "name": "navigationPillLabel",
-            "label": "Configurazione label navigation pill",
+            "label": "Label",
             "required": true
           },
           {
@@ -2106,52 +2003,18 @@
             "component": "aem-content",
             "name": "navigationPillHref",
             "label": "Link URL",
-            "condition": {
-              "===": [
-                {
-                  "var": "navigationPillTypology"
-                },
-                "custom"
-              ]
-            }
-          },
-          {
-            "component": "boolean",
-            "label": "Apri in una nuova scheda",
-            "description": "Attivo: il bottone aprirà il link in una nuova scheda",
-            "name": "navPillOpenInNewTab",
-            "valueType": "boolean",
-            "value": false,
-            "condition": {
-              "===": [
-                {
-                  "var": "navigationPillTypology"
-                },
-                "custom"
-              ]
-            }
-          },
-          {
-            "component": "boolean",
-            "label": "Icona Sinistra",
-            "description": "Attivo: mostra la configurazione dell'icona sinistra.",
-            "name": "showNavPillLeftIcon",
-            "valueType": "boolean",
-            "value": false
-          },
-          {
-            "component": "boolean",
-            "label": "Icona Destra",
-            "description": "Attivo: mostra la configurazione dell'icona destra.",
-            "name": "showNavPillRightIcon",
-            "valueType": "boolean",
-            "value": false
+            "description": "Optional URL the pill points to"
           },
           {
             "component": "select",
             "name": "navigationPillLeftIcon",
-            "label": "Configurazione icona sinistra",
+            "label": "Left Icon",
+            "description": "Optional icon on the left",
             "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
               {
                 "name": "Chevron Left",
                 "value": "un-icon-chevron-left"
@@ -2164,20 +2027,12 @@
                 "name": "Search Icon",
                 "value": "un-icon-search"
               }
-            ],
-            "condition": {
-              "===": [
-                {
-                  "var": "showNavPillLeftIcon"
-                },
-                true
-              ]
-            }
+            ]
           },
           {
             "component": "select",
             "name": "navigationPillLeftIconSize",
-            "label": "Dimensione icona sinistra",
+            "label": "Size",
             "value": "medium",
             "options": [
               {
@@ -2196,21 +2051,18 @@
                 "name": "Extra Large",
                 "value": "extra-large"
               }
-            ],
-            "condition": {
-              "===": [
-                {
-                  "var": "showNavPillLeftIcon"
-                },
-                true
-              ]
-            }
+            ]
           },
           {
             "component": "select",
             "name": "navigationPillRightIcon",
-            "label": "Configurazione icona destra",
+            "label": "Right Icon",
+            "description": "Optional icon on the right",
             "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
               {
                 "name": "Chevron Left",
                 "value": "chevron-left"
@@ -2223,20 +2075,12 @@
                 "name": "Search",
                 "value": "search-icon"
               }
-            ],
-            "condition": {
-              "===": [
-                {
-                  "var": "showNavPillRightIcon"
-                },
-                true
-              ]
-            }
+            ]
           },
           {
             "component": "select",
             "name": "navigationPillRightIconSize",
-            "label": "Dimensione icona destra",
+            "label": "Size",
             "value": "medium",
             "options": [
               {
@@ -2255,15 +2099,7 @@
                 "name": "Extra Large",
                 "value": "extra-large"
               }
-            ],
-            "condition": {
-              "===": [
-                {
-                  "var": "showNavPillRightIcon"
-                },
-                true
-              ]
-            }
+            ]
           }
         ]
       },
@@ -3964,30 +3800,9 @@
     "id": "navigation-pill",
     "fields": [
       {
-        "component": "select",
-        "name": "navigationPillTypology",
-        "valueType": "string",
-        "value": "custom",
-        "label": "Tipologia Destinazione",
-        "options": [
-          {
-            "name": "Custom",
-            "value": "custom"
-          },
-          {
-            "name": "Preventivatore",
-            "value": "preventivatore"
-          },
-          {
-            "name": "Locator",
-            "value": "locator"
-          }
-        ]
-      },
-      {
         "component": "text",
         "name": "navigationPillLabel",
-        "label": "Configurazione label navigation pill",
+        "label": "Label",
         "required": true
       },
       {
@@ -4010,52 +3825,18 @@
         "component": "aem-content",
         "name": "navigationPillHref",
         "label": "Link URL",
-        "condition": {
-          "===": [
-            {
-              "var": "navigationPillTypology"
-            },
-            "custom"
-          ]
-        }
-      },
-      {
-        "component": "boolean",
-        "label": "Apri in una nuova scheda",
-        "description": "Attivo: il bottone aprirà il link in una nuova scheda",
-        "name": "navPillOpenInNewTab",
-        "valueType": "boolean",
-        "value": false,
-        "condition": {
-          "===": [
-            {
-              "var": "navigationPillTypology"
-            },
-            "custom"
-          ]
-        }
-      },
-      {
-        "component": "boolean",
-        "label": "Icona Sinistra",
-        "description": "Attivo: mostra la configurazione dell'icona sinistra.",
-        "name": "showNavPillLeftIcon",
-        "valueType": "boolean",
-        "value": false
-      },
-      {
-        "component": "boolean",
-        "label": "Icona Destra",
-        "description": "Attivo: mostra la configurazione dell'icona destra.",
-        "name": "showNavPillRightIcon",
-        "valueType": "boolean",
-        "value": false
+        "description": "Optional URL the pill points to"
       },
       {
         "component": "select",
         "name": "navigationPillLeftIcon",
-        "label": "Configurazione icona sinistra",
+        "label": "Left Icon",
+        "description": "Optional icon on the left",
         "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
           {
             "name": "Chevron Left",
             "value": "un-icon-chevron-left"
@@ -4068,20 +3849,12 @@
             "name": "Search Icon",
             "value": "un-icon-search"
           }
-        ],
-        "condition": {
-          "===": [
-            {
-              "var": "showNavPillLeftIcon"
-            },
-            true
-          ]
-        }
+        ]
       },
       {
         "component": "select",
         "name": "navigationPillLeftIconSize",
-        "label": "Dimensione icona sinistra",
+        "label": "Size",
         "value": "medium",
         "options": [
           {
@@ -4100,21 +3873,18 @@
             "name": "Extra Large",
             "value": "extra-large"
           }
-        ],
-        "condition": {
-          "===": [
-            {
-              "var": "showNavPillLeftIcon"
-            },
-            true
-          ]
-        }
+        ]
       },
       {
         "component": "select",
         "name": "navigationPillRightIcon",
-        "label": "Configurazione icona destra",
+        "label": "Right Icon",
+        "description": "Optional icon on the right",
         "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
           {
             "name": "Chevron Left",
             "value": "chevron-left"
@@ -4127,20 +3897,12 @@
             "name": "Search",
             "value": "search-icon"
           }
-        ],
-        "condition": {
-          "===": [
-            {
-              "var": "showNavPillRightIcon"
-            },
-            true
-          ]
-        }
+        ]
       },
       {
         "component": "select",
         "name": "navigationPillRightIconSize",
-        "label": "Dimensione icona destra",
+        "label": "Size",
         "value": "medium",
         "options": [
           {
@@ -4159,15 +3921,7 @@
             "name": "Extra Large",
             "value": "extra-large"
           }
-        ],
-        "condition": {
-          "===": [
-            {
-              "var": "showNavPillRightIcon"
-            },
-            true
-          ]
-        }
+        ]
       }
     ]
   },

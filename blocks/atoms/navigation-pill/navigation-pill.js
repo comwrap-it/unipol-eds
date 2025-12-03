@@ -1,5 +1,5 @@
 /**
- * Navigation Pill
+ * Navigation Pill - Utility Component
  */
 
 export const NAVIGATION_PILL_VARIANTS = {
@@ -14,14 +14,11 @@ export const NAVIGATION_PILL_ICON_SIZES = {
   EXTRA_LARGE: 'extra-large',
 };
 
-export const NAVIGATION_PILL_TYPOLOGIES = {
-  CUSTOM: 'custom',
-  PREVENTIVATORE: 'preventivatore',
-  LOCATOR: 'locator',
-};
-
 /**
  * Retrieves instrumentation attributes
+ *
+ * @param {HTMLElement} element
+ * @returns {Object}
  */
 export function extractInstrumentationAttributes(element) {
   const instrumentation = {};
@@ -38,6 +35,16 @@ export function extractInstrumentationAttributes(element) {
 
 /**
  * Creates a Navigation Pill
+ *
+ * @param {string} label - Text.
+ * @param {string} [href] - link.
+ * @param {string} variant - "primary" or "secondary".
+ * @param {string} [leftIcon] - Left Icon className.
+ * @param {string} [leftIconSize] - Left Icon size.
+ * @param {string} [rightIcon] - Right Icon className.
+ * @param {string} [rightIconSize] - Right Icon size.
+ * @param {Object} [instrumentation={}] - AEM attributes.
+ * @returns {HTMLElement}
  */
 export function createNavigationPill(
   label,
@@ -47,31 +54,22 @@ export function createNavigationPill(
   leftIconSize,
   rightIcon,
   rightIconSize,
-  openInNewTab,
-  typology,
-  showLeftIcon,
-  showRightIcon,
   instrumentation = {},
 ) {
-  const isCustom = typology === NAVIGATION_PILL_TYPOLOGIES.CUSTOM;
-  const isLink = Boolean(href) && isCustom;
-
+  const isLink = Boolean(href);
   const el = isLink ? document.createElement('a') : document.createElement('button');
 
-  // LEFT ICON
-  if (showLeftIcon && leftIcon) {
+  if (leftIcon) {
     const span = document.createElement('span');
     span.className = `icon icon-${leftIconSize || NAVIGATION_PILL_ICON_SIZES.MEDIUM} ${leftIcon}`;
     el.appendChild(span);
   }
 
-  // TEXT
   const txt = document.createElement('span');
   txt.textContent = label;
   el.appendChild(txt);
 
-  // RIGHT ICON
-  if (showRightIcon && rightIcon) {
+  if (rightIcon) {
     const span = document.createElement('span');
     span.className = `icon icon-${rightIconSize || NAVIGATION_PILL_ICON_SIZES.MEDIUM} ${rightIcon}`;
     el.appendChild(span);
@@ -83,11 +81,6 @@ export function createNavigationPill(
   if (isLink) {
     el.href = href;
     el.setAttribute('role', 'button');
-
-    if (openInNewTab) {
-      el.target = '_blank';
-      el.rel = 'noopener';
-    }
   }
 
   el.tabIndex = 0;
@@ -108,52 +101,46 @@ export function createNavigationPill(
 
 /**
  * Retrieves Universal Editor values.
+ *
+ * @param {Array<HTMLElement>} rows
+ * @returns {{
+ *   text: string,
+ *   variant: string,
+ *   href: string,
+ *   leftIcon: string,
+ *   rightIcon: string,
+ *   instrumentation: Object
+ * }}
  */
 function extractValuesFromRows(rows) {
-  const typology = rows[0]?.textContent?.trim() || NAVIGATION_PILL_TYPOLOGIES.CUSTOM;
-
-  const text = rows[1]?.textContent?.trim() || 'Navigation Pill';
-
-  const variant = rows[2]?.textContent?.trim().toLowerCase()
+  const text = rows[0]?.textContent?.trim() || 'Navigation Pill';
+  const variant = rows[1]?.textContent?.trim().toLowerCase()
     || NAVIGATION_PILL_VARIANTS.PRIMARY;
 
-  const href = typology === NAVIGATION_PILL_TYPOLOGIES.CUSTOM
-    ? (rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || '')
-    : '';
+  const href = rows[2]?.querySelector('a')?.href
+    || rows[2]?.textContent?.trim()
+    || '';
 
-  const openInNewTab = typology === NAVIGATION_PILL_TYPOLOGIES.CUSTOM
-    ? rows[4]?.textContent?.trim() === 'true'
-    : false;
+  const leftIcon = rows[3]?.textContent?.trim() || '';
+  const rightIcon = rows[4]?.textContent?.trim() || '';
 
-  const showLeftIcon = rows[5]?.textContent?.trim() === 'true';
-  const showRightIcon = rows[6]?.textContent?.trim() === 'true';
-
-  const leftIcon = showLeftIcon ? (rows[7]?.textContent?.trim() || '') : '';
-  const leftIconSize = showLeftIcon ? (rows[8]?.textContent?.trim() || NAVIGATION_PILL_ICON_SIZES.MEDIUM) : '';
-
-  const rightIcon = showRightIcon ? (rows[9]?.textContent?.trim() || '') : '';
-  const rightIconSize = showRightIcon ? (rows[10]?.textContent?.trim() || NAVIGATION_PILL_ICON_SIZES.MEDIUM) : '';
-
-  const instrumentation = extractInstrumentationAttributes(rows[1]);
+  const instrumentation = extractInstrumentationAttributes(rows[0]);
 
   return {
-    typology,
     text,
     variant,
     href,
-    openInNewTab,
-    showLeftIcon,
     leftIcon,
-    leftIconSize,
-    showRightIcon,
     rightIcon,
-    rightIconSize,
     instrumentation,
   };
 }
 
 /**
  * Decorator for Navigation Pill
+ *
+ * @param {HTMLElement} block
+ * @returns {void}
  */
 export default function decorateNavigationPill(block) {
   if (!block) return;
@@ -162,7 +149,14 @@ export default function decorateNavigationPill(block) {
   const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) rows = [...wrapper.children];
 
-  const values = extractValuesFromRows(rows);
+  const {
+    text,
+    variant,
+    href,
+    leftIcon,
+    rightIcon,
+    instrumentation,
+  } = extractValuesFromRows(rows);
 
   const hasInstrumentation = block.hasAttribute('data-aue-resource')
     || block.querySelector('[data-aue-resource]')
@@ -173,48 +167,37 @@ export default function decorateNavigationPill(block) {
   if (hasInstrumentation) {
     pillElement = block.querySelector('a, button');
 
-    const newPill = createNavigationPill(
-      values.text,
-      values.href,
-      values.variant,
-      values.leftIcon,
-      values.leftIconSize,
-      values.rightIcon,
-      values.rightIconSize,
-      values.openInNewTab,
-      values.typology,
-      values.showLeftIcon,
-      values.showRightIcon,
-      values.instrumentation,
-    );
-
     if (!pillElement) {
+      pillElement = createNavigationPill(
+        text,
+        href,
+        variant,
+        leftIcon,
+        rightIcon,
+        instrumentation,
+      );
+
       if (rows[0]) {
         rows[0].textContent = '';
-        rows[0].appendChild(newPill);
+        rows[0].appendChild(pillElement);
       } else {
-        block.appendChild(newPill);
+        block.appendChild(pillElement);
       }
     } else {
-      pillElement.replaceWith(newPill);
+      pillElement.replaceWith(
+        createNavigationPill(
+          text,
+          href,
+          variant,
+          leftIcon,
+          rightIcon,
+          instrumentation,
+        ),
+      );
     }
   } else {
     block.textContent = '';
-
-    pillElement = createNavigationPill(
-      values.text,
-      values.href,
-      values.variant,
-      values.leftIcon,
-      values.leftIconSize,
-      values.rightIcon,
-      values.rightIconSize,
-      values.openInNewTab,
-      values.typology,
-      values.showLeftIcon,
-      values.showRightIcon,
-    );
-
+    pillElement = createNavigationPill(text, href, variant, leftIcon, rightIcon);
     block.appendChild(pillElement);
   }
 

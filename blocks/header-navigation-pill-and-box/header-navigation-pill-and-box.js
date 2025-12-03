@@ -19,21 +19,15 @@ async function ensureStylesLoaded() {
 
 function buildNavigationPill() {
   return createNavigationPill(
-    'NavPill',               // label
-    '',                      // href
+    'NavPill',
+    undefined,
     NAVIGATION_PILL_VARIANTS.SECONDARY,
-    'search-icon',           // leftIcon
+    'search-icon',
     NAVIGATION_PILL_ICON_SIZES.LARGE,
-    'phone-icon',            // rightIcon
+    'phone-icon',
     NAVIGATION_PILL_ICON_SIZES.SMALL,
-    false,                   // openInNewTab
-    NAVIGATION_PILL_TYPOLOGIES.CUSTOM,
-    true,                    // showLeftIcon
-    true,                    // showRightIcon
-    {}                       // instrumentation
   );
 }
-
 
 export default async function decorate(block) {
   if (!block) return;
@@ -43,11 +37,9 @@ export default async function decorate(block) {
   const headerNavPill = document.createElement('div');
   headerNavPill.className = 'uheader-navigation-pill';
 
-
   headerNavPill.appendChild(buildNavigationPill());
 
   // Mount
   block.innerHTML = '';
   block.appendChild(headerNavPill);
 }
-
