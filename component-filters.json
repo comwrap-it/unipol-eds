@@ -46,12 +46,6 @@
     ]
   },
   {
-    "id": "blog-carousel",
-    "components": [
-      "blog-preview-card"
-    ]
-  },
-  {
     "id": "cards",
     "components": [
       "card"

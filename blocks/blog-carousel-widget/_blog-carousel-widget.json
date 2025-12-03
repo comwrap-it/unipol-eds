@@ -20,13 +20,7 @@
               "blog-carousel": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Blog Carousel",
-                "filter": "blog-carousel",
-                "blog-preview-card": {
-                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
-                  "name": "Blog Preview Card",
-                  "filter": "blog-preview-card",
-                  "model": "blog-preview-card"
-                }
+                "filter": "blog-carousel"
               }
             }
           }

@@ -17,12 +17,5 @@
     }
   ],
   "models": [],
-  "filters": [
-    {
-      "id": "blog-carousel",
-      "components": [
-        "blog-preview-card"
-      ]
-    }
-  ]
+  "filters": []
 }
