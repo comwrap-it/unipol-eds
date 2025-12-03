@@ -1,7 +1,4 @@
-/* eslint-disable import/extensions */
-/* eslint-disable no-console */
-// eslint-disable-next-line import/no-unresolved
-import loadSwiper from '../../scripts/delayed.js';
+import loadSwiper from '../../scripts/lib/utils.js';
 
 export default async function handleInsuranceProductCarouselWidget() {
   const block = document.querySelector('.insurance-product-carousel-widget');
