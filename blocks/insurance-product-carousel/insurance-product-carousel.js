@@ -183,15 +183,6 @@ export default async function decorate(block) {
   // Replace block with carousel
   block.replaceWith(carousel);
 
-  function handleAddingCard(e) {
-    // eslint-disable-next-line no-console
-    console.info('adding card', e);
-  }
-
-  if (hasInstrumentation) {
-    block.addEventListener('aue:content-add', handleAddingCard);
-  }
-
   if (mq.matches) {
     const handleInsuranceProductCarouselWidget = await import('../insurance-product-carousel-widget/insurance-product-carousel-widget.js');
     handleInsuranceProductCarouselWidget.default();
