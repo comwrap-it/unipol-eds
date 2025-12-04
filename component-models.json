@@ -402,6 +402,14 @@
         "name": "header-nav-pill-tab"
       },
       {
+        "component": "boolean",
+        "label": "Nascondi label",
+        "description": "Attivo: nasconde la label. Disattivo: rende visibile la label.",
+        "name": "showNavigationPillLabel",
+        "valueType": "boolean",
+        "value": false
+      },
+      {
         "component": "text",
         "name": "navigationPillLabel",
         "label": "Label",
@@ -1886,6 +1894,14 @@
         "name": "test-button-container-navigation-pill",
         "label": "Configurazione Navigation Pill",
         "fields": [
+          {
+            "component": "boolean",
+            "label": "Nascondi label",
+            "description": "Attivo: nasconde la label. Disattivo: rende visibile la label.",
+            "name": "showNavigationPillLabel",
+            "valueType": "boolean",
+            "value": false
+          },
           {
             "component": "text",
             "name": "navigationPillLabel",
@@ -3708,6 +3724,14 @@
   {
     "id": "navigation-pill",
     "fields": [
+      {
+        "component": "boolean",
+        "label": "Nascondi label",
+        "description": "Attivo: nasconde la label. Disattivo: rende visibile la label.",
+        "name": "showNavigationPillLabel",
+        "valueType": "boolean",
+        "value": false
+      },
       {
         "component": "text",
         "name": "navigationPillLabel",
