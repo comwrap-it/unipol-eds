@@ -119,19 +119,21 @@ function attachEventListners(main) {
 
 attachEventListners(document.querySelector('main'));
 
-async function handleInit(event) {
-  // eslint-disable-next-line no-console
-  console.info('INIT INTERCEPTED: ', event);
-}
-
 function attachEventInit(containers) {
-  containers.forEach((container) => container?.addEventListener('load', async (event) => {
-    // eslint-disable-next-line no-unused-vars
-    const applied = await handleInit(event);
-  }));
+  containers.forEach((container) => {
+    const initObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === "attributes" && mutation.attributeName === "data-initialized") {
+          const newValue = container.getAttribute("data-initialized");
+          console.log(`data-initialized changed from: ${mutation.oldValue} to ${newValue}`);
+        }
+      });
+    });
+    initObserver.observe(container, {attributes: true, attributeFilter: ["data-initialized"],});
+  });
 }
 
-attachEventInit(document.querySelectorAll('.insurance-product-carousel-container'));
+attachEventInit(document.querySelectorAll('[data-aue-filter="insurance-product-carousel"]'));
 
 // decorate rich text
 // this has to happen after decorateMain(), and everythime decorateBlocks() is called
