@@ -52,8 +52,13 @@ function extractNavigationPillValues(row) {
   };
 }
 
-function buildNavigationPill(row, container, openBoxRef) {
+function buildNavigationPill(row, openBoxRef) {
   const cfg = extractNavigationPillValues(row);
+
+  // Wrapper per pill + box
+  const wrapper = document.createElement('div');
+  wrapper.className = 'navigation-pill-wrapper';
+
   const pillEl = createNavigationPill(
     cfg.text,
     cfg.href,
@@ -66,14 +71,15 @@ function buildNavigationPill(row, container, openBoxRef) {
     cfg.hideLabel,
   );
 
+  wrapper.appendChild(pillEl);
+
   if (cfg.boxText) {
     const box = document.createElement('div');
     box.className = 'header-box-text-container';
     box.textContent = cfg.boxText;
     box.style.display = 'none';
 
-    container.appendChild(pillEl);
-    container.appendChild(box);
+    wrapper.appendChild(box);
 
     pillEl.addEventListener('click', () => {
       if (box.style.display === 'none') {
@@ -87,11 +93,9 @@ function buildNavigationPill(row, container, openBoxRef) {
         openBoxRef.current = null;
       }
     });
-
-    return pillEl;
   }
 
-  return pillEl;
+  return wrapper;
 }
 
 export default async function decorate(block) {
