@@ -17,4 +17,5 @@
 .navigation-pill-container .navigation-pill-wrapper .header-nav-pill-active,
 .navigation-pill-container .navigation-pill-wrapper .header-nav-pill-active:hover {
     background-color: var(--Navigation-Pill-Active-Background, #f9f9f7);
+    color: var(--Navigation-Pill-Active-Text);
 }

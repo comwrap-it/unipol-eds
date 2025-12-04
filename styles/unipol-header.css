@@ -3,6 +3,7 @@
 .sectionheader-utilities-section-container {
     display: flex;
     justify-content: space-between;
+    align-items: center;
     position: absolute;
     padding: var(--Header-Vertical-Padding-M-Tp, 24px); var(--Header-Horizontal-Padding-D-Ds, 24px);
     width: 100%;
