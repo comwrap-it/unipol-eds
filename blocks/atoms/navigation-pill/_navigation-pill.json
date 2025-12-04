@@ -75,8 +75,24 @@
               "value": "un-icon-chevron-right"
             },
             {
+              "name": "Arrow up right Icon",
+              "value": "un-icon-arrow-up-right"
+            },
+            {
               "name": "Search Icon",
               "value": "un-icon-search"
+            },
+            {
+              "name": "Math Operations Icon",
+              "value": "un-icon-math-operations"
+            },
+            {
+              "name": "User Icon",
+              "value": "un-icon-user"
+            },
+            {
+              "name": "Basket Icon",
+              "value": "un-icon-basket"
             }
           ]
         },
@@ -116,15 +132,31 @@
             },
             {
               "name": "Chevron Left",
-              "value": "chevron-left"
+              "value": "un-icon-chevron-left"
             },
             {
               "name": "Chevron Right",
-              "value": "chevron-right"
+              "value": "un-icon-chevron-right"
             },
             {
-              "name": "Search",
-              "value": "search-icon"
+              "name": "Arrow up right Icon",
+              "value": "un-icon-arrow-up-right"
+            },
+            {
+              "name": "Search Icon",
+              "value": "un-icon-search"
+            },
+            {
+              "name": "Math Operations Icon",
+              "value": "un-icon-math-operations"
+            },
+            {
+              "name": "User Icon",
+              "value": "un-icon-user"
+            },
+            {
+              "name": "Basket Icon",
+              "value": "un-icon-basket"
             }
           ]
         },
