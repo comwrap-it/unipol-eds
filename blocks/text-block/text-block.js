@@ -25,13 +25,24 @@ async function ensureBtnStylesLoaded() {
 function extractTitleElement(titleRow) {
   if (!titleRow) return null;
 
+  // Check if there's already a heading element
   const existingHeading = titleRow.querySelector('h1, h2, h3, h4, h5, h6');
   if (existingHeading) {
     moveInstrumentation(titleRow, existingHeading);
     return existingHeading;
   }
 
-  // Extract text content from any nested structure (div > p, etc.)
+  // Check for element with instrumentation (text field from Universal Editor)
+  const instrumentedElement = titleRow.querySelector('[data-aue-prop], [data-aue-resource]');
+  if (instrumentedElement) {
+    const title = document.createElement('h2');
+    title.textContent = instrumentedElement.textContent?.trim() || '';
+    // Move instrumentation from the instrumented element
+    moveInstrumentation(instrumentedElement, title);
+    return title.textContent ? title : null;
+  }
+
+  // Fallback: extract text content from any nested structure
   const textContent = titleRow.textContent?.trim();
   if (!textContent) return null;
 
