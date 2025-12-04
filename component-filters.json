@@ -6,6 +6,7 @@
       "kpi-highlights-widget",
       "insurance-product-carousel-widget",
       "hero-widget",
+      "unipol-header",
       "unipol-footer",
       "blog-carousel-widget"
     ]
@@ -87,6 +88,18 @@
     "max": 8
   },
   {
+    "id": "header-navigation-section",
+    "components": [
+      "header-navigation-pill-and-box"
+    ]
+  },
+  {
+    "id": "header-utilities-section",
+    "components": [
+      "header-utilities-navigation-pill"
+    ]
+  },
+  {
     "id": "hero-widget",
     "components": [
       "full-screen-hero-carousel"
@@ -128,6 +141,14 @@
     "id": "options",
     "components": [
       "unipol-option"
+    ]
+  },
+  {
+    "id": "unipol-header",
+    "components": [
+      "header-logo",
+      "header-navigation-section",
+      "header-utilities-section"
     ]
   },
   {

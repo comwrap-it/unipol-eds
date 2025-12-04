@@ -47,6 +47,9 @@
           "...": "../blocks/hero/_hero.json#/definitions"
         },
         {
+          "...": "./_unipol-header.json#/definitions"
+        },
+        {
           "...": "./_unipol-footer.json#/definitions"
         }
       ]

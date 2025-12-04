@@ -1,0 +1,4 @@
+.header-logo-link img {
+    width: 100px;
+    height: var(--Header-Logo-Height, 40px);
+}

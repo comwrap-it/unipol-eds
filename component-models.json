@@ -514,102 +514,305 @@
     ]
   },
   {
-    "id": "header-unipol",
+    "id": "header-logo",
     "fields": [
       {
         "component": "reference",
-        "name": "logo",
-        "label": "Logo Image",
-        "description": "Upload or select the header logo",
+        "valueType": "string",
+        "name": "unipolHeaderLogo",
+        "label": "Logo Unipol Header"
+      },
+      {
+        "component": "aem-content",
+        "name": "UnipolHeaderLogoHref",
+        "label": "Link URL logo Unipol header"
+      }
+    ]
+  },
+  {
+    "id": "header-navigation-pill-and-box",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Configurazione Navigation Pill",
+        "name": "header-nav-pill-tab"
+      },
+      {
+        "component": "boolean",
+        "label": "Nascondi label",
+        "description": "Attivo: nasconde il contenuto testuale della label. Disattivo: rende visibile il contenuto testuale della label.",
+        "name": "showNavigationPillLabel",
+        "valueType": "boolean",
+        "value": false
+      },
+      {
+        "component": "text",
+        "name": "navigationPillLabel",
+        "label": "Label",
         "required": true
       },
       {
-        "component": "container",
-        "name": "navigationItems",
-        "label": "Navigation Items",
-        "description": "Add navigation pills to the header",
-        "multi": true,
-        "fields": [
+        "component": "select",
+        "name": "navigationPillVariant",
+        "label": "Variant",
+        "value": "primary",
+        "options": [
           {
-            "component": "text",
-            "name": "navLabel",
-            "label": "Label",
-            "required": true,
-            "maxlength": 25
+            "name": "Primary",
+            "value": "primary"
           },
           {
-            "component": "aem-content",
-            "name": "navHref",
-            "label": "Link URL",
-            "required": true
+            "name": "Secondary",
+            "value": "secondary"
+          }
+        ]
+      },
+      {
+        "component": "aem-content",
+        "name": "navigationPillHref",
+        "label": "Link URL",
+        "description": "Optional URL the pill points to"
+      },
+      {
+        "component": "select",
+        "name": "navigationPillLeftIcon",
+        "label": "Left Icon",
+        "description": "Optional icon on the left",
+        "options": [
+          {
+            "name": "None",
+            "value": ""
           },
           {
-            "component": "select",
-            "name": "navVariant",
-            "label": "Variant",
-            "value": "primary",
-            "options": [
-              {
-                "name": "Primary",
-                "value": "primary"
-              },
-              {
-                "name": "Secondary",
-                "value": "secondary"
-              }
-            ]
+            "name": "Chevron Left",
+            "value": "un-icon-chevron-left"
           },
           {
-            "component": "select",
-            "name": "navLeftIcon",
-            "label": "Left Icon",
-            "description": "Optional icon on the left",
-            "options": [
-              {
-                "name": "None",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "chevron-left-icon"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "chevron-right-icon"
-              },
-              {
-                "name": "Search",
-                "value": "search-icon"
-              },
-              {
-                "name": "Phone",
-                "value": "phone-icon"
-              }
-            ]
+            "name": "Chevron Right",
+            "value": "un-icon-chevron-right"
           },
           {
-            "component": "select",
-            "name": "navRightIcon",
-            "label": "Right Icon",
-            "description": "Optional icon on the right",
-            "options": [
-              {
-                "name": "None",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "chevron-left-icon"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "chevron-right-icon"
-              },
-              {
-                "name": "Dropdown",
-                "value": "dropdown-icon"
-              }
-            ]
+            "name": "Search Icon",
+            "value": "un-icon-search"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "navigationPillLeftIconSize",
+        "label": "Size",
+        "value": "medium",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          },
+          {
+            "name": "Extra Large",
+            "value": "extra-large"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "navigationPillRightIcon",
+        "label": "Right Icon",
+        "description": "Optional icon on the right",
+        "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
+          {
+            "name": "Chevron Left",
+            "value": "chevron-left"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "chevron-right"
+          },
+          {
+            "name": "Search",
+            "value": "search-icon"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "navigationPillRightIconSize",
+        "label": "Size",
+        "value": "medium",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          },
+          {
+            "name": "Extra Large",
+            "value": "extra-large"
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Box",
+        "name": "header-box-tab"
+      },
+      {
+        "component": "text",
+        "name": "header-box-top-text",
+        "label": "Titolo Box Header"
+      }
+    ]
+  },
+  {
+    "id": "header-utilities-navigation-pill",
+    "fields": [
+      {
+        "component": "boolean",
+        "label": "Nascondi label",
+        "description": "Attivo: nasconde il contenuto testuale della label. Disattivo: rende visibile il contenuto testuale della label.",
+        "name": "showNavigationPillLabel",
+        "valueType": "boolean",
+        "value": false
+      },
+      {
+        "component": "text",
+        "name": "navigationPillLabel",
+        "label": "Label",
+        "required": true
+      },
+      {
+        "component": "select",
+        "name": "navigationPillVariant",
+        "label": "Variant",
+        "value": "primary",
+        "options": [
+          {
+            "name": "Primary",
+            "value": "primary"
+          },
+          {
+            "name": "Secondary",
+            "value": "secondary"
+          }
+        ]
+      },
+      {
+        "component": "aem-content",
+        "name": "navigationPillHref",
+        "label": "Link URL",
+        "description": "Optional URL the pill points to"
+      },
+      {
+        "component": "select",
+        "name": "navigationPillLeftIcon",
+        "label": "Left Icon",
+        "description": "Optional icon on the left",
+        "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
+          {
+            "name": "Chevron Left",
+            "value": "un-icon-chevron-left"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "un-icon-chevron-right"
+          },
+          {
+            "name": "Search Icon",
+            "value": "un-icon-search"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "navigationPillLeftIconSize",
+        "label": "Size",
+        "value": "medium",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          },
+          {
+            "name": "Extra Large",
+            "value": "extra-large"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "navigationPillRightIcon",
+        "label": "Right Icon",
+        "description": "Optional icon on the right",
+        "options": [
+          {
+            "name": "None",
+            "value": ""
+          },
+          {
+            "name": "Chevron Left",
+            "value": "chevron-left"
+          },
+          {
+            "name": "Chevron Right",
+            "value": "chevron-right"
+          },
+          {
+            "name": "Search",
+            "value": "search-icon"
+          }
+        ]
+      },
+      {
+        "component": "select",
+        "name": "navigationPillRightIconSize",
+        "label": "Size",
+        "value": "medium",
+        "options": [
+          {
+            "name": "Small",
+            "value": "small"
+          },
+          {
+            "name": "Medium",
+            "value": "medium"
+          },
+          {
+            "name": "Large",
+            "value": "large"
+          },
+          {
+            "name": "Extra Large",
+            "value": "extra-large"
           }
         ]
       }
@@ -1976,6 +2179,14 @@
         "name": "test-button-container-navigation-pill",
         "label": "Configurazione Navigation Pill",
         "fields": [
+          {
+            "component": "boolean",
+            "label": "Nascondi label",
+            "description": "Attivo: nasconde il contenuto testuale della label. Disattivo: rende visibile il contenuto testuale della label.",
+            "name": "showNavigationPillLabel",
+            "valueType": "boolean",
+            "value": false
+          },
           {
             "component": "text",
             "name": "navigationPillLabel",
@@ -3799,6 +4010,14 @@
     "id": "navigation-pill",
     "fields": [
       {
+        "component": "boolean",
+        "label": "Nascondi label",
+        "description": "Attivo: nasconde il contenuto testuale della label. Disattivo: rende visibile il contenuto testuale della label.",
+        "name": "showNavigationPillLabel",
+        "valueType": "boolean",
+        "value": false
+      },
+      {
         "component": "text",
         "name": "navigationPillLabel",
         "label": "Label",
@@ -4282,6 +4501,16 @@
             "value": ""
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "unipol-header",
+    "fields": [
+      {
+        "component": "text",
+        "name": "unipol-header-name",
+        "label": "Nome sezione Header"
       }
     ]
   },

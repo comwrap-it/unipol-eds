@@ -1,0 +1,13 @@
+.navigation-pill-container {
+    display: flex;
+    background: var(--Header-Background);
+    padding: var(--Header-Navigation-Vertical-Padding,4px) var(--Header-Navigation-Horizontal-Padding, 4px);
+    border-radius: var(--Header-Radius, 9999);
+}
+
+.header-box-text-container {
+  position: absolute;
+  padding: var(--Quote-Tool-Full-Quote-Tool-Padding, 16px);
+  background-color: var(--Quote-Tool-Full-Quote-Tool-Background, #F9F9F7);
+  border-radius: var(--Quote-Tool-Radius, 16px);
+}

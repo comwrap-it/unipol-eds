@@ -6,6 +6,7 @@
       "kpi-highlights-widget",
       "insurance-product-carousel-widget",
       "hero-widget",
+      "unipol-header",
       "unipol-footer",
       "blog-carousel-widget"
     ]
@@ -24,6 +25,9 @@
   },
   {
     "...": "../blocks/atoms/**/_*.json#/filters"
+  },
+  {
+    "...": "./_unipol-header.json#/filters"
   },
   {
     "...": "./_unipol-footer.json#/filters"

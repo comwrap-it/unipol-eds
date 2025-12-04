@@ -21,6 +21,14 @@
       "id": "navigation-pill",
       "fields": [
         {
+          "component": "boolean",
+          "label": "Nascondi label",
+          "description": "Attivo: nasconde il contenuto testuale della label. Disattivo: rende visibile il contenuto testuale della label.",
+          "name": "showNavigationPillLabel",
+          "valueType": "boolean",
+          "value": false
+        },
+        {
           "component": "text",
           "name": "navigationPillLabel",
           "label": "Label",

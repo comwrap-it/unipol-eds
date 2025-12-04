@@ -1,0 +1,7 @@
+.header-utilities-container {
+    display: flex;
+}
+
+.header-utilities-container .navigation-pill {
+    background: var(--Header-Background);
+}
