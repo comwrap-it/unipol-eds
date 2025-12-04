@@ -56,22 +56,21 @@ async function applyChanges(event) {
 
     const block = element.parentElement?.closest('.block[data-aue-resource]') || element?.closest('.block[data-aue-resource]');
     if (block) {
-      componentsWithMaxItems.forEach((component) => {
-        if (element.classList.contains(component.filter)) {
-          const undoOp = detail?.response?.undo?.op || 'remove';
-          const items = element.querySelectorAll(component.itemClass)?.length || 1;
-          const currentItems = undoOp === 'add' ? items - 1 : items + 1;
-          if (currentItems >= component.maxItems) {
-            element.setAttribute('data-aue-filter', 'disable-add');
-          } else {
-            element.setAttribute('data-aue-filter', component.filter);
-          }
-        }
-      });
-
       const blockResource = block.getAttribute('data-aue-resource');
       const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
       if (newBlock) {
+        componentsWithMaxItems.forEach((component) => {
+          if (newBlock.classList.contains(component.filter)) {
+            const undoOp = detail?.response?.undo?.op || 'remove';
+            const items = element.querySelectorAll(component.itemClass)?.length || 1;
+            const currentItems = undoOp === 'add' ? items - 1 : items + 1;
+            if (currentItems >= component.maxItems) {
+              newBlock.setAttribute('data-aue-filter', 'disable-add');
+            } else {
+              newBlock.setAttribute('data-aue-filter', component.filter);
+            }
+          }
+        });
         newBlock.style.display = 'none';
         block.insertAdjacentElement('afterend', newBlock);
         decorateButtons(newBlock);
