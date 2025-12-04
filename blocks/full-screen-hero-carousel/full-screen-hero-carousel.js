@@ -57,6 +57,8 @@ export default async function decorate(block) {
     rows = Array.from(wrapper.children);
   }
 
+  block.classList.add('theme-dark');
+
   const isCarousel = rows.length > 1;
 
   const carousel = document.createElement('div');
