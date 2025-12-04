@@ -56,7 +56,7 @@ async function applyChanges(event) {
 
     componentsWithMaxItems.forEach(component => {
       if (element.classList.contains(component.filter)) {
-        if (element.querySelectorAll(component.itemClass) >= component.maxItems) {
+        if (element.querySelectorAll(component.itemClass)?.length >= component.maxItems) {
           if (element.getAttribute('data-aue-filter') === 'insurance-product-carousel') {
             element.setAttribute('data-aue-filter', 'disable-add');
           }
