@@ -124,7 +124,7 @@ function attachEventInit(containers, filter) {
     const initObserver = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'attributes' && mutation.attributeName === 'data-block-status' && container.getAttribute('data-block-status') === 'loaded') {
-          if (container.children[0].children.length >= 8) {
+          if (container.children[0].children[0].children.length >= 8) {
             container.setAttribute('data-aue-filter', 'disable-add');
           } else {
             container.setAttribute('data-aue-filter', filter);
