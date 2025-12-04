@@ -11,6 +11,14 @@ import {
 import { decorateRichtext } from './editor-support-rte.js';
 import { decorateMain } from './scripts.js';
 
+const componentsWithMaxItems = [
+  {
+    filter: 'insurance-product-carousel',
+    itemClass: '.insurance-product-card-wrapper',
+    maxItems: 8
+  }
+];
+
 async function applyChanges(event) {
   // redecorate default content and blocks on patches (in the properties rail)
   const { detail } = event;
@@ -46,14 +54,15 @@ async function applyChanges(event) {
       return true;
     }
 
-    if (element.classList.contains('insurance-product-carousel-container')) {
-      if (element.children[0].children.length >= 8) {
-        if (element.getAttribute('data-aue-filter') === 'insurance-product-carousel') {
-          element.setAttribute('data-aue-filter', 'disable-add');
+    componentsWithMaxItems.forEach(component => {
+      if (element.classList.contains(component.filter)) {
+        if (element.querySelectorAll(component.itemClass) >= component.maxItems) {
+          if (element.getAttribute('data-aue-filter') === 'insurance-product-carousel') {
+            element.setAttribute('data-aue-filter', 'disable-add');
+          }
         }
-        return true;
       }
-    }
+    });
 
     const block = element.parentElement?.closest('.block[data-aue-resource]') || element?.closest('.block[data-aue-resource]');
     if (block) {
@@ -119,15 +128,13 @@ function attachEventListners(main) {
 
 attachEventListners(document.querySelector('main'));
 
-function attachEventInit(containers, filter) {
+function attachEventInit(containers, itemClass, maxItems) {
   containers.forEach((container) => {
     const initObserver = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
         if (mutation.type === 'attributes' && mutation.attributeName === 'data-block-status' && container.getAttribute('data-block-status') === 'loaded') {
-          if (container.children[0].children[0].children.length >= 8) {
+          if (container.querySelectorAll(itemClass).length >= maxItems) {
             container.setAttribute('data-aue-filter', 'disable-add');
-          } else {
-            container.setAttribute('data-aue-filter', filter);
           }
         }
       });
@@ -136,7 +143,9 @@ function attachEventInit(containers, filter) {
   });
 }
 
-attachEventInit(document.querySelectorAll('[data-aue-filter="insurance-product-carousel"]'), 'insurance-product-carousel');
+componentsWithMaxItems.forEach((element) => {
+  attachEventInit(document.querySelectorAll([`'data-aue-filter="${element.filter}"'`]), element.itemClass, element.maxItems);
+});
 
 // decorate rich text
 // this has to happen after decorateMain(), and everythime decorateBlocks() is called
