@@ -510,17 +510,15 @@
           }
         },
         {
-          "title": "FAQ Widget",
-          "id": "faq-widget",
+          "title": "CTA Card Grid",
+          "id": "cta-card-grid",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "key-value": true,
-                  "filter": "faq-widget",
-                  "name": "FAQ Widget",
-                  "model": "faq-widget"
+                  "filter": "cta-card-grid",
+                  "name": "CTA Card Grid"
                 }
               }
             }

@@ -1,0 +1,127 @@
+.cta-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 1.5rem;
+  justify-items: center;
+}
+
+.cta-card {
+  display: flex;
+  width: 19.75rem;
+  flex-direction: column;
+  align-items: stretch;
+  border-radius: var(--Card-Radius, 1.5rem);
+  background: var(--Card-Insurance-Product-Card-Background, #fff);
+  box-shadow: var(--Depth-050-2, 2px) var(--Depth-050-2, 2px) var(--Blur-200-8, 8px) 0 rgb(0 0 0 / 8%);
+  overflow: hidden;
+}
+
+.cta-card-image {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 11.11rem;
+  background: var(--Neutral-50, #fff);
+}
+
+.cta-card-image picture,
+.cta-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cta-card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+.cta-card-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.cta-card-title {
+  margin: 0;
+  align-self: stretch;
+  color: var(--Card-Insurance-Product-Card-Title, #001c35);
+  text-align: center;
+  font-family: var(--Family-Font-2, Manrope);
+  font-size: var(--Font-Size-Heading, 1.5rem);
+  font-style: normal;
+  font-weight: 600;
+  line-height: 125%;
+  letter-spacing: -0.015rem;
+}
+
+.cta-card-description {
+  margin: 0;
+  align-self: stretch;
+  color: var(--Card-Insurance-Product-Card-Body, #001c35);
+  text-align: center;
+  font-family: var(--Family-Font-2, Manrope);
+  font-size: var(--Size-16, 1rem);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+}
+
+.cta-card-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.cta-card-button {
+  width: fit-content;
+}
+
+.cta-card-note {
+  margin: 0;
+  color: var(--Card-Insurance-Product-Card-Details, #63727d);
+  text-align: center;
+  font-family: var(--Family-Font-2, Manrope);
+  font-size: var(--Size-14, 0.875rem);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+}
+
+@media (768px <= width < 1200px) {
+  .cta-card {
+    width: 15rem;
+  }
+
+  .cta-card-image {
+    height: 10.27rem;
+  }
+
+  .cta-card-title {
+    font-size: var(--Size-20, 1.25rem);
+    line-height: 130%;
+  }
+}
+
+@media (width < 768px) {
+  .cta-card-grid {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .cta-card {
+    width: 21.4375rem;
+  }
+
+  .cta-card-image {
+    height: 12.06rem;
+  }
+}
