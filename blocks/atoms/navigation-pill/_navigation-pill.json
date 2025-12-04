@@ -37,7 +37,7 @@
         {
           "component": "select",
           "name": "navigationPillVariant",
-          "label": "Variant",
+          "label": "Variante",
           "value": "primary",
           "options": [
             {
@@ -59,7 +59,7 @@
         {
           "component": "select",
           "name": "navigationPillLeftIcon",
-          "label": "Left Icon",
+          "label": "Icona Sinistra",
           "description": "Optional icon on the left",
           "options": [
             {
@@ -99,7 +99,7 @@
         {
           "component": "select",
           "name": "navigationPillLeftIconSize",
-          "label": "Size",
+          "label": "Dimensione Icone",
           "value": "medium",
           "options": [
             {
@@ -123,7 +123,7 @@
         {
           "component": "select",
           "name": "navigationPillRightIcon",
-          "label": "Right Icon",
+          "label": "Icona Destra",
           "description": "Optional icon on the right",
           "options": [
             {
@@ -163,7 +163,7 @@
         {
           "component": "select",
           "name": "navigationPillRightIconSize",
-          "label": "Size",
+          "label": "Dimensione Icone",
           "value": "medium",
           "options": [
             {
