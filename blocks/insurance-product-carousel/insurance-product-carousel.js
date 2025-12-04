@@ -179,6 +179,7 @@ export default async function decorate(block) {
     carousel.dataset.blockName = block.dataset.blockName;
   }
 
+  block.innerText = '';
   // Preserve block class
   carousel.classList.add('block', 'insurance-product-carousel-block');
   // Replace block with carousel
