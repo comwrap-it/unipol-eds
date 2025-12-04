@@ -1,5 +1,8 @@
 .navigation-pill-container {
     display: flex;
+    background: var(--Header-Background);
+    padding: var(--Header-Navigation-Vertical-Padding,4px) var(--Header-Navigation-Horizontal-Padding, 4px);
+    border-radius: var(--Header-Radius, 9999);
 }
 
 .header-box-text-container {
