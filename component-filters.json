@@ -7,7 +7,8 @@
       "insurance-product-carousel-widget",
       "hero-widget",
       "unipol-header",
-      "unipol-footer"
+      "unipol-footer",
+      "blog-carousel-widget"
     ]
   },
   {
@@ -37,6 +38,12 @@
     "id": "insurance-product-carousel-widget",
     "components": [
       "insurance-product-carousel"
+    ]
+  },
+  {
+    "id": "blog-carousel-widget",
+    "components": [
+      "blog-carousel"
     ]
   },
   {

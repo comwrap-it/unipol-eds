@@ -176,6 +176,12 @@
         "component": "text",
         "name": "insurance-product-carousel-widget-name",
         "label": "Nome sezione Insurance Product Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "insurance-product-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
       }
     ]
   },
@@ -206,6 +212,130 @@
         "validation": {
           "rootPath": "/content/dam/unipol/cf"
         }
+      }
+    ]
+  },
+  {
+    "id": "blog-carousel-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "blog-carousel-widget-name",
+        "label": "Nome sezione Blog Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "blog-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "blog-preview-card",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Card Image",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Titolo",
+        "required": true,
+        "validation": {
+          "maxLength": 80
+        }
+      },
+      {
+        "component": "select",
+        "name": "duration-icon",
+        "label": "Icona Durata",
+        "required": true,
+        "value": "un-icon-newspaper",
+        "options": [
+          {
+            "value": "un-icon-newspaper",
+            "name": "Newspaper"
+          },
+          {
+            "value": "un-icon-headphones",
+            "name": "Headphones"
+          },
+          {
+            "value": "un-icon-play-circle",
+            "name": "Play Circle"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "duration-text",
+        "label": "Testo Durata",
+        "required": true
+      },
+      {
+        "component": "container",
+        "name": "tag",
+        "label": "Configurazione Tag",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "tagLabel",
+            "label": "Tag text",
+            "required": true
+          },
+          {
+            "component": "select",
+            "name": "tagCategory",
+            "label": "Tag Category",
+            "required": true,
+            "value": "mobility",
+            "options": [
+              {
+                "name": "Mobility",
+                "value": "mobility"
+              },
+              {
+                "name": "Welfare",
+                "value": "welfare"
+              },
+              {
+                "name": "Property",
+                "value": "property"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "tagVariant",
+            "label": "Tag type",
+            "required": true,
+            "value": "default",
+            "options": [
+              {
+                "name": "Default",
+                "value": "default"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Neutral",
+                "value": "neutral"
+              },
+              {
+                "name": "Custom",
+                "value": "custom"
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -689,6 +819,12 @@
         "component": "text",
         "name": "hero-widget-name",
         "label": "Nome sezione Hero Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "hero-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
       }
     ]
   },
@@ -1211,6 +1347,12 @@
         "component": "text",
         "name": "insurance-product-carousel-widget-name",
         "label": "Nome sezione Insurance Product Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "insurance-product-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
       }
     ]
   },

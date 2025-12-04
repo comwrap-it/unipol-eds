@@ -31,10 +31,18 @@ body {
     margin: 0;
     font: var(--Text-Styles-Body-Base);
     line-height: 1.6;
+    overflow-x: hidden;
+    max-width: 100vw;
 }
 
 body.appear {
     display: block;
+}
+
+main {
+    display: block;
+    margin: 0 auto;
+    max-width: 100vw;
 }
 
 header {

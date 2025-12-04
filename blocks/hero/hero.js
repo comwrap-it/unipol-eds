@@ -13,22 +13,21 @@ import {
  * Sets up the Hero container with background media (image or video).
  * @param {HTMLElement} heroBackground - The media element (video or picture)
  * @param {boolean} isVideoBackground
+ * @param {boolean} isCarousel
  * @returns {HTMLDivElement}
  */
-const setupHeroWithBg = (heroBackground, isVideoBackground = false) => {
-  if (!heroBackground) return null;
-
+const setupHeroWithBg = (heroBackground, isVideoBackground = false, isCarousel = false) => {
   const hero = document.createElement('div');
-  hero.className = 'hero swiper-slide';
+  hero.className = `hero${isCarousel ? ' swiper-slide' : ''}`;
   // Background media
-  if (!isVideoBackground) {
+  if (!isVideoBackground && heroBackground) {
     const pictureBg = heroBackground.cloneNode(true);
     moveInstrumentation(heroBackground, pictureBg);
     pictureBg.className = 'hero-bg';
     pictureBg.setAttribute('aria-hidden', 'true');
     pictureBg.fetchPriority = 'high';
     hero.appendChild(pictureBg);
-  } else {
+  } else if (heroBackground) {
     const videoPath = heroBackground.href;
     const videoBg = document.createElement('video');
     videoBg.src = videoPath;
@@ -114,11 +113,7 @@ const createHeroMainSection = (
     const bullets = document.createElement('ul');
     bullets.className = 'hero-bullets';
     bulletListRows?.forEach((bulletRow) => {
-      const listItem = createTextElementFromRow(
-        bulletRow,
-        '',
-        'li',
-      );
+      const listItem = createTextElementFromRow(bulletRow, '', 'li');
       bullets.appendChild(listItem);
     });
     mainSection.appendChild(bullets);
@@ -216,7 +211,7 @@ export async function createHero(
   btnRightIcon,
   isCarousel = false,
 ) {
-  const hero = setupHeroWithBg(heroBackground, isVideoBackground);
+  const hero = setupHeroWithBg(heroBackground, isVideoBackground, isCarousel);
   const heroContent = document.createElement('div');
   heroContent.className = 'hero-content';
   const mainSection = createHeroMainSection(
@@ -278,11 +273,9 @@ export const extractHeroPropertiesFromRows = (rows) => {
   const subtitleBold = rows[5];
   const subtitle = rows[6];
   const showHeroBulletList = extractBooleanValueFromRow(rows[7]);
-  const bulletList = [
-    rows[8],
-    rows[9],
-    rows[10],
-  ].filter((row) => row.firstChild);
+  const bulletList = [rows[8], rows[9], rows[10]].filter(
+    (row) => row.firstChild,
+  );
   // Button properties
   const showHeroButton = extractBooleanValueFromRow(rows[11]);
   const btnText = rows[12]?.textContent?.trim() || '';
