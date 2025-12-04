@@ -412,30 +412,128 @@
     ]
   },
   {
-    "id": "faq-widget",
+    "id": "cta-card-grid",
     "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Immagine",
+        "multi": false,
+        "required": true
+      },
       {
         "component": "text",
         "name": "title",
         "label": "Titolo",
-        "description": "max 40 caratteri",
-        "required": true,
-        "maxlength": 40
+        "maxlength": 80,
+        "required": true
       },
       {
         "component": "text",
         "name": "description",
         "label": "Descrizione",
-        "description": "max 150 caratteri",
-        "required": true,
-        "maxlength": 150
+        "maxlength": 200
+      },
+      {
+        "component": "container",
+        "name": "button",
+        "label": "Configurazione Pulsante",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "buttonLabel",
+            "label": "Etichetta CTA",
+            "required": true
+          },
+          {
+            "component": "aem-content",
+            "name": "buttonHref",
+            "label": "Link CTA"
+          },
+          {
+            "component": "select",
+            "name": "buttonVariant",
+            "label": "Variante CTA",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Accent",
+                "value": "accent"
+              }
+            ]
+          },
+          {
+            "component": "boolean",
+            "name": "buttonOpenInNewTab",
+            "label": "Apri in nuova scheda",
+            "valueType": "boolean",
+            "value": false
+          },
+          {
+            "component": "select",
+            "name": "buttonLeftIcon",
+            "label": "Icona sinistra",
+            "value": "",
+            "options": [
+              {
+                "name": "Nessuna",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search",
+                "value": "un-icon-search"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "buttonRightIcon",
+            "label": "Icona destra",
+            "value": "",
+            "options": [
+              {
+                "name": "Nessuna",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search",
+                "value": "un-icon-search"
+              }
+            ]
+          }
+        ]
       },
       {
         "component": "text",
-        "name": "showMoreButtonLabel",
-        "label": "Testo pulsante carica altro",
-        "description": "Default \"Mostra di più\"",
-        "maxlength": 15
+        "name": "note",
+        "label": "Nota sotto CTA",
+        "maxlength": 120
       }
     ]
   },
