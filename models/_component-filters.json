@@ -12,6 +12,10 @@
     ]
   },
   {
+    "id": "disable-add",
+    "components": []
+  },
+  {
     "...": "./_section.json#/filters"
   },
   {

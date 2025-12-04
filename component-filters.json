@@ -12,6 +12,10 @@
     ]
   },
   {
+    "id": "disable-add",
+    "components": []
+  },
+  {
     "id": "section",
     "components": [
       "text",
@@ -36,9 +40,7 @@
   },
   {
     "id": "insurance-product-carousel-widget",
-    "components": [
-      "insurance-product-carousel"
-    ]
+    "components": []
   },
   {
     "id": "blog-carousel-widget",
@@ -107,9 +109,7 @@
   },
   {
     "id": "insurance-product-carousel-widget",
-    "components": [
-      "insurance-product-carousel"
-    ]
+    "components": []
   },
   {
     "id": "insurance-product-carousel",

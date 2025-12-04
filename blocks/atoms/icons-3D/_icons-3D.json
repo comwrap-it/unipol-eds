@@ -23,22 +23,22 @@
         {
           "component": "boolean",
           "name": "vehiclesShowIcon",
-          "label": "Show Vehicles & Mobility icon",
-          "description": "Toggle to display the Vehicles & Mobility icon",
+          "label": "Visualizza l'icona Veicoli e Mobilità",
+          "description": "Attiva per visualizzare l'icona Veicoli e Mobilità",
           "value": false
         },
         {
           "component": "boolean",
           "name": "homeShowIcon",
-          "label": "Show Home & Family icon",
-          "description": "Toggle to display the Home & Family icon",
+          "label": "Visualizza l'icona Casa e Famiglia",
+          "description": "Attiva per visualizzare l'icona Casa e Famiglia",
           "value": false
         },
         {
           "component": "boolean",
           "name": "personalShowIcon",
-          "label": "Show Personal Protection icon",
-          "description": "Toggle to display the Personal Protection icon",
+          "label": "Visualizza l'icona Salute",
+          "description": "Attiva per visualizzare l'icona Salute",
           "value": false
         }
       ]

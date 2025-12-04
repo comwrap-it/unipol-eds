@@ -23,7 +23,8 @@
         {
           "component": "text",
           "name": "showMoreButtonLabel",
-          "label": "Show more button label for mobile",
+          "label": "Testo bottone per dispositivi mobile",
+          "description": "Default \"Mostra di più\"",
           "maxlength": 15
         }
       ]
