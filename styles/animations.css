@@ -1,5 +1,5 @@
 :root {
-    --reveal-distance: 12px;
+    --reveal-distance: 22px;
     --reveal-duration: 500ms;
     --reveal-ease: cubic-bezier(0.25, 1, 0.5, 1);
     --reveal-delay: 500ms;
