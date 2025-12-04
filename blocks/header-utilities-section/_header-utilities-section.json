@@ -14,39 +14,8 @@
           }
         }
       }
-    },
-    {
-      "title": "Utilities navigation pill",
-      "id": "utilities-navigation-pill",
-      "plugins": {
-        "xwalk": {
-          "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
-            "template": {
-              "name": "Utilities navigation pill",
-              "model": "utilities-navigation-pill"
-            }
-          }
-        }
-      }
     }
   ],
-  "models": [
-    {
-      "id": "utilities-navigation-pill",
-      "fields": [
-        {
-          "...": "../atoms/navigation-pill/_navigation-pill.json#/models/navigation-pill/fields"
-        }
-      ]
-    }
-  ],
-  "filters": [
-    {
-      "id": "header-utilities-section",
-      "components": [
-        "utilities-navigation-pill"
-      ]
-    }
-  ]
+  "models": [],
+  "filters": []
 }

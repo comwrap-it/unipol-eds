@@ -87,12 +87,6 @@
     ]
   },
   {
-    "id": "header-utilities-section",
-    "components": [
-      "utilities-navigation-pill"
-    ]
-  },
-  {
     "id": "hero-widget",
     "components": [
       "full-screen-hero-carousel"
