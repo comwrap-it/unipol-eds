@@ -88,3 +88,9 @@ main .section.text-block-container.number-block-container.bg-dark-gray {
 main .section.text-block-container.number-block-container.bg-white {
     background-color: var(--Neutral-50);
 }
+
+.section.header-logo-container ,
+.sectionheader-navigation-section-container ,
+.sectionheader-utilities-section-container {
+    display: flex;
+}

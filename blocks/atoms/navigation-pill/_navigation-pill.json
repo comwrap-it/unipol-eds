@@ -23,7 +23,7 @@
         {
           "component": "boolean",
           "label": "Nascondi label",
-          "description": "Attivo: nasconde la label. Disattivo: rende visibile la label.",
+          "description": "Attivo: nasconde il contenuto testuale della label. Disattivo: rende visibile il contenuto testuale della label.",
           "name": "showNavigationPillLabel",
           "valueType": "boolean",
           "value": false
