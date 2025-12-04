@@ -80,7 +80,7 @@ export default async function decorate(block) {
 
   // Create carousel container structure
   const carousel = document.createElement('div');
-  carousel.className = 'blog-carousel-container swiper';
+  carousel.className = 'blog-carousel-container swiper reveal-in-up';
   carousel.setAttribute('role', 'region');
   carousel.setAttribute('aria-label', 'Blog carousel');
   carousel.setAttribute('tabindex', '0');

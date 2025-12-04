@@ -15,11 +15,13 @@
               "text-block": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Text Block",
-                "model": "text-block"
+                "model": "text-block",
+                "classes": "reveal-in-up"
               },
               "blog-carousel": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Blog Carousel",
+                "classes": "reveal-in-up",
                 "filter": "blog-carousel"
               }
             }
