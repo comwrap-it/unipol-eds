@@ -17,6 +17,26 @@ async function ensureStylesLoaded() {
   isStylesLoaded = true;
 }
 
+function makeNavigationSticky(block) {
+  const container = block.querySelector('.navigation-pill-container');
+  if (!container) return;
+
+  const header = document.querySelector('header');
+  if (!header) return;
+
+  const headerBottom = header.offsetTop + header.offsetHeight;
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY || window.pageYOffset;
+
+    if (scrollY > headerBottom) {
+      container.classList.add('sticky');
+    } else {
+      container.classList.remove('sticky');
+    }
+  });
+}
+
 function extractNavigationPillValues(row) {
   const rows = Array.from(row.children);
   // navigation-pill
@@ -152,4 +172,5 @@ export default async function decorate(block) {
   await Promise.all(Array.from(container.children)
     .filter((el) => el.classList.contains('navigation-pill'))
     .map((pillEl) => loadBlock(pillEl)));
+  makeNavigationSticky(block);
 }

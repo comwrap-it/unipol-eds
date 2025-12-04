@@ -19,3 +19,12 @@
     background-color: var(--Navigation-Pill-Active-Background, #f9f9f7);
     color: var(--Navigation-Pill-Active-Text);
 }
+
+.navigation-pill-container.sticky {
+  position: fixed;
+  max-width: fit-content;
+  top: var(--Header-Vertical-Padding-M-Tp,24px);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+}
