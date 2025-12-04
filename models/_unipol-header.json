@@ -36,20 +36,20 @@
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Header Utilities Section",
                 "filter": "header-utilities-section",
-                "utilities-navigation-pill": {
+                "header-utilities-navigation-pill-1": {
                   "sling:resourceType": "core/franklin/components/block/v1/block",
-                  "name": "Navigation Pill",
-                  "model": "navigation-pill"
+                  "name": "Header utilities navigation pill",
+                  "model": "header-utilities-navigation-pill"
                 },
-                "utilities-icon-button-1": {
+                "header-utilities-navigation-pill-2": {
                   "sling:resourceType": "core/franklin/components/block/v1/block",
-                  "name": "Icon Button",
-                  "model": "icon-button"
+                  "name": "Header utilities navigation pill",
+                  "model": "header-utilities-navigation-pill"
                 },
-                "utilities-icon-button-2": {
+                "header-utilities-navigation-pill-3": {
                   "sling:resourceType": "core/franklin/components/block/v1/block",
-                  "name": "Icon Button",
-                  "model": "icon-button"
+                  "name": "Header utilities navigation pill",
+                  "model": "header-utilities-navigation-pill"
                 }
               }
             }

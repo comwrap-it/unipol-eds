@@ -20,17 +20,30 @@ async function ensureStylesLoaded() {
 function extractNavigationPillValues(row) {
   const rows = Array.from(row.children);
 
-  const text = rows[0]?.textContent?.trim() || '';
-  const variant = rows[1]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_VARIANTS.PRIMARY;
-  const href = rows[2]?.querySelector('a')?.href || rows[2]?.textContent?.trim() || undefined;
-  const leftIcon = rows[3]?.textContent?.trim() || '';
-  const lftIcnSze = rows[4]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
-  const rightIcon = rows[5]?.textContent?.trim() || '';
-  const rhtIcnSze = rows[6]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
-  const instrumentation = extractInstrumentationAttributes(rows[0]);
+  const rawFlag = rows[0]?.textContent?.trim() || 'false';
+  const hideLabel = rawFlag === 'true';
+
+  if (rows[0]) rows[0].textContent = '';
+
+  const text = rows[1]?.textContent?.trim() || '';
+  const variant = rows[2]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_VARIANTS.PRIMARY;
+  const href = rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || undefined;
+  const leftIcon = rows[4]?.textContent?.trim() || '';
+  const lftIcnSze = rows[5]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
+  const rightIcon = rows[6]?.textContent?.trim() || '';
+  const rhtIcnSze = rows[7]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
+  const instrumentation = extractInstrumentationAttributes(rows[1]);
 
   return {
-    text, variant, href, leftIcon, lftIcnSze, rightIcon, rhtIcnSze, instrumentation,
+    text,
+    hideLabel,
+    variant,
+    href,
+    leftIcon,
+    lftIcnSze,
+    rightIcon,
+    rhtIcnSze,
+    instrumentation,
   };
 }
 
@@ -45,6 +58,7 @@ function buildNavigationPill(row) {
     cfg.rightIcon,
     cfg.rhtIcnSze,
     cfg.instrumentation,
+    cfg.hideLabel,
   );
 }
 
