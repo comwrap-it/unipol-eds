@@ -123,13 +123,14 @@ function attachEventInit(containers) {
   containers.forEach((container) => {
     const initObserver = new MutationObserver((mutations) => {
       mutations.forEach((mutation) => {
-        if (mutation.type === "attributes" && mutation.attributeName === "data-initialized") {
-          const newValue = container.getAttribute("data-initialized");
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-initialized') {
+          const newValue = container.getAttribute('data-initialized');
+          // eslint-disable-next-line no-console
           console.log(`data-initialized changed from: ${mutation.oldValue} to ${newValue}`);
         }
       });
     });
-    initObserver.observe(container, {attributes: true, attributeFilter: ["data-initialized"],});
+    initObserver.observe(container, { attributes: true, attributeFilter: ['data-initialized'] });
   });
 }
 
