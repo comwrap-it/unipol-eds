@@ -1,4 +1,4 @@
-import loadSwiper from '../../scripts/delayed.js';
+import loadSwiper, { handleSlideChange } from '../../scripts/lib/utils.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { createHero, extractHeroPropertiesFromRows } from '../hero/hero.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
@@ -32,45 +32,6 @@ const initSwiper = (
 };
 
 /**
- *
- * @param {swiperInstance} the swiper instance
- * @param {function} setExpandedDot function to set the expanded dot in the scroll indicator
- * @param {HTMLElement} leftIconButton the left navigation button
- * @param {HTMLElement} rightIconButton the right navigation button
- */
-const setSwiperListeners = (
-  swiperInstance,
-  setExpandedDot,
-  leftIconButton,
-  rightIconButton,
-) => {
-  if (!swiperInstance) return;
-
-  const handleSlideChange = () => {
-    const { isBeginning, isEnd } = swiperInstance;
-    setExpandedDot({
-      isBeginning,
-      isEnd,
-    });
-    if (isBeginning && leftIconButton) {
-      leftIconButton.disabled = true;
-    } else {
-      leftIconButton.disabled = false;
-    }
-
-    if (isEnd && rightIconButton) {
-      rightIconButton.disabled = true;
-    } else {
-      rightIconButton.disabled = false;
-    }
-  };
-
-  swiperInstance.on('slideChange', () => {
-    handleSlideChange();
-  });
-};
-
-/**
  * ensures styles are loaded only once
  */
 let isStylesAlreadyLoaded = false;
@@ -95,6 +56,8 @@ export default async function decorate(block) {
   if (wrapper) {
     rows = Array.from(wrapper.children);
   }
+
+  block.classList.add('theme-dark');
 
   const isCarousel = rows.length > 1;
 
@@ -171,7 +134,7 @@ export default async function decorate(block) {
       leftIconButton,
       rightIconButton,
     );
-    setSwiperListeners(
+    handleSlideChange(
       swiperInstance,
       setExpandedDot,
       leftIconButton,

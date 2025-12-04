@@ -25,6 +25,7 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* these classes handle icon sizes */
 .icon-small {
     font-size: var(--Icon-100-16);
 }
@@ -41,6 +42,7 @@
     font-size: var(--Icon-400-32);
 }
 
+/* Individual icon classes */
 .un-icon-address-book-tabs::before {
     content: "\e900";
 }

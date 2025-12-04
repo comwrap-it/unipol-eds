@@ -153,7 +153,7 @@
         {
           "component": "container",
           "name": "hero-button-container",
-          "label": "Configurazione Bottone",
+          "label": "Configurazione Pulsante",
           "collapsible": true,
           "fields": [
             {

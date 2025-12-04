@@ -16,6 +16,10 @@
 /* Icons */
 @import url("./icons.css");
 
+
+/* Import file Unipol header styling */
+@import url("./unipol-header.css");
+
 /* Import file footer styling - authoring mode */
 @import url("./editor-unipol-footer.css");
 
@@ -31,14 +35,18 @@ body {
     margin: 0;
     font: var(--Text-Styles-Body-Base);
     line-height: 1.6;
+    overflow-x: hidden;
+    max-width: 100vw;
 }
 
 body.appear {
     display: block;
 }
 
-header {
-    height: var(--Header-Height, 64px);
+main {
+    display: block;
+    margin: 0 auto;
+    max-width: 100vw;
 }
 
 header .header,

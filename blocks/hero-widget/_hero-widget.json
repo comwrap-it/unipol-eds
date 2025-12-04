@@ -31,6 +31,12 @@
                     "component": "text",
                     "name": "hero-widget-name",
                     "label": "Nome sezione Hero Widget"
+                },
+                {
+                  "component": "toggle",
+                  "name": "hero-widget-dark-theme",
+                  "label": "Tema scuro",
+                  "default": false
                 }
             ]
         }

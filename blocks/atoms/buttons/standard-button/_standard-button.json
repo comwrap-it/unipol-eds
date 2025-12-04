@@ -29,7 +29,7 @@
         {
           "component": "select",
           "name": "standardButtonVariant",
-          "label": "Variant",
+          "label": "Variante",
           "value": "primary",
           "options": [
             {
@@ -64,7 +64,7 @@
           "component": "select",
           "name": "standardButtonSize",
           "description": "Modifica la dimensione delle icone del bottone",
-          "label": "Size",
+          "label": "Dimensione Icone",
           "value": "medium",
           "options": [
             {
@@ -89,7 +89,7 @@
         {
           "component": "select",
           "name": "standardButtonLeftIcon",
-          "label": "Left Icon",
+          "label": "Icona Sinistra",
           "description": "Select the left icon",
           "value": "",
           "options": [
@@ -114,7 +114,7 @@
         {
           "component": "select",
           "name": "standardButtonRightIcon",
-          "label": "Right Icon",
+          "label": "Icona Destra",
           "description": "Select the right icon",
           "value": "",
           "options": [

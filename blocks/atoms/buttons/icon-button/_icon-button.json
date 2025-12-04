@@ -23,12 +23,12 @@
                 {
                     "component": "select",
                     "name": "iconButtonIcon",
-                    "label": "Icon",
+                    "label": "Icona",
                     "required": true,
-                    "description": "Select the icon",
+                    "description": "Seleziona l'icona",
                     "options": [
                         {
-                            "name": "None",
+                            "name": "Nessuna",
                             "value": ""
                         },
                         {
@@ -48,7 +48,7 @@
                 {
                     "component": "select",
                     "name": "iconButtonVariant",
-                    "label": "Variant",
+                    "label": "Variante",
                     "value": "primary",
                     "options": [
                         {
@@ -88,7 +88,7 @@
                 {
                     "component": "aem-content",
                     "name": "iconButtonHref",
-                    "label": "Link URL",
+                    "label": "URL del link",
                     "description": "Optional URL to make this a link button"
                 },
                 {

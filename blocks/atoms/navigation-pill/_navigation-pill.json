@@ -21,6 +21,14 @@
       "id": "navigation-pill",
       "fields": [
         {
+          "component": "boolean",
+          "label": "Nascondi label",
+          "description": "Attivo: nasconde il contenuto testuale della label. Disattivo: rende visibile il contenuto testuale della label.",
+          "name": "showNavigationPillLabel",
+          "valueType": "boolean",
+          "value": false
+        },
+        {
           "component": "text",
           "name": "navigationPillLabel",
           "label": "Label",
@@ -29,7 +37,7 @@
         {
           "component": "select",
           "name": "navigationPillVariant",
-          "label": "Variant",
+          "label": "Variante",
           "value": "primary",
           "options": [
             {
@@ -51,7 +59,7 @@
         {
           "component": "select",
           "name": "navigationPillLeftIcon",
-          "label": "Left Icon",
+          "label": "Icona Sinistra",
           "description": "Optional icon on the left",
           "options": [
             {
@@ -67,15 +75,31 @@
               "value": "un-icon-chevron-right"
             },
             {
+              "name": "Arrow up right Icon",
+              "value": "un-icon-arrow-up-right"
+            },
+            {
               "name": "Search Icon",
               "value": "un-icon-search"
+            },
+            {
+              "name": "Math Operations Icon",
+              "value": "un-icon-math-operations"
+            },
+            {
+              "name": "User Icon",
+              "value": "un-icon-user"
+            },
+            {
+              "name": "Basket Icon",
+              "value": "un-icon-basket"
             }
           ]
         },
         {
           "component": "select",
           "name": "navigationPillLeftIconSize",
-          "label": "Size",
+          "label": "Dimensione Icone",
           "value": "medium",
           "options": [
             {
@@ -99,7 +123,7 @@
         {
           "component": "select",
           "name": "navigationPillRightIcon",
-          "label": "Right Icon",
+          "label": "Icona Destra",
           "description": "Optional icon on the right",
           "options": [
             {
@@ -108,22 +132,38 @@
             },
             {
               "name": "Chevron Left",
-              "value": "chevron-left"
+              "value": "un-icon-chevron-left"
             },
             {
               "name": "Chevron Right",
-              "value": "chevron-right"
+              "value": "un-icon-chevron-right"
             },
             {
-              "name": "Search",
-              "value": "search-icon"
+              "name": "Arrow up right Icon",
+              "value": "un-icon-arrow-up-right"
+            },
+            {
+              "name": "Search Icon",
+              "value": "un-icon-search"
+            },
+            {
+              "name": "Math Operations Icon",
+              "value": "un-icon-math-operations"
+            },
+            {
+              "name": "User Icon",
+              "value": "un-icon-user"
+            },
+            {
+              "name": "Basket Icon",
+              "value": "un-icon-basket"
             }
           ]
         },
         {
           "component": "select",
           "name": "navigationPillRightIconSize",
-          "label": "Size",
+          "label": "Dimensione Icone",
           "value": "medium",
           "options": [
             {

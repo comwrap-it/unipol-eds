@@ -1,0 +1,20 @@
+.navigation-pill-container {
+    display: flex;
+    background: var(--Header-Background);
+    padding: var(--Header-Navigation-Vertical-Padding,4px) var(--Header-Navigation-Horizontal-Padding, 4px);
+    border-radius: var(--Header-Radius, 9999);
+    gap: var(--Navigation-Pill-Gap, 8px);
+}
+
+.header-box-text-container {
+    position: absolute;
+    padding: var(--Quote-Tool-Full-Quote-Tool-Padding, 16px);
+    background-color: var(--Quote-Tool-Full-Quote-Tool-Background, #F9F9F7);
+    border-radius: var(--Quote-Tool-Radius, 16px);
+    margin-top: var(--Header-Vertical-Gap-D-Ds, 16px);
+}
+
+.navigation-pill-container .navigation-pill-wrapper .header-nav-pill-active,
+.navigation-pill-container .navigation-pill-wrapper .header-nav-pill-active:hover {
+    background-color: var(--Navigation-Pill-Active-Background, #f9f9f7);
+}
