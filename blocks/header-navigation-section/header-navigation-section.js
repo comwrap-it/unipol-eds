@@ -19,7 +19,7 @@ async function ensureStylesLoaded() {
 
 function extractNavigationPillValues(row) {
   const rows = Array.from(row.children);
-
+  // navigation-pill
   const rawFlag = rows[0]?.textContent?.trim() || 'false';
   const hideLabel = rawFlag === 'true';
 
@@ -33,8 +33,11 @@ function extractNavigationPillValues(row) {
   const rightIcon = rows[6]?.textContent?.trim() || '';
   const rhtIcnSze = rows[7]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
   const instrumentation = extractInstrumentationAttributes(rows[1]);
+  // box
+  const boxText = rows[8]?.textContent?.trim() || '';
 
   return {
+    // navigation-pill
     text,
     hideLabel,
     variant,
@@ -44,12 +47,14 @@ function extractNavigationPillValues(row) {
     rightIcon,
     rhtIcnSze,
     instrumentation,
+    // box
+    boxText,
   };
 }
 
-function buildNavigationPill(row) {
+function buildNavigationPill(row, container, openBoxRef) {
   const cfg = extractNavigationPillValues(row);
-  return createNavigationPill(
+  const pillEl = createNavigationPill(
     cfg.text,
     cfg.href,
     cfg.variant,
@@ -60,6 +65,33 @@ function buildNavigationPill(row) {
     cfg.instrumentation,
     cfg.hideLabel,
   );
+
+  if (cfg.boxText) {
+    const box = document.createElement('div');
+    box.className = 'header-box-text-container';
+    box.textContent = cfg.boxText;
+    box.style.display = 'none';
+
+    container.appendChild(pillEl);
+    container.appendChild(box);
+
+    pillEl.addEventListener('click', () => {
+      if (box.style.display === 'none') {
+        if (openBoxRef.current && openBoxRef.current !== box) {
+          openBoxRef.current.style.display = 'none';
+        }
+        box.style.display = 'block';
+        openBoxRef.current = box;
+      } else {
+        box.style.display = 'none';
+        openBoxRef.current = null;
+      }
+    });
+
+    return pillEl;
+  }
+
+  return pillEl;
 }
 
 export default async function decorate(block) {
@@ -78,21 +110,25 @@ export default async function decorate(block) {
     || block.querySelector('[data-aue-resource]')
     || block.querySelector('[data-richtext-prop]');
 
-  const pillElements = pillRows.map((row) => {
-    const pillEl = buildNavigationPill(row);
+  const openBoxRef = { current: null };
+
+  pillRows.forEach((row) => {
+    const pillEl = buildNavigationPill(row, container, openBoxRef);
 
     if (hasInstrumentation) {
       moveInstrumentation(row, pillEl);
     }
 
-    return pillEl;
+    if (!pillEl.nextSibling || !pillEl.nextSibling.classList.contains('header-box-text-container')) {
+      container.appendChild(pillEl);
+    }
   });
-
-  pillElements.forEach((pillEl) => container.appendChild(pillEl));
 
   block.innerHTML = '';
   block.appendChild(container);
   block.classList.add('header-navigation-pill-and-box');
 
-  await Promise.all(pillElements.map((pillEl) => loadBlock(pillEl)));
+  await Promise.all(Array.from(container.children)
+    .filter((el) => el.classList.contains('navigation-pill'))
+    .map((pillEl) => loadBlock(pillEl)));
 }
