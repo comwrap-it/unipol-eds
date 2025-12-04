@@ -144,7 +144,7 @@ function attachEventInit(containers, itemClass, maxItems) {
 }
 
 componentsWithMaxItems.forEach((element) => {
-  attachEventInit(document.querySelectorAll([`'data-aue-filter="${element.filter}"'`]), element.itemClass, element.maxItems);
+  attachEventInit(document.querySelectorAll([`data-aue-filter="${element.filter}"`]), element.itemClass, element.maxItems);
 });
 
 // decorate rich text
