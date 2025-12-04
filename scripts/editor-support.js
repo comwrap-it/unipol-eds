@@ -66,6 +66,8 @@ async function applyChanges(event) {
           } else {
             element.setAttribute('data-aue-filter', component.filter);
           }
+
+          return true;
         }
       });
 
