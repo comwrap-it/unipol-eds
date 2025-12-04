@@ -8,3 +8,9 @@
     width: 100%;
     z-index: 2;
 }
+
+main .section.header-logo-container ,
+main .sectionheader-navigation-section-container ,
+main .sectionheader-utilities-section-container {
+    position: relative;
+}
