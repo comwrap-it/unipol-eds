@@ -15,8 +15,8 @@ const componentsWithMaxItems = [
   {
     filter: 'insurance-product-carousel',
     itemClass: '.insurance-product-card-wrapper',
-    maxItems: 8
-  }
+    maxItems: 8,
+  },
 ];
 
 async function applyChanges(event) {
@@ -54,12 +54,14 @@ async function applyChanges(event) {
       return true;
     }
 
-    componentsWithMaxItems.forEach(component => {
+    componentsWithMaxItems.forEach((component) => {
       if (element.classList.contains(component.filter)) {
-        if (element.querySelectorAll(component.itemClass)?.length >= component.maxItems) {
+        if (element.querySelectorAll(component.itemClass)?.length >= component.maxItems - 1) {
           if (element.getAttribute('data-aue-filter') === 'insurance-product-carousel') {
             element.setAttribute('data-aue-filter', 'disable-add');
           }
+        } else {
+          element.setAttribute('data-aue-filter', component.filter);
         }
       }
     });
