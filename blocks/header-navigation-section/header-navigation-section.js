@@ -55,7 +55,6 @@ function extractNavigationPillValues(row) {
 function buildNavigationPill(row, openBoxRef) {
   const cfg = extractNavigationPillValues(row);
 
-  // Wrapper per pill + box
   const wrapper = document.createElement('div');
   wrapper.className = 'navigation-pill-wrapper';
 
@@ -79,17 +78,32 @@ function buildNavigationPill(row, openBoxRef) {
     box.textContent = cfg.boxText;
     box.style.display = 'none';
 
+    pillEl.setAttribute('aria-expanded', 'false');
+    const boxId = `header-box-${Math.random().toString(36).substr(2, 9)}`;
+    box.id = boxId;
+    pillEl.setAttribute('aria-controls', boxId);
+
     wrapper.appendChild(box);
 
     pillEl.addEventListener('click', () => {
-      if (box.style.display === 'none') {
-        if (openBoxRef.current && openBoxRef.current !== box) {
-          openBoxRef.current.style.display = 'none';
+      const isClosed = box.style.display === 'none';
+
+      if (openBoxRef.current && openBoxRef.current !== box) {
+        openBoxRef.current.style.display = 'none';
+
+        const prevPill = openBoxRef.current.previousElementSibling;
+        if (prevPill?.hasAttribute('aria-expanded')) {
+          prevPill.setAttribute('aria-expanded', 'false');
         }
+      }
+
+      if (isClosed) {
         box.style.display = 'block';
+        pillEl.setAttribute('aria-expanded', 'true');
         openBoxRef.current = box;
       } else {
         box.style.display = 'none';
+        pillEl.setAttribute('aria-expanded', 'false');
         openBoxRef.current = null;
       }
     });
