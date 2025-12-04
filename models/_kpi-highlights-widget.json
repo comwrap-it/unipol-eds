@@ -54,6 +54,12 @@
               "value": "bg-dark-gray"
             }
           ]
+        },
+        {
+          "component": "toggle",
+          "name": "kpi-highlights-widget-dark-theme",
+          "label": "Tema scuro",
+          "default": false
         }
       ]
     }

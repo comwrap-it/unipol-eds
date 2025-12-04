@@ -20,6 +20,7 @@ import loadSwiper, { handleSlideChange } from '../../scripts/lib/utils.js';
 import mockBlogCards from '../../scripts/mock.js';
 import { createBlogCard } from '../blog-preview-card/blog-preview-card.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
+import { getParentProp } from '../full-screen-hero-carousel/full-screen-hero-carousel.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -97,6 +98,11 @@ export default async function decorate(block) {
     // eslint-disable-next-line no-console
     console.warn('Blog Carousel: No cards found');
     return;
+  }
+
+  const darkTheme = getParentProp(block, 'blogCarouselWidgetDarkTheme') ?? false;
+  if (darkTheme) {
+    block.classList.add('theme-dark');
   }
 
   const cardsData = await mockBlogCards();

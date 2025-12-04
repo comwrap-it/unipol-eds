@@ -1,4 +1,5 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { getParentProp } from '../full-screen-hero-carousel/full-screen-hero-carousel.js';
 
 /**
  * Creates the DOM for a single Number Item
@@ -57,6 +58,11 @@ export function createNumberBlock(items = []) {
 export default function decorate(block) {
   const rows = [...block.children];
   const items = [];
+
+  const darkTheme = getParentProp(block, 'kpiHighlightsWidgetDarkTheme') ?? false;
+  if (darkTheme) {
+    block.classList.add('theme-dark');
+  }
 
   // --- KEY MODIFICATION ---
   // Iterate by 2 because in AEM/UE flat DOM:

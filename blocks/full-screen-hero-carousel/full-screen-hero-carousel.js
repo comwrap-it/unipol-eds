@@ -46,15 +46,36 @@ const ensureStylesLoaded = async () => {
   isStylesAlreadyLoaded = true;
 };
 
+export function getParentProp(block, propName) {
+  const parentBlock = block.closest('.section');
+  if (!parentBlock) return null;
+  const propValue = parentBlock.dataset[propName];
+  if (propValue === undefined) return null;
+  if (propValue === 'true') return true;
+  if (propValue === 'false') return false;
+  return propValue;
+}
+
 export default async function decorate(block) {
   if (!block) return;
   await ensureStylesLoaded();
+
+  // Setting dark mode for hero
+  const parentBlock = block.closest('.section');
+  if (parentBlock) {
+    parentBlock.dataset.heroWidgetDarkTheme = 'true';
+  }
 
   // Get rows from block
   let rows = Array.from(block.children);
   const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) {
     rows = Array.from(wrapper.children);
+  }
+
+  const darkTheme = getParentProp(block, 'heroWidgetDarkTheme') ?? false;
+  if (darkTheme) {
+    block.classList.add('theme-dark');
   }
 
   const isCarousel = rows.length > 1;

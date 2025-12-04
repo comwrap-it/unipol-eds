@@ -6,6 +6,7 @@ import {
   createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES, createButtonFromRows,
 } from '../atoms/buttons/standard-button/standard-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { getParentProp } from '../full-screen-hero-carousel/full-screen-hero-carousel.js';
 
 export { BUTTON_VARIANTS, BUTTON_ICON_SIZES };
 
@@ -182,6 +183,11 @@ export default async function decorate(block) {
   const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) {
     rows = Array.from(wrapper.children);
+  }
+
+  const darkTheme = getParentProp(block, 'kpiHighlightsWidgetDarkTheme') ?? false;
+  if (darkTheme) {
+    block.classList.add('theme-dark');
   }
 
   // 0: contentAlignment

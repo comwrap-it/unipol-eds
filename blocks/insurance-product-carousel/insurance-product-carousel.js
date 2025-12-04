@@ -20,6 +20,7 @@ import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
 import { createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
+import { getParentProp } from '../full-screen-hero-carousel/full-screen-hero-carousel.js';
 
 /**
  * Decorates the insurance product carousel block
@@ -67,6 +68,11 @@ export default async function decorate(block) {
 
   // Get all rows (each row will be a card)
   const rows = Array.from(block.children);
+
+  const darkTheme = getParentProp(block, 'insuranceProductCarouselWidgetDarkTheme') ?? false;
+  if (darkTheme) {
+    block.classList.add('theme-dark');
+  }
 
   const showMoreButtonLabel = rows[0].textContent?.trim() || 'Mostra di più';
   rows.shift();
