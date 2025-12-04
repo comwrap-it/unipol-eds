@@ -29,11 +29,6 @@ export function createHeaderLogo(config = {}) {
         img.alt = '';
         return img;
       })();
-
-    if (logoElement.tagName === 'IMG' && !logoElement.hasAttribute('alt')) {
-      logoElement.alt = '';
-    }
-
     link.appendChild(logoElement);
   }
 

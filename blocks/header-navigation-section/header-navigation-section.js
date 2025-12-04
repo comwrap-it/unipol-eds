@@ -94,16 +94,19 @@ function buildNavigationPill(row, openBoxRef) {
         const prevPill = openBoxRef.current.previousElementSibling;
         if (prevPill?.hasAttribute('aria-expanded')) {
           prevPill.setAttribute('aria-expanded', 'false');
+          prevPill.classList.remove('header-nav-pill-active');
         }
       }
 
       if (isClosed) {
         box.style.display = 'block';
         pillEl.setAttribute('aria-expanded', 'true');
+        pillEl.classList.add('header-nav-pill-active');
         openBoxRef.current = box;
       } else {
         box.style.display = 'none';
         pillEl.setAttribute('aria-expanded', 'false');
+        pillEl.classList.remove('header-nav-pill-active');
         openBoxRef.current = null;
       }
     });
