@@ -56,6 +56,19 @@ async function applyChanges(event) {
 
     const block = element.parentElement?.closest('.block[data-aue-resource]') || element?.closest('.block[data-aue-resource]');
     if (block) {
+      componentsWithMaxItems.forEach((component) => {
+        if (element.classList.contains(component.filter)) {
+          const undoOp = detail?.response?.undo?.op || 'remove';
+          const items = element.querySelectorAll(component.itemClass)?.length || 1;
+          const currentItems = undoOp === 'add' ? items - 1 : items + 1;
+          if (currentItems >= component.maxItems) {
+            element.setAttribute('data-aue-filter', 'disable-add');
+          } else {
+            element.setAttribute('data-aue-filter', component.filter);
+          }
+        }
+      });
+
       const blockResource = block.getAttribute('data-aue-resource');
       const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
       if (newBlock) {
@@ -68,19 +81,6 @@ async function applyChanges(event) {
         await loadBlock(newBlock);
         block.remove();
         newBlock.style.display = null;
-
-        componentsWithMaxItems.forEach((component) => {
-          if (element.classList.contains(component.filter)) {
-            if (element.querySelectorAll(component.itemClass)?.length >= component.maxItems) {
-              if (element.getAttribute('data-aue-filter') === component.filter) {
-                element.setAttribute('data-aue-filter', 'disable-add');
-              }
-            } else {
-              element.setAttribute('data-aue-filter', component.filter);
-            }
-          }
-        });
-
         return true;
       }
     } else {
