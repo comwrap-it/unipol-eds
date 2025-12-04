@@ -54,18 +54,6 @@ async function applyChanges(event) {
       return true;
     }
 
-    componentsWithMaxItems.forEach((component) => {
-      if (element.classList.contains(component.filter)) {
-        if (element.querySelectorAll(component.itemClass)?.length >= component.maxItems - 1) {
-          if (element.getAttribute('data-aue-filter') === 'insurance-product-carousel') {
-            element.setAttribute('data-aue-filter', 'disable-add');
-          }
-        } else {
-          element.setAttribute('data-aue-filter', component.filter);
-        }
-      }
-    });
-
     const block = element.parentElement?.closest('.block[data-aue-resource]') || element?.closest('.block[data-aue-resource]');
     if (block) {
       const blockResource = block.getAttribute('data-aue-resource');
@@ -80,6 +68,19 @@ async function applyChanges(event) {
         await loadBlock(newBlock);
         block.remove();
         newBlock.style.display = null;
+
+        componentsWithMaxItems.forEach((component) => {
+          if (element.classList.contains(component.filter)) {
+            if (element.querySelectorAll(component.itemClass)?.length >= component.maxItems) {
+              if (element.getAttribute('data-aue-filter') === component.filter) {
+                element.setAttribute('data-aue-filter', 'disable-add');
+              }
+            } else {
+              element.setAttribute('data-aue-filter', component.filter);
+            }
+          }
+        });
+
         return true;
       }
     } else {
