@@ -26,9 +26,14 @@ export function createHeaderLogo(config = {}) {
       : (() => {
         const img = document.createElement('img');
         img.src = config.logo;
-        img.alt = 'Logo';
+        img.alt = '';
         return img;
       })();
+
+    if (logoElement.tagName === 'IMG' && !logoElement.hasAttribute('alt')) {
+      logoElement.alt = '';
+    }
+
     link.appendChild(logoElement);
   }
 
@@ -50,7 +55,7 @@ function extractHeaderLogoData(rows) {
   config.logo = logoElement || (() => {
     const img = document.createElement('img');
     img.src = '/content/dam/unipol/logo/Unipol-Logo-OnDark.svg';
-    img.alt = 'Header Logo';
+    img.alt = '';
     return img;
   })();
 
@@ -72,9 +77,7 @@ export default function decorate(block) {
   const rows = Array.from(block.children);
   const wrapper = block.querySelector('.default-content-wrapper');
   const actualRows = wrapper ? Array.from(wrapper.children) : rows;
-
   const config = extractHeaderLogoData(actualRows);
-
   const headerLogoElement = createHeaderLogo(config);
 
   block.innerHTML = '';
