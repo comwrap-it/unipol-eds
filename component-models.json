@@ -187,7 +187,6 @@
   },
   {
     "id": "accordion",
-    "key-value": true,
     "fields": [
       {
         "component": "text",
