@@ -19,12 +19,12 @@
 import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
-// eslint-disable-next-line max-len
-import {
-  createButton,
-  BUTTON_VARIANTS,
-  BUTTON_ICON_SIZES,
-} from '../atoms/buttons/standard-button/standard-button.js';
+// eslint-disable-next-line max-len, import/no-duplicates
+import { createButton } from '../atoms/buttons/standard-button/standard-button.js';
+// eslint-disable-next-line import/no-duplicates
+import { BUTTON_VARIANTS } from '../atoms/buttons/standard-button/standard-button.js';
+// eslint-disable-next-line import/no-duplicates
+import { BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
 
 let isStylesLoaded = false;
 
@@ -64,9 +64,7 @@ export default async function decorate(block) {
   const hasInstrumentation = asInstrumentation(block);
 
   // Import card component dynamically
-  const cardModule = await import(
-    '../insurance-product-card/insurance-product-card.js'
-  );
+  const cardModule = await import('../insurance-product-card/insurance-product-card.js');
   const decorateInsuranceProductCard = cardModule.default;
 
   // Create carousel container structure
@@ -83,9 +81,7 @@ export default async function decorate(block) {
 
   // Get all rows (each row will be a card)
   const rows = Array.from(block.children);
-
   const showMoreElement = rows.shift();
-
   if (rows.length === 0) {
     // eslint-disable-next-line no-console
     console.warn('Insurance Product Carousel: No cards found');
@@ -108,10 +104,7 @@ export default async function decorate(block) {
 
     // Preserve row instrumentation on card block if present
     if (row.hasAttribute('data-aue-resource')) {
-      cardBlock.setAttribute(
-        'data-aue-resource',
-        row.getAttribute('data-aue-resource'),
-      );
+      cardBlock.setAttribute('data-aue-resource', row.getAttribute('data-aue-resource'));
       const aueBehavior = row.getAttribute('data-aue-behavior');
       if (aueBehavior) cardBlock.setAttribute('data-aue-behavior', aueBehavior);
       const aueType = row.getAttribute('data-aue-type');
@@ -132,8 +125,7 @@ export default async function decorate(block) {
     await decorateInsuranceProductCard(cardBlock);
 
     // Load card styles
-    const decoratedCard = slide.querySelector('.insurance-product-card-container, .card')
-      || slide.firstElementChild;
+    const decoratedCard = slide.querySelector('.insurance-product-card-container, .card') || slide.firstElementChild;
     if (decoratedCard && decoratedCard.dataset.blockName) {
       await loadBlock(decoratedCard);
     }
@@ -159,8 +151,11 @@ export default async function decorate(block) {
   let scrollIndicator;
   let showMoreButton;
 
-  function handleShowMoreButton(e) {
-    e.preventDefault();
+  /**
+   * @param {PointerEvent} event
+   */
+  function handleShowMoreButton(event) {
+    event.preventDefault();
     cardElements.forEach((slide) => {
       if (slide.classList.contains('hidden')) {
         slide.classList.remove('hidden');
@@ -177,7 +172,7 @@ export default async function decorate(block) {
   } else if (cardElements && cardElements.length > 4) {
     // eslint-disable-next-line max-len
     showMoreButton = createButton(
-      showMoreButtonLabel,
+      '',
       '',
       false,
       BUTTON_VARIANTS.SECONDARY,
@@ -211,9 +206,7 @@ export default async function decorate(block) {
 
   if (mq.matches) {
     // eslint-disable-next-line max-len
-    const handleInsuranceProductCarouselWidget = await import(
-      '../insurance-product-carousel-widget/insurance-product-carousel-widget.js'
-    );
+    const handleInsuranceProductCarouselWidget = await import('../insurance-product-carousel-widget/insurance-product-carousel-widget.js');
     handleInsuranceProductCarouselWidget.default();
   }
 }
