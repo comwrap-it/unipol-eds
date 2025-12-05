@@ -7,3 +7,9 @@
 .header-utilities-container .navigation-pill:hover {
     background: var(--Header-Background);
 }
+
+@media (width <= 768px) {
+  .header-utilities-container > :not(:last-child) {
+    display: none;
+  }
+}

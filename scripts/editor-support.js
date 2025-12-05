@@ -11,6 +11,14 @@ import {
 import { decorateRichtext } from './editor-support-rte.js';
 import { decorateMain } from './scripts.js';
 
+const componentsWithMaxItems = [
+  {
+    filter: 'insurance-product-carousel',
+    itemClass: '.insurance-product-card-wrapper',
+    maxItems: 8,
+  },
+];
+
 async function applyChanges(event) {
   // redecorate default content and blocks on patches (in the properties rail)
   const { detail } = event;
@@ -51,6 +59,18 @@ async function applyChanges(event) {
       const blockResource = block.getAttribute('data-aue-resource');
       const newBlock = parsedUpdate.querySelector(`[data-aue-resource="${blockResource}"]`);
       if (newBlock) {
+        componentsWithMaxItems.forEach((component) => {
+          if (newBlock.classList.contains(component.filter)) {
+            const undoOp = detail?.response?.undo?.op || 'remove';
+            const items = element.querySelectorAll(component.itemClass)?.length || 1;
+            const currentItems = undoOp === 'add' ? items - 1 : items + 1;
+            if (currentItems >= component.maxItems) {
+              newBlock.setAttribute('data-aue-filter', 'disable-add');
+            } else {
+              newBlock.setAttribute('data-aue-filter', component.filter);
+            }
+          }
+        });
         newBlock.style.display = 'none';
         block.insertAdjacentElement('afterend', newBlock);
         decorateButtons(newBlock);
@@ -109,6 +129,25 @@ function attachEventListners(main) {
 }
 
 attachEventListners(document.querySelector('main'));
+
+function attachEventInit(containers, itemClass, maxItems) {
+  containers.forEach((container) => {
+    const initObserver = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'data-block-status' && container.getAttribute('data-block-status') === 'loaded') {
+          if (container.querySelectorAll(itemClass).length >= maxItems) {
+            container.setAttribute('data-aue-filter', 'disable-add');
+          }
+        }
+      });
+    });
+    initObserver.observe(container, { attributes: true, attributeFilter: ['data-block-status'] });
+  });
+}
+
+componentsWithMaxItems.forEach((element) => {
+  attachEventInit(document.querySelectorAll(`[data-aue-filter="${element.filter}"]`), element.itemClass, element.maxItems);
+});
 
 // decorate rich text
 // this has to happen after decorateMain(), and everythime decorateBlocks() is called

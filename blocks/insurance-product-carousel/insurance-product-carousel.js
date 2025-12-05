@@ -69,7 +69,7 @@ export default async function decorate(block) {
   const rows = Array.from(block.children);
 
   const showMoreButtonLabel = rows[0].textContent?.trim() || 'Mostra di più';
-  rows.shift();
+  const showMoreElement = rows.shift();
 
   if (rows.length === 0) {
     // eslint-disable-next-line no-console
@@ -78,7 +78,7 @@ export default async function decorate(block) {
   }
 
   // Process each row as a card
-  const cardPromises = rows.map(async (row) => {
+  const cardPromises = rows.map(async (row, index) => {
     const slide = document.createElement('div');
     slide.className = 'insurance-product-card-wrapper swiper-slide';
     slide.setAttribute('role', 'listitem');
@@ -114,7 +114,9 @@ export default async function decorate(block) {
     slide.appendChild(cardBlock);
 
     // Decorate the card using card component
-    await decorateInsuranceProductCard(cardBlock);
+    // First card (index 0) is LCP candidate - optimize image loading
+    const isFirstCard = index === 0;
+    await decorateInsuranceProductCard(cardBlock, isFirstCard);
 
     // Load card styles
     const decoratedCard = slide.querySelector('.insurance-product-card-container, .card')
@@ -172,16 +174,18 @@ export default async function decorate(block) {
     carousel.appendChild(showMoreButton);
   }
 
+  showMoreElement.remove();
+
   // Preserve blockName if present
   if (block.dataset.blockName) {
     carousel.dataset.blockName = block.dataset.blockName;
   }
 
+  block.innerText = '';
   // Preserve block class
   carousel.classList.add('block', 'insurance-product-carousel-block');
-  moveInstrumentation(block, carousel);
   // Replace block with carousel
-  block.replaceWith(carousel);
+  block.appendChild(carousel);
 
   if (mq.matches) {
     const handleInsuranceProductCarouselWidget = await import('../insurance-product-carousel-widget/insurance-product-carousel-widget.js');
