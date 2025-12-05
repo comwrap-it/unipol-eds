@@ -39,11 +39,10 @@
           "component": "text",
           "name": "footerPrivacyLink",
           "label": "Testo Link",
-          "maxlength": 35,
           "required": true,
           "validation": {
-            "maxLength": 35,
-            "customErrorMsg": "Testo troppo lungo"
+            "maxLength": 40,
+            "customErrorMsg": "Testo troppo lungo (max 40 caratteri)"
           }
         },
         {
