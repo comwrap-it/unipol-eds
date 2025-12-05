@@ -103,6 +103,14 @@
     "components": []
   },
   {
+    "id": "insurance-product-carousel",
+    "components": [
+      "insurance-product-card"
+    ],
+    "min": 1,
+    "max": 8
+  },
+  {
     "id": "footer-privacy-section",
     "components": [
       "footer-privacy-link"

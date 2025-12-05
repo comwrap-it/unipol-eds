@@ -1,0 +1,97 @@
+{
+  "definitions": [
+    {
+      "title": "Insurance Product Card",
+      "id": "insurance-product-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Insurance Product card",
+              "model": "insurance-product-card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "insurance-product-card",
+      "fields": [
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Titolo",
+          "maxlength": 15,
+          "required": true
+        },
+        {
+          "component": "text",
+          "name": "description",
+          "label": "Descrizione",
+          "maxlength": 130,
+          "required": true
+        },
+        {
+          "component": "container",
+          "name": "button-container",
+          "label": "Configurazione Pulsante",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
+            }
+          ]
+        },
+        {
+          "component": "text",
+          "name": "note",
+          "label": "Note",
+          "maxlength": 60,
+          "required": true
+        },
+        {
+          "component": "container",
+          "name": "tag",
+          "label": "Configurazione Tag",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../atoms/tag/_tag.json#/models/tag/fields"
+            }
+          ]
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Immagine",
+          "multi": false,
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageSR",
+          "label": "Testo alternativo per l'immagine",
+          "required": true
+        },
+        {
+          "component": "container",
+          "name": "icons-3D",
+          "label": "Configurazione Icone 3D",
+          "collapsible": true,
+          "required": true,
+          "fields": [
+            {
+              "...": "../atoms/icons-3D/_icons-3D.json#/models/icons-3D/fields"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
