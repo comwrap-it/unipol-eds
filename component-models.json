@@ -2454,6 +2454,38 @@
             ]
           }
         ]
+      },
+      {
+        "component": "container",
+        "name": "test-accordion",
+        "label": "Configurazione Accordion",
+        "fields": [
+          {
+            "component": "text",
+            "name": "accordionLabel",
+            "label": "Label",
+            "description": "Header label (max 100 characters)",
+            "maxlength": 100,
+            "value": ""
+          },
+          {
+            "component": "textarea",
+            "name": "accordionDescription",
+            "label": "Description",
+            "description": "Accordion content (max 500 characters)",
+            "maxlength": 500,
+            "value": ""
+          },
+          {
+            "component": "aem-content",
+            "valueType": "string",
+            "name": "accordionRootpath",
+            "label": "Percorso CF elementi accordion",
+            "validation": {
+              "rootPath": "/content/dam/unipol/cf"
+            }
+          }
+        ]
       }
     ]
   },
