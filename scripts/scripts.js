@@ -99,30 +99,43 @@ function applyMainFilter(main) {
 }
 
 /**
- * Genera un label leggibile per la sezione basato sul suo contenuto
+ * Genera un label leggibile per la sezione basato sulla classe -container
+ * che viene aggiunta da decorateBlock()
  * @param {Element} section - La sezione da etichettare
  * @returns {string} Label per la sezione
  */
 function generateSectionLabel(section) {
-  // Cerca il primo blocco nella sezione
-  const firstBlock = section.querySelector('div[class]');
+  // Cerca una classe che termina con '-container'
+  const containerClass = Array.from(section.classList).find(cls => cls.endsWith('-container'));
   
-  if (firstBlock) {
-    // Prende la prima classe che non sia 'block'
-    const blockClasses = Array.from(firstBlock.classList).filter(cls => cls !== 'block');
-    if (blockClasses.length > 0) {
-      const blockName = blockClasses[0];
-      // Converti da kebab-case a Title Case
-      // es: 'unipol-footer' -> 'Unipol Footer'
-      return blockName
-        .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-    }
+  if (containerClass) {
+    // Rimuovi il suffisso '-container' per ottenere il nome del blocco
+    const blockName = containerClass.replace('-container', '');
+    
+    // Converti da kebab-case a Title Case
+    // es: 'unipol-footer' -> 'Unipol Footer'
+    return blockName
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
   }
   
-  // Default se non trova blocchi
+  // Default se non trova classi -container
   return 'Section';
+}
+
+/**
+ * Aggiorna i label delle sezioni dopo che i blocchi sono stati decorati.
+ * Deve essere chiamato dopo decorateBlocks() perché usa le classi -container.
+ * @param {Element} main - L'elemento main contenente le sezioni
+ */
+function updateSectionLabels(main) {
+  main.querySelectorAll('.section').forEach((section) => {
+    // Aggiorna solo se non è già stato impostato un label custom via metadata
+    if (section.dataset.aueLabel === 'Section') {
+      section.dataset.aueLabel = generateSectionLabel(section);
+    }
+  });
 }
 
 /**
@@ -203,6 +216,10 @@ export function decorateMain(main) {
 
   decorateSections(main);
   decorateBlocks(main);
+  
+  // Aggiorna i label delle sezioni dopo la decorazione dei blocchi
+  // (i blocchi aggiungono le classi -container alle sezioni)
+  updateSectionLabels(main);
 }
 
 /**
