@@ -19,6 +19,7 @@ import {
 import {
   getMainFilter,
   getSectionFilter,
+  getTemplateFilterConfig,
 } from './template-filters-config.js';
 
 /**
@@ -98,48 +99,6 @@ function applyMainFilter(main) {
   console.log(`[Template Filters] Template: "${templateName}" -> Main Filter: "${mainFilter}"`);
 }
 
-/**
- * Genera un label leggibile per la sezione basato sul primo blocco principale.
- * La struttura è: section > wrapper > block
- * Cerca il primo blocco al primo livello della sezione.
- * @param {Element} section - La sezione da etichettare
- * @returns {string} Label per la sezione
- */
-function generateSectionLabel(section) {
-  // Cerca il primo blocco al primo livello: section > div > div.block
-  const firstLevelBlock = section.querySelector(':scope > div > div.block');
-  
-  if (firstLevelBlock) {
-    // Prende il nome del blocco dal data-block-name o dalla prima classe
-    const blockName = firstLevelBlock.dataset.blockName || firstLevelBlock.classList[0];
-    
-    if (blockName && blockName !== 'block') {
-      // Converti da kebab-case a Title Case
-      // es: 'unipol-footer' -> 'Unipol Footer'
-      return blockName
-        .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-    }
-  }
-  
-  // Default se non trova blocchi
-  return 'Section';
-}
-
-/**
- * Aggiorna i label delle sezioni dopo che i blocchi sono stati decorati.
- * Deve essere chiamato dopo decorateBlocks() perché usa le classi -container.
- * @param {Element} main - L'elemento main contenente le sezioni
- */
-function updateSectionLabels(main) {
-  main.querySelectorAll('.section').forEach((section) => {
-    // Aggiorna solo se non è già stato impostato un label custom via metadata
-    if (section.dataset.aueLabel === 'Section') {
-      section.dataset.aueLabel = generateSectionLabel(section);
-    }
-  });
-}
 
 /**
  * Decorates all sections in a container element.
@@ -171,12 +130,19 @@ export function decorateSections(main) {
     // --- UNIVERSAL EDITOR: Configurazione della sezione ---
     section.dataset.aueType = 'container';
     
-    // Genera un label dinamico basato sul contenuto della sezione
-    section.dataset.aueLabel = generateSectionLabel(section);
-
-    // Determina il filtro per questa sezione basato su template e posizione
-    const sectionFilter = getSectionFilter(templateName, index);
-    section.dataset.aueFilter = sectionFilter;
+    // Controlla se il template ha sezioni "trasparenti"
+    // (dove label e filter vengono dal model del widget contenuto)
+    const templateConfig = getTemplateFilterConfig(templateName);
+    const isTransparent = templateConfig.sections?.transparent === true;
+    
+    if (!isTransparent) {
+      // Sezione normale: imposta label e filtro manualmente
+      section.dataset.aueLabel = 'Section';
+      const sectionFilter = getSectionFilter(templateName, index);
+      section.dataset.aueFilter = sectionFilter;
+    }
+    // Se transparent=true, NON impostiamo label/filter
+    // Il widget contenuto (con data-aue-model) li gestirà automaticamente
 
     // --- METADATA: Elaborazione section-metadata (può sovrascrivere i filtri) ---
     const sectionMeta = section.querySelector('div.section-metadata');
@@ -219,10 +185,6 @@ export function decorateMain(main) {
 
   decorateSections(main);
   decorateBlocks(main);
-  
-  // Aggiorna i label delle sezioni dopo la decorazione dei blocchi
-  // (i blocchi aggiungono le classi -container alle sezioni)
-  updateSectionLabels(main);
 }
 
 /**

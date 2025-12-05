@@ -36,10 +36,12 @@
  */
 export const TEMPLATE_FILTERS = {
   // Template Footer: permette solo unipol-footer nel main
+  // Le sezioni sono trasparenti: label e filter vengono dal widget contenuto
   footer: {
     main: 'footer-template-main',
     sections: {
-      default: 'section', // Le sezioni usano il filtro standard
+      default: null, // null = non impostare filtro, lascia che sia il widget a gestirlo
+      transparent: true, // Le sezioni prendono label/filter dal model del widget
     },
   },
 
