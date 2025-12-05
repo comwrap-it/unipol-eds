@@ -49,9 +49,10 @@ export const createBlogCard = (
   category,
   type,
   isSlide = false,
+  animationClass = '',
 ) => {
   const card = document.createElement('div');
-  card.className = `blog-card ${isSlide ? 'swiper-slide' : ''}`;
+  card.className = `blog-card ${isSlide ? 'swiper-slide' : ''} ${animationClass}`;
 
   const picture = createOptimizedPicture(imagePath, `Blog image: ${title}`);
   picture.classList.add('blog-card-image');

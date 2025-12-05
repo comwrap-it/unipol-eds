@@ -1,8 +1,8 @@
 :root {
-    --reveal-distance: 22px;
-    --reveal-duration: 500ms;
+    --reveal-distance: 150px;
+    --reveal-duration: 650ms;
     --reveal-ease: cubic-bezier(0.25, 1, 0.5, 1);
-    --reveal-delay: 500ms;
+    --reveal-delay: 300ms;
 }
 
 .reveal-in {
@@ -22,7 +22,7 @@
     will-change: opacity, transform;
 
     &.is-revealed {
-        animation: fade-in-up var(--reveal-duration) var(--reveal-ease)
+        animation: appear-in-up var(--reveal-duration) var(--reveal-ease)
             var(--reveal-delay, 300ms) both;
     }
 }
@@ -62,7 +62,7 @@
     }
 }
 
-@keyframes fade-in-up {
+@keyframes appear-in-up {
     from {
         opacity: 0;
         transform: translateY(var(--reveal-distance));

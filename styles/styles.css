@@ -40,9 +40,12 @@ body.appear {
 }
 
 main {
-    display: block;
+    display: flex;
+    flex-direction: column;
     margin: 0 auto;
     max-width: 100vw;
+    gap: var(--Layout-Page-Gap);
+    /* width: var(--Layout-Page-Width); */
 }
 
 header {

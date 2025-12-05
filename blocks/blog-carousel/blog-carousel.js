@@ -18,6 +18,7 @@
 
 import loadSwiper, { handleSlideChange } from '../../scripts/lib/utils.js';
 import mockBlogCards from '../../scripts/mock.js';
+import { initCarouselAnimations } from '../../scripts/reveal.js';
 import { createBlogCard } from '../blog-preview-card/blog-preview-card.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
 
@@ -56,7 +57,7 @@ const initSwiper = (
     },
     slidesPerView: 'auto',
     allowTouchMove: true,
-    a11y: { enabled: true },
+    a11y: { enabled: false },
     touchStartPreventDefault: false,
     resistanceRatio: 0.85,
     watchOverflow: true,
@@ -121,6 +122,7 @@ export default async function decorate(block) {
       tagCategory,
       tagType,
       true, // isSlide
+      'reveal-in-up', // animationClass
     );
     track.appendChild(card);
   });
@@ -128,6 +130,8 @@ export default async function decorate(block) {
   carousel.appendChild(track);
 
   if (isThereMultipleCards) {
+    initCarouselAnimations(carousel);
+
     const {
       leftIconButton, scrollIndicator, rightIconButton, setExpandedDot,
     } = await createScrollIndicator();

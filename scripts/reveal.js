@@ -6,15 +6,13 @@
  * @param {string} [options.rootMargin="0px 0px -10% 0px"] - Margin around the root.
  * @param {number} [options.threshold=0.15] - Percentage of the element's visibility required.
  */
-export default function initReveal({
-  selector = '.reveal-in, .reveal-in-up',
+export function initRevealAnimations({
+  selector = '.reveal-in:not(.swiper-slide), .reveal-in-up:not(.swiper-slide)',
   root = null,
   rootMargin = '0px 0px -10% 0px',
   threshold = 0.05,
 } = {}) {
-  console.log('Initializing reveal animations');
   const items = Array.from(document.querySelectorAll(selector));
-  console.log('🚀 ~ initReveal ~ items:', items);
   if (!items.length) return;
 
   const io = new IntersectionObserver(
@@ -30,4 +28,39 @@ export default function initReveal({
   );
 
   items.forEach((el) => io.observe(el));
+}
+
+/**
+ * Initializes reveal animations specifically for a carousel element.
+ * When any slide becomes visible inside the carousel viewport,
+ * all slides get revealed and the observer stops.
+ * @param {HTMLElement} carousel - The carousel element containing slides to be revealed.
+ */
+function animateCarouselSlideProgressively(carousel) {
+  const slides = carousel.querySelectorAll(
+    '.swiper-slide.reveal-up, .swiper-slide.reveal-in-up, .swiper-slide.reveal-in',
+  );
+  if (!slides.length) return;
+
+  const CARD_ANIMATION_DELAY = 100; // milliseconds
+  slides.forEach((el, index) => {
+    el.style.setProperty('--reveal-delay', `${index * CARD_ANIMATION_DELAY}ms`);
+    el.classList.add('is-revealed');
+  });
+}
+
+export function initCarouselAnimations(carousel) {
+  const observer = new IntersectionObserver(
+    (entries, obs) => {
+      const intersected = entries.some((e) => e.isIntersecting);
+      if (intersected) {
+        animateCarouselSlideProgressively(carousel);
+        obs.unobserve(carousel);
+        obs.disconnect();
+      }
+    },
+    { root: null, rootMargin: '0px 0px -10% 0px', threshold: 0.05 },
+  );
+
+  observer.observe(carousel);
 }

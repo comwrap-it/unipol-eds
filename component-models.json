@@ -2642,6 +2642,41 @@
             ]
           }
         ]
+      },
+      {
+        "component": "boolean",
+        "label": "Il componente è animato?",
+        "name": "is-animated",
+        "valueType": "boolean",
+        "defaultValue": false
+      },
+      {
+        "component": "select",
+        "label": "Animazione",
+        "name": "animation-class",
+        "options": [
+          {
+            "label": "Nessuna",
+            "value": ""
+          },
+          {
+            "label": "Reveal In",
+            "value": "reveal-in"
+          },
+          {
+            "label": "Reveal In Up",
+            "value": "reveal-in-up"
+          }
+        ],
+        "defaultValue": "",
+        "condition": {
+          "===": [
+            {
+              "var": "is-animated"
+            },
+            true
+          ]
+        }
       }
     ]
   },
