@@ -99,10 +99,8 @@
     ]
   },
   {
-    "id": "faq-widget",
-    "components": [
-      "fragment"
-    ]
+    "id": "editorial-carousel-widget",
+    "components": []
   },
   {
     "id": "footer-privacy-section",
