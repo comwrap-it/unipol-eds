@@ -1,33 +1,34 @@
 /**
  * Template Filters Configuration
  *
- * Questo file centralizza la configurazione dei filtri Universal Editor
- * basati sul template della pagina (definito tramite metadata).
+ * This file centralizes the configuration of Universal Editor filters
+ * based on the template of the page (defined through metadata).
  *
- * COME FUNZIONA:
- * 1. Il metadata "template" viene letto dalla pagina
- * 2. In base al template, vengono applicati filtri specifici a:
- *    - main element (cosa può essere aggiunto come widget/sezioni)
- *    - sections (cosa può essere aggiunto dentro ogni sezione)
- * 3. È possibile definire regole per sezioni specifiche (es. prima sezione)
+ * HOW IT WORKS:
+ * 1. The "template" metadata is read from the page
+ * 2. Based on the template, specific filters are applied to:
+ *    - main element (what can be added as widget/sections)
+ *    - sections (what can be added inside each section)
+ * 3. It is possible to define rules for specific sections (e.g. first section)
+ * based on the template of the page (defined through metadata).
  *
- * FILTRI DISPONIBILI:
- * I filtri devono essere definiti in component-filters.json
- * Ogni filtro specifica quali componenti possono essere aggiunti dall'editor.
+ * AVAILABLE FILTERS:
+ * Filters must be defined in component-filters.json
+ * Each filter specifies which components can be added by the editor.
  */
 
 /**
- * Configurazione dei filtri per template
+ * Configuration of filters for templates
  *
- * Struttura:
+ * Structure:
  * {
  *   'template-name': {
- *     main: 'filter-id',           // Filtro per il main element
+ *     main: 'filter-id',           // Filter for the main element
  *     sections: {
- *       default: 'filter-id',      // Filtro di default per le sezioni
- *       byIndex: {                 // Filtri per sezioni specifiche (opzionale)
- *         0: 'filter-id',          // Prima sezione
- *         1: 'filter-id',          // Seconda sezione
+ *       default: 'filter-id',      // Default filter for sections
+ *       byIndex: {                 // Filters for specific sections (optional)
+ *         0: 'filter-id',          // First section
+ *         1: 'filter-id',          // Second section
  *         // ...
  *       }
  *     }
@@ -35,28 +36,35 @@
  * }
  */
 export const TEMPLATE_FILTERS = {
-  // Template Footer: permette solo unipol-footer nel main
-  // Le sezioni sono trasparenti: label e filter vengono dal widget contenuto
+  // Template Footer: allows only unipol-footer in the main
+  // Sections are transparent: label and filter come from the contained widget
   footer: {
-    main: 'footer-template-main',
+    main: 'footer-template',
     sections: {
-      default: null, // null = non impostare filtro, lascia che sia il widget a gestirlo
-      transparent: true, // Le sezioni prendono label/filter dal model del widget
+      default: null, // null = don't set filter, let the widget handle it
+      transparent: true, // Sections take label/filter from the contained widget model
+    },
+  },
+  header: {
+    main: 'header-template',
+    sections: {
+      default: null, // null = don't set filter, let the widget handle it
+      transparent: true, // Sections take label/filter from the contained widget model
     },
   },
 
-  // Template Homepage: permette vari widget nel main
+  // Template Homepage: allows various widgets in the main
   /* 'homepage': {
     main: 'main', // Filtro standard del main
     sections: {
       default: 'section',
       byIndex: {
-        0: 'homepage-hero-section', // Prima sezione: solo hero
+        0: 'homepage-hero-section', // First section: only hero
       }
     }
   }, */
 
-  // Aggiungi qui altri template secondo necessità
+  // Add other templates as needed
   // 'product-page': {
   //   main: 'main',
   //   sections: {
@@ -66,7 +74,7 @@ export const TEMPLATE_FILTERS = {
 };
 
 /**
- * Filtro di default per template non configurati
+ * Default filter for unconfigured templates
  */
 export const DEFAULT_TEMPLATE_CONFIG = {
   main: 'main',
@@ -76,18 +84,18 @@ export const DEFAULT_TEMPLATE_CONFIG = {
 };
 
 /**
- * Ottiene la configurazione del filtro per un template specifico
- * @param {string} templateName - Nome del template (normalizzato con toClassName)
- * @returns {Object} Configurazione del filtro per il template
+ * Gets the filter configuration for a specific template
+ * @param {string} templateName - Template name (normalized with toClassName)
+ * @returns {Object} Filter configuration for the template
  */
 export function getTemplateFilterConfig(templateName) {
   return TEMPLATE_FILTERS[templateName] || DEFAULT_TEMPLATE_CONFIG;
 }
 
 /**
- * Ottiene il filtro per il main element basato sul template
- * @param {string} templateName - Nome del template (normalizzato con toClassName)
- * @returns {string} ID del filtro da applicare al main
+ * Gets the filter for the main element based on the template
+ * @param {string} templateName - Template name (normalized with toClassName)
+ * @returns {string} Filter ID to apply to the main
  */
 export function getMainFilter(templateName) {
   const config = getTemplateFilterConfig(templateName);
@@ -95,19 +103,19 @@ export function getMainFilter(templateName) {
 }
 
 /**
- * Ottiene il filtro per una sezione specifica basato sul template
- * @param {string} templateName - Nome del template (normalizzato con toClassName)
- * @param {number} sectionIndex - Indice della sezione (0-based)
- * @returns {string} ID del filtro da applicare alla sezione
+ * Gets the filter for a specific section based on the template
+ * @param {string} templateName - Template name (normalized with toClassName)
+ * @param {number} sectionIndex - Section index (0-based)
+ * @returns {string} Filter ID to apply to the section
  */
 export function getSectionFilter(templateName, sectionIndex) {
   const config = getTemplateFilterConfig(templateName);
 
-  // Controlla se esiste un filtro specifico per questo indice
+  // Check if there is a specific filter for this index
   if (config.sections.byIndex && config.sections.byIndex[sectionIndex]) {
     return config.sections.byIndex[sectionIndex];
   }
 
-  // Altrimenti usa il filtro di default
+  // Otherwise use the default filter
   return config.sections.default;
 }

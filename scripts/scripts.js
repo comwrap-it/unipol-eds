@@ -82,19 +82,19 @@ function buildAutoBlocks() {
 }
 
 /**
- * Applica il filtro Universal Editor al main element basato sul template.
- * Questo controlla quali widget/sezioni possono essere aggiunti al main.
- * @param {Element} main - L'elemento main da decorare
+ * Applies the Universal Editor filter to the main element based on the template.
+ * This controls which widgets/sections can be added to the main element.
+ * @param {Element} main - The main element to decorate
  */
 function applyMainFilter(main) {
   const templateName = toClassName(getMetadata('template'));
   const mainFilter = getMainFilter(templateName);
 
-  // Applica gli attributi Universal Editor al main element
+  // Apply Universal Editor attributes to the main element
   main.dataset.aueType = 'container';
   main.dataset.aueFilter = mainFilter;
 
-  // Log per debugging (rimuovere in produzione se necessario)
+  // Log for debugging (remove in production if needed)
   // eslint-disable-next-line no-console
   console.log(`[Template Filters] Template: "${templateName}" -> Main Filter: "${mainFilter}"`);
 }
@@ -102,15 +102,15 @@ function applyMainFilter(main) {
 
 /**
  * Decorates all sections in a container element.
- * Shadowing della funzione originale di aem.js per gestire Universal Editor
- * con supporto per filtri basati su template.
- * @param {Element} main - L'elemento main contenente le sezioni
+ * Shadowing the original function from aem.js to handle Universal Editor
+ * with support for template-based filters.
+ * @param {Element} main - The main element containing the sections
  */
 export function decorateSections(main) {
   const templateName = toClassName(getMetadata('template'));
 
   main.querySelectorAll(':scope > div:not([data-section-status])').forEach((section, index) => {
-    // --- LOGICA STANDARD: Creazione dei wrapper ---
+    // --- STANDARD LOGIC: Creation of wrappers ---
     const wrappers = [];
     let defaultContent = false;
     [...section.children].forEach((e) => {
@@ -127,24 +127,24 @@ export function decorateSections(main) {
     section.dataset.sectionStatus = 'initialized';
     section.style.display = 'none';
 
-    // --- UNIVERSAL EDITOR: Configurazione della sezione ---
+    // --- UNIVERSAL EDITOR: Section configuration ---
     section.dataset.aueType = 'container';
     
-    // Controlla se il template ha sezioni "trasparenti"
-    // (dove label e filter vengono dal model del widget contenuto)
+    // Check if the template has "transparent" sections
+    // (where label and filter come from the contained widget model)
     const templateConfig = getTemplateFilterConfig(templateName);
     const isTransparent = templateConfig.sections?.transparent === true;
     
     if (!isTransparent) {
-      // Sezione normale: imposta label e filtro manualmente
+      // Normal section: set label and filter manually
       section.dataset.aueLabel = 'Section';
       const sectionFilter = getSectionFilter(templateName, index);
       section.dataset.aueFilter = sectionFilter;
     }
-    // Se transparent=true, NON impostiamo label/filter
-    // Il widget contenuto (con data-aue-model) li gestirà automaticamente
+    // If transparent=true, we don't set label/filter
+    // The contained widget (with data-aue-model) will handle them automatically
 
-    // --- METADATA: Elaborazione section-metadata (può sovrascrivere i filtri) ---
+    // --- METADATA: Processing section-metadata (can override filters) ---
     const sectionMeta = section.querySelector('div.section-metadata');
     if (sectionMeta) {
       const meta = readBlockConfig(sectionMeta);
@@ -158,7 +158,7 @@ export function decorateSections(main) {
         } else {
           section.dataset[toCamelCase(key)] = meta[key];
 
-          // Override: Se il metadata specifica un filtro esplicito, ha priorità
+          // Override: If the metadata specifies an explicit filter, it takes priority
           if (key === 'filter' || key === 'aue-filter') {
             section.dataset.aueFilter = meta[key];
           }
@@ -180,7 +180,7 @@ export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
 
-  // Applica il filtro Universal Editor al main basato sul template
+  // Apply the Universal Editor filter to the main element based on the template
   applyMainFilter(main);
 
   decorateSections(main);

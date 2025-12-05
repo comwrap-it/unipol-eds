@@ -6,14 +6,19 @@
       "kpi-highlights-widget",
       "insurance-product-carousel-widget",
       "hero-widget",
-      "unipol-header",
       "blog-carousel-widget"
     ]
   },
   {
-    "id": "footer-template-main",
+    "id": "footer-template",
     "components": [
       "unipol-footer"
+    ]
+  },
+  {
+    "id": "header-template",
+    "components": [
+      "unipol-header"
     ]
   },
   {
