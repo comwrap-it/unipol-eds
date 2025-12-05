@@ -25,7 +25,12 @@ const setupHeroWithBg = (heroBackground, isVideoBackground = false, isCarousel =
     moveInstrumentation(heroBackground, pictureBg);
     pictureBg.className = 'hero-bg';
     pictureBg.setAttribute('aria-hidden', 'true');
-    pictureBg.fetchPriority = 'high';
+    const img = pictureBg.querySelector('img');
+    if (img) {
+      img.loading = 'eager';
+      img.decoding = 'async';
+      img.fetchPriority = 'high';
+    }
     hero.appendChild(pictureBg);
   } else if (heroBackground) {
     const videoPath = heroBackground.href;
@@ -34,6 +39,7 @@ const setupHeroWithBg = (heroBackground, isVideoBackground = false, isCarousel =
     moveInstrumentation(heroBackground, videoBg);
     videoBg.className = 'hero-bg';
     videoBg.setAttribute('aria-hidden', 'true');
+    videoBg.preload = 'auto';
     videoBg.autoplay = true;
     videoBg.muted = true;
     videoBg.loop = true;
