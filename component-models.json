@@ -187,31 +187,23 @@
   },
   {
     "id": "accordion",
+    "key-value": true,
     "fields": [
       {
         "component": "text",
         "name": "accordionLabel",
-        "label": "Label",
-        "description": "Header label (max 100 characters)",
+        "label": "Domanda",
+        "description": "Descrizione della domanda (max 100 characters)",
         "maxlength": 100,
         "value": ""
       },
       {
         "component": "text",
         "name": "accordionDescription",
-        "label": "Description",
-        "description": "Accordion content (max 500 characters)",
+        "label": "Risposta",
+        "description": "Risposta contenuta nell'accordio(max 500 characters)",
         "maxlength": 500,
         "value": ""
-      },
-      {
-        "component": "aem-content",
-        "valueType": "string",
-        "name": "accordionRootpath",
-        "label": "Percorso CF elementi accordion",
-        "validation": {
-          "rootPath": "/content/dam/unipol/cf"
-        }
       }
     ]
   },
@@ -2463,27 +2455,18 @@
           {
             "component": "text",
             "name": "accordionLabel",
-            "label": "Label",
-            "description": "Header label (max 100 characters)",
+            "label": "Domanda",
+            "description": "Descrizione della domanda (max 100 characters)",
             "maxlength": 100,
             "value": ""
           },
           {
             "component": "text",
             "name": "accordionDescription",
-            "label": "Description",
-            "description": "Accordion content (max 500 characters)",
+            "label": "Risposta",
+            "description": "Risposta contenuta nell'accordio(max 500 characters)",
             "maxlength": 500,
             "value": ""
-          },
-          {
-            "component": "aem-content",
-            "valueType": "string",
-            "name": "accordionRootpath",
-            "label": "Percorso CF elementi accordion",
-            "validation": {
-              "rootPath": "/content/dam/unipol/cf"
-            }
           }
         ]
       }
