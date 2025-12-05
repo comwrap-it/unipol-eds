@@ -78,7 +78,7 @@ export default async function decorate(block) {
   }
 
   // Process each row as a card
-  const cardPromises = rows.map(async (row) => {
+  const cardPromises = rows.map(async (row, index) => {
     const slide = document.createElement('div');
     slide.className = 'insurance-product-card-wrapper swiper-slide';
     slide.setAttribute('role', 'listitem');
@@ -114,7 +114,9 @@ export default async function decorate(block) {
     slide.appendChild(cardBlock);
 
     // Decorate the card using card component
-    await decorateInsuranceProductCard(cardBlock);
+    // First card (index 0) is LCP candidate - optimize image loading
+    const isFirstCard = index === 0;
+    await decorateInsuranceProductCard(cardBlock, isFirstCard);
 
     // Load card styles
     const decoratedCard = slide.querySelector('.insurance-product-card-container, .card')
