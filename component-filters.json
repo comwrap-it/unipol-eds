@@ -5,6 +5,7 @@
       "section",
       "kpi-highlights-widget",
       "insurance-product-carousel-widget",
+      "editorial-carousel-widget",
       "hero-widget",
       "mini-hero-widget",
       "blog-carousel-widget",
@@ -56,16 +57,8 @@
     "components": []
   },
   {
-    "id": "hero-widget",
-    "components": [
-      "full-screen-hero-carousel"
-    ]
-  },
-  {
-    "id": "mini-hero-widget",
-    "components": [
-      "mini-hero-carousel"
-    ]
+    "id": "editorial-carousel-widget",
+    "components": []
   },
   {
     "id": "blog-carousel-widget",

@@ -245,6 +245,22 @@
     ]
   },
   {
+    "id": "editorial-carousel-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "editorial-carousel-widget-name",
+        "label": "Nome sezione Editorial Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "editorial-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
     "id": "accordion",
     "fields": [
       {
