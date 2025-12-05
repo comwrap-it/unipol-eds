@@ -99,7 +99,6 @@ function applyMainFilter(main) {
   console.log(`[Template Filters] Template: "${templateName}" -> Main Filter: "${mainFilter}"`);
 }
 
-
 /**
  * Decorates all sections in a container element.
  * Shadowing the original function from aem.js to handle Universal Editor
@@ -129,12 +128,12 @@ export function decorateSections(main) {
 
     // --- UNIVERSAL EDITOR: Section configuration ---
     section.dataset.aueType = 'container';
-    
+
     // Check if the template has "transparent" sections
     // (where label and filter come from the contained widget model)
     const templateConfig = getTemplateFilterConfig(templateName);
     const isTransparent = templateConfig.sections?.transparent === true;
-    
+
     if (!isTransparent) {
       // Normal section: set label and filter ONLY if not already set
       // (widgets with models may already have their own label/filter)
