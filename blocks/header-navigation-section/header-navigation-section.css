@@ -1,9 +1,10 @@
 .navigation-pill-container {
     display: flex;
+    align-items: center;
     background: var(--Header-Background);
     padding: var(--Header-Navigation-Vertical-Padding,4px) var(--Header-Navigation-Horizontal-Padding, 4px);
     border-radius: var(--Header-Radius, 9999);
-    gap: var(--Navigation-Pill-Gap, 8px);
+    gap: var(--Header-Horizontal-Gap, 4px);
 }
 
 .header-box-text-container {
@@ -20,7 +21,7 @@
     color: var(--Navigation-Pill-Active-Text);
 }
 
-.navigation-pill-container.sticky {
+.navigation-pill-container.nav-header-sticky {
   position: fixed;
   max-width: fit-content;
   top: var(--Header-Vertical-Padding-M-Tp,24px);

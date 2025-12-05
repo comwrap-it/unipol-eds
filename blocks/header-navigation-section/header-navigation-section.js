@@ -30,9 +30,9 @@ function makeNavigationSticky(block) {
     const scrollY = window.scrollY || window.pageYOffset;
 
     if (scrollY > headerBottom) {
-      container.classList.add('sticky');
+      container.classList.add('nav-header-sticky');
     } else {
-      container.classList.remove('sticky');
+      container.classList.remove('nav-header-sticky');
     }
   });
 }

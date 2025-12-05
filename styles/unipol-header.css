@@ -14,4 +14,5 @@ main .section.header-logo-container ,
 main .sectionheader-navigation-section-container ,
 main .sectionheader-utilities-section-container {
     position: relative;
+    padding-top: 140px;
 }
