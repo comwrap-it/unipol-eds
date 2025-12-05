@@ -3,14 +3,23 @@ import {
   loadFooter,
   decorateButtons,
   decorateIcons,
-  decorateSections,
+  // decorateSections,
+  toClassName,
+  getMetadata,
   decorateBlocks,
   decorateTemplateAndTheme,
   waitForFirstImage,
   loadSection,
   loadSections,
   loadCSS,
+  readBlockConfig,
+  toCamelCase,
 } from './aem.js';
+
+import {
+  getMainFilter,
+  getSectionFilter,
+} from './template-filters-config.js';
 
 /**
  * Moves all the attributes from a given elmenet to another given element.
@@ -72,6 +81,84 @@ function buildAutoBlocks() {
 }
 
 /**
+ * Applica il filtro Universal Editor al main element basato sul template.
+ * Questo controlla quali widget/sezioni possono essere aggiunti al main.
+ * @param {Element} main - L'elemento main da decorare
+ */
+function applyMainFilter(main) {
+  const templateName = toClassName(getMetadata('template'));
+  const mainFilter = getMainFilter(templateName);
+
+  // Applica gli attributi Universal Editor al main element
+  main.dataset.aueType = 'container';
+  main.dataset.aueFilter = mainFilter;
+
+  // Log per debugging (rimuovere in produzione se necessario)
+  // eslint-disable-next-line no-console
+  console.log(`[Template Filters] Template: "${templateName}" -> Main Filter: "${mainFilter}"`);
+}
+
+/**
+ * Decorates all sections in a container element.
+ * Shadowing della funzione originale di aem.js per gestire Universal Editor
+ * con supporto per filtri basati su template.
+ * @param {Element} main - L'elemento main contenente le sezioni
+ */
+export function decorateSections(main) {
+  const templateName = toClassName(getMetadata('template'));
+
+  main.querySelectorAll(':scope > div:not([data-section-status])').forEach((section, index) => {
+    // --- LOGICA STANDARD: Creazione dei wrapper ---
+    const wrappers = [];
+    let defaultContent = false;
+    [...section.children].forEach((e) => {
+      if ((e.tagName === 'DIV' && e.className) || !defaultContent) {
+        const wrapper = document.createElement('div');
+        wrappers.push(wrapper);
+        defaultContent = e.tagName !== 'DIV' || !e.className;
+        if (defaultContent) wrapper.classList.add('default-content-wrapper');
+      }
+      wrappers[wrappers.length - 1].append(e);
+    });
+    wrappers.forEach((wrapper) => section.append(wrapper));
+    section.classList.add('section');
+    section.dataset.sectionStatus = 'initialized';
+    section.style.display = 'none';
+
+    // --- UNIVERSAL EDITOR: Configurazione della sezione ---
+    section.dataset.aueType = 'container';
+    section.dataset.aueLabel = 'Section';
+
+    // Determina il filtro per questa sezione basato su template e posizione
+    const sectionFilter = getSectionFilter(templateName, index);
+    section.dataset.aueFilter = sectionFilter;
+
+    // --- METADATA: Elaborazione section-metadata (può sovrascrivere i filtri) ---
+    const sectionMeta = section.querySelector('div.section-metadata');
+    if (sectionMeta) {
+      const meta = readBlockConfig(sectionMeta);
+      Object.keys(meta).forEach((key) => {
+        if (key === 'style') {
+          const styles = meta.style
+            .split(',')
+            .filter((style) => style)
+            .map((style) => toClassName(style.trim()));
+          styles.forEach((style) => section.classList.add(style));
+        } else {
+          section.dataset[toCamelCase(key)] = meta[key];
+
+          // Override: Se il metadata specifica un filtro esplicito, ha priorità
+          if (key === 'filter' || key === 'aue-filter') {
+            section.dataset.aueFilter = meta[key];
+          }
+        }
+      });
+      sectionMeta.parentNode.remove();
+    }
+  });
+}
+
+/**
  * Decorates the main element.
  * @param {Element} main The main element
  */
@@ -81,6 +168,10 @@ export function decorateMain(main) {
   decorateButtons(main);
   decorateIcons(main);
   buildAutoBlocks(main);
+
+  // Applica il filtro Universal Editor al main basato sul template
+  applyMainFilter(main);
+
   decorateSections(main);
   decorateBlocks(main);
 }

@@ -7,8 +7,13 @@
       "insurance-product-carousel-widget",
       "hero-widget",
       "unipol-header",
-      "unipol-footer",
       "blog-carousel-widget"
+    ]
+  },
+  {
+    "id": "footer-template-main",
+    "components": [
+      "unipol-footer"
     ]
   },
   {
