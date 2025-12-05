@@ -20,7 +20,7 @@ module.exports = {
   },
   rules: {
     'import/extensions': ['error', { js: 'always' }], // require js file extensions in imports
-    'linebreak-style': ['error', 'unix'], // enforce LF for repo consistency (see .gitattributes)
+    'linebreak-style': ['error', 'unix'], // enforce unix linebreaks
     'no-param-reassign': [2, { props: false }], // allow modifying properties of param
     'xwalk/max-cells': ['warn', { '*': 60 }],
     'xwalk/no-orphan-collapsible-fields': 'error',
