@@ -258,7 +258,6 @@ export default async function decorate(block) {
     }
   });
 
-
   pillRows.forEach((row) => {
     const pillEl = buildNavigationPill(row, openBoxRef);
 
