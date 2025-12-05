@@ -25,14 +25,70 @@ function makeNavigationSticky(block) {
   if (!header) return;
 
   const headerBottom = header.offsetTop + header.offsetHeight;
+  let isSticky = false;
+  let animating = false;
+
+  const pillWrappers = Array.from(container.children);
+
+  const updateContainerWidth = () => {
+    let width = 0;
+    const gap = parseInt(getComputedStyle(container).gap || 0, 10);
+    pillWrappers.forEach((w) => {
+      if (!w.classList.contains('nav-pill-hidden')) {
+        width += w.offsetWidth + gap;
+      }
+    });
+    container.style.width = `${width}px`;
+  };
+
+  const hidePills = () => {
+    if (animating) return;
+    animating = true;
+    const wrappersToHide = pillWrappers.slice(2).reverse();
+
+    wrappersToHide.forEach((wrapper, i) => {
+      setTimeout(() => {
+        wrapper.classList.add('nav-pill-hidden');
+        updateContainerWidth();
+
+        const onTransitionEnd = () => {
+          wrapper.style.display = 'none';
+          wrapper.removeEventListener('transitionend', onTransitionEnd);
+        };
+        wrapper.addEventListener('transitionend', onTransitionEnd);
+
+        if (i === wrappersToHide.length - 1) animating = false;
+      }, i * 50);
+    });
+  };
+
+  const showPills = () => {
+    if (animating) return;
+    animating = true;
+    const wrappersToShow = pillWrappers.slice(2);
+
+    wrappersToShow.forEach((wrapper, i) => {
+      setTimeout(() => {
+        wrapper.style.display = 'flex';
+        wrapper.classList.remove('nav-pill-hidden');
+        updateContainerWidth();
+
+        if (i === wrappersToShow.length - 1) animating = false;
+      }, i * 50);
+    });
+  };
 
   window.addEventListener('scroll', () => {
     const scrollY = window.scrollY || window.pageYOffset;
 
-    if (scrollY > headerBottom) {
+    if (scrollY > headerBottom && !isSticky) {
+      isSticky = true;
       container.classList.add('nav-header-sticky');
-    } else {
+      hidePills();
+    } else if (scrollY <= headerBottom && isSticky) {
+      isSticky = false;
       container.classList.remove('nav-header-sticky');
+      showPills();
     }
   });
 }
