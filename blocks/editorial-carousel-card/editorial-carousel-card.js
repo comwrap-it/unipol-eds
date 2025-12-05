@@ -36,10 +36,11 @@
  * @param {HTMLElement} block - The card block element
  */
 export default async function decorateInsuranceProductCard(block) {
-  // eslint-disable-next-line no-console
-  console.log('editorial-carousel-card block', block);
   // eslint-disable-next-line no-useless-return
   if (!block) return;
+
+  // eslint-disable-next-line no-console
+  console.log('editorial-carousel-card block', block);
 
   // Ensure CSS is loaded
   // await ensureStylesLoaded();
@@ -51,8 +52,8 @@ export default async function decorateInsuranceProductCard(block) {
   // }
 
   // // Create card structure
-  // const card = document.createElement('div');
-  // card.className = 'insurance-product-card-container';
+  const card = document.createElement('div');
+  card.className = 'editorial-carousel-card-container';
 
   // // Get rows from block
   // let rows = Array.from(block.children);
@@ -277,6 +278,6 @@ export default async function decorateInsuranceProductCard(block) {
 
   // // Replace block content with card
   // // Preserve block class and instrumentation
-  // card.classList.add('card-block');
-  // block.replaceWith(card);
+  card.classList.add('card-block');
+  block.appendChild(card);
 }
