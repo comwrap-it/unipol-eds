@@ -99,6 +99,33 @@ function applyMainFilter(main) {
 }
 
 /**
+ * Genera un label leggibile per la sezione basato sul suo contenuto
+ * @param {Element} section - La sezione da etichettare
+ * @returns {string} Label per la sezione
+ */
+function generateSectionLabel(section) {
+  // Cerca il primo blocco nella sezione
+  const firstBlock = section.querySelector('div[class]');
+  
+  if (firstBlock) {
+    // Prende la prima classe che non sia 'block'
+    const blockClasses = Array.from(firstBlock.classList).filter(cls => cls !== 'block');
+    if (blockClasses.length > 0) {
+      const blockName = blockClasses[0];
+      // Converti da kebab-case a Title Case
+      // es: 'unipol-footer' -> 'Unipol Footer'
+      return blockName
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+    }
+  }
+  
+  // Default se non trova blocchi
+  return 'Section';
+}
+
+/**
  * Decorates all sections in a container element.
  * Shadowing della funzione originale di aem.js per gestire Universal Editor
  * con supporto per filtri basati su template.
@@ -127,7 +154,9 @@ export function decorateSections(main) {
 
     // --- UNIVERSAL EDITOR: Configurazione della sezione ---
     section.dataset.aueType = 'container';
-    section.dataset.aueLabel = 'Section';
+    
+    // Genera un label dinamico basato sul contenuto della sezione
+    section.dataset.aueLabel = generateSectionLabel(section);
 
     // Determina il filtro per questa sezione basato su template e posizione
     const sectionFilter = getSectionFilter(templateName, index);
