@@ -6,7 +6,7 @@
     padding: var(--Header-Navigation-Vertical-Padding,4px) var(--Header-Navigation-Horizontal-Padding, 4px);
     border-radius: var(--Header-Radius, 9999);
     gap: var(--Header-Horizontal-Gap, 4px);
-    transition: width 0.6s ease-in-out;
+    transition: width 0.4s ease-in-out;
     overflow: hidden;
 }
 
@@ -26,7 +26,7 @@
 
 .navigation-pill-container.nav-header-sticky {
   position: fixed;
-  max-width: fit-content;
+  width: fit-content;
   top: var(--Header-Vertical-Padding-M-Tp,24px);
   left: 50%;
   transform: translateX(-50%);
@@ -34,17 +34,30 @@
 }
 
 .navigation-pill-wrapper {
-    display: flex;
-    opacity: 1;
-    transition:
-    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    flex-shrink: 0;
+  display: flex;
+  opacity: 1;
+  transform: translateX(0) scale(1);
+  filter: blur(0);
+  transition:
+    opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
 }
 
 .navigation-pill-wrapper.nav-pill-hidden {
-    opacity: 0;
-    transform: translateX(20px);
-    pointer-events: none;
+  opacity: 0;
+  transform: translateX(8px) scale(0.98);
+  filter: blur(2px);
+  pointer-events: none;
 }
+
+.second-pill-right-icon {
+  display: none;
+}
+
+.nav-header-sticky .second-pill-right-icon {
+  display: inline-flex;
+}
+
 

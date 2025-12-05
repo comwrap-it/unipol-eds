@@ -17,6 +17,16 @@ async function ensureStylesLoaded() {
   isStylesLoaded = true;
 }
 
+function showSecondRightIcon() {
+  const icon = document.querySelector('.second-pill-right-icon');
+  if (icon) icon.style.opacity = '1';
+}
+
+function hideSecondRightIcon() {
+  const icon = document.querySelector('.second-pill-right-icon');
+  if (icon) icon.style.opacity = '0';
+}
+
 function makeNavigationSticky(block) {
   const container = block.querySelector('.navigation-pill-container');
   if (!container) return;
@@ -51,14 +61,25 @@ function makeNavigationSticky(block) {
         wrapper.classList.add('nav-pill-hidden');
         updateContainerWidth();
 
-        const onTransitionEnd = () => {
-          wrapper.style.display = 'none';
-          wrapper.removeEventListener('transitionend', onTransitionEnd);
-        };
-        wrapper.addEventListener('transitionend', onTransitionEnd);
+        let finished = false;
 
-        if (i === wrappersToHide.length - 1) animating = false;
-      }, i * 50);
+        const onEnd = () => {
+          if (finished) return;
+          finished = true;
+
+          wrapper.style.display = 'none';
+          wrapper.removeEventListener('transitionend', onEnd);
+
+          if (i === wrappersToHide.length - 1) {
+            animating = false;
+            showSecondRightIcon();
+          }
+        };
+
+        wrapper.addEventListener('transitionend', onEnd);
+
+        setTimeout(onEnd, 100);
+      }, i * 80);
     });
   };
 
@@ -73,7 +94,23 @@ function makeNavigationSticky(block) {
         wrapper.classList.remove('nav-pill-hidden');
         updateContainerWidth();
 
-        if (i === wrappersToShow.length - 1) animating = false;
+        let finished = false;
+
+        const onEnd = () => {
+          if (finished) return;
+          finished = true;
+
+          wrapper.style.display = 'flex';
+          wrapper.removeEventListener('transitionend', onEnd);
+
+          if (i === wrappersToShow.length - 1) {
+            animating = false;
+            hideSecondRightIcon();
+          }
+        };
+
+        wrapper.addEventListener('transitionend', onEnd);
+        setTimeout(onEnd, 100);
       }, i * 50);
     });
   };
@@ -210,11 +247,9 @@ export default async function decorate(block) {
   const openBoxRef = { current: null };
 
   pillRows.forEach((row) => {
-    const pillEl = buildNavigationPill(row, container, openBoxRef);
+    const pillEl = buildNavigationPill(row, openBoxRef);
 
-    if (hasInstrumentation) {
-      moveInstrumentation(row, pillEl);
-    }
+    if (hasInstrumentation) moveInstrumentation(row, pillEl);
 
     if (!pillEl.nextSibling || !pillEl.nextSibling.classList.contains('header-box-text-container')) {
       container.appendChild(pillEl);
@@ -225,8 +260,20 @@ export default async function decorate(block) {
   block.appendChild(container);
   block.classList.add('header-navigation-pill-and-box');
 
-  await Promise.all(Array.from(container.children)
-    .filter((el) => el.classList.contains('navigation-pill'))
-    .map((pillEl) => loadBlock(pillEl)));
+  const secondWrapper = container.children[1];
+  if (secondWrapper) {
+    const rightIconEl = secondWrapper.querySelector('.icon:last-child');
+    if (rightIconEl) {
+      rightIconEl.classList.add('second-pill-right-icon');
+      rightIconEl.style.opacity = '0';
+    }
+  }
+
+  await Promise.all(
+    Array.from(container.children)
+      .filter((el) => el.classList.contains('navigation-pill'))
+      .map((pillEl) => loadBlock(pillEl)),
+  );
+
   makeNavigationSticky(block);
 }

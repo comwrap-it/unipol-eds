@@ -2,6 +2,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: var(--Navigation-Pill-Gap, 8px);
   padding: var(--Navigation-Pill-Vertical-Padding)
            var(--Navigation-Pill-Horizontal-Padding);
   border: var(--Stroke-200-2) solid transparent;
