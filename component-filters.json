@@ -99,18 +99,6 @@
     ]
   },
   {
-    "id": "editorial-carousel-widget",
-    "components": []
-  },
-  {
-    "id": "editorial-carousel",
-    "components": [
-      "editorial-carousel-card"
-    ],
-    "min": 1,
-    "max": 8
-  },
-  {
     "id": "footer-privacy-section",
     "components": [
       "footer-privacy-link"
