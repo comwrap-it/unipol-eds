@@ -510,15 +510,15 @@
           }
         },
         {
-          "title": "Insurance Product Card",
-          "id": "insurance-product-card",
+          "title": "Editorial Card",
+          "id": "editorial-carousel-card",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block/item",
                 "template": {
-                  "name": "Insurance Product card",
-                  "model": "insurance-product-card"
+                  "name": "Editorial card",
+                  "model": "editorial-carousel-card"
                 }
               }
             }
@@ -541,16 +541,16 @@
                     "name": "Text Block",
                     "model": "text-block"
                   },
-                  "insurance-product-carousel": {
+                  "editorial-carousel": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
-                    "name": "Insurance Product Carousel",
-                    "filter": "insurance-product-carousel",
-                    "model": "insurance-product-carousel",
-                    "insurance-product-card": {
+                    "name": "Editorial Carousel",
+                    "filter": "editorial-carousel",
+                    "model": "editorial-carousel",
+                    "editorial-carousel-card": {
                       "sling:resourceType": "core/franklin/components/block/v1/block/item",
-                      "name": "Insurance Product Card",
-                      "filter": "insurance-product-card",
-                      "model": "insurance-product-card"
+                      "name": "Editorial Card",
+                      "filter": "editorial-carousel-card",
+                      "model": "editorial-carousel-card"
                     }
                   }
                 }
@@ -559,15 +559,15 @@
           }
         },
         {
-          "title": "Insurance Product Carousel",
-          "id": "insurance-product-carousel",
+          "title": "Editorial Carousel",
+          "id": "editorial-carousel",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "filter": "insurance-product-carousel",
-                  "name": "Insurance Product Carousel"
+                  "filter": "editorial-carousel",
+                  "name": "Editorial Carousel"
                 }
               }
             }

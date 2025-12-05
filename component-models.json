@@ -412,7 +412,7 @@
     ]
   },
   {
-    "id": "insurance-product-card",
+    "id": "editorial-carousel-card",
     "fields": [
       {
         "component": "text",
@@ -671,7 +671,7 @@
       {
         "component": "text",
         "name": "editorial-carousel-widget-name",
-        "label": "Nome sezione Insurance Product Carousel Widget"
+        "label": "Nome sezione Editorial Carousel Widget"
       },
       {
         "component": "toggle",
@@ -682,7 +682,7 @@
     ]
   },
   {
-    "id": "insurance-product-carousel",
+    "id": "editorial-carousel",
     "fields": [
       {
         "component": "text",
