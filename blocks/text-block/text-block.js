@@ -20,28 +20,41 @@ async function ensureBtnStylesLoaded() {
 }
 
 /* -----------------------------
-   TITLE EXTRACTOR (unchanged)
+   TITLE EXTRACTOR
 ------------------------------*/
 function extractTitleElement(titleRow) {
   if (!titleRow) return null;
 
+  // Check if there's already a heading element
   const existingHeading = titleRow.querySelector('h1, h2, h3, h4, h5, h6');
   if (existingHeading) {
     moveInstrumentation(titleRow, existingHeading);
     return existingHeading;
   }
 
-  const title = document.createElement('h2');
-  while (titleRow.firstChild) {
-    title.appendChild(titleRow.firstChild);
+  // Check for element with instrumentation (text field from Universal Editor)
+  const instrumentedElement = titleRow.querySelector('[data-aue-prop], [data-aue-resource]');
+  if (instrumentedElement) {
+    const title = document.createElement('h2');
+    title.textContent = instrumentedElement.textContent?.trim() || '';
+    // Move instrumentation from the instrumented element
+    moveInstrumentation(instrumentedElement, title);
+    return title.textContent ? title : null;
   }
+
+  // Fallback: extract text content from any nested structure
+  const textContent = titleRow.textContent?.trim();
+  if (!textContent) return null;
+
+  const title = document.createElement('h2');
+  title.textContent = textContent;
   moveInstrumentation(titleRow, title);
 
-  return title.textContent?.trim() ? title : null;
+  return title;
 }
 
 /* -----------------------------
-  TEXT EXTRACTOR (unchanged)
+  TEXT EXTRACTOR (richtext support)
 ------------------------------*/
 function extractTextElement(textRow) {
   if (!textRow) return null;
@@ -55,19 +68,35 @@ function extractTextElement(textRow) {
     return null;
   }
 
+  // Check for richtext wrapper created by editor-support-rte.js
+  const richtextWrapper = textRow.querySelector('div[data-aue-type="richtext"]');
+  if (richtextWrapper) {
+    // Extract content from richtext wrapper
+    const text = document.createElement('p');
+    text.innerHTML = richtextWrapper.innerHTML;
+    // Move instrumentation from wrapper to new element
+    moveInstrumentation(richtextWrapper, text);
+    return text;
+  }
+
+  // Check for standalone paragraph
   const existingPara = textRow.querySelector('p');
-  if (existingPara) {
+  if (existingPara && !existingPara.parentElement.hasAttribute('data-aue-type')) {
     moveInstrumentation(textRow, existingPara);
     return existingPara;
   }
 
-  const text = document.createElement('p');
-  while (textRow.firstChild) {
-    text.appendChild(textRow.firstChild);
+  // Fallback: extract text content from any nested structure
+  const textContent = textRow.textContent?.trim();
+  if (!textContent && !hasInstrumentation) {
+    return null;
   }
+
+  const text = document.createElement('p');
+  text.textContent = textContent;
   moveInstrumentation(textRow, text);
 
-  return (hasInstrumentation || text.textContent?.trim()) ? text : null;
+  return text;
 }
 
 /* ------------------------------------------

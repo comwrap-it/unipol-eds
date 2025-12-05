@@ -33,8 +33,9 @@ async function ensureStylesLoaded() {
 /**
  * Decorates a card block element
  * @param {HTMLElement} block - The card block element
+ * @param {boolean} [isFirstCard=false] - Whether this is the first card (LCP candidate)
  */
-export default async function decorateInsuranceProductCard(block) {
+export default async function decorateInsuranceProductCard(block, isFirstCard = false) {
   if (!block) return;
 
   // Ensure CSS is loaded
@@ -100,8 +101,15 @@ export default async function decorateInsuranceProductCard(block) {
     const picture = imageRow.querySelector('picture');
     if (picture) {
       // Move existing picture (preserves instrumentation)
-
-      picture.querySelector('img').setAttribute('alt', altText);
+      const existingImg = picture.querySelector('img');
+      if (existingImg) {
+        existingImg.setAttribute('alt', altText);
+        // Optimize for LCP if this is the first card
+        if (isFirstCard) {
+          existingImg.setAttribute('loading', 'eager');
+          existingImg.setAttribute('fetchpriority', 'high');
+        }
+      }
       cardImage.appendChild(picture);
     } else {
       const img = imageRow.querySelector('img');
@@ -109,13 +117,17 @@ export default async function decorateInsuranceProductCard(block) {
         const optimizedPic = createOptimizedPicture(
           img.src,
           altText,
-          false,
+          isFirstCard, // Use eager loading for first card (LCP candidate)
           [{ media: '(min-width: 769)', width: '316' }, { media: '(max-width: 768)', width: '240' }, { media: '(max-width: 392)', width: '343' }],
         );
         // Preserve instrumentation from original img
         const newImg = optimizedPic.querySelector('img');
         if (newImg && img) {
           moveInstrumentation(img, newImg);
+          // Add fetchpriority for LCP optimization
+          if (isFirstCard) {
+            newImg.setAttribute('fetchpriority', 'high');
+          }
         }
         cardImage.appendChild(optimizedPic);
       } else {
@@ -125,13 +137,17 @@ export default async function decorateInsuranceProductCard(block) {
           const optimizedPic = createOptimizedPicture(
             link.href,
             altText,
-            false,
+            isFirstCard, // Use eager loading for first card (LCP candidate)
             [{ media: '(min-width: 769)', width: '316' }, { media: '(max-width: 768)', width: '240' }, { media: '(max-width: 392)', width: '343' }],
           );
           // Preserve instrumentation from link
           const newImg = optimizedPic.querySelector('img');
           if (newImg && link) {
             moveInstrumentation(link, newImg);
+            // Add fetchpriority for LCP optimization
+            if (isFirstCard) {
+              newImg.setAttribute('fetchpriority', 'high');
+            }
           }
           cardImage.appendChild(optimizedPic);
         }

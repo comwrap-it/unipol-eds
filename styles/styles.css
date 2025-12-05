@@ -16,6 +16,10 @@
 /* Icons */
 @import url("./icons.css");
 
+
+/* Import file Unipol header styling */
+@import url("./unipol-header.css");
+
 /* Import file footer styling - authoring mode */
 @import url("./editor-unipol-footer.css");
 
@@ -51,10 +55,6 @@ main {
     padding-block: var(--Layout-Section-Vertical-Padding, 0);
     gap: var(--Layout-Section-Vertical-Gap, 1rem)
         var(--Layout-Section-Horizontal-Gap, 1rem);
-}
-
-header {
-    height: var(--Header-Height, 64px);
 }
 
 header .header,
@@ -99,10 +99,4 @@ main .section.text-block-container.number-block-container.bg-dark-gray {
 
 main .section.text-block-container.number-block-container.bg-white {
     background-color: var(--Neutral-50);
-}
-
-.section.header-logo-container,
-.sectionheader-navigation-section-container,
-.sectionheader-utilities-section-container {
-    display: flex;
 }

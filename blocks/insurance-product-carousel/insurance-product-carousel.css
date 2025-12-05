@@ -16,18 +16,6 @@
 
     &.swiper {
         overflow: visible;
-
-        & .scroll-indicator {
-            & .expanding-dots {
-                & .dot {
-                    background-color: var(--Expanding-Dots-Background-Dot, #bfc7cd);
-
-                    &.expanded {
-                        background-color: var(--Expanding-Dots-Background, #001c35);
-                    }
-                }
-            }
-        }
     }
 
     .insurance-product-carousel {

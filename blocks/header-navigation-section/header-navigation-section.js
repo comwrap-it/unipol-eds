@@ -17,6 +17,119 @@ async function ensureStylesLoaded() {
   isStylesLoaded = true;
 }
 
+function showSecondRightIcon() {
+  const icon = document.querySelector('.second-pill-right-icon');
+  if (icon) icon.style.opacity = '1';
+}
+
+function hideSecondRightIcon() {
+  const icon = document.querySelector('.second-pill-right-icon');
+  if (icon) icon.style.opacity = '0';
+}
+
+function makeNavigationSticky(block) {
+  const container = block.querySelector('.navigation-pill-container');
+  if (!container) return;
+
+  const header = document.querySelector('header');
+  if (!header) return;
+
+  const headerBottom = header.offsetTop + header.offsetHeight;
+  let isSticky = false;
+  let animating = false;
+
+  const pillWrappers = Array.from(container.children);
+
+  const updateContainerWidth = () => {
+    let width = 0;
+    const gap = parseInt(getComputedStyle(container).gap || 0, 10);
+    pillWrappers.forEach((w) => {
+      if (!w.classList.contains('nav-pill-hidden')) {
+        width += w.offsetWidth + gap;
+      }
+    });
+    container.style.width = `${width}px`;
+  };
+
+  const hidePills = () => {
+    if (animating) return;
+    animating = true;
+    const wrappersToHide = pillWrappers.slice(2).reverse();
+
+    wrappersToHide.forEach((wrapper, i) => {
+      setTimeout(() => {
+        wrapper.classList.add('nav-pill-hidden');
+        updateContainerWidth();
+
+        let finished = false;
+
+        const onEnd = () => {
+          if (finished) return;
+          finished = true;
+
+          wrapper.style.display = 'none';
+          wrapper.removeEventListener('transitionend', onEnd);
+
+          if (i === wrappersToHide.length - 1) {
+            animating = false;
+            showSecondRightIcon();
+          }
+        };
+
+        wrapper.addEventListener('transitionend', onEnd);
+
+        setTimeout(onEnd, 100);
+      }, i * 50);
+    });
+  };
+
+  const showPills = () => {
+    if (animating) return;
+    animating = true;
+    const wrappersToShow = pillWrappers.slice(2);
+
+    wrappersToShow.forEach((wrapper, i) => {
+      setTimeout(() => {
+        wrapper.style.display = 'flex';
+        wrapper.classList.remove('nav-pill-hidden');
+        updateContainerWidth();
+
+        let finished = false;
+
+        const onEnd = () => {
+          if (finished) return;
+          finished = true;
+
+          wrapper.style.display = 'flex';
+          wrapper.removeEventListener('transitionend', onEnd);
+
+          if (i === wrappersToShow.length - 1) {
+            animating = false;
+            hideSecondRightIcon();
+          }
+        };
+
+        wrapper.addEventListener('transitionend', onEnd);
+        setTimeout(onEnd, 200);
+      }, i * 60);
+    });
+  };
+
+  window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY || window.pageYOffset;
+
+    if (scrollY > headerBottom && !isSticky) {
+      isSticky = true;
+      container.classList.add('nav-header-sticky');
+      hidePills();
+    } else if (scrollY <= headerBottom && isSticky) {
+      isSticky = false;
+      container.classList.remove('nav-header-sticky');
+      showPills();
+    }
+  });
+}
+
 function extractNavigationPillValues(row) {
   const rows = Array.from(row.children);
   // navigation-pill
@@ -52,8 +165,12 @@ function extractNavigationPillValues(row) {
   };
 }
 
-function buildNavigationPill(row, container, openBoxRef) {
+function buildNavigationPill(row, openBoxRef) {
   const cfg = extractNavigationPillValues(row);
+
+  const wrapper = document.createElement('div');
+  wrapper.className = 'navigation-pill-wrapper';
+
   const pillEl = createNavigationPill(
     cfg.text,
     cfg.href,
@@ -66,32 +183,49 @@ function buildNavigationPill(row, container, openBoxRef) {
     cfg.hideLabel,
   );
 
+  wrapper.appendChild(pillEl);
+
   if (cfg.boxText) {
     const box = document.createElement('div');
     box.className = 'header-box-text-container';
     box.textContent = cfg.boxText;
     box.style.display = 'none';
 
-    container.appendChild(pillEl);
-    container.appendChild(box);
+    pillEl.setAttribute('aria-expanded', 'false');
+    const boxId = `header-box-${Math.random().toString(36).substr(2, 9)}`;
+    box.id = boxId;
+    pillEl.setAttribute('aria-controls', boxId);
+
+    wrapper.appendChild(box);
 
     pillEl.addEventListener('click', () => {
-      if (box.style.display === 'none') {
-        if (openBoxRef.current && openBoxRef.current !== box) {
-          openBoxRef.current.style.display = 'none';
+      const isClosed = box.style.display === 'none';
+
+      if (openBoxRef.current && openBoxRef.current !== box) {
+        openBoxRef.current.style.display = 'none';
+
+        const prevPill = openBoxRef.current.previousElementSibling;
+        if (prevPill?.hasAttribute('aria-expanded')) {
+          prevPill.setAttribute('aria-expanded', 'false');
+          prevPill.classList.remove('header-nav-pill-active');
         }
+      }
+
+      if (isClosed) {
         box.style.display = 'block';
+        pillEl.setAttribute('aria-expanded', 'true');
+        pillEl.classList.add('header-nav-pill-active');
         openBoxRef.current = box;
       } else {
         box.style.display = 'none';
+        pillEl.setAttribute('aria-expanded', 'false');
+        pillEl.classList.remove('header-nav-pill-active');
         openBoxRef.current = null;
       }
     });
-
-    return pillEl;
   }
 
-  return pillEl;
+  return wrapper;
 }
 
 export default async function decorate(block) {
@@ -112,12 +246,22 @@ export default async function decorate(block) {
 
   const openBoxRef = { current: null };
 
-  pillRows.forEach((row) => {
-    const pillEl = buildNavigationPill(row, container, openBoxRef);
-
-    if (hasInstrumentation) {
-      moveInstrumentation(row, pillEl);
+  document.addEventListener('click', (e) => {
+    if (!openBoxRef.current) return;
+    const box = openBoxRef.current;
+    const pill = box.previousElementSibling;
+    if (!box.contains(e.target) && !pill.contains(e.target)) {
+      box.style.display = 'none';
+      pill.setAttribute('aria-expanded', 'false');
+      pill.classList.remove('header-nav-pill-active');
+      openBoxRef.current = null;
     }
+  });
+
+  pillRows.forEach((row) => {
+    const pillEl = buildNavigationPill(row, openBoxRef);
+
+    if (hasInstrumentation) moveInstrumentation(row, pillEl);
 
     if (!pillEl.nextSibling || !pillEl.nextSibling.classList.contains('header-box-text-container')) {
       container.appendChild(pillEl);
@@ -128,7 +272,20 @@ export default async function decorate(block) {
   block.appendChild(container);
   block.classList.add('header-navigation-pill-and-box');
 
-  await Promise.all(Array.from(container.children)
-    .filter((el) => el.classList.contains('navigation-pill'))
-    .map((pillEl) => loadBlock(pillEl)));
+  const secondWrapper = container.children[1];
+  if (secondWrapper) {
+    const rightIconEl = secondWrapper.querySelector('.icon:last-child');
+    if (rightIconEl) {
+      rightIconEl.classList.add('second-pill-right-icon');
+      rightIconEl.style.opacity = '0';
+    }
+  }
+
+  await Promise.all(
+    Array.from(container.children)
+      .filter((el) => el.classList.contains('navigation-pill'))
+      .map((pillEl) => loadBlock(pillEl)),
+  );
+
+  makeNavigationSticky(block);
 }

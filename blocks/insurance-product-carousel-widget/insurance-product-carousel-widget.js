@@ -1,4 +1,4 @@
-import loadSwiper from '../../scripts/lib/utils.js';
+import loadSwiper from '../../scripts/delayed.js';
 
 export default async function handleInsuranceProductCarouselWidget() {
   const block = document.querySelector('.insurance-product-carousel-container');

@@ -1,4 +1,5 @@
-import loadSwiper, { handleSlideChange } from '../../scripts/lib/utils.js';
+import loadSwiper from '../../scripts/delayed.js';
+import handleSlideChange from '../../scripts/lib/utils.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { createHero, extractHeroPropertiesFromRows } from '../hero/hero.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
@@ -56,6 +57,8 @@ export default async function decorate(block) {
   if (wrapper) {
     rows = Array.from(wrapper.children);
   }
+
+  block.classList.add('theme-dark');
 
   const isCarousel = rows.length > 1;
 

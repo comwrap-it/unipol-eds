@@ -1,3 +1,15 @@
-.header-utilities-section-wrapper {
-    margin: auto;
+.header-utilities-container {
+    display: flex;
+    gap: var(--Header-Horizontal-Gap, 4px);
+}
+
+.header-utilities-container .navigation-pill,
+.header-utilities-container .navigation-pill:hover {
+    background: var(--Header-Background);
+}
+
+@media (width <= 768px) {
+  .header-utilities-container > :not(:last-child) {
+    display: none;
+  }
 }

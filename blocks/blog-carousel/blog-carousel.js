@@ -16,7 +16,8 @@
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
 
-import loadSwiper, { handleSlideChange } from '../../scripts/lib/utils.js';
+import loadSwiper from '../../scripts/delayed.js';
+import handleSlideChange from '../../scripts/lib/utils.js';
 import mockBlogCards from '../../scripts/mock.js';
 import { initCarouselAnimations } from '../../scripts/reveal.js';
 import { createBlogCard } from '../blog-preview-card/blog-preview-card.js';

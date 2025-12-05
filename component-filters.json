@@ -6,10 +6,24 @@
       "kpi-highlights-widget",
       "insurance-product-carousel-widget",
       "hero-widget",
-      "unipol-header",
-      "unipol-footer",
       "blog-carousel-widget"
     ]
+  },
+  {
+    "id": "footer-template",
+    "components": [
+      "unipol-footer"
+    ]
+  },
+  {
+    "id": "header-template",
+    "components": [
+      "unipol-header"
+    ]
+  },
+  {
+    "id": "disable-add",
+    "components": []
   },
   {
     "id": "section",
@@ -36,9 +50,7 @@
   },
   {
     "id": "insurance-product-carousel-widget",
-    "components": [
-      "insurance-product-carousel"
-    ]
+    "components": []
   },
   {
     "id": "blog-carousel-widget",
@@ -107,9 +119,7 @@
   },
   {
     "id": "insurance-product-carousel-widget",
-    "components": [
-      "insurance-product-carousel"
-    ]
+    "components": []
   },
   {
     "id": "insurance-product-carousel",

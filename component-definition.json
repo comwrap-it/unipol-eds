@@ -111,7 +111,7 @@
               "page": {
                 "resourceType": "core/franklin/components/section/v1/section",
                 "template": {
-                  "filter": "insurance-product-carousel",
+                  "filter": "insurance-product-carousel-widget",
                   "name": "Insurance Product Carousel Widget",
                   "model": "insurance-product-carousel-widget",
                   "style": "insurance-product-carousel-widget",
@@ -724,7 +724,7 @@
               "page": {
                 "resourceType": "core/franklin/components/section/v1/section",
                 "template": {
-                  "filter": "insurance-product-carousel",
+                  "filter": "insurance-product-carousel-widget",
                   "name": "Insurance Product Carousel Widget",
                   "model": "insurance-product-carousel-widget",
                   "style": "insurance-product-carousel-widget",

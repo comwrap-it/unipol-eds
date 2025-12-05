@@ -548,7 +548,7 @@
       {
         "component": "select",
         "name": "navigationPillVariant",
-        "label": "Variant",
+        "label": "Variante",
         "value": "primary",
         "options": [
           {
@@ -570,7 +570,7 @@
       {
         "component": "select",
         "name": "navigationPillLeftIcon",
-        "label": "Left Icon",
+        "label": "Icona Sinistra",
         "description": "Optional icon on the left",
         "options": [
           {
@@ -586,15 +586,39 @@
             "value": "un-icon-chevron-right"
           },
           {
+            "name": "Arrow up right Icon",
+            "value": "un-icon-arrow-up-right"
+          },
+          {
             "name": "Search Icon",
             "value": "un-icon-search"
+          },
+          {
+            "name": "Math Operations Icon",
+            "value": "un-icon-math-operations"
+          },
+          {
+            "name": "User Icon",
+            "value": "un-icon-user"
+          },
+          {
+            "name": "Basket Icon",
+            "value": "un-icon-basket"
+          },
+          {
+            "name": "AI Star Icon big",
+            "value": "un-icon-AI-star-big"
+          },
+          {
+            "name": "AI Star Icon small",
+            "value": "un-icon-AI-star-small"
           }
         ]
       },
       {
         "component": "select",
         "name": "navigationPillLeftIconSize",
-        "label": "Size",
+        "label": "Dimensione Icone",
         "value": "medium",
         "options": [
           {
@@ -618,7 +642,7 @@
       {
         "component": "select",
         "name": "navigationPillRightIcon",
-        "label": "Right Icon",
+        "label": "Icona Destra",
         "description": "Optional icon on the right",
         "options": [
           {
@@ -627,22 +651,46 @@
           },
           {
             "name": "Chevron Left",
-            "value": "chevron-left"
+            "value": "un-icon-chevron-left"
           },
           {
             "name": "Chevron Right",
-            "value": "chevron-right"
+            "value": "un-icon-chevron-right"
           },
           {
-            "name": "Search",
-            "value": "search-icon"
+            "name": "Arrow up right Icon",
+            "value": "un-icon-arrow-up-right"
+          },
+          {
+            "name": "Search Icon",
+            "value": "un-icon-search"
+          },
+          {
+            "name": "Math Operations Icon",
+            "value": "un-icon-math-operations"
+          },
+          {
+            "name": "User Icon",
+            "value": "un-icon-user"
+          },
+          {
+            "name": "Basket Icon",
+            "value": "un-icon-basket"
+          },
+          {
+            "name": "AI Star Icon big",
+            "value": "un-icon-AI-star-big"
+          },
+          {
+            "name": "AI Star Icon small",
+            "value": "un-icon-AI-star-small"
           }
         ]
       },
       {
         "component": "select",
         "name": "navigationPillRightIconSize",
-        "label": "Size",
+        "label": "Dimensione Icone",
         "value": "medium",
         "options": [
           {
@@ -695,7 +743,7 @@
       {
         "component": "select",
         "name": "navigationPillVariant",
-        "label": "Variant",
+        "label": "Variante",
         "value": "primary",
         "options": [
           {
@@ -717,7 +765,7 @@
       {
         "component": "select",
         "name": "navigationPillLeftIcon",
-        "label": "Left Icon",
+        "label": "Icona Sinistra",
         "description": "Optional icon on the left",
         "options": [
           {
@@ -733,15 +781,39 @@
             "value": "un-icon-chevron-right"
           },
           {
+            "name": "Arrow up right Icon",
+            "value": "un-icon-arrow-up-right"
+          },
+          {
             "name": "Search Icon",
             "value": "un-icon-search"
+          },
+          {
+            "name": "Math Operations Icon",
+            "value": "un-icon-math-operations"
+          },
+          {
+            "name": "User Icon",
+            "value": "un-icon-user"
+          },
+          {
+            "name": "Basket Icon",
+            "value": "un-icon-basket"
+          },
+          {
+            "name": "AI Star Icon big",
+            "value": "un-icon-AI-star-big"
+          },
+          {
+            "name": "AI Star Icon small",
+            "value": "un-icon-AI-star-small"
           }
         ]
       },
       {
         "component": "select",
         "name": "navigationPillLeftIconSize",
-        "label": "Size",
+        "label": "Dimensione Icone",
         "value": "medium",
         "options": [
           {
@@ -765,7 +837,7 @@
       {
         "component": "select",
         "name": "navigationPillRightIcon",
-        "label": "Right Icon",
+        "label": "Icona Destra",
         "description": "Optional icon on the right",
         "options": [
           {
@@ -774,22 +846,46 @@
           },
           {
             "name": "Chevron Left",
-            "value": "chevron-left"
+            "value": "un-icon-chevron-left"
           },
           {
             "name": "Chevron Right",
-            "value": "chevron-right"
+            "value": "un-icon-chevron-right"
           },
           {
-            "name": "Search",
-            "value": "search-icon"
+            "name": "Arrow up right Icon",
+            "value": "un-icon-arrow-up-right"
+          },
+          {
+            "name": "Search Icon",
+            "value": "un-icon-search"
+          },
+          {
+            "name": "Math Operations Icon",
+            "value": "un-icon-math-operations"
+          },
+          {
+            "name": "User Icon",
+            "value": "un-icon-user"
+          },
+          {
+            "name": "Basket Icon",
+            "value": "un-icon-basket"
+          },
+          {
+            "name": "AI Star Icon big",
+            "value": "un-icon-AI-star-big"
+          },
+          {
+            "name": "AI Star Icon small",
+            "value": "un-icon-AI-star-small"
           }
         ]
       },
       {
         "component": "select",
         "name": "navigationPillRightIconSize",
-        "label": "Size",
+        "label": "Dimensione Icone",
         "value": "medium",
         "options": [
           {
@@ -964,7 +1060,7 @@
       {
         "component": "container",
         "name": "hero-button-container",
-        "label": "Configurazione Bottone",
+        "label": "Configurazione Pulsante",
         "collapsible": true,
         "fields": [
           {
@@ -976,7 +1072,7 @@
           {
             "component": "select",
             "name": "standardButtonVariant",
-            "label": "Variant",
+            "label": "Variante",
             "value": "primary",
             "options": [
               {
@@ -1011,7 +1107,7 @@
             "component": "select",
             "name": "standardButtonSize",
             "description": "Modifica la dimensione delle icone del bottone",
-            "label": "Size",
+            "label": "Dimensione Icone",
             "value": "medium",
             "options": [
               {
@@ -1035,7 +1131,7 @@
           {
             "component": "select",
             "name": "standardButtonLeftIcon",
-            "label": "Left Icon",
+            "label": "Icona Sinistra",
             "description": "Select the left icon",
             "value": "",
             "options": [
@@ -1060,7 +1156,7 @@
           {
             "component": "select",
             "name": "standardButtonRightIcon",
-            "label": "Right Icon",
+            "label": "Icona Destra",
             "description": "Select the right icon",
             "value": "",
             "options": [
@@ -1106,7 +1202,7 @@
       {
         "component": "container",
         "name": "button-container",
-        "label": "Configurazione Bottone",
+        "label": "Configurazione Pulsante",
         "collapsible": true,
         "fields": [
           {
@@ -1118,7 +1214,7 @@
           {
             "component": "select",
             "name": "standardButtonVariant",
-            "label": "Variant",
+            "label": "Variante",
             "value": "primary",
             "options": [
               {
@@ -1153,7 +1249,7 @@
             "component": "select",
             "name": "standardButtonSize",
             "description": "Modifica la dimensione delle icone del bottone",
-            "label": "Size",
+            "label": "Dimensione Icone",
             "value": "medium",
             "options": [
               {
@@ -1177,7 +1273,7 @@
           {
             "component": "select",
             "name": "standardButtonLeftIcon",
-            "label": "Left Icon",
+            "label": "Icona Sinistra",
             "description": "Select the left icon",
             "value": "",
             "options": [
@@ -1202,7 +1298,7 @@
           {
             "component": "select",
             "name": "standardButtonRightIcon",
-            "label": "Right Icon",
+            "label": "Icona Destra",
             "description": "Select the right icon",
             "value": "",
             "options": [
@@ -1297,7 +1393,7 @@
         "component": "reference",
         "valueType": "string",
         "name": "image",
-        "label": "Image",
+        "label": "Immagine",
         "multi": false,
         "required": true
       },
@@ -1305,7 +1401,7 @@
         "component": "text",
         "valueType": "string",
         "name": "imageSR",
-        "label": "Image Alternative Text",
+        "label": "Testo alternativo per l'immagine",
         "required": true
       },
       {
@@ -1318,22 +1414,22 @@
           {
             "component": "boolean",
             "name": "vehiclesShowIcon",
-            "label": "Show Vehicles & Mobility icon",
-            "description": "Toggle to display the Vehicles & Mobility icon",
+            "label": "Visualizza l'icona Veicoli e Mobilità",
+            "description": "Attiva per visualizzare l'icona Veicoli e Mobilità",
             "value": false
           },
           {
             "component": "boolean",
             "name": "homeShowIcon",
-            "label": "Show Home & Family icon",
-            "description": "Toggle to display the Home & Family icon",
+            "label": "Visualizza l'icona Casa e Famiglia",
+            "description": "Attiva per visualizzare l'icona Casa e Famiglia",
             "value": false
           },
           {
             "component": "boolean",
             "name": "personalShowIcon",
-            "label": "Show Personal Protection icon",
-            "description": "Toggle to display the Personal Protection icon",
+            "label": "Visualizza l'icona Salute",
+            "description": "Attiva per visualizzare l'icona Salute",
             "value": false
           }
         ]
@@ -1362,7 +1458,8 @@
       {
         "component": "text",
         "name": "showMoreButtonLabel",
-        "label": "Show more button label for mobile",
+        "label": "Testo bottone per dispositivi mobile",
+        "description": "Default \"Mostra di più\"",
         "maxlength": 15
       }
     ]
@@ -1525,7 +1622,7 @@
           {
             "component": "select",
             "name": "standardButtonVariant",
-            "label": "Variant",
+            "label": "Variante",
             "value": "primary",
             "options": [
               {
@@ -1560,7 +1657,7 @@
             "component": "select",
             "name": "standardButtonSize",
             "description": "Modifica la dimensione delle icone del bottone",
-            "label": "Size",
+            "label": "Dimensione Icone",
             "value": "medium",
             "options": [
               {
@@ -1584,7 +1681,7 @@
           {
             "component": "select",
             "name": "standardButtonLeftIcon",
-            "label": "Left Icon",
+            "label": "Icona Sinistra",
             "description": "Select the left icon",
             "value": "",
             "options": [
@@ -1609,7 +1706,7 @@
           {
             "component": "select",
             "name": "standardButtonRightIcon",
-            "label": "Right Icon",
+            "label": "Icona Destra",
             "description": "Select the right icon",
             "value": "",
             "options": [
@@ -1641,12 +1738,12 @@
           {
             "component": "select",
             "name": "iconButtonIcon",
-            "label": "Icon",
+            "label": "Icona",
             "required": true,
-            "description": "Select the icon",
+            "description": "Seleziona l'icona",
             "options": [
               {
-                "name": "None",
+                "name": "Nessuna",
                 "value": ""
               },
               {
@@ -1666,7 +1763,7 @@
           {
             "component": "select",
             "name": "iconButtonVariant",
-            "label": "Variant",
+            "label": "Variante",
             "value": "primary",
             "options": [
               {
@@ -1706,7 +1803,7 @@
           {
             "component": "aem-content",
             "name": "iconButtonHref",
-            "label": "Link URL",
+            "label": "URL del link",
             "description": "Optional URL to make this a link button"
           },
           {
@@ -2190,7 +2287,7 @@
           {
             "component": "select",
             "name": "navigationPillVariant",
-            "label": "Variant",
+            "label": "Variante",
             "value": "primary",
             "options": [
               {
@@ -2212,7 +2309,7 @@
           {
             "component": "select",
             "name": "navigationPillLeftIcon",
-            "label": "Left Icon",
+            "label": "Icona Sinistra",
             "description": "Optional icon on the left",
             "options": [
               {
@@ -2228,15 +2325,39 @@
                 "value": "un-icon-chevron-right"
               },
               {
+                "name": "Arrow up right Icon",
+                "value": "un-icon-arrow-up-right"
+              },
+              {
                 "name": "Search Icon",
                 "value": "un-icon-search"
+              },
+              {
+                "name": "Math Operations Icon",
+                "value": "un-icon-math-operations"
+              },
+              {
+                "name": "User Icon",
+                "value": "un-icon-user"
+              },
+              {
+                "name": "Basket Icon",
+                "value": "un-icon-basket"
+              },
+              {
+                "name": "AI Star Icon big",
+                "value": "un-icon-AI-star-big"
+              },
+              {
+                "name": "AI Star Icon small",
+                "value": "un-icon-AI-star-small"
               }
             ]
           },
           {
             "component": "select",
             "name": "navigationPillLeftIconSize",
-            "label": "Size",
+            "label": "Dimensione Icone",
             "value": "medium",
             "options": [
               {
@@ -2260,7 +2381,7 @@
           {
             "component": "select",
             "name": "navigationPillRightIcon",
-            "label": "Right Icon",
+            "label": "Icona Destra",
             "description": "Optional icon on the right",
             "options": [
               {
@@ -2269,22 +2390,46 @@
               },
               {
                 "name": "Chevron Left",
-                "value": "chevron-left"
+                "value": "un-icon-chevron-left"
               },
               {
                 "name": "Chevron Right",
-                "value": "chevron-right"
+                "value": "un-icon-chevron-right"
               },
               {
-                "name": "Search",
-                "value": "search-icon"
+                "name": "Arrow up right Icon",
+                "value": "un-icon-arrow-up-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              },
+              {
+                "name": "Math Operations Icon",
+                "value": "un-icon-math-operations"
+              },
+              {
+                "name": "User Icon",
+                "value": "un-icon-user"
+              },
+              {
+                "name": "Basket Icon",
+                "value": "un-icon-basket"
+              },
+              {
+                "name": "AI Star Icon big",
+                "value": "un-icon-AI-star-big"
+              },
+              {
+                "name": "AI Star Icon small",
+                "value": "un-icon-AI-star-small"
               }
             ]
           },
           {
             "component": "select",
             "name": "navigationPillRightIconSize",
-            "label": "Size",
+            "label": "Dimensione Icone",
             "value": "medium",
             "options": [
               {
@@ -2523,7 +2668,7 @@
       {
         "component": "container",
         "name": "button-container",
-        "label": "Configurazione Bottone",
+        "label": "Configurazione Pulsante",
         "collapsible": true,
         "fields": [
           {
@@ -2535,7 +2680,7 @@
           {
             "component": "select",
             "name": "standardButtonVariant",
-            "label": "Variant",
+            "label": "Variante",
             "value": "primary",
             "options": [
               {
@@ -2570,7 +2715,7 @@
             "component": "select",
             "name": "standardButtonSize",
             "description": "Modifica la dimensione delle icone del bottone",
-            "label": "Size",
+            "label": "Dimensione Icone",
             "value": "medium",
             "options": [
               {
@@ -2594,7 +2739,7 @@
           {
             "component": "select",
             "name": "standardButtonLeftIcon",
-            "label": "Left Icon",
+            "label": "Icona Sinistra",
             "description": "Select the left icon",
             "value": "",
             "options": [
@@ -2619,7 +2764,7 @@
           {
             "component": "select",
             "name": "standardButtonRightIcon",
-            "label": "Right Icon",
+            "label": "Icona Destra",
             "description": "Select the right icon",
             "value": "",
             "options": [
@@ -2740,12 +2885,12 @@
       {
         "component": "select",
         "name": "iconButtonIcon",
-        "label": "Icon",
+        "label": "Icona",
         "required": true,
-        "description": "Select the icon",
+        "description": "Seleziona l'icona",
         "options": [
           {
-            "name": "None",
+            "name": "Nessuna",
             "value": ""
           },
           {
@@ -2765,7 +2910,7 @@
       {
         "component": "select",
         "name": "iconButtonVariant",
-        "label": "Variant",
+        "label": "Variante",
         "value": "primary",
         "options": [
           {
@@ -2805,7 +2950,7 @@
       {
         "component": "aem-content",
         "name": "iconButtonHref",
-        "label": "Link URL",
+        "label": "URL del link",
         "description": "Optional URL to make this a link button"
       },
       {
@@ -2959,7 +3104,7 @@
       {
         "component": "select",
         "name": "standardButtonVariant",
-        "label": "Variant",
+        "label": "Variante",
         "value": "primary",
         "options": [
           {
@@ -2994,7 +3139,7 @@
         "component": "select",
         "name": "standardButtonSize",
         "description": "Modifica la dimensione delle icone del bottone",
-        "label": "Size",
+        "label": "Dimensione Icone",
         "value": "medium",
         "options": [
           {
@@ -3018,7 +3163,7 @@
       {
         "component": "select",
         "name": "standardButtonLeftIcon",
-        "label": "Left Icon",
+        "label": "Icona Sinistra",
         "description": "Select the left icon",
         "value": "",
         "options": [
@@ -3043,7 +3188,7 @@
       {
         "component": "select",
         "name": "standardButtonRightIcon",
-        "label": "Right Icon",
+        "label": "Icona Destra",
         "description": "Select the right icon",
         "value": "",
         "options": [
@@ -3413,22 +3558,22 @@
       {
         "component": "boolean",
         "name": "vehiclesShowIcon",
-        "label": "Show Vehicles & Mobility icon",
-        "description": "Toggle to display the Vehicles & Mobility icon",
+        "label": "Visualizza l'icona Veicoli e Mobilità",
+        "description": "Attiva per visualizzare l'icona Veicoli e Mobilità",
         "value": false
       },
       {
         "component": "boolean",
         "name": "homeShowIcon",
-        "label": "Show Home & Family icon",
-        "description": "Toggle to display the Home & Family icon",
+        "label": "Visualizza l'icona Casa e Famiglia",
+        "description": "Attiva per visualizzare l'icona Casa e Famiglia",
         "value": false
       },
       {
         "component": "boolean",
         "name": "personalShowIcon",
-        "label": "Show Personal Protection icon",
-        "description": "Toggle to display the Personal Protection icon",
+        "label": "Visualizza l'icona Salute",
+        "description": "Attiva per visualizzare l'icona Salute",
         "value": false
       }
     ]
@@ -4055,7 +4200,7 @@
       {
         "component": "select",
         "name": "navigationPillVariant",
-        "label": "Variant",
+        "label": "Variante",
         "value": "primary",
         "options": [
           {
@@ -4077,7 +4222,7 @@
       {
         "component": "select",
         "name": "navigationPillLeftIcon",
-        "label": "Left Icon",
+        "label": "Icona Sinistra",
         "description": "Optional icon on the left",
         "options": [
           {
@@ -4093,15 +4238,39 @@
             "value": "un-icon-chevron-right"
           },
           {
+            "name": "Arrow up right Icon",
+            "value": "un-icon-arrow-up-right"
+          },
+          {
             "name": "Search Icon",
             "value": "un-icon-search"
+          },
+          {
+            "name": "Math Operations Icon",
+            "value": "un-icon-math-operations"
+          },
+          {
+            "name": "User Icon",
+            "value": "un-icon-user"
+          },
+          {
+            "name": "Basket Icon",
+            "value": "un-icon-basket"
+          },
+          {
+            "name": "AI Star Icon big",
+            "value": "un-icon-AI-star-big"
+          },
+          {
+            "name": "AI Star Icon small",
+            "value": "un-icon-AI-star-small"
           }
         ]
       },
       {
         "component": "select",
         "name": "navigationPillLeftIconSize",
-        "label": "Size",
+        "label": "Dimensione Icone",
         "value": "medium",
         "options": [
           {
@@ -4125,7 +4294,7 @@
       {
         "component": "select",
         "name": "navigationPillRightIcon",
-        "label": "Right Icon",
+        "label": "Icona Destra",
         "description": "Optional icon on the right",
         "options": [
           {
@@ -4134,22 +4303,46 @@
           },
           {
             "name": "Chevron Left",
-            "value": "chevron-left"
+            "value": "un-icon-chevron-left"
           },
           {
             "name": "Chevron Right",
-            "value": "chevron-right"
+            "value": "un-icon-chevron-right"
           },
           {
-            "name": "Search",
-            "value": "search-icon"
+            "name": "Arrow up right Icon",
+            "value": "un-icon-arrow-up-right"
+          },
+          {
+            "name": "Search Icon",
+            "value": "un-icon-search"
+          },
+          {
+            "name": "Math Operations Icon",
+            "value": "un-icon-math-operations"
+          },
+          {
+            "name": "User Icon",
+            "value": "un-icon-user"
+          },
+          {
+            "name": "Basket Icon",
+            "value": "un-icon-basket"
+          },
+          {
+            "name": "AI Star Icon big",
+            "value": "un-icon-AI-star-big"
+          },
+          {
+            "name": "AI Star Icon small",
+            "value": "un-icon-AI-star-small"
           }
         ]
       },
       {
         "component": "select",
         "name": "navigationPillRightIconSize",
-        "label": "Size",
+        "label": "Dimensione Icone",
         "value": "medium",
         "options": [
           {
