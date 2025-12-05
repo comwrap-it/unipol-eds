@@ -136,13 +136,18 @@ export function decorateSections(main) {
     const isTransparent = templateConfig.sections?.transparent === true;
     
     if (!isTransparent) {
-      // Normal section: set label and filter manually
-      section.dataset.aueLabel = 'Section';
-      const sectionFilter = getSectionFilter(templateName, index);
-      section.dataset.aueFilter = sectionFilter;
+      // Normal section: set label and filter ONLY if not already set
+      // (widgets with models may already have their own label/filter)
+      if (!section.dataset.aueLabel) {
+        section.dataset.aueLabel = 'Section';
+      }
+      if (!section.dataset.aueFilter) {
+        const sectionFilter = getSectionFilter(templateName, index);
+        section.dataset.aueFilter = sectionFilter;
+      }
     }
-    // If transparent=true, we don't set label/filter
-    // The contained widget (with data-aue-model) will handle them automatically
+    // If transparent=true, we don't set anything
+    // The contained widget (with data-aue-model) will handle label/filter automatically
 
     // --- METADATA: Processing section-metadata (can override filters) ---
     const sectionMeta = section.querySelector('div.section-metadata');
