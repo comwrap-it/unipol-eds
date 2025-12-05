@@ -29,7 +29,7 @@
           "value": ""
         },
         {
-          "component": "textarea",
+          "component": "text",
           "name": "accordionDescription",
           "label": "Description",
           "description": "Accordion content (max 500 characters)",
