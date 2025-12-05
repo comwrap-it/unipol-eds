@@ -79,7 +79,7 @@ function makeNavigationSticky(block) {
         wrapper.addEventListener('transitionend', onEnd);
 
         setTimeout(onEnd, 100);
-      }, i * 80);
+      }, i * 50);
     });
   };
 
@@ -110,8 +110,8 @@ function makeNavigationSticky(block) {
         };
 
         wrapper.addEventListener('transitionend', onEnd);
-        setTimeout(onEnd, 100);
-      }, i * 50);
+        setTimeout(onEnd, 200);
+      }, i * 60);
     });
   };
 
@@ -245,6 +245,19 @@ export default async function decorate(block) {
     || block.querySelector('[data-richtext-prop]');
 
   const openBoxRef = { current: null };
+
+  document.addEventListener('click', (e) => {
+    if (!openBoxRef.current) return;
+    const box = openBoxRef.current;
+    const pill = box.previousElementSibling;
+    if (!box.contains(e.target) && !pill.contains(e.target)) {
+      box.style.display = 'none';
+      pill.setAttribute('aria-expanded', 'false');
+      pill.classList.remove('header-nav-pill-active');
+      openBoxRef.current = null;
+    }
+  });
+
 
   pillRows.forEach((row) => {
     const pillEl = buildNavigationPill(row, openBoxRef);

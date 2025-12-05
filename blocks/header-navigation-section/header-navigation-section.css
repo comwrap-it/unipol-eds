@@ -6,16 +6,15 @@
     padding: var(--Header-Navigation-Vertical-Padding,4px) var(--Header-Navigation-Horizontal-Padding, 4px);
     border-radius: var(--Header-Radius, 9999);
     gap: var(--Header-Horizontal-Gap, 4px);
-    transition: width 0.4s ease-in-out;
-    overflow: hidden;
+    transition: width 0.6s ease-in-out;
 }
 
 .header-box-text-container {
     position: absolute;
+    top: 120%;
     padding: var(--Quote-Tool-Full-Quote-Tool-Padding, 16px);
     background-color: var(--Quote-Tool-Full-Quote-Tool-Background, #F9F9F7);
     border-radius: var(--Quote-Tool-Radius, 16px);
-    margin-top: var(--Header-Vertical-Gap-D-Ds, 16px);
 }
 
 .navigation-pill-container .navigation-pill-wrapper .header-nav-pill-active,
@@ -39,9 +38,9 @@
   transform: translateX(0) scale(1);
   filter: blur(0);
   transition:
-    opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-    filter 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   flex-shrink: 0;
 }
 
