@@ -99,28 +99,31 @@ function applyMainFilter(main) {
 }
 
 /**
- * Genera un label leggibile per la sezione basato sulla classe -container
- * che viene aggiunta da decorateBlock()
+ * Genera un label leggibile per la sezione basato sul primo blocco principale.
+ * La struttura è: section > wrapper > block
+ * Cerca il primo blocco al primo livello della sezione.
  * @param {Element} section - La sezione da etichettare
  * @returns {string} Label per la sezione
  */
 function generateSectionLabel(section) {
-  // Cerca una classe che termina con '-container'
-  const containerClass = Array.from(section.classList).find(cls => cls.endsWith('-container'));
+  // Cerca il primo blocco al primo livello: section > div > div.block
+  const firstLevelBlock = section.querySelector(':scope > div > div.block');
   
-  if (containerClass) {
-    // Rimuovi il suffisso '-container' per ottenere il nome del blocco
-    const blockName = containerClass.replace('-container', '');
+  if (firstLevelBlock) {
+    // Prende il nome del blocco dal data-block-name o dalla prima classe
+    const blockName = firstLevelBlock.dataset.blockName || firstLevelBlock.classList[0];
     
-    // Converti da kebab-case a Title Case
-    // es: 'unipol-footer' -> 'Unipol Footer'
-    return blockName
-      .split('-')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+    if (blockName && blockName !== 'block') {
+      // Converti da kebab-case a Title Case
+      // es: 'unipol-footer' -> 'Unipol Footer'
+      return blockName
+        .split('-')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+    }
   }
   
-  // Default se non trova classi -container
+  // Default se non trova blocchi
   return 'Section';
 }
 
