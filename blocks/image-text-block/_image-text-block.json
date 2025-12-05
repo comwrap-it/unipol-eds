@@ -21,20 +21,28 @@
       "id": "image-text-block",
       "fields": [
         {
-          "component": "image",
-          "name": "main-image",
-          "label": "Immagine",
-          "description": "Scegli un'immagine",
-          "required": true
-        },
-        {
-          "component": "text",
-          "name": "imageAlt",
-          "label": "Testo alternativo immagine",
-          "description": "Inserisci un testo alternativo per l'immagine",
-          "required": true,
-          "maxlength": 150,
-          "valueType": "string"
+          "component": "container",
+          "name": "image-settings",
+          "label": "Impostazioni Immagine",
+          "collapsible": true,
+          "fields": [
+            {
+              "component": "image",
+              "name": "main-image",
+              "label": "Immagine",
+              "description": "Scegli un'immagine",
+              "required": true
+            },
+            {
+              "component": "text",
+              "name": "imageAlt",
+              "label": "Testo alternativo immagine",
+              "description": "Inserisci un testo alternativo per l'immagine",
+              "required": true,
+              "maxlength": 150,
+              "valueType": "string"
+            }
+          ]
         },
         {
           "component": "container",

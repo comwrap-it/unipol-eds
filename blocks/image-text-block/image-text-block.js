@@ -9,7 +9,8 @@ export default async function decorate(block, isFirstBlock = false) {
   const wrapper = block.querySelector('.default-content-wrapper');
   const items = wrapper ? Array.from(wrapper.children) : rows;
 
-  const imageRow = items[0]; // First row: img
+  // Img Settings Wrapper
+  const imageContainer = items[0];
   const textBlockRows = items.slice(1);
 
   const container = document.createElement('div');
@@ -19,60 +20,51 @@ export default async function decorate(block, isFirstBlock = false) {
   const imageWrapper = document.createElement('div');
   imageWrapper.className = 'itb-image-wrapper';
 
-  if (imageRow) {
-    const altText = imageRow.dataset.alt || '';
+  if (imageContainer) {
+    const img = imageContainer.querySelector('img');
+    const picture = imageContainer.querySelector('picture');
+    const link = imageContainer.querySelector('a');
+    const altTextField = imageContainer.querySelector('[data-field-name="imageAlt"]');
+    const altText = altTextField ? altTextField.textContent.trim() : '';
 
-    const picture = imageRow.querySelector('picture');
     if (picture) {
       imageWrapper.appendChild(picture);
-    } else {
-      const img = imageRow.querySelector('img');
-      if (img) {
-        const optimizedPic = createOptimizedPicture(
-          img.src,
-          altText,
-          isFirstBlock,
-          [
-            { media: '(min-width: 769px)', width: '600' },
-            { media: '(max-width: 768px)', width: '400' },
-            { media: '(max-width: 392px)', width: '343' },
-          ]
-        );
-
-        const newImg = optimizedPic.querySelector('img');
-        if (newImg) moveInstrumentation(img, newImg);
-
-        if (isFirstBlock) {
-          newImg.setAttribute('loading', 'eager');
-          newImg.setAttribute('fetchpriority', 'high');
-        }
-
-        imageWrapper.appendChild(optimizedPic);
-      } else {
-        const link = imageRow.querySelector('a');
-        if (link && link.href) {
-          const optimizedPic = createOptimizedPicture(
-            link.href,
-            altText,
-            isFirstBlock,
-            [
-              { media: '(min-width: 769px)', width: '600' },
-              { media: '(max-width: 768px)', width: '400' },
-              { media: '(max-width: 392px)', width: '343' },
-            ]
-          );
-
-          const newImg = optimizedPic.querySelector('img');
-          if (newImg) moveInstrumentation(link, newImg);
-
-          if (isFirstBlock) {
-            newImg.setAttribute('loading', 'eager');
-            newImg.setAttribute('fetchpriority', 'high');
-          }
-
-          imageWrapper.appendChild(optimizedPic);
-        }
+    } else if (img) {
+      const optimizedPic = createOptimizedPicture(
+        img.src,
+        altText,
+        isFirstBlock,
+        [
+          { media: '(min-width: 769px)', width: '600' },
+          { media: '(max-width: 768px)', width: '400' },
+          { media: '(max-width: 392px)', width: '343' },
+        ]
+      );
+      const newImg = optimizedPic.querySelector('img');
+      if (newImg) moveInstrumentation(img, newImg);
+      if (isFirstBlock) {
+        newImg.setAttribute('loading', 'eager');
+        newImg.setAttribute('fetchpriority', 'high');
       }
+      imageWrapper.appendChild(optimizedPic);
+    } else if (link && link.href) {
+      const optimizedPic = createOptimizedPicture(
+        link.href,
+        altText,
+        isFirstBlock,
+        [
+          { media: '(min-width: 769px)', width: '600' },
+          { media: '(max-width: 768px)', width: '400' },
+          { media: '(max-width: 392px)', width: '343' },
+        ]
+      );
+      const newImg = optimizedPic.querySelector('img');
+      if (newImg) moveInstrumentation(link, newImg);
+      if (isFirstBlock) {
+        newImg.setAttribute('loading', 'eager');
+        newImg.setAttribute('fetchpriority', 'high');
+      }
+      imageWrapper.appendChild(optimizedPic);
     }
   }
 
