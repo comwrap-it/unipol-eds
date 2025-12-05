@@ -118,6 +118,14 @@
     ]
   },
   {
+    "id": "image-text-grid",
+    "components": [
+      "image-text-block"
+    ],
+    "min": 1,
+    "max": 4
+  },
+  {
     "id": "insurance-product-carousel-widget",
     "components": []
   },

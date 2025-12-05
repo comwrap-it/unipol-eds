@@ -1183,6 +1183,339 @@
     ]
   },
   {
+    "id": "image-text-block",
+    "fields": [
+      {
+        "component": "image",
+        "name": "main-image",
+        "label": "Immagine",
+        "description": "Scegli un'immagine",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Testo alternativo immagine",
+        "description": "Inserisci un testo alternativo per l'immagine",
+        "required": true,
+        "maxlength": 150,
+        "valueType": "string"
+      },
+      {
+        "component": "container",
+        "name": "text-block-container",
+        "label": "Configurazione Text Block",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "boolean",
+            "label": "Centra e mostra testo",
+            "description": "Attivo: contenuto centrato verticalmente e testo visibile. Disattivo: contenuto allineato orizzontalmente e testo non visibile.",
+            "name": "contentAlignment",
+            "valueType": "boolean"
+          },
+          {
+            "component": "text",
+            "name": "text-block-center-align",
+            "label": "Titolo",
+            "required": true,
+            "validation": {
+              "maxLength": 60,
+              "customErrorMsg": "Testo troppo lungo"
+            },
+            "condition": {
+              "===": [
+                {
+                  "var": "contentAlignment"
+                },
+                true
+              ]
+            }
+          },
+          {
+            "component": "richtext",
+            "label": "Testo",
+            "name": "subtitle",
+            "value": "",
+            "valueType": "string",
+            "condition": {
+              "===": [
+                {
+                  "var": "contentAlignment"
+                },
+                true
+              ]
+            },
+            "rte": {
+              "plugins": {
+                "table": {
+                  "features": [
+                    "table",
+                    "tableproperties",
+                    "tablecellproperties",
+                    "tablerow",
+                    "tablecolumn"
+                  ]
+                },
+                "misctools": {
+                  "features": [
+                    "specialchars",
+                    "sourceedit"
+                  ]
+                },
+                "edit": {
+                  "features": [
+                    "cut",
+                    "copy",
+                    "paste-default",
+                    "paste-plaintext",
+                    "paste-wordhtml"
+                  ]
+                },
+                "format": {
+                  "features": [
+                    "bold",
+                    "italic",
+                    "underline",
+                    "strikethrough",
+                    "subscript",
+                    "superscript"
+                  ]
+                },
+                "styles": {
+                  "features": [
+                    "styles"
+                  ],
+                  "styles": [
+                    {
+                      "name": "Highlight",
+                      "element": "span",
+                      "classes": [
+                        "highlight"
+                      ]
+                    },
+                    {
+                      "name": "Code",
+                      "element": "code"
+                    }
+                  ]
+                },
+                "lists": {
+                  "features": [
+                    "ordered",
+                    "unordered",
+                    "indent",
+                    "outdent"
+                  ]
+                },
+                "links": {
+                  "features": [
+                    "modifylink",
+                    "unlink",
+                    "anchor"
+                  ]
+                }
+              },
+              "specialCharsConfig": {
+                "chars": [
+                  {
+                    "name": "copyright",
+                    "entity": "&copy;"
+                  },
+                  {
+                    "name": "registered",
+                    "entity": "&reg;"
+                  },
+                  {
+                    "name": "trademark",
+                    "entity": "&trade;"
+                  },
+                  {
+                    "name": "euro",
+                    "entity": "&euro;"
+                  },
+                  {
+                    "name": "pound",
+                    "entity": "&pound;"
+                  },
+                  {
+                    "name": "yen",
+                    "entity": "&yen;"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "component": "text",
+            "name": "text-block-left-align",
+            "label": "Titolo",
+            "required": true,
+            "validation": {
+              "maxLength": 30,
+              "customErrorMsg": "Testo troppo lungo"
+            },
+            "condition": {
+              "===": [
+                {
+                  "var": "contentAlignment"
+                },
+                false
+              ]
+            }
+          },
+          {
+            "component": "container",
+            "name": "button-container",
+            "label": "Configurazione Pulsante",
+            "collapsible": true,
+            "fields": [
+              {
+                "component": "text",
+                "name": "standardButtonLabel",
+                "label": "Button Text",
+                "required": false
+              },
+              {
+                "component": "select",
+                "name": "standardButtonVariant",
+                "label": "Variante",
+                "value": "primary",
+                "options": [
+                  {
+                    "name": "Primary",
+                    "value": "primary"
+                  },
+                  {
+                    "name": "Secondary",
+                    "value": "secondary"
+                  },
+                  {
+                    "name": "Accent",
+                    "value": "accent"
+                  }
+                ]
+              },
+              {
+                "component": "aem-content",
+                "name": "standardButtonHref",
+                "label": "Link URL",
+                "description": "URL del bottone"
+              },
+              {
+                "component": "boolean",
+                "label": "Apri in una nuova scheda",
+                "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+                "name": "standardButtonOpenInNewTab",
+                "valueType": "boolean",
+                "value": false
+              },
+              {
+                "component": "select",
+                "name": "standardButtonSize",
+                "description": "Modifica la dimensione delle icone del bottone",
+                "label": "Dimensione Icone",
+                "value": "medium",
+                "options": [
+                  {
+                    "name": "Small",
+                    "value": "small"
+                  },
+                  {
+                    "name": "Medium",
+                    "value": "medium"
+                  },
+                  {
+                    "name": "Large",
+                    "value": "large"
+                  },
+                  {
+                    "name": "Extra Large",
+                    "value": "extra-large"
+                  }
+                ]
+              },
+              {
+                "component": "select",
+                "name": "standardButtonLeftIcon",
+                "label": "Icona Sinistra",
+                "description": "Select the left icon",
+                "value": "",
+                "options": [
+                  {
+                    "name": "None",
+                    "value": ""
+                  },
+                  {
+                    "name": "Chevron Left",
+                    "value": "un-icon-chevron-left"
+                  },
+                  {
+                    "name": "Chevron Right",
+                    "value": "un-icon-chevron-right"
+                  },
+                  {
+                    "name": "Search Icon",
+                    "value": "un-icon-search"
+                  }
+                ]
+              },
+              {
+                "component": "select",
+                "name": "standardButtonRightIcon",
+                "label": "Icona Destra",
+                "description": "Select the right icon",
+                "value": "",
+                "options": [
+                  {
+                    "name": "None",
+                    "value": ""
+                  },
+                  {
+                    "name": "Chevron Left",
+                    "value": "un-icon-chevron-left"
+                  },
+                  {
+                    "name": "Chevron Right",
+                    "value": "un-icon-chevron-right"
+                  },
+                  {
+                    "name": "Search Icon",
+                    "value": "un-icon-search"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "image-text-grid",
+    "fields": [
+      {
+        "component": "choice",
+        "name": "starting-alignment",
+        "label": "Allineamento immagini",
+        "description": "Scegli se l'allineamento inizia da sinistra o da destra",
+        "options": [
+          {
+            "value": "left",
+            "label": "Sinistra"
+          },
+          {
+            "value": "right",
+            "label": "Destra"
+          }
+        ],
+        "valueType": "string",
+        "required": true,
+        "value": "right"
+      }
+    ]
+  },
+  {
     "id": "insurance-product-card",
     "fields": [
       {

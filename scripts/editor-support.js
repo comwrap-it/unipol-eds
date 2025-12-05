@@ -17,6 +17,11 @@ const componentsWithMaxItems = [
     itemClass: '.insurance-product-card-wrapper',
     maxItems: 8,
   },
+  {
+    filter: 'image-text-grid',
+    itemClass: '.image-text-block',
+    maxItems: 4,
+  },
 ];
 
 async function applyChanges(event) {
