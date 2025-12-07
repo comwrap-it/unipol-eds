@@ -1,5 +1,5 @@
 import loadSwiper from '../../scripts/delayed.js';
-import handleSlideChange from '../../scripts/lib/utils.js';
+import { handleSlideChange } from '../../scripts/utils.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { createHero, extractHeroPropertiesFromRows } from '../hero/hero.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';

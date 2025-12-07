@@ -64,6 +64,7 @@
         .insurance-product-carousel {
             & .swiper-slide {
                 width: calc(100% / 3.6);
+                margin-inline-end: var(--Carousel-Insurance-Product-Gap, 1rem);
             }
         }
     }
