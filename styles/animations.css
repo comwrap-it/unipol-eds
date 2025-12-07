@@ -12,7 +12,7 @@
 
     &.is-revealed {
         animation: fade-in var(--reveal-duration) var(--reveal-ease)
-            var(--reveal-delay, 300ms) both;
+            calc(var(--reveal-delay, 300ms) + var(--slide-reveal-offset, 0ms)) both;
     }
 }
 
@@ -23,7 +23,7 @@
 
     &.is-revealed {
         animation: appear-in-up var(--reveal-duration) var(--reveal-ease)
-            var(--reveal-delay, 300ms) both;
+            calc(var(--reveal-delay, 300ms) + var(--slide-reveal-offset, 0ms)) both;
     }
 }
 
