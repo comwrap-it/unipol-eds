@@ -1,8 +1,8 @@
 :root {
-    --reveal-distance: 150px;
-    --reveal-duration: 650ms;
+    --reveal-distance: 80px;
+    --reveal-duration: 750ms;
     --reveal-ease: cubic-bezier(0.25, 1, 0.5, 1);
-    --reveal-delay: 300ms;
+    --reveal-delay: 350ms;
 }
 
 .reveal-in {
@@ -12,7 +12,7 @@
 
     &.is-revealed {
         animation: fade-in var(--reveal-duration) var(--reveal-ease)
-            calc(var(--reveal-delay, 300ms) + var(--slide-reveal-offset, 0ms)) both;
+            calc(var(--reveal-delay, 350ms) + var(--slide-reveal-offset, 0ms)) both;
     }
 }
 
@@ -23,7 +23,7 @@
 
     &.is-revealed {
         animation: appear-in-up var(--reveal-duration) var(--reveal-ease)
-            calc(var(--reveal-delay, 300ms) + var(--slide-reveal-offset, 0ms)) both;
+            calc(var(--reveal-delay, 350ms) + var(--slide-reveal-offset, 0ms)) both;
     }
 }
 
