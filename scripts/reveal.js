@@ -37,14 +37,12 @@ export function initRevealAnimations({
  * @param {HTMLElement} carousel - The carousel element containing slides to be revealed.
  */
 function animateCarouselSlideProgressively(carousel) {
-  const slides = carousel.querySelectorAll(
-    '.swiper-slide.reveal-up, .swiper-slide.reveal-in-up, .swiper-slide.reveal-in',
-  );
+  const slides = carousel.querySelectorAll('.swiper-slide');
   if (!slides.length) return;
 
   const CARD_ANIMATION_DELAY = 100; // milliseconds
   slides.forEach((el, index) => {
-    el.style.setProperty('--reveal-delay', `${index * CARD_ANIMATION_DELAY}ms`);
+    el.style.setProperty('--slide-reveal-offset', `${index * CARD_ANIMATION_DELAY}ms`);
     el.classList.add('is-revealed');
   });
 }

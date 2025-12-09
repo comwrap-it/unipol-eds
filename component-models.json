@@ -456,11 +456,10 @@
         "component": "text",
         "name": "footerPrivacyLink",
         "label": "Testo Link",
-        "maxlength": 35,
         "required": true,
         "validation": {
-          "maxLength": 35,
-          "customErrorMsg": "Testo troppo lungo"
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo (max 40 caratteri)"
         }
       },
       {
@@ -1815,14 +1814,18 @@
           {
             "component": "text",
             "name": "linkButtonLabel",
-            "label": "Link Text",
-            "required": true
+            "label": "Testo del link",
+            "required": true,
+            "validation": {
+              "maxLength": 30,
+              "customErrorMsg": "Testo troppo lungo (max 30 caratteri)"
+            }
           },
           {
             "component": "aem-content",
             "name": "linkButtonHref",
             "label": "Link URL",
-            "description": "Destination URL for this link button",
+            "description": "URL di destinazione per questo link",
             "required": true
           },
           {
@@ -1836,8 +1839,8 @@
           {
             "component": "select",
             "name": "linkButtonLeftIcon",
-            "label": "Link Button Left Icon",
-            "description": "Optional icon on the left",
+            "label": "Icona a sinistra",
+            "description": "Opzionale icona a sinistra.",
             "options": [
               {
                 "name": "None",
@@ -1860,8 +1863,8 @@
           {
             "component": "select",
             "name": "linkButtonRightIcon",
-            "label": "Right Button Right Icon",
-            "description": "Optional icon on the right",
+            "label": "Icona a destra",
+            "description": "Opzionale icona a destra. Non utilizzare se già presente un'icona a sinistra, salvo eccezioni funzionali.",
             "options": [
               {
                 "name": "None",
@@ -1884,7 +1887,7 @@
           {
             "component": "select",
             "name": "linkButtonLeftIconSize",
-            "label": "Size",
+            "label": "Dimensione icona a sinistra",
             "value": "medium",
             "options": [
               {
@@ -1908,7 +1911,7 @@
           {
             "component": "select",
             "name": "linkButtonRightIconSize",
-            "label": "Size",
+            "label": "Dimensione icona a destra",
             "value": "medium",
             "options": [
               {
@@ -2801,41 +2804,6 @@
             ]
           }
         ]
-      },
-      {
-        "component": "boolean",
-        "label": "Il componente è animato?",
-        "name": "is-animated",
-        "valueType": "boolean",
-        "defaultValue": false
-      },
-      {
-        "component": "select",
-        "label": "Animazione",
-        "name": "animation-class",
-        "options": [
-          {
-            "label": "Nessuna",
-            "value": ""
-          },
-          {
-            "label": "Reveal In",
-            "value": "reveal-in"
-          },
-          {
-            "label": "Reveal In Up",
-            "value": "reveal-in-up"
-          }
-        ],
-        "defaultValue": "",
-        "condition": {
-          "===": [
-            {
-              "var": "is-animated"
-            },
-            true
-          ]
-        }
       }
     ]
   },
@@ -2983,14 +2951,18 @@
       {
         "component": "text",
         "name": "linkButtonLabel",
-        "label": "Link Text",
-        "required": true
+        "label": "Testo del link",
+        "required": true,
+        "validation": {
+          "maxLength": 30,
+          "customErrorMsg": "Testo troppo lungo (max 30 caratteri)"
+        }
       },
       {
         "component": "aem-content",
         "name": "linkButtonHref",
         "label": "Link URL",
-        "description": "Destination URL for this link button",
+        "description": "URL di destinazione per questo link",
         "required": true
       },
       {
@@ -3004,8 +2976,8 @@
       {
         "component": "select",
         "name": "linkButtonLeftIcon",
-        "label": "Link Button Left Icon",
-        "description": "Optional icon on the left",
+        "label": "Icona a sinistra",
+        "description": "Opzionale icona a sinistra.",
         "options": [
           {
             "name": "None",
@@ -3028,8 +3000,8 @@
       {
         "component": "select",
         "name": "linkButtonRightIcon",
-        "label": "Right Button Right Icon",
-        "description": "Optional icon on the right",
+        "label": "Icona a destra",
+        "description": "Opzionale icona a destra. Non utilizzare se già presente un'icona a sinistra, salvo eccezioni funzionali.",
         "options": [
           {
             "name": "None",
@@ -3052,7 +3024,7 @@
       {
         "component": "select",
         "name": "linkButtonLeftIconSize",
-        "label": "Size",
+        "label": "Dimensione icona a sinistra",
         "value": "medium",
         "options": [
           {
@@ -3076,7 +3048,7 @@
       {
         "component": "select",
         "name": "linkButtonRightIconSize",
-        "label": "Size",
+        "label": "Dimensione icona a destra",
         "value": "medium",
         "options": [
           {

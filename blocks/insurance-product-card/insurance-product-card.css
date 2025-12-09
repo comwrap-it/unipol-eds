@@ -1,13 +1,9 @@
 .insurance-product-card-wrapper {
     display: flex;
 
-    &.swiper-slide {
-        width: auto;
-    }
-
     & .insurance-product-card-container {
         display: flex;
-        width: var(--Column-Size-Col-3, 19.75rem);
+        width: 100%;
         flex-direction: column;
         align-items: flex-start;
         flex: auto;
@@ -26,7 +22,7 @@
             border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem) var(--Radius-0, 0) var(--Radius-0, 0);
 
             & img, picture {
-                width: 19.75rem;
+                width: 100%;
                 height: 11.1095rem;
                 border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem) var(--Radius-0, 0) var(--Radius-0, 0);
             }
@@ -120,19 +116,15 @@
 /* Tablet Portrait */
 @media (768px <= width < 1200px) {
     .insurance-product-card-wrapper {
-        &.swiper-slide {
-            width: 15rem;
-        }
-
         & .insurance-product-card-container {
-            width: 15rem;
+            width: 100%;
 
             & .insurance-product-card-image {
                 height: 10.26575rem;
                 aspect-ratio: 292.00/164.25;
 
                 & img, picture {
-                    width: 15rem;
+                    width: 100%;
                     height: 10.26575rem;
                 }
             }
@@ -166,10 +158,8 @@
 /* Mobile */
 @media (width < 768px) {
     .insurance-product-card-wrapper {
-        width: 21.4375rem;
-
         .insurance-product-card-container {
-            width: 21.4375rem;
+            width: 100%;
 
             & .insurance-product-card-image {
                 height: 12.05875rem;
@@ -177,7 +167,7 @@
                 border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem) var(--Radius-0, 0) var(--Radius-0, 0);
 
                 & img, picture {
-                    width: 21.4375rem;
+                    width: 100%;
                     height: 12.05875rem;
                 }
             }

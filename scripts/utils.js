@@ -12,12 +12,12 @@
  * @param {HTMLElement} leftIconButton the left navigation button
  * @param {HTMLElement} rightIconButton the right navigation button
  */
-export default function handleSlideChange(
+export const handleSlideChange = (
   swiperInstance,
   setExpandedDot,
   leftIconButton,
   rightIconButton,
-) {
+) => {
   if (!swiperInstance) return;
 
   const onSlideChange = () => {
@@ -42,4 +42,21 @@ export default function handleSlideChange(
   swiperInstance.on('slideChange', () => {
     onSlideChange();
   });
-}
+};
+
+/**
+ *
+ * adds animation class to the nearest section of the given element
+ * @param {HTMLElement} element the element from which to find the nearest section
+ * @param {string} animationClass the animation class to add to the nearest section
+ */
+export const addAnimationClassToNearestSection = (
+  element,
+  animationClass = 'reveal-in-up',
+) => {
+  if (!element) return;
+  const section = element.closest('.section');
+  if (section) {
+    section.classList.add(animationClass);
+  }
+};
