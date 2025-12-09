@@ -65,15 +65,12 @@ function hideSecondRightIcon() {
 ------------------------------------------------------------------ */
 function updateContainerWidth(container) {
   const wrappers = Array.from(container.querySelectorAll('.navigation-pill-wrapper'));
-
-  // Se nessun wrapper ha width > 0, aspetta il prossimo frame
   const ready = wrappers.some((w) => w.offsetWidth > 0);
   if (!ready) {
     requestAnimationFrame(() => updateContainerWidth(container));
     return;
   }
 
-  // Calcola la width totale
   let width = 0;
   wrappers.forEach((w) => {
     if (!w.classList.contains('nav-pill-hidden')) {
@@ -87,7 +84,7 @@ function updateContainerWidth(container) {
    MAKE NAVIGATION STICKY
 ------------------------------------------------------------------ */
 function makeNavigationSticky(block) {
-  if (window.innerWidth <= 768) return () => {};
+  if (window.innerWidth <= 1199) return () => {};
 
   const container = block.querySelector('.navigation-pill-container');
   if (!container) return () => {};
@@ -130,7 +127,7 @@ function makeNavigationSticky(block) {
   };
 
   const onScroll = () => {
-    if (window.innerWidth <= 768) return;
+    if (window.innerWidth <= 1199) return;
     const scrollY = window.scrollY || window.pageYOffset;
     if (scrollY > headerBottom && !isSticky) {
       isSticky = true;
@@ -167,7 +164,7 @@ function navigationResponsiveController(block) {
   };
 
   const check = () => {
-    if (window.innerWidth <= 768) {
+    if (window.innerWidth <= 1199) {
       if (stickyCleanup) { stickyCleanup(); stickyCleanup = null; }
       recalcWidth();
     } else {

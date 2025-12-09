@@ -8,6 +8,11 @@
     background: var(--Header-Background);
 }
 
+.header-utilities-container [class^="un-icon-"],
+.header-utilities-container [class*=" un-icon-"] {
+    line-height: unset;
+}
+
 @media (width <= 768px) {
   .header-utilities-container > :not(:last-child) {
     display: none;
