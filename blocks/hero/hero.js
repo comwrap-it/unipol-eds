@@ -3,6 +3,7 @@ import {
   extractBooleanValueFromRow,
 } from '../../scripts/domHelpers.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { isAuthorMode } from '../../scripts/utils.js';
 import {
   BUTTON_ICON_SIZES,
   BUTTON_VARIANTS,
@@ -183,16 +184,9 @@ const createHeroButtonSection = async (
  * @param {HTMLDivElement} hero
  */
 const handleAuthorMode = (hero) => {
-  const doc = hero.ownerDocument;
-  const root = doc.documentElement;
-  if (!root) {
-    return;
-  }
-  const isInAuthorMode = root.classList.contains('adobe-ue-preview')
-    || root.classList.contains('adobe-ue-edit');
+  const isInAuthorMode = isAuthorMode(hero);
   if (isInAuthorMode) {
     const screenHeight = window.innerHeight;
-    console.log('🚀 ~ handleAuthorMode ~ screenHeight:', screenHeight);
     hero.style.height = `${screenHeight}px`;
   }
 };
