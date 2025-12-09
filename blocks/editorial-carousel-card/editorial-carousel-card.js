@@ -101,7 +101,7 @@ export default async function decorateEdictorialCarouselCard(block) {
       cardImage.appendChild(tagElement);
     }
 
-    const altText = rows[14].textContent?.trim() || '';
+    const altText = rows[14]?.textContent?.trim() || '';
     const picture = imageRow.querySelector('picture');
     if (picture) {
       //     // Move existing picture (preserves instrumentation)
@@ -276,5 +276,5 @@ export default async function decorateEdictorialCarouselCard(block) {
   // Replace block content with card
   // Preserve block class and instrumentation
   card.classList.add('card-block');
-  block.appendChild(card);
+  block.replaceChildren(card);
 }

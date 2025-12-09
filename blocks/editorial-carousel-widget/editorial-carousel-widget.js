@@ -30,18 +30,17 @@ function applyDarkTheme(block) {
 }
 
 export default async function handleEditorialProductCarouselWidget() {
-  const block = document.querySelector('.editorial-carousel-container');
-  if (!block) return;
-
-  applyDarkTheme(block);
+  const carousels = document.querySelectorAll('.editorial-carousel-container');
+  if (!carousels.length) return;
   await ensureStylesLoaded();
 
   // Initialize Swiper
   try {
     const Swiper = await loadSwiper();
-    const carousels = document.querySelectorAll('.editorial-carousel-wrapper');
     carousels.forEach((carousel) => {
-      const swiperEl = carousel.querySelector('.swiper');
+      applyDarkTheme(carousel);
+
+      const swiperEl = carousel;
 
       if (swiperEl.dataset.initialized) return;
 

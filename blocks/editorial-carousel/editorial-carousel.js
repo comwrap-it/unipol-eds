@@ -99,7 +99,7 @@ export default async function decorate(block) {
 
     // Create a card block element to decorate
     const cardBlock = document.createElement('div');
-    cardBlock.className = 'editorial-carousel-card-container';
+    cardBlock.className = 'editorial-carousel-card';
     cardBlock.dataset.blockName = 'editorial-carousel-card';
 
     // Preserve row instrumentation on card block if present
