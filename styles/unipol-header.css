@@ -9,11 +9,12 @@ body main .section.header-logo-container,
 body main .sectionheader-navigation-section-container,
 body main .sectionheader-utilities-section-container {
     margin-top: 100px;
+    background: #00000080;
 }
 
 body main .section.header-logo-container,
-body main .sectionheader-navigation-section-container,
-body main .sectionheader-utilities-section-container,
+body main .section.header-navigation-section-container,
+body main .section.header-utilities-section-container,
 body .header .section.header-logo-container,
 body .header .sectionheader-navigation-section-container,
 body .header .sectionheader-utilities-section-container {
@@ -27,4 +28,10 @@ body .header .sectionheader-utilities-section-container {
     width: 100%;
     z-index: 2;
     padding-bottom: 0 !important;
+}
+
+@media (width <= 1199px) {
+    body main .section.header-navigation-section-container .navigation-pill-container {
+        margin-bottom: 60px;
+    }
 }
