@@ -9,7 +9,7 @@
     position: relative;
     width: 100%;
     height: 100vh;
-    height: 100svh;
+    height: 100dvh;
     padding: 0 var(--Hero-Full-Screen-Horizontal-Padding-D, 64px)
         var(--Hero-Full-Screen-Bottom-Padding-Tl-Tp, 80px)
         var(--Hero-Full-Screen-Horizontal-Padding-D, 64px);
@@ -137,10 +137,14 @@
     }
 }
 
+html.adobe-ue-preview .hero,
+html.adobe-ue-edit .hero {
+    min-height: 100%;
+    height: auto;
+}
+
 @media (width < 768px) {
     .hero {
-        height: 100vh;
-        height: 100svh;
         padding: 0 var(--Hero-Full-Screen-Horizontal-Padding-M-Tp, 16px)
             var(--Hero-Full-Screen-Bottom-Padding-M, 120px)
             var(--Hero-Full-Screen-Horizontal-Padding-M-Tp, 16px);
@@ -176,8 +180,6 @@
 
 @media (768px <= width < 1280px) {
     .hero {
-        height: 100vh;
-        height: 100svh;
         padding: 0 var(--Hero-Full-Screen-Horizontal-Padding-M-Tp, 16px)
             var(--Hero-Full-Screen-Bottom-Padding-Tl-Tp, 80px)
             var(--Hero-Full-Screen-Horizontal-Padding-M-Tp, 16px);
