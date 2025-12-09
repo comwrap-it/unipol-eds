@@ -1,5 +1,5 @@
 /**
- * Insurance Product Carousel Component
+ * Editorial Carousel Component
  *
  * A carousel block that displays a horizontal scrollable list of card components.
  * Uses card as a molecule component, which in turn uses primary-button as an atom.
@@ -53,7 +53,7 @@ function asInstrumentation(block) {
 }
 
 /**
- * Decorates the insurance product carousel block
+ * Decorates the editorial carousel block
  * @param {HTMLElement} block - The carousel block element
  */
 export default async function decorate(block) {
@@ -64,19 +64,19 @@ export default async function decorate(block) {
   const hasInstrumentation = asInstrumentation(block);
 
   // Import card component dynamically
-  const cardModule = await import('../insurance-product-card/insurance-product-card.js');
-  const decorateInsuranceProductCard = cardModule.default;
+  const cardModule = await import('../editorial-carousel-card/editorial-carousel-card.js');
+  const decorateEditorialProductCard = cardModule.default;
 
   // Create carousel container structure
   const carousel = document.createElement('div');
-  carousel.className = 'insurance-product-carousel-container swiper';
+  carousel.className = 'editorial-carousel-container swiper';
   carousel.setAttribute('role', 'region');
   carousel.setAttribute('aria-label', 'Product carousel');
   carousel.setAttribute('tabindex', '0');
 
   // Create carousel track (scrollable container)
   const track = document.createElement('div');
-  track.className = 'insurance-product-carousel swiper-wrapper';
+  track.className = 'editorial-carousel-carousel swiper-wrapper';
   track.setAttribute('role', 'list');
 
   // Get all rows (each row will be a card)
@@ -84,14 +84,14 @@ export default async function decorate(block) {
   const showMoreElement = rows.shift();
   if (rows.length === 0) {
     // eslint-disable-next-line no-console
-    console.warn('Insurance Product Carousel: No cards found');
+    console.warn('Editorial Carousel: No cards found');
     return;
   }
 
   // Process each row as a card
   const cardPromises = rows.map(async (row) => {
     const slide = document.createElement('div');
-    slide.className = 'insurance-product-card-wrapper swiper-slide';
+    slide.className = 'editorial-carousel-card-wrapper swiper-slide';
     slide.setAttribute('role', 'listitem');
 
     // Preserve instrumentation from row to slide
@@ -99,8 +99,8 @@ export default async function decorate(block) {
 
     // Create a card block element to decorate
     const cardBlock = document.createElement('div');
-    cardBlock.className = 'insurance-product-card-container';
-    cardBlock.dataset.blockName = 'insurance-product-card';
+    cardBlock.className = 'editorial-carousel-card-container';
+    cardBlock.dataset.blockName = 'editorial-carousel-card';
 
     // Preserve row instrumentation on card block if present
     if (row.hasAttribute('data-aue-resource')) {
@@ -122,10 +122,10 @@ export default async function decorate(block) {
     slide.appendChild(cardBlock);
 
     // Decorate the card using card component
-    await decorateInsuranceProductCard(cardBlock);
+    await decorateEditorialProductCard(cardBlock);
 
     // Load card styles
-    const decoratedCard = slide.querySelector('.insurance-product-card-container, .card') || slide.firstElementChild;
+    const decoratedCard = slide.querySelector('.editorial-carousel-card-container, .card') || slide.firstElementChild;
     if (decoratedCard && decoratedCard.dataset.blockName) {
       await loadBlock(decoratedCard);
     }
@@ -200,13 +200,13 @@ export default async function decorate(block) {
 
   block.innerText = '';
   // Preserve block class
-  carousel.classList.add('block', 'insurance-product-carousel-block');
+  carousel.classList.add('block', 'editorial-carousel-carousel-block');
   // Replace block with carousel
   block.appendChild(carousel);
 
   if (mq.matches) {
     // eslint-disable-next-line max-len
-    const handleInsuranceProductCarouselWidget = await import('../insurance-product-carousel-widget/insurance-product-carousel-widget.js');
-    handleInsuranceProductCarouselWidget.default();
+    const handleEditorialProductCarouselWidget = await import('../editorial-carousel-carousel-widget/editorial-carousel-carousel-widget.js');
+    handleEditorialProductCarouselWidget.default();
   }
 }
