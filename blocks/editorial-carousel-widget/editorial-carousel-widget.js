@@ -1,4 +1,4 @@
-import loadSwiper from '../../scripts/lib/delayed.js';
+import loadSwiper from '../../scripts/delayed.js';
 
 let isStylesLoaded = false;
 
