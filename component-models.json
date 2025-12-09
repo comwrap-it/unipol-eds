@@ -200,7 +200,7 @@
         "component": "text",
         "name": "accordionDescription",
         "label": "Risposta",
-        "description": "Risposta contenuta nell'accordio(max 800 caratteri)",
+        "description": "Risposta contenuta nell'accordion (max 800 caratteri)",
         "maxlength": 800,
         "value": ""
       }
@@ -2514,7 +2514,7 @@
             "component": "text",
             "name": "accordionDescription",
             "label": "Risposta",
-            "description": "Risposta contenuta nell'accordio(max 800 caratteri)",
+            "description": "Risposta contenuta nell'accordion (max 800 caratteri)",
             "maxlength": 800,
             "value": ""
           }
