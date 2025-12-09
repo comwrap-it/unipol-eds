@@ -11,19 +11,19 @@
 import {
   createButtonFromRows,
   extractInstrumentationAttributes,
-} from "../atoms/buttons/standard-button/standard-button.js";
-import { createTagFromRows } from "../atoms/tag/tag.js";
-import { createOptimizedPicture } from "../../scripts/aem.js";
-import { moveInstrumentation } from "../../scripts/scripts.js";
+} from '../atoms/buttons/standard-button/standard-button.js';
+import { createTagFromRows } from '../atoms/tag/tag.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
-  const { loadCSS } = await import("../../scripts/aem.js");
+  const { loadCSS } = await import('../../scripts/aem.js');
   await Promise.all([
     // eslint-disable-next-line max-len
     loadCSS(
-      `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`
+      `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`,
     ),
     loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`),
     loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/icons-3D/icons-3D.css`),
@@ -40,24 +40,24 @@ export default async function decorateEdictorialCarouselCard(block) {
   if (!block) return;
 
   // eslint-disable-next-line no-console
-  console.log("editorial-carousel-card block", block);
+  console.log('editorial-carousel-card block', block);
 
   // Ensure CSS is loaded
   await ensureStylesLoaded();
 
   // Check if card is already decorated (has card-block class)
   // This happens when Universal Editor re-renders after an edit
-  if (block.classList.contains("card-block")) {
+  if (block.classList.contains('card-block')) {
     return;
   }
 
   // Create card structure
-  const card = document.createElement("div");
-  card.className = "editorial-carousel-card-container";
+  const card = document.createElement('div');
+  card.className = 'editorial-carousel-card-container';
 
   // Get rows from block
   let rows = Array.from(block.children);
-  const wrapper = block.querySelector(".default-content-wrapper");
+  const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) {
     rows = Array.from(wrapper.children);
   }
@@ -87,29 +87,29 @@ export default async function decorateEdictorialCarouselCard(block) {
   // Card Image
   const imageRow = rows[13];
   if (imageRow) {
-    const cardImage = document.createElement("div");
-    cardImage.className = "editorial-carousel-card-image";
+    const cardImage = document.createElement('div');
+    cardImage.className = 'editorial-carousel-card-image';
 
     const tagRows = rows.slice(10, 13);
     const tagElement = createTagFromRows(tagRows);
 
     if (tagElement && tagElement.classList) {
-      tagElement.classList.add("editorial-carousel-card-tag");
+      tagElement.classList.add('editorial-carousel-card-tag');
     }
 
     if (cardImage && tagElement && tagRows && tagRows.length > 0) {
       cardImage.appendChild(tagElement);
     }
 
-    const altText = rows[14].textContent?.trim() || "";
-    const picture = imageRow.querySelector("picture");
+    const altText = rows[14].textContent?.trim() || '';
+    const picture = imageRow.querySelector('picture');
     if (picture) {
       //     // Move existing picture (preserves instrumentation)
 
-      picture.querySelector("img").setAttribute("alt", altText);
+      picture.querySelector('img').setAttribute('alt', altText);
       cardImage.appendChild(picture);
     } else {
-      const img = imageRow.querySelector("img");
+      const img = imageRow.querySelector('img');
       if (img) {
         const optimizedPic = createOptimizedPicture(
           img.src,
@@ -117,20 +117,20 @@ export default async function decorateEdictorialCarouselCard(block) {
           false,
           // eslint-disable-next-line max-len
           [
-            { media: "(min-width: 769)", width: "316" },
-            { media: "(max-width: 768)", width: "240" },
-            { media: "(max-width: 392)", width: "343" },
-          ]
+            { media: '(min-width: 769)', width: '316' },
+            { media: '(max-width: 768)', width: '240' },
+            { media: '(max-width: 392)', width: '343' },
+          ],
         );
         // Preserve instrumentation from original img
-        const newImg = optimizedPic.querySelector("img");
+        const newImg = optimizedPic.querySelector('img');
         if (newImg && img) {
           moveInstrumentation(img, newImg);
         }
         cardImage.appendChild(optimizedPic);
       } else {
         // Try to get image from link
-        const link = imageRow.querySelector("a");
+        const link = imageRow.querySelector('a');
         if (link && link.href) {
           const optimizedPic = createOptimizedPicture(
             link.href,
@@ -138,13 +138,13 @@ export default async function decorateEdictorialCarouselCard(block) {
             false,
             // eslint-disable-next-line max-len
             [
-              { media: "(min-width: 769)", width: "316" },
-              { media: "(max-width: 768)", width: "240" },
-              { media: "(max-width: 392)", width: "343" },
-            ]
+              { media: '(min-width: 769)', width: '316' },
+              { media: '(max-width: 768)', width: '240' },
+              { media: '(max-width: 392)', width: '343' },
+            ],
           );
           // Preserve instrumentation from link
-          const newImg = optimizedPic.querySelector("img");
+          const newImg = optimizedPic.querySelector('img');
           if (newImg && link) {
             moveInstrumentation(link, newImg);
           }
@@ -159,23 +159,23 @@ export default async function decorateEdictorialCarouselCard(block) {
   }
 
   // Card Text Content
-  const cardTextContent = document.createElement("div");
-  cardTextContent.className = "editorial-carousel-card-text";
+  const cardTextContent = document.createElement('div');
+  cardTextContent.className = 'editorial-carousel-card-text';
 
   // Card Title - preserve original element and instrumentation
   const titleRow = rows[0];
   if (titleRow) {
     // Try to preserve existing heading element
-    const existingHeading = titleRow.querySelector("h1, h2, h3, h4, h5, h6");
+    const existingHeading = titleRow.querySelector('h1, h2, h3, h4, h5, h6');
     if (existingHeading) {
       // Move existing heading and preserve instrumentation
-      existingHeading.className = "title";
+      existingHeading.className = 'title';
       moveInstrumentation(titleRow, existingHeading);
       cardTextContent.appendChild(existingHeading);
     } else {
       // Create new heading but preserve instrumentation
-      const title = document.createElement("h3");
-      title.className = "title";
+      const title = document.createElement('h3');
+      title.className = 'title';
       // Clone child nodes to preserve richtext instrumentation
       while (titleRow.firstChild) {
         title.appendChild(titleRow.firstChild);
@@ -195,15 +195,15 @@ export default async function decorateEdictorialCarouselCard(block) {
   // This ensures subtitle is always visible in the DOM for editing
   if (subtitleRow) {
     // Try to preserve existing paragraph
-    const existingPara = subtitleRow.querySelector("p");
+    const existingPara = subtitleRow.querySelector('p');
     if (existingPara) {
-      existingPara.className = "description";
+      existingPara.className = 'description';
       moveInstrumentation(subtitleRow, existingPara);
       cardTextContent.appendChild(existingPara);
     } else if (subtitleRow.textContent?.trim()) {
       // Create new paragraph but preserve instrumentation
-      const subtitle = document.createElement("p");
-      subtitle.className = "description";
+      const subtitle = document.createElement('p');
+      subtitle.className = 'description';
       // Clone child nodes to preserve richtext instrumentation
       while (subtitleRow.firstChild) {
         subtitle.appendChild(subtitleRow.firstChild);
@@ -215,8 +215,8 @@ export default async function decorateEdictorialCarouselCard(block) {
   }
 
   // Card Content
-  const cardContent = document.createElement("div");
-  cardContent.className = "editorial-carousel-card-content";
+  const cardContent = document.createElement('div');
+  cardContent.className = 'editorial-carousel-card-content';
 
   cardContent.appendChild(cardTextContent);
 
@@ -226,23 +226,23 @@ export default async function decorateEdictorialCarouselCard(block) {
   const buttonElement = createButtonFromRows(buttonRows);
 
   if (buttonElement && buttonElement.children.length > 0) {
-    const buttonsContainer = document.createElement("div");
-    buttonsContainer.className = "button-subdescription";
+    const buttonsContainer = document.createElement('div');
+    buttonsContainer.className = 'button-subdescription';
 
     buttonsContainer.appendChild(buttonElement);
 
     const note = rows[9];
     if (note) {
       // Try to preserve existing paragraph
-      const existingPara = note.querySelector("p");
+      const existingPara = note.querySelector('p');
       if (existingPara) {
-        existingPara.className = "subdescription";
+        existingPara.className = 'subdescription';
         moveInstrumentation(note, existingPara);
         buttonsContainer.appendChild(existingPara);
       } else if (note.textContent?.trim()) {
         // Create new paragraph but preserve instrumentation
-        const noteFromHTML = document.createElement("p");
-        noteFromHTML.className = "subdescription";
+        const noteFromHTML = document.createElement('p');
+        noteFromHTML.className = 'subdescription';
         // Clone child nodes to preserve richtext instrumentation
         while (note.firstChild) {
           noteFromHTML.appendChild(note.firstChild);
@@ -275,6 +275,6 @@ export default async function decorateEdictorialCarouselCard(block) {
 
   // Replace block content with card
   // Preserve block class and instrumentation
-  card.classList.add("card-block");
+  card.classList.add('card-block');
   block.appendChild(card);
 }
