@@ -28,11 +28,6 @@
   flex-shrink: 0;
 }
 
-/* Gap */
-.image-text-item .content-wrapper [data-field-name="description"] {
-  margin-top: var(--Section-Text-Gap, 16px);
-}
-
 .image-text-item .content-wrapper [data-field-name="title"] {
   color: var(--Section-Text, #001C35);
   font-family: var(--Family-Font-1, "Apex New");
@@ -50,6 +45,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
+  margin-top: var(--Section-Text-Gap, 16px);
 }
 
 /* Alignment */
@@ -62,7 +58,7 @@
 }
 
 /* Mobile */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .image-text-item {
     flex-direction: column-reverse !important;
     text-align: center;
