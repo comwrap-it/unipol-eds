@@ -3,19 +3,19 @@
  * To modify the format or content of this file, please contact your design system team. 
  */
 
-.theme-dark {
+.theme-tablet-portrait {
   /* Bg/Utilities/Scrim */
-  --Background-Utilities-Scrim: #000000cc;
+  --Background-Utilities-Scrim: #ffffffcc;
   /* Bg/Utilities/Overlay */
   --Background-Utilities-Overlay: #00000080;
   /* Bg/Utilities/Blanket */
   --Background-Utilities-Blanket: #000000b2;
-  --Text-Utilities-Text-On-Measurement: #fae1fa;
-  --Icon-Default-Tertiary: #ffffff66;
-  --Icon-Utilities-Icon-On-Measurement: #fae1fa;
-  --Icon-Utilities-Icon: #f19edc;
-  --Border-Utilities-Measurement: #d732a8;
-  --Border-Utilities-Swatch: #ffffff3d;
+  --Text-Utilities-Text-On-Measurement: #8a226f;
+  --Icon-Default-Tertiary: #bfc7cd;
+  --Icon-Utilities-Icon-On-Measurement: #8a226f;
+  --Icon-Utilities-Icon: #d732a8;
+  --Border-Utilities-Measurement: #f19edc;
+  --Border-Utilities-Swatch: #0000003d;
   --Brand-50: #e5f3ff;
   --Accent-50: #ebebff;
   --Accent-100: #cdcdff;
@@ -127,17 +127,17 @@
   /* Bg/Default/Default */
   --Background-Default-Primary: var(--Neutral-200);
   /* Bg/Default/Default */
-  --Background-Default-Secondary: var(--Brand-800);
+  --Background-Default-Secondary: var(--Neutral-50);
   /* Bg/Default/Tertiary */
-  --Background-Default-Tertiary: var(--Neutral-200);
+  --Background-Default-Tertiary: var(--Brand-800);
   /* Bg/Default/Tertiary */
   --Background-Default-Accent-Fixed: var(--Accent-500);
   /* Bg/Default/Tertiary */
-  --Background-Default-Accent-Light: var(--Grayscale-700);
+  --Background-Default-Accent-Light: var(--Accent-50);
   /* Bg/Default/Default Hover */
-  --Background-Default-Accent-Hover: var(--Accent-700);
+  --Background-Default-Accent-Hover: var(--Accent-100);
   /* Bg/Default/Tertiary Hover */
-  --Background-Default-Tertiary-Hover: var(--Grayscale-200);
+  --Background-Default-Tertiary-Hover: var(--Brand-600);
   /* Bg/Brand/Default */
   --Background-Brand-Mobilty-Light: var(--Blue-100);
   /* Bg/Brand/Secondary */
@@ -151,85 +151,85 @@
   /* Bg/Brand/Hover */
   --Background-Brand-Property-Strong: var(--Orange-700);
   /* Bg/Positive/Default */
-  --Background-Success-Default: #4b9d2f;
+  --Background-Success-Default: var(--Feedback-Success-100);
   /* Bg/Positive/Secondary */
-  --Background-Success-Secondary: #387623;
+  --Background-Success-Secondary: var(--Feedback-Success-200);
   /* Bg/Positive/Tertiary */
-  --Background-Success-Tertiary: #254f17;
+  --Background-Success-Tertiary: var(--Feedback-Success-300);
   /* Bg/Warning/Default */
-  --Background-Warning-Default: #f59670;
+  --Background-Warning-Default: var(--Feedback-Warning-100);
   /* Bg/Warning/Secondary */
-  --Background-Warning-Secondary: #8f300a;
+  --Background-Warning-Secondary: var(--Feedback-Warning-200);
   /* Bg/Warning/Tertiary */
-  --Background-Warning-Tertiary: #5f2007;
+  --Background-Warning-Tertiary: var(--Feedback-Warning-300);
   /* Bg/Danger/Default */
-  --Background-Error-Default: #0050b4;
+  --Background-Error-Default: var(--Feedback-Error-100);
   /* Bg/Danger/Secondary */
-  --Background-Error-Secondary: #00295c;
+  --Background-Error-Secondary: var(--Feedback-Error-200);
   /* Bg/Danger/Tertiary */
-  --Background-Error-Tertiary: #001b3d;
+  --Background-Error-Tertiary: var(--Feedback-Error-300);
   /* Bg/Disabled/Default */
-  --Background-Disabled-Primary: var(--Grayscale-700);
+  --Background-Disabled-Primary: var(--Grayscale-200);
   /* Bg/Disabled/Default */
-  --Background-Disabled-Secondary: var(--Grayscale-700);
+  --Background-Disabled-Secondary: var(--Grayscale-500);
   /* Bg/Neutral/Secondary */
-  --Background-Neutral-Primary: var(--Grayscale-800);
+  --Background-Neutral-Primary: var(--Grayscale-50);
   /* Bg/Neutral/Default */
-  --Background-Neutral-Secondary: var(--Grayscale-400);
+  --Background-Neutral-Secondary: var(--Grayscale-200);
   /* Bg/Neutral/Tertiary */
-  --Background-Neutral-Tertiary: var(--Grayscale-500);
-  --Text-Default-Primary: var(--Neutral-200);
-  --Text-Default-Accent: var(--Neutral-200);
-  --Text-Default-Secondary: var(--Neutral-200);
+  --Background-Neutral-Tertiary: var(--Grayscale-400);
+  --Text-Default-Primary: var(--Brand-800);
+  --Text-Default-Accent: var(--Accent-500);
+  --Text-Default-Secondary: var(--Brand-600);
   --Text-Brand-Mobility: var(--Blue-600);
   --Text-Brand-Welfare: var(--Green-800);
   --Text-Brand-Property: var(--Orange-700);
-  --Text-Success-Default: var(--Feedback-Success-100);
-  --Text-Success-Secondary: #9edc89;
-  --Text-Warning-Default: var(--Feedback-Warning-100);
-  --Text-Warning-Secondary: #f59670;
-  --Text-Error-Default: var(--Feedback-Error-100);
-  --Text-Error-Secondary: #3d95ff;
-  --Text-Disabled-Primary: #63727d;
-  --Text-Disabled-Secondary: var(--Grayscale-400);
-  --Text-Disabled-Tertiary: var(--Grayscale-400);
-  --Text-Utilities-Text-On-Overlay: var(--White-1100);
+  --Text-Success-Default: var(--Feedback-Success-200);
+  --Text-Success-Secondary: var(--Feedback-Success-300);
+  --Text-Warning-Default: var(--Feedback-Warning-200);
+  --Text-Warning-Secondary: var(--Feedback-Warning-300);
+  --Text-Error-Default: var(--Feedback-Error-200);
+  --Text-Error-Secondary: var(--Feedback-Error-300);
+  --Text-Disabled-Primary: var(--Grayscale-500);
+  --Text-Disabled-Secondary: var(--Grayscale-700);
+  --Text-Disabled-Tertiary: var(--Grayscale-800);
+  --Text-Utilities-Text-On-Overlay: var(--Black-1100);
   --Text-Neutral-Primary: var(--Grayscale-500);
-  --Text-Neutral-Secondary: var(--Neutral-200);
-  --Text-Neutral-Tertiary: var(--Brand-800);
-  --Icon-Default-Primary: var(--Neutral-200);
-  --Icon-Default-Secondary: var(--Grayscale-400);
-  --Icon-Brand-Mobility: #e5f3ff;
-  --Icon-Brand-Welfare: #99cfff;
-  --Icon-Brand-Property: #66b8ff;
-  --Icon-Success-Primary: var(--Feedback-Success-100);
-  --Icon-Success-Secondary: #9edc89;
-  --Icon-Warning-Primary: var(--Feedback-Warning-100);
-  --Icon-Warning-Secondary: #f59670;
-  --Icon-Error-Primary: var(--Feedback-Error-100);
-  --Icon-Error-Secondary: #3d95ff;
-  --Icon-Disabled-Primary: var(--Grayscale-400);
-  --Icon-Disabled-Secondary: var(--Grayscale-500);
-  --Icon-Disabled-Tertiary: var(--Grayscale-400);
-  --Icon-Neutral-Primary: #e3e3e3;
-  --Icon-Neutral-Secondary: var(--Neutral-200);
-  --Icon-Neutral-Tertiary: var(--Brand-800);
-  --Border-Default-Primary: var(--Neutral-200);
-  --Border-Default-Accent: #cdcdcd;
-  --Border-Default-Secondary: var(--Grayscale-400);
+  --Text-Neutral-Secondary: var(--Grayscale-700);
+  --Text-Neutral-Tertiary: var(--Neutral-200);
+  --Icon-Default-Primary: var(--Brand-800);
+  --Icon-Default-Secondary: var(--Brand-600);
+  --Icon-Brand-Mobility: var(--Blue-600);
+  --Icon-Brand-Welfare: var(--Green-800);
+  --Icon-Brand-Property: var(--Orange-600);
+  --Icon-Success-Primary: var(--Feedback-Success-200);
+  --Icon-Success-Secondary: var(--Feedback-Success-300);
+  --Icon-Warning-Primary: var(--Feedback-Warning-200);
+  --Icon-Warning-Secondary: var(--Feedback-Warning-300);
+  --Icon-Error-Primary: var(--Feedback-Error-200);
+  --Icon-Error-Secondary: var(--Feedback-Error-300);
+  --Icon-Disabled-Primary: var(--Grayscale-500);
+  --Icon-Disabled-Secondary: var(--Grayscale-700);
+  --Icon-Disabled-Tertiary: var(--Grayscale-800);
+  --Icon-Neutral-Primary: var(--Grayscale-500);
+  --Icon-Neutral-Secondary: var(--Grayscale-700);
+  --Icon-Neutral-Tertiary: var(--Neutral-200);
+  --Border-Default-Primary: var(--Brand-800);
+  --Border-Default-Accent: var(--Accent-500);
+  --Border-Default-Secondary: var(--Brand-600);
   --Border-Default-Focused: var(--Brand-200);
   --Border-Brand-Mobility: var(--Blue-400);
   --Border-Brand-Welfare: var(--Green-400);
   --Border-Brand-Property: var(--Orange-400);
-  --Border-Success-Primary: var(--Feedback-Success-100);
-  --Border-Success-Secondary: #9edc89;
-  --Border-Warning-Primary: var(--Feedback-Warning-100);
-  --Border-Warning-Secondary: #f59670;
-  --Border-Error-Primary: var(--Feedback-Error-100);
-  --Border-Error-Secondary: #3d95ff;
-  --Border-Disabled-Primary: var(--Grayscale-300);
-  --Border-Disabled-Secondary: var(--Grayscale-600);
-  --Border-Neutral-Primary: #f3f3f3;
+  --Border-Success-Primary: var(--Feedback-Success-200);
+  --Border-Success-Secondary: var(--Feedback-Success-300);
+  --Border-Warning-Primary: var(--Feedback-Warning-200);
+  --Border-Warning-Secondary: var(--Feedback-Warning-300);
+  --Border-Error-Primary: var(--Feedback-Error-200);
+  --Border-Error-Secondary: var(--Feedback-Error-300);
+  --Border-Disabled-Primary: var(--Grayscale-500);
+  --Border-Disabled-Secondary: var(--Grayscale-700);
+  --Border-Neutral-Primary: var(--Grayscale-200);
   --Border-Neutral-Secondary: var(--Grayscale-600);
   /* Bg/Neutral/Default */
   --Background-Opacity-Primary: var(--White-600);
@@ -252,7 +252,7 @@
   --Avatar-Background: var(--Background-Default-Primary);
   --Avatar-Border: var(--Background-Default-Primary);
   --Text-Block-Title: var(--Text-Default-Primary);
-  --Avatar-Text: var(--Text-Default-Primary);
+  --Avatar-Text: var(--Text-Block-Title);
   --Button-Primary-Default-Background: var(--Background-Default-Tertiary);
   --Button-Primary-Default-Border: var(--Border-Default-Primary);
   --Button-Primary-Default-Text: var(--Text-Neutral-Tertiary);
@@ -416,7 +416,7 @@
   --Link-Button-Link-Disabled-Background: var(--Null-000);
   --Link-Button-Link-Disabled-Border: var(--Null-000);
   --Link-Button-Link-Disabled-Text: var(--Text-Disabled-Secondary);
-  --Link-Button-Link-Disabled-Icon: var(--Text-Disabled-Secondary);
+  --Link-Button-Link-Disabled-Icon: var(--Link-Button-Link-Disabled-Text);
   --Link-Button-Link-Hover-Background: var(--Null-000);
   --Link-Button-Link-Hover-Border: var(--Null-000);
   --Link-Button-Link-Hover-Text: var(--Text-Default-Secondary);
@@ -677,7 +677,7 @@
   --Category-Strip-Welfare-Icon: var(--Icon-Default-Primary);
   --Category-Strip-Welfare-Text: var(--Text-Default-Primary);
   --Border-Default-Tertiary: var(--Neutral-200);
-  --Border-Neutral-Tertiary: var(--Grayscale-500);
+  --Border-Neutral-Tertiary: var(--Grayscale-700);
   --Card-Agency-Card-Background: var(--Background-Default-Secondary);
   --Card-Agency-Card-Icon-Pin: var(--Icon-Neutral-Tertiary);
   --Card-Agency-Card-Title: var(--Text-Default-Primary);
