@@ -118,15 +118,16 @@ export function getValuesFromBlock(block, keys) {
 
   if (!block) return result;
 
-  const instrumentation = extractInstrumentationAttributes(block);
-
   const rows = Array.from(block.children);
 
   rows.forEach((row) => {
     const items = row.querySelectorAll(':scope > div');
     const key = items[0].textContent.trim();
     const valueNode = items[1];
-
+    const instrumentation = {
+      'data-aue-type': 'text',
+      'data-aue-prop': key,
+    };
     const value = valueNode.querySelector('a')?.getAttribute('href') || valueNode.textContent.trim();
 
     if (keys.includes(key)) {
