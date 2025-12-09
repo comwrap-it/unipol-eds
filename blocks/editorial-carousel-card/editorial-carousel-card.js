@@ -89,13 +89,13 @@ export default async function decorateInsuranceProductCard(block) {
   const imageRow = rows[13];
   if (imageRow) {
     const cardImage = document.createElement("div");
-    cardImage.className = "insurance-product-card-image";
+    cardImage.className = "editorial-carousel-card-image";
 
     const tagRows = rows.slice(10, 13);
     const tagElement = createTagFromRows(tagRows);
 
     if (tagElement && tagElement.classList) {
-      tagElement.classList.add("insurance-product-card-tag");
+      tagElement.classList.add("editorial-carousel-card-tag");
     }
 
     if (cardImage && tagElement && tagRows && tagRows.length > 0) {
@@ -161,7 +161,7 @@ export default async function decorateInsuranceProductCard(block) {
 
   // Card Text Content
   const cardTextContent = document.createElement("div");
-  cardTextContent.className = "insurance-product-card-text";
+  cardTextContent.className = "editorial-carousel-card-text";
 
   // Card Title - preserve original element and instrumentation
   const titleRow = rows[0];
@@ -217,7 +217,7 @@ export default async function decorateInsuranceProductCard(block) {
 
   // Card Content
   const cardContent = document.createElement("div");
-  cardContent.className = "insurance-product-card-content";
+  cardContent.className = "editorial-carousel-card-content";
 
   cardContent.appendChild(cardTextContent);
 

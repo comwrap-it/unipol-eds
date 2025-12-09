@@ -1,4 +1,4 @@
-.insurance-product-card-wrapper {
+.editorial-carousel-card-wrapper {
     display: flex;
 
     &.swiper-slide {
@@ -15,7 +15,7 @@
         background: var(--Card-Insurance-Product-Card-Background, #FFF);
         box-shadow: var(--Depth-050-2, 2px) var(--Depth-050-2, 2px) var(--Blur-200-8, 8px) 0 rgb(0 0 0 / 8%);
 
-        & .insurance-product-card-image {
+        & .editorial-carousel-card-image {
             position: relative;
             display: flex;
             height: 11.1095rem;
@@ -31,7 +31,7 @@
                 border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem) var(--Radius-0, 0) var(--Radius-0, 0);
             }
 
-            & .insurance-product-card-tag {
+            & .editorial-carousel-card-tag {
                 display: flex;
                 padding: var(--Tag-Vertical-Padding, 0.25rem) var(--Tag-Horizontal-Padding, 0.75rem);
                 justify-content: center;
@@ -44,7 +44,7 @@
             }
         }
 
-        & .insurance-product-card-content {
+        & .editorial-carousel-card-content {
             flex: 1;
             display: flex;
             position: relative;
@@ -55,7 +55,7 @@
             gap: var(--Card-Insurance-Product-Card-Gap, 1.5rem);
             align-self: stretch;
 
-            & .insurance-product-card-text {
+            & .editorial-carousel-card-text {
                 display: flex;
                 padding-top: var(--Card-Insurance-Product-Card-Vertical-Padding-Top, 3.5rem);
                 flex-direction: column;
@@ -127,7 +127,7 @@
     background: var(--Card-Insurance-Product-Card-Background, #FFF);
     box-shadow: var(--Depth-050-2, 2px) var(--Depth-050-2, 2px) var(--Blur-200-8, 8px) 0 rgb(0 0 0 / 8%);
 
-    & .insurance-product-card-image {
+    & .editorial-carousel-card-image {
         position: relative;
         display: flex;
         height: 11.1095rem;
@@ -143,7 +143,7 @@
             border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem) var(--Radius-0, 0) var(--Radius-0, 0);
         }
 
-        & .insurance-product-card-tag {
+        & .editorial-carousel-card-tag {
             display: flex;
             padding: var(--Tag-Vertical-Padding, 0.25rem) var(--Tag-Horizontal-Padding, 0.75rem);
             justify-content: center;
@@ -156,7 +156,7 @@
         }
     }
 
-    & .insurance-product-card-content {
+    & .editorial-carousel-card-content {
         flex: 1;
         display: flex;
         position: relative;
@@ -167,7 +167,7 @@
         gap: var(--Card-Insurance-Product-Card-Gap, 1.5rem);
         align-self: stretch;
 
-        & .insurance-product-card-text {
+        & .editorial-carousel-card-text {
             display: flex;
             padding-top: var(--Card-Insurance-Product-Card-Vertical-Padding-Top, 3.5rem);
             flex-direction: column;
@@ -230,7 +230,7 @@
 
 /* Tablet Portrait */
 @media (768px <= width < 1200px) {
-    .insurance-product-card-wrapper {
+    .editorial-carousel-card-wrapper {
         &.swiper-slide {
             width: 15rem;
         }
@@ -238,7 +238,7 @@
         &.editorial-carousel-card-container {
             width: 15rem;
 
-            & .insurance-product-card-image {
+            & .editorial-carousel-card-image {
                 height: 10.26575rem;
                 aspect-ratio: 292.00/164.25;
 
@@ -248,10 +248,10 @@
                 }
             }
 
-            & .insurance-product-card-content {
+            & .editorial-carousel-card-content {
                 padding: 0 var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem);
 
-                & .insurance-product-card-text {
+                & .editorial-carousel-card-text {
                     padding-top: 3rem;
 
                     & .title {
@@ -276,13 +276,13 @@
 
 /* Mobile */
 @media (width < 768px) {
-    .insurance-product-card-wrapper {
+    .editorial-carousel-card-wrapper {
         width: 21.4375rem;
 
         .editorial-carousel-card-container {
             width: 21.4375rem;
 
-            & .insurance-product-card-image {
+            & .editorial-carousel-card-image {
                 height: 12.05875rem;
                 aspect-ratio: 343.00/192.94;
                 border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem) var(--Radius-0, 0) var(--Radius-0, 0);
@@ -293,7 +293,7 @@
                 }
             }
 
-            & .insurance-product-card-content {
+            & .editorial-carousel-card-content {
                 padding: 0 var(--Card-Insurance-Product-Card-Horizontal-Padding-M, 1rem) var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Horizontal-Padding-M, 1rem);
                 gap: var(--Card-Insurance-Product-Card-Gap, 1.5rem);
 
