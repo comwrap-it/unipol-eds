@@ -19,15 +19,16 @@
 import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
-// eslint-disable-next-line max-len, import/no-duplicates
 import { createButton } from '../atoms/buttons/standard-button/standard-button.js';
-// eslint-disable-next-line import/no-duplicates
 import { BUTTON_VARIANTS } from '../atoms/buttons/standard-button/standard-button.js';
-// eslint-disable-next-line import/no-duplicates
 import { BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
 
 let isStylesLoaded = false;
 
+/**
+ * Ensures carousel/widget styles are loaded once.
+ * @returns {Promise<void>}
+ */
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
@@ -40,11 +41,11 @@ async function ensureStylesLoaded() {
 }
 
 /**
- * Check if block has instrumentation (Universal Editor)
+ * Check if block has instrumentation (Universal Editor).
  * @param {HTMLElement} block
- * @returns boolean
+ * @returns {boolean}
  */
-function asInstrumentation(block) {
+function hasInstrumentation(block) {
   return (
     block.hasAttribute('data-aue-resource')
     || block.querySelector('[data-aue-resource]')
@@ -53,124 +54,100 @@ function asInstrumentation(block) {
 }
 
 /**
- * Decorates the editorial carousel block
- * @param {HTMLElement} block - The carousel block element
+ * Creates the carousel root container with accessibility attributes.
+ * @returns {{carousel: HTMLDivElement, track: HTMLDivElement}}
  */
-export default async function decorate(block) {
-  if (!block) return;
-
-  await ensureStylesLoaded();
-
-  const hasInstrumentation = asInstrumentation(block);
-
-  // Import card component dynamically
-  const cardModule = await import('../editorial-carousel-card/editorial-carousel-card.js');
-  const decorateEditorialProductCard = cardModule.default;
-
-  // Create carousel container structure
+function createCarouselStructure() {
   const carousel = document.createElement('div');
   carousel.className = 'editorial-carousel-container swiper';
   carousel.setAttribute('role', 'region');
   carousel.setAttribute('aria-label', 'Product carousel');
   carousel.setAttribute('tabindex', '0');
 
-  // Create carousel track (scrollable container)
   const track = document.createElement('div');
   track.className = 'editorial-carousel swiper-wrapper';
   track.setAttribute('role', 'list');
 
-  // Get all rows (each row will be a card)
-  const rows = Array.from(block.children);
-  const showMoreElement = rows.shift();
-  if (rows.length === 0) {
-    // eslint-disable-next-line no-console
-    console.warn('Editorial Carousel: No cards found');
-    return;
+  return { carousel, track };
+}
+
+/**
+ * Creates a single slide from an authored row.
+ * @param {HTMLElement} row
+ * @param {(el: HTMLElement) => Promise<void>} decorateCard
+ * @returns {Promise<HTMLDivElement>}
+ */
+async function createSlideFromRow(row, decorateCard) {
+  const slide = document.createElement('div');
+  slide.className = 'editorial-carousel-card-wrapper swiper-slide';
+  slide.setAttribute('role', 'listitem');
+  moveInstrumentation(row, slide);
+
+  const cardBlock = document.createElement('div');
+  cardBlock.className = 'editorial-carousel-card';
+  cardBlock.dataset.blockName = 'editorial-carousel-card';
+
+  if (row.hasAttribute('data-aue-resource')) {
+    cardBlock.setAttribute('data-aue-resource', row.getAttribute('data-aue-resource'));
+    const aueBehavior = row.getAttribute('data-aue-behavior');
+    if (aueBehavior) cardBlock.setAttribute('data-aue-behavior', aueBehavior);
+    const aueType = row.getAttribute('data-aue-type');
+    if (aueType) cardBlock.setAttribute('data-aue-type', aueType);
+    const aueLabel = row.getAttribute('data-aue-label');
+    if (aueLabel) cardBlock.setAttribute('data-aue-label', aueLabel);
   }
 
-  // Process each row as a card
-  const cardPromises = rows.map(async (row) => {
-    const slide = document.createElement('div');
-    slide.className = 'editorial-carousel-card-wrapper swiper-slide';
-    slide.setAttribute('role', 'listitem');
+  while (row.firstElementChild) {
+    cardBlock.appendChild(row.firstElementChild);
+  }
 
-    // Preserve instrumentation from row to slide
-    moveInstrumentation(row, slide);
+  slide.appendChild(cardBlock);
+  await decorateCard(cardBlock);
 
-    // Create a card block element to decorate
-    const cardBlock = document.createElement('div');
-    cardBlock.className = 'editorial-carousel-card';
-    cardBlock.dataset.blockName = 'editorial-carousel-card';
+  const decoratedCard = slide.querySelector('.editorial-carousel-card-container, .card') || slide.firstElementChild;
+  if (decoratedCard?.dataset.blockName) {
+    await loadBlock(decoratedCard);
+  }
 
-    // Preserve row instrumentation on card block if present
-    if (row.hasAttribute('data-aue-resource')) {
-      cardBlock.setAttribute('data-aue-resource', row.getAttribute('data-aue-resource'));
-      const aueBehavior = row.getAttribute('data-aue-behavior');
-      if (aueBehavior) cardBlock.setAttribute('data-aue-behavior', aueBehavior);
-      const aueType = row.getAttribute('data-aue-type');
-      if (aueType) cardBlock.setAttribute('data-aue-type', aueType);
-      const aueLabel = row.getAttribute('data-aue-label');
-      if (aueLabel) cardBlock.setAttribute('data-aue-label', aueLabel);
-    }
+  return slide;
+}
 
-    // Move all children from row to card block (preserves their instrumentation)
-    while (row.firstElementChild) {
-      cardBlock.appendChild(row.firstElementChild);
-    }
-
-    // Temporarily append cardBlock to slide
-    slide.appendChild(cardBlock);
-
-    // Decorate the card using card component
-    await decorateEditorialProductCard(cardBlock);
-
-    // Load card styles
-    const decoratedCard = slide.querySelector('.editorial-carousel-card-container, .card') || slide.firstElementChild;
-    if (decoratedCard && decoratedCard.dataset.blockName) {
-      await loadBlock(decoratedCard);
-    }
-
-    return slide;
-  });
-
-  const mq = window.matchMedia('(min-width: 768px)');
-
-  // Wait for all cards to be processed
-  const cardElements = await Promise.all(cardPromises);
-  cardElements.forEach((slide, index) => {
-    if (slide && !hasInstrumentation && slide.innerText) {
+/**
+ * Appends slides to the track, respecting mobile hidden state and instrumentation.
+ * @param {HTMLDivElement[]} slides
+ * @param {HTMLDivElement} track
+ * @param {boolean} withInstrumentation
+ * @param {MediaQueryList} mq
+ */
+function appendSlides(slides, track, withInstrumentation, mq) {
+  slides.forEach((slide, index) => {
+    if (slide && !withInstrumentation && slide.innerText) {
       if (index >= 4 && !mq.matches) {
         slide.classList.add('hidden');
       }
       track.appendChild(slide);
-    } else if (slide && hasInstrumentation) {
+    } else if (slide && withInstrumentation) {
       track.appendChild(slide);
     }
   });
+}
 
+/**
+ * Creates the show more button (mobile) or scroll indicator (desktop).
+ * @param {HTMLDivElement[]} slides
+ * @param {MediaQueryList} mq
+ * @returns {{scrollIndicator?: HTMLElement, showMoreButton?: HTMLElement}}
+ */
+async function createNavigationControls(slides, mq) {
   let scrollIndicator;
   let showMoreButton;
 
-  /**
-   * @param {PointerEvent} event
-   */
-  function handleShowMoreButton(event) {
-    event.preventDefault();
-    cardElements.forEach((slide) => {
-      if (slide.classList.contains('hidden')) {
-        slide.classList.remove('hidden');
-      }
-    });
-    showMoreButton.remove();
-  }
-
   if (mq.matches) {
-    if (cardElements && cardElements.length > 4) {
+    if (slides && slides.length > 4) {
       const { scrollIndicator: createdScrollIndicator } = await createScrollIndicator();
       scrollIndicator = createdScrollIndicator;
     }
-  } else if (cardElements && cardElements.length > 4) {
-    // eslint-disable-next-line max-len
+  } else if (slides && slides.length > 4) {
     showMoreButton = createButton(
       '',
       '',
@@ -180,33 +157,76 @@ export default async function decorate(block) {
       '',
       '',
     );
-    showMoreButton.addEventListener('click', handleShowMoreButton);
   }
 
-  carousel.appendChild(track);
+  return { scrollIndicator, showMoreButton };
+}
 
+/**
+ * Wire up the mobile "show more" behavior.
+ * @param {HTMLElement} showMoreButton
+ * @param {HTMLDivElement[]} slides
+ */
+function bindShowMore(showMoreButton, slides) {
+  if (!showMoreButton) return;
+  showMoreButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    slides.forEach((slide) => slide.classList.remove('hidden'));
+    showMoreButton.remove();
+  });
+}
+
+/**
+ * Entry point: decorates the editorial carousel block.
+ * @param {HTMLElement} block - The carousel block element
+ * @returns {Promise<void>}
+ */
+export default async function decorate(block) {
+  if (!block) return;
+  await ensureStylesLoaded();
+
+  const instrumented = hasInstrumentation(block);
+  const cardModule = await import('../editorial-carousel-card/editorial-carousel-card.js');
+  const decorateEditorialProductCard = cardModule.default;
+
+  const { carousel, track } = createCarouselStructure();
+  const rows = Array.from(block.children);
+  const showMoreElement = rows.shift();
+  if (rows.length === 0) {
+    // eslint-disable-next-line no-console
+    console.warn('Editorial Carousel: No cards found');
+    return;
+  }
+
+  const cardPromises = rows.map((row) => createSlideFromRow(row, decorateEditorialProductCard));
+  const mq = window.matchMedia('(min-width: 768px)');
+  const cardElements = await Promise.all(cardPromises);
+
+  appendSlides(cardElements, track, instrumented, mq);
+
+  const { scrollIndicator, showMoreButton } = await createNavigationControls(cardElements, mq);
+  bindShowMore(showMoreButton, cardElements);
+
+  carousel.appendChild(track);
   if (scrollIndicator) {
     carousel.appendChild(scrollIndicator);
   } else if (showMoreButton) {
     carousel.appendChild(showMoreButton);
   }
 
-  showMoreElement.remove();
+  showMoreElement?.remove();
 
-  // Preserve blockName if present
   if (block.dataset.blockName) {
     carousel.dataset.blockName = block.dataset.blockName;
   }
 
   block.innerText = '';
-  // Preserve block class
   carousel.classList.add('block', 'editorial-carousel-block');
-  // Replace block with carousel
   block.appendChild(carousel);
 
   if (mq.matches) {
-    // eslint-disable-next-line max-len
     const handleEditorialProductCarouselWidget = await import('../editorial-carousel-widget/editorial-carousel-widget.js');
     handleEditorialProductCarouselWidget.default();
   }
 }
+
