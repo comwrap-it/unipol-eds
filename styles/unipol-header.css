@@ -5,8 +5,11 @@ main .sectionheader-utilities-section-container {
     padding-top: 140px;
 }
 
-body .header .section.header-logo-container ,
-body .header .sectionheader-navigation-section-container ,
+body main .section.header-logo-container,
+body main .sectionheader-navigation-section-container,
+body main .sectionheader-utilities-section-container,
+body .header .section.header-logo-container,
+body .header .sectionheader-navigation-section-container,
 body .header .sectionheader-utilities-section-container {
     display: flex;
     justify-content: space-between;
@@ -19,4 +22,3 @@ body .header .sectionheader-utilities-section-container {
     z-index: 2;
     padding-bottom: 0;
 }
-
