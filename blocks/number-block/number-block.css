@@ -68,7 +68,6 @@
 /* --- TABLET --- */
 @media (width >= 768px) {
   .number-block-wrapper {
-    padding: 0 32px;
     flex-direction: row;
     justify-content: space-around;
     gap: var(--Number-Block-Gap-D-Tl-Tp, 16px);
@@ -84,10 +83,6 @@
 
 /* --- DESKTOP --- */
 @media (width >= 1281px) {
-  .number-block-wrapper {
-    padding: 0 64px;
-  }
-
   .number-item-title {
     font-size: var(--Size-80, 5rem);
   }
