@@ -9,38 +9,91 @@
             "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Image Text Grid",
-              "model": "image-text-grid"
+              "filter": "image-text-grid"
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "Image Text Item",
+      "id": "image-text-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Image Text Item",
+              "model": "image-text-item"
             }
           }
         }
       }
     }
   ],
+
   "models": [
     {
       "id": "image-text-grid",
       "fields": [
         {
-          "component": "choice",
-          "name": "starting-alignment",
-          "label": "Allineamento immagini",
-          "description": "Scegli se l'allineamento inizia da sinistra o da destra",
+          "component": "select",
+          "label": "Allineamento immagine iniziale",
+          "name": "initialAlignment",
+          "valueType": "string",
           "options": [
             { "value": "left", "label": "Sinistra" },
             { "value": "right", "label": "Destra" }
           ],
+          "required": true
+        }
+      ]
+    },
+
+    {
+      "id": "image-text-item",
+      "fields": [
+        {
+          "component": "aem-content",
+          "label": "Immagine",
+          "name": "image",
           "valueType": "string",
-          "required": true,
-          "value": "right"
+          "required": true
+        },
+        {
+          "component": "text",
+          "label": "Titolo",
+          "name": "title",
+          "valueType": "string",
+          "maxLength": 50
+        },
+        {
+          "component": "textarea",
+          "label": "Descrizione",
+          "name": "description",
+          "valueType": "string",
+          "maxLength": 240
+        },
+        {
+          "component": "container",
+          "name": "buttonConfig",
+          "label": "Configurazione Pulsante",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
+            }
+          ]
         }
       ]
     }
   ],
+
   "filters": [
     {
       "id": "image-text-grid",
       "components": [
-        "image-text-block"
+        "image-text-item"
       ],
       "min": 1,
       "max": 4

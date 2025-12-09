@@ -120,7 +120,7 @@
   {
     "id": "image-text-grid",
     "components": [
-      "image-text-block"
+      "image-text-item"
     ],
     "min": 1,
     "max": 4

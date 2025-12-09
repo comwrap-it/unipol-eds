@@ -1,29 +1,93 @@
-/* Wrapper */
 .image-text-grid {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 48px;
 }
 
-.image-text-block.image-left .image-text-block {
+/* Image */
+.image-text-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.image-text-item .image-wrapper,
+.image-text-item .content-wrapper {
+  flex: 1;
+}
+
+/* Content */
+.image-text-item .content-wrapper {
+  display: flex;
+  width: 537px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--Section-Gap, 32px);
+  flex-shrink: 0;
+}
+
+/* Gap */
+.image-text-item .content-wrapper [data-field-name="description"] {
+  margin-top: var(--Section-Text-Gap, 16px);
+}
+
+.image-text-item .content-wrapper [data-field-name="title"] {
+  color: var(--Section-Text, #001C35);
+  font-family: var(--Family-Font-1, "Apex New");
+  font-size: var(--Font-Size-Title-Page, 48px);
+  font-style: normal;
+  font-weight: 550;
+  line-height: 115%;
+  letter-spacing: -0.48px;
+}
+
+.image-text-item .content-wrapper [data-field-name="description"] {
+  color: var(--Section-Text, #001C35);
+  font-family: var(--Family-Font-2, Manrope);
+  font-size: var(--Size-16, 16px);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+}
+
+/* Alignment */
+.image-text-item.image-left {
   flex-direction: row;
 }
 
-.image-text-block.image-right .image-text-block {
+.image-text-item.image-right {
   flex-direction: row-reverse;
 }
 
 /* Mobile */
-@media (max-width: 767px) {
-  .image-text-block .image-text-block {
-    flex-direction: column !important;
+@media (max-width: 768px) {
+  .image-text-item {
+    flex-direction: column-reverse !important;
+    text-align: center;
+    align-items: center;
   }
-  .image-text-block .image-text-block > .text-block-container {
-    order: 0;
+
+  .image-wrapper picture,
+  .image-wrapper img {
+    max-width: 100%;
+    height: auto;
   }
-  .image-text-block .image-text-block > img,
-  .image-text-block .image-text-block > .image-container {
-    order: 1;
+
+  .image-text-item .content-wrapper {
     width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .image-text-item .content-wrapper [data-field-name="title"] {
+    font-size: var(--Size-32, 32px);
+    letter-spacing: -0.32px;
+  }
+
+  .image-text-item .content-wrapper [data-field-name="description"] {
+    font-size: var(--Size-16, 16px);
+    line-height: 140%;
   }
 }
