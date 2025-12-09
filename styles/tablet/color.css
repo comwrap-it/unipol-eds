@@ -248,7 +248,7 @@
   --Accordion-Description-Open: var(--Text-Default-Primary);
   --Accordion-Title-Close: var(--Text-Default-Primary);
   --Accordion-Icon-Open: var(--Icon-Default-Primary);
-  --Accordion-Icon-Closed: var(--Icon-Default-Primary);
+  --Accordion-Icon: var(--Icon-Default-Primary);
   --Avatar-Background: var(--Background-Default-Primary);
   --Avatar-Border: var(--Background-Default-Primary);
   --Text-Block-Title: var(--Text-Default-Primary);
@@ -790,8 +790,8 @@
   --Footer-Icon: var(--Icon-Neutral-Tertiary);
   --Header-Background: var(--Background-Opacity-Primary);
   --Header-Icon: var(--Icon-Default-Primary);
-  --Hero-Full-Screen-Text-Color: var(--Text-Neutral-Tertiary);
-  --Hero-Mini-Hero-Text-Color: var(--Text-Neutral-Tertiary);
+  --Hero-Full-Screen-Text-Color: var(--Text-Default-Primary);
+  --Hero-Mini-Hero-Text-Color: var(--Text-Default-Primary);
   --Hero-Blog-Text-Color: var(--Text-Neutral-Tertiary);
   --Quote-Tool-Full-Quote-Tool-Background: var(--Background-Default-Primary);
   --Quote-Tool-Text: var(--Text-Default-Primary);
