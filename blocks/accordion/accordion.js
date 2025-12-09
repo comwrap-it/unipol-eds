@@ -1,4 +1,4 @@
-import { getValuesFromBlock, restoreInstrumentation } from '../../scripts/utils';
+import { getValuesFromBlock, restoreInstrumentation } from '../../scripts/utils.js';
 
 /**
  * Creates Accordion
