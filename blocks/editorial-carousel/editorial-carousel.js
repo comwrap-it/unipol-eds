@@ -76,7 +76,7 @@ export default async function decorate(block) {
 
   // Create carousel track (scrollable container)
   const track = document.createElement('div');
-  track.className = 'editorial-carousel-carousel swiper-wrapper';
+  track.className = 'editorial-carousel swiper-wrapper';
   track.setAttribute('role', 'list');
 
   // Get all rows (each row will be a card)
@@ -200,13 +200,13 @@ export default async function decorate(block) {
 
   block.innerText = '';
   // Preserve block class
-  carousel.classList.add('block', 'editorial-carousel-carousel-block');
+  carousel.classList.add('block', 'editorial-carousel-block');
   // Replace block with carousel
   block.appendChild(carousel);
 
   if (mq.matches) {
     // eslint-disable-next-line max-len
-    const handleEditorialProductCarouselWidget = await import('../editorial-carousel-carousel-widget/editorial-carousel-carousel-widget.js');
+    const handleEditorialProductCarouselWidget = await import('../editorial-carousel-widget/editorial-carousel-widget.js');
     handleEditorialProductCarouselWidget.default();
   }
 }

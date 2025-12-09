@@ -18,7 +18,7 @@
         overflow: visible;
     }
 
-    .editorial-carousel-carousel {
+    .editorial-carousel {
         display: flex;
         width: 82rem;
         align-items: stretch;
@@ -63,7 +63,7 @@
             }
         }
 
-        & .editorial-carousel-carousel {
+        & .editorial-carousel {
             width: 46rem;
         }
     }
@@ -74,7 +74,7 @@
     .editorial-carousel-container {
         gap: var(--Carousel-Widget-Gap-M-Tp, 2.5rem);
 
-        & .editorial-carousel-carousel {
+        & .editorial-carousel {
             display: flex;
             flex-direction: column;
             width: 21.4375rem;
