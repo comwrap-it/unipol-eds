@@ -184,16 +184,17 @@ const createHeroButtonSection = async (
  */
 const handleAuthorMode = (hero) => {
   const doc = hero.ownerDocument;
-  console.log('🚀 ~ handleAuthorMode ~ doc:', doc);
   const root = doc.documentElement;
-  console.log('🚀 ~ handleAuthorMode ~ root:', root);
-  // const isInAuthorMode =
-  //   document.documentElement.classList.contains('adobe-ue-preview') ||
-  //   document.documentElement.classList.contains('adobe-ue-edit');
-  // if (isInAuthorMode) {
-  //   const screenHeight = window.innerHeight;
-  //   hero.style.height = `${screenHeight}px`;
-  // }
+  if (!root) {
+    return;
+  }
+  const isInAuthorMode = root.classList.contains('adobe-ue-preview')
+    || root.classList.contains('adobe-ue-edit');
+  if (isInAuthorMode) {
+    const screenHeight = window.innerHeight;
+    console.log('🚀 ~ handleAuthorMode ~ screenHeight:', screenHeight);
+    hero.style.height = `${screenHeight}px`;
+  }
 };
 
 /**
