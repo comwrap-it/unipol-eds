@@ -77,18 +77,6 @@
           "name": "imageSR",
           "label": "Testo alternativo per l'immagine",
           "required": true
-        },
-        {
-          "component": "container",
-          "name": "icons-3D",
-          "label": "Configurazione Icone 3D",
-          "collapsible": true,
-          "required": true,
-          "fields": [
-            {
-              "...": "../atoms/icons-3D/_icons-3D.json#/models/icons-3D/fields"
-            }
-          ]
         }
       ]
     }

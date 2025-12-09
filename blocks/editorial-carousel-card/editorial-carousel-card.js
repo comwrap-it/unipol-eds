@@ -13,7 +13,6 @@ import {
   extractInstrumentationAttributes,
 } from "../atoms/buttons/standard-button/standard-button.js";
 import { createTagFromRows } from "../atoms/tag/tag.js";
-import { create3DiconsFromRows } from "../atoms/icons-3D/icons-3D.js";
 import { createOptimizedPicture } from "../../scripts/aem.js";
 import { moveInstrumentation } from "../../scripts/scripts.js";
 
@@ -257,17 +256,6 @@ export default async function decorateInsuranceProductCard(block) {
     if (buttonsContainer.children.length > 0) {
       cardContent.appendChild(buttonsContainer);
     }
-  }
-
-  // Card 3D-icons - Rows 15-17
-  const iconsRows = rows.slice(15, 18);
-  const iconsElement = create3DiconsFromRows(iconsRows);
-
-  if (iconsElement && iconsElement.children.length > 0) {
-    const imgVector = document.createElement("div");
-    imgVector.className = "img-vector";
-    imgVector.appendChild(iconsElement);
-    cardContent.appendChild(imgVector);
   }
 
   // Append card content
