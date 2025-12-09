@@ -36,7 +36,14 @@
             "maxLength": 60,
             "customErrorMsg": "Testo troppo lungo"
           },
-          "condition": { "===": [{"var" : "contentAlignment"}, true] }
+          "condition": {
+            "===": [
+              {
+                "var": "contentAlignment"
+              },
+              true
+            ]
+          }
         },
         {
           "component": "richtext",
@@ -44,28 +51,61 @@
           "name": "subtitle",
           "value": "",
           "valueType": "string",
-          "condition": { "===": [{"var" : "contentAlignment"}, true] },
+          "condition": {
+            "===": [
+              {
+                "var": "contentAlignment"
+              },
+              true
+            ]
+          },
           "rte": {
             "plugins": {
               "table": {
-                "features": ["table", "tableproperties", "tablecellproperties", "tablerow", "tablecolumn"]
+                "features": [
+                  "table",
+                  "tableproperties",
+                  "tablecellproperties",
+                  "tablerow",
+                  "tablecolumn"
+                ]
               },
               "misctools": {
-                "features": ["specialchars", "sourceedit"]
+                "features": [
+                  "specialchars",
+                  "sourceedit"
+                ]
               },
               "edit": {
-                "features": ["cut", "copy", "paste-default", "paste-plaintext", "paste-wordhtml"]
+                "features": [
+                  "cut",
+                  "copy",
+                  "paste-default",
+                  "paste-plaintext",
+                  "paste-wordhtml"
+                ]
               },
               "format": {
-                "features": ["bold", "italic", "underline", "strikethrough", "subscript", "superscript"]
+                "features": [
+                  "bold",
+                  "italic",
+                  "underline",
+                  "strikethrough",
+                  "subscript",
+                  "superscript"
+                ]
               },
               "styles": {
-                "features": ["styles"],
+                "features": [
+                  "styles"
+                ],
                 "styles": [
                   {
                     "name": "Highlight",
                     "element": "span",
-                    "classes": ["highlight"]
+                    "classes": [
+                      "highlight"
+                    ]
                   },
                   {
                     "name": "Code",
@@ -74,20 +114,47 @@
                 ]
               },
               "lists": {
-                "features": ["ordered", "unordered", "indent", "outdent"]
+                "features": [
+                  "ordered",
+                  "unordered",
+                  "indent",
+                  "outdent"
+                ]
               },
               "links": {
-                "features": ["modifylink", "unlink", "anchor"]
+                "features": [
+                  "modifylink",
+                  "unlink",
+                  "anchor"
+                ]
               }
             },
             "specialCharsConfig": {
               "chars": [
-                {"name": "copyright", "entity": "&copy;"},
-                {"name": "registered", "entity": "&reg;"},
-                {"name": "trademark", "entity": "&trade;"},
-                {"name": "euro", "entity": "&euro;"},
-                {"name": "pound", "entity": "&pound;"},
-                {"name": "yen", "entity": "&yen;"}
+                {
+                  "name": "copyright",
+                  "entity": "&copy;"
+                },
+                {
+                  "name": "registered",
+                  "entity": "&reg;"
+                },
+                {
+                  "name": "trademark",
+                  "entity": "&trade;"
+                },
+                {
+                  "name": "euro",
+                  "entity": "&euro;"
+                },
+                {
+                  "name": "pound",
+                  "entity": "&pound;"
+                },
+                {
+                  "name": "yen",
+                  "entity": "&yen;"
+                }
               ]
             }
           }
@@ -101,7 +168,14 @@
             "maxLength": 30,
             "customErrorMsg": "Testo troppo lungo"
           },
-          "condition": { "===": [{"var" : "contentAlignment"}, false] }
+          "condition": {
+            "===": [
+              {
+                "var": "contentAlignment"
+              },
+              false
+            ]
+          }
         },
         {
           "component": "container",

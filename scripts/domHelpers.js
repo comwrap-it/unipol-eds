@@ -58,7 +58,7 @@ export const createIconElementFromCssClass = (
   iconSize = BUTTON_ICON_SIZES.MEDIUM,
 ) => {
   const iconEl = document.createElement('span');
-  iconEl.className = `icon ${iconSize} ${iconClass}`;
+  iconEl.className = `icon icon-${iconSize} ${iconClass}`;
   return iconEl;
 };
 

@@ -17,6 +17,55 @@ async function ensureStylesLoaded() {
   isStylesLoaded = true;
 }
 
+function updateHiddenPillsAccessibility(container) {
+  const wrappers = container.querySelectorAll('.navigation-pill-wrapper');
+
+  wrappers.forEach((wrapper) => {
+    const isHidden = wrapper.classList.contains('nav-pill-hidden');
+    const interactiveElements = wrapper.querySelectorAll('button, a');
+    interactiveElements.forEach((el) => {
+      if (isHidden) {
+        el.setAttribute('aria-hidden', 'true');
+        el.tabIndex = -1;
+      } else {
+        el.setAttribute('aria-hidden', 'false');
+        el.tabIndex = 0;
+      }
+    });
+  });
+}
+
+function closeBoxWithAnimation(box) {
+  return new Promise((resolve) => {
+    if (!box) {
+      resolve();
+    }
+
+    box.classList.remove('header-box-open');
+
+    let finished = false;
+
+    const onEnd = (e) => {
+      if (e && e.propertyName && !['max-height', 'opacity', 'transform'].includes(e.propertyName)) return;
+      if (finished) return;
+      finished = true;
+      box.removeEventListener('transitionend', onEnd);
+      box.style.display = 'none';
+      resolve();
+    };
+
+    box.addEventListener('transitionend', onEnd, { once: true });
+
+    setTimeout(() => {
+      if (finished) return;
+      finished = true;
+      box.removeEventListener('transitionend', onEnd);
+      box.style.display = 'none';
+      resolve();
+    }, 250);
+  });
+}
+
 function showSecondRightIcon() {
   const icon = document.querySelector('.second-pill-right-icon');
   if (icon) icon.style.opacity = '1';
@@ -38,14 +87,13 @@ function makeNavigationSticky(block) {
   let isSticky = false;
   let animating = false;
 
-  const pillWrappers = Array.from(container.children);
+  const pillWrappers = Array.from(container.children).filter((el) => el.classList.contains('navigation-pill-wrapper'));
 
   const updateContainerWidth = () => {
     let width = 0;
-    const gap = parseInt(getComputedStyle(container).gap || 0, 10);
     pillWrappers.forEach((w) => {
       if (!w.classList.contains('nav-pill-hidden')) {
-        width += w.offsetWidth + gap;
+        width += w.offsetWidth + 6;
       }
     });
     container.style.width = `${width}px`;
@@ -60,14 +108,11 @@ function makeNavigationSticky(block) {
       setTimeout(() => {
         wrapper.classList.add('nav-pill-hidden');
         updateContainerWidth();
-
+        updateHiddenPillsAccessibility(container);
         let finished = false;
-
         const onEnd = () => {
           if (finished) return;
           finished = true;
-
-          wrapper.style.display = 'none';
           wrapper.removeEventListener('transitionend', onEnd);
 
           if (i === wrappersToHide.length - 1) {
@@ -90,17 +135,14 @@ function makeNavigationSticky(block) {
 
     wrappersToShow.forEach((wrapper, i) => {
       setTimeout(() => {
-        wrapper.style.display = 'flex';
         wrapper.classList.remove('nav-pill-hidden');
         updateContainerWidth();
+        updateHiddenPillsAccessibility(container);
 
         let finished = false;
-
         const onEnd = () => {
           if (finished) return;
           finished = true;
-
-          wrapper.style.display = 'flex';
           wrapper.removeEventListener('transitionend', onEnd);
 
           if (i === wrappersToShow.length - 1) {
@@ -150,7 +192,6 @@ function extractNavigationPillValues(row) {
   const boxText = rows[8]?.textContent?.trim() || '';
 
   return {
-    // navigation-pill
     text,
     hideLabel,
     variant,
@@ -160,72 +201,8 @@ function extractNavigationPillValues(row) {
     rightIcon,
     rhtIcnSze,
     instrumentation,
-    // box
     boxText,
   };
-}
-
-function buildNavigationPill(row, openBoxRef) {
-  const cfg = extractNavigationPillValues(row);
-
-  const wrapper = document.createElement('div');
-  wrapper.className = 'navigation-pill-wrapper';
-
-  const pillEl = createNavigationPill(
-    cfg.text,
-    cfg.href,
-    cfg.variant,
-    cfg.leftIcon,
-    cfg.lftIcnSze,
-    cfg.rightIcon,
-    cfg.rhtIcnSze,
-    cfg.instrumentation,
-    cfg.hideLabel,
-  );
-
-  wrapper.appendChild(pillEl);
-
-  if (cfg.boxText) {
-    const box = document.createElement('div');
-    box.className = 'header-box-text-container';
-    box.textContent = cfg.boxText;
-    box.style.display = 'none';
-
-    pillEl.setAttribute('aria-expanded', 'false');
-    const boxId = `header-box-${Math.random().toString(36).substr(2, 9)}`;
-    box.id = boxId;
-    pillEl.setAttribute('aria-controls', boxId);
-
-    wrapper.appendChild(box);
-
-    pillEl.addEventListener('click', () => {
-      const isClosed = box.style.display === 'none';
-
-      if (openBoxRef.current && openBoxRef.current !== box) {
-        openBoxRef.current.style.display = 'none';
-
-        const prevPill = openBoxRef.current.previousElementSibling;
-        if (prevPill?.hasAttribute('aria-expanded')) {
-          prevPill.setAttribute('aria-expanded', 'false');
-          prevPill.classList.remove('header-nav-pill-active');
-        }
-      }
-
-      if (isClosed) {
-        box.style.display = 'block';
-        pillEl.setAttribute('aria-expanded', 'true');
-        pillEl.classList.add('header-nav-pill-active');
-        openBoxRef.current = box;
-      } else {
-        box.style.display = 'none';
-        pillEl.setAttribute('aria-expanded', 'false');
-        pillEl.classList.remove('header-nav-pill-active');
-        openBoxRef.current = null;
-      }
-    });
-  }
-
-  return wrapper;
 }
 
 export default async function decorate(block) {
@@ -245,28 +222,89 @@ export default async function decorate(block) {
     || block.querySelector('[data-richtext-prop]');
 
   const openBoxRef = { current: null };
+  const pillToBoxMap = new Map();
 
-  document.addEventListener('click', (e) => {
-    if (!openBoxRef.current) return;
-    const box = openBoxRef.current;
-    const pill = box.previousElementSibling;
-    if (!box.contains(e.target) && !pill.contains(e.target)) {
-      box.style.display = 'none';
-      pill.setAttribute('aria-expanded', 'false');
-      pill.classList.remove('header-nav-pill-active');
-      openBoxRef.current = null;
+  const buildNavigationPill = (row) => {
+    const cfg = extractNavigationPillValues(row);
+
+    const wrapperEl = document.createElement('div');
+    wrapperEl.className = 'navigation-pill-wrapper';
+
+    const pillEl = createNavigationPill(
+      cfg.text,
+      cfg.href,
+      cfg.variant,
+      cfg.leftIcon,
+      cfg.lftIcnSze,
+      cfg.rightIcon,
+      cfg.rhtIcnSze,
+      cfg.instrumentation,
+      cfg.hideLabel,
+    );
+
+    wrapperEl.appendChild(pillEl);
+
+    let boxEl = null;
+    if (cfg.boxText) {
+      boxEl = document.createElement('div');
+      boxEl.className = 'header-box-text-container';
+      boxEl.textContent = cfg.boxText;
+      boxEl.style.display = 'none';
+
+      pillEl.setAttribute('aria-expanded', 'false');
+      const boxId = `header-box-${Math.random().toString(36).substr(2, 9)}`;
+      boxEl.id = boxId;
+      pillEl.setAttribute('aria-controls', boxId);
+
+      pillToBoxMap.set(pillEl, boxEl);
+
+      pillEl.addEventListener('click', () => {
+        const box = pillToBoxMap.get(pillEl);
+        if (!box) return;
+
+        const isClosed = box.style.display === 'none';
+
+        if (openBoxRef.current && openBoxRef.current !== box) {
+          const prevPill = [...pillToBoxMap.entries()]
+            .find(([, b]) => b === openBoxRef.current)?.[0];
+          closeBoxWithAnimation(openBoxRef.current);
+          if (prevPill) {
+            prevPill.setAttribute('aria-expanded', 'false');
+            prevPill.classList.remove('header-nav-pill-active');
+          }
+        }
+
+        if (isClosed) {
+          box.style.display = 'block';
+          requestAnimationFrame(() => box.classList.add('header-box-open'));
+          pillEl.setAttribute('aria-expanded', 'true');
+          pillEl.classList.add('header-nav-pill-active');
+          openBoxRef.current = box;
+        } else {
+          closeBoxWithAnimation(box);
+          pillEl.setAttribute('aria-expanded', 'false');
+          pillEl.classList.remove('header-nav-pill-active');
+          openBoxRef.current = null;
+        }
+      });
     }
-  });
+
+    return { wrapperEl, boxEl };
+  };
+
+  const boxes = [];
 
   pillRows.forEach((row) => {
-    const pillEl = buildNavigationPill(row, openBoxRef);
+    const { wrapperEl, boxEl } = buildNavigationPill(row);
 
-    if (hasInstrumentation) moveInstrumentation(row, pillEl);
+    if (hasInstrumentation) moveInstrumentation(row, wrapperEl);
 
-    if (!pillEl.nextSibling || !pillEl.nextSibling.classList.contains('header-box-text-container')) {
-      container.appendChild(pillEl);
-    }
+    container.appendChild(wrapperEl);
+
+    if (boxEl) boxes.push(boxEl);
   });
+
+  boxes.forEach((box) => container.appendChild(box));
 
   block.innerHTML = '';
   block.appendChild(container);
@@ -286,6 +324,22 @@ export default async function decorate(block) {
       .filter((el) => el.classList.contains('navigation-pill'))
       .map((pillEl) => loadBlock(pillEl)),
   );
+
+  document.addEventListener('click', (e) => {
+    if (!openBoxRef.current) return;
+
+    const box = openBoxRef.current;
+    const pill = [...pillToBoxMap.entries()].find(([, b]) => b === box)?.[0];
+
+    if (!box.contains(e.target) && !pill.contains(e.target)) {
+      closeBoxWithAnimation(box);
+      if (pill) {
+        pill.setAttribute('aria-expanded', 'false');
+        pill.classList.remove('header-nav-pill-active');
+      }
+      openBoxRef.current = null;
+    }
+  });
 
   makeNavigationSticky(block);
 }

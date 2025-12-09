@@ -43,7 +43,7 @@ const createNumberItem = (item) => {
 
 export function createNumberBlock(items = []) {
   const wrapper = document.createElement('div');
-  wrapper.classList.add('number-block-wrapper');
+  wrapper.classList.add('number-block-wrapper', 'reveal-in-up');
 
   items.forEach((item) => {
     if (!item.title && !item.description) return;

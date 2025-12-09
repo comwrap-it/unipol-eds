@@ -1,0 +1,8 @@
+/**
+ * This file was generated automatically by Supernova.io and should not be changed manually.
+ * To modify the format or content of this file, please contact your design system team. 
+ */
+
+.theme-dark {
+  --Gradient: linear-gradient(180deg, rgba(var(--Accent-500), 1) 0%, rgba(var(--Brand-800), 1) 100%);
+}

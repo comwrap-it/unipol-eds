@@ -3,6 +3,7 @@ import {
   extractBooleanValueFromRow,
 } from '../../scripts/domHelpers.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { isAuthorMode } from '../../scripts/utils.js';
 import {
   BUTTON_ICON_SIZES,
   BUTTON_VARIANTS,
@@ -16,7 +17,11 @@ import {
  * @param {boolean} isCarousel
  * @returns {HTMLDivElement}
  */
-const setupHeroWithBg = (heroBackground, isVideoBackground = false, isCarousel = false) => {
+const setupHeroWithBg = (
+  heroBackground,
+  isVideoBackground = false,
+  isCarousel = false,
+) => {
   const hero = document.createElement('div');
   hero.className = `hero${isCarousel ? ' swiper-slide' : ''}`;
   // Background media
@@ -25,7 +30,12 @@ const setupHeroWithBg = (heroBackground, isVideoBackground = false, isCarousel =
     moveInstrumentation(heroBackground, pictureBg);
     pictureBg.className = 'hero-bg';
     pictureBg.setAttribute('aria-hidden', 'true');
-    pictureBg.fetchPriority = 'high';
+    const img = pictureBg.querySelector('img');
+    if (img) {
+      img.loading = 'eager';
+      img.decoding = 'async';
+      img.fetchPriority = 'high';
+    }
     hero.appendChild(pictureBg);
   } else if (heroBackground) {
     const videoPath = heroBackground.href;
@@ -34,6 +44,7 @@ const setupHeroWithBg = (heroBackground, isVideoBackground = false, isCarousel =
     moveInstrumentation(heroBackground, videoBg);
     videoBg.className = 'hero-bg';
     videoBg.setAttribute('aria-hidden', 'true');
+    videoBg.preload = 'auto';
     videoBg.autoplay = true;
     videoBg.muted = true;
     videoBg.loop = true;
@@ -169,6 +180,18 @@ const createHeroButtonSection = async (
 };
 
 /**
+ * Adjusts hero height in authoring mode to fit viewport height.
+ * @param {HTMLDivElement} hero
+ */
+const handleAuthorMode = (hero) => {
+  const isInAuthorMode = isAuthorMode(hero);
+  if (isInAuthorMode) {
+    const screenHeight = window.innerHeight;
+    hero.style.height = `${screenHeight}px`;
+  }
+};
+
+/**
  * Creates a Hero component
  *
  * @param {HTMLElement} heroBackground - the background media source
@@ -212,6 +235,8 @@ export async function createHero(
   isCarousel = false,
 ) {
   const hero = setupHeroWithBg(heroBackground, isVideoBackground, isCarousel);
+  // since hero uses 100vh in author i have to calculate it dinamically
+  handleAuthorMode(hero);
   const heroContent = document.createElement('div');
   heroContent.className = 'hero-content';
   const mainSection = createHeroMainSection(

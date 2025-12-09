@@ -1,0 +1,85 @@
+:root {
+    --reveal-distance: 80px;
+    --reveal-duration: 750ms;
+    --reveal-ease: cubic-bezier(0.25, 1, 0.5, 1);
+    --reveal-delay: 350ms;
+}
+
+.reveal-in {
+    opacity: 0;
+    transform: none;
+    will-change: opacity;
+
+    &.is-revealed {
+        animation: fade-in var(--reveal-duration) var(--reveal-ease)
+            calc(var(--reveal-delay, 350ms) + var(--slide-reveal-offset, 0ms)) both;
+    }
+}
+
+.reveal-in-up {
+    opacity: 0;
+    transform: translateY(var(--reveal-distance));
+    will-change: opacity, transform;
+
+    &.is-revealed {
+        animation: appear-in-up var(--reveal-duration) var(--reveal-ease)
+            calc(var(--reveal-delay, 350ms) + var(--slide-reveal-offset, 0ms)) both;
+    }
+}
+
+/* Delay modifiers */
+.reveal-in,
+.reveal-in-up {
+    &.delay-1 {
+        --reveal-delay: 100ms;
+    }
+
+    &.delay-2 {
+        --reveal-delay: 200ms;
+    }
+
+    &.delay-3 {
+        --reveal-delay: 300ms;
+    }
+
+    &.delay-4 {
+        --reveal-delay: 400ms;
+    }
+
+    &.delay-5 {
+        --reveal-delay: 500ms;
+    }
+}
+
+/* Keyframes */
+@keyframes fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes appear-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(var(--reveal-distance));
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    .reveal.in,
+    .reveal-in-up {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+    }
+}

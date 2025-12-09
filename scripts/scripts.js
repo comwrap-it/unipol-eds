@@ -52,7 +52,9 @@ export function moveInstrumentation(from, to) {
     to,
     [...from.attributes]
       .map(({ nodeName }) => nodeName)
-      .filter((attr) => attr.startsWith('data-aue-') || attr.startsWith('data-richtext-')),
+      .filter(
+        (attr) => attr.startsWith('data-aue-') || attr.startsWith('data-richtext-'),
+      ),
   );
 }
 
@@ -99,7 +101,6 @@ function applyMainFilter(main) {
   console.log(`[Template Filters] Template: "${templateName}" -> Main Filter: "${mainFilter}"`);
 }
 
-
 /**
  * Decorates all sections in a container element.
  * Shadowing the original function from aem.js to handle Universal Editor
@@ -129,12 +130,12 @@ export function decorateSections(main) {
 
     // --- UNIVERSAL EDITOR: Section configuration ---
     section.dataset.aueType = 'container';
-    
+
     // Check if the template has "transparent" sections
     // (where label and filter come from the contained widget model)
     const templateConfig = getTemplateFilterConfig(templateName);
     const isTransparent = templateConfig.sections?.transparent === true;
-    
+
     if (!isTransparent) {
       // Normal section: set label and filter ONLY if not already set
       // (widgets with models may already have their own label/filter)
@@ -223,7 +224,8 @@ async function loadEager(doc) {
 async function loadLazy(doc) {
   const main = doc.querySelector('main');
   await loadSections(main);
-
+  const revealModule = await import('./reveal.js');
+  revealModule.initRevealAnimations();
   const { hash } = window.location;
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
@@ -252,3 +254,35 @@ async function loadPage() {
 }
 
 loadPage();
+
+// handle viewport-based theming
+const THEME_CLASSES = ['theme-mobile', 'theme-tablet-portrait', 'theme-tablet'];
+
+function applyViewportTheme() {
+  const w = window.innerWidth;
+  const { body } = document;
+  body.classList.remove(...THEME_CLASSES);
+
+  if (w < 768) {
+    body.classList.add('theme-mobile');
+  } else if (w < 1280) {
+    body.classList.add('theme-tablet-portrait');
+  } else if (w < 1440) {
+    body.classList.add('theme-tablet');
+  }
+}
+
+// Run once after body appears, then on resize (debounced)
+let rafId = null;
+function onResize() {
+  if (rafId) return;
+  rafId = requestAnimationFrame(() => {
+    rafId = null;
+    applyViewportTheme();
+  });
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  applyViewportTheme();
+  window.addEventListener('resize', onResize, { passive: true });
+});

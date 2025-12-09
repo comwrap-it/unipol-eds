@@ -26,8 +26,8 @@ export function createLinkButton(
   openInNewTab,
   leftIcon,
   rightIcon,
-  leftIconSize = BUTTON_ICON_SIZES.MEDIUM,
-  rightIconSize = BUTTON_ICON_SIZES.MEDIUM,
+  leftIconSize = BUTTON_ICON_SIZES.SMALL,
+  rightIconSize = BUTTON_ICON_SIZES.SMALL,
   disabled = false,
 ) {
   const link = document.createElement('a');

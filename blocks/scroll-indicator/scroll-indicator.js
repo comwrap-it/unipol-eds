@@ -45,8 +45,8 @@ async function ensureStylesLoaded() {
 export default async function createScrollIndicator(
   isInsideHero = false,
 ) {
-  // Ensure CSS is loaded
-  await ensureStylesLoaded();
+  // Ensure CSS is loaded not awaited to avoid block
+  ensureStylesLoaded();
 
   // Create scrollIndicator structure
   const scrollIndicator = document.createElement('div');
