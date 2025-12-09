@@ -595,6 +595,14 @@
           {
             "name": "Basket Icon",
             "value": "un-icon-basket"
+          },
+          {
+            "name": "AI Star Icon big",
+            "value": "un-icon-AI-star-big"
+          },
+          {
+            "name": "AI Star Icon small",
+            "value": "un-icon-AI-star-small"
           }
         ]
       },
@@ -659,6 +667,14 @@
           {
             "name": "Basket Icon",
             "value": "un-icon-basket"
+          },
+          {
+            "name": "AI Star Icon big",
+            "value": "un-icon-AI-star-big"
+          },
+          {
+            "name": "AI Star Icon small",
+            "value": "un-icon-AI-star-small"
           }
         ]
       },
@@ -774,6 +790,14 @@
           {
             "name": "Basket Icon",
             "value": "un-icon-basket"
+          },
+          {
+            "name": "AI Star Icon big",
+            "value": "un-icon-AI-star-big"
+          },
+          {
+            "name": "AI Star Icon small",
+            "value": "un-icon-AI-star-small"
           }
         ]
       },
@@ -838,6 +862,14 @@
           {
             "name": "Basket Icon",
             "value": "un-icon-basket"
+          },
+          {
+            "name": "AI Star Icon big",
+            "value": "un-icon-AI-star-big"
+          },
+          {
+            "name": "AI Star Icon small",
+            "value": "un-icon-AI-star-small"
           }
         ]
       },
@@ -2302,6 +2334,14 @@
               {
                 "name": "Basket Icon",
                 "value": "un-icon-basket"
+              },
+              {
+                "name": "AI Star Icon big",
+                "value": "un-icon-AI-star-big"
+              },
+              {
+                "name": "AI Star Icon small",
+                "value": "un-icon-AI-star-small"
               }
             ]
           },
@@ -2366,6 +2406,14 @@
               {
                 "name": "Basket Icon",
                 "value": "un-icon-basket"
+              },
+              {
+                "name": "AI Star Icon big",
+                "value": "un-icon-AI-star-big"
+              },
+              {
+                "name": "AI Star Icon small",
+                "value": "un-icon-AI-star-small"
               }
             ]
           },
@@ -2753,6 +2801,41 @@
             ]
           }
         ]
+      },
+      {
+        "component": "boolean",
+        "label": "Il componente è animato?",
+        "name": "is-animated",
+        "valueType": "boolean",
+        "defaultValue": false
+      },
+      {
+        "component": "select",
+        "label": "Animazione",
+        "name": "animation-class",
+        "options": [
+          {
+            "label": "Nessuna",
+            "value": ""
+          },
+          {
+            "label": "Reveal In",
+            "value": "reveal-in"
+          },
+          {
+            "label": "Reveal In Up",
+            "value": "reveal-in-up"
+          }
+        ],
+        "defaultValue": "",
+        "condition": {
+          "===": [
+            {
+              "var": "is-animated"
+            },
+            true
+          ]
+        }
       }
     ]
   },
@@ -4187,6 +4270,14 @@
           {
             "name": "Basket Icon",
             "value": "un-icon-basket"
+          },
+          {
+            "name": "AI Star Icon big",
+            "value": "un-icon-AI-star-big"
+          },
+          {
+            "name": "AI Star Icon small",
+            "value": "un-icon-AI-star-small"
           }
         ]
       },
@@ -4251,6 +4342,14 @@
           {
             "name": "Basket Icon",
             "value": "un-icon-basket"
+          },
+          {
+            "name": "AI Star Icon big",
+            "value": "un-icon-AI-star-big"
+          },
+          {
+            "name": "AI Star Icon small",
+            "value": "un-icon-AI-star-small"
           }
         ]
       },

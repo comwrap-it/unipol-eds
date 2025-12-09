@@ -16,6 +16,10 @@
         width: 100%;
         align-items: flex-start;
 
+        & .swiper {
+          overflow: visible;
+        }
+
         /* Mobile ~1.3 slides visible */
         & .swiper-slide {
             width: calc(100%/1.3);

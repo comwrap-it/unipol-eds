@@ -93,6 +93,14 @@
             {
               "name": "Basket Icon",
               "value": "un-icon-basket"
+            },
+            {
+              "name": "AI Star Icon big",
+              "value": "un-icon-AI-star-big"
+            },
+            {
+              "name": "AI Star Icon small",
+              "value": "un-icon-AI-star-small"
             }
           ]
         },
@@ -157,6 +165,14 @@
             {
               "name": "Basket Icon",
               "value": "un-icon-basket"
+            },
+            {
+              "name": "AI Star Icon big",
+              "value": "un-icon-AI-star-big"
+            },
+            {
+              "name": "AI Star Icon small",
+              "value": "un-icon-AI-star-small"
             }
           ]
         },

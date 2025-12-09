@@ -133,7 +133,7 @@ export function createTextBlock(
   buttonConfig = null,
 ) {
   const textBlock = document.createElement('div');
-  textBlock.className = 'text-block block';
+  textBlock.className = 'text-block block reveal-in-up';
   textBlock.classList.add(centered ? 'text-block-center' : 'text-block-left');
 
   const textContentContainer = document.createElement('div');

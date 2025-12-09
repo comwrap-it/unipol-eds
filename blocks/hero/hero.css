@@ -8,7 +8,8 @@
     align-self: stretch;
     position: relative;
     width: 100%;
-    height: 860px;
+    height: 100vh;
+    height: 100svh;
     padding: 0 var(--Hero-Full-Screen-Horizontal-Padding-D, 64px)
         var(--Hero-Full-Screen-Bottom-Padding-Tl-Tp, 80px)
         var(--Hero-Full-Screen-Horizontal-Padding-D, 64px);
@@ -138,7 +139,8 @@
 
 @media (width < 768px) {
     .hero {
-        height: 812px;
+        height: 100vh;
+        height: 100svh;
         padding: 0 var(--Hero-Full-Screen-Horizontal-Padding-M-Tp, 16px)
             var(--Hero-Full-Screen-Bottom-Padding-M, 120px)
             var(--Hero-Full-Screen-Horizontal-Padding-M-Tp, 16px);
@@ -154,7 +156,9 @@
                 flex-grow: unset;
 
                 &.carousel {
-                    padding-bottom: calc(var(--Hero-Full-Screen-Button-Gap-M-Tp, 32px) + 40px); /* Space for scroll indicator */
+                    padding-bottom: calc(
+                        var(--Hero-Full-Screen-Button-Gap-M-Tp, 32px) + 40px
+                    ); /* Space for scroll indicator */
                 }
 
                 & .hero-title {
@@ -172,7 +176,8 @@
 
 @media (768px <= width < 1280px) {
     .hero {
-        height: 1024px;
+        height: 100vh;
+        height: 100svh;
         padding: 0 var(--Hero-Full-Screen-Horizontal-Padding-M-Tp, 16px)
             var(--Hero-Full-Screen-Bottom-Padding-Tl-Tp, 80px)
             var(--Hero-Full-Screen-Horizontal-Padding-M-Tp, 16px);

@@ -62,6 +62,27 @@ function buildNavigationPill(row) {
   );
 }
 
+function updatePillLabels() {
+  const pills = document.querySelectorAll('.header-utilities-container .navigation-pill');
+
+  pills.forEach((pill) => {
+    const textSpan = pill.querySelector('span:nth-of-type(2)');
+    if (!textSpan) return;
+
+    const text = textSpan.textContent.trim();
+
+    if (text && !pill.hasAttribute('aria-label')) {
+      pill.setAttribute('aria-label', text);
+    }
+
+    if (window.innerWidth <= 1280) {
+      textSpan.style.display = 'none';
+    } else {
+      textSpan.style.display = '';
+    }
+  });
+}
+
 export default async function decorate(block) {
   if (!block) return;
 
@@ -95,4 +116,6 @@ export default async function decorate(block) {
   block.classList.add('header-utilities-nav-pill');
 
   await Promise.all(pillElements.map((pillEl) => loadBlock(pillEl)));
+  updatePillLabels();
+  window.addEventListener('resize', updatePillLabels);
 }

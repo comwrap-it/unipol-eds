@@ -20,6 +20,7 @@ import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
 import { createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
+import { initCarouselAnimations } from '../../scripts/reveal.js';
 
 /**
  * Decorates the insurance product carousel block
@@ -78,9 +79,9 @@ export default async function decorate(block) {
   }
 
   // Process each row as a card
-  const cardPromises = rows.map(async (row) => {
+  const cardPromises = rows.map(async (row, index) => {
     const slide = document.createElement('div');
-    slide.className = 'insurance-product-card-wrapper swiper-slide';
+    slide.className = 'insurance-product-card-wrapper swiper-slide reveal-in-up';
     slide.setAttribute('role', 'listitem');
 
     // Preserve instrumentation from row to slide
@@ -114,7 +115,9 @@ export default async function decorate(block) {
     slide.appendChild(cardBlock);
 
     // Decorate the card using card component
-    await decorateInsuranceProductCard(cardBlock);
+    // First card (index 0) is LCP candidate - optimize image loading
+    const isFirstCard = index === 0;
+    await decorateInsuranceProductCard(cardBlock, isFirstCard);
 
     // Load card styles
     const decoratedCard = slide.querySelector('.insurance-product-card-container, .card')
@@ -165,6 +168,7 @@ export default async function decorate(block) {
   }
 
   carousel.appendChild(track);
+  initCarouselAnimations(carousel);
 
   if (scrollIndicator) {
     carousel.appendChild(scrollIndicator);
