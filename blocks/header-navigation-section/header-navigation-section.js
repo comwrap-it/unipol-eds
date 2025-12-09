@@ -19,18 +19,12 @@ async function ensureStylesLoaded() {
 
 function updateHiddenPillsAccessibility(container) {
   const wrappers = container.querySelectorAll('.navigation-pill-wrapper');
-
   wrappers.forEach((wrapper) => {
     const isHidden = wrapper.classList.contains('nav-pill-hidden');
     const interactiveElements = wrapper.querySelectorAll('button, a');
     interactiveElements.forEach((el) => {
-      if (isHidden) {
-        el.setAttribute('aria-hidden', 'true');
-        el.tabIndex = -1;
-      } else {
-        el.setAttribute('aria-hidden', 'false');
-        el.tabIndex = 0;
-      }
+      el.setAttribute('aria-hidden', isHidden ? 'true' : 'false');
+      el.tabIndex = isHidden ? -1 : 0;
     });
   });
 }
@@ -39,30 +33,20 @@ function closeBoxWithAnimation(box) {
   return new Promise((resolve) => {
     if (!box) {
       resolve();
+      return;
     }
-
     box.classList.remove('header-box-open');
-
     let finished = false;
-
     const onEnd = (e) => {
-      if (e && e.propertyName && !['max-height', 'opacity', 'transform'].includes(e.propertyName)) return;
-      if (finished) return;
-      finished = true;
-      box.removeEventListener('transitionend', onEnd);
-      box.style.display = 'none';
-      resolve();
+      if (!(e && e.propertyName && !['max-height', 'opacity', 'transform'].includes(e.propertyName)) && !finished) {
+        finished = true;
+        box.removeEventListener('transitionend', onEnd);
+        box.style.display = 'none';
+        resolve();
+      }
     };
-
     box.addEventListener('transitionend', onEnd, { once: true });
-
-    setTimeout(() => {
-      if (finished) return;
-      finished = true;
-      box.removeEventListener('transitionend', onEnd);
-      box.style.display = 'none';
-      resolve();
-    }, 250);
+    setTimeout(() => { if (!finished) { finished = true; box.style.display = 'none'; resolve(); } }, 250);
   });
 }
 
@@ -76,54 +60,57 @@ function hideSecondRightIcon() {
   if (icon) icon.style.opacity = '0';
 }
 
-function makeNavigationSticky(block) {
-  const container = block.querySelector('.navigation-pill-container');
-  if (!container) return;
+/* ------------------------------------------------------------------
+   AGGIORNA WIDTH DEL CONTAINER SICURA
+------------------------------------------------------------------ */
+function updateContainerWidth(container) {
+  const wrappers = Array.from(container.querySelectorAll('.navigation-pill-wrapper'));
 
+  // Se nessun wrapper ha width > 0, aspetta il prossimo frame
+  const ready = wrappers.some((w) => w.offsetWidth > 0);
+  if (!ready) {
+    requestAnimationFrame(() => updateContainerWidth(container));
+    return;
+  }
+
+  // Calcola la width totale
+  let width = 0;
+  wrappers.forEach((w) => {
+    if (!w.classList.contains('nav-pill-hidden')) {
+      width += w.offsetWidth + 6;
+    }
+  });
+  container.style.width = `${width}px`;
+}
+
+/* ------------------------------------------------------------------
+   MAKE NAVIGATION STICKY
+------------------------------------------------------------------ */
+function makeNavigationSticky(block) {
+  if (window.innerWidth <= 768) return () => {};
+
+  const container = block.querySelector('.navigation-pill-container');
+  if (!container) return () => {};
   const header = document.querySelector('header');
-  if (!header) return;
+  if (!header) return () => {};
 
   const headerBottom = header.offsetTop + header.offsetHeight;
   let isSticky = false;
   let animating = false;
 
-  const pillWrappers = Array.from(container.children).filter((el) => el.classList.contains('navigation-pill-wrapper'));
-
-  const updateContainerWidth = () => {
-    let width = 0;
-    pillWrappers.forEach((w) => {
-      if (!w.classList.contains('nav-pill-hidden')) {
-        width += w.offsetWidth + 6;
-      }
-    });
-    container.style.width = `${width}px`;
-  };
+  const pillWrappers = Array.from(container.children)
+    .filter((el) => el.classList.contains('navigation-pill-wrapper'));
 
   const hidePills = () => {
     if (animating) return;
     animating = true;
     const wrappersToHide = pillWrappers.slice(2).reverse();
-
     wrappersToHide.forEach((wrapper, i) => {
       setTimeout(() => {
         wrapper.classList.add('nav-pill-hidden');
-        updateContainerWidth();
+        updateContainerWidth(container);
         updateHiddenPillsAccessibility(container);
-        let finished = false;
-        const onEnd = () => {
-          if (finished) return;
-          finished = true;
-          wrapper.removeEventListener('transitionend', onEnd);
-
-          if (i === wrappersToHide.length - 1) {
-            animating = false;
-            showSecondRightIcon();
-          }
-        };
-
-        wrapper.addEventListener('transitionend', onEnd);
-
-        setTimeout(onEnd, 100);
+        if (i === wrappersToHide.length - 1) { animating = false; showSecondRightIcon(); }
       }, i * 50);
     });
   };
@@ -132,34 +119,19 @@ function makeNavigationSticky(block) {
     if (animating) return;
     animating = true;
     const wrappersToShow = pillWrappers.slice(2);
-
     wrappersToShow.forEach((wrapper, i) => {
       setTimeout(() => {
         wrapper.classList.remove('nav-pill-hidden');
-        updateContainerWidth();
+        updateContainerWidth(container);
         updateHiddenPillsAccessibility(container);
-
-        let finished = false;
-        const onEnd = () => {
-          if (finished) return;
-          finished = true;
-          wrapper.removeEventListener('transitionend', onEnd);
-
-          if (i === wrappersToShow.length - 1) {
-            animating = false;
-            hideSecondRightIcon();
-          }
-        };
-
-        wrapper.addEventListener('transitionend', onEnd);
-        setTimeout(onEnd, 200);
+        if (i === wrappersToShow.length - 1) { animating = false; hideSecondRightIcon(); }
       }, i * 60);
     });
   };
 
-  window.addEventListener('scroll', () => {
+  const onScroll = () => {
+    if (window.innerWidth <= 768) return;
     const scrollY = window.scrollY || window.pageYOffset;
-
     if (scrollY > headerBottom && !isSticky) {
       isSticky = true;
       container.classList.add('nav-header-sticky');
@@ -169,42 +141,71 @@ function makeNavigationSticky(block) {
       container.classList.remove('nav-header-sticky');
       showPills();
     }
-  });
-}
+  };
 
-function extractNavigationPillValues(row) {
-  const rows = Array.from(row.children);
-  // navigation-pill
-  const rawFlag = rows[0]?.textContent?.trim() || 'false';
-  const hideLabel = rawFlag === 'true';
+  window.addEventListener('scroll', onScroll);
 
-  if (rows[0]) rows[0].textContent = '';
-
-  const text = rows[1]?.textContent?.trim() || '';
-  const variant = rows[2]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_VARIANTS.PRIMARY;
-  const href = rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || undefined;
-  const leftIcon = rows[4]?.textContent?.trim() || '';
-  const lftIcnSze = rows[5]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
-  const rightIcon = rows[6]?.textContent?.trim() || '';
-  const rhtIcnSze = rows[7]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
-  const instrumentation = extractInstrumentationAttributes(rows[1]);
-  // box
-  const boxText = rows[8]?.textContent?.trim() || '';
-
-  return {
-    text,
-    hideLabel,
-    variant,
-    href,
-    leftIcon,
-    lftIcnSze,
-    rightIcon,
-    rhtIcnSze,
-    instrumentation,
-    boxText,
+  return () => {
+    window.removeEventListener('scroll', onScroll);
+    container.classList.remove('nav-header-sticky');
+    pillWrappers.forEach((w) => w.classList.remove('nav-pill-hidden'));
+    updateHiddenPillsAccessibility(container);
+    hideSecondRightIcon();
   };
 }
 
+/* ------------------------------------------------------------------
+   CONTROLLER RESPONSIVE
+------------------------------------------------------------------ */
+function navigationResponsiveController(block) {
+  let stickyCleanup = null;
+
+  const recalcWidth = () => {
+    const container = block.querySelector('.navigation-pill-container');
+    if (!container) return;
+    updateContainerWidth(container);
+  };
+
+  const check = () => {
+    if (window.innerWidth <= 768) {
+      if (stickyCleanup) { stickyCleanup(); stickyCleanup = null; }
+      recalcWidth();
+    } else {
+      if (!stickyCleanup) stickyCleanup = makeNavigationSticky(block);
+      recalcWidth();
+    }
+  };
+
+  check();
+  window.addEventListener('resize', check);
+}
+
+/* ------------------------------------------------------------------
+   EXTRACT NAVIGATION PILL
+------------------------------------------------------------------ */
+function extractNavigationPillValues(row) {
+  const rows = Array.from(row.children);
+  const rawFlag = rows[0]?.textContent?.trim() || 'false';
+  const hideLabel = rawFlag === 'true';
+  if (rows[0]) rows[0].textContent = '';
+
+  return {
+    text: rows[1]?.textContent?.trim() || '',
+    hideLabel,
+    variant: rows[2]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_VARIANTS.PRIMARY,
+    href: rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || undefined,
+    leftIcon: rows[4]?.textContent?.trim() || '',
+    lftIcnSze: rows[5]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM,
+    rightIcon: rows[6]?.textContent?.trim() || '',
+    rhtIcnSze: rows[7]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM,
+    instrumentation: extractInstrumentationAttributes(rows[1]),
+    boxText: rows[8]?.textContent?.trim() || '',
+  };
+}
+
+/* ------------------------------------------------------------------
+   DECORATE
+------------------------------------------------------------------ */
 export default async function decorate(block) {
   if (!block) return;
 
@@ -226,10 +227,8 @@ export default async function decorate(block) {
 
   const buildNavigationPill = (row) => {
     const cfg = extractNavigationPillValues(row);
-
     const wrapperEl = document.createElement('div');
     wrapperEl.className = 'navigation-pill-wrapper';
-
     const pillEl = createNavigationPill(
       cfg.text,
       cfg.href,
@@ -241,7 +240,6 @@ export default async function decorate(block) {
       cfg.instrumentation,
       cfg.hideLabel,
     );
-
     wrapperEl.appendChild(pillEl);
 
     let boxEl = null;
@@ -250,28 +248,23 @@ export default async function decorate(block) {
       boxEl.className = 'header-box-text-container';
       boxEl.textContent = cfg.boxText;
       boxEl.style.display = 'none';
-
-      pillEl.setAttribute('aria-expanded', 'false');
       const boxId = `header-box-${Math.random().toString(36).substr(2, 9)}`;
       boxEl.id = boxId;
       pillEl.setAttribute('aria-controls', boxId);
-
+      pillEl.setAttribute('aria-expanded', 'false');
       pillToBoxMap.set(pillEl, boxEl);
 
       pillEl.addEventListener('click', () => {
         const box = pillToBoxMap.get(pillEl);
         if (!box) return;
-
         const isClosed = box.style.display === 'none';
 
         if (openBoxRef.current && openBoxRef.current !== box) {
-          const prevPill = [...pillToBoxMap.entries()]
-            .find(([, b]) => b === openBoxRef.current)?.[0];
-          closeBoxWithAnimation(openBoxRef.current);
-          if (prevPill) {
-            prevPill.setAttribute('aria-expanded', 'false');
-            prevPill.classList.remove('header-nav-pill-active');
-          }
+          const prevPillEntry = [...pillToBoxMap.entries()]
+            .find(([, b]) => b === openBoxRef.current);
+          const prevPill = prevPillEntry?.[0];
+
+          if (prevPill) prevPill.classList.remove('header-nav-pill-active');
         }
 
         if (isClosed) {
@@ -293,22 +286,19 @@ export default async function decorate(block) {
   };
 
   const boxes = [];
-
   pillRows.forEach((row) => {
     const { wrapperEl, boxEl } = buildNavigationPill(row);
-
     if (hasInstrumentation) moveInstrumentation(row, wrapperEl);
-
     container.appendChild(wrapperEl);
-
     if (boxEl) boxes.push(boxEl);
   });
-
   boxes.forEach((box) => container.appendChild(box));
 
   block.innerHTML = '';
   block.appendChild(container);
   block.classList.add('header-navigation-pill-and-box');
+
+  updateContainerWidth(container);
 
   const secondWrapper = container.children[1];
   if (secondWrapper) {
@@ -327,19 +317,16 @@ export default async function decorate(block) {
 
   document.addEventListener('click', (e) => {
     if (!openBoxRef.current) return;
-
     const box = openBoxRef.current;
-    const pill = [...pillToBoxMap.entries()].find(([, b]) => b === box)?.[0];
-
+    const pillEntry = [...pillToBoxMap.entries()]
+      .find(([, b]) => b === box);
+    const pill = pillEntry?.[0];
     if (!box.contains(e.target) && !pill.contains(e.target)) {
       closeBoxWithAnimation(box);
-      if (pill) {
-        pill.setAttribute('aria-expanded', 'false');
-        pill.classList.remove('header-nav-pill-active');
-      }
+      if (pill) pill.classList.remove('header-nav-pill-active');
       openBoxRef.current = null;
     }
   });
 
-  makeNavigationSticky(block);
+  navigationResponsiveController(block);
 }

@@ -11,7 +11,7 @@
 
 .header-box-text-container {
     position: absolute;
-    width: 800px;
+    width: 55%;
     top: 120%;
     padding: var(--Quote-Tool-Full-Quote-Tool-Padding, 16px);
     background-color: var(--Quote-Tool-Full-Quote-Tool-Background, #F9F9F7);
@@ -23,6 +23,10 @@
         min-height 0.4s ease,
         opacity 0.35s ease,
         transform 0.45s ease;
+}
+
+.nav-header-sticky .header-box-text-container {
+    width:100%;
 }
 
 .header-box-open {
@@ -72,5 +76,25 @@
 .nav-header-sticky .second-pill-right-icon {
   display: inline-flex;
 }
+
+@media (width <= 768px) {
+    .navigation-pill-container {
+        position: fixed;
+        bottom: var(--Header-Vertical-Padding-M-Tp,24px);
+        transform: translateX(-50%);
+        z-index: 2;
+    }
+
+    .header-box-text-container {
+        width: 100%;
+        bottom: 120%;
+        top: unset;
+    }
+
+  .navigation-pill-container .navigation-pill-wrapper:nth-child(n+3) {
+    display: none;
+  }
+}
+
 
 
