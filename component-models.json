@@ -193,7 +193,7 @@
         "name": "accordionLabel",
         "label": "Domanda",
         "description": "Descrizione della domanda (max 100 characters)",
-        "maxlength": 100,
+        "maxlength": 120,
         "value": ""
       },
       {
@@ -201,7 +201,7 @@
         "name": "accordionDescription",
         "label": "Risposta",
         "description": "Risposta contenuta nell'accordio(max 500 characters)",
-        "maxlength": 500,
+        "maxlength": 800,
         "value": ""
       }
     ]
@@ -2504,7 +2504,7 @@
             "name": "accordionLabel",
             "label": "Domanda",
             "description": "Descrizione della domanda (max 100 characters)",
-            "maxlength": 100,
+            "maxlength": 120,
             "value": ""
           },
           {
@@ -2512,7 +2512,7 @@
             "name": "accordionDescription",
             "label": "Risposta",
             "description": "Risposta contenuta nell'accordio(max 500 characters)",
-            "maxlength": 500,
+            "maxlength": 800,
             "value": ""
           }
         ]
