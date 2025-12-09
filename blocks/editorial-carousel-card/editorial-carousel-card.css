@@ -1,4 +1,4 @@
-/* .insurance-product-card-wrapper {
+.insurance-product-card-wrapper {
     display: flex;
 
     &.swiper-slide {
@@ -115,7 +115,7 @@
             }
         }
     }
-} */
+}
 
 &.editorial-carousel-card-container {
     display: flex;
@@ -229,7 +229,7 @@
 }
 
 /* Tablet Portrait */
-/* @media (768px <= width < 1200px) {
+@media (768px <= width < 1200px) {
     .insurance-product-card-wrapper {
         &.swiper-slide {
             width: 15rem;
@@ -272,10 +272,10 @@
             }
         }
     }
-} */
+}
 
 /* Mobile */
-/* @media (width < 768px) {
+@media (width < 768px) {
     .insurance-product-card-wrapper {
         width: 21.4375rem;
 
@@ -312,6 +312,4 @@
             display: none;
         }
     }
-} */
-
-
+}

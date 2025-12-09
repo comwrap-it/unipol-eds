@@ -1,0 +1,84 @@
+.section {
+    &.text-block-container {
+        &.insurance-product-carousel-container {
+            & .text-block-wrapper {
+                margin: 0 !important;
+            }
+        }
+    }
+}
+
+.insurance-product-carousel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--Carousel-Widget-Gap-D-Ds, 3rem);
+
+    &.swiper {
+        overflow: visible;
+    }
+
+    .insurance-product-carousel {
+        display: flex;
+        width: 82rem;
+        align-items: stretch;
+        gap: var(--Carousel-Insurance-Product-Gap, 1rem);
+    }
+}
+
+/* Tablet Portrait */
+@media (768px <= width < 1200px) {
+    .insurance-product-carousel-container {
+        margin-inline: auto;
+        gap: var(--Carousel-Widget-Gap-M-Tp, 2.5rem);
+
+        &.swiper {
+            overflow: visible;
+
+            & .scroll-indicator {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                align-self: stretch;
+                min-width: 36.4375rem;
+
+                & .expanding-dots {
+                    order: 1;
+                    margin-right: auto;
+                }
+
+                & .left-icon-button {
+                    order: 2;
+                }
+
+                & .right-icon-button {
+                    order: 3;
+                }
+
+                & .arrows {
+                    display: flex;
+                    align-items: center;
+                    gap: var(--Scroll-Indicator-Gap-Icon-M, 1.5rem);
+                }
+            }
+        }
+
+        & .insurance-product-carousel {
+            width: 46rem;
+        }
+    }
+}
+
+/* Mobile */
+@media (width < 768px) {
+    .insurance-product-carousel-container {
+        gap: var(--Carousel-Widget-Gap-M-Tp, 2.5rem);
+
+        & .insurance-product-carousel {
+            display: flex;
+            flex-direction: column;
+            width: 21.4375rem;
+            gap: var(--Carousel-Insurance-Product-Gap, 1rem);
+        }
+    }
+}
