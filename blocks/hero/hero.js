@@ -3,6 +3,7 @@ import {
   extractBooleanValueFromRow,
 } from '../../scripts/domHelpers.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { isAuthorMode } from '../../scripts/utils.js';
 import {
   BUTTON_ICON_SIZES,
   BUTTON_VARIANTS,
@@ -16,7 +17,11 @@ import {
  * @param {boolean} isCarousel
  * @returns {HTMLDivElement}
  */
-const setupHeroWithBg = (heroBackground, isVideoBackground = false, isCarousel = false) => {
+const setupHeroWithBg = (
+  heroBackground,
+  isVideoBackground = false,
+  isCarousel = false,
+) => {
   const hero = document.createElement('div');
   hero.className = `hero${isCarousel ? ' swiper-slide' : ''}`;
   // Background media
@@ -175,6 +180,18 @@ const createHeroButtonSection = async (
 };
 
 /**
+ * Adjusts hero height in authoring mode to fit viewport height.
+ * @param {HTMLDivElement} hero
+ */
+const handleAuthorMode = (hero) => {
+  const isInAuthorMode = isAuthorMode(hero);
+  if (isInAuthorMode) {
+    const screenHeight = window.innerHeight;
+    hero.style.height = `${screenHeight}px`;
+  }
+};
+
+/**
  * Creates a Hero component
  *
  * @param {HTMLElement} heroBackground - the background media source
@@ -218,6 +235,8 @@ export async function createHero(
   isCarousel = false,
 ) {
   const hero = setupHeroWithBg(heroBackground, isVideoBackground, isCarousel);
+  // since hero uses 100vh in author i have to calculate it dinamically
+  handleAuthorMode(hero);
   const heroContent = document.createElement('div');
   heroContent.className = 'hero-content';
   const mainSection = createHeroMainSection(

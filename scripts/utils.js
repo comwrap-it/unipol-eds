@@ -60,3 +60,25 @@ export const addAnimationClassToNearestSection = (
     section.classList.add(animationClass);
   }
 };
+
+/**
+ *
+ * checks if the document is in author mode
+ * the html elemtent is required to access the document because in author we have nested iframes
+ * @param {HTMLElement} htmlElement any html element within the document to check
+ * @returns {boolean} true if in author mode, false otherwise
+ */
+export const isAuthorMode = (htmlElement) => {
+  if (!htmlElement || !htmlElement.ownerDocument) {
+    console.warn('Invalid htmlElement provided to isAuthorMode');
+    return false;
+  }
+  const doc = htmlElement.ownerDocument;
+  const root = doc.documentElement;
+  if (!root) {
+    return false;
+  }
+  const isInAuthorMode = root.classList.contains('adobe-ue-preview')
+    || root.classList.contains('adobe-ue-edit');
+  return isInAuthorMode;
+};
