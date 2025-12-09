@@ -19,9 +19,7 @@
 import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
-import { createButton } from '../atoms/buttons/standard-button/standard-button.js';
-import { BUTTON_VARIANTS } from '../atoms/buttons/standard-button/standard-button.js';
-import { BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
+import { createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
 
 let isStylesLoaded = false;
 
@@ -229,4 +227,3 @@ export default async function decorate(block) {
     handleEditorialProductCarouselWidget.default();
   }
 }
-
