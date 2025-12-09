@@ -19,7 +19,7 @@ const componentsWithMaxItems = [
   },
   {
     filter: 'image-text-grid',
-    itemClass: '.image-text-block',
+    itemClass: '.image-text-item',
     maxItems: 4,
   },
 ];
