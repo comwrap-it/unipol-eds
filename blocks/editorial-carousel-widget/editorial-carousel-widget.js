@@ -48,7 +48,7 @@ export default async function handleEditorialProductCarouselWidget() {
       swiperEl.dataset.initialized = 'true';
 
       // eslint-disable-next-line no-unused-vars
-      function insuranceProductCarousel({ swiper, extendParams, on }) {
+      function editorialCarousel({ swiper, extendParams, on }) {
         extendParams({
           debugger: false,
         });
@@ -103,7 +103,7 @@ export default async function handleEditorialProductCarouselWidget() {
       // eslint-disable-next-line no-unused-vars
       const swiper = new Swiper(swiperEl, {
         // Install Plugin To Swiper
-        modules: [insuranceProductCarousel],
+        modules: [editorialCarousel],
         a11y: false,
         navigation: {
           nextEl: carousel.querySelector('.swiper-button-next'),

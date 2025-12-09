@@ -1,9 +1,9 @@
 /**
- * Insurance Product Card - Molecule
+ * edictorial Carousel Card - Molecule
  *
  * Uses standard-button as an atom component for call-to-action buttons.
  * Uses primary-button as an atom component for call-to-action buttons.
- * This component can be used as a molecule within insurance-product-carousel.
+ * This component can be used as a molecule within edictorial-carousel.
  *
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
@@ -35,7 +35,7 @@ async function ensureStylesLoaded() {
  * Decorates a card block element
  * @param {HTMLElement} block - The card block element
  */
-export default async function decorateInsuranceProductCard(block) {
+export default async function decorateEdictorialCarouselCard(block) {
   // eslint-disable-next-line no-useless-return
   if (!block) return;
 
