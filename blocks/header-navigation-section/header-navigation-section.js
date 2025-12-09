@@ -91,10 +91,9 @@ function makeNavigationSticky(block) {
 
   const updateContainerWidth = () => {
     let width = 0;
-    const gap = parseInt(getComputedStyle(container).gap || 0, 10);
     pillWrappers.forEach((w) => {
       if (!w.classList.contains('nav-pill-hidden')) {
-        width += w.offsetWidth + gap;
+        width += w.offsetWidth + 6;
       }
     });
     container.style.width = `${width}px`;
