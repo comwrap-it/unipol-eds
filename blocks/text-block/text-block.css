@@ -82,7 +82,7 @@
 }
 
 /* Desktop */
-@media (width >= 1312) {
+@media (width >= 1312px) {
     .text-block-wrapper {
         .text-block-title {
             font-size: var(--Font-Size-Title-Page, 3rem);
