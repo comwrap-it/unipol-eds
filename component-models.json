@@ -1221,7 +1221,7 @@
         "maxLength": 50
       },
       {
-        "component": "textarea",
+        "component": "text",
         "label": "Descrizione",
         "name": "description",
         "valueType": "string",
