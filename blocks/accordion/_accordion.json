@@ -6,9 +6,10 @@
       "plugins": {
         "xwalk": {
           "page": {
-            "resourceType": "core/franklin/components/block/v1/block/item",
+            "resourceType": "core/franklin/components/block/v1/block",
             "template": {
               "name": "Accordion",
+              "key-value": true,
               "model": "accordion"
             }
           }
@@ -23,27 +24,18 @@
         {
           "component": "text",
           "name": "accordionLabel",
-          "label": "Label",
-          "description": "Header label (max 100 characters)",
-          "maxlength": 100,
+          "label": "Domanda",
+          "description": "Descrizione della domanda (max 120 caratteri)",
+          "maxlength": 120,
           "value": ""
         },
         {
-          "component": "textarea",
+          "component": "text",
           "name": "accordionDescription",
-          "label": "Description",
-          "description": "Accordion content (max 500 characters)",
-          "maxlength": 500,
+          "label": "Risposta",
+          "description": "Risposta contenuta nell'accordion (max 800 caratteri)",
+          "maxlength": 800,
           "value": ""
-        },
-        {
-          "component": "aem-content",
-          "valueType": "string",
-          "name": "accordionRootpath",
-          "label": "Percorso CF elementi accordion",
-          "validation": {
-            "rootPath": "/content/dam/unipol/cf"
-          }
         }
       ]
     }

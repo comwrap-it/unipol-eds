@@ -1,18 +1,18 @@
 .accordion {
   width: 100%;
-  max-width: 640px;
-  padding: var(--Accordion-Vertical-Padding, 24px)
-           var(--Accordion-Horizontal-Padding, 24px);
+  max-width: 40rem;
+  padding: var(--Accordion-Vertical-Padding, 1.5rem)
+           var(--Accordion-Horizontal-Padding, 1.5rem);
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: var(--Accordion-Vertical-Gap, 24px);
-  border-radius: var(--Accordion-Radius, 16px);
-  border: var(--Accordion-Border, 1px) solid
+  gap: var(--Accordion-Vertical-Gap, 1.5rem);
+  border-radius: var(--Accordion-Radius, 1rem);
+  border: var(--Accordion-Border, 0.0625rem) solid
           var(--Accordion-Border-Close, rgb(17 17 17 / 0%));
   background: var(--Accordion-Background-Closed, #FFF);
-  box-shadow: var(--Depth-050---2, 2px) var(--Depth-050---2, 2px)
-              var(--Blur-200---8, 8px) 0 rgb(0 0 0 / 8%);
+  box-shadow: var(--Depth-050-2, 0.125rem) var(--Depth-050-2, 0.125rem)
+              var(--Blur-200-8, 0.5rem) 0 rgb(0 0 0 / 8%);
   cursor: pointer;
 }
 
@@ -26,16 +26,16 @@
 .accordion-label {
   color: var(--Accordion-Title-Close, #001C35);
   font-family: var(--Family-Font-2, Manrope);
-  font-size: var(--Font-Size-Heading, 24px);
+  font-size: var(--Font-Size-Heading, 1.5rem);
   font-style: normal;
   font-weight: 600;
   line-height: 125%;
-  letter-spacing: -0.24px;
+  letter-spacing: -0.015rem;
 }
 
 .accordion-icon {
-  width: 24px;
-  height: 24px;
+  width: 1.5rem;
+  height: 1.5rem;
   font-size: var(--Size-24);
   flex-shrink: 0;
   aspect-ratio: 1 / 1;
@@ -72,14 +72,14 @@
 /* Mobile */
 @media (width <= 768px) {
   .accordion {
-    padding: var(--Accordion-Vertical-Padding, 24px)
-             var(--Accordion-Horizontal-Padding, 16px);
-    gap: var(--Accordion-Vertical-Gap, 16px);
+    padding: var(--Accordion-Vertical-Padding, 1.5rem)
+             var(--Accordion-Horizontal-Padding, 1rem);
+    gap: var(--Accordion-Vertical-Gap, 1rem);
   }
 
   .accordion-label {
-    font-size: var(--Font-Size-Heading, 20px);
-    letter-spacing: -0.2px;
+    font-size: var(--Font-Size-Heading, 1.25rem);
+    letter-spacing: -0.0125rem;
   }
 }
 

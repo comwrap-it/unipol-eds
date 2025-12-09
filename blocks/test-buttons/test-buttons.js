@@ -24,6 +24,7 @@ import {
 } from '../atoms/radio-button/standard-radio-button/radio-button.js';
 import { create3Dicons } from '../atoms/icons-3D/icons-3D.js';
 import { createRadioButtonField } from '../atoms/radio-button/radio-button-field/radio-button-field.js';
+import { createAccordion } from '../accordion/accordion.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -46,6 +47,7 @@ async function ensureStylesLoaded() {
       'blocks/atoms/radio-button/standard-radio-button/radio-button.css',
       'blocks/atoms/radio-button/radio-button-field/radio-button-field.css',
       'blocks/atoms/3D-icons/3D-icons.css',
+      'blocks/accordion/accordion.css',
     ].map((p) => loadCSS(`${base}/${p}`)),
   );
   isStylesLoaded = true;
@@ -283,6 +285,13 @@ function build3DIconsSets() {
   return container;
 }
 
+function buildAccordion() {
+  const container = document.createElement('div');
+  container.style = 'width:100%;display:flex;justify-content:center;margin-top:20px;gap:24px;flex-wrap:wrap;';
+  container.appendChild(createAccordion('Accordion Label', 'Accordion Description'));
+  return container;
+}
+
 /* -------- Main Decorator -------- */
 export default async function decorate(block) {
   console.log('Decorating test-buttons block...');
@@ -312,6 +321,7 @@ export default async function decorate(block) {
   testButtons.appendChild(centeredRow(buildOptionsList()));
   testButtons.appendChild(centeredRow(buildSelect()));
   testButtons.appendChild(build3DIconsSets());
+  testButtons.appendChild(centeredRow(buildAccordion()));
 
   // Mount
   block.innerHTML = '';
