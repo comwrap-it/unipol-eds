@@ -82,3 +82,59 @@ export const isAuthorMode = (htmlElement) => {
     || root.classList.contains('adobe-ue-edit');
   return isInAuthorMode;
 };
+
+/**
+ * Extract instrumentation attributes from an element
+ *
+ * @param {HTMLElement} element - The element to extract attributes from
+ * @returns {Object} An object containing instrumentation attributes
+ */
+export const extractInstrumentationAttributes = (element) => {
+  const instrumentation = {};
+  if (element) {
+    [...element.attributes].forEach((attr) => {
+      if (
+        attr.name.startsWith('data-aue-')
+        || attr.name.startsWith('data-richtext-')
+      ) {
+        instrumentation[attr.name] = attr.value;
+      }
+    });
+  }
+  return instrumentation;
+};
+
+export function restoreInstrumentation(element, instrumentation) {
+  Object.entries(instrumentation).forEach(([name, value]) => {
+    element.setAttribute(name, value);
+  });
+}
+
+/**
+ * Extracts editorial values from UE
+ */
+export function getValuesFromBlock(block, keys) {
+  const result = {};
+
+  if (!block) return result;
+
+  const rows = Array.from(block.children);
+
+  rows.forEach((row) => {
+    const items = row.querySelectorAll(':scope > div');
+    const key = items[0].textContent.trim();
+    const valueNode = items[1];
+    const instrumentation = extractInstrumentationAttributes(items);
+
+    const value = valueNode.querySelector('a')?.getAttribute('href') || valueNode.textContent.trim();
+
+    if (keys.includes(key)) {
+      result[key] = {
+        value,
+        instrumentation,
+      };
+    }
+  });
+
+  return result;
+}

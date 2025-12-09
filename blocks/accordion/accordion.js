@@ -1,3 +1,5 @@
+import { getValuesFromBlock, restoreInstrumentation } from '../../scripts/utils';
+
 /**
  * Creates Accordion
  *
@@ -14,7 +16,8 @@ export function createAccordion(accordionLabel, accordionDescription) {
 
   const labelEl = document.createElement('span');
   labelEl.className = 'accordion-label';
-  labelEl.textContent = accordionLabel || '';
+  labelEl.textContent = accordionLabel.value || '';
+  restoreInstrumentation(labelEl, accordionLabel.instrumentation);
 
   const icon = document.createElement('span');
   icon.className = 'accordion-icon un-icon-plus';
@@ -23,12 +26,13 @@ export function createAccordion(accordionLabel, accordionDescription) {
 
   const content = document.createElement('div');
   content.className = 'accordion-content';
-  content.textContent = accordionDescription || '';
+  content.textContent = accordionDescription.value || '';
   content.style.maxHeight = '0';
   content.style.paddingTop = '0';
   content.style.paddingBottom = '0';
   content.style.overflow = 'hidden';
   content.style.transition = 'max-height 0.3s ease, padding 0.3s ease';
+  restoreInstrumentation(content, accordionDescription.instrumentation);
 
   wrapper.append(header, content);
 
@@ -51,31 +55,6 @@ export function createAccordion(accordionLabel, accordionDescription) {
   });
 
   return wrapper;
-}
-
-/**
- * Extracts editorial values from UE
- */
-function getValuesFromBlock(block, keys) {
-  const result = {};
-
-  if (!block) return result;
-
-  const rows = Array.from(block.children);
-
-  rows.forEach((row) => {
-    const items = row.querySelectorAll(':scope > div');
-    const key = items[0].textContent.trim();
-    const valueNode = items[1];
-
-    const value = valueNode.querySelector('a')?.getAttribute('href') || valueNode.textContent.trim();
-
-    if (keys.includes(key)) {
-      result[key] = value;
-    }
-  });
-
-  return result;
 }
 
 /**
