@@ -1192,11 +1192,11 @@
         "options": [
           {
             "value": "left",
-            "label": "Sinistra"
+            "name": "Sinistra"
           },
           {
             "value": "right",
-            "label": "Destra"
+            "name": "Destra"
           }
         ],
         "required": true

@@ -43,8 +43,8 @@
           "name": "initialAlignment",
           "valueType": "string",
           "options": [
-            { "value": "left", "label": "Sinistra" },
-            { "value": "right", "label": "Destra" }
+            { "value": "left", "name": "Sinistra" },
+            { "value": "right", "name": "Destra" }
           ],
           "required": true
         }
