@@ -42,9 +42,7 @@ async function ensureStylesLoaded() {
  * @param {boolean} isInsideHero - Whether the scroll indicator is inside a hero block
  * @return {ScrollIndicatorReturnType} scrollIndicator
  */
-export default async function createScrollIndicator(
-  isInsideHero = false,
-) {
+export default async function createScrollIndicator(isInsideHero = false) {
   // Ensure CSS is loaded not awaited to avoid block
   ensureStylesLoaded();
 
@@ -70,12 +68,46 @@ export default async function createScrollIndicator(
   const expandingDotsContainer = document.createElement('div');
   expandingDotsContainer.className = 'expanding-dots';
 
-  const dots = [1, 2, 3].map((number) => {
-    const ellipse = document.createElement('span');
-    ellipse.className = `dot ${number === 1 ? 'expanded' : ''}`;
-    expandingDotsContainer.appendChild(ellipse);
-    return ellipse;
+  // Create dots; keep 'expanded' on a single element permanently
+  const dots = [0, 1, 2].map(() => {
+    const dot = document.createElement('span');
+    dot.className = 'dot';
+    expandingDotsContainer.appendChild(dot);
+    return dot;
   });
+
+  const expandedDot = dots[0];
+  expandedDot.classList.add('expanded');
+
+  // Helper to clear positional classes
+  function clearPositions() {
+    dots.forEach((dot) => {
+      dot.classList.remove('first-dot', 'second-dot', 'third-dot');
+    });
+  }
+
+  // Helper to apply positions so expandedDot moves between left/center/right
+  // activePos: 'first' | 'second' | 'third'
+  function applyPositions(activePos) {
+    clearPositions();
+    const positions = ['first', 'second', 'third'];
+
+    expandingDotsContainer.className = `expanding-dots ${activePos}-expanded`;
+
+    // Assign the active position to the expandedDot
+    expandedDot.classList.add(`${activePos}-dot`);
+
+    // Assign remaining positions to the other two dots
+    const remaining = positions.filter((p) => p !== activePos);
+    dots
+      .filter((d) => d !== expandedDot)
+      .forEach((dot, idx) => {
+        dot.classList.add(`${remaining[idx]}-dot`);
+      });
+  }
+
+  // Initial positions: expanded on the left
+  applyPositions('first');
 
   const rightIconButtonContainer = document.createElement('div');
   rightIconButtonContainer.className = 'right-icon-button';
@@ -94,19 +126,19 @@ export default async function createScrollIndicator(
   scrollIndicator.appendChild(rightIconButtonContainer);
 
   function setExpandedDot({ isBeginning, isEnd }) {
-    // Clear previous state
-    dots.forEach((dot) => dot.classList.remove('expanded'));
-    // Decide which to expand
     if (isBeginning) {
-      dots[0]?.classList.add('expanded');
+      applyPositions('first'); // expanded left
     } else if (isEnd) {
-      dots[2]?.classList.add('expanded');
+      applyPositions('third'); // expanded right
     } else {
-      dots[1]?.classList.add('expanded');
+      applyPositions('second'); // expanded center
     }
   }
 
   return {
-    leftIconButton, scrollIndicator, rightIconButton, setExpandedDot,
+    leftIconButton,
+    scrollIndicator,
+    rightIconButton,
+    setExpandedDot,
   };
 }
