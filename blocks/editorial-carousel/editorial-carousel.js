@@ -11,6 +11,11 @@ import { handleSlideChange } from '../../scripts/utils.js';
 
 let stylesLoaded = false;
 
+/**
+ * Ensures the carousel widget CSS is fetched once before decoration.
+ *
+ * @returns {Promise<void>} resolves when the stylesheet is loaded
+ */
 async function ensureStylesLoaded() {
   if (stylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
@@ -19,6 +24,15 @@ async function ensureStylesLoaded() {
   stylesLoaded = true;
 }
 
+/**
+ * Initializes a Swiper instance configured for the editorial carousel.
+ *
+ * @param {typeof Swiper} SwiperLib - Swiper constructor pulled from CDN
+ * @param {HTMLElement} carousel - The carousel container element
+ * @param {HTMLElement} leftIconButton - Navigation element for previous slide
+ * @param {HTMLElement} rightIconButton - Navigation element for next slide
+ * @returns {import('swiper').Swiper} configured Swiper instance
+ */
 const initSwiperInstance = (
   SwiperLib,
   carousel,
@@ -43,12 +57,23 @@ const initSwiperInstance = (
   debugger: true,
 });
 
+/**
+ * Checks whether a block already carries instrumentation data.
+ *
+ * @param {HTMLElement} block - The block root element
+ * @returns {boolean} true when instrumentation attributes are present
+ */
 const hasInstrumentation = (block) => (
   block.hasAttribute('data-aue-resource')
   || block.querySelector('[data-aue-resource]')
   || block.querySelector('[data-richtext-prop]')
 );
 
+/**
+ * Builds empty carousel scaffolding with container and track elements.
+ *
+ * @returns {{carousel: HTMLElement, track: HTMLElement}} wrapper elements for slides
+ */
 const createCarouselStructure = () => {
   const carousel = document.createElement('div');
   carousel.className = 'editorial-carousel-container swiper';
@@ -63,6 +88,13 @@ const createCarouselStructure = () => {
   return { carousel, track };
 };
 
+/**
+ * Transforms a row of authored content into a swiper slide and decorates the card.
+ *
+ * @param {HTMLElement} row - Row containing the card authored content
+ * @param {(cardBlock: HTMLElement) => Promise<void>} decorateCard - Async decorator for the card block
+ * @returns {Promise<HTMLElement>} the populated slide element
+ */
 const createSlide = async (row, decorateCard) => {
   const slide = document.createElement('div');
   slide.className = 'editorial-carousel-card-wrapper swiper-slide';
@@ -99,6 +131,14 @@ const createSlide = async (row, decorateCard) => {
   return slide;
 };
 
+/**
+ * Appends slides to the track, respecting mobile truncation and instrumentation rules.
+ *
+ * @param {HTMLElement[]} slides - List of slide elements
+ * @param {HTMLElement} track - Swiper track element
+ * @param {boolean} instrumented - Whether Universal Editor instrumentation is present
+ * @param {MediaQueryList} mq - Media query determining desktop/tablet vs mobile
+ */
 const appendSlides = (slides, track, instrumented, mq) => {
   slides.forEach((slide, index) => {
     if (slide && !instrumented && slide.innerText) {
@@ -112,6 +152,15 @@ const appendSlides = (slides, track, instrumented, mq) => {
   });
 };
 
+/**
+ * Creates navigation UI based on viewport: scroll indicator on desktop/tablet,
+ * or a "show more" button on mobile when needed.
+ *
+ * @param {HTMLElement[]} cardElements - Slides representing each card
+ * @param {MediaQueryList} mq - Media query for min-width: 768px
+ * @param {string} showMoreButtonLabel - Text for the mobile expansion button
+ * @returns {Promise<{scrollIndicatorProps: Object, showMoreButton: HTMLElement | undefined}>}
+ */
 const createNavigation = async (cardElements, mq, showMoreButtonLabel) => {
   const scrollIndicatorProps = {};
   let showMoreButton;
@@ -142,6 +191,12 @@ const createNavigation = async (cardElements, mq, showMoreButtonLabel) => {
   return { scrollIndicatorProps, showMoreButton };
 };
 
+/**
+ * Attaches "show more" behavior for mobile: reveals hidden slides and removes the trigger.
+ *
+ * @param {HTMLElement} showMoreButton - Button element used to expand the list
+ * @param {HTMLElement[]} cardElements - Slide elements to unhide
+ */
 const bindShowMore = (showMoreButton, cardElements) => {
   if (!showMoreButton) return;
   showMoreButton.addEventListener('click', (event) => {
@@ -151,6 +206,14 @@ const bindShowMore = (showMoreButton, cardElements) => {
   });
 };
 
+/**
+ * Inserts core carousel structure and any navigation UI into the block container.
+ *
+ * @param {HTMLElement} carousel - Carousel wrapper
+ * @param {HTMLElement} track - Slides track
+ * @param {Object} scrollIndicatorProps - Optional scroll indicator elements
+ * @param {HTMLElement} showMoreButton - Optional mobile "show more" button
+ */
 const assembleCarousel = (carousel, track, scrollIndicatorProps, showMoreButton) => {
   carousel.appendChild(track);
   if (scrollIndicatorProps.scrollIndicator) {
@@ -160,6 +223,13 @@ const assembleCarousel = (carousel, track, scrollIndicatorProps, showMoreButton)
   }
 };
 
+/**
+ * Initializes Swiper for desktop/tablet and wires the expanding dots state.
+ *
+ * @param {HTMLElement} carousel - Carousel wrapper
+ * @param {Object} scrollIndicatorProps - Elements controlling navigation state
+ * @returns {Promise<void>} resolves after Swiper is ready
+ */
 const initDesktopSwiper = async (carousel, scrollIndicatorProps) => {
   const SwiperLib = await loadSwiper();
   const swiperInstance = initSwiperInstance(
@@ -188,6 +258,13 @@ const initDesktopSwiper = async (carousel, scrollIndicatorProps) => {
   }
 };
 
+/**
+ * Entry point that decorates the editorial carousel block: builds slides,
+ * navigation, instrumentation, and desktop Swiper behavior.
+ *
+ * @param {HTMLElement} block - The carousel block container
+ * @returns {Promise<void>} resolves when the carousel is fully decorated
+ */
 export default async function handleEditorialProductCarouselWidget(block) {
   if (!block) return;
   await ensureStylesLoaded();

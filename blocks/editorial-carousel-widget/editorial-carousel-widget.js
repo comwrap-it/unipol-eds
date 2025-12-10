@@ -2,6 +2,11 @@ import loadSwiper from '../../scripts/delayed.js';
 
 let stylesLoaded = false;
 
+/**
+ * Loads the widget stylesheet once prior to initializing Swiper behavior.
+ *
+ * @returns {Promise<void>} resolves when the CSS is fetched
+ */
 async function ensureStylesLoaded() {
   if (stylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
@@ -10,6 +15,11 @@ async function ensureStylesLoaded() {
   stylesLoaded = true;
 }
 
+/**
+ * Applies or removes the dark theme on the closest section based on authored data.
+ *
+ * @param {HTMLElement} carousel - Carousel element containing the dark theme flag row
+ */
 function applyDarkTheme(carousel) {
   const rows = [...carousel.children];
   const darkThemeText = rows[1]?.textContent?.trim().toLowerCase();
@@ -22,6 +32,12 @@ function applyDarkTheme(carousel) {
   }
 }
 
+/**
+ * Creates a Swiper plugin that syncs expanding dots and navigation state.
+ *
+ * @param {HTMLElement} carousel - Carousel element the plugin will control
+ * @returns {(params: Object) => void} Swiper module initializer
+ */
 function createPlugin(carousel) {
   return function editorialCarousel({ extendParams, on }) {
     extendParams({ debugger: false });
@@ -71,6 +87,13 @@ function createPlugin(carousel) {
   };
 }
 
+/**
+ * Initializes Swiper on a carousel element using the expanding-dots plugin.
+ * Guards against double initialization via a data flag.
+ *
+ * @param {HTMLElement} carousel - Carousel to enhance with Swiper
+ * @param {typeof Swiper} SwiperLib - Swiper constructor from CDN
+ */
 function initSwiper(carousel, SwiperLib) {
   if (carousel.dataset.initialized) return;
   carousel.dataset.initialized = 'true';
@@ -105,6 +128,12 @@ function initSwiper(carousel, SwiperLib) {
   });
 }
 
+/**
+ * Bootstraps all editorial carousel instances on the page: loads styles,
+ * fetches Swiper, applies theme toggles, and initializes navigation behavior.
+ *
+ * @returns {Promise<void>} resolves when initialization completes or exits early
+ */
 export default async function handleEditorialProductCarouselWidget() {
   const carousels = document.querySelectorAll('.editorial-carousel-container');
   if (!carousels.length) return;

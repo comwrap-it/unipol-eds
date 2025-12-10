@@ -9,6 +9,12 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 let stylesLoaded = false;
 
+/**
+ * Lazily loads CSS dependencies for link buttons, tags, and icons.
+ * Uses a memoized flag to avoid redundant requests on repeated decorations.
+ *
+ * @returns {Promise<void>} resolves when all dependent stylesheets are loaded
+ */
 async function ensureStylesLoaded() {
   if (stylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
@@ -17,16 +23,27 @@ async function ensureStylesLoaded() {
       `${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`,
     ),
     loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`),
-    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/icons-3D/icons-3D.css`),
   ]);
   stylesLoaded = true;
 }
 
+/**
+ * Retrieves the rows that describe the card content.
+ *
+ * @param {HTMLElement} block - The editorial carousel card block wrapper
+ * @returns {HTMLElement[]} ordered rows either from the default wrapper or the block children
+ */
 function getRows(block) {
   const wrapper = block.querySelector('.default-content-wrapper');
   return wrapper ? Array.from(wrapper.children) : Array.from(block.children);
 }
 
+/**
+ * Creates the image section including the optional tag overlay and optimized picture fallback.
+ *
+ * @param {HTMLElement[]} rows - Structured rows aligned with the card content model
+ * @returns {HTMLElement|null} image container or null when no image row is provided
+ */
 function buildImageSection(rows) {
   const imageRow = rows[13];
   if (!imageRow) return null;
@@ -72,6 +89,13 @@ function buildImageSection(rows) {
   return cardImage.children.length ? cardImage : null;
 }
 
+/**
+ * Builds the textual stack (title and description), preserving authored semantics
+ * and instrumentation when present.
+ *
+ * @param {HTMLElement[]} rows - Structured rows aligned with the card content model
+ * @returns {HTMLElement} container with the populated title and description
+ */
 function buildTextSection(rows) {
   const cardTextContent = document.createElement('div');
   cardTextContent.className = 'editorial-carousel-card-text';
@@ -117,6 +141,12 @@ function buildTextSection(rows) {
   return cardTextContent;
 }
 
+/**
+ * Builds the CTA area and optional supporting note beneath the button.
+ *
+ * @param {HTMLElement[]} rows - Structured rows aligned with the card content model
+ * @returns {HTMLElement|null} wrapper containing the button and note, or null when absent
+ */
 function buildButtonsSection(rows) {
   const buttonRows = rows.slice(2, 9);
   const buttonElement = createLinkButtonFromRows(buttonRows);
@@ -147,6 +177,13 @@ function buildButtonsSection(rows) {
   return buttonsContainer;
 }
 
+/**
+ * Applies Universal Editor instrumentation attributes to the rendered card.
+ *
+ * @param {HTMLElement} card - Rendered card element
+ * @param {Object.<string, string>} instrumentation - Attribute map extracted from the source rows
+ * @param {HTMLElement} block - Original block to mirror metadata (e.g., block name)
+ */
 function applyInstrumentation(card, instrumentation, block) {
   Object.entries(instrumentation).forEach(([name, value]) => {
     card.setAttribute(name, value);
@@ -156,6 +193,13 @@ function applyInstrumentation(card, instrumentation, block) {
   }
 }
 
+/**
+ * Decorates an editorial carousel card block by rebuilding its structure,
+ * applying instrumentation, and attaching required styles.
+ *
+ * @param {HTMLElement} block - The block instance to decorate
+ * @returns {Promise<void>} resolves when the card is fully transformed
+ */
 export default async function handleEditorialProductCarouselWidget(block) {
   if (!block || block.classList.contains('card-block')) return;
   await ensureStylesLoaded();
