@@ -29,6 +29,7 @@
       font-weight: 600;
       line-height: 125%;
       letter-spacing: -0.015rem;
+      text-align: left;
     }
 
     & .accordion-icon {
@@ -52,12 +53,8 @@
     overflow: hidden;
     padding-top: 0;
     padding-bottom: 0;
-    transition: max-height 0.3s ease, padding 0.3s ease;
-  }
-
-  .accordion-label,
-  .accordion-content {
     text-align: left;
+    transition: max-height 0.3s ease, padding 0.3s ease;
   }
 
   .accordion.open .accordion-content {
