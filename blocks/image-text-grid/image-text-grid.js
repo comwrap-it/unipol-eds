@@ -1,28 +1,30 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { createButton } from '../atoms/buttons/standard-button/standard-button.js';
 
 export default function decorate(block, isFirstBlock = false) {
   if (!block) return;
 
-  const initialAlignment = block.dataset.initialAlignment || 'left';
-  const items = [...block.children];
+  // First alignment
+  const initialAlignment = block.children[0]?.textContent?.trim() || 'left';
+
+  const items = [...block.children].slice(1);
 
   items.forEach((item, index) => {
     item.classList.add('image-text-item');
 
-    // Align images
-    const align = (initialAlignment === 'left' && index % 2 === 0)
-      || (initialAlignment === 'right' && index % 2 !== 0)
-      ? 'left'
-      : 'right';
+    // Automatic alignment
+    const align =
+      (initialAlignment === 'left' && index % 2 === 0) ||
+      (initialAlignment === 'right' && index % 2 !== 0)
+        ? 'left'
+        : 'right';
+
     item.classList.add(`image-${align}`);
 
+    // Image
     const imgElement = item.querySelector('img, picture, a');
-    const contentNodes = Array.from(item.childNodes).filter(
-      (n) => n !== imgElement && (n.nodeType === 1 || (n.nodeType === 3 && n.textContent.trim() !== '')),
-    );
 
-    // Image functions
     const getOptimizedImage = (el) => {
       if (!el) return null;
 
@@ -31,7 +33,11 @@ export default function decorate(block, isFirstBlock = false) {
 
       if (el.tagName === 'PICTURE') return el;
 
-      const src = (el.tagName === 'IMG' && el.src) || (el.tagName === 'A' && el.href) || null;
+      const src =
+        (el.tagName === 'IMG' && el.src) ||
+        (el.tagName === 'A' && el.href) ||
+        null;
+
       if (!src) return null;
 
       const optimizedPic = createOptimizedPicture(
@@ -55,19 +61,74 @@ export default function decorate(block, isFirstBlock = false) {
       return optimizedPic;
     };
 
-    // Img wrapper
-    const imageWrapperDiv = document.createElement('div');
-    imageWrapperDiv.classList.add('image-wrapper');
-    const optimizedPic = getOptimizedImage(imgElement);
-    if (optimizedPic) imageWrapperDiv.appendChild(optimizedPic);
+    // Retrieving items data
+    const rows = [...item.children].filter((c) => c !== imgElement);
 
-    // Content wrapper
-    const contentWrapperDiv = document.createElement('div');
-    contentWrapperDiv.classList.add('content-wrapper');
-    contentNodes.forEach((node) => contentWrapperDiv.appendChild(node));
+    const title              = rows[1]?.textContent.trim() || '';
+    const description        = rows[2]?.textContent.trim() || '';
+    const btnLabel           = rows[3]?.textContent.trim() || '';
+    const btnVariant         = rows[4]?.textContent.trim() || 'primary';
 
+    const btnHrefEl         = rows[5]?.querySelector('a');
+    const btnHref           = btnHrefEl?.getAttribute('href') || '';
+
+    const btnSize           = rows[6]?.textContent.trim() || 'medium';
+
+    const rawOpen           = rows[7]?.textContent.trim().toLowerCase();
+    const btnOpenInNewTab   = rawOpen === 'true' || rawOpen === '1' || rawOpen === 'yes';
+
+    const btnLeftIcon       = rows[8]?.textContent.trim() || '';
+    const btnRightIcon      = rows[9]?.textContent.trim() || '';
+
+    // Button
+    let buttonElement = null;
+    if (btnLabel || btnHref) {
+      buttonElement = createButton(
+        btnLabel,
+        btnHref,
+        btnOpenInNewTab,
+        btnVariant,
+        btnSize,
+        btnLeftIcon,
+        btnRightIcon,
+      );
+    }
+
+    // Render
     item.innerHTML = '';
-    item.appendChild(imageWrapperDiv);
-    item.appendChild(contentWrapperDiv);
+
+    // Image
+    const imageWrapper = document.createElement('div');
+    imageWrapper.classList.add('image-wrapper');
+    const optimized = getOptimizedImage(imgElement);
+    if (optimized) imageWrapper.appendChild(optimized);
+
+    // Content with text and button
+    const contentWrapper = document.createElement('div');
+    contentWrapper.classList.add('content-wrapper');
+
+    if (title) {
+      const t = document.createElement('div');
+      t.classList.add('title');
+      t.innerHTML = `<p>${title}</p>`;
+      contentWrapper.appendChild(t);
+    }
+
+    if (description) {
+      const d = document.createElement('div');
+      d.classList.add('description');
+      d.innerHTML = `<p>${description}</p>`;
+      contentWrapper.appendChild(d);
+    }
+
+    if (buttonElement) {
+      const btnContainer = document.createElement('div');
+      btnContainer.classList.add('button-container');
+      btnContainer.appendChild(buttonElement);
+      contentWrapper.appendChild(btnContainer);
+    }
+
+    item.appendChild(imageWrapper);
+    item.appendChild(contentWrapper);
   });
 }

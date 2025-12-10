@@ -28,7 +28,7 @@
   flex-shrink: 0;
 }
 
-.image-text-item .content-wrapper [data-field-name="title"] {
+.image-text-item .content-wrapper .title {
   color: var(--Section-Text, #001C35);
   font-family: var(--Family-Font-1, "Apex New");
   font-size: var(--Font-Size-Title-Page, 48px);
@@ -38,7 +38,7 @@
   letter-spacing: -0.48px;
 }
 
-.image-text-item .content-wrapper [data-field-name="description"] {
+.image-text-item .content-wrapper .description {
   color: var(--Section-Text, #001C35);
   font-family: var(--Family-Font-2, Manrope);
   font-size: var(--Size-16, 16px);
@@ -77,12 +77,12 @@
     text-align: center;
   }
 
-  .image-text-item .content-wrapper [data-field-name="title"] {
+  .image-text-item .content-wrapper .title {
     font-size: var(--Size-32, 32px);
     letter-spacing: -0.32px;
   }
 
-  .image-text-item .content-wrapper [data-field-name="description"] {
+  .image-text-item .content-wrapper .description {
     font-size: var(--Size-16, 16px);
     line-height: 140%;
   }
