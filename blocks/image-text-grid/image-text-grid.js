@@ -46,10 +46,11 @@ export default function decorate(block, isFirstBlock = false) {
         altText,
         isFirstBlock,
         [
-          { media: '(min-width: 769px)', width: '600' },
-          { media: '(max-width: 768px)', width: '400' },
-          { media: '(max-width: 392px)', width: '343' },
-        ],
+          { media: '(min-width: 1313px)', width: '648' },  // Desktop
+          { media: '(min-width: 1152px) and (max-width: 1312px)', width: '600' },  // Desktop small
+          { media: '(min-width: 768px) and (max-width: 1152px)', width: '364' },  // Tablet
+          { media: '(max-width: 768px)', width: '343' },   // Mobile
+        ]
       );
 
       const newImg = optimizedPic.querySelector('img');
