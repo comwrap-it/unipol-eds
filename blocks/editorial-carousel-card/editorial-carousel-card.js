@@ -136,7 +136,7 @@ export default async function handleEditorialProductCarouselWidget(block) {
   const buttonRows = rows.slice(2, 9);
   const buttonElement = createLinkButtonFromRows(buttonRows);
 
-  if (buttonElement && buttonElement.children.length > 0) {
+  if (buttonElement) {
     const buttonsContainer = document.createElement('div');
     buttonsContainer.className = 'button-subdescription';
     buttonsContainer.appendChild(buttonElement);
