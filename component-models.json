@@ -170,6 +170,33 @@
     ]
   },
   {
+    "id": "faq-widget-section",
+    "fields": [
+      {
+        "component": "toggle",
+        "name": "faq-widget-section-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "insurance-product-carousel-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "insurance-product-carousel-widget-name",
+        "label": "Nome sezione Insurance Product Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "insurance-product-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
     "id": "faq-widget",
     "fields": [
       {
@@ -201,22 +228,6 @@
         "label": "Link alle pagine con FAQ",
         "description": "Aggiungi le pagine che contengono le FAQ",
         "multi": true
-      }
-    ]
-  },
-  {
-    "id": "insurance-product-carousel-widget",
-    "fields": [
-      {
-        "component": "text",
-        "name": "insurance-product-carousel-widget-name",
-        "label": "Nome sezione Insurance Product Carousel Widget"
-      },
-      {
-        "component": "toggle",
-        "name": "insurance-product-carousel-widget-dark-theme",
-        "label": "Tema scuro",
-        "default": false
       }
     ]
   },

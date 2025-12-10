@@ -44,11 +44,15 @@
     "components": []
   },
   {
-    "id": "faq-widget",
+    "id": "faq-widget-section",
     "components": []
   },
   {
     "id": "insurance-product-carousel-widget",
+    "components": []
+  },
+  {
+    "id": "faq-widget",
     "components": []
   },
   {
