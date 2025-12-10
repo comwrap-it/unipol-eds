@@ -123,7 +123,7 @@
 }
 
 /* TABLET */
-@media (width >= 768px) and (width < 1024) {
+@media (width >= 768px) and (width < 1024px) {
     .mini-hero {
         height: 760px;
         padding: 0 var(--Hero-Mini-Hero-Horizontal-Padding-M-Tp, 16px)
