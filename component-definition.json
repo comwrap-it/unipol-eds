@@ -104,7 +104,7 @@
           }
         },
         {
-          "title": "FAQ Widget",
+          "title": "FAQ Widget Section",
           "id": "faq-widget-section",
           "plugins": {
             "xwalk": {
@@ -112,14 +112,14 @@
                 "resourceType": "core/franklin/components/section/v1/section",
                 "template": {
                   "filter": "faq-widget-section",
-                  "name": "FAQ Widget",
+                  "name": "FAQ Widget Section",
                   "model": "faq-widget-section",
                   "style": "faq-widget-section",
                   "faq-widget": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
-                    "name": "FAQ Block",
+                    "name": "FAQ Widget",
                     "model": "faq-widget",
-                    "filters": "faq-widget"
+                    "filter": "faq-widget"
                   }
                 }
               }
