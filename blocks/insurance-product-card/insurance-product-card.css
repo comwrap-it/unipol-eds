@@ -25,6 +25,8 @@
                 width: 100%;
                 height: 11.1095rem;
                 border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem) var(--Radius-0, 0) var(--Radius-0, 0);
+                object-fit: cover;
+                object-position: top;
             }
 
             & .insurance-product-card-tag {
