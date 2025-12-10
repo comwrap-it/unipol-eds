@@ -108,7 +108,7 @@ function makeNavigationSticky(block) {
         updateContainerWidth(container);
         updateHiddenPillsAccessibility(container);
         if (i === wrappersToHide.length - 1) { animating = false; showSecondRightIcon(); }
-      }, i * 50);
+      }, i * 40);
     });
   };
 
@@ -122,7 +122,7 @@ function makeNavigationSticky(block) {
         updateContainerWidth(container);
         updateHiddenPillsAccessibility(container);
         if (i === wrappersToShow.length - 1) { animating = false; hideSecondRightIcon(); }
-      }, i * 60);
+      }, i * 40);
     });
   };
 
