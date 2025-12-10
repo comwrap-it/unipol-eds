@@ -786,6 +786,28 @@
           }
         },
         {
+          "title": "Mini Hero Widget",
+          "id": "mini-hero-widget",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {
+                  "filter": "mini-hero-widget",
+                  "name": "Mini Hero Widget",
+                  "model": "mini-hero-widget",
+                  "style": "mini-hero-widget",
+                  "mini-hero-carousel": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Mini Hero Carousel",
+                    "filter": "mini-hero-carousel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Mini Hero",
           "id": "mini-hero",
           "plugins": {

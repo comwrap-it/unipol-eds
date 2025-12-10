@@ -1,0 +1,52 @@
+{
+    "definitions": [
+        {
+            "title": "Mini Hero Widget",
+            "id": "mini-hero-widget",
+            "plugins": {
+                "xwalk": {
+                    "page": {
+                        "resourceType": "core/franklin/components/section/v1/section",
+                        "template": {
+                            "filter": "mini-hero-widget",
+                            "name": "Mini Hero Widget",
+                            "model": "mini-hero-widget",
+                            "style": "mini-hero-widget",
+                            "mini-hero-carousel": {
+                                "sling:resourceType": "core/franklin/components/block/v1/block",
+                                "name": "Mini Hero Carousel",
+                                "filter": "mini-hero-carousel"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "models": [
+        {
+            "id": "mini-hero-widget",
+            "fields": [
+                {
+                    "component": "text",
+                    "name": "mini-hero-widget-name",
+                    "label": "Nome sezione Mini Hero Widget"
+                },
+                {
+                  "component": "toggle",
+                  "name": "mini-hero-widget-dark-theme",
+                  "label": "Tema scuro",
+                  "default": false
+                }
+            ]
+        }
+    ],
+    "filters": [
+        {
+            "id": "mini-hero-widget",
+            "components": [
+                "mini-hero-carousel"
+            ]
+        }
+    ]
+}

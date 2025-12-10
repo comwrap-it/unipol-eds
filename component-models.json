@@ -1464,6 +1464,22 @@
     ]
   },
   {
+    "id": "mini-hero-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "mini-hero-widget-name",
+        "label": "Nome sezione Mini Hero Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "mini-hero-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
     "id": "mini-hero",
     "fields": [
       {

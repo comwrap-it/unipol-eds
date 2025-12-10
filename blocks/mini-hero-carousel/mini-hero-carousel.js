@@ -2,7 +2,7 @@ import loadSwiper from '../../scripts/delayed.js';
 import { handleSlideChange } from '../../scripts/utils.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
-import { extractMiniHeroPropertiesFromRows } from '../mini-hero/mini-hero.js';
+import { createMiniHero, extractMiniHeroPropertiesFromRows } from '../mini-hero/mini-hero.js';
 
 /**
  *
@@ -94,7 +94,7 @@ export default async function decorate(block) {
       btnLeftIcon,
       btnRightIcon,
     } = extractMiniHeroPropertiesFromRows(childrenRows);
-    const hero = await createHero(
+    const hero = await createMiniHero(
       heroBackground,
       isVideoBackground,
       showHeroButton,

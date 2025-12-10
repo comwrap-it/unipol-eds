@@ -6,6 +6,7 @@
       "kpi-highlights-widget",
       "insurance-product-carousel-widget",
       "hero-widget",
+      "mini-hero-widget",
       "blog-carousel-widget"
     ]
   },
@@ -35,8 +36,6 @@
       "cards",
       "columns",
       "fragment",
-      "full-screen-hero-carousel",
-      "mini-hero-carousel",
       "text-block",
       "test-buttons",
       "options-list",
@@ -132,6 +131,12 @@
     "id": "mini-hero-carousel",
     "components": [
       "mini-hero"
+    ]
+  },
+  {
+    "id": "mini-hero-widget",
+    "components": [
+      "mini-hero-carousel"
     ]
   },
   {
