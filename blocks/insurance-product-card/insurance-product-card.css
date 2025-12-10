@@ -25,6 +25,8 @@
                 width: 100%;
                 height: 11.1095rem;
                 border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem) var(--Radius-0, 0) var(--Radius-0, 0);
+                object-fit: cover;
+                object-position: top;
             }
 
             & .insurance-product-card-tag {
@@ -103,11 +105,17 @@
             }
 
             & .img-vector {
-                width: 16.25rem;
+                width: 100%;
+                left: 0;
+                display: flex;
+                justify-content: center;
                 height: 5.1875rem;
                 position: absolute;
-                left: 1.75rem;
                 top: -2.6095rem;
+
+                & .icons-3d {
+                    gap: var(--Card-Insurance-Product-Card-Icon-Gap, 0.5rem);
+                }
             }
         }
     }
@@ -144,10 +152,8 @@
                 }
 
                 & .img-vector {
-                    width: 13rem;
                     height: 4rem;
                     position: absolute;
-                    left: 1rem;
                     top: -1.98456rem;
                 }
             }
@@ -177,11 +183,8 @@
                 gap: var(--Card-Insurance-Product-Card-Gap, 1.5rem);
 
                 & .img-vector {
-                    width: 16.125rem;
                     height: 5rem;
                     position: absolute;
-                    right: 2.6875rem;
-                    left: auto;
                     top: -2.48081rem;
                 }
             }

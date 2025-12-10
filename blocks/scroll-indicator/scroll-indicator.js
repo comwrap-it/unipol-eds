@@ -30,6 +30,89 @@ async function ensureStylesLoaded() {
 }
 
 /**
+ * Creates a navigation button for the scroll indicator
+ * @param {string} containerClass - The class name for the button container
+ * @param {string} iconName - The name of the icon to use
+ * @param {string} buttonClass - The class name for the button itself
+ * @returns {HTMLElement} The navigation button container element
+ */
+const createNavButton = (containerClass, iconName, buttonClass) => {
+  const iconButtonContainer = document.createElement('div');
+  iconButtonContainer.className = containerClass;
+
+  const iconButton = createIconButton(
+    iconName,
+    BUTTON_VARIANTS.PRIMARY,
+    BUTTON_ICON_SIZES.MEDIUM,
+    '',
+  );
+  iconButton.classList.add(buttonClass);
+  iconButtonContainer.appendChild(iconButton);
+  return { iconButtonContainer, iconButton };
+};
+
+const createExpandingDots = () => {
+  const expandingDotsContainer = document.createElement('div');
+  expandingDotsContainer.className = 'expanding-dots';
+
+  // Create dots; keep 'expanded' on a single element permanently
+  const dots = [0, 1, 2].map(() => {
+    const dot = document.createElement('span');
+    dot.className = 'dot';
+    expandingDotsContainer.appendChild(dot);
+    return dot;
+  });
+
+  const expandedDot = dots[0];
+  expandedDot.classList.add('expanded');
+
+  // Helper to clear positional classes
+  function clearPositions() {
+    dots.forEach((dot) => {
+      dot.classList.remove('first-dot', 'second-dot', 'third-dot');
+    });
+  }
+
+  // Helper to apply positions so expandedDot moves between left/center/right
+  // activePos: 'first' | 'second' | 'third'
+  function applyPositions(activePos) {
+    clearPositions();
+    const positions = ['first', 'second', 'third'];
+
+    expandingDotsContainer.className = `expanding-dots ${activePos}-expanded`;
+
+    // Assign the active position to the expandedDot
+    expandedDot.classList.add(`${activePos}-dot`);
+
+    // Assign remaining positions to the other two dots
+    const remaining = positions.filter((p) => p !== activePos);
+    dots
+      .filter((d) => d !== expandedDot)
+      .forEach((dot, idx) => {
+        dot.classList.add(`${remaining[idx]}-dot`);
+      });
+  }
+
+  // Initial positions: expanded on the left
+  applyPositions('first');
+
+  // method to update the expanded dot position from swiper carousel
+  function setExpandedDot({ isBeginning, isEnd }) {
+    if (isBeginning) {
+      applyPositions('first'); // expanded left
+    } else if (isEnd) {
+      applyPositions('third'); // expanded right
+    } else {
+      applyPositions('second'); // expanded center
+    }
+  }
+
+  return {
+    expandingDotsContainer,
+    setExpandedDot,
+  };
+};
+/**
   @typedef {Object} ScrollIndicatorReturnType
   @property {HTMLElement} leftIconButton: The left navigation button element.
   @property {HTMLElement} scrollIndicator: The scroll indicator wrapper element.
@@ -42,9 +125,7 @@ async function ensureStylesLoaded() {
  * @param {boolean} isInsideHero - Whether the scroll indicator is inside a hero block
  * @return {ScrollIndicatorReturnType} scrollIndicator
  */
-export default async function createScrollIndicator(
-  isInsideHero = false,
-) {
+export default async function createScrollIndicator(isInsideHero = false) {
   // Ensure CSS is loaded not awaited to avoid block
   ensureStylesLoaded();
 
@@ -55,58 +136,34 @@ export default async function createScrollIndicator(
     scrollIndicator.classList.add('hero-indicator');
   }
 
-  const leftIconButtonContainer = document.createElement('div');
-  leftIconButtonContainer.className = 'left-icon-button';
-
-  const leftIconButton = createIconButton(
+  const {
+    iconButtonContainer: leftIconButtonContainer,
+    iconButton: leftIconButton,
+  } = createNavButton(
+    'left-icon-button',
     'un-icon-chevron-left',
-    BUTTON_VARIANTS.PRIMARY,
-    BUTTON_ICON_SIZES.MEDIUM,
-    '',
+    'swiper-button-prev',
   );
-  leftIconButton.classList.add('swiper-button-prev');
-  leftIconButtonContainer.appendChild(leftIconButton);
 
-  const expandingDotsContainer = document.createElement('div');
-  expandingDotsContainer.className = 'expanding-dots';
+  const { expandingDotsContainer, setExpandedDot } = createExpandingDots();
 
-  const dots = [1, 2, 3].map((number) => {
-    const ellipse = document.createElement('span');
-    ellipse.className = `dot ${number === 1 ? 'expanded' : ''}`;
-    expandingDotsContainer.appendChild(ellipse);
-    return ellipse;
-  });
-
-  const rightIconButtonContainer = document.createElement('div');
-  rightIconButtonContainer.className = 'right-icon-button';
-
-  const rightIconButton = createIconButton(
+  const {
+    iconButtonContainer: rightIconButtonContainer,
+    iconButton: rightIconButton,
+  } = createNavButton(
+    'right-icon-button',
     'un-icon-chevron-right',
-    BUTTON_VARIANTS.PRIMARY,
-    BUTTON_ICON_SIZES.MEDIUM,
-    '',
+    'swiper-button-next',
   );
-  rightIconButton.classList.add('swiper-button-next');
-  rightIconButtonContainer.appendChild(rightIconButton);
 
   scrollIndicator.appendChild(leftIconButtonContainer);
   scrollIndicator.appendChild(expandingDotsContainer);
   scrollIndicator.appendChild(rightIconButtonContainer);
 
-  function setExpandedDot({ isBeginning, isEnd }) {
-    // Clear previous state
-    dots.forEach((dot) => dot.classList.remove('expanded'));
-    // Decide which to expand
-    if (isBeginning) {
-      dots[0]?.classList.add('expanded');
-    } else if (isEnd) {
-      dots[2]?.classList.add('expanded');
-    } else {
-      dots[1]?.classList.add('expanded');
-    }
-  }
-
   return {
-    leftIconButton, scrollIndicator, rightIconButton, setExpandedDot,
+    leftIconButton,
+    scrollIndicator,
+    rightIconButton,
+    setExpandedDot,
   };
 }

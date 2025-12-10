@@ -45,6 +45,7 @@
 
             & .swiper-slide {
                 width: calc(100% / 2.3);
+                height: -webkit-fill-available;
                 margin-inline-end: var(
                     --Carousel-Insurance-Product-Gap-M-Tp,
                     0.5rem

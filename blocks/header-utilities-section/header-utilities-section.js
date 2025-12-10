@@ -1,4 +1,3 @@
-import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import {
   NAVIGATION_PILL_VARIANTS,
@@ -75,7 +74,7 @@ function updatePillLabels() {
       pill.setAttribute('aria-label', text);
     }
 
-    if (window.innerWidth <= 1280) {
+    if (window.innerWidth <= 1200) {
       textSpan.style.display = 'none';
     } else {
       textSpan.style.display = '';
@@ -114,8 +113,6 @@ export default async function decorate(block) {
   block.innerHTML = '';
   block.appendChild(container);
   block.classList.add('header-utilities-nav-pill');
-
-  await Promise.all(pillElements.map((pillEl) => loadBlock(pillEl)));
   updatePillLabels();
   window.addEventListener('resize', updatePillLabels);
 }
