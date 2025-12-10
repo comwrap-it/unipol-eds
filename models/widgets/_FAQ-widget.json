@@ -1,0 +1,57 @@
+{
+  "definitions": [
+    {
+      "title": "FAQ Widget",
+      "id": "faq-widget",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/section/v1/section",
+            "template": {
+              "filter": "faq-widget",
+              "name": "FAQ Widget",
+              "model": "faq-widget",
+              "style": "faq-widget"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "faq-widget",
+      "fields": [
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Titolo",
+          "description": "max 40 caratteri",
+          "required": true,
+          "maxlength": 40
+        },
+        {
+          "component": "text",
+          "name": "description",
+          "label": "Descrizione",
+          "description": "max 150 caratteri",
+          "required": true,
+          "maxlength": 150
+        },
+        {
+          "component": "aem-content",
+          "name": "link",
+          "label": "Link alle pagine con FAQ",
+          "description": "Aggiungi le pagine che contengono le FAQ",
+          "multi": true
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "faq-widget",
+      "components": []
+    }
+  ]
+}

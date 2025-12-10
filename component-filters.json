@@ -6,7 +6,8 @@
       "kpi-highlights-widget",
       "insurance-product-carousel-widget",
       "hero-widget",
-      "blog-carousel-widget"
+      "blog-carousel-widget",
+      "faq-widget"
     ]
   },
   {
@@ -40,6 +41,10 @@
   },
   {
     "id": "kpi-highlights-widget",
+    "components": []
+  },
+  {
+    "id": "faq-widget",
     "components": []
   },
   {
