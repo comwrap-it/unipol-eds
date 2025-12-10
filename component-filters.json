@@ -41,7 +41,8 @@
       "options-list",
       "text-list",
       "prodotto-unico",
-      "prodotto-unico-header"
+      "prodotto-unico-header",
+      "image-text-grid"
     ]
   },
   {
@@ -116,6 +117,14 @@
     "components": [
       "full-screen-hero-carousel"
     ]
+  },
+  {
+    "id": "image-text-grid",
+    "components": [
+      "image-text-item"
+    ],
+    "min": 1,
+    "max": 4
   },
   {
     "id": "insurance-product-carousel-widget",
