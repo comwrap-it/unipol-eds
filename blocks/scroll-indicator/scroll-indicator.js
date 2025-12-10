@@ -30,41 +30,28 @@ async function ensureStylesLoaded() {
 }
 
 /**
-  @typedef {Object} ScrollIndicatorReturnType
-  @property {HTMLElement} leftIconButton: The left navigation button element.
-  @property {HTMLElement} scrollIndicator: The scroll indicator wrapper element.
-  @property {HTMLElement} rightIconButton: The right navigation button element.
-  @property {(state: {isBeginning: boolean, isEnd: boolean}) => void}
-*/
-
-/**
- * Decorates the scroll indicator block element
- * @param {boolean} isInsideHero - Whether the scroll indicator is inside a hero block
- * @return {ScrollIndicatorReturnType} scrollIndicator
+ * Creates a navigation button for the scroll indicator
+ * @param {string} containerClass - The class name for the button container
+ * @param {string} iconName - The name of the icon to use
+ * @param {string} buttonClass - The class name for the button itself
+ * @returns {HTMLElement} The navigation button container element
  */
-export default async function createScrollIndicator(isInsideHero = false) {
-  // Ensure CSS is loaded not awaited to avoid block
-  ensureStylesLoaded();
+const createNavButton = (containerClass, iconName, buttonClass) => {
+  const iconButtonContainer = document.createElement('div');
+  iconButtonContainer.className = containerClass;
 
-  // Create scrollIndicator structure
-  const scrollIndicator = document.createElement('div');
-  scrollIndicator.className = 'scroll-indicator';
-  if (isInsideHero) {
-    scrollIndicator.classList.add('hero-indicator');
-  }
-
-  const leftIconButtonContainer = document.createElement('div');
-  leftIconButtonContainer.className = 'left-icon-button';
-
-  const leftIconButton = createIconButton(
-    'un-icon-chevron-left',
+  const iconButton = createIconButton(
+    iconName,
     BUTTON_VARIANTS.PRIMARY,
     BUTTON_ICON_SIZES.MEDIUM,
     '',
   );
-  leftIconButton.classList.add('swiper-button-prev');
-  leftIconButtonContainer.appendChild(leftIconButton);
+  iconButton.classList.add(buttonClass);
+  iconButtonContainer.appendChild(iconButton);
+  return { iconButtonContainer, iconButton };
+};
 
+const createExpandingDots = () => {
   const expandingDotsContainer = document.createElement('div');
   expandingDotsContainer.className = 'expanding-dots';
 
@@ -109,22 +96,7 @@ export default async function createScrollIndicator(isInsideHero = false) {
   // Initial positions: expanded on the left
   applyPositions('first');
 
-  const rightIconButtonContainer = document.createElement('div');
-  rightIconButtonContainer.className = 'right-icon-button';
-
-  const rightIconButton = createIconButton(
-    'un-icon-chevron-right',
-    BUTTON_VARIANTS.PRIMARY,
-    BUTTON_ICON_SIZES.MEDIUM,
-    '',
-  );
-  rightIconButton.classList.add('swiper-button-next');
-  rightIconButtonContainer.appendChild(rightIconButton);
-
-  scrollIndicator.appendChild(leftIconButtonContainer);
-  scrollIndicator.appendChild(expandingDotsContainer);
-  scrollIndicator.appendChild(rightIconButtonContainer);
-
+  // method to update the expanded dot position from swiper carousel
   function setExpandedDot({ isBeginning, isEnd }) {
     if (isBeginning) {
       applyPositions('first'); // expanded left
@@ -134,6 +106,59 @@ export default async function createScrollIndicator(isInsideHero = false) {
       applyPositions('second'); // expanded center
     }
   }
+
+  return {
+    expandingDotsContainer,
+    setExpandedDot,
+  };
+};
+/**
+  @typedef {Object} ScrollIndicatorReturnType
+  @property {HTMLElement} leftIconButton: The left navigation button element.
+  @property {HTMLElement} scrollIndicator: The scroll indicator wrapper element.
+  @property {HTMLElement} rightIconButton: The right navigation button element.
+  @property {(state: {isBeginning: boolean, isEnd: boolean}) => void}
+*/
+
+/**
+ * Decorates the scroll indicator block element
+ * @param {boolean} isInsideHero - Whether the scroll indicator is inside a hero block
+ * @return {ScrollIndicatorReturnType} scrollIndicator
+ */
+export default async function createScrollIndicator(isInsideHero = false) {
+  // Ensure CSS is loaded not awaited to avoid block
+  ensureStylesLoaded();
+
+  // Create scrollIndicator structure
+  const scrollIndicator = document.createElement('div');
+  scrollIndicator.className = 'scroll-indicator';
+  if (isInsideHero) {
+    scrollIndicator.classList.add('hero-indicator');
+  }
+
+  const {
+    iconButtonContainer: leftIconButtonContainer,
+    iconButton: leftIconButton,
+  } = createNavButton(
+    'left-icon-button',
+    'un-icon-chevron-left',
+    'swiper-button-prev',
+  );
+
+  const { expandingDotsContainer, setExpandedDot } = createExpandingDots();
+
+  const {
+    iconButtonContainer: rightIconButtonContainer,
+    iconButton: rightIconButton,
+  } = createNavButton(
+    'right-icon-button',
+    'un-icon-chevron-right',
+    'swiper-button-next',
+  );
+
+  scrollIndicator.appendChild(leftIconButtonContainer);
+  scrollIndicator.appendChild(expandingDotsContainer);
+  scrollIndicator.appendChild(rightIconButtonContainer);
 
   return {
     leftIconButton,
