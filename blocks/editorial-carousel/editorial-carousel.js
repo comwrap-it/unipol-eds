@@ -158,8 +158,8 @@ export default async function handleEditorialProductCarouselWidget(block) {
 
   // #region Desktop widget behavior
   if (mq.matches) {
-    const handleEditorialProductCarouselWidget = await import('../editorial-carousel-widget/editorial-carousel-widget.js');
-    handleEditorialProductCarouselWidget.default();
+    const widgetModule = await import('../editorial-carousel-widget/editorial-carousel-widget.js');
+    widgetModule.default();
   }
   // #endregion
 }
