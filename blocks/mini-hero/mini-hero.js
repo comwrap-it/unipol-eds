@@ -11,13 +11,13 @@ import {
 } from '../atoms/buttons/standard-button/standard-button.js';
 
 /**
- * Sets up the Hero container with background media (image or video).
+ * Sets up the Mini Hero container with background media (image or video).
  * @param {HTMLElement} heroBackground - The media element (video or picture)
  * @param {boolean} isVideoBackground
  * @param {boolean} isCarousel
  * @returns {HTMLDivElement}
  */
-const setupHeroWithBg = (
+const setupMiniHeroWithBg = (
   heroBackground,
   isVideoBackground = false,
   isCarousel = false,
@@ -74,7 +74,7 @@ const setupHeroWithBg = (
 };
 
 /**
- * Builds the main textual/logo section of a Hero.
+ * Builds the main textual/logo section of a Mini Hero.
  * @param {HTMLElement} titleRow
  * @param {HTMLElement} subtitleRow
  * @param {boolean} showHeroBulletList
@@ -82,7 +82,7 @@ const setupHeroWithBg = (
  * @param {boolean} isCarousel
  * @returns {HTMLDivElement}
  */
-const createHeroMainSection = (
+const createMiniHeroMainSection = (
   titleRow,
   subtitleRow,
   showHeroBulletList,
@@ -96,7 +96,7 @@ const createHeroMainSection = (
   if (subtitleRow.firstChild) {
     const subtitleBoldEl = createTextElementFromRow(
       subtitleRow,
-      'hero-subtitle-bold',
+      'hero-subtitle',
       'p',
     );
     mainSection.appendChild(subtitleBoldEl);
@@ -114,7 +114,7 @@ const createHeroMainSection = (
 };
 
 /**
- * Builds the button section of a Hero, handling carousel placement logic.
+ * Builds the button section of a Mini Hero, handling carousel placement logic.
  * @param {boolean} showHeroButton
  * @param {string} btnLabel
  * @param {string} btnHref
@@ -127,7 +127,7 @@ const createHeroMainSection = (
  * @param {boolean} isCarousel
  * @returns {HTMLDivElement|null}
  */
-const createHeroButtonSection = async (
+const createMiniHeroButtonSection = async (
   showHeroButton,
   btnLabel,
   btnHref,
@@ -197,10 +197,10 @@ export async function createMiniHero(
   btnRightIcon,
   isCarousel = false,
 ) {
-  const hero = setupHeroWithBg(heroBackground, isVideoBackground, isCarousel);
+  const hero = setupMiniHeroWithBg(heroBackground, isVideoBackground, isCarousel);
   const heroContent = document.createElement('div');
   heroContent.className = 'hero-content';
-  const mainSection = createHeroMainSection(
+  const mainSection = createMiniHeroMainSection(
     titleRow,
     subtitleRow,
     showHeroBulletList,
@@ -209,7 +209,7 @@ export async function createMiniHero(
   );
   heroContent.appendChild(mainSection);
   if (showHeroButton) {
-    const buttonSection = await createHeroButtonSection(
+    const buttonSection = await createMiniHeroButtonSection(
       showHeroButton,
       btnLabel,
       btnHref,
@@ -236,8 +236,8 @@ export async function createMiniHero(
  *
  */
 export const extractMiniHeroPropertiesFromRows = (rows) => {
+  const heroBackground = extractMediaElementFromRow(rows[0]);
   const isVideoBackground = extractBooleanValueFromRow(rows[1]);
-  const heroBackground = extractMediaElementFromRow(rows[0], isVideoBackground);
   const titleRow = rows[2];
   const subtitleRow = rows[3];
   const showHeroBulletList = extractBooleanValueFromRow(rows[4]);
