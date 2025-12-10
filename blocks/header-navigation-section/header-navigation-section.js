@@ -113,7 +113,7 @@ function updateContainerWidth(container) {
   let width = 0;
   wrappers.forEach((w) => {
     if (!w.classList.contains('nav-pill-hidden')) {
-      width += w.offsetWidth + 3.3;
+      width += w.offsetWidth + 3.5;
     }
   });
   container.style.width = `${width}px`;

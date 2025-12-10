@@ -80,7 +80,7 @@
   display: inline-flex;
 }
 
-.header-box-text-container button {
+.header-box-text-container button.un-close-btn {
     display: none;
 }
 
@@ -103,7 +103,7 @@
         top: unset;
     }
 
-    .header-box-text-container button {
+    .header-box-text-container button.un-close-btn {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -113,7 +113,7 @@
         padding: var(--Space-100-4, 4px);
     }
 
-    .header-box-text-container button span {
+    .header-box-text-container button.un-close-btn span {
         display: flex;
         justify-content: center;
         align-items: center;

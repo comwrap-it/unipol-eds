@@ -2,3 +2,29 @@
     width: 100px;
     height: var(--Header-Logo-Height, 40px);
 }
+
+.hamburger-menu-container {
+    display: none;
+}
+
+@media (width <= 1200px) {
+    .header-logo {
+        display: flex;
+    }
+
+    .hamburger-menu-container {
+        display: block;
+    }
+
+    .hamburger-menu-container a,
+    .hamburger-menu-container button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--Header-Background);
+        border-radius: var(--Header-Radius);
+        font-size: var(--Icon-200-20);
+        height: 44px;
+        width: 44px;
+    }
+}
