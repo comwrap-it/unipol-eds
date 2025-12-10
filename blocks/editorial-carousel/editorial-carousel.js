@@ -9,25 +9,22 @@ import {
 import loadSwiper from '../../scripts/delayed.js';
 import { handleSlideChange } from '../../scripts/utils.js';
 
-let isStylesLoaded = false;
+let stylesLoaded = false;
 
 async function ensureStylesLoaded() {
-  if (isStylesLoaded) return;
+  if (stylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
-  await Promise.all([
-    loadCSS(
-      `${window.hlx.codeBasePath}/blocks/editorial-carousel-widget/editorial-carousel-widget.css`,
-    ),
-  ]);
-  isStylesLoaded = true;
+  const widgetCssPath = `${window.hlx.codeBasePath}/blocks/editorial-carousel-widget/editorial-carousel-widget.css`;
+  await Promise.all([loadCSS(widgetCssPath)]);
+  stylesLoaded = true;
 }
 
-const initSwiper = (
-  Swiper,
+const initSwiperInstance = (
+  SwiperLib,
   carousel,
-  leftIconButton = null,
-  rightIconButton = null,
-) => new Swiper(carousel, {
+  leftIconButton,
+  rightIconButton,
+) => new SwiperLib(carousel, {
   a11y: false,
   navigation: {
     prevEl: leftIconButton || carousel.querySelector('.swiper-button-prev'),
@@ -38,9 +35,7 @@ const initSwiper = (
   slidesPerView: 'auto',
   allowTouchMove: true,
   breakpoints: {
-    1200: {
-      allowTouchMove: false,
-    },
+    1200: { allowTouchMove: false },
   },
   resistanceRatio: 0.85,
   touchReleaseOnEdges: true,
@@ -48,25 +43,13 @@ const initSwiper = (
   debugger: true,
 });
 
-export default async function handleEditorialProductCarouselWidget(block) {
-  // #region Guard clauses
-  if (!block) return;
-  // #endregion
+const hasInstrumentation = (block) => (
+  block.hasAttribute('data-aue-resource')
+  || block.querySelector('[data-aue-resource]')
+  || block.querySelector('[data-richtext-prop]')
+);
 
-  // #region Load styles once
-  await ensureStylesLoaded();
-  // #endregion
-
-  // #region Instrumentation check and card module
-  const hasInstrumentation = block.hasAttribute('data-aue-resource')
-    || block.querySelector('[data-aue-resource]')
-    || block.querySelector('[data-richtext-prop]');
-
-  const cardModule = await import('../editorial-carousel-card/editorial-carousel-card.js');
-  const decorateEditorialProductCard = cardModule.default;
-  // #endregion
-
-  // #region Carousel structure
+const createCarouselStructure = () => {
   const carousel = document.createElement('div');
   carousel.className = 'editorial-carousel-container swiper';
   carousel.setAttribute('role', 'region');
@@ -76,72 +59,60 @@ export default async function handleEditorialProductCarouselWidget(block) {
   const track = document.createElement('div');
   track.className = 'editorial-carousel swiper-wrapper';
   track.setAttribute('role', 'list');
-  // #endregion
 
-  // #region Rows extraction
-  const rows = Array.from(block.children);
-  const showMoreElement = rows.shift();
-  const showMoreButtonLabel = showMoreElement?.textContent?.trim() || 'Mostra di piu';
-  if (rows.length === 0) {
-    // eslint-disable-next-line no-console
-    console.warn('Editorial Carousel: No cards found');
-    return;
+  return { carousel, track };
+};
+
+const createSlide = async (row, decorateCard) => {
+  const slide = document.createElement('div');
+  slide.className = 'editorial-carousel-card-wrapper swiper-slide';
+  slide.setAttribute('role', 'listitem');
+  moveInstrumentation(row, slide);
+
+  const cardBlock = document.createElement('div');
+  cardBlock.className = 'editorial-carousel-card';
+  cardBlock.dataset.blockName = 'editorial-carousel-card';
+
+  if (row.hasAttribute('data-aue-resource')) {
+    cardBlock.setAttribute('data-aue-resource', row.getAttribute('data-aue-resource'));
+    const aueBehavior = row.getAttribute('data-aue-behavior');
+    if (aueBehavior) cardBlock.setAttribute('data-aue-behavior', aueBehavior);
+    const aueType = row.getAttribute('data-aue-type');
+    if (aueType) cardBlock.setAttribute('data-aue-type', aueType);
+    const aueLabel = row.getAttribute('data-aue-label');
+    if (aueLabel) cardBlock.setAttribute('data-aue-label', aueLabel);
   }
-  // #endregion
 
-  // #region Build slides
-  const cardPromises = rows.map(async (row) => {
-    const slide = document.createElement('div');
-    slide.className = 'editorial-carousel-card-wrapper swiper-slide';
-    slide.setAttribute('role', 'listitem');
-    moveInstrumentation(row, slide);
+  while (row.firstElementChild) {
+    cardBlock.appendChild(row.firstElementChild);
+  }
 
-    const cardBlock = document.createElement('div');
-    cardBlock.className = 'editorial-carousel-card';
-    cardBlock.dataset.blockName = 'editorial-carousel-card';
+  slide.appendChild(cardBlock);
+  await decorateCard(cardBlock);
 
-    if (row.hasAttribute('data-aue-resource')) {
-      cardBlock.setAttribute('data-aue-resource', row.getAttribute('data-aue-resource'));
-      const aueBehavior = row.getAttribute('data-aue-behavior');
-      if (aueBehavior) cardBlock.setAttribute('data-aue-behavior', aueBehavior);
-      const aueType = row.getAttribute('data-aue-type');
-      if (aueType) cardBlock.setAttribute('data-aue-type', aueType);
-      const aueLabel = row.getAttribute('data-aue-label');
-      if (aueLabel) cardBlock.setAttribute('data-aue-label', aueLabel);
-    }
+  const decoratedCard = slide.querySelector('.editorial-carousel-card-container, .card')
+    || slide.firstElementChild;
+  if (decoratedCard?.dataset.blockName) {
+    await loadBlock(decoratedCard);
+  }
 
-    while (row.firstElementChild) {
-      cardBlock.appendChild(row.firstElementChild);
-    }
+  return slide;
+};
 
-    slide.appendChild(cardBlock);
-    await decorateEditorialProductCard(cardBlock);
-
-    const decoratedCard = slide.querySelector('.editorial-carousel-card-container, .card')
-      || slide.firstElementChild;
-    if (decoratedCard?.dataset.blockName) {
-      await loadBlock(decoratedCard);
-    }
-
-    return slide;
-  });
-
-  const mq = window.matchMedia('(min-width: 768px)');
-  const cardElements = await Promise.all(cardPromises);
-
-  cardElements.forEach((slide, index) => {
-    if (slide && !hasInstrumentation && slide.innerText) {
+const appendSlides = (slides, track, instrumented, mq) => {
+  slides.forEach((slide, index) => {
+    if (slide && !instrumented && slide.innerText) {
       if (index >= 4 && !mq.matches) {
         slide.classList.add('hidden');
       }
       track.appendChild(slide);
-    } else if (slide && hasInstrumentation) {
+    } else if (slide && instrumented) {
       track.appendChild(slide);
     }
   });
-  // #endregion
+};
 
-  // #region Navigation controls
+const createNavigation = async (cardElements, mq, showMoreButtonLabel) => {
   const scrollIndicatorProps = {};
   let showMoreButton;
 
@@ -168,23 +139,87 @@ export default async function handleEditorialProductCarouselWidget(block) {
     );
   }
 
-  if (showMoreButton) {
-    showMoreButton.addEventListener('click', (event) => {
-      event.preventDefault();
-      cardElements.forEach((slide) => slide.classList.remove('hidden'));
-      showMoreButton.remove();
-    });
-  }
-  // #endregion
+  return { scrollIndicatorProps, showMoreButton };
+};
 
-  // #region Assemble
+const bindShowMore = (showMoreButton, cardElements) => {
+  if (!showMoreButton) return;
+  showMoreButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    cardElements.forEach((slide) => slide.classList.remove('hidden'));
+    showMoreButton.remove();
+  });
+};
+
+const assembleCarousel = (carousel, track, scrollIndicatorProps, showMoreButton) => {
   carousel.appendChild(track);
   if (scrollIndicatorProps.scrollIndicator) {
     carousel.appendChild(scrollIndicatorProps.scrollIndicator);
   } else if (showMoreButton) {
     carousel.appendChild(showMoreButton);
   }
+};
 
+const initDesktopSwiper = async (carousel, scrollIndicatorProps) => {
+  const SwiperLib = await loadSwiper();
+  const swiperInstance = initSwiperInstance(
+    SwiperLib,
+    carousel,
+    scrollIndicatorProps.leftIconButton,
+    scrollIndicatorProps.rightIconButton,
+  );
+  if (scrollIndicatorProps.setExpandedDot) {
+    handleSlideChange(
+      swiperInstance,
+      scrollIndicatorProps.setExpandedDot,
+      scrollIndicatorProps.leftIconButton,
+      scrollIndicatorProps.rightIconButton,
+    );
+    scrollIndicatorProps.setExpandedDot({
+      isBeginning: swiperInstance.isBeginning,
+      isEnd: swiperInstance.isEnd,
+    });
+    if (scrollIndicatorProps.leftIconButton) {
+      scrollIndicatorProps.leftIconButton.disabled = swiperInstance.isBeginning;
+    }
+    if (scrollIndicatorProps.rightIconButton) {
+      scrollIndicatorProps.rightIconButton.disabled = swiperInstance.isEnd;
+    }
+  }
+};
+
+export default async function handleEditorialProductCarouselWidget(block) {
+  if (!block) return;
+  await ensureStylesLoaded();
+
+  const instrumented = hasInstrumentation(block);
+  const cardModule = await import('../editorial-carousel-card/editorial-carousel-card.js');
+  const decorateEditorialProductCard = cardModule.default;
+
+  const { carousel, track } = createCarouselStructure();
+  const rows = Array.from(block.children);
+  const showMoreElement = rows.shift();
+  const showMoreButtonLabel = showMoreElement?.textContent?.trim() || 'Mostra di piu';
+  if (rows.length === 0) {
+    // eslint-disable-next-line no-console
+    console.warn('Editorial Carousel: No cards found');
+    return;
+  }
+
+  const cardPromises = rows.map((row) => createSlide(row, decorateEditorialProductCard));
+  const mq = window.matchMedia('(min-width: 768px)');
+  const cardElements = await Promise.all(cardPromises);
+
+  appendSlides(cardElements, track, instrumented, mq);
+
+  const { scrollIndicatorProps, showMoreButton } = await createNavigation(
+    cardElements,
+    mq,
+    showMoreButtonLabel,
+  );
+  bindShowMore(showMoreButton, cardElements);
+
+  assembleCarousel(carousel, track, scrollIndicatorProps, showMoreButton);
   showMoreElement?.remove();
 
   if (block.dataset.blockName) {
@@ -194,35 +229,8 @@ export default async function handleEditorialProductCarouselWidget(block) {
   block.innerText = '';
   carousel.classList.add('block', 'editorial-carousel-block');
   block.appendChild(carousel);
-  // #endregion
 
-  // #region Swiper initialization
   if (mq.matches) {
-    const SwiperLib = await loadSwiper();
-    const swiperInstance = initSwiper(
-      SwiperLib,
-      carousel,
-      scrollIndicatorProps.leftIconButton,
-      scrollIndicatorProps.rightIconButton,
-    );
-    if (scrollIndicatorProps.setExpandedDot) {
-      handleSlideChange(
-        swiperInstance,
-        scrollIndicatorProps.setExpandedDot,
-        scrollIndicatorProps.leftIconButton,
-        scrollIndicatorProps.rightIconButton,
-      );
-      scrollIndicatorProps.setExpandedDot({
-        isBeginning: swiperInstance.isBeginning,
-        isEnd: swiperInstance.isEnd,
-      });
-      if (scrollIndicatorProps.leftIconButton) {
-        scrollIndicatorProps.leftIconButton.disabled = swiperInstance.isBeginning;
-      }
-      if (scrollIndicatorProps.rightIconButton) {
-        scrollIndicatorProps.rightIconButton.disabled = swiperInstance.isEnd;
-      }
-    }
+    await initDesktopSwiper(carousel, scrollIndicatorProps);
   }
-  // #endregion
 }
