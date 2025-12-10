@@ -27,12 +27,8 @@ export function createAccordion(accordionLabel, accordionDescription) {
   const content = document.createElement('div');
   content.className = 'accordion-content';
   content.textContent = accordionDescription.value || '';
-  if (!isAuthorMode(content)) {
-    content.style.maxHeight = '0';
-    content.style.paddingTop = '0';
-    content.style.paddingBottom = '0';
-    content.style.overflow = 'hidden';
-    content.style.transition = 'max-height 0.3s ease, padding 0.3s ease';
+  if (isAuthorMode(content)) {
+    wrapper.classList.add('open');
   }
   restoreInstrumentation(content, accordionDescription.instrumentation);
 
