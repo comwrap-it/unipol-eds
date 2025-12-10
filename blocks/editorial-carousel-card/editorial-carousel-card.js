@@ -2,9 +2,8 @@
  * Editorial Carousel Card - monolithic version with region markers.
  */
 import {
-  createButtonFromRows,
-  extractInstrumentationAttributes,
-} from '../atoms/buttons/standard-button/standard-button.js';
+  extractInstrumentationAttributes } from '../atoms/buttons/standard-button/standard-button.js';
+import { createLinkButtonFromRows } from '../atoms/buttons/link-button/link-button.js';
 import { createTagFromRows } from '../atoms/tag/tag.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
@@ -20,7 +19,7 @@ export default async function handleEditorialProductCarouselWidget(block) {
     const { loadCSS } = await import('../../scripts/aem.js');
     await Promise.all([
       loadCSS(
-        `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`,
+        `${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`,
       ),
       loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`),
       loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/icons-3D/icons-3D.css`),
@@ -135,7 +134,7 @@ export default async function handleEditorialProductCarouselWidget(block) {
 
   // #region Buttons + note
   const buttonRows = rows.slice(2, 9);
-  const buttonElement = createButtonFromRows(buttonRows);
+  const buttonElement = createLinkButtonFromRows(buttonRows);
 
   if (buttonElement && buttonElement.children.length > 0) {
     const buttonsContainer = document.createElement('div');
@@ -185,3 +184,6 @@ export default async function handleEditorialProductCarouselWidget(block) {
   block.replaceChildren(card);
   // #endregion
 }
+
+
+
