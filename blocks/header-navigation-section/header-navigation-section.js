@@ -50,22 +50,36 @@ function closeBoxWithAnimation(box) {
   });
 }
 
-/**
- * closeBox: ora accetta pill opzionale. Se pill è fornito, rimuove anche la classe
- * e aggiorna aria-expanded. Se pill non è fornito chiude comunque il box.
- */
 async function closeBox(pill, box) {
   if (!box) return;
   await closeBoxWithAnimation(box);
 
   pill?.classList.remove('header-nav-pill-active');
   pill?.setAttribute('aria-expanded', 'false');
-  box?.setAttribute('aria-hidden', 'true');
 }
 
-/**
- * closeAllBoxesExcept: ora riceve la mappa come primo argomento per evitare problemi di scope.
- */
+function addCloseIconToBox(box, pill) {
+  if (!box || !pill) return;
+  if (window.innerWidth > 1200) return;
+
+  if (box.querySelector('.un-close-btn')) return;
+
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'un-close-btn';
+  closeBtn.setAttribute('aria-label', 'Close Header Navigation box');
+
+  const spanIcon = document.createElement('span');
+  spanIcon.className = 'un-icon-close';
+
+  closeBtn.appendChild(spanIcon);
+
+  closeBtn.addEventListener('click', async () => {
+    await closeBox(pill, box);
+  });
+
+  box.appendChild(closeBtn);
+}
+
 async function closeAllBoxesExcept(map, currentPill, currentBox) {
   if (!map || typeof map.entries !== 'function') return;
 
@@ -89,9 +103,6 @@ function hideSecondRightIcon() {
   if (icon) icon.style.opacity = '0';
 }
 
-/* ------------------------------------------------------------------
-   AGGIORNA WIDTH DEL CONTAINER SICURA
------------------------------------------------------------------- */
 function updateContainerWidth(container) {
   const wrappers = Array.from(container.querySelectorAll('.navigation-pill-wrapper'));
   const ready = wrappers.some((w) => w.offsetWidth > 0);
@@ -102,7 +113,7 @@ function updateContainerWidth(container) {
   let width = 0;
   wrappers.forEach((w) => {
     if (!w.classList.contains('nav-pill-hidden')) {
-      width += w.offsetWidth + 6;
+      width += w.offsetWidth + 3.3;
     }
   });
   container.style.width = `${width}px`;
@@ -271,32 +282,31 @@ export default async function decorate(block) {
     if (cfg.boxText) {
       boxEl = document.createElement('div');
       boxEl.className = 'header-box-text-container';
-      boxEl.textContent = cfg.boxText;
       boxEl.style.display = 'none';
+      const textWrapper = document.createElement('div');
+      textWrapper.className = 'header-box-text-content';
+      textWrapper.textContent = cfg.boxText;
+      boxEl.appendChild(textWrapper);
       const boxId = `header-box-${Math.random().toString(36).substr(2, 9)}`;
       boxEl.id = boxId;
       pillEl.setAttribute('aria-controls', boxId);
       pillEl.setAttribute('aria-expanded', 'false');
-      boxEl.setAttribute('aria-hidden', 'true');
       pillToBoxMap.set(pillEl, boxEl);
+      addCloseIconToBox(boxEl, pillEl);
 
       pillEl.addEventListener('click', async () => {
         const box = pillToBoxMap.get(pillEl);
         if (!box) return;
-
         const isClosed = box.style.display === 'none';
-
         await closeAllBoxesExcept(pillToBoxMap, pillEl, box);
-
         if (isClosed) {
-          box.style.display = 'block';
+          box.style.display = 'flex';
           requestAnimationFrame(() => box.classList.add('header-box-open'));
           pillEl.classList.add('header-nav-pill-active');
           pillEl.setAttribute('aria-expanded', 'true');
-          box.setAttribute('aria-hidden', 'false');
-
           openBoxRef.box = box;
           openBoxRef.pill = pillEl;
+          addCloseIconToBox(box, pillEl);
         } else {
           await closeBox(pillEl, box);
           openBoxRef.box = null;
@@ -347,6 +357,16 @@ export default async function decorate(block) {
     await closeBox(pill, box);
     openBoxRef.box = null;
     openBoxRef.pill = null;
+  });
+  window.addEventListener('resize', () => {
+    pillToBoxMap.forEach((box, pill) => {
+      if (window.innerWidth <= 1200) {
+        addCloseIconToBox(box, pill);
+      } else {
+        const btn = box.querySelector('.un-close-btn'); // <-- qui cambia
+        if (btn) box.removeChild(btn);
+      }
+    });
   });
 
   navigationResponsiveController(block);

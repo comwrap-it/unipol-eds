@@ -13,8 +13,28 @@
     line-height: unset;
 }
 
+.hamburger-menu-container {
+    display: none;
+}
+
+@media (width <= 1200px) {
+    .hamburger-menu-container {
+        display: block;
+    }
+
+    .hamburger-menu-container button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid var(--Icon-Button-Secondary-Default-Border);
+        border-radius: var(--Header-Radius);
+        background: var(--Header-Background);
+        padding: var(--Space-100-4, 4px);
+    }
+}
+
 @media (width <= 768px) {
-  .header-utilities-container > :not(:last-child) {
+  .header-utilities-container > :not(:first-child) {
     display: none;
   }
 }

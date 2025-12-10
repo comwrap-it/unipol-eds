@@ -69,6 +69,20 @@ function extractHeaderLogoData(rows) {
 export default function decorate(block) {
   if (!block) return;
 
+  const hamburgerContainer = document.createElement('div');
+  hamburgerContainer.className = 'hamburger-menu-container';
+
+  const hamburgerButton = document.createElement('button');
+  hamburgerButton.className = 'hamburger-menu-button';
+
+  const icon = document.createElement('span');
+  icon.className = 'icon un-icon-arrow-down-right';
+
+  hamburgerButton.appendChild(icon);
+  hamburgerContainer.appendChild(hamburgerButton);
+
+  block.insertBefore(hamburgerContainer, block.firstChild);
+
   const rows = Array.from(block.children);
   const wrapper = block.querySelector('.default-content-wrapper');
   const actualRows = wrapper ? Array.from(wrapper.children) : rows;
@@ -87,4 +101,5 @@ export default function decorate(block) {
   });
 
   block.classList.add('header-logo');
+  block.insertBefore(hamburgerContainer, block.firstChild);
 }
