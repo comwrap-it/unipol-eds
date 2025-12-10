@@ -1,95 +1,78 @@
 /**
- * Editorial Carousel Card - monolithic version with region markers.
+ * Editorial Carousel Card - modular version.
  */
-import {
-  extractInstrumentationAttributes } from '../atoms/buttons/standard-button/standard-button.js';
+import { extractInstrumentationAttributes } from '../atoms/buttons/standard-button/standard-button.js';
 import { createLinkButtonFromRows } from '../atoms/buttons/link-button/link-button.js';
 import { createTagFromRows } from '../atoms/tag/tag.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-export default async function handleEditorialProductCarouselWidget(block) {
-  // #region Guard clauses
-  if (!block) return;
-  if (block.classList.contains('card-block')) return;
-  // #endregion
+let stylesLoaded = false;
 
-  // #region Load styles once
-  if (!handleEditorialProductCarouselWidget.stylesLoaded) {
-    const { loadCSS } = await import('../../scripts/aem.js');
-    await Promise.all([
-      loadCSS(
-        `${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`,
-      ),
-      loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`),
-      loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/icons-3D/icons-3D.css`),
-    ]);
-    handleEditorialProductCarouselWidget.stylesLoaded = true;
-  }
-  // #endregion
+async function ensureStylesLoaded() {
+  if (stylesLoaded) return;
+  const { loadCSS } = await import('../../scripts/aem.js');
+  await Promise.all([
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`,
+    ),
+    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`),
+    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/icons-3D/icons-3D.css`),
+  ]);
+  stylesLoaded = true;
+}
 
-  // #region Rows and instrumentation
+function getRows(block) {
   const wrapper = block.querySelector('.default-content-wrapper');
-  const rows = wrapper ? Array.from(wrapper.children) : Array.from(block.children);
-  const instrumentation = extractInstrumentationAttributes(rows[0]);
-  // #endregion
+  return wrapper ? Array.from(wrapper.children) : Array.from(block.children);
+}
 
-  // #region Build card skeleton
-  const card = document.createElement('div');
-  card.className = 'editorial-carousel-card-container';
-
-  const cardContent = document.createElement('div');
-  cardContent.className = 'editorial-carousel-card-content';
-  // #endregion
-
-  // #region Image section + tag
+function buildImageSection(rows) {
   const imageRow = rows[13];
-  if (imageRow) {
-    const cardImage = document.createElement('div');
-    cardImage.className = 'editorial-carousel-card-image';
+  if (!imageRow) return null;
 
-    const tagRows = rows.slice(10, 13);
-    const tagElement = createTagFromRows(tagRows);
-    if (tagElement?.classList) {
-      tagElement.classList.add('editorial-carousel-card-tag');
-      cardImage.appendChild(tagElement);
-    }
+  const cardImage = document.createElement('div');
+  cardImage.className = 'editorial-carousel-card-image';
 
-    const altText = rows[14]?.textContent?.trim() || '';
-    const picture = imageRow.querySelector('picture');
-    if (picture) {
-      picture.querySelector('img')?.setAttribute('alt', altText);
-      cardImage.appendChild(picture);
-    } else {
-      const img = imageRow.querySelector('img');
-      const link = imageRow.querySelector('a');
-      const src = img?.src || link?.href;
+  const tagRows = rows.slice(10, 13);
+  const tagElement = createTagFromRows(tagRows);
+  if (tagElement?.classList) {
+    tagElement.classList.add('editorial-carousel-card-tag');
+    cardImage.appendChild(tagElement);
+  }
 
-      if (src) {
-        const optimizedPic = createOptimizedPicture(
-          src,
-          altText,
-          false,
-          [
-            { media: '(min-width: 769)', width: '316' },
-            { media: '(max-width: 768)', width: '240' },
-            { media: '(max-width: 392)', width: '343' },
-          ],
-        );
-        const newImg = optimizedPic.querySelector('img');
-        if (newImg && img) moveInstrumentation(img, newImg);
-        if (newImg && link) moveInstrumentation(link, newImg);
-        cardImage.appendChild(optimizedPic);
-      }
-    }
+  const altText = rows[14]?.textContent?.trim() || '';
+  const picture = imageRow.querySelector('picture');
+  if (picture) {
+    picture.querySelector('img')?.setAttribute('alt', altText);
+    cardImage.appendChild(picture);
+  } else {
+    const img = imageRow.querySelector('img');
+    const link = imageRow.querySelector('a');
+    const src = img?.src || link?.href;
 
-    if (cardImage.children.length) {
-      card.appendChild(cardImage);
+    if (src) {
+      const optimizedPic = createOptimizedPicture(
+        src,
+        altText,
+        false,
+        [
+          { media: '(min-width: 769)', width: '316' },
+          { media: '(max-width: 768)', width: '240' },
+          { media: '(max-width: 392)', width: '343' },
+        ],
+      );
+      const newImg = optimizedPic.querySelector('img');
+      if (newImg && img) moveInstrumentation(img, newImg);
+      if (newImg && link) moveInstrumentation(link, newImg);
+      cardImage.appendChild(optimizedPic);
     }
   }
-  // #endregion
 
-  // #region Text section
+  return cardImage.children.length ? cardImage : null;
+}
+
+function buildTextSection(rows) {
   const cardTextContent = document.createElement('div');
   cardTextContent.className = 'editorial-carousel-card-text';
 
@@ -130,60 +113,74 @@ export default async function handleEditorialProductCarouselWidget(block) {
       cardTextContent.appendChild(subtitle);
     }
   }
-  // #endregion
 
-  // #region Buttons + note
+  return cardTextContent;
+}
+
+function buildButtonsSection(rows) {
   const buttonRows = rows.slice(2, 9);
   const buttonElement = createLinkButtonFromRows(buttonRows);
+  if (!buttonElement) return null;
 
-  if (buttonElement) {
-    const buttonsContainer = document.createElement('div');
-    buttonsContainer.className = 'button-subdescription';
-    buttonsContainer.appendChild(buttonElement);
+  const buttonsContainer = document.createElement('div');
+  buttonsContainer.className = 'button-subdescription';
+  buttonsContainer.appendChild(buttonElement);
 
-    const note = rows[9];
-    if (note) {
-      const existingPara = note.querySelector('p');
-      if (existingPara) {
-        existingPara.className = 'subdescription';
-        moveInstrumentation(note, existingPara);
-        buttonsContainer.appendChild(existingPara);
-      } else if (note.textContent?.trim()) {
-        const noteFromHTML = document.createElement('p');
-        noteFromHTML.className = 'subdescription';
-        while (note.firstChild) {
-          noteFromHTML.appendChild(note.firstChild);
-        }
-        moveInstrumentation(note, noteFromHTML);
-        buttonsContainer.appendChild(noteFromHTML);
+  const note = rows[9];
+  if (note) {
+    const existingPara = note.querySelector('p');
+    if (existingPara) {
+      existingPara.className = 'subdescription';
+      moveInstrumentation(note, existingPara);
+      buttonsContainer.appendChild(existingPara);
+    } else if (note.textContent?.trim()) {
+      const noteFromHTML = document.createElement('p');
+      noteFromHTML.className = 'subdescription';
+      while (note.firstChild) {
+        noteFromHTML.appendChild(note.firstChild);
       }
-    }
-
-    if (buttonsContainer.children.length > 0) {
-      cardContent.appendChild(buttonsContainer);
+      moveInstrumentation(note, noteFromHTML);
+      buttonsContainer.appendChild(noteFromHTML);
     }
   }
-  // #endregion
 
-  // #region Assemble card content
-  cardContent.appendChild(cardTextContent);
-  if (cardContent.children.length > 0) {
-    card.appendChild(cardContent);
-  }
-  // #endregion
+  return buttonsContainer;
+}
 
-  // #region Apply instrumentation and replace block
+function applyInstrumentation(card, instrumentation, block) {
   Object.entries(instrumentation).forEach(([name, value]) => {
     card.setAttribute(name, value);
   });
   if (block.dataset.blockName) {
     card.dataset.blockName = block.dataset.blockName;
   }
-
-  card.classList.add('card-block');
-  block.replaceChildren(card);
-  // #endregion
 }
 
+export default async function handleEditorialProductCarouselWidget(block) {
+  if (!block || block.classList.contains('card-block')) return;
+  await ensureStylesLoaded();
 
+  const rows = getRows(block);
+  const instrumentation = extractInstrumentationAttributes(rows[0]);
 
+  const card = document.createElement('div');
+  card.className = 'editorial-carousel-card-container';
+
+  const cardContent = document.createElement('div');
+  cardContent.className = 'editorial-carousel-card-content';
+
+  const imageSection = buildImageSection(rows);
+  const textSection = buildTextSection(rows);
+  const buttonsSection = buildButtonsSection(rows);
+
+  if (imageSection) card.appendChild(imageSection);
+  if (textSection) cardContent.appendChild(textSection);
+  if (buttonsSection) cardContent.appendChild(buttonsSection);
+  if (cardContent.children.length > 0) {
+    card.appendChild(cardContent);
+  }
+
+  applyInstrumentation(card, instrumentation, block);
+  card.classList.add('card-block');
+  block.replaceChildren(card);
+}
