@@ -2,7 +2,7 @@ main .section.header-logo-container ,
 main .sectionheader-navigation-section-container ,
 main .sectionheader-utilities-section-container {
     position: relative;
-    padding-top: 140px;
+    padding-top: 150px;
 }
 
 body main .section.header-logo-container,
@@ -30,7 +30,7 @@ body .header .sectionheader-utilities-section-container {
     padding-bottom: 0 !important;
 }
 
-@media (width <= 1199px) {
+@media (width <= 1200px) {
     body main .section.header-navigation-section-container .navigation-pill-container {
         margin-bottom: 60px;
     }
