@@ -9,6 +9,7 @@ export default function decorate(block, isFirstBlock = false) {
   const initialAlignment = block.children[0]?.textContent?.trim() || 'left';
 
   const items = [...block.children].slice(1);
+  block.children[0].remove();
 
   items.forEach((item, index) => {
     item.classList.add('image-text-item');
