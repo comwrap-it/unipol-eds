@@ -1,0 +1,6 @@
+.faq-section {
+    display: flex;
+    width: 82rem;
+    justify-content: space-between;
+    align-items: flex-start;
+}
