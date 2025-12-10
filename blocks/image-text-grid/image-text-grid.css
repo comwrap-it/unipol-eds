@@ -18,6 +18,12 @@
   flex: 1;
 }
 
+.text-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: var(--Section-Text-Gap, 16px);
+}
+
 /* Content */
 .image-text-item .content-wrapper {
   display: flex;
@@ -45,7 +51,6 @@
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
-  margin-top: var(--Section-Text-Gap, 16px);
 }
 
 /* Alignment */

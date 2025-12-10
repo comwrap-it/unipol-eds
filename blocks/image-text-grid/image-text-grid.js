@@ -107,20 +107,27 @@ export default function decorate(block, isFirstBlock = false) {
     const contentWrapper = document.createElement('div');
     contentWrapper.classList.add('content-wrapper');
 
+    // Wrapper for title + description
+    const textWrapper = document.createElement('div');
+    textWrapper.classList.add('text-wrapper');
+
     if (title) {
       const t = document.createElement('div');
       t.classList.add('title');
       t.innerHTML = `<p>${title}</p>`;
-      contentWrapper.appendChild(t);
+      textWrapper.appendChild(t);
     }
 
     if (description) {
       const d = document.createElement('div');
       d.classList.add('description');
       d.innerHTML = `<p>${description}</p>`;
-      contentWrapper.appendChild(d);
+      textWrapper.appendChild(d);
     }
 
+    contentWrapper.appendChild(textWrapper);
+
+    // Button
     if (buttonElement) {
       const btnContainer = document.createElement('div');
       btnContainer.classList.add('button-container');
