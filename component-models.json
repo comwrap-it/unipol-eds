@@ -1497,28 +1497,6 @@
         "valueType": "boolean"
       },
       {
-        "component": "boolean",
-        "name": "showMiniHeroLogo",
-        "label": "Show Mini Hero Logo",
-        "description": "Toggle to show or hide the mini hero logo",
-        "valueType": "boolean"
-      },
-      {
-        "component": "reference",
-        "valueType": "string",
-        "name": "miniHeroLogoMediaSrc",
-        "label": "Mini Hero Logo Media",
-        "description": "URL of the logo image",
-        "condition": {
-          "===": [
-            {
-              "var": "showMiniHeroLogo"
-            },
-            true
-          ]
-        }
-      },
-      {
         "component": "text",
         "label": "Mini Hero Title",
         "name": "miniHeroMainLabel",
@@ -1530,20 +1508,10 @@
       },
       {
         "component": "text",
-        "name": "miniHeroSubtitleBold",
-        "label": "Mini Hero Subtitle Bold",
-        "validation": {
-          "maxLength": 50,
-          "customErrorMsg": "Testo troppo lungo"
-        }
-      },
-      {
-        "component": "richtext",
         "name": "miniHeroSubtitle",
         "label": "Mini Hero Subtitle",
-        "valueType": "string",
         "validation": {
-          "maxLength": 150,
+          "maxLength": 50,
           "customErrorMsg": "Testo troppo lungo"
         }
       },

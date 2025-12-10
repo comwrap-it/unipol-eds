@@ -1,6 +1,7 @@
 import {
   createTextElementFromRow,
   extractBooleanValueFromRow,
+  extractMediaElementFromRow,
 } from '../../scripts/domHelpers.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { isAuthorMode } from '../../scripts/utils.js';
@@ -270,18 +271,6 @@ export async function createHero(
   hero.appendChild(heroContent);
   return hero;
 }
-/** Get media source URL from a row
- *
- * @param {HTMLElement} row - The row element
- * @param {boolean} isVideo - Flag to indicate if media is video
- * @returns {HTMLElement|null} The media element (video or picture) or null if not found
- */
-const extractMediaFromRow = (row, isVideo = false) => {
-  const mediaElement = row?.querySelector(isVideo ? 'a' : 'picture');
-  moveInstrumentation(row, mediaElement);
-  if (mediaElement) return mediaElement;
-  return null;
-};
 
 /** Extract hero properties from rows
  *
@@ -291,9 +280,9 @@ const extractMediaFromRow = (row, isVideo = false) => {
  */
 export const extractHeroPropertiesFromRows = (rows) => {
   const isVideoBackground = extractBooleanValueFromRow(rows[1]);
-  const heroBackground = extractMediaFromRow(rows[0], isVideoBackground);
+  const heroBackground = extractMediaElementFromRow(rows[0]);
   const showHeroLogo = extractBooleanValueFromRow(rows[2]);
-  const heroLogo = extractMediaFromRow(rows[3]);
+  const heroLogo = extractMediaElementFromRow(rows[3]);
   const title = rows[4];
   const subtitleBold = rows[5];
   const subtitle = rows[6];

@@ -78,7 +78,7 @@ main {
     gap: var(--Layout-Page-Gap);
 }
 
-.section:not(:has(.hero)) {
+.section:not(:has(.hero, .mini-hero)) {
     padding-inline: var(--Layout-Section-Margin-Horizontal-Padding, 4rem);
     padding-block: var(--Layout-Section-Vertical-Padding, 0);
 

@@ -1,9 +1,9 @@
 import {
   createTextElementFromRow,
   extractBooleanValueFromRow,
+  extractMediaElementFromRow,
 } from '../../scripts/domHelpers.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import { isAuthorMode } from '../../scripts/utils.js';
 import {
   BUTTON_ICON_SIZES,
   BUTTON_VARIANTS,
@@ -23,7 +23,7 @@ const setupHeroWithBg = (
   isCarousel = false,
 ) => {
   const hero = document.createElement('div');
-  hero.className = `hero${isCarousel ? ' swiper-slide' : ''}`;
+  hero.className = `mini-hero${isCarousel ? ' swiper-slide' : ''}`;
   // Background media
   if (!isVideoBackground && heroBackground) {
     const pictureBg = heroBackground.cloneNode(true);
@@ -75,10 +75,7 @@ const setupHeroWithBg = (
 
 /**
  * Builds the main textual/logo section of a Hero.
- * @param {boolean} showHeroLogo
- * @param {HTMLElement} heroLogo - the hero logo element
  * @param {HTMLElement} titleRow
- * @param {HTMLElement} subtitleBoldRow
  * @param {HTMLElement} subtitleRow
  * @param {boolean} showHeroBulletList
  * @param {HTMLElement[]} bulletListRows
@@ -86,10 +83,7 @@ const setupHeroWithBg = (
  * @returns {HTMLDivElement}
  */
 const createHeroMainSection = (
-  showHeroLogo,
-  heroLogo,
   titleRow,
-  subtitleBoldRow,
   subtitleRow,
   showHeroBulletList,
   bulletListRows,
@@ -97,28 +91,15 @@ const createHeroMainSection = (
 ) => {
   const mainSection = document.createElement('div');
   mainSection.className = `main-section${isCarousel ? ' carousel' : ''}`;
-  if (showHeroLogo) {
-    const logo = heroLogo.cloneNode(true);
-    logo.className = 'hero-logo';
-    mainSection.appendChild(logo);
-  }
   const titleEl = createTextElementFromRow(titleRow, 'hero-title', 'h2');
   mainSection.appendChild(titleEl);
-  if (subtitleBoldRow.firstChild) {
+  if (subtitleRow.firstChild) {
     const subtitleBoldEl = createTextElementFromRow(
-      subtitleBoldRow,
+      subtitleRow,
       'hero-subtitle-bold',
       'p',
     );
     mainSection.appendChild(subtitleBoldEl);
-  }
-  if (subtitleRow.firstChild) {
-    const subtitleEl = createTextElementFromRow(
-      subtitleRow,
-      'hero-subtitle',
-      'p',
-    );
-    mainSection.appendChild(subtitleEl);
   }
   if (showHeroBulletList && bulletListRows?.length > 0) {
     const bullets = document.createElement('ul');
@@ -180,30 +161,15 @@ const createHeroButtonSection = async (
 };
 
 /**
- * Adjusts hero height in authoring mode to fit viewport height.
- * @param {HTMLDivElement} hero
- */
-const handleAuthorMode = (hero) => {
-  const isInAuthorMode = isAuthorMode(hero);
-  if (isInAuthorMode) {
-    const screenHeight = window.innerHeight;
-    hero.style.height = `${screenHeight}px`;
-  }
-};
-
-/**
  * Creates a Hero component
  *
  * @param {HTMLElement} heroBackground - the background media source
  * @param {boolean} isVideoBackground
- * @param {boolean} showHeroButton
- * @param {boolean} showHeroLogo
- * @param {HTMLElement} heroLogo - the hero logo element
  * @param {HTMLElement} title (required)
- * @param {HTMLElement} subtitleBold
- * @param {HTMLElement} subtitle
+ * @param {HTMLElement} subtitleRow
  * @param {boolean} showHeroBulletList
- * @param {HTMLElement[]} bulletList
+ * @param {HTMLElement[]} bulletListRows
+ * @param {boolean} showHeroButton
  * @param {string} btnLabel - Button text/label
  * @param {string} btnHref - Button URL (optional)
  * @param {boolean} btnOpenInNewTab - Open link in new tab (optional)
@@ -217,14 +183,11 @@ const handleAuthorMode = (hero) => {
 export async function createMiniHero(
   heroBackground,
   isVideoBackground,
-  showHeroButton,
-  showHeroLogo,
-  heroLogo,
   titleRow,
-  subtitleBoldRow,
   subtitleRow,
   showHeroBulletList,
-  bulletList,
+  bulletListRows,
+  showHeroButton,
   btnLabel,
   btnHref,
   btnOpenInNewTab,
@@ -235,18 +198,13 @@ export async function createMiniHero(
   isCarousel = false,
 ) {
   const hero = setupHeroWithBg(heroBackground, isVideoBackground, isCarousel);
-  // since hero uses 100vh in author i have to calculate it dinamically
-  handleAuthorMode(hero);
   const heroContent = document.createElement('div');
   heroContent.className = 'hero-content';
   const mainSection = createHeroMainSection(
-    showHeroLogo,
-    heroLogo,
     titleRow,
-    subtitleBoldRow,
     subtitleRow,
     showHeroBulletList,
-    bulletList,
+    bulletListRows,
     isCarousel,
   );
   heroContent.appendChild(mainSection);
@@ -270,18 +228,6 @@ export async function createMiniHero(
   hero.appendChild(heroContent);
   return hero;
 }
-/** Get media source URL from a row
- *
- * @param {HTMLElement} row - The row element
- * @param {boolean} isVideo - Flag to indicate if media is video
- * @returns {HTMLElement|null} The media element (video or picture) or null if not found
- */
-const extractMediaFromRow = (row, isVideo = false) => {
-  const mediaElement = row?.querySelector(isVideo ? 'a' : 'picture');
-  moveInstrumentation(row, mediaElement);
-  if (mediaElement) return mediaElement;
-  return null;
-};
 
 /** Extract hero properties from rows
  *
@@ -291,36 +237,30 @@ const extractMediaFromRow = (row, isVideo = false) => {
  */
 export const extractMiniHeroPropertiesFromRows = (rows) => {
   const isVideoBackground = extractBooleanValueFromRow(rows[1]);
-  const heroBackground = extractMediaFromRow(rows[0], isVideoBackground);
-  const showHeroLogo = extractBooleanValueFromRow(rows[2]);
-  const heroLogo = extractMediaFromRow(rows[3]);
-  const title = rows[4];
-  const subtitleBold = rows[5];
-  const subtitle = rows[6];
-  const showHeroBulletList = extractBooleanValueFromRow(rows[7]);
-  const bulletList = [rows[8], rows[9], rows[10]].filter(
+  const heroBackground = extractMediaElementFromRow(rows[0], isVideoBackground);
+  const titleRow = rows[2];
+  const subtitleRow = rows[3];
+  const showHeroBulletList = extractBooleanValueFromRow(rows[4]);
+  const bulletListRows = [rows[5], rows[6], rows[7]].filter(
     (row) => row.firstChild,
   );
   // Button properties
-  const showHeroButton = extractBooleanValueFromRow(rows[11]);
-  const btnText = rows[12]?.textContent?.trim() || '';
-  const btnVariant = rows[13]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-  const btnHref = rows[14]?.querySelector('a')?.href || rows[14]?.textContent?.trim() || '';
-  const btnOpenInNewTab = extractBooleanValueFromRow(rows[15]);
-  const btnIconSize = rows[16]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
-  const btnLeftIcon = rows[17]?.textContent?.trim() || '';
-  const btnRightIcon = rows[18]?.textContent?.trim() || '';
+  const showHeroButton = extractBooleanValueFromRow(rows[8]);
+  const btnText = rows[9]?.textContent?.trim() || '';
+  const btnVariant = rows[10]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
+  const btnHref = rows[11]?.querySelector('a')?.href || rows[11]?.textContent?.trim() || '';
+  const btnOpenInNewTab = extractBooleanValueFromRow(rows[12]);
+  const btnIconSize = rows[13]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
+  const btnLeftIcon = rows[14]?.textContent?.trim() || '';
+  const btnRightIcon = rows[15]?.textContent?.trim() || '';
   return {
     heroBackground,
     isVideoBackground,
     showHeroButton,
-    showHeroLogo,
-    heroLogo,
-    title,
-    subtitleBold,
-    subtitle,
+    titleRow,
+    subtitleRow,
     showHeroBulletList,
-    bulletList,
+    bulletListRows,
     btnText,
     btnHref,
     btnOpenInNewTab,

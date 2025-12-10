@@ -41,7 +41,7 @@ const ensureStylesLoaded = async () => {
   const { loadCSS } = await import('../../scripts/aem.js');
   const cssPromises = [
     `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`,
-    `${window.hlx.codeBasePath}/blocks/hero/hero.css`,
+    `${window.hlx.codeBasePath}/blocks/mini-hero/mini-hero.css`,
   ].map((cssPath) => loadCSS(cssPath));
   await Promise.all(cssPromises);
   isStylesAlreadyLoaded = true;
@@ -79,13 +79,10 @@ export default async function decorate(block) {
       heroBackground,
       isVideoBackground,
       showHeroButton,
-      showHeroLogo,
-      heroLogo,
-      title,
-      subtitleBold,
-      subtitle,
+      titleRow,
+      subtitleRow,
       showHeroBulletList,
-      bulletList,
+      bulletListRows,
       btnText,
       btnHref,
       btnOpenInNewTab,
@@ -98,13 +95,10 @@ export default async function decorate(block) {
       heroBackground,
       isVideoBackground,
       showHeroButton,
-      showHeroLogo,
-      heroLogo,
-      title,
-      subtitleBold,
-      subtitle,
+      titleRow,
+      subtitleRow,
       showHeroBulletList,
-      bulletList,
+      bulletListRows,
       btnText,
       btnHref,
       btnOpenInNewTab,
