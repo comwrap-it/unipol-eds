@@ -36,6 +36,7 @@
       "columns",
       "fragment",
       "full-screen-hero-carousel",
+      "mini-hero-carousel",
       "text-block",
       "test-buttons",
       "options-list",
@@ -95,9 +96,7 @@
     "id": "full-screen-hero-carousel",
     "components": [
       "hero"
-    ],
-    "min": 1,
-    "max": 8
+    ]
   },
   {
     "id": "header-navigation-section",
@@ -128,6 +127,12 @@
     ],
     "min": 1,
     "max": 8
+  },
+  {
+    "id": "mini-hero-carousel",
+    "components": [
+      "mini-hero"
+    ]
   },
   {
     "id": "prodotto-unico-header",
