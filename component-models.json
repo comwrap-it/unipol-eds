@@ -189,6 +189,13 @@
         "maxlength": 150
       },
       {
+        "component": "text",
+        "name": "showMoreButtonLabel",
+        "label": "Testo pulsante carica altro",
+        "description": "Default \"Mostra di più\"",
+        "maxlength": 15
+      },
+      {
         "component": "aem-content",
         "name": "link",
         "label": "Link alle pagine con FAQ",
