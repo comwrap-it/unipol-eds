@@ -1,4 +1,3 @@
-import { html } from 'lit';
 import createEditorialCarouselInstance from '@blocks/editorial-carousel/editorial-carousel-create.js';
 
 const ARG_TYPES = {
@@ -56,7 +55,7 @@ export default {
   render: (args) => {
     const host = document.createElement('div');
     createEditorialCarouselInstance(args).then((el) => host.replaceChildren(el));
-    return html`${host}`;
+    return host;
   },
 };
 

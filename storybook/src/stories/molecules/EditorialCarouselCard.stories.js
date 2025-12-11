@@ -1,4 +1,3 @@
-import { html } from 'lit';
 import createEditorialCardInstance from '@blocks/editorial-carousel-card/editorial-carousel-card-create.js';
 
 const ARG_TYPES = {
@@ -45,7 +44,7 @@ export default {
   render: (args) => {
     const host = document.createElement('div');
     createEditorialCardInstance(args).then((el) => host.replaceChildren(el));
-    return html`${host}`;
+    return host;
   },
 };
 
