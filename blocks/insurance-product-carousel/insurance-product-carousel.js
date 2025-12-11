@@ -19,27 +19,71 @@
 import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
-import { createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
+import {
+  createButton,
+  BUTTON_VARIANTS,
+  BUTTON_ICON_SIZES,
+} from '../atoms/buttons/standard-button/standard-button.js';
 import { initCarouselAnimations } from '../../scripts/reveal.js';
+import loadSwiper from '../../scripts/delayed.js';
+import { handleSlideChange } from '../../scripts/utils.js';
 
+let isStylesLoaded = false;
+async function ensureStylesLoaded() {
+  if (isStylesLoaded) return;
+  const { loadCSS } = await import('../../scripts/aem.js');
+  await Promise.all([
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/insurance-product-card/insurance-product-card.css`,
+    ),
+  ]);
+  isStylesLoaded = true;
+}
+
+/**
+ *
+ * @param {} Swiper the swiper instance
+ * @param {HTMLElement} carousel the carousel element
+ * @param {HTMLElement} leftIconButton the left navigation button
+ * @param {HTMLElement} rightIconButton the right navigation button
+ */
+const initSwiper = (
+  Swiper,
+  carousel,
+  leftIconButton = null,
+  rightIconButton = null,
+) => {
+  const swiperInstance = new Swiper(carousel, {
+    a11y: false,
+    navigation: {
+      prevEl: leftIconButton || carousel.querySelector('.swiper-button-prev'),
+      nextEl: rightIconButton || carousel.querySelector('.swiper-button-next'),
+      addIcons: false,
+    },
+    speed: 700,
+    slidesPerView: 'auto',
+    allowTouchMove: true,
+    breakpoints: {
+      // width >= 1200
+      1200: {
+        allowTouchMove: false,
+      },
+    },
+    resistanceRatio: 0.85,
+    touchReleaseOnEdges: true,
+    effect: 'slide',
+    // Enable debugger
+    debugger: true,
+  });
+
+  return swiperInstance;
+};
 /**
  * Decorates the insurance product carousel block
  * @param {HTMLElement} block - The carousel block element
  */
 export default async function decorate(block) {
   if (!block) return;
-
-  let isStylesLoaded = false;
-  async function ensureStylesLoaded() {
-    if (isStylesLoaded) return;
-    const { loadCSS } = await import('../../scripts/aem.js');
-    await Promise.all([
-      loadCSS(
-        `${window.hlx.codeBasePath}/blocks/insurance-product-card/insurance-product-card.css`,
-      ),
-    ]);
-    isStylesLoaded = true;
-  }
 
   await ensureStylesLoaded();
 
@@ -144,7 +188,7 @@ export default async function decorate(block) {
     }
   });
 
-  let scrollIndicator;
+  let scrollIndicatorProps = {};
   let showMoreButton;
 
   function handleShowMoreButton(e) {
@@ -159,19 +203,37 @@ export default async function decorate(block) {
 
   if (mq.matches) {
     if (cardElements && cardElements.length > 4) {
-      const { scrollIndicator: createdScrollIndicator } = await createScrollIndicator();
-      scrollIndicator = createdScrollIndicator;
+      const {
+        leftIconButton,
+        scrollIndicator,
+        rightIconButton,
+        setExpandedDot,
+      } = await createScrollIndicator();
+      scrollIndicatorProps = {
+        leftIconButton,
+        scrollIndicator,
+        rightIconButton,
+        setExpandedDot,
+      };
     }
   } else if (cardElements && cardElements.length > 4) {
-    showMoreButton = createButton(showMoreButtonLabel, '', false, BUTTON_VARIANTS.SECONDARY, BUTTON_ICON_SIZES.MEDIUM, '', '');
+    showMoreButton = createButton(
+      showMoreButtonLabel,
+      '',
+      false,
+      BUTTON_VARIANTS.SECONDARY,
+      BUTTON_ICON_SIZES.MEDIUM,
+      '',
+      '',
+    );
     showMoreButton.addEventListener('click', handleShowMoreButton);
   }
 
   carousel.appendChild(track);
   initCarouselAnimations(carousel);
 
-  if (scrollIndicator) {
-    carousel.appendChild(scrollIndicator);
+  if (scrollIndicatorProps.scrollIndicator) {
+    carousel.appendChild(scrollIndicatorProps.scrollIndicator);
   } else if (showMoreButton) {
     carousel.appendChild(showMoreButton);
   }
@@ -190,7 +252,23 @@ export default async function decorate(block) {
   block.appendChild(carousel);
 
   if (mq.matches) {
-    const handleInsuranceProductCarouselWidget = await import('../insurance-product-carousel-widget/insurance-product-carousel-widget.js');
+    // Initialize Swiper after DOM insertion
+    const Swiper = await loadSwiper();
+    const swiperInstance = initSwiper(
+      Swiper,
+      carousel,
+      scrollIndicatorProps.leftIconButton,
+      scrollIndicatorProps.rightIconButton,
+    );
+    handleSlideChange(
+      swiperInstance,
+      scrollIndicatorProps.setExpandedDot,
+      scrollIndicatorProps.leftIconButton,
+      scrollIndicatorProps.rightIconButton,
+    );
+    const handleInsuranceProductCarouselWidget = await import(
+      '../insurance-product-carousel-widget/insurance-product-carousel-widget.js'
+    );
     handleInsuranceProductCarouselWidget.default();
   }
 }

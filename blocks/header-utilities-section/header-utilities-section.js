@@ -1,4 +1,3 @@
-import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import {
   NAVIGATION_PILL_VARIANTS,
@@ -66,19 +65,20 @@ function updatePillLabels() {
   const pills = document.querySelectorAll('.header-utilities-container .navigation-pill');
 
   pills.forEach((pill) => {
-    const textSpan = pill.querySelector('span:nth-of-type(2)');
-    if (!textSpan) return;
+    const labelSpan = pill.querySelector('span:not(.icon)');
 
-    const text = textSpan.textContent.trim();
+    if (labelSpan) {
+      const text = labelSpan.textContent.trim();
 
-    if (text && !pill.hasAttribute('aria-label')) {
-      pill.setAttribute('aria-label', text);
-    }
+      if (text && !pill.hasAttribute('aria-label')) {
+        pill.setAttribute('aria-label', text);
+      }
 
-    if (window.innerWidth <= 1280) {
-      textSpan.style.display = 'none';
-    } else {
-      textSpan.style.display = '';
+      if (window.innerWidth <= 1200) {
+        labelSpan.classList.add('pill-hide-label');
+      } else {
+        labelSpan.classList.remove('pill-hide-label');
+      }
     }
   });
 }
@@ -114,8 +114,10 @@ export default async function decorate(block) {
   block.innerHTML = '';
   block.appendChild(container);
   block.classList.add('header-utilities-nav-pill');
+  requestAnimationFrame(() => {
+    updatePillLabels();
 
-  await Promise.all(pillElements.map((pillEl) => loadBlock(pillEl)));
-  updatePillLabels();
+    requestAnimationFrame(updatePillLabels);
+  });
   window.addEventListener('resize', updatePillLabels);
 }

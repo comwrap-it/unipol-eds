@@ -73,10 +73,12 @@
 /* Desktop small */
 @media (width >= 1152px) {
     .text-block-wrapper {
-        .text-block-title {
-            font-size: var(--Size-40, 2.5rem);
-            line-height: 115%;
-            letter-spacing: -0.4px;
+        .text-block-cont {
+            .text-block-title {
+                font-size: var(--Size-40, 2.5rem);
+                line-height: 115%;
+                letter-spacing: -0.4px;
+            }
         }
     }
 }
@@ -84,10 +86,12 @@
 /* Desktop */
 @media (width >= 1312px) {
     .text-block-wrapper {
-        .text-block-title {
-            font-size: var(--Font-Size-Title-Page, 3rem);
-            line-height: 3.45rem;
-            letter-spacing: -0.03rem;
+        .text-block-cont {
+            .text-block-title {
+                font-size: var(--Font-Size-Title-Page, 3rem);
+                line-height: 3.45rem;
+                letter-spacing: -0.03rem;
+            }
         }
     }
 }

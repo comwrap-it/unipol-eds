@@ -36,6 +36,14 @@
       "cards",
       "columns",
       "fragment",
+      "full-screen-hero-carousel",
+      "text-block",
+      "test-buttons",
+      "options-list",
+      "text-list",
+      "prodotto-unico",
+      "prodotto-unico-header",
+      "image-text-grid",
       "accordion"
     ]
   },
@@ -121,6 +129,14 @@
     "components": [
       "full-screen-hero-carousel"
     ]
+  },
+  {
+    "id": "image-text-grid",
+    "components": [
+      "image-text-item"
+    ],
+    "min": 1,
+    "max": 4
   },
   {
     "id": "insurance-product-carousel-widget",
