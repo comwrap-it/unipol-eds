@@ -1,6 +1,5 @@
 .accordion-block {
   width: 100%;
-  max-width: 40rem;
   padding: var(--Accordion-Vertical-Padding, 1.5rem)
            var(--Accordion-Horizontal-Padding, 1.5rem);
   flex-direction: column;
