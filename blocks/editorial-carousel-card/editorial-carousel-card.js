@@ -1,7 +1,6 @@
 /**
  * Editorial Carousel Card - modular version.
  */
-import { extractInstrumentationAttributes } from '../atoms/buttons/standard-button/standard-button.js';
 import { createLinkButtonFromRows } from '../atoms/buttons/link-button/link-button.js';
 import { createTagFromRows } from '../atoms/tag/tag.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
@@ -184,14 +183,14 @@ function buildButtonsSection(rows) {
  * @param {Object.<string, string>} instrumentation - Attribute map extracted from the source rows
  * @param {HTMLElement} block - Original block to mirror metadata (e.g., block name)
  */
-function applyInstrumentation(card, instrumentation, block) {
-  Object.entries(instrumentation).forEach(([name, value]) => {
-    card.setAttribute(name, value);
-  });
-  if (block.dataset.blockName) {
-    card.dataset.blockName = block.dataset.blockName;
-  }
-}
+// function applyInstrumentation(card, instrumentation, block) {
+//   Object.entries(instrumentation).forEach(([name, value]) => {
+//     card.setAttribute(name, value);
+//   });
+//   if (block.dataset.blockName) {
+//     card.dataset.blockName = block.dataset.blockName;
+//   }
+// }
 
 /**
  * Decorates an editorial carousel card block by rebuilding its structure,
@@ -205,7 +204,7 @@ export default async function handleEditorialProductCarouselWidget(block) {
   await ensureStylesLoaded();
 
   const rows = getRows(block);
-  const instrumentation = extractInstrumentationAttributes(rows[0]);
+  // const instrumentation = extractInstrumentationAttributes(rows[0]);
 
   const card = document.createElement('div');
   card.className = 'editorial-carousel-card-container';
@@ -224,7 +223,13 @@ export default async function handleEditorialProductCarouselWidget(block) {
     card.appendChild(cardContent);
   }
 
-  applyInstrumentation(card, instrumentation, block);
+  /**
+   * TODO MOVE INSTRUIMENTATIONS
+   */
+  // moveInstrumentation
+  moveInstrumentation(card, rows);
+
+  // applyInstrumentation(card, instrumentation, block);
   card.classList.add('card-block');
   block.replaceChildren(card);
 }
