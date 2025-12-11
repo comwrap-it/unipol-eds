@@ -42,19 +42,19 @@ export default async function decorate(block) {
 
   await ensureStylesLoaded();
 
-  const properties = ['title', 'description', 'showMoreButtonLabel', 'link'];
+  const properties = ['title', 'description', 'showMoreButtonLabel', 'reference'];
   const valuesFromBlock = getValuesFromBlock(block, properties);
 
   const showMoreLabel = valuesFromBlock.showMoreButtonLabel || 'Carica altro';
 
-  if (valuesFromBlock && valuesFromBlock.link && valuesFromBlock.link.length === 0) {
+  if (valuesFromBlock && valuesFromBlock.reference && valuesFromBlock.reference.length === 0) {
     // eslint-disable-next-line no-console
     console.warn('No FAQ configured!');
     return;
   }
 
   // Process each row as a card
-  const faqsPromises = valuesFromBlock.link.map(async (faq) => {
+  const faqsPromises = valuesFromBlock.reference.map(async (faq) => {
     const faqWrapper = document.createElement('div');
     faqWrapper.className = 'faq-wrapper';
 
