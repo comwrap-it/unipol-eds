@@ -40,11 +40,10 @@
       display: none;
       background: white;
       position: absolute;
-      top: 60px;
-      right: 20px;
-      border-radius: var(--Header-Radius, 8px);
+      top: 100px;
       padding: 20px;
       min-width: 200px;
+      min-height: 200px;
       box-shadow: 0 4px 20px rgb(0 0 0 / 10%);
       z-index: 9999;
     }
