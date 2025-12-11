@@ -187,9 +187,34 @@ const createHeroButtonSection = async (
 const handleAuthorMode = (hero) => {
   const isInAuthorMode = isAuthorMode(hero);
   if (isInAuthorMode) {
-    const screenHeight = window.innerHeight;
-    console.log('🚀 ~ handleAuthorMode ~ screenHeight:', screenHeight);
-    // hero.style.height = `${screenHeight}px`;
+    const container = hero.closest('body') || hero.closest('main');
+
+    if (!container) {
+      hero.style.minHeight = '700px';
+      return;
+    }
+
+    const getVisibleHeight = () => {
+      // clientHeight: visible content box height (excludes scrollbars)
+      const h = container.clientHeight;
+      // Fallback to bounding rect if clientHeight is 0
+      return h && Number.isFinite(h)
+        ? h
+        : container.getBoundingClientRect().height;
+    };
+
+    const applyHeight = () => {
+      const h = Math.round(getVisibleHeight());
+      console.log('🚀 ~ applyHeight ~ h:', h);
+      if (h > 0) {
+        hero.style.height = `${h}px`;
+      } else {
+        hero.style.minHeight = '700px';
+      }
+    };
+
+    // Initial apply
+    applyHeight();
   }
 };
 
