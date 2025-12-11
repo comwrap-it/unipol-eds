@@ -52,10 +52,6 @@
     "components": []
   },
   {
-    "id": "faq-widget",
-    "components": []
-  },
-  {
     "id": "blog-carousel-widget",
     "components": [
       "blog-carousel"
@@ -80,6 +76,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "faq-widget",
+    "components": [
+      "fragment"
     ]
   },
   {

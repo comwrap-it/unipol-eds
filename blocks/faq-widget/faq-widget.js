@@ -49,7 +49,7 @@ export default async function decorate(block) {
   const accordionModule = await import(
     '../accordion/accordion.js'
   );
-  const decorateAccordion = accordionModule.default(valuesFromBlock.link);
+  //const decorateAccordion = accordionModule.default(valuesFromBlock.link);
 
   const showMoreLabel = valuesFromBlock.showMoreButtonLabel || 'Carica altro';
 
@@ -97,7 +97,7 @@ export default async function decorate(block) {
     // Decorate the card using card component
     // First card (index 0) is LCP candidate - optimize image loading
     const isFirstCard = index === 0;
-    await decorateAccordion(faqBlock, isFirstCard);
+    //await decorateAccordion(faqBlock, isFirstCard);
 
     // Load card styles
     const decoratedFAQ = faqWrapper.querySelector('.faq-container')
