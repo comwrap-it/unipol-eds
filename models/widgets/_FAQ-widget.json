@@ -15,6 +15,7 @@
               "faq-widget": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "FAQ Widget",
+                "key-value": true,
                 "model": "faq-widget",
                 "filter": "faq-widget"
               }
