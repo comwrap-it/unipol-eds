@@ -267,7 +267,7 @@ const initDesktopSwiper = async (carousel, scrollIndicatorProps) => {
  * @param {HTMLElement} block - The carousel block container
  * @returns {Promise<void>} resolves when the carousel is fully decorated
  */
-export default async function handleEditorialProductCarouselWidget(block) {
+export default async function decorateEditorialCarousel(block) {
   if (!block) return;
   await ensureStylesLoaded();
 

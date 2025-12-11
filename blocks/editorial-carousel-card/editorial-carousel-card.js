@@ -175,7 +175,7 @@ function buildButtonsSection(rows) {
  * @param {HTMLElement} block - The block instance to decorate
  * @returns {Promise<void>} resolves when the card is fully transformed
  */
-export default async function handleEditorialProductCarouselWidget(block) {
+export default async function decorateEditorialCarouselCard(block) {
   if (!block || block.classList.contains('card-block')) return;
   await ensureStylesLoaded();
 

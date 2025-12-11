@@ -134,7 +134,7 @@ function initSwiper(carousel, SwiperLib) {
  *
  * @returns {Promise<void>} resolves when initialization completes or exits early
  */
-export default async function handleEditorialProductCarouselWidget() {
+export default async function handleEditorialCarouselWidget() {
   const carousels = document.querySelectorAll('.editorial-carousel-container');
   if (!carousels.length) return;
 
