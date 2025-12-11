@@ -1,21 +1,17 @@
 .faq-widget-wrapper {
     & .faq-section {
         display: flex;
-        width: 82rem;
-        justify-content: space-between;
         align-items: flex-start;
+        width: 100%;
 
         & .faq-text {
             display: flex;
-            width: 19.75rem;
             flex-direction: column;
-            align-items: flex-start;
             gap: var(--Faq-Widget-Text-Gap, 1rem);
-            flex-shrink: 0;
+            flex: 1;
 
             & .faq-title {
                 display: flex;
-                align-self: stretch;
                 color: var(--Faq-Widget-Text, #001C35);
                 font-family: var(--Family-Font-1, "Apex New");
                 font-size: var(--Font-Size-Title-Page, 3rem);
@@ -26,8 +22,6 @@
             }
 
             & .faq-subtitle {
-                display: flex;
-                align-self: stretch;
                 color: var(--Faq-Widget-Text, #001C35);
                 font-family: var(--Family-Font-2, Manrope);
                 font-size: var(--Size-16, 1rem);
@@ -39,19 +33,50 @@
 
         & .faq-accordions-button {
             display: flex;
-            width: 54.3125rem;
             flex-direction: column;
-            align-items: flex-start;
             gap: var(--Faq-Widget-Gap-Button, 2.5rem);
-            flex-shrink: 0;
+            flex: 1.8;
+            margin-left: auto;
+            width: 100%;
 
             & .faq-accordion-wrapper {
                 display: flex;
                 flex-direction: column;
-                align-items: flex-start;
                 gap: var(--Faq-Widget-Gap-Accordion, 1rem);
-                align-self: stretch;
+                width: 100%;
             }
         }
     }
 }
+
+@media (width < 768px) {
+    .faq-widget-wrapper .faq-section {
+        flex-direction: column;
+
+        .faq-text,
+        .faq-accordions-button {
+            margin-left: 0;
+            width: 100%;
+            flex: none;
+        }
+    }
+}
+
+@media (768px <= width < 1200px) {
+    .faq-text {
+        flex: 1;
+        max-width: 35%;
+    }
+
+    .faq-accordions-button {
+        flex: 2;
+        max-width: 65%;
+        margin-left: auto;
+    }
+
+    .faq-title {
+        font-size: 2.5rem;
+        letter-spacing: -0.025rem;
+    }
+}
+
