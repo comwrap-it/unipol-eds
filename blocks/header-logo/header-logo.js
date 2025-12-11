@@ -164,4 +164,12 @@ export default function decorate(block) {
   });
 
   dropdownMenu.addEventListener('click', (e) => e.stopPropagation());
+  document.addEventListener('unipol-mobile-menu-ready', (e) => {
+    const dropdown = dropdownMenu;
+
+    const oldMenu = dropdown.querySelector('.mobile-nav-hidden-pills');
+    if (oldMenu) oldMenu.remove();
+
+    dropdown.appendChild(e.detail);
+  });
 }

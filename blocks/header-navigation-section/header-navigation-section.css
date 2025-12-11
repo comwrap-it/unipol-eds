@@ -135,6 +135,11 @@
     .second-pill-right-icon {
         display: block;
     }
+
+    .mobile-nav-hidden-pills .mobile-nav-item .navigation-pill {
+        width: unset;
+        height: unset;
+    }
 }
 
 

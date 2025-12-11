@@ -17,6 +17,33 @@ async function ensureStylesLoaded() {
   isStylesLoaded = true;
 }
 
+function buildMobileMenu(container) {
+  const mobileMenu = document.createElement('ul');
+  mobileMenu.className = 'mobile-nav-hidden-pills';
+
+  const wrappers = Array.from(container.querySelectorAll('.navigation-pill-wrapper'));
+  const hiddenWrappers = wrappers.slice(2);
+
+  hiddenWrappers.forEach((wrapper) => {
+    const li = document.createElement('li');
+    li.className = 'mobile-nav-item';
+
+    const pill = wrapper.querySelector('button, a');
+    if (!pill) return;
+
+    const cloned = pill.cloneNode(true);
+    cloned.removeAttribute('aria-controls');
+    cloned.removeAttribute('aria-expanded');
+
+    li.appendChild(cloned);
+    mobileMenu.appendChild(li);
+  });
+
+  document.dispatchEvent(
+    new CustomEvent('unipol-mobile-menu-ready', { detail: mobileMenu }),
+  );
+}
+
 function updateHiddenPillsAccessibility(container) {
   const wrappers = container.querySelectorAll('.navigation-pill-wrapper');
   wrappers.forEach((wrapper) => {
@@ -336,7 +363,7 @@ export default async function decorate(block) {
   block.innerHTML = '';
   block.appendChild(container);
   block.classList.add('header-navigation-pill-and-box');
-
+  buildMobileMenu(container);
   updateContainerWidth(container);
 
   const secondWrapper = container.children[1];
