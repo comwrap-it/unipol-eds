@@ -8,8 +8,16 @@
 }
 
 @media (width <= 1200px) {
+    .header-logo-wrapper {
+        width: 100%;
+    }
+
     .header-logo {
         display: flex;
+    }
+
+    .header-logo-link {
+        margin: auto;
     }
 
     .hamburger-menu-container {

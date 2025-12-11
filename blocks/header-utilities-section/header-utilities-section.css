@@ -13,6 +13,10 @@
     line-height: unset;
 }
 
+.pill-hide-label {
+  display: none;
+}
+
 @media (width <= 1200px) {
     .header-utilities-container a,
     .header-utilities-container button {
