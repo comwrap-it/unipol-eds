@@ -237,7 +237,7 @@ export async function createHero(
 ) {
   const hero = setupHeroWithBg(heroBackground, isVideoBackground, isCarousel);
   // since hero uses 100vh in author i have to calculate it dinamically
-  handleAuthorMode(hero);
+  // handleAuthorMode(hero);
   const heroContent = document.createElement('div');
   heroContent.className = 'hero-content';
   const mainSection = createHeroMainSection(
