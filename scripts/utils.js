@@ -122,19 +122,28 @@ export function getValuesFromBlock(block, keys) {
 
   rows.forEach((row) => {
     const items = row.querySelectorAll(':scope > div');
-    const key = items[0].textContent.trim();
-    const valueNode = items[1];
-    const instrumentation = {
-      'data-aue-type': 'text',
-      'data-aue-prop': key,
-    };
-    const value = valueNode.querySelector('a')?.getAttribute('href') || valueNode.textContent.trim();
 
-    if (keys.includes(key)) {
-      result[key] = {
-        value,
-        instrumentation,
+    if (items && items.length >= 2) {
+      const key = items[0].textContent.trim();
+      const valueNode = items[1];
+      const instrumentation = {
+        'data-aue-type': 'text',
+        'data-aue-prop': key,
       };
+      const value = valueNode.querySelector('a')?.getAttribute('href') || valueNode.textContent.trim();
+
+      if (keys.includes(key)) {
+        const newItem = { value, instrumentation };
+
+        if (!result[key]) {
+          result[key] = newItem;
+        } else {
+          if (!Array.isArray(result[key])) {
+            result[key] = [result[key]];
+          }
+          result[key].push(newItem);
+        }
+      }
     }
   });
 
