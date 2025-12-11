@@ -1,20 +1,13 @@
 import decorateEditorialCarouselCard from './editorial-carousel-card.js';
 
 /**
- * Crea una riga di testo (con eventuale tag semantico).
+ * Crea una riga di testo
  * @param {string} text
- * @param {keyof HTMLElementTagNameMap} [tagName]
  * @returns {HTMLDivElement}
  */
-const createTextRow = (text, tagName) => {
+const createTextRow = (text) => {
   const row = document.createElement('div');
-  if (tagName) {
-    const el = document.createElement(tagName);
-    el.textContent = text || '';
-    row.appendChild(el);
-  } else {
-    row.textContent = text || '';
-  }
+  row.textContent = text || '';
   return row;
 };
 
@@ -65,9 +58,6 @@ export function buildEditorialCardRows(args = {}) {
     buttonLeftIconSize = 'small',
     buttonRightIconSize = 'small',
     note = '',
-    tagLabel = '',
-    tagCategory = '',
-    tagType = '',
     imageSrc = '',
     imageAlt = '',
   } = args;
@@ -85,10 +75,6 @@ export function buildEditorialCardRows(args = {}) {
   rows.push(createTextRow(buttonRightIconSize));
 
   rows.push(createTextRow(note, 'p'));
-
-  rows.push(createTextRow(tagLabel));
-  rows.push(createTextRow(tagCategory));
-  rows.push(createTextRow(tagType));
 
   rows.push(createImageRow(imageSrc));
   rows.push(createTextRow(imageAlt));

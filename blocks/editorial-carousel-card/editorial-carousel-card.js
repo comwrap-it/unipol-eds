@@ -8,7 +8,7 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 let stylesLoaded = false;
 
 /**
- * Lazily loads CSS dependencies for link buttons, tags, and icons.
+ * Lazily loads CSS dependencies for link buttons, and icons.
  * Uses a memoized flag to avoid redundant requests on repeated decorations.
  *
  * @returns {Promise<void>} resolves when all dependent stylesheets are loaded
@@ -20,7 +20,6 @@ async function ensureStylesLoaded() {
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`,
     ),
-    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`),
   ]);
   stylesLoaded = true;
 }
@@ -37,7 +36,7 @@ function getRows(block) {
 }
 
 /**
- * Creates the image section including the optional tag overlay and optimized picture fallback.
+ * Creates the image section including the optional overlay and optimized picture fallback.
  *
  * @param {HTMLElement[]} rows - Structured rows aligned with the card content model
  * @returns {HTMLElement|null} image container or null when no image row is provided
