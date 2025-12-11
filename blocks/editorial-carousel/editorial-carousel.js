@@ -9,6 +9,7 @@ import {
 } from '../atoms/buttons/standard-button/standard-button.js';
 import loadSwiper from '../../scripts/delayed.js';
 import { handleSlideChange } from '../../scripts/utils.js';
+import { initCarouselAnimations } from '../../scripts/reveal.js';
 
 let stylesLoaded = false;
 
@@ -98,7 +99,7 @@ const createCarouselStructure = () => {
  */
 const createSlide = async (row, decorateCard) => {
   const slide = document.createElement('div');
-  slide.className = 'editorial-carousel-card-wrapper swiper-slide';
+  slide.className = 'editorial-carousel-card-wrapper swiper-slide reveal-in-up';
   slide.setAttribute('role', 'listitem');
   moveInstrumentation(row, slide);
 
@@ -298,6 +299,7 @@ export default async function handleEditorialProductCarouselWidget(block) {
   bindShowMore(showMoreButton, cardElements);
 
   assembleCarousel(carousel, track, scrollIndicatorProps, showMoreButton);
+  initCarouselAnimations(carousel);
   showMoreElement?.remove();
 
   if (block.dataset.blockName) {
