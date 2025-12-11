@@ -77,6 +77,9 @@ const hasInstrumentation = (block) => (
  * @returns {{carousel: HTMLElement, track: HTMLElement}} wrapper elements for slides
  */
 const createCarouselStructure = () => {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'editorial-carousel-wrapper';
+
   const carousel = document.createElement('div');
   carousel.className = 'editorial-carousel-container swiper';
   carousel.setAttribute('role', 'region');
@@ -87,7 +90,9 @@ const createCarouselStructure = () => {
   track.className = 'editorial-carousel swiper-wrapper';
   track.setAttribute('role', 'list');
 
-  return { carousel, track };
+  wrapper.appendChild(carousel);
+
+  return { wrapper, carousel, track };
 };
 
 /**
@@ -275,7 +280,7 @@ export default async function decorateEditorialCarousel(block) {
   const cardModule = await import('../editorial-carousel-card/editorial-carousel-card.js');
   const decorateEditorialProductCard = cardModule.default;
 
-  const { carousel, track } = createCarouselStructure();
+  const { wrapper, carousel, track } = createCarouselStructure();
   const rows = Array.from(block.children);
   const showMoreElement = rows.shift();
   const showMoreButtonLabel = showMoreElement?.textContent?.trim() || 'Mostra di piu';
@@ -308,7 +313,8 @@ export default async function decorateEditorialCarousel(block) {
 
   block.innerText = '';
   carousel.classList.add('block', 'editorial-carousel-block');
-  block.appendChild(carousel);
+  wrapper.appendChild(carousel);
+  block.appendChild(wrapper);
 
   if (mq.matches) {
     await initDesktopSwiper(carousel, scrollIndicatorProps);

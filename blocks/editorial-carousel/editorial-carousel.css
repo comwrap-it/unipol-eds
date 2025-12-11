@@ -1,3 +1,7 @@
+.editorial-carousel-wrapper {
+    width: 100%;
+}
+
 .editorial-carousel-container {
     display: flex;
     flex-direction: column;
