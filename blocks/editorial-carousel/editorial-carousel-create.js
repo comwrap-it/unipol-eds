@@ -1,40 +1,26 @@
 import decorateEditorialCarousel from './editorial-carousel.js';
-import { createEditorialCardBlock, editorialCardDefaultArgs, editorialCardArgTypes } from '../editorial-carousel-card/editorial-carousel-card-create.js';
-
-export const editorialCarouselDefaultArgs = {
-  showMoreLabel: 'Mostra di pi?',
-  cards: [
-    editorialCardDefaultArgs,
-    {
-      ...editorialCardDefaultArgs,
-      title: 'Protezione Casa',
-      description: 'Soluzioni assicurative su misura per la tua casa.',
-      tagLabel: '',
-      imageSrc: 'https://placehold.co/632x356?text=Casa',
-    },
-  ],
-};
-
-export const editorialCarouselArgTypes = {
-  showMoreLabel: { control: 'text' },
-  cards: { control: 'object' },
-  ...editorialCardArgTypes,
-};
+import { createEditorialCardBlock } from '../editorial-carousel-card/editorial-carousel-card-create.js';
 
 /**
  * Crea un blocco editorial-carousel popolato con card configurabili.
- * ? pensato per l'uso in Storybook: restituisce il blocco gi? decorato.
+ * Restituisce il blocco decorato e pronto per il DOM.
+ * @param {Object} args
+ * @param {string} [args.showMoreLabel]
+ * @param {Array<Object>} [args.cards]
+ * @returns {Promise<HTMLElement>}
  */
-export async function createEditorialCarouselInstance(args = {}) {
-  const cfg = { ...editorialCarouselDefaultArgs, ...args };
+export default async function createEditorialCarouselInstance(args = {}) {
+  const showMoreLabel = args.showMoreLabel || "Mostra di piu'";
+  const cards = Array.isArray(args.cards) && args.cards.length ? args.cards : [{}];
+
   const block = document.createElement('div');
 
   const showMoreRow = document.createElement('div');
-  showMoreRow.textContent = cfg.showMoreLabel || 'Mostra di pi?';
+  showMoreRow.textContent = showMoreLabel;
   block.appendChild(showMoreRow);
 
-  (cfg.cards || []).forEach((cardArgs) => {
-    const cardRow = createEditorialCardBlock({ ...editorialCardDefaultArgs, ...cardArgs });
+  cards.forEach((cardArgs) => {
+    const cardRow = createEditorialCardBlock(cardArgs);
     block.appendChild(cardRow);
   });
 
