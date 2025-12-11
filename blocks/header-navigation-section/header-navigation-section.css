@@ -87,7 +87,7 @@
 @media (width <= 1200px) {
     .navigation-pill-container {
         position: fixed;
-        width: fit-content;
+        width: max-content;
         left: 50%;
         bottom: var(--Header-Vertical-Padding-M-Tp,24px);
         transform: translateX(-50%);

@@ -114,6 +114,10 @@ export default async function decorate(block) {
   block.innerHTML = '';
   block.appendChild(container);
   block.classList.add('header-utilities-nav-pill');
-  updatePillLabels();
+  requestAnimationFrame(() => {
+    updatePillLabels();
+
+    requestAnimationFrame(updatePillLabels);
+  });
   window.addEventListener('resize', updatePillLabels);
 }
