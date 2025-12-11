@@ -9,6 +9,7 @@
             flex-direction: column;
             gap: var(--Faq-Widget-Text-Gap, 1rem);
             flex: 1;
+            max-width: 19.75rem;
 
             & .faq-title {
                 display: flex;
@@ -38,6 +39,7 @@
             flex: 1.8;
             margin-left: auto;
             width: 100%;
+            max-width: 54.3125rem;
 
             & .faq-accordion-wrapper {
                 display: flex;
@@ -65,12 +67,12 @@
 @media (768px <= width < 1200px) {
     .faq-text {
         flex: 1;
-        max-width: 35%;
+        max-width: 23.3125rem;
     }
 
     .faq-accordions-button {
         flex: 2;
-        max-width: 65%;
+        max-width: 41.5625rem;
         margin-left: auto;
     }
 
