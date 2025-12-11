@@ -45,12 +45,6 @@ export default async function decorate(block) {
   const properties = ['title', 'description', 'showMoreButtonLabel', 'link'];
   const valuesFromBlock = getValuesFromBlock(block, properties);
 
-  // Import card component dynamically
-  const accordionModule = await import(
-    '../accordion/accordion.js'
-  );
-  //const decorateAccordion = accordionModule.default(valuesFromBlock.link);
-
   const showMoreLabel = valuesFromBlock.showMoreButtonLabel || 'Carica altro';
 
   if (valuesFromBlock && valuesFromBlock.link && valuesFromBlock.link.length === 0) {
@@ -60,7 +54,7 @@ export default async function decorate(block) {
   }
 
   // Process each row as a card
-  const faqsPromises = valuesFromBlock.link.map(async (faq, index) => {
+  const faqsPromises = valuesFromBlock.link.map(async (faq) => {
     const faqWrapper = document.createElement('div');
     faqWrapper.className = 'faq-wrapper';
 
@@ -93,11 +87,6 @@ export default async function decorate(block) {
 
     // Temporarily append faqBlock to faqWrapper
     faqWrapper.appendChild(faqBlock);
-
-    // Decorate the card using card component
-    // First card (index 0) is LCP candidate - optimize image loading
-    const isFirstCard = index === 0;
-    //await decorateAccordion(faqBlock, isFirstCard);
 
     // Load card styles
     const decoratedFAQ = faqWrapper.querySelector('.faq-container')
