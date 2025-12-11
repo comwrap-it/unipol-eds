@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--Carousel-Widget-Gap-D-Ds, 3rem);
+    gap: var(--Carousel-Widget-Gap-D-Ds, var(--Space-700-48));
     width: 100%;
 
     &.swiper {
@@ -11,9 +11,10 @@
 
     & .editorial-carousel {
         display: flex;
-        width: 82rem;
+        width: 100%;
+        max-width: var(--Column-Size-Col-12, 82rem);
         align-items: stretch;
-        gap: var(--Carousel-editorial-carousel-Gap, 1rem);
+        gap: var(--Carousel-Editorial-Gap, var(--Space-300-16));
     }
 }
 
@@ -21,7 +22,7 @@
 @media (768px <= width < 1200px) {
     .editorial-carousel-container {
         margin-inline: auto;
-        gap: var(--Carousel-Widget-Gap-M-Tp, 2.5rem);
+        gap: var(--Carousel-Widget-Gap-M-Tp, var(--Space-600-40));
 
         &.swiper {
             overflow: visible;
@@ -56,7 +57,7 @@
 
         & .editorial-carousel {
             width: 100%;
-            max-width: 46rem;
+            max-width: var(--Column-Size-Col-8, 54.313rem);
         }
     }
 }
@@ -64,13 +65,14 @@
 /* Mobile */
 @media (width < 768px) {
     .editorial-carousel-container {
-        gap: var(--Carousel-Widget-Gap-M-Tp, 2.5rem);
+        gap: var(--Carousel-Widget-Gap-M-Tp, var(--Space-600-40));
 
         & .editorial-carousel {
             display: flex;
             flex-direction: column;
-            width: 21.4375rem;
-            gap: var(--Carousel-editorial-carousel-Gap, 1rem);
+            width: 100%;
+            max-width: var(--Container-Width-L3-M6-S12, var(--Column-Size-Col-3));
+            gap: var(--Carousel-Editorial-Gap, var(--Space-300-16));
         }
     }
 }
