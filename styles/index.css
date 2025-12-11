@@ -7,6 +7,7 @@
 @import "./base/font-family.css";
 @import "./base/font-size.css";
 @import "./base/font-weight.css";
+@import "./base/space.css";
 @import "./base/color.css";
 @import "./base/typography.css";
 @import "./base/gradient.css";
@@ -22,6 +23,7 @@
 @import "./dark/font-family.css";
 @import "./dark/font-size.css";
 @import "./dark/font-weight.css";
+@import "./dark/space.css";
 @import "./dark/color.css";
 @import "./dark/typography.css";
 @import "./dark/gradient.css";
@@ -37,6 +39,7 @@
 @import "./tablet/font-family.css";
 @import "./tablet/font-size.css";
 @import "./tablet/font-weight.css";
+@import "./tablet/space.css";
 @import "./tablet/color.css";
 @import "./tablet/typography.css";
 @import "./tablet/gradient.css";
@@ -52,6 +55,7 @@
 @import "./tablet-portrait/font-family.css";
 @import "./tablet-portrait/font-size.css";
 @import "./tablet-portrait/font-weight.css";
+@import "./tablet-portrait/space.css";
 @import "./tablet-portrait/color.css";
 @import "./tablet-portrait/typography.css";
 @import "./tablet-portrait/gradient.css";
@@ -67,6 +71,7 @@
 @import "./mobile/font-family.css";
 @import "./mobile/font-size.css";
 @import "./mobile/font-weight.css";
+@import "./mobile/space.css";
 @import "./mobile/color.css";
 @import "./mobile/typography.css";
 @import "./mobile/gradient.css";

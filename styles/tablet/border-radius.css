@@ -10,4 +10,5 @@
   --Radius-300-16: 1rem;
   --Radius-400-24: 1.5rem;
   --Radius-9999: 624.938rem;
+  --Carousel-Widget-Product-Highlights-Radius: var(--Radius-400-24);
 }
