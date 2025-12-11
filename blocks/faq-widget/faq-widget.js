@@ -118,7 +118,7 @@ export default async function decorate(block) {
   } */
 
   if (faqElements && faqElements.length > 5) {
-    showMoreButton = createButton(showMoreLabel, '', false, BUTTON_VARIANTS.SECONDARY, BUTTON_ICON_SIZES.MEDIUM, '', '', valuesFromBlock.showMoreButtonLabel.instrumentation);
+    showMoreButton = createButton(showMoreLabel, '', false, BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM, '', '', valuesFromBlock.showMoreButtonLabel.instrumentation);
     // showMoreButton.addEventListener('click', handleShowMoreButton);
   }
 
