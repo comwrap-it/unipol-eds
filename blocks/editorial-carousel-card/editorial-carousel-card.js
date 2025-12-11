@@ -2,7 +2,6 @@
  * Editorial Carousel Card - modular version.
  */
 import { createLinkButtonFromRows } from '../atoms/buttons/link-button/link-button.js';
-import { createTagFromRows } from '../atoms/tag/tag.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
@@ -49,13 +48,6 @@ function buildImageSection(rows) {
 
   const cardImage = document.createElement('div');
   cardImage.className = 'editorial-carousel-card-image';
-
-  const tagRows = rows.slice(10, 13);
-  const tagElement = createTagFromRows(tagRows);
-  if (tagElement?.classList) {
-    tagElement.classList.add('editorial-carousel-card-tag');
-    cardImage.appendChild(tagElement);
-  }
 
   const altText = rows[14]?.textContent?.trim() || '';
   const picture = imageRow.querySelector('picture');
@@ -177,22 +169,6 @@ function buildButtonsSection(rows) {
 }
 
 /**
- * Applies Universal Editor instrumentation attributes to the rendered card.
- *
- * @param {HTMLElement} card - Rendered card element
- * @param {Object.<string, string>} instrumentation - Attribute map extracted from the source rows
- * @param {HTMLElement} block - Original block to mirror metadata (e.g., block name)
- */
-// function applyInstrumentation(card, instrumentation, block) {
-//   Object.entries(instrumentation).forEach(([name, value]) => {
-//     card.setAttribute(name, value);
-//   });
-//   if (block.dataset.blockName) {
-//     card.dataset.blockName = block.dataset.blockName;
-//   }
-// }
-
-/**
  * Decorates an editorial carousel card block by rebuilding its structure,
  * applying instrumentation, and attaching required styles.
  *
@@ -204,10 +180,13 @@ export default async function handleEditorialProductCarouselWidget(block) {
   await ensureStylesLoaded();
 
   const rows = getRows(block);
-  // const instrumentation = extractInstrumentationAttributes(rows[0]);
-
   const card = document.createElement('div');
   card.className = 'editorial-carousel-card-container';
+
+  moveInstrumentation(block, card);
+  if (block.dataset.blockName) {
+    card.dataset.blockName = block.dataset.blockName;
+  }
 
   const cardContent = document.createElement('div');
   cardContent.className = 'editorial-carousel-card-content';
@@ -223,13 +202,6 @@ export default async function handleEditorialProductCarouselWidget(block) {
     card.appendChild(cardContent);
   }
 
-  /**
-   * TODO MOVE INSTRUIMENTATIONS
-   */
-  // moveInstrumentation
-  moveInstrumentation(card, rows);
-
-  // applyInstrumentation(card, instrumentation, block);
   card.classList.add('card-block');
   block.replaceChildren(card);
 }

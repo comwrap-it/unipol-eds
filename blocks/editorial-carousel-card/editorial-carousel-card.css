@@ -1,9 +1,9 @@
 .editorial-carousel-card-wrapper {
     display: flex;
-}
 
-.editorial-carousel-card-wrapper.swiper-slide {
-    width: auto;
+    &.swiper-slide {
+        width: auto;
+    }
 }
 
 .editorial-carousel-card-container {
@@ -13,191 +13,196 @@
     align-items: flex-start;
     flex: auto;
     border-radius: var(--Card-Radius, 1.5rem);
-    background: var(--Card-Insurance-Product-Card-Background, #FFF);
-    box-shadow: var(--Depth-050-2, 2px) var(--Depth-050-2, 2px) var(--Blur-200-8, 8px) 0 rgb(0 0 0 / 8%);
+    background: var(--Card-Insurance-Product-Card-Background, #fff);
+    box-shadow: var(--Depth-050-2, 2px) var(--Depth-050-2, 2px)
+        var(--Blur-200-8, 8px) 0 rgb(0 0 0 / 8%);
+
+    .editorial-carousel-card-image {
+        position: relative;
+        display: flex;
+        height: 11.1095rem;
+        justify-content: center;
+        align-items: center;
+        align-self: stretch;
+        aspect-ratio: 316 / 177.75;
+        border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem)
+            var(--Radius-0, 0) var(--Radius-0, 0);
+
+        img,
+        picture {
+            width: 19.75rem;
+            height: 11.1095rem;
+            border-radius: var(--Images-Radius, 1.5rem)
+                var(--Images-Radius, 1.5rem) var(--Radius-0, 0)
+                var(--Radius-0, 0);
+        }
+    }
+
+    .editorial-carousel-card-content {
+        flex: 1;
+        display: flex;
+        position: relative;
+        padding: 0 var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem)
+            var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem)
+            var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem);
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        gap: var(--Card-Insurance-Product-Card-Gap, 1.5rem);
+        align-self: stretch;
+
+        .editorial-carousel-card-text {
+            display: flex;
+            padding-top: var(
+                --Card-Insurance-Product-Card-Vertical-Padding-Top,
+                3.5rem
+            );
+            flex-direction: column;
+            align-items: center;
+            gap: var(--Card-Insurance-Product-Card-Text-Gap, 0.5rem);
+            align-self: stretch;
+
+            .title {
+                align-self: stretch;
+                color: var(--Card-Insurance-Product-Card-Title, #001c35);
+                text-align: center;
+                font-family: var(--Family-Font-2, Manrope);
+                font-size: var(--Font-Size-Heading, 1.5rem);
+                font-style: normal;
+                font-weight: 600;
+                line-height: 125%;
+                letter-spacing: -0.015rem;
+            }
+
+            .description {
+                align-self: stretch;
+                color: var(--Card-Insurance-Product-Card-Body, #001c35);
+                text-align: center;
+                font-family: var(--Family-Font-2, Manrope);
+                font-size: var(--Size-16, 1rem);
+                font-style: normal;
+                font-weight: 400;
+                line-height: 140%;
+            }
+        }
+
+        .button-subdescription {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--Card-Insurance-Product-Card-Button-Gap, 0.5rem);
+            align-self: stretch;
+
+            .subdescription {
+                align-self: stretch;
+                color: var(--Card-Insurance-Product-Card-Details, #63727d);
+                text-align: center;
+                font-family: var(--Family-Font-2, Manrope);
+                font-size: var(--Size-14, 0.875rem);
+                font-style: normal;
+                font-weight: 400;
+                line-height: 140%;
+            }
+        }
+
+        .img-vector {
+            width: 16.25rem;
+            height: 5.1875rem;
+            position: absolute;
+            left: 1.75rem;
+            top: -2.6095rem;
+        }
+    }
 }
 
-.editorial-carousel-card-container .editorial-carousel-card-image {
-    position: relative;
-    display: flex;
-    height: 11.1095rem;
-    justify-content: center;
-    align-items: center;
-    align-self: stretch;
-    aspect-ratio: 316 / 177.75;
-    border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem) var(--Radius-0, 0) var(--Radius-0, 0);
-}
-
-.editorial-carousel-card-container .editorial-carousel-card-image img,
-.editorial-carousel-card-container .editorial-carousel-card-image picture {
-    width: 19.75rem;
-    height: 11.1095rem;
-    border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem) var(--Radius-0, 0) var(--Radius-0, 0);
-}
-
-.editorial-carousel-card-container .editorial-carousel-card-image .editorial-carousel-card-tag {
-    display: flex;
-    padding: var(--Tag-Vertical-Padding, 0.25rem) var(--Tag-Horizontal-Padding, 0.75rem);
-    justify-content: center;
-    align-items: center;
-    position: absolute;
-    left: 1rem;
-    top: 1rem;
-    border-radius: var(--Tag-Radius, 0.5rem);
-    border: var(--Tag-Border, 1px) solid var(--Tag-Neutral-Border, rgb(17 17 17 / 0%));
-}
-
-.editorial-carousel-card-container .editorial-carousel-card-content {
-    flex: 1;
-    display: flex;
-    position: relative;
-    padding: 0 var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem);
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    gap: var(--Card-Insurance-Product-Card-Gap, 1.5rem);
-    align-self: stretch;
-}
-
-.editorial-carousel-card-container .editorial-carousel-card-content .editorial-carousel-card-text {
-    display: flex;
-    padding-top: var(--Card-Insurance-Product-Card-Vertical-Padding-Top, 3.5rem);
-    flex-direction: column;
-    align-items: center;
-    gap: var(--Card-Insurance-Product-Card-Text-Gap, 0.5rem);
-    align-self: stretch;
-}
-
-.editorial-carousel-card-container .editorial-carousel-card-content .editorial-carousel-card-text .title {
-    align-self: stretch;
-    color: var(--Card-Insurance-Product-Card-Title, #001C35);
-    text-align: center;
-    font-family: var(--Family-Font-2, Manrope);
-    font-size: var(--Font-Size-Heading, 1.5rem);
-    font-style: normal;
-    font-weight: 600;
-    line-height: 125%;
-    letter-spacing: -0.015rem;
-}
-
-.editorial-carousel-card-container .editorial-carousel-card-content .editorial-carousel-card-text .description {
-    align-self: stretch;
-    color: var(--Card-Insurance-Product-Card-Body, #001C35);
-    text-align: center;
-    font-family: var(--Family-Font-2, Manrope);
-    font-size: var(--Size-16, 1rem);
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%;
-}
-
-.editorial-carousel-card-container .editorial-carousel-card-content .button-subdescription {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--Card-Insurance-Product-Card-Button-Gap, 0.5rem);
-    align-self: stretch;
-}
-
-.editorial-carousel-card-container .editorial-carousel-card-content .button-subdescription .subdescription {
-    align-self: stretch;
-    color: var(--Card-Insurance-Product-Card-Details, #63727D);
-    text-align: center;
-    font-family: var(--Family-Font-2, Manrope);
-    font-size: var(--Size-14, 0.875rem);
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%;
-}
-
-.editorial-carousel-card-container .editorial-carousel-card-content .img-vector {
-    width: 16.25rem;
-    height: 5.1875rem;
-    position: absolute;
-    left: 1.75rem;
-    top: -2.6095rem;
-}
-
-/* Tablet Portrait */
 @media (768px <= width < 1200px) {
-    .editorial-carousel-card-wrapper.swiper-slide {
-        width: 15rem;
+    .editorial-carousel-card-wrapper {
+        &.swiper-slide {
+            width: 15rem;
+        }
     }
 
     .editorial-carousel-card-container {
         width: 15rem;
-    }
 
-    .editorial-carousel-card-container .editorial-carousel-card-image {
-        height: 10.26575rem;
-        aspect-ratio: 292 / 164.25;
-    }
+        .editorial-carousel-card-image {
+            height: 10.26575rem;
+            aspect-ratio: 292 / 164.25;
 
-    .editorial-carousel-card-container .editorial-carousel-card-image img,
-    .editorial-carousel-card-container .editorial-carousel-card-image picture {
-        width: 15rem;
-        height: 10.26575rem;
-    }
+            img,
+            picture {
+                width: 15rem;
+                height: 10.26575rem;
+            }
+        }
 
-    .editorial-carousel-card-container .editorial-carousel-card-content {
-        padding: 0 var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem);
-    }
+        .editorial-carousel-card-content {
+            padding: 0
+                var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem)
+                var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem)
+                var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem);
 
-    .editorial-carousel-card-container .editorial-carousel-card-content .editorial-carousel-card-text {
-        padding-top: 3rem;
-    }
+            .editorial-carousel-card-text {
+                padding-top: 3rem;
 
-    .editorial-carousel-card-container .editorial-carousel-card-content .editorial-carousel-card-text .title {
-        font-size: var(--Size-20, 1.25rem);
-        font-weight: 600;
-        line-height: 130%;
-        letter-spacing: -0.0125rem;
-    }
+                .title {
+                    font-size: var(--Size-20, 1.25rem);
+                    font-weight: 600;
+                    line-height: 130%;
+                    letter-spacing: -0.0125rem;
+                }
+            }
 
-    .editorial-carousel-card-container .editorial-carousel-card-content .img-vector {
-        width: 13rem;
-        height: 4rem;
-        left: 1rem;
-        top: -1.98456rem;
+            .img-vector {
+                width: 13rem;
+                height: 4rem;
+                left: 1rem;
+                top: -1.98456rem;
+            }
+        }
     }
 }
 
-/* Mobile */
 @media (width < 768px) {
     .editorial-carousel-card-wrapper {
         width: 21.4375rem;
-    }
 
-    .editorial-carousel-card-wrapper.hidden {
-        display: none;
+        &.hidden {
+            display: none;
+        }
     }
 
     .editorial-carousel-card-container {
         width: 21.4375rem;
-    }
 
-    .editorial-carousel-card-container .editorial-carousel-card-image {
-        height: 12.05875rem;
-        aspect-ratio: 343 / 192.94;
-        border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem) var(--Radius-0, 0) var(--Radius-0, 0);
-    }
+        .editorial-carousel-card-image {
+            height: 12.05875rem;
+            aspect-ratio: 343 / 192.94;
+            border-radius: var(--Images-Radius, 1.5rem)
+                var(--Images-Radius, 1.5rem) var(--Radius-0, 0)
+                var(--Radius-0, 0);
 
-    .editorial-carousel-card-container .editorial-carousel-card-image img,
-    .editorial-carousel-card-container .editorial-carousel-card-image picture {
-        width: 21.4375rem;
-        height: 12.05875rem;
-    }
+            img,
+            picture {
+                width: 21.4375rem;
+                height: 12.05875rem;
+            }
+        }
 
-    .editorial-carousel-card-container .editorial-carousel-card-content {
-        padding: 0 var(--Card-Insurance-Product-Card-Horizontal-Padding-M, 1rem) var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Horizontal-Padding-M, 1rem);
-        gap: var(--Card-Insurance-Product-Card-Gap, 1.5rem);
-    }
+        .editorial-carousel-card-content {
+            padding: 0
+                var(--Card-Insurance-Product-Card-Horizontal-Padding-M, 1rem)
+                var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem)
+                var(--Card-Insurance-Product-Card-Horizontal-Padding-M, 1rem);
+            gap: var(--Card-Insurance-Product-Card-Gap, 1.5rem);
 
-    .editorial-carousel-card-container .editorial-carousel-card-content .img-vector {
-        width: 16.125rem;
-        height: 5rem;
-        right: 2.6875rem;
-        left: auto;
-        top: -2.48081rem;
+            .img-vector {
+                width: 16.125rem;
+                height: 5rem;
+                right: 2.6875rem;
+                left: auto;
+                top: -2.48081rem;
+            }
+        }
     }
 }
