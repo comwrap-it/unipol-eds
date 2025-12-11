@@ -24,6 +24,12 @@
           "component": "richtext",
           "name": "text",
           "label": "Testo",
+          "value": "",
+          "valueType": "string",
+          "validation": {
+            "maxLength": 1000,
+            "customErrorMsg": "Testo troppo lungo"
+          },
           "required": true
         }
       ]
