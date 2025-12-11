@@ -141,7 +141,7 @@ export default function decorate(block) {
   });
 
   /** ------------------------------
-     *  CLOSE MENU ON RESIZE (A11Y SAFE)
+     *  CLOSE MENU ON RESIZE
      * ------------------------------ */
   let resizeTimeout;
 

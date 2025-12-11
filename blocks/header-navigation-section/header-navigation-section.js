@@ -103,6 +103,11 @@ function hideSecondRightIcon() {
   if (icon) icon.style.opacity = '0';
 }
 
+function showMobileSecondRightIcon() {
+  const icon = document.querySelector('.second-pill-right-icon');
+  if (icon) icon.style.opacity = '1';
+}
+
 function updateContainerWidth(container) {
   const wrappers = Array.from(container.querySelectorAll('.navigation-pill-wrapper'));
   const ready = wrappers.some((w) => w.offsetWidth > 0);
@@ -206,6 +211,7 @@ function navigationResponsiveController(block) {
     if (window.innerWidth <= 1200) {
       if (stickyCleanup) { stickyCleanup(); stickyCleanup = null; }
       recalcWidth();
+      showMobileSecondRightIcon();
     } else {
       if (!stickyCleanup) stickyCleanup = makeNavigationSticky(block);
       recalcWidth();
@@ -363,7 +369,7 @@ export default async function decorate(block) {
       if (window.innerWidth <= 1200) {
         addCloseIconToBox(box, pill);
       } else {
-        const btn = box.querySelector('.un-close-btn'); // <-- qui cambia
+        const btn = box.querySelector('.un-close-btn');
         if (btn) box.removeChild(btn);
       }
     });

@@ -51,6 +51,7 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
+  backdrop-filter: blur(4px);
 }
 
 .navigation-pill-wrapper {
@@ -92,6 +93,7 @@
         bottom: var(--Header-Vertical-Padding-M-Tp,24px);
         transform: translateX(-50%);
         z-index: 2;
+        backdrop-filter: blur(4px);
     }
 
     .header-box-text-container {
@@ -126,9 +128,13 @@
         width: var(--Icon-Button-Dimentions);
     }
 
-  .navigation-pill-container .navigation-pill-wrapper:nth-child(n+3) {
-    display: none;
-  }
+    .navigation-pill-container .navigation-pill-wrapper:nth-child(n+3) {
+        display: none;
+    }
+
+    .second-pill-right-icon {
+        display: block;
+    }
 }
 
 
