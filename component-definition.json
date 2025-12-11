@@ -796,6 +796,21 @@
           }
         },
         {
+          "title": "legal-info-widget",
+          "id": "legal-info-widget",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Legal Info Widget",
+                  "model": "legal-info-widget"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Number Block",
           "id": "number-block",
           "plugins": {

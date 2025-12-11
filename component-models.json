@@ -1635,6 +1635,17 @@
     ]
   },
   {
+    "id": "legal-info-widget",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Testo",
+        "required": true
+      }
+    ]
+  },
+  {
     "id": "number-block",
     "fields": [
       {
