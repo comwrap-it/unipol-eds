@@ -1,6 +1,57 @@
 .faq-widget-wrapper {
-    display: flex;
-    width: 82rem;
-    justify-content: space-between;
-    align-items: flex-start;
+    & .faq-section {
+        display: flex;
+        width: 82rem;
+        justify-content: space-between;
+        align-items: flex-start;
+
+        & .faq-text {
+            display: flex;
+            width: 19.75rem;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--Faq-Widget-Text-Gap, 1rem);
+            flex-shrink: 0;
+
+            & .faq-title {
+                display: flex;
+                align-self: stretch;
+                color: var(--Faq-Widget-Text, #001C35);
+                font-family: var(--Family-Font-1, "Apex New");
+                font-size: var(--Font-Size-Title-Page, 3rem);
+                font-style: normal;
+                font-weight: 550;
+                line-height: 115%;
+                letter-spacing: -0.03rem;
+            }
+
+            & .faq-subtitle {
+                display: flex;
+                align-self: stretch;
+                color: var(--Faq-Widget-Text, #001C35);
+                font-family: var(--Family-Font-2, Manrope);
+                font-size: var(--Size-16, 1rem);
+                font-style: normal;
+                font-weight: 400;
+                line-height: 140%;
+            }
+        }
+
+        & .faq-accordions-button {
+            display: flex;
+            width: 54.3125rem;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--Faq-Widget-Gap-Button, 2.5rem);
+            flex-shrink: 0;
+
+            & .faq-accordion-wrapper {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--Faq-Widget-Gap-Accordion, 1rem);
+                align-self: stretch;
+            }
+        }
+    }
 }

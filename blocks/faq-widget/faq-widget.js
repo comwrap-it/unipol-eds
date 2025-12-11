@@ -1,29 +1,25 @@
 /**
- * Insurance Product Carousel Component
+ * FAQ Widget Component
  *
- * A carousel block that displays a horizontal scrollable list of card components.
- * Uses card as a molecule component, which in turn uses primary-button as an atom.
+ * A FAQ block that displays a title, subtitle, accordions with FAQs.
+ * Uses accordion and fragment components as a molecule component, standard-button as an atom.
  *
  * Features:
- * - Horizontal scroll with navigation arrows
- * - Dot indicators for slide position
- * - Responsive design (mobile: 1 card, tablet: 2 cards, desktop: 3-4 cards)
- * - Smooth scrolling with snap points
- * - Touch/swipe support on mobile
- * - Keyboard navigation (arrow keys)
+ * - Title aligned to the left
+ * - Subtitle under the title
+ * - Responsive design (mobile, tablet, desktop)
  * - Preserves Universal Editor instrumentation
  *
- * Preserves Universal Editor instrumentation for AEM EDS.
  */
 
-import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
-import { getValuesFromBlock } from '../../scripts/utils.js';
+import { getValuesFromBlock, restoreInstrumentation } from '../../scripts/utils.js';
+import { loadFragment } from '../fragment/fragment.js';
 
 /**
- * Decorates the insurance product carousel block
- * @param {HTMLElement} block - The carousel block element
+ * Decorates the FAQ Widget block
+ * @param {HTMLElement} block - The FAQ block element
  */
 export default async function decorate(block) {
   if (!block) return;
@@ -34,7 +30,7 @@ export default async function decorate(block) {
     const { loadCSS } = await import('../../scripts/aem.js');
     await Promise.all([
       loadCSS(
-        `${window.hlx.codeBasePath}/blocks/FAQ-widget/FAQ-widget.css`,
+        `${window.hlx.codeBasePath}/blocks/accordion/accordion.css`,
       ),
     ]);
     isStylesLoaded = true;
@@ -42,74 +38,76 @@ export default async function decorate(block) {
 
   await ensureStylesLoaded();
 
-  const properties = ['title', 'description', 'showMoreButtonLabel', 'reference'];
+  const properties = ['title', 'description', 'showMoreButtonLabel'];
   const valuesFromBlock = getValuesFromBlock(block, properties);
 
-  const showMoreLabel = valuesFromBlock.showMoreButtonLabel || 'Carica altro';
+  const showMoreLabel = valuesFromBlock.showMoreButtonLabel.value || 'Carica altro';
 
-  if (valuesFromBlock && valuesFromBlock.reference && valuesFromBlock.reference.length === 0) {
+  const rows = Array.from(block.children);
+  const references = rows.slice(3);
+
+  if (references && references.length === 0) {
     // eslint-disable-next-line no-console
     console.warn('No FAQ configured!');
     return;
   }
 
-  // Process each row as a card
-  const faqsPromises = valuesFromBlock.reference.map(async (faq) => {
-    const faqWrapper = document.createElement('div');
-    faqWrapper.className = 'faq-wrapper';
+  // Process each row as a fragment containing one Accordion
+  const faqsPromises = references.map(async (reference) => {
+    const faqAccordionWrapper = document.createElement('div');
+    faqAccordionWrapper.className = 'faq-accordion-wrapper';
+
+    const link = reference.querySelector('a');
+    const path = link ? link.getAttribute('href') : reference.textContent.trim();
+    const fragment = await loadFragment(path);
+
+    if (fragment) {
+      const fragmentSection = fragment.querySelector(':scope .section');
+      if (fragmentSection) {
+        fragmentSection.classList.remove('section');
+        faqAccordionWrapper.appendChild(fragmentSection);
+      }
+    }
 
     // Preserve instrumentation from faq to faqWrapper
-    moveInstrumentation(faq, faqWrapper);
+    moveInstrumentation(reference, faqAccordionWrapper);
 
-    // Create a faq block element to decorate
-    const faqBlock = document.createElement('div');
-    faqBlock.className = 'faq-block';
-    faqBlock.dataset.blockName = 'faq-block';
-
-    // Preserve faq instrumentation on card block if present
-    if (faq.hasAttribute('data-aue-resource')) {
-      faqBlock.setAttribute(
-        'data-aue-resource',
-        faq.getAttribute('data-aue-resource'),
-      );
-      const aueBehavior = faq.getAttribute('data-aue-behavior');
-      if (aueBehavior) faqBlock.setAttribute('data-aue-behavior', aueBehavior);
-      const aueType = faq.getAttribute('data-aue-type');
-      if (aueType) faqBlock.setAttribute('data-aue-type', aueType);
-      const aueLabel = faq.getAttribute('data-aue-label');
-      if (aueLabel) faqBlock.setAttribute('data-aue-label', aueLabel);
-    }
-
-    // Move all children from faq to card block (preserves their instrumentation)
-    while (faq.firstElementChild) {
-      faqBlock.appendChild(faq.firstElementChild);
-    }
-
-    // Temporarily append faqBlock to faqWrapper
-    faqWrapper.appendChild(faqBlock);
-
-    // Load card styles
-    const decoratedFAQ = faqWrapper.querySelector('.faq-container')
-      || faqWrapper.firstElementChild;
-    if (decoratedFAQ && decoratedFAQ.dataset.blockName) {
-      await loadBlock(decoratedFAQ);
-    }
-
-    return faqWrapper;
+    return faqAccordionWrapper;
   });
 
   const faqSection = document.createElement('div');
   faqSection.className = 'faq-section';
 
+  const faqText = document.createElement('div');
+  faqText.className = 'faq-text';
+
+  const faqTitle = document.createElement('div');
+  faqTitle.className = 'faq-title';
+  faqTitle.textContent = valuesFromBlock.title.value;
+  restoreInstrumentation(faqTitle, valuesFromBlock.title.instrumentation);
+
+  const faqSubtitle = document.createElement('div');
+  faqSubtitle.className = 'faq-subtitle';
+  faqSubtitle.textContent = valuesFromBlock.description.value;
+  restoreInstrumentation(faqSubtitle, valuesFromBlock.description.instrumentation);
+
+  faqText.appendChild(faqTitle);
+  faqText.appendChild(faqSubtitle);
+
+  faqSection.appendChild(faqText);
+
+  const faqAccordionsButton = document.createElement('div');
+  faqAccordionsButton.className = 'faq-accordions-button';
+
   // Wait for all cards to be processed
   const faqElements = await Promise.all(faqsPromises);
   faqElements.forEach((faq) => {
-    faqSection.appendChild(faq);
+    faqAccordionsButton.appendChild(faq);
   });
 
   let showMoreButton;
 
-  function handleShowMoreButton(e) {
+  /* function handleShowMoreButton(e) {
     e.preventDefault();
     faqElements.forEach((slide) => {
       if (slide.classList.contains('hidden')) {
@@ -117,16 +115,18 @@ export default async function decorate(block) {
       }
     });
     showMoreButton.remove();
-  }
+  } */
 
-  if (faqElements && faqElements.length > 4) {
-    showMoreButton = createButton(showMoreLabel, '', false, BUTTON_VARIANTS.SECONDARY, BUTTON_ICON_SIZES.MEDIUM, '', '');
-    showMoreButton.addEventListener('click', handleShowMoreButton);
+  if (faqElements && faqElements.length > 5) {
+    showMoreButton = createButton(showMoreLabel, '', false, BUTTON_VARIANTS.SECONDARY, BUTTON_ICON_SIZES.MEDIUM, '', '', valuesFromBlock.showMoreButtonLabel.instrumentation);
+    // showMoreButton.addEventListener('click', handleShowMoreButton);
   }
 
   if (showMoreButton) {
-    faqSection.appendChild(showMoreButton);
+    faqAccordionsButton.appendChild(showMoreButton);
   }
+
+  faqSection.appendChild(faqAccordionsButton);
 
   // Preserve blockName if present
   if (block.dataset.blockName) {
