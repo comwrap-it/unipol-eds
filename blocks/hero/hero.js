@@ -187,6 +187,12 @@ const createHeroButtonSection = async (
 const handleAuthorMode = (hero) => {
   const isInAuthorMode = isAuthorMode(hero);
   if (isInAuthorMode) {
+    const alreadyExistentHero = document.querySelector('.hero');
+    if (alreadyExistentHero && alreadyExistentHero !== hero) {
+      const existingHeight = alreadyExistentHero.style.height;
+      hero.style.height = existingHeight;
+      return;
+    }
     const windowHeight = window.innerHeight;
     hero.style.height = `${windowHeight}px`;
   }
