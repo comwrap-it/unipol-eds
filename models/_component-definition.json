@@ -59,12 +59,6 @@
           "...": "../blocks/editorial-carousel-card/_editorial-carousel-card.json#/definitions"
         },
         {
-          "...": "../blocks/full-screen-hero-carousel/_full-screen-hero-carousel.json#/definitions"
-        },
-        {
-          "...": "../blocks/hero/_hero.json#/definitions"
-        },
-        {
           "...": "./_unipol-header.json#/definitions"
         },
         {
