@@ -115,9 +115,17 @@ function setupAssetPathInterceptor() {
 
   // Intercetta le modifiche agli stili tramite setProperty
   const originalSetProperty = CSSStyleDeclaration.prototype.setProperty;
-  CSSStyleDeclaration.prototype.setProperty = function interceptedSetProperty(property, value, priority) {
+  CSSStyleDeclaration.prototype.setProperty = function interceptedSetProperty(
+    property,
+    value,
+    priority,
+  ) {
     let modifiedValue = value;
-    if (property === 'background-image' && typeof modifiedValue === 'string' && modifiedValue.includes('/assets/')) {
+    if (
+      property === 'background-image'
+      && typeof modifiedValue === 'string'
+      && modifiedValue.includes('/assets/')
+    ) {
       modifiedValue = modifiedValue.replace(/\/assets\//g, '/static/assets/');
     }
     return originalSetProperty.call(this, property, modifiedValue, priority);
