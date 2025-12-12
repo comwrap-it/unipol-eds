@@ -36,6 +36,9 @@
     "...": "./widgets/_insurance-product-carousel-widget.json#/models"
   },
   {
+    "...": "../blocks/editorial-carousel-widget/_editorial-carousel-widget.json#/models"
+  },
+  {
     "...": "../blocks/*/_*.json#/models"
   },
   {

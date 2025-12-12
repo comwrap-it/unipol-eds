@@ -245,6 +245,22 @@
     ]
   },
   {
+    "id": "editorial-carousel-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "editorial-carousel-widget-name",
+        "label": "Nome sezione Editorial Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "editorial-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
     "id": "accordion",
     "fields": [
       {
@@ -412,28 +428,192 @@
     ]
   },
   {
-    "id": "faq-widget",
+    "id": "editorial-carousel-card",
     "fields": [
       {
         "component": "text",
         "name": "title",
         "label": "Titolo",
-        "description": "max 40 caratteri",
-        "required": true,
-        "maxlength": 40
+        "maxlength": 15,
+        "required": true
       },
       {
         "component": "text",
         "name": "description",
         "label": "Descrizione",
-        "description": "max 150 caratteri",
-        "required": true,
-        "maxlength": 150
+        "maxlength": 130,
+        "required": true
+      },
+      {
+        "component": "container",
+        "name": "button-container",
+        "label": "Configurazione Pulsante",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "standardButtonLabel",
+            "label": "Button Text",
+            "required": false
+          },
+          {
+            "component": "select",
+            "name": "standardButtonVariant",
+            "label": "Variante",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Accent",
+                "value": "accent"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "URL del bottone"
+          },
+          {
+            "component": "boolean",
+            "label": "Apri in una nuova scheda",
+            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+            "name": "standardButtonOpenInNewTab",
+            "valueType": "boolean",
+            "value": false
+          },
+          {
+            "component": "select",
+            "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
+            "label": "Dimensione Icone",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonLeftIcon",
+            "label": "Icona Sinistra",
+            "description": "Select the left icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonRightIcon",
+            "label": "Icona Destra",
+            "description": "Select the right icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          }
+        ]
       },
       {
         "component": "text",
+        "name": "note",
+        "label": "Note",
+        "maxlength": 60,
+        "required": true
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Immagine",
+        "multi": false,
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageSR",
+        "label": "Testo alternativo per l'immagine",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "editorial-carousel-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "editorial-carousel-widget-name",
+        "label": "Nome sezione Editorial Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "editorial-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "editorial-carousel",
+    "fields": [
+      {
+        "component": "text",
         "name": "showMoreButtonLabel",
-        "label": "Testo pulsante carica altro",
+        "label": "Testo bottone per dispositivi mobile",
         "description": "Default \"Mostra di più\"",
         "maxlength": 15
       }

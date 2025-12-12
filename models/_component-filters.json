@@ -5,6 +5,7 @@
       "section",
       "kpi-highlights-widget",
       "insurance-product-carousel-widget",
+      "editorial-carousel-widget",
       "hero-widget",
       "mini-hero-widget",
       "blog-carousel-widget",
@@ -47,6 +48,9 @@
   },
   {
     "...": "./widgets/_insurance-product-carousel-widget.json#/filters"
+  },
+  {
+    "...": "../blocks/editorial-carousel-widget/_editorial-carousel-widget.json#/filters"
   },
   {
     "...": "../blocks/*/_*.json#/filters"
