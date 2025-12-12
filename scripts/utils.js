@@ -69,16 +69,12 @@ export const addAnimationClassToNearestSection = (
  * @returns {boolean} true if in author mode, false otherwise
  */
 export const isAuthorMode = (htmlElement) => {
-  if (!htmlElement || !htmlElement.ownerDocument) {
-    console.warn('Invalid htmlElement provided to isAuthorMode');
-    return false;
-  }
-  const doc = htmlElement.ownerDocument;
-  const root = doc.documentElement;
-  if (!root) {
-    return false;
-  }
-  const isInAuthorMode = root.classList.contains('adobe-ue-preview')
-    || root.classList.contains('adobe-ue-edit');
+  const currentUrl = window.location.href;
+  const doc = htmlElement?.ownerDocument;
+  const root = doc?.documentElement;
+  const isInAuthorMode = root?.classList.contains('adobe-ue-preview')
+    || root?.classList.contains('adobe-ue-edit')
+    || currentUrl.includes('author-')
+    || currentUrl.includes('universal-editor');
   return isInAuthorMode;
 };

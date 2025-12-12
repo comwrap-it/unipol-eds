@@ -186,7 +186,9 @@ const createHeroButtonSection = async (
  */
 const handleAuthorMode = (hero) => {
   const isInAuthorMode = isAuthorMode(hero);
+  console.log('🚀 ~ handleAuthorMode ~ isInAuthorMode:', isInAuthorMode)
   if (isInAuthorMode) {
+    console.log('window height', window.innerHeight);
     const container = hero.closest('body') || hero.closest('main');
 
     if (!container) {
