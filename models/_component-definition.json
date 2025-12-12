@@ -59,9 +59,6 @@
           "...": "../blocks/editorial-carousel-card/_editorial-carousel-card.json#/definitions"
         },
         {
-          "...": "../blocks/hero-widget/_hero-widget.json#/definitions"
-        },
-        {
           "...": "../blocks/full-screen-hero-carousel/_full-screen-hero-carousel.json#/definitions"
         },
         {
