@@ -181,6 +181,22 @@
     ]
   },
   {
+    "id": "mini-hero-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "mini-hero-widget-name",
+        "label": "Nome sezione Mini Hero Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "mini-hero-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
     "id": "insurance-product-carousel-widget",
     "fields": [
       {
@@ -1661,22 +1677,6 @@
         "label": "Testo bottone per dispositivi mobile",
         "description": "Default \"Mostra di più\"",
         "maxlength": 15
-      }
-    ]
-  },
-  {
-    "id": "mini-hero-widget",
-    "fields": [
-      {
-        "component": "text",
-        "name": "mini-hero-widget-name",
-        "label": "Nome sezione Mini Hero Widget"
-      },
-      {
-        "component": "toggle",
-        "name": "mini-hero-widget-dark-theme",
-        "label": "Tema scuro",
-        "default": false
       }
     ]
   },

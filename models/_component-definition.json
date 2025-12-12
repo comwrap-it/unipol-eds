@@ -32,6 +32,9 @@
           "...": "./widgets/_FAQ-widget.json#/definitions"
         },
         {
+          "...": "./widgets/_mini-hero-widget.json#/definitions"
+        },
+        {
           "...": "../blocks/insurance-product-carousel-widget/_insurance-product-carousel-widget.json#/definitions"
         },
         {

@@ -56,6 +56,12 @@
     "components": []
   },
   {
+    "id": "mini-hero-widget",
+    "components": [
+      "mini-hero-carousel"
+    ]
+  },
+  {
     "id": "insurance-product-carousel-widget",
     "components": []
   },
@@ -152,12 +158,6 @@
     "id": "mini-hero-carousel",
     "components": [
       "mini-hero"
-    ]
-  },
-  {
-    "id": "mini-hero-widget",
-    "components": [
-      "mini-hero-carousel"
     ]
   },
   {
