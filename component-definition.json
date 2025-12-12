@@ -263,6 +263,92 @@
           }
         },
         {
+          "title": "Editorial Carousel Widget",
+          "id": "editorial-carousel-widget",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {
+                  "filter": "editorial-carousel-widget",
+                  "name": "Editorial Carousel Widget",
+                  "model": "editorial-carousel-widget",
+                  "style": "editorial-carousel-widget",
+                  "text-block": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Text Block",
+                    "model": "text-block"
+                  },
+                  "editorial-carousel": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Editorial Carousel",
+                    "filter": "editorial-carousel",
+                    "model": "editorial-carousel",
+                    "editorial-carousel-card": {
+                      "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                      "name": "Editorial Card",
+                      "filter": "editorial-carousel-card",
+                      "model": "editorial-carousel-card"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Editorial Carousel",
+          "id": "editorial-carousel",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "editorial-carousel",
+                  "name": "Editorial Carousel"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Editorial Card",
+          "id": "editorial-carousel-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Editorial card",
+                  "model": "editorial-carousel-card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Hero Widget",
+          "id": "hero-widget",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {
+                  "filter": "hero-widget",
+                  "name": "Hero Widget",
+                  "model": "hero-widget",
+                  "style": "hero-widget",
+                  "full-screen-hero-carousel": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Full Screen Hero Carousel",
+                    "filter": "full-screen-hero-carousel"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Full Screen Hero Carousel",
           "id": "full-screen-hero-carousel",
           "plugins": {
@@ -510,17 +596,64 @@
           }
         },
         {
-          "title": "FAQ Widget",
-          "id": "faq-widget",
+          "title": "Editorial Card",
+          "id": "editorial-carousel-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Editorial card",
+                  "model": "editorial-carousel-card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Editorial Carousel Widget",
+          "id": "editorial-carousel-widget",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {
+                  "filter": "editorial-carousel-widget",
+                  "name": "Editorial Carousel Widget",
+                  "model": "editorial-carousel-widget",
+                  "style": "editorial-carousel-widget",
+                  "text-block": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Text Block",
+                    "model": "text-block"
+                  },
+                  "editorial-carousel": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Editorial Carousel",
+                    "filter": "editorial-carousel",
+                    "model": "editorial-carousel",
+                    "editorial-carousel-card": {
+                      "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                      "name": "Editorial Card",
+                      "filter": "editorial-carousel-card",
+                      "model": "editorial-carousel-card"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Editorial Carousel",
+          "id": "editorial-carousel",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "key-value": true,
-                  "filter": "faq-widget",
-                  "name": "FAQ Widget",
-                  "model": "faq-widget"
+                  "filter": "editorial-carousel",
+                  "name": "Editorial Carousel"
                 }
               }
             }
@@ -970,6 +1103,21 @@
                 "template": {
                   "name": "Text-Link",
                   "model": "text-link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Unica Preventivatore",
+          "id": "unica-preventivatore",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "name": "Unica Preventivatore",
+                  "model": "unica-preventivatore"
                 }
               }
             }

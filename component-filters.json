@@ -5,6 +5,7 @@
       "section",
       "kpi-highlights-widget",
       "insurance-product-carousel-widget",
+      "editorial-carousel-widget",
       "hero-widget",
       "mini-hero-widget",
       "blog-carousel-widget",
@@ -42,6 +43,7 @@
       "options-list",
       "text-list",
       "prodotto-unico",
+      "unica-preventivatore",
       "prodotto-unico-header",
       "image-text-grid",
       "accordion"
@@ -56,16 +58,8 @@
     "components": []
   },
   {
-    "id": "hero-widget",
-    "components": [
-      "full-screen-hero-carousel"
-    ]
-  },
-  {
-    "id": "mini-hero-widget",
-    "components": [
-      "mini-hero-carousel"
-    ]
+    "id": "editorial-carousel-widget",
+    "components": []
   },
   {
     "id": "blog-carousel-widget",
@@ -99,10 +93,16 @@
     ]
   },
   {
-    "id": "faq-widget",
+    "id": "editorial-carousel-widget",
+    "components": []
+  },
+  {
+    "id": "editorial-carousel",
     "components": [
-      "fragment"
-    ]
+      "editorial-carousel-card"
+    ],
+    "min": 1,
+    "max": 8
   },
   {
     "id": "footer-privacy-section",
