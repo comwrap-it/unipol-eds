@@ -1,5 +1,6 @@
 import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { getTemplateMetaContent } from '../../scripts/utils.js';
 import {
   NAVIGATION_PILL_VARIANTS,
   NAVIGATION_PILL_ICON_SIZES,
@@ -366,6 +367,28 @@ export default async function decorate(block) {
   buildMobileMenu(container);
   updateContainerWidth(container);
 
+  const template = getTemplateMetaContent();
+  if (template === 'homepage') {
+    const firstWrapper = container.querySelector('.navigation-pill-wrapper');
+    if (firstWrapper) {
+      const firstPill = firstWrapper.querySelector('.navigation-pill');
+      const firstBox = pillToBoxMap.get(firstPill);
+
+      if (firstPill && firstBox) {
+        firstBox.style.display = 'flex';
+        requestAnimationFrame(() => firstBox.classList.add('header-box-open'));
+
+        firstPill.classList.add('header-nav-pill-active');
+        firstPill.setAttribute('aria-expanded', 'true');
+
+        openBoxRef.box = firstBox;
+        openBoxRef.pill = firstPill;
+
+        addCloseIconToBox(firstBox, firstPill);
+      }
+    }
+  }
+
   const secondWrapper = container.children[1];
   if (secondWrapper) {
     const rightIconEl = secondWrapper.querySelector('.icon:last-child');
@@ -403,4 +426,5 @@ export default async function decorate(block) {
   });
 
   navigationResponsiveController(block);
+  console.log('Template meta content:', getTemplateMetaContent());
 }
