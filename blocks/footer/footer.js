@@ -124,7 +124,6 @@ export default async function decorate(block) {
       }
     });
 
-    // --- DISPLAY: NONE / RESET ---
     textLinks.forEach((link) => {
       if (isMobile) {
         link.style.display = 'none';
@@ -137,7 +136,7 @@ export default async function decorate(block) {
     });
   }
 
-  // --- MOBILE ACCORDION FOR .text-link-title ---
+  // --- MOBILE ACCORDION
   function setupAccordion() {
     const titles = footerContainer.querySelectorAll('.text-link-title');
 
@@ -153,6 +152,15 @@ export default async function decorate(block) {
   }
 
   const mql = window.matchMedia('(max-width: 768px)');
+
+  const titles = footerContainer.querySelectorAll('.text-link-title');
+  titles.forEach((title) => {
+    if (!title.querySelector('.un-icon-plus')) {
+      const icon = document.createElement('span');
+      icon.className = 'un-icon-plus';
+      title.append(icon);
+    }
+  });
 
   applyMobileAttributes(mql.matches);
 
