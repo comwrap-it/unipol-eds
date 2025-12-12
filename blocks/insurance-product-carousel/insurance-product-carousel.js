@@ -54,7 +54,7 @@ const initSwiper = (
   rightIconButton = null,
 ) => {
   const swiperInstance = new Swiper(carousel, {
-    a11y: false,
+    a11y: { enabled: false },
     navigation: {
       prevEl: leftIconButton || carousel.querySelector('.swiper-button-prev'),
       nextEl: rightIconButton || carousel.querySelector('.swiper-button-next'),

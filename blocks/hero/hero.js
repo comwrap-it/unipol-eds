@@ -4,7 +4,6 @@ import {
   extractMediaElementFromRow,
 } from '../../scripts/domHelpers.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import { isAuthorMode } from '../../scripts/utils.js';
 import {
   BUTTON_ICON_SIZES,
   BUTTON_VARIANTS,
@@ -181,24 +180,6 @@ const createHeroButtonSection = async (
 };
 
 /**
- * Adjusts hero height in authoring mode to fit viewport height.
- * @param {HTMLDivElement} hero
- */
-const handleAuthorMode = (hero) => {
-  const isInAuthorMode = isAuthorMode(hero);
-  if (isInAuthorMode) {
-    const alreadyExistentHero = document.querySelector('.hero');
-    if (alreadyExistentHero && alreadyExistentHero !== hero) {
-      const existingHeight = alreadyExistentHero.style.height;
-      hero.style.height = existingHeight;
-      return;
-    }
-    const windowHeight = window.innerHeight;
-    hero.style.height = `${windowHeight}px`;
-  }
-};
-
-/**
  * Creates a Hero component
  *
  * @param {HTMLElement} heroBackground - the background media source
@@ -242,8 +223,6 @@ export async function createHero(
   isCarousel = false,
 ) {
   const hero = setupHeroWithBg(heroBackground, isVideoBackground, isCarousel);
-  // since hero uses 100vh in author i have to calculate it dinamically
-  handleAuthorMode(hero);
   const heroContent = document.createElement('div');
   heroContent.className = 'hero-content';
   const mainSection = createHeroMainSection(
