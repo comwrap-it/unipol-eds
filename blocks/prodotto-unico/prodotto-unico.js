@@ -19,11 +19,13 @@ function setupAssetPathInterceptor() {
     if (!element || element.nodeType !== Node.ELEMENT_NODE) return;
 
     // Riscrivi attributi src e href
-    ['src', 'href'].forEach((attr) => {
+    ['src', 'href', 'data-src', 'data-href'].forEach((attr) => {
       if (element.hasAttribute(attr)) {
         const value = element.getAttribute(attr);
         if (value && value.startsWith('/assets/')) {
-          element.setAttribute(attr, rewriteAssetPath(value));
+          const newValue = rewriteAssetPath(value);
+          element.setAttribute(attr, newValue);
+          console.log(`[Asset Interceptor] ${attr}: ${value} -> ${newValue}`);
         }
       }
     });
@@ -32,20 +34,54 @@ function setupAssetPathInterceptor() {
     if (element.style && element.style.backgroundImage) {
       const bgImage = element.style.backgroundImage;
       if (bgImage.includes('/assets/')) {
-        element.style.backgroundImage = bgImage.replace(/\/assets\//g, '/static/assets/');
+        const newBgImage = bgImage.replace(/\/assets\//g, '/static/assets/');
+        element.style.backgroundImage = newBgImage;
+        console.log(`[Asset Interceptor] background-image: ${bgImage} -> ${newBgImage}`);
       }
     }
 
     // Controlla anche gli elementi figli
     const elementsWithSrc = element.querySelectorAll('[src^="/assets/"]');
     elementsWithSrc.forEach((el) => {
-      el.setAttribute('src', rewriteAssetPath(el.getAttribute('src')));
+      const oldSrc = el.getAttribute('src');
+      el.setAttribute('src', rewriteAssetPath(oldSrc));
+      console.log(`[Asset Interceptor] src (child): ${oldSrc} -> ${rewriteAssetPath(oldSrc)}`);
     });
 
     const elementsWithHref = element.querySelectorAll('[href^="/assets/"]');
     elementsWithHref.forEach((el) => {
-      el.setAttribute('href', rewriteAssetPath(el.getAttribute('href')));
+      const oldHref = el.getAttribute('href');
+      el.setAttribute('href', rewriteAssetPath(oldHref));
+      console.log(`[Asset Interceptor] href (child): ${oldHref} -> ${rewriteAssetPath(oldHref)}`);
     });
+  };
+
+  // Intercetta anche la creazione di elementi con createElement
+  const originalCreateElement = document.createElement.bind(document);
+  document.createElement = function interceptedCreateElement(tagName, options) {
+    const element = originalCreateElement(tagName, options);
+
+    // Intercetta l'assegnazione di src e href
+    ['src', 'href', 'data-src', 'data-href'].forEach((attr) => {
+      const descriptor = Object.getOwnPropertyDescriptor(element, attr);
+      if (descriptor && descriptor.set) {
+        Object.defineProperty(element, attr, {
+          set: function interceptedAttrSetter(value) {
+            let modifiedValue = value;
+            if (typeof modifiedValue === 'string' && modifiedValue.startsWith('/assets/')) {
+              modifiedValue = rewriteAssetPath(modifiedValue);
+              console.log(`[Asset Interceptor] ${attr} property: ${value} -> ${modifiedValue}`);
+            }
+            descriptor.set.call(this, modifiedValue);
+          },
+          get: descriptor.get,
+          configurable: true,
+          enumerable: true,
+        });
+      }
+    });
+
+    return element;
   };
 
   // Intercetta le modifiche al DOM per riscrivere src, href, e background-image
@@ -58,7 +94,11 @@ function setupAssetPathInterceptor() {
 
       // Gestisci le modifiche agli attributi
       if (mutation.type === 'attributes') {
-        rewriteElementPaths(mutation.target);
+        const { target } = mutation;
+        const attrName = mutation.attributeName;
+        if (['src', 'href', 'style'].includes(attrName)) {
+          rewriteElementPaths(target);
+        }
       }
     });
   });
@@ -80,25 +120,57 @@ function setupAssetPathInterceptor() {
     return false;
   };
 
+  // Funzione per riscrivere tutti i path nel DOM periodicamente
+  const scanAndRewriteAllPaths = () => {
+    const angularElement = document.querySelector('tpd-interprete-angular-dx-api-pu');
+    if (angularElement) {
+      // Cerca tutti gli elementi con path /assets/ in tutto il subtree
+      const allElements = angularElement.querySelectorAll('*');
+      allElements.forEach((el) => {
+        rewriteElementPaths(el);
+      });
+      rewriteElementPaths(angularElement);
+    }
+  };
+
   // Prova ad avviare l'observer immediatamente
   if (!startObserver()) {
     // Se l'elemento non è ancora disponibile, riprova dopo il caricamento di Angular
     const checkInterval = setInterval(() => {
       if (startObserver()) {
         clearInterval(checkInterval);
+        // Esegui una scansione completa dopo che l'observer è attivo
+        setTimeout(scanAndRewriteAllPaths, 500);
       }
     }, 100);
 
     // Timeout di sicurezza dopo 10 secondi
-    setTimeout(() => clearInterval(checkInterval), 10000);
+    setTimeout(() => {
+      clearInterval(checkInterval);
+      // Esegui una scansione finale anche se l'observer non si è attivato
+      scanAndRewriteAllPaths();
+    }, 10000);
+  } else {
+    // Se l'observer si è avviato immediatamente, esegui una scansione dopo un breve delay
+    setTimeout(scanAndRewriteAllPaths, 1000);
   }
+
+  // Esegui scansioni periodiche per catturare elementi creati dinamicamente
+  const periodicScan = setInterval(() => {
+    scanAndRewriteAllPaths();
+  }, 2000);
+
+  // Ferma la scansione periodica dopo 30 secondi (dovrebbe essere sufficiente)
+  setTimeout(() => clearInterval(periodicScan), 30000);
 
   // Intercetta le richieste fetch per riscrivere i path
   const originalFetch = window.fetch;
   window.fetch = function interceptedFetch(...args) {
     const modifiedArgs = [...args];
     if (typeof modifiedArgs[0] === 'string' && modifiedArgs[0].startsWith('/assets/')) {
-      modifiedArgs[0] = rewriteAssetPath(modifiedArgs[0]);
+      const originalUrl = modifiedArgs[0];
+      modifiedArgs[0] = rewriteAssetPath(originalUrl);
+      console.log(`[Asset Interceptor] Fetch: ${originalUrl} -> ${modifiedArgs[0]}`);
     }
     return originalFetch.apply(this, modifiedArgs);
   };
@@ -108,10 +180,20 @@ function setupAssetPathInterceptor() {
   XMLHttpRequest.prototype.open = function interceptedOpen(method, url, ...rest) {
     let modifiedUrl = url;
     if (typeof modifiedUrl === 'string' && modifiedUrl.startsWith('/assets/')) {
-      modifiedUrl = rewriteAssetPath(modifiedUrl);
+      const originalUrl = modifiedUrl;
+      modifiedUrl = rewriteAssetPath(originalUrl);
+      console.log(`[Asset Interceptor] XHR: ${originalUrl} -> ${modifiedUrl}`);
     }
     return originalOpen.call(this, method, modifiedUrl, ...rest);
   };
+
+  // Intercetta anche le richieste di risorse (immagini, CSS, etc.)
+  // a livello di Service Worker/Request.
+  // Questo intercetta anche le richieste dirette del browser per immagini, font, etc.
+  if ('serviceWorker' in navigator) {
+    // Se c'è un service worker, potrebbe intercettare le richieste
+    // Ma per ora ci concentriamo su fetch e XHR
+  }
 
   // Intercetta le modifiche agli stili tramite setProperty
   const originalSetProperty = CSSStyleDeclaration.prototype.setProperty;
@@ -127,12 +209,16 @@ function setupAssetPathInterceptor() {
       && modifiedValue.includes('/assets/')
     ) {
       modifiedValue = modifiedValue.replace(/\/assets\//g, '/static/assets/');
+      console.log(`[Asset Interceptor] setProperty background-image: ${value} -> ${modifiedValue}`);
     }
     return originalSetProperty.call(this, property, modifiedValue, priority);
   };
 
   // Intercetta anche l'assegnazione diretta a backgroundImage
-  const styleDescriptor = Object.getOwnPropertyDescriptor(CSSStyleDeclaration.prototype, 'backgroundImage');
+  const styleDescriptor = Object.getOwnPropertyDescriptor(
+    CSSStyleDeclaration.prototype,
+    'backgroundImage',
+  );
   if (styleDescriptor && styleDescriptor.set) {
     const originalSet = styleDescriptor.set;
     Object.defineProperty(CSSStyleDeclaration.prototype, 'backgroundImage', {
@@ -140,6 +226,7 @@ function setupAssetPathInterceptor() {
         let modifiedValue = value;
         if (typeof modifiedValue === 'string' && modifiedValue.includes('/assets/')) {
           modifiedValue = modifiedValue.replace(/\/assets\//g, '/static/assets/');
+          console.log(`[Asset Interceptor] backgroundImage setter: ${value} -> ${modifiedValue}`);
         }
         originalSet.call(this, modifiedValue);
       },
@@ -148,6 +235,33 @@ function setupAssetPathInterceptor() {
       enumerable: true,
     });
   }
+
+  // Intercetta anche la creazione di elementi Image
+  const originalImage = window.Image;
+  window.Image = function InterceptedImage(...args) {
+    const img = new originalImage(...args);
+    const originalSrcSetter = Object.getOwnPropertyDescriptor(
+      HTMLImageElement.prototype,
+      'src',
+    )?.set;
+    if (originalSrcSetter) {
+      Object.defineProperty(img, 'src', {
+        set: function interceptedSrcSetter(value) {
+          let modifiedValue = value;
+          if (typeof modifiedValue === 'string' && modifiedValue.startsWith('/assets/')) {
+            modifiedValue = rewriteAssetPath(modifiedValue);
+            console.log(`[Asset Interceptor] Image.src: ${value} -> ${modifiedValue}`);
+          }
+          originalSrcSetter.call(this, modifiedValue);
+        },
+        get: Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src')?.get,
+        configurable: true,
+        enumerable: true,
+      });
+    }
+    return img;
+  };
+  window.Image.prototype = originalImage.prototype;
 
   console.log('Asset path interceptor configurato: /assets/ -> /static/assets/');
 }
