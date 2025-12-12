@@ -149,7 +149,7 @@
 
 html.adobe-ue-preview .hero,
 html.adobe-ue-edit .hero {
-    min-height: 700px;
+    min-height: 550px;
     height: auto;
 }
 
