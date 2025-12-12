@@ -24,19 +24,19 @@
           "component": "reference",
           "valueType": "string",
           "name": "miniHeroBackgroundMediaSrc",
-          "label": "Mini Hero Background Media",
-          "description": "URL of the background image or video"
+          "label": "Media di sfondo del Mini Hero",
+          "description": "Immagine o video di sfondo"
         },
         {
           "component": "boolean",
           "name": "isVideoBackground",
-          "label": "Is Video Background",
-          "description": "Toggle to enable or disable video background",
+          "label": "Sfondo video",
+          "description": "Abilita o disabilita lo sfondo video",
           "valueType": "boolean"
         },
         {
           "component": "text",
-          "label": "Mini Hero Title",
+          "label": "Titolo Mini Hero",
           "name": "miniHeroMainLabel",
           "required": true,
           "validation": {
@@ -47,7 +47,7 @@
         {
           "component": "text",
           "name": "miniHeroSubtitle",
-          "label": "Mini Hero Subtitle",
+          "label": "Sottotitolo Mini Hero",
           "validation": {
             "maxLength": 50,
             "customErrorMsg": "Testo troppo lungo"
@@ -56,14 +56,14 @@
         {
           "component": "boolean",
           "name": "showMiniHeroBulletList",
-          "label": "Show Mini Hero Bullet List",
-          "description": "Enable up to 3 bullet points",
+          "label": "Mostra elenco puntato Mini Hero",
+          "description": "Abilita fino a 3 punti elenco",
           "valueType": "boolean"
         },
         {
           "component": "text",
           "name": "miniHeroBullet1",
-          "label": "Bullet 1",
+          "label": "Punto elenco 1",
           "validation": {
             "maxLength": 40,
             "customErrorMsg": "Testo troppo lungo"
@@ -80,7 +80,7 @@
         {
           "component": "text",
           "name": "miniHeroBullet2",
-          "label": "Bullet 2",
+          "label": "Punto elenco 2",
           "validation": {
             "maxLength": 40,
             "customErrorMsg": "Testo troppo lungo"
@@ -97,7 +97,7 @@
         {
           "component": "text",
           "name": "miniHeroBullet3",
-          "label": "Bullet 3",
+          "label": "Punto elenco 3",
           "validation": {
             "maxLength": 40,
             "customErrorMsg": "Testo troppo lungo"
@@ -114,8 +114,8 @@
         {
           "component": "boolean",
           "name": "showMiniHeroButton",
-          "label": "Show Mini Hero Button",
-          "description": "Toggle to show or hide the mini hero button",
+          "label": "Mostra pulsante Mini Hero",
+          "description": "Mostra o nascondi il pulsante del Mini Hero",
           "valueType": "boolean"
         },
         {
