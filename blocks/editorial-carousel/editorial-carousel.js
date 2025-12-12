@@ -145,13 +145,13 @@ const createSlide = async (row, decorateCard) => {
  * @param {HTMLElement[]} slides - List of slide elements
  * @param {HTMLElement} track - Swiper track element
  * @param {boolean} instrumented - Whether Universal Editor instrumentation is present
- * @param {MediaQueryList} mq - Media query determining desktop/tablet vs mobile
+ * @param {MediaQueryList} mqTablet - Media query determining tablet/desktop vs mobile
  */
-const appendSlides = (slides, track, instrumented, mq) => {
+const appendSlides = (slides, track, instrumented, mqTablet) => {
   slides.forEach((slide, index) => {
     const hasContent = slide?.innerText?.trim() || slide?.querySelector('img, picture');
     if (slide && !instrumented && hasContent) {
-      if (index >= 4 && !mq.matches) {
+      if (index >= 4 && !mqTablet.matches) {
         slide.classList.add('hidden');
       }
       track.appendChild(slide);
