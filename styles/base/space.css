@@ -6,16 +6,20 @@
 :root {
   --Spacing-Padding-24-16: var(--Space-400-24);
   --Spacing-Gap-24-16: var(--Space-400-24);
+  --Spacing-Gap-16-8: var(--Space-300-16);
+  --Text-Block-Centered-Text-Gap: var(--Spacing-Gap-16-8);
+  --Text-Block-Centered-Gap: var(--Space-500-32);
   --Spacing-Padding-4-2: var(--Space-100-4);
   --Spacing-Padding-16-12: var(--Space-300-16);
-  --Spacing-Gap-16-8: var(--Space-300-16);
   --Spacing-Gap-8-4: var(--Space-200-8);
+  --Text-Block-Left-Horizontal-Gap-D-Ds-Tp: var(--Space-500-32);
   --Spacing-Padding-32-24: var(--Space-500-32);
   --Spacing-Gap-32-24: var(--Space-500-32);
   --Spacing-Gap-48-40: var(--Space-700-48);
   --Spacing-Gap-80-48: var(--Space-1000-80);
-  --Carousel-Widget-Gap-D-Ds: var(--Space-700-48);
+  --Carousel-Widget-Gap: var(--Spacing-Gap-48-40);
   --Carousel-Widget-Gap-M-Tp: var(--Space-600-40);
+  --Spacing-Gap-56-48: var(--Space-800-56);
   --Carousel-Widget-Review-Text-Gap: var(--Space-300-16);
   --Carousel-Widget-Review-Text-Gap-M: var(--Space-200-8);
   --Kpi-Highlights-Widget-Gap-D-Ds: var(--Space-800-56);
@@ -24,6 +28,8 @@
   --Carousel-Widget-Product-Highlights-Logo-Text-Gap-D-Ds: var(--Space-500-32);
   --Carousel-Widget-Product-Highlights-Logo-Text-Gap-M: var(--Space-400-24);
   --Spacing-Padding-8-4: var(--Space-200-8);
+  --Spacing-Gap-16-8: var(--Space-300-16);
+  --Spacing-Gap-120-96-80: var(--Space-1200-120);
   --Carousel-Widget-Gap-M-Alt: var(--Space-500-32);
   --Spacing-Gap-56-40: var(--Space-800-56);
   --Carousel-Widget-Vertical-Gap: var(--Spacing-Gap-48-40);
