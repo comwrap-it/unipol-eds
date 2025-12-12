@@ -37,7 +37,13 @@
     "...": "./widgets/_FAQ-widget.json#/filters"
   },
   {
+    "...": "./widgets/_hero-widget.json#/filters"
+  },
+  {
     "...": "./widgets/_mini-hero-widget.json#/filters"
+  },
+  {
+    "...": "./widgets/_blog-carousel-widget.json#/filters"
   },
   {
     "...": "../blocks/insurance-product-carousel-widget/_insurance-product-carousel-widget.json#/filters"

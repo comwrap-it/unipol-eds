@@ -56,20 +56,26 @@
     "components": []
   },
   {
+    "id": "hero-widget",
+    "components": [
+      "full-screen-hero-carousel"
+    ]
+  },
+  {
     "id": "mini-hero-widget",
     "components": [
       "mini-hero-carousel"
     ]
   },
   {
-    "id": "insurance-product-carousel-widget",
-    "components": []
-  },
-  {
     "id": "blog-carousel-widget",
     "components": [
       "blog-carousel"
     ]
+  },
+  {
+    "id": "insurance-product-carousel-widget",
+    "components": []
   },
   {
     "id": "cards",
@@ -126,12 +132,6 @@
     "id": "header-utilities-section",
     "components": [
       "header-utilities-navigation-pill"
-    ]
-  },
-  {
-    "id": "hero-widget",
-    "components": [
-      "full-screen-hero-carousel"
     ]
   },
   {

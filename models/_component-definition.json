@@ -32,7 +32,13 @@
           "...": "./widgets/_FAQ-widget.json#/definitions"
         },
         {
+          "...": "./widgets/_hero-widget.json#/definitions"
+        },
+        {
           "...": "./widgets/_mini-hero-widget.json#/definitions"
+        },
+        {
+          "...": "./widgets/_blog-carousel-widget.json#/definitions"
         },
         {
           "...": "../blocks/insurance-product-carousel-widget/_insurance-product-carousel-widget.json#/definitions"
@@ -42,9 +48,6 @@
         },
         {
           "...": "../blocks/insurance-product-card/_insurance-product-card.json#/definitions"
-        },
-        {
-          "...": "../blocks/hero-widget/_hero-widget.json#/definitions"
         },
         {
           "...": "../blocks/full-screen-hero-carousel/_full-screen-hero-carousel.json#/definitions"

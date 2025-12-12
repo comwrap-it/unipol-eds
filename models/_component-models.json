@@ -24,7 +24,13 @@
     "...": "./widgets/_FAQ-widget.json#/models"
   },
   {
+    "...": "./widgets/_hero-widget.json#/models"
+  },
+  {
     "...": "./widgets/_mini-hero-widget.json#/models"
+  },
+  {
+    "...": "./widgets/_blog-carousel-widget.json#/models"
   },
   {
     "...": "../blocks/insurance-product-carousel-widget/_insurance-product-carousel-widget.json#/models"
