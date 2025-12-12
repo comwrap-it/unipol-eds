@@ -2,10 +2,10 @@
 
 .image-text-grid {
   width: 100%;
-  padding: var(--Layout-Section-Vertical-Padding, 64px) var(--Layout-Section-Margin-Horizontal-Padding, 64px);
+  padding: var(--Layout-Section-Vertical-Padding, 4rem) var(--Layout-Section-Margin-Horizontal-Padding, 4rem);
   display: flex;
   flex-direction: column;
-  gap: var(--Section-Widget-Gap-D, 120px);
+  gap: var(--Section-Widget-Gap-D, 7.5rem);
 }
 
 /* Image */
@@ -72,7 +72,7 @@
 /* Desktop small */
 @media (1152px <= width <= 1312px) {
     .image-text-grid {
-        gap: var(--Section-Widget-Gap-Ds, 96px);
+        gap: var(--Section-Widget-Gap-Ds, 6rem);
     }
 
     .image-text-item .image-wrapper img {
@@ -84,7 +84,7 @@
 /* Tablet */
 @media (768px <= width <= 1152px) {
     .image-text-grid {
-        gap: var(--Section-Widget-Gap-M, 96px);
+        gap: var(--Section-Widget-Gap-M, 6rem);
     }
 
     .image-text-item .image-wrapper img {
@@ -96,14 +96,14 @@
 /* Mobile */
 @media (width <= 768px) {
   .image-text-grid {
-    max-width: 736px;
-    gap: var(--Section-Widget-Gap-M, 48px);
+    max-width: 46rem;
+    gap: var(--Section-Widget-Gap-M, 3rem);
   }
 
   .image-text-item {
     flex-direction: column-reverse !important;
     align-items: center;
-    gap: var(--Section-Image-Gap-M, 48px);
+    gap: var(--Section-Image-Gap-M, 3rem);
   }
 
   .image-text-item .image-wrapper picture,
