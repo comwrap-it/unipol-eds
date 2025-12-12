@@ -5,25 +5,34 @@
     --reveal-delay: 350ms;
 }
 
-.reveal-in {
-    opacity: 0;
-    transform: none;
-    will-change: opacity;
+html:not(.adobe-ue-preview),
+html:not(.adobe-ue-edit) {
+    .reveal-in {
+        opacity: 0;
+        transform: none;
+        will-change: opacity;
 
-    &.is-revealed {
-        animation: fade-in var(--reveal-duration) var(--reveal-ease)
-            calc(var(--reveal-delay, 350ms) + var(--slide-reveal-offset, 0ms)) both;
+        &.is-revealed {
+            animation: fade-in var(--reveal-duration) var(--reveal-ease)
+                calc(
+                    var(--reveal-delay, 350ms) + var(--slide-reveal-offset, 0ms)
+                )
+                both;
+        }
     }
-}
 
-.reveal-in-up {
-    opacity: 0;
-    transform: translateY(var(--reveal-distance));
-    will-change: opacity, transform;
+    .reveal-in-up {
+        opacity: 0;
+        transform: translateY(var(--reveal-distance));
+        will-change: opacity, transform;
 
-    &.is-revealed {
-        animation: appear-in-up var(--reveal-duration) var(--reveal-ease)
-            calc(var(--reveal-delay, 350ms) + var(--slide-reveal-offset, 0ms)) both;
+        &.is-revealed {
+            animation: appear-in-up var(--reveal-duration) var(--reveal-ease)
+                calc(
+                    var(--reveal-delay, 350ms) + var(--slide-reveal-offset, 0ms)
+                )
+                both;
+        }
     }
 }
 
