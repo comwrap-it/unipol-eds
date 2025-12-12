@@ -12,10 +12,46 @@ export function setupAssetPathInterceptor(elementSelector, options = {}) {
 
   // Funzione helper per riscrivere i path
   const rewriteAssetPath = (path) => {
-    if (typeof path === 'string' && path.startsWith('/assets/')) {
+    if (typeof path !== 'string') return path;
+    
+    // Evita loop infiniti: se il path contiene già /static/static/, non riscrivere
+    if (path.includes('/static/static/')) {
+      return path;
+    }
+    
+    // Se il path inizia già con /static/assets/, non riscrivere
+    if (path.startsWith('/static/assets/')) {
+      return path;
+    }
+    
+    // Riscrivi solo se inizia con /assets/ (e non è già stato riscritto)
+    if (path.startsWith('/assets/')) {
       return path.replace(/^\/assets\//, '/static/assets/');
     }
+    
     return path;
+  };
+
+  // Funzione helper per riscrivere i path nei background-image (può contenere url())
+  const rewriteBackgroundImagePath = (bgImage) => {
+    if (typeof bgImage !== 'string') return bgImage;
+    
+    // Evita loop infiniti: se contiene già /static/static/, non riscrivere
+    if (bgImage.includes('/static/static/')) {
+      return bgImage;
+    }
+    
+    // Se contiene già /static/assets/, non riscrivere
+    if (bgImage.includes('/static/assets/')) {
+      return bgImage;
+    }
+    
+    // Riscrivi solo se contiene /assets/ (e non è già stato riscritto)
+    if (bgImage.includes('/assets/')) {
+      return bgImage.replace(/\/assets\//g, '/static/assets/');
+    }
+    
+    return bgImage;
   };
 
   // Funzione per loggare (se abilitato)
@@ -44,8 +80,8 @@ export function setupAssetPathInterceptor(elementSelector, options = {}) {
     // Riscrivi background-image negli stili inline
     if (element.style && element.style.backgroundImage) {
       const bgImage = element.style.backgroundImage;
-      if (bgImage.includes('/assets/')) {
-        const newBgImage = bgImage.replace(/\/assets\//g, '/static/assets/');
+      const newBgImage = rewriteBackgroundImagePath(bgImage);
+      if (newBgImage !== bgImage) {
         element.style.backgroundImage = newBgImage;
         log(`[Asset Interceptor] background-image: ${bgImage} -> ${newBgImage}`);
       }
@@ -206,13 +242,12 @@ export function setupAssetPathInterceptor(elementSelector, options = {}) {
     priority,
   ) {
     let modifiedValue = value;
-    if (
-      property === 'background-image'
-      && typeof modifiedValue === 'string'
-      && modifiedValue.includes('/assets/')
-    ) {
-      modifiedValue = modifiedValue.replace(/\/assets\//g, '/static/assets/');
-      log(`[Asset Interceptor] setProperty background-image: ${value} -> ${modifiedValue}`);
+    if (property === 'background-image' && typeof modifiedValue === 'string') {
+      const newValue = rewriteBackgroundImagePath(modifiedValue);
+      if (newValue !== modifiedValue) {
+        modifiedValue = newValue;
+        log(`[Asset Interceptor] setProperty background-image: ${value} -> ${modifiedValue}`);
+      }
     }
     return originalSetProperty.call(this, property, modifiedValue, priority);
   };
@@ -227,9 +262,12 @@ export function setupAssetPathInterceptor(elementSelector, options = {}) {
     Object.defineProperty(CSSStyleDeclaration.prototype, 'backgroundImage', {
       set: function interceptedBackgroundImageSetter(value) {
         let modifiedValue = value;
-        if (typeof modifiedValue === 'string' && modifiedValue.includes('/assets/')) {
-          modifiedValue = modifiedValue.replace(/\/assets\//g, '/static/assets/');
-          log(`[Asset Interceptor] backgroundImage setter: ${value} -> ${modifiedValue}`);
+        if (typeof modifiedValue === 'string') {
+          const newValue = rewriteBackgroundImagePath(modifiedValue);
+          if (newValue !== modifiedValue) {
+            modifiedValue = newValue;
+            log(`[Asset Interceptor] backgroundImage setter: ${value} -> ${modifiedValue}`);
+          }
         }
         originalSet.call(this, modifiedValue);
       },
