@@ -27,7 +27,7 @@ export default async function decorate(block) {
     await loadScript('/static/js/interprete/vendor.js', { type: 'module' });
     console.log('vendor.js caricato');
 
-    await loadScript('/static/js/interprete-pu/main.js', { type: 'module' });
+    await loadScript('/static/js/interprete/main.js', { type: 'module' });
     console.log('main.js caricato - Componente Angular Prodotto Unico pronto');
   } catch (error) {
     console.error('Errore nel caricamento del componente Angular Prodotto Unico:', error);
