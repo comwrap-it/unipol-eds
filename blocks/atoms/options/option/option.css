@@ -1,0 +1,68 @@
+/* Updated token references (old commented block replaced by new naming):
+    --Options-Default-Text-Label: var(--Text-Default-Primary);
+    --Options-Default-Text-Description: var(--Text-Neutral-Secondary);
+    --Options-Default-Background: var(--Null-000);
+    --Options-Selected-Text-Label: var(--Text-Default-Primary);
+    --Options-Selected-Text-Description: var(--Text-Neutral-Secondary);
+    --Options-Selected-Background: var(--Background-Neutral-Primary);
+    --Options-Radius: var(--Radius-300-16);
+    --Options-Radius-Box: var(--Radius-400-24);
+    --Options-Horizontal-Padding-External: var(--Space-200-8);
+    --Options-Horizontal-Padding-Internal: var(--Space-250-12);
+    --Options-Horizontal-Gap: var(--Space-250-12);
+    --Options-Vertical-Padding: var(--Space-200-8);
+    --Options-Vertical-Padding-List: var(--Space-200-8);
+    --Options-Vertical-Gap: var(--Space-0);
+    --Options-Border: var(--Stroke-100-1); */
+
+.option-container {
+    display: flex;
+    width: 350px;
+    padding: 0 var(--Options-Horizontal-Padding-External, 8px);
+    align-items: flex-start;
+
+    & .option {
+        display: flex;
+        padding: var(--Options-Vertical-Padding, 8px) var(--Options-Horizontal-Padding-Internal, 12px);
+        align-items: flex-start;
+        gap: var(--Options-Horizontal-Gap, 12px);
+        flex: 1 0 0;
+        border-radius: var(--Options-Radius, 16px);
+        background: var(--Options-Default-Background, rgb(17 17 17 / 0%));
+        border: none;
+
+        & .texts-container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+
+            & .title {
+                color: var(--Options-Default-Text-Label, #001c35);
+                font-family: var(--Family-Font-2, Manrope);
+                font-size: var(--Size-14, 14px);
+                font-style: normal;
+                font-weight: var(--Weight-Medium);
+                line-height: 1.4;
+            }
+
+            & .description {
+                color: var(--Options-Default-Text-Description, #63727d);
+
+                /* Text styles/Body Small */
+                font-family: var(--Family-Font-2, Manrope);
+                font-size: var(--Size-14, 14px);
+                font-style: normal;
+                font-weight: var(--Weight-Italic);
+                line-height: 1.4;
+            }
+        }
+
+        & input[type="checkbox"] {
+            margin-block: 2px;
+        }
+
+        &.selected {
+            background: var(--Options-Selected-Background, #f6f7f8);
+        }
+    }
+}

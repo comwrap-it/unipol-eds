@@ -1,0 +1,195 @@
+{
+  "definitions": [
+    {
+      "title": "Text Block",
+      "id": "text-block",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Text Block",
+              "model": "text-block"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "text-block",
+      "fields": [
+        {
+          "component": "boolean",
+          "label": "Centra e mostra testo",
+          "description": "Attivo: contenuto centrato verticalmente e testo visibile. Disattivo: contenuto allineato orizzontalmente e testo non visibile.",
+          "name": "contentAlignment",
+          "valueType": "boolean"
+        },
+        {
+          "component": "text",
+          "name": "text-block-center-align",
+          "label": "Titolo",
+          "required": true,
+          "validation": {
+            "maxLength": 60,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": {
+            "===": [
+              {
+                "var": "contentAlignment"
+              },
+              true
+            ]
+          }
+        },
+        {
+          "component": "richtext",
+          "label": "Testo",
+          "name": "subtitle",
+          "value": "",
+          "valueType": "string",
+          "condition": {
+            "===": [
+              {
+                "var": "contentAlignment"
+              },
+              true
+            ]
+          },
+          "rte": {
+            "plugins": {
+              "table": {
+                "features": [
+                  "table",
+                  "tableproperties",
+                  "tablecellproperties",
+                  "tablerow",
+                  "tablecolumn"
+                ]
+              },
+              "misctools": {
+                "features": [
+                  "specialchars",
+                  "sourceedit"
+                ]
+              },
+              "edit": {
+                "features": [
+                  "cut",
+                  "copy",
+                  "paste-default",
+                  "paste-plaintext",
+                  "paste-wordhtml"
+                ]
+              },
+              "format": {
+                "features": [
+                  "bold",
+                  "italic",
+                  "underline",
+                  "strikethrough",
+                  "subscript",
+                  "superscript"
+                ]
+              },
+              "styles": {
+                "features": [
+                  "styles"
+                ],
+                "styles": [
+                  {
+                    "name": "Highlight",
+                    "element": "span",
+                    "classes": [
+                      "highlight"
+                    ]
+                  },
+                  {
+                    "name": "Code",
+                    "element": "code"
+                  }
+                ]
+              },
+              "lists": {
+                "features": [
+                  "ordered",
+                  "unordered",
+                  "indent",
+                  "outdent"
+                ]
+              },
+              "links": {
+                "features": [
+                  "modifylink",
+                  "unlink",
+                  "anchor"
+                ]
+              }
+            },
+            "specialCharsConfig": {
+              "chars": [
+                {
+                  "name": "copyright",
+                  "entity": "&copy;"
+                },
+                {
+                  "name": "registered",
+                  "entity": "&reg;"
+                },
+                {
+                  "name": "trademark",
+                  "entity": "&trade;"
+                },
+                {
+                  "name": "euro",
+                  "entity": "&euro;"
+                },
+                {
+                  "name": "pound",
+                  "entity": "&pound;"
+                },
+                {
+                  "name": "yen",
+                  "entity": "&yen;"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "component": "text",
+          "name": "text-block-left-align",
+          "label": "Titolo",
+          "required": true,
+          "validation": {
+            "maxLength": 30,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": {
+            "===": [
+              {
+                "var": "contentAlignment"
+              },
+              false
+            ]
+          }
+        },
+        {
+          "component": "container",
+          "name": "button-container",
+          "label": "Configurazione Pulsante",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

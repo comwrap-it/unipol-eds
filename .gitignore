@@ -7,3 +7,14 @@ helix-importer-ui
 .DS_Store
 *.bak
 .idea
+
+# Env files
+.env
+
+# Agents
+.claude/*
+.agents/*
+AGENTS.md
+
+# Copilot instructions
+copilot-instructions.md

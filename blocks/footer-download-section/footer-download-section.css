@@ -1,0 +1,129 @@
+.footer-download-section {
+    height: 100%;
+    width: 280px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    justify-content: space-between;
+}
+
+.footer-download-section-wrapper {
+    margin-left: auto;
+}
+
+.footer-download-section-wrapper .footer-download-section a {
+    margin-bottom: 0;
+}
+
+.footer-download-bottom-app {
+    width: 100%;
+}
+
+.footer-download-section .footer-download-qr {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1px solid var(--Footer-Primary-Border, #F9F9F7);
+    border-radius: var(--Footer-Radius, 16px);
+    padding: var(--Footer-Box-Padding, 12px);
+    color: var(--Footer-Primary-Text, #F9F9F7);
+    font-weight: 400;
+    font-size: var(--font-size-14, 0.875rem);
+    margin-bottom: var(--Footer-Download-Gap, 8px);
+}
+
+.footer-download-qr img {
+    width: 80px;
+    height: 80px;
+    margin-right: var(--Footer-Box-Gap, 40px);
+}
+
+.footer-download-brand {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid var(--Footer-Primary-Border, #F9F9F7);
+    border-radius: 0 var(--Footer-Radius, 16px);
+    padding: var(--Footer-Box-Padding, 12px);
+}
+
+.footer-download-brand img {
+    width: 80px;
+    height: 33px;
+}
+
+.footer-download-section-wrapper .footer-download-brand a {
+    font-size: var(--Size-16, 1rem);
+    font-weight: 600;
+    color: var(--Footer-Primary-Text, #F9F9F7);
+    text-align: end;
+}
+
+.footer-download-brand-button {
+    display: flex;
+    align-items:center;
+}
+
+.footer-download-brand-button picture {
+    display: flex;
+    margin-left: var(--Button-Gap, 8px);
+}
+
+.footer-download-brand-button img {
+    width: var(--Icon-100-16, 16px);
+}
+
+.footer-download-apps {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Tablet */
+@media (width > 375px) and (width <= 768px) {
+    .footer-download-section-wrapper {
+        margin-left: unset;
+    }
+
+    .footer-download-section {
+        flex-direction: row;
+        width: 100%;
+        align-items: start;
+    }
+
+    .footer-download-brand {
+        width: 45%;
+    }
+
+    .footer-download-bottom-app {
+        width: 50%;
+    }
+}
+
+@media (width > 375px) and (width <= 565px) {
+    .footer-download-app-google img {
+        width: 110px;
+    }
+
+    .footer-download-app-apple img {
+        width: 90px;
+    }
+}
+
+
+/* Mobile */
+@media (width <= 375px) {
+    .footer-download-section-wrapper {
+        margin-left: unset;
+    }
+
+    .footer-download-section {
+        flex-direction: column;
+        width: 100%
+    }
+
+    .footer-download-brand {
+        margin-bottom: var(--Footer-Logo-Gap, 40px);
+    }
+}

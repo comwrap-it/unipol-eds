@@ -1,0 +1,83 @@
+<!-- 
+  EDS Storybook Global Styles
+  
+  IMPORTANT: CSS files are loaded as static HTML <link> tags instead of JS imports
+  because Vite transforms JS-imported CSS into modules, which breaks the loading.
+  
+  When adding a new component:
+  1. Add its CSS <link> tag below in the appropriate section
+  2. Follow the pattern: <link rel="stylesheet" href="/blocks/{level}/{category}/{component}/{component}.css">
+  3. Keep sections organized: Global Styles → Atoms → Molecules → Organisms
+-->
+
+<!-- ========== GLOBAL STYLES (Design System Foundation) ========== -->
+<link rel="stylesheet" href="/styles/index.css">    <!-- CSS Design Tokens (must load first) -->
+<link rel="stylesheet" href="/styles/fonts.css">   <!-- Font definitions -->
+<link rel="stylesheet" href="/styles/icons.css">   <!-- Icon definitions -->
+<link rel="stylesheet" href="/styles/styles.css">  <!-- Base styles -->
+
+<!-- ========== ATOMS ========== -->
+<!-- Buttons -->
+<link rel="stylesheet" href="/blocks/atoms/buttons/standard-button/standard-button.css">
+<link rel="stylesheet" href="/blocks/atoms/buttons/icon-button/icon-button.css">
+<link rel="stylesheet" href="/blocks/atoms/buttons/link-button/link-button.css">
+
+<!-- Inputs -->
+<link rel="stylesheet" href="/blocks/atoms/inputs/inputs.css">
+
+<!-- Form Elements -->
+<link rel="stylesheet" href="/blocks/atoms/checkbox/standard-checkbox/checkbox.css">
+<link rel="stylesheet" href="/blocks/atoms/options/option/option.css">
+<link rel="stylesheet" href="/blocks/atoms/options/options-list/options-list.css">
+
+<!-- Content Elements -->
+<link rel="stylesheet" href="/blocks/atoms/category-chip/category-chip.css">
+<link rel="stylesheet" href="/blocks/atoms/category-tab/category-tab.css">
+<link rel="stylesheet" href="/blocks/atoms/tag/tag.css">
+
+<!-- Navigation -->
+<link rel="stylesheet" href="/blocks/atoms/navigation-pill/navigation-pill.css">
+
+<!-- ========== MOLECULES ========== -->
+<!-- Add molecule CSS here as they are created -->
+<!-- Example: <link rel="stylesheet" href="/blocks/molecules/card/card.css"> -->
+<link rel="stylesheet" href="/blocks/editorial-carousel-card/editorial-carousel-card.css">
+
+<!-- ========== ORGANISMS ========== -->
+<!-- Add organism CSS here as they are created -->
+<link rel="stylesheet" href="/blocks/text-block/text-block.css">
+<link rel="stylesheet" href="/blocks/number-block/number-block.css">
+<link rel="stylesheet" href="/blocks/header-unipol/header-unipol.css">
+<link rel="stylesheet" href="/blocks/editorial-carousel/editorial-carousel.css">
+
+<!-- ========== WIDGETS ========== -->
+<!-- Add widget CSS here as they are created -->
+<link rel="stylesheet" href="/blocks/editorial-carousel-widget/editorial-carousel-widget.css">
+
+<!-- Storybook-specific inline styles (since we can't import CSS without Vite transforming it) -->
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family-base, system-ui, -apple-system, sans-serif);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  .sb-show-main {
+    background: var(--color-background-primary, #fff);
+  }
+  
+  .sb-story {
+    padding: 2rem;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  [hidden] {
+    display: none !important;
+  }
+</style>
+

@@ -1,0 +1,51 @@
+{
+  "definitions": [
+    {
+      "title": "Switch Button Field",
+      "id": "switch-button-field",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Switch Button Field",
+              "model": "switch-button-field"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "switch-button-field",
+      "fields": [
+        {
+          "component": "text",
+          "name": "switchLabel",
+          "label": "Switch Label",
+          "description": "Primary text displayed next to the switch",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "name": "switchDescription",
+          "label": "Switch Description",
+          "description": "Secondary text displayed below the label",
+          "value": ""
+        },
+        {
+          "component": "container",
+          "name": "switch-button-field-switch",
+          "label": "Switch of the Field",
+          "fields": [
+            {
+              "...": "../standard-switch-button/_switch-button.json#/models/switch/fields"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

@@ -1,0 +1,264 @@
+{
+    "definitions": [
+        {
+            "title": "Textfield",
+            "id": "textfield",
+            "plugins": {
+                "xwalk": {
+                    "page": {
+                        "resourceType": "core/franklin/components/block/v1/block/item",
+                        "template": {
+                            "name": "Textfield",
+                            "model": "textfield"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "models": [
+        {
+            "id": "textfield",
+            "fields": [
+                {
+                    "component": "text",
+                    "name": "textfieldLabel",
+                    "label": "Label",
+                    "required": true,
+                    "value": "Textfield Label"
+                },
+                {
+                    "component": "select",
+                    "name": "textfieldIcon",
+                    "label": "Textfield icon",
+                    "description": "Select the icon",
+                    "options": [
+                        {
+                            "name": "None",
+                            "value": ""
+                        },
+                        {
+                            "name": "Search",
+                            "value": "un-icon-search"
+                        },
+                        {
+                            "name": "Chevron Left",
+                            "value": "un-icon-chevron-left"
+                        },
+                        {
+                            "name": "Chevron Right",
+                            "value": "un-icon-chevron-right"
+                        },
+                        {
+                            "name": "Phone",
+                            "value": "un-icon-phone"
+                        },
+                        {
+                            "name": "Phone Call",
+                            "value": "un-icon-phone-call"
+                        },
+                        {
+                            "name": "Placeholder",
+                            "value": "un-icon-placeholder"
+                        },
+                        {
+                            "name": "Plant",
+                            "value": "un-icon-plant"
+                        },
+                        {
+                            "name": "Play Circle",
+                            "value": "un-icon-play-circle"
+                        },
+                        {
+                            "name": "Play Pause",
+                            "value": "un-icon-play-pause"
+                        },
+                        {
+                            "name": "Plus",
+                            "value": "un-icon-plus"
+                        },
+                        {
+                            "name": "Prohibit",
+                            "value": "un-icon-prohibit"
+                        },
+                        {
+                            "name": "Push Pin",
+                            "value": "un-icon-push-pin"
+                        },
+                        {
+                            "name": "Question",
+                            "value": "un-icon-question"
+                        },
+                        {
+                            "name": "Quotes",
+                            "value": "un-icon-quotes"
+                        },
+                        {
+                            "name": "Share",
+                            "value": "un-icon-share"
+                        },
+                        {
+                            "name": "Share Big",
+                            "value": "un-icon-share-big"
+                        },
+                        {
+                            "name": "Shield Check",
+                            "value": "un-icon-shield-check"
+                        },
+                        {
+                            "name": "Shield Plus",
+                            "value": "un-icon-shield-plus"
+                        },
+                        {
+                            "name": "Shield Slash",
+                            "value": "un-icon-shield-slash"
+                        },
+                        {
+                            "name": "Sign In",
+                            "value": "un-icon-sign-in"
+                        },
+                        {
+                            "name": "Sign Out",
+                            "value": "un-icon-sign-out"
+                        },
+                        {
+                            "name": "Skip Back Circle",
+                            "value": "un-icon-skip-back-circle"
+                        }
+                    ]
+                },
+                {
+                    "component": "select",
+                    "name": "textfieldIconSize",
+                    "label": "Icon size",
+                    "value": "medium",
+                    "options": [
+                        {
+                            "name": "Small",
+                            "value": "small"
+                        },
+                        {
+                            "name": "Medium",
+                            "value": "medium"
+                        },
+                        {
+                            "name": "Large",
+                            "value": "large"
+                        },
+                        {
+                            "name": "Extra Large",
+                            "value": "extra-large"
+                        }
+                    ]
+                },
+                {
+                    "component": "text",
+                    "name": "textfieldHint",
+                    "label": "Hint Text",
+                    "value": "Textfield Hint Text"
+                },
+                {
+                    "component": "select",
+                    "name": "textfieldHintIcon",
+                    "label": "Textfield hint icon",
+                    "description": "Select the icon",
+                    "options": [
+                        {
+                            "name": "None",
+                            "value": ""
+                        },
+                        {
+                            "name": "Search",
+                            "value": "un-icon-search"
+                        },
+                        {
+                            "name": "Chevron Left",
+                            "value": "un-icon-chevron-left"
+                        },
+                        {
+                            "name": "Chevron Right",
+                            "value": "un-icon-chevron-right"
+                        },
+                        {
+                            "name": "Phone",
+                            "value": "un-icon-phone"
+                        },
+                        {
+                            "name": "Phone Call",
+                            "value": "un-icon-phone-call"
+                        },
+                        {
+                            "name": "Placeholder",
+                            "value": "un-icon-placeholder"
+                        },
+                        {
+                            "name": "Plant",
+                            "value": "un-icon-plant"
+                        },
+                        {
+                            "name": "Play Circle",
+                            "value": "un-icon-play-circle"
+                        },
+                        {
+                            "name": "Play Pause",
+                            "value": "un-icon-play-pause"
+                        },
+                        {
+                            "name": "Plus",
+                            "value": "un-icon-plus"
+                        },
+                        {
+                            "name": "Prohibit",
+                            "value": "un-icon-prohibit"
+                        },
+                        {
+                            "name": "Push Pin",
+                            "value": "un-icon-push-pin"
+                        },
+                        {
+                            "name": "Question",
+                            "value": "un-icon-question"
+                        },
+                        {
+                            "name": "Quotes",
+                            "value": "un-icon-quotes"
+                        },
+                        {
+                            "name": "Share",
+                            "value": "un-icon-share"
+                        },
+                        {
+                            "name": "Share Big",
+                            "value": "un-icon-share-big"
+                        },
+                        {
+                            "name": "Shield Check",
+                            "value": "un-icon-shield-check"
+                        },
+                        {
+                            "name": "Shield Plus",
+                            "value": "un-icon-shield-plus"
+                        },
+                        {
+                            "name": "Shield Slash",
+                            "value": "un-icon-shield-slash"
+                        },
+                        {
+                            "name": "Sign In",
+                            "value": "un-icon-sign-in"
+                        },
+                        {
+                            "name": "Sign Out",
+                            "value": "un-icon-sign-out"
+                        },
+                        {
+                            "name": "Skip Back Circle",
+                            "value": "un-icon-skip-back-circle"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "filters": []
+}

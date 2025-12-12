@@ -1,0 +1,15 @@
+.footer-social-section-wrapper {
+    margin-left: auto;
+}
+
+.footer-social-section {
+    display: flex;
+    gap: var(--Footer-Icon-Gap, 12px);
+}
+
+/* Tablet - Mobile */
+@media (width <= 768px) {
+    .footer-social-section-wrapper {
+        margin-left: unset;
+    }
+}

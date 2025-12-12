@@ -1,0 +1,51 @@
+{
+  "definitions": [
+    {
+      "title": "Checkbox Field",
+      "id": "checkbox-field",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Checkbox Field",
+              "model": "checkbox-field"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "checkbox-field",
+      "fields": [
+        {
+          "component": "text",
+          "name": "checkboxLabel",
+          "label": "Checkbox Label",
+          "description": "Primary text displayed next to the checkbox",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "name": "checkboxDescription",
+          "label": "Checkbox Description",
+          "description": "Secondary text displayed below the label",
+          "value": ""
+        },
+        {
+          "component": "container",
+          "name": "checkbox-field-checkbox",
+          "label": "Checkbox Of The Field",
+          "fields": [
+            {
+              "...": "../standard-checkbox/_checkbox.json#/models/checkbox/fields"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

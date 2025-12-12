@@ -1,0 +1,48 @@
+{
+  "definitions": [
+    {
+      "title": "3D Icons",
+      "id": "icons-3D",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "3D Icons",
+              "model": "icons-3D"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "icons-3D",
+      "fields": [
+        {
+          "component": "boolean",
+          "name": "vehiclesShowIcon",
+          "label": "Visualizza l'icona Veicoli e Mobilità",
+          "description": "Attiva per visualizzare l'icona Veicoli e Mobilità",
+          "value": false
+        },
+        {
+          "component": "boolean",
+          "name": "homeShowIcon",
+          "label": "Visualizza l'icona Casa e Famiglia",
+          "description": "Attiva per visualizzare l'icona Casa e Famiglia",
+          "value": false
+        },
+        {
+          "component": "boolean",
+          "name": "personalShowIcon",
+          "label": "Visualizza l'icona Salute",
+          "description": "Attiva per visualizzare l'icona Salute",
+          "value": false
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

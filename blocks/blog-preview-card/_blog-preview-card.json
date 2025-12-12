@@ -1,0 +1,81 @@
+{
+  "definitions": [
+    {
+      "title": "Blog Preview Card",
+      "id": "blog-preview-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Blog Preview card",
+              "model": "blog-preview-card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "blog-preview-card",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Card Image",
+          "required": true
+        },
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Titolo",
+          "required": true,
+          "validation": {
+            "maxLength": 80
+          }
+        },
+        {
+          "component": "select",
+          "name": "duration-icon",
+          "label": "Icona Durata",
+          "required": true,
+          "value": "un-icon-newspaper",
+          "options": [
+            {
+              "value": "un-icon-newspaper",
+              "name": "Newspaper"
+            },
+            {
+              "value": "un-icon-headphones",
+              "name": "Headphones"
+            },
+            {
+              "value": "un-icon-play-circle",
+              "name": "Play Circle"
+            }
+          ]
+        },
+        {
+          "component": "text",
+          "name": "duration-text",
+          "label": "Testo Durata",
+          "required": true
+        },
+        {
+          "component": "container",
+          "name": "tag",
+          "label": "Configurazione Tag",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../atoms/tag/_tag.json#/models/tag/fields"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

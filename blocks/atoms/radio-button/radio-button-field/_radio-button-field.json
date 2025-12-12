@@ -1,0 +1,51 @@
+{
+  "definitions": [
+    {
+      "title": "Radio Button Field",
+      "id": "radio-button-field",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Radio Button Field",
+              "model": "radio-button-field"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "radio-button-field",
+      "fields": [
+        {
+          "component": "text",
+          "name": "radioButtonlabel",
+          "label": "Radio Button Label",
+          "description": "Primary text displayed next to the radio",
+          "value": ""
+        },
+        {
+          "component": "text",
+          "name": "radioButtonDescription",
+          "label": "Radio Button Description",
+          "description": "Secondary text displayed below the label",
+          "value": ""
+        },
+        {
+          "component": "container",
+          "name": "radio-button-field-radio",
+          "label": "Radio Button Of The Field",
+          "fields": [
+            {
+              "...": "../standard-radio-button/_radio-button.json#/models/radio/fields"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

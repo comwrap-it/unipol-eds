@@ -1,0 +1,79 @@
+{
+    "definitions": [
+        {
+            "title": "tag",
+            "id": "tag",
+            "plugins": {
+                "xwalk": {
+                    "page": {
+                        "resourceType": "core/franklin/components/block/v1/block/item",
+                        "template": {
+                            "name": "Tag",
+                            "model": "tag"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "models": [
+        {
+            "id": "tag",
+            "fields": [
+                {
+                    "component": "text",
+                    "name": "tagLabel",
+                    "label": "Tag text",
+                    "required": true
+                },
+                {
+                    "component": "select",
+                    "name": "tagCategory",
+                    "label": "Tag Category",
+                    "required": true,
+                    "value": "mobility",
+                    "options": [
+                        {
+                            "name": "Mobility",
+                            "value": "mobility"
+                        },
+                        {
+                            "name": "Welfare",
+                            "value": "welfare"
+                        },
+                        {
+                            "name": "Property",
+                            "value": "property"
+                        }
+                    ]
+                },
+                {
+                    "component": "select",
+                    "name": "tagVariant",
+                    "label": "Tag type",
+                    "required": true,
+                    "value": "default",
+                    "options": [
+                        {
+                            "name": "Default",
+                            "value": "default"
+                        },
+                        {
+                            "name": "Secondary",
+                            "value": "secondary"
+                        },
+                        {
+                            "name": "Neutral",
+                            "value": "neutral"
+                        },
+                        {
+                            "name": "Custom",
+                            "value": "custom"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "filters": []
+}

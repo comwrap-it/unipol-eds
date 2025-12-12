@@ -1,0 +1,13 @@
+.text-switch {
+  display: inline-flex;
+  padding: var(--Text-Switch-Padding, 4px);
+  align-items: center;
+  gap: var(--Text-Switch-Gap, 0);
+  border-radius: var(--Text-Switch-Radius, 9999px);
+  background: var(--Text-Switch-Background, #DFE2E5);
+  user-select: none;
+}
+
+.text-switch .switch-label {
+  cursor: pointer;
+}

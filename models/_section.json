@@ -47,10 +47,18 @@
         "image",
         "button",
         "title",
-        "hero",
         "cards",
         "columns",
-        "fragment"
+        "fragment",
+        "text-block",
+        "options-list",
+        "text-list",
+        "prodotto-unico",
+        "unica-preventivatore",
+        "prodotto-unico-header",
+        "image-text-grid",
+        "accordion",
+        "legal-info-widget"
       ]
     }
   ]

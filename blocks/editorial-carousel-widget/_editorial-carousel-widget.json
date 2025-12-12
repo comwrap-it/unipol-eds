@@ -1,0 +1,60 @@
+{
+  "definitions": [
+    {
+      "title": "Editorial Carousel Widget",
+      "id": "editorial-carousel-widget",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/section/v1/section",
+            "template": {
+              "filter": "editorial-carousel-widget",
+              "name": "Editorial Carousel Widget",
+              "model": "editorial-carousel-widget",
+              "style": "editorial-carousel-widget",
+              "text-block": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Text Block",
+                "model": "text-block"
+              },
+              "editorial-carousel": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Editorial Carousel",
+                "filter": "editorial-carousel",
+                "model": "editorial-carousel",
+                "editorial-carousel-card": {
+                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                  "name": "Editorial Card",
+                  "filter": "editorial-carousel-card",
+                  "model": "editorial-carousel-card"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "editorial-carousel-widget",
+      "fields": [
+        {
+          "component": "text",
+          "name": "editorial-carousel-widget-name",
+          "label": "Nome sezione Editorial Carousel Widget"
+        },
+        {
+          "component": "toggle",
+          "name": "editorial-carousel-widget-dark-theme",
+          "label": "Tema scuro",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "filters": [{
+    "id": "editorial-carousel-widget",
+    "components": []
+  }]
+}

@@ -6,7 +6,7 @@
       "plugins": {
         "xwalk": {
           "page": {
-            "resourceType": "core/franklin/components/block/v1/block",
+            "resourceType": "core/franklin/components/block/v1/block/item",
             "template": {
               "name": "Hero",
               "model": "hero"
@@ -23,23 +23,143 @@
         {
           "component": "reference",
           "valueType": "string",
-          "name": "image",
-          "label": "Image",
-          "multi": false
+          "name": "heroBackgroundMediaSrc",
+          "label": "Media di sfondo dell'Hero",
+          "description": "Immagine o video di sfondo"
+        },
+        {
+          "component": "boolean",
+          "name": "isVideoBackground",
+          "label": "Sfondo video",
+          "description": "Abilita o disabilita lo sfondo video",
+          "valueType": "boolean"
+        },
+        {
+          "component": "boolean",
+          "name": "showHeroLogo",
+          "label": "Mostra logo Hero",
+          "description": "Mostra o nascondi il logo nell'hero",
+          "valueType": "boolean"
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "heroLogoMediaSrc",
+          "label": "Media logo Hero",
+          "description": "URL dell'immagine del logo",
+          "condition": {
+            "===": [
+              {
+                "var": "showHeroLogo"
+              },
+              true
+            ]
+          }
         },
         {
           "component": "text",
-          "valueType": "string",
-          "name": "imageAlt",
-          "label": "Alt",
-          "value": ""
+          "label": "Titolo Hero",
+          "name": "heroMainLabel",
+          "required": true,
+          "validation": {
+            "maxLength": 50,
+            "customErrorMsg": "Testo troppo lungo"
+          }
+        },
+        {
+          "component": "text",
+          "name": "heroSubtitleBold",
+          "label": "Sottotitolo Hero (grassetto)",
+          "validation": {
+            "maxLength": 50,
+            "customErrorMsg": "Testo troppo lungo"
+          }
         },
         {
           "component": "richtext",
-          "name": "text",
-          "value": "",
-          "label": "Text",
-          "valueType": "string"
+          "name": "heroSubtitle",
+          "label": "Sottotitolo Hero",
+          "valueType": "string",
+          "validation": {
+            "maxLength": 150,
+            "customErrorMsg": "Testo troppo lungo"
+          }
+        },
+        {
+          "component": "boolean",
+          "name": "showHeroBulletList",
+          "label": "Mostra elenco puntato Hero",
+          "description": "Abilita fino a 3 punti elenco",
+          "valueType": "boolean"
+        },
+        {
+          "component": "text",
+          "name": "heroBullet1",
+          "label": "Punto elenco 1",
+          "validation": {
+            "maxLength": 40,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": {
+            "===": [
+              {
+                "var": "showHeroBulletList"
+              },
+              true
+            ]
+          }
+        },
+        {
+          "component": "text",
+          "name": "heroBullet2",
+          "label": "Punto elenco 2",
+          "validation": {
+            "maxLength": 40,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": {
+            "===": [
+              {
+                "var": "showHeroBulletList"
+              },
+              true
+            ]
+          }
+        },
+        {
+          "component": "text",
+          "name": "heroBullet3",
+          "label": "Punto elenco 3",
+          "validation": {
+            "maxLength": 40,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": {
+            "===": [
+              {
+                "var": "showHeroBulletList"
+              },
+              true
+            ]
+          }
+        },
+        {
+          "component": "boolean",
+          "name": "showHeroButton",
+          "label": "Mostra pulsante Hero",
+          "description": "Mostra o nascondi il pulsante dell'hero",
+          "valueType": "boolean"
+        },
+        {
+          "component": "container",
+          "name": "hero-button-container",
+          "label": "Configurazione Pulsante",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
+            }
+          ]
         }
       ]
     }

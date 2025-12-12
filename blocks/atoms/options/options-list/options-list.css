@@ -1,0 +1,11 @@
+.options-list {
+    display: flex;
+    width: 350px;
+    padding: var(--Options-Vertical-Padding-List, 8px) 0;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--Options-Vertical-Gap, 0);
+    border-radius: var(--Options-Radius-Box, 24px);
+    border: var(--Options-Border, 1px) solid var(--Options-List-Border, #82909c);
+    background: var(--Options-List-Background, rgb(17 17 17 / 0%));
+}

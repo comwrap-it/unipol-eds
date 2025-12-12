@@ -1,0 +1,43 @@
+.category-chip {
+    display: flex;
+    align-items: center;
+    font-size: var(--Size-14);
+    font-weight: var(--Weight-Medium);
+    line-height: 1.4;
+    padding: var(--Category-Chips-Vertical-Padding) var(--Category-Chips-Horizontal-Padding);
+    border-radius: var(--Category-Chips-Radius);
+    gap: var(--Category-Chips-Gap);
+
+    .icon {
+        width: var(--Space-350-20);
+        height: var(--Space-350-20);
+        flex-shrink: 0;
+    }
+
+    &.mobility {
+        background-color: var(--Category-Chips-Mobility-Background);
+        color: var(--Category-Chips-Mobility-Text);
+
+        & .icon {
+            color: var(--Category-Chips-Mobility-Icon);
+        }
+    }
+
+    &.property {
+        background-color: var(--Category-Chips-Property-Background);
+        color: var(--Category-Chips-Property-Text);
+
+        & .icon {
+            color: var(--Category-Chips-Property-Icon);
+        }
+    }
+
+    &.welfare {
+        background-color: var(--Category-Chips-Welfare-Background);
+        color: var(--Category-Chips-Welfare-Text);
+
+        & .icon {
+            color: var(--Category-Chips-Welfare-Icon);
+        }
+    }
+}

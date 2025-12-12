@@ -2,8 +2,31 @@
   {
     "id": "main",
     "components": [
-      "section"
+      "section",
+      "kpi-highlights-widget",
+      "insurance-product-carousel-widget",
+      "editorial-carousel-widget",
+      "hero-widget",
+      "mini-hero-widget",
+      "blog-carousel-widget",
+      "faq-widget-section"
     ]
+  },
+  {
+    "id": "footer-template",
+    "components": [
+      "unipol-footer"
+    ]
+  },
+  {
+    "id": "header-template",
+    "components": [
+      "unipol-header"
+    ]
+  },
+  {
+    "id": "disable-add",
+    "components": []
   },
   {
     "id": "section",
@@ -12,74 +35,53 @@
       "image",
       "button",
       "title",
-      "hero",
       "cards",
       "columns",
-      "fragment"
+      "fragment",
+      "text-block",
+      "options-list",
+      "text-list",
+      "prodotto-unico",
+      "unica-preventivatore",
+      "prodotto-unico-header",
+      "image-text-grid",
+      "accordion",
+      "legal-info-widget"
     ]
   },
   {
-    "id": "richtext",
-    "rte": {
-      "toolbar": {
-        "format": [
-          "bold",
-          "italic"
-        ],
-        "blocks": [
-          "paragraph",
-          "h1",
-          "h2"
-        ],
-        "list": [
-          "bullet_list",
-          "ordered_list"
-        ],
-        "insert": [
-          "link",
-          "unlink"
-        ],
-        "sections": [
-          "format",
-          "blocks",
-          "list",
-          "insert"
-        ]
-      },
-      "actions": {
-        "bold": {
-          "tag": "strong",
-          "shortcut": "Mod-B",
-          "label": "Bold"
-        },
-        "italic": {
-          "tag": "em",
-          "shortcut": "Mod-I"
-        },
-        "bullet_list": {
-          "wrapInParagraphs": true,
-          "label": "Bullet List"
-        },
-        "ordered_list": {
-          "wrapInParagraphs": false
-        },
-        "link": {
-          "hideTarget": false,
-          "shortcut": "Mod-K",
-          "label": "Add Link"
-        },
-        "unlink": {
-          "label": "Remove Link"
-        },
-        "h1": {
-          "shortcut": "Mod-Alt-1",
-          "label": "Main Heading"
-        }
-      }
-    },
+    "id": "kpi-highlights-widget",
+    "components": []
+  },
+  {
+    "id": "faq-widget-section",
+    "components": []
+  },
+  {
+    "id": "hero-widget",
     "components": [
-      "richtext"
+      "full-screen-hero-carousel"
     ]
+  },
+  {
+    "id": "mini-hero-widget",
+    "components": [
+      "mini-hero-carousel"
+    ]
+  },
+  {
+    "id": "blog-carousel-widget",
+    "components": [
+      "blog-carousel"
+    ]
+  },
+  {
+    "id": "insurance-product-carousel-widget",
+    "components": []
+  },
+  {
+    "id": "editorial-carousel-widget",
+    "components": []
   },
   {
     "id": "cards",
@@ -100,6 +102,112 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "editorial-carousel-widget",
+    "components": []
+  },
+  {
+    "id": "editorial-carousel",
+    "components": [
+      "editorial-carousel-card"
+    ],
+    "min": 1,
+    "max": 8
+  },
+  {
+    "id": "faq-widget",
+    "components": [
+      "fragment"
+    ]
+  },
+  {
+    "id": "footer-privacy-section",
+    "components": [
+      "footer-privacy-link"
+    ]
+  },
+  {
+    "id": "footer-social-section",
+    "components": [
+      "footer-social-link"
+    ]
+  },
+  {
+    "id": "full-screen-hero-carousel",
+    "components": [
+      "hero"
+    ]
+  },
+  {
+    "id": "header-navigation-section",
+    "components": [
+      "header-navigation-pill-and-box"
+    ]
+  },
+  {
+    "id": "header-utilities-section",
+    "components": [
+      "header-utilities-navigation-pill"
+    ]
+  },
+  {
+    "id": "image-text-grid",
+    "components": [
+      "image-text-item"
+    ],
+    "min": 1,
+    "max": 4
+  },
+  {
+    "id": "insurance-product-carousel",
+    "components": [
+      "insurance-product-card"
+    ],
+    "min": 1,
+    "max": 8
+  },
+  {
+    "id": "mini-hero-carousel",
+    "components": [
+      "mini-hero"
+    ]
+  },
+  {
+    "id": "prodotto-unico-header",
+    "components": [
+      "prodotto-unico-header"
+    ]
+  },
+  {
+    "id": "text-list",
+    "components": [
+      "text-link"
+    ]
+  },
+  {
+    "id": "options",
+    "components": [
+      "unipol-option"
+    ]
+  },
+  {
+    "id": "unipol-header",
+    "components": [
+      "header-logo",
+      "header-navigation-section",
+      "header-utilities-section"
+    ]
+  },
+  {
+    "id": "unipol-footer",
+    "components": [
+      "text-list",
+      "footer-download-section",
+      "footer-privacy-section",
+      "footer-social-section",
+      "footer-copyright-section"
     ]
   }
 ]
