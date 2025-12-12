@@ -143,10 +143,6 @@
     "max": 4
   },
   {
-    "id": "insurance-product-carousel-widget",
-    "components": []
-  },
-  {
     "id": "insurance-product-carousel",
     "components": [
       "insurance-product-card"

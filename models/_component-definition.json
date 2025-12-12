@@ -41,7 +41,7 @@
           "...": "./widgets/_blog-carousel-widget.json#/definitions"
         },
         {
-          "...": "../blocks/insurance-product-carousel-widget/_insurance-product-carousel-widget.json#/definitions"
+          "...": "./widgets/_insurance-product-carousel-widget.json#/definitions"
         },
         {
           "...": "../blocks/insurance-product-carousel/_insurance-product-carousel.json#/definitions"

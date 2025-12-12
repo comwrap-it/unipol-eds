@@ -33,7 +33,7 @@
     "...": "./widgets/_blog-carousel-widget.json#/models"
   },
   {
-    "...": "../blocks/insurance-product-carousel-widget/_insurance-product-carousel-widget.json#/models"
+    "...": "./widgets/_insurance-product-carousel-widget.json#/models"
   },
   {
     "...": "../blocks/*/_*.json#/models"
