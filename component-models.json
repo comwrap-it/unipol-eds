@@ -960,29 +960,29 @@
         "component": "reference",
         "valueType": "string",
         "name": "heroBackgroundMediaSrc",
-        "label": "Hero Background Media",
-        "description": "URL of the background image or video"
+        "label": "Media di sfondo dell'Hero",
+        "description": "Immagine o video di sfondo"
       },
       {
         "component": "boolean",
         "name": "isVideoBackground",
-        "label": "Is Video Background",
-        "description": "Toggle to enable or disable video background",
+        "label": "Sfondo video",
+        "description": "Abilita o disabilita lo sfondo video",
         "valueType": "boolean"
       },
       {
         "component": "boolean",
         "name": "showHeroLogo",
-        "label": "Show Hero Logo",
-        "description": "Toggle to show or hide the hero logo",
+        "label": "Mostra logo Hero",
+        "description": "Mostra o nascondi il logo nell'hero",
         "valueType": "boolean"
       },
       {
         "component": "reference",
         "valueType": "string",
         "name": "heroLogoMediaSrc",
-        "label": "Hero Logo Media",
-        "description": "URL of the logo image",
+        "label": "Media logo Hero",
+        "description": "URL dell'immagine del logo",
         "condition": {
           "===": [
             {
@@ -994,7 +994,7 @@
       },
       {
         "component": "text",
-        "label": "Hero Title",
+        "label": "Titolo Hero",
         "name": "heroMainLabel",
         "required": true,
         "validation": {
@@ -1005,7 +1005,7 @@
       {
         "component": "text",
         "name": "heroSubtitleBold",
-        "label": "Hero Subtitle Bold",
+        "label": "Sottotitolo Hero (grassetto)",
         "validation": {
           "maxLength": 50,
           "customErrorMsg": "Testo troppo lungo"
@@ -1014,7 +1014,7 @@
       {
         "component": "richtext",
         "name": "heroSubtitle",
-        "label": "Hero Subtitle",
+        "label": "Sottotitolo Hero",
         "valueType": "string",
         "validation": {
           "maxLength": 150,
@@ -1024,14 +1024,14 @@
       {
         "component": "boolean",
         "name": "showHeroBulletList",
-        "label": "Show Hero Bullet List",
-        "description": "Enable up to 3 bullet points",
+        "label": "Mostra elenco puntato Hero",
+        "description": "Abilita fino a 3 punti elenco",
         "valueType": "boolean"
       },
       {
         "component": "text",
         "name": "heroBullet1",
-        "label": "Bullet 1",
+        "label": "Punto elenco 1",
         "validation": {
           "maxLength": 40,
           "customErrorMsg": "Testo troppo lungo"
@@ -1048,7 +1048,7 @@
       {
         "component": "text",
         "name": "heroBullet2",
-        "label": "Bullet 2",
+        "label": "Punto elenco 2",
         "validation": {
           "maxLength": 40,
           "customErrorMsg": "Testo troppo lungo"
@@ -1065,7 +1065,7 @@
       {
         "component": "text",
         "name": "heroBullet3",
-        "label": "Bullet 3",
+        "label": "Punto elenco 3",
         "validation": {
           "maxLength": 40,
           "customErrorMsg": "Testo troppo lungo"
@@ -1082,8 +1082,8 @@
       {
         "component": "boolean",
         "name": "showHeroButton",
-        "label": "Show Hero Button",
-        "description": "Toggle to show or hide the hero button",
+        "label": "Mostra pulsante Hero",
+        "description": "Mostra o nascondi il pulsante dell'hero",
         "valueType": "boolean"
       },
       {
@@ -1687,19 +1687,19 @@
         "component": "reference",
         "valueType": "string",
         "name": "miniHeroBackgroundMediaSrc",
-        "label": "Mini Hero Background Media",
-        "description": "URL of the background image or video"
+        "label": "Media di sfondo del Mini Hero",
+        "description": "Immagine o video di sfondo"
       },
       {
         "component": "boolean",
         "name": "isVideoBackground",
-        "label": "Is Video Background",
-        "description": "Toggle to enable or disable video background",
+        "label": "Sfondo video",
+        "description": "Abilita o disabilita lo sfondo video",
         "valueType": "boolean"
       },
       {
         "component": "text",
-        "label": "Mini Hero Title",
+        "label": "Titolo Mini Hero",
         "name": "miniHeroMainLabel",
         "required": true,
         "validation": {
@@ -1710,7 +1710,7 @@
       {
         "component": "text",
         "name": "miniHeroSubtitle",
-        "label": "Mini Hero Subtitle",
+        "label": "Sottotitolo Mini Hero",
         "validation": {
           "maxLength": 50,
           "customErrorMsg": "Testo troppo lungo"
@@ -1719,14 +1719,14 @@
       {
         "component": "boolean",
         "name": "showMiniHeroBulletList",
-        "label": "Show Mini Hero Bullet List",
-        "description": "Enable up to 3 bullet points",
+        "label": "Mostra elenco puntato Mini Hero",
+        "description": "Abilita fino a 3 punti elenco",
         "valueType": "boolean"
       },
       {
         "component": "text",
         "name": "miniHeroBullet1",
-        "label": "Bullet 1",
+        "label": "Punto elenco 1",
         "validation": {
           "maxLength": 40,
           "customErrorMsg": "Testo troppo lungo"
@@ -1743,7 +1743,7 @@
       {
         "component": "text",
         "name": "miniHeroBullet2",
-        "label": "Bullet 2",
+        "label": "Punto elenco 2",
         "validation": {
           "maxLength": 40,
           "customErrorMsg": "Testo troppo lungo"
@@ -1760,7 +1760,7 @@
       {
         "component": "text",
         "name": "miniHeroBullet3",
-        "label": "Bullet 3",
+        "label": "Punto elenco 3",
         "validation": {
           "maxLength": 40,
           "customErrorMsg": "Testo troppo lungo"
@@ -1777,8 +1777,8 @@
       {
         "component": "boolean",
         "name": "showMiniHeroButton",
-        "label": "Show Mini Hero Button",
-        "description": "Toggle to show or hide the mini hero button",
+        "label": "Mostra pulsante Mini Hero",
+        "description": "Mostra o nascondi il pulsante del Mini Hero",
         "valueType": "boolean"
       },
       {
