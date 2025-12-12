@@ -1,0 +1,206 @@
+/**
+ * Editorial Carousel Card - modular version.
+ */
+import { createLinkButtonFromRows } from '../atoms/buttons/link-button/link-button.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+let stylesLoaded = false;
+
+/**
+ * Lazily loads CSS dependencies for link buttons, and icons.
+ * Uses a memoized flag to avoid redundant requests on repeated decorations.
+ *
+ * @returns {Promise<void>} resolves when all dependent stylesheets are loaded
+ */
+async function ensureStylesLoaded() {
+  if (stylesLoaded) return;
+  const { loadCSS } = await import('../../scripts/aem.js');
+  await Promise.all([
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`,
+    ),
+  ]);
+  stylesLoaded = true;
+}
+
+/**
+ * Retrieves the rows that describe the card content.
+ *
+ * @param {HTMLElement} block - The editorial carousel card block wrapper
+ * @returns {HTMLElement[]} ordered rows either from the default wrapper or the block children
+ */
+function getRows(block) {
+  const wrapper = block.querySelector('.default-content-wrapper');
+  return wrapper ? Array.from(wrapper.children) : Array.from(block.children);
+}
+
+/**
+ * Creates the image section including the optional overlay and optimized picture fallback.
+ *
+ * @param {HTMLElement[]} rows - Structured rows aligned with the card content model
+ * @returns {HTMLElement|null} image container or null when no image row is provided
+ */
+function buildImageSection(rows) {
+  const imageRow = rows[13];
+  if (!imageRow) return null;
+
+  const cardImage = document.createElement('div');
+  cardImage.className = 'editorial-carousel-card-image';
+
+  const altText = rows[14]?.textContent?.trim() || '';
+  const picture = imageRow.querySelector('picture');
+  if (picture) {
+    picture.querySelector('img')?.setAttribute('alt', altText);
+    cardImage.appendChild(picture);
+  } else {
+    const img = imageRow.querySelector('img');
+    const link = imageRow.querySelector('a');
+    const src = img?.src || link?.href;
+
+    if (src) {
+      const optimizedPic = createOptimizedPicture(
+        src,
+        altText,
+        false,
+        [
+          { media: '(min-width: 769)', width: '316' },
+          { media: '(max-width: 768)', width: '240' },
+          { media: '(max-width: 392)', width: '343' },
+        ],
+      );
+      const newImg = optimizedPic.querySelector('img');
+      if (newImg && img) moveInstrumentation(img, newImg);
+      if (newImg && link) moveInstrumentation(link, newImg);
+      cardImage.appendChild(optimizedPic);
+    }
+  }
+
+  return cardImage.children.length ? cardImage : null;
+}
+
+/**
+ * Builds the textual stack (title and description), preserving authored semantics
+ * and instrumentation when present.
+ *
+ * @param {HTMLElement[]} rows - Structured rows aligned with the card content model
+ * @returns {HTMLElement} container with the populated title and description
+ */
+function buildTextSection(rows) {
+  const cardTextContent = document.createElement('div');
+  cardTextContent.className = 'editorial-carousel-card-text';
+
+  const titleRow = rows[0];
+  if (titleRow) {
+    const existingHeading = titleRow.querySelector('h1, h2, h3, h4, h5, h6');
+    if (existingHeading) {
+      existingHeading.className = 'title';
+      moveInstrumentation(titleRow, existingHeading);
+      cardTextContent.appendChild(existingHeading);
+    } else {
+      const title = document.createElement('h3');
+      title.className = 'title';
+      while (titleRow.firstChild) {
+        title.appendChild(titleRow.firstChild);
+      }
+      moveInstrumentation(titleRow, title);
+      if (title.textContent?.trim()) {
+        cardTextContent.appendChild(title);
+      }
+    }
+  }
+
+  const subtitleRow = rows[1];
+  if (subtitleRow) {
+    const existingPara = subtitleRow.querySelector('p');
+    if (existingPara) {
+      existingPara.className = 'description';
+      moveInstrumentation(subtitleRow, existingPara);
+      cardTextContent.appendChild(existingPara);
+    } else if (subtitleRow.textContent?.trim()) {
+      const subtitle = document.createElement('p');
+      subtitle.className = 'description';
+      while (subtitleRow.firstChild) {
+        subtitle.appendChild(subtitleRow.firstChild);
+      }
+      moveInstrumentation(subtitleRow, subtitle);
+      cardTextContent.appendChild(subtitle);
+    }
+  }
+
+  return cardTextContent;
+}
+
+/**
+ * Builds the CTA area and optional supporting note beneath the button.
+ *
+ * @param {HTMLElement[]} rows - Structured rows aligned with the card content model
+ * @returns {HTMLElement|null} wrapper containing the button and note, or null when absent
+ */
+function buildButtonsSection(rows) {
+  const buttonRows = rows.slice(2, 9);
+  const buttonElement = createLinkButtonFromRows(buttonRows);
+  if (!buttonElement) return null;
+
+  const buttonsContainer = document.createElement('div');
+  buttonsContainer.className = 'button-subdescription';
+  buttonsContainer.appendChild(buttonElement);
+
+  const note = rows[9];
+  if (note) {
+    const existingPara = note.querySelector('p');
+    if (existingPara) {
+      existingPara.className = 'subdescription';
+      moveInstrumentation(note, existingPara);
+      buttonsContainer.appendChild(existingPara);
+    } else if (note.textContent?.trim()) {
+      const noteFromHTML = document.createElement('p');
+      noteFromHTML.className = 'subdescription';
+      while (note.firstChild) {
+        noteFromHTML.appendChild(note.firstChild);
+      }
+      moveInstrumentation(note, noteFromHTML);
+      buttonsContainer.appendChild(noteFromHTML);
+    }
+  }
+
+  return buttonsContainer;
+}
+
+/**
+ * Decorates an editorial carousel card block by rebuilding its structure,
+ * applying instrumentation, and attaching required styles.
+ *
+ * @param {HTMLElement} block - The block instance to decorate
+ * @returns {Promise<void>} resolves when the card is fully transformed
+ */
+export default async function decorateEditorialCarouselCard(block) {
+  if (!block || block.classList.contains('card-block')) return;
+  await ensureStylesLoaded();
+
+  const rows = getRows(block);
+  const card = document.createElement('div');
+  card.className = 'editorial-carousel-card-container';
+
+  moveInstrumentation(block, card);
+  if (block.dataset.blockName) {
+    card.dataset.blockName = block.dataset.blockName;
+  }
+
+  const cardContent = document.createElement('div');
+  cardContent.className = 'editorial-carousel-card-content';
+
+  const imageSection = buildImageSection(rows);
+  const textSection = buildTextSection(rows);
+  const buttonsSection = buildButtonsSection(rows);
+
+  if (imageSection) card.appendChild(imageSection);
+  if (textSection) cardContent.appendChild(textSection);
+  if (buttonsSection) cardContent.appendChild(buttonsSection);
+  if (cardContent.children.length > 0) {
+    card.appendChild(cardContent);
+  }
+
+  card.classList.add('card-block');
+  block.replaceChildren(card);
+}

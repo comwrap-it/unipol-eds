@@ -29,6 +29,7 @@ export function createHeaderLogo(config = {}) {
         img.alt = '';
         return img;
       })();
+
     link.appendChild(logoElement);
   }
 
@@ -55,7 +56,10 @@ function extractHeaderLogoData(rows) {
   })();
 
   // Row 1: Link Href
-  const href = rows[1]?.querySelector('a')?.href || rows[1]?.textContent?.trim() || '/';
+  const href = rows[1]?.querySelector('a')?.href
+    || rows[1]?.textContent?.trim()
+    || '/';
+
   config.href = href;
 
   return config;
@@ -81,16 +85,15 @@ export default function decorate(block) {
   hamburgerButton.setAttribute('aria-controls', 'header-hamburger-menu');
 
   const icon = document.createElement('span');
-  icon.className = 'icon un-icon-arrow-down-right';
+  icon.className = 'icon un-icon-hamburger';
 
   hamburgerButton.appendChild(icon);
   hamburgerContainer.appendChild(hamburgerButton);
 
-  // The dropdown (white box)
+  // Dropdown menu container
   const dropdownMenu = document.createElement('div');
   dropdownMenu.id = 'header-hamburger-menu';
   dropdownMenu.className = 'hamburger-dropdown';
-  dropdownMenu.setAttribute('role', 'menu');
   dropdownMenu.setAttribute('aria-hidden', 'true');
 
   hamburgerContainer.appendChild(dropdownMenu);
@@ -101,6 +104,7 @@ export default function decorate(block) {
   const rows = Array.from(block.children);
   const wrapper = block.querySelector('.default-content-wrapper');
   const actualRows = wrapper ? Array.from(wrapper.children) : rows;
+
   const config = extractHeaderLogoData(actualRows);
   const headerLogoElement = createHeaderLogo(config);
 
@@ -120,29 +124,108 @@ export default function decorate(block) {
   block.insertBefore(hamburgerContainer, block.firstChild);
 
   /** ------------------------------
-   *  ACCESSIBLE TOGGLE LOGIC
+   *  ACCESSIBILITY: TOGGLE + FOCUS TRAP
    * ------------------------------ */
-  function toggleMenu(open) {
-    const isOpen = open ?? hamburgerButton.getAttribute('aria-expanded') === 'false';
+  let lastFocusedElement = null;
+  let focusTrapHandler = null;
+
+  function getFocusableElements() {
+    return dropdownMenu.querySelectorAll('a, button');
+  }
+
+  function trapFocus() {
+    const focusables = getFocusableElements();
+    if (focusables.length === 0) return;
+
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+
+    focusTrapHandler = (e) => {
+      if (e.key !== 'Tab') return;
+
+      if (e.shiftKey) {
+        if (document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        }
+      } else if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
+
+    document.addEventListener('keydown', focusTrapHandler);
+  }
+
+  function removeTrapFocus() {
+    if (focusTrapHandler) {
+      document.removeEventListener('keydown', focusTrapHandler);
+      focusTrapHandler = null;
+    }
+  }
+
+  function toggleMenu(forceState) {
+    const isOpen = forceState
+      ?? (hamburgerButton.getAttribute('aria-expanded') === 'false');
+    hamburgerButton.setAttribute('aria-label', isOpen ? 'Chiudi hamburger menu' : 'Apri hamburger menu');
+
+    if (isOpen) lastFocusedElement = document.activeElement;
 
     hamburgerButton.setAttribute('aria-expanded', isOpen);
     dropdownMenu.setAttribute('aria-hidden', !isOpen);
 
+    const focusables = getFocusableElements();
+    const focusableCount = focusables.length;
+
+    focusables.forEach((el) => {
+      if (isOpen) {
+        el.tabIndex = 0;
+        el.setAttribute('aria-hidden', 'false');
+      } else {
+        el.tabIndex = -1;
+        el.setAttribute('aria-hidden', 'true');
+      }
+    });
+
     if (isOpen) {
       dropdownMenu.classList.add('open');
+      trapFocus();
+      requestAnimationFrame(() => {
+        if (focusableCount > 0) focusables[0].focus();
+      });
     } else {
       dropdownMenu.classList.remove('open');
+      removeTrapFocus();
+      if (lastFocusedElement) {
+        lastFocusedElement.focus();
+        lastFocusedElement = null;
+      }
     }
   }
 
+  /** ------------------------------
+   *  TOGGLE ON CLICK
+   * ------------------------------ */
   hamburgerButton.addEventListener('click', (e) => {
     e.stopPropagation();
     toggleMenu();
   });
 
   /** ------------------------------
-     *  CLOSE MENU ON RESIZE
-     * ------------------------------ */
+   *  ESC CLOSE
+   * ------------------------------ */
+  document.addEventListener('keydown', (e) => {
+    if (
+      e.key === 'Escape'
+      && hamburgerButton.getAttribute('aria-expanded') === 'true'
+    ) {
+      toggleMenu(false);
+    }
+  });
+
+  /** ------------------------------
+   *  CLOSE MENU ON RESIZE
+   * ------------------------------ */
   let resizeTimeout;
 
   window.addEventListener('resize', () => {
@@ -151,12 +234,13 @@ export default function decorate(block) {
     resizeTimeout = setTimeout(() => {
       const isMobile = window.matchMedia('(max-width: 1200px)').matches;
 
-      if (!isMobile) {
-        toggleMenu(false);
-      }
+      if (!isMobile) toggleMenu(false);
     }, 50);
   });
 
+  /** ------------------------------
+   *  CLOSE MENU ON OUTSIDE CLICK
+   * ------------------------------ */
   document.body.addEventListener('click', () => {
     if (hamburgerButton.getAttribute('aria-expanded') === 'true') {
       toggleMenu(false);
@@ -164,4 +248,14 @@ export default function decorate(block) {
   });
 
   dropdownMenu.addEventListener('click', (e) => e.stopPropagation());
+
+  /** ------------------------------
+   *  LISTEN FOR MENU CONTENT READY
+   * ------------------------------ */
+  document.addEventListener('unipol-mobile-menu-ready', (e) => {
+    const oldMenu = dropdownMenu.querySelector('.mobile-nav-hidden-pills');
+    if (oldMenu) oldMenu.remove();
+
+    dropdownMenu.appendChild(e.detail);
+  });
 }

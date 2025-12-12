@@ -69,16 +69,79 @@ export const addAnimationClassToNearestSection = (
  * @returns {boolean} true if in author mode, false otherwise
  */
 export const isAuthorMode = (htmlElement) => {
-  if (!htmlElement || !htmlElement.ownerDocument) {
-    console.warn('Invalid htmlElement provided to isAuthorMode');
-    return false;
-  }
-  const doc = htmlElement.ownerDocument;
-  const root = doc.documentElement;
-  if (!root) {
-    return false;
-  }
-  const isInAuthorMode = root.classList.contains('adobe-ue-preview')
-    || root.classList.contains('adobe-ue-edit');
+  const currentUrl = window.location.href;
+  const doc = htmlElement?.ownerDocument;
+  const root = doc?.documentElement;
+  const isInAuthorMode = root?.classList.contains('adobe-ue-preview')
+    || root?.classList.contains('adobe-ue-edit')
+    || currentUrl.includes('author-')
+    || currentUrl.includes('universal-editor');
   return isInAuthorMode;
 };
+
+/**
+ * Extract instrumentation attributes from an element
+ *
+ * @param {HTMLElement} element - The element to extract attributes from
+ * @returns {Object} An object containing instrumentation attributes
+ */
+export const extractInstrumentationAttributes = (element) => {
+  const instrumentation = {};
+  if (element) {
+    [...element.attributes].forEach((attr) => {
+      if (
+        attr.name.startsWith('data-aue-')
+        || attr.name.startsWith('data-richtext-')
+      ) {
+        instrumentation[attr.name] = attr.value;
+      }
+    });
+  }
+  return instrumentation;
+};
+
+export function restoreInstrumentation(element, instrumentation) {
+  Object.entries(instrumentation).forEach(([name, value]) => {
+    element.setAttribute(name, value);
+  });
+}
+
+/**
+ * Extracts editorial values from UE
+ */
+export function getValuesFromBlock(block, keys) {
+  const result = {};
+
+  if (!block) return result;
+
+  const rows = Array.from(block.children);
+
+  rows.forEach((row) => {
+    const items = row.querySelectorAll(':scope > div');
+
+    if (items && items.length >= 2) {
+      const key = items[0].textContent.trim();
+      const valueNode = items[1];
+      const instrumentation = {
+        'data-aue-type': 'text',
+        'data-aue-prop': key,
+      };
+      const value = valueNode.querySelector('a')?.getAttribute('href') || valueNode.textContent.trim();
+
+      if (keys.includes(key)) {
+        const newItem = { value, instrumentation };
+
+        if (!result[key]) {
+          result[key] = newItem;
+        } else {
+          if (!Array.isArray(result[key])) {
+            result[key] = [result[key]];
+          }
+          result[key].push(newItem);
+        }
+      }
+    }
+  });
+
+  return result;
+}

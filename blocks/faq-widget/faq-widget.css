@@ -1,0 +1,84 @@
+.faq-widget-wrapper {
+    & .faq-section {
+        display: flex;
+        align-items: flex-start;
+        width: 100%;
+
+        & .faq-text {
+            display: flex;
+            flex-direction: column;
+            gap: var(--Faq-Widget-Text-Gap, 1rem);
+            flex: 1;
+            max-width: 19.75rem;
+
+            & .faq-title {
+                display: flex;
+                color: var(--Faq-Widget-Text, #001C35);
+                font-family: var(--Family-Font-1, "Apex New");
+                font-size: var(--Font-Size-Title-Page, 3rem);
+                font-style: normal;
+                font-weight: 550;
+                line-height: 115%;
+                letter-spacing: -0.03rem;
+            }
+
+            & .faq-subtitle {
+                color: var(--Faq-Widget-Text, #001C35);
+                font-family: var(--Family-Font-2, Manrope);
+                font-size: var(--Size-16, 1rem);
+                font-style: normal;
+                font-weight: 400;
+                line-height: 140%;
+            }
+        }
+
+        & .faq-accordions-button {
+            display: flex;
+            flex-direction: column;
+            gap: var(--Faq-Widget-Gap-Button, 2.5rem);
+            flex: 1.8;
+            margin-left: auto;
+            width: 100%;
+            max-width: 54.3125rem;
+
+            & .faq-accordion-wrapper {
+                display: flex;
+                flex-direction: column;
+                gap: var(--Faq-Widget-Gap-Accordion, 1rem);
+                width: 100%;
+            }
+        }
+    }
+}
+
+@media (width < 768px) {
+    .faq-widget-wrapper .faq-section {
+        flex-direction: column;
+
+        .faq-text,
+        .faq-accordions-button {
+            margin-left: 0;
+            width: 100%;
+            flex: none;
+        }
+    }
+}
+
+@media (768px <= width < 1200px) {
+    .faq-text {
+        flex: 1;
+        max-width: 23.3125rem;
+    }
+
+    .faq-accordions-button {
+        flex: 2;
+        max-width: 41.5625rem;
+        margin-left: auto;
+    }
+
+    .faq-title {
+        font-size: 2.5rem;
+        letter-spacing: -0.025rem;
+    }
+}
+

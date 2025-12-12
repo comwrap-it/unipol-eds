@@ -15,3 +15,6 @@ helix-importer-ui
 .claude/*
 .agents/*
 AGENTS.md
+
+# Copilot instructions
+copilot-instructions.md

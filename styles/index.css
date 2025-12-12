@@ -7,6 +7,7 @@
 @import url("./base/font-family.css");
 @import url("./base/font-size.css");
 @import url("./base/font-weight.css");
+@import url("./base/space.css");
 @import url("./base/color.css");
 @import url("./base/typography.css");
 @import url("./base/gradient.css");
@@ -22,6 +23,7 @@
 @import url("./dark/font-family.css");
 @import url("./dark/font-size.css");
 @import url("./dark/font-weight.css");
+@import url("./dark/space.css");
 @import url("./dark/color.css");
 @import url("./dark/typography.css");
 @import url("./dark/gradient.css");
@@ -37,6 +39,7 @@
 @import url("./tablet/font-family.css");
 @import url("./tablet/font-size.css");
 @import url("./tablet/font-weight.css");
+@import url("./tablet/space.css");
 @import url("./tablet/color.css");
 @import url("./tablet/typography.css");
 @import url("./tablet/gradient.css");
@@ -52,6 +55,7 @@
 @import url("./tablet-portrait/font-family.css");
 @import url("./tablet-portrait/font-size.css");
 @import url("./tablet-portrait/font-weight.css");
+@import url("./tablet-portrait/space.css");
 @import url("./tablet-portrait/color.css");
 @import url("./tablet-portrait/typography.css");
 @import url("./tablet-portrait/gradient.css");
@@ -67,6 +71,7 @@
 @import url("./mobile/font-family.css");
 @import url("./mobile/font-size.css");
 @import url("./mobile/font-weight.css");
+@import url("./mobile/space.css");
 @import url("./mobile/color.css");
 @import url("./mobile/typography.css");
 @import url("./mobile/gradient.css");

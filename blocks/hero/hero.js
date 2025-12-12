@@ -1,6 +1,7 @@
 import {
   createTextElementFromRow,
   extractBooleanValueFromRow,
+  extractMediaElementFromRow,
 } from '../../scripts/domHelpers.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { isAuthorMode } from '../../scripts/utils.js';
@@ -186,8 +187,14 @@ const createHeroButtonSection = async (
 const handleAuthorMode = (hero) => {
   const isInAuthorMode = isAuthorMode(hero);
   if (isInAuthorMode) {
-    const screenHeight = window.innerHeight;
-    hero.style.height = `${screenHeight}px`;
+    const alreadyExistentHero = document.querySelector('.hero');
+    if (alreadyExistentHero && alreadyExistentHero !== hero) {
+      const existingHeight = alreadyExistentHero.style.height;
+      hero.style.height = existingHeight;
+      return;
+    }
+    const windowHeight = window.innerHeight;
+    hero.style.height = `${windowHeight}px`;
   }
 };
 
@@ -270,18 +277,6 @@ export async function createHero(
   hero.appendChild(heroContent);
   return hero;
 }
-/** Get media source URL from a row
- *
- * @param {HTMLElement} row - The row element
- * @param {boolean} isVideo - Flag to indicate if media is video
- * @returns {HTMLElement|null} The media element (video or picture) or null if not found
- */
-const extractMediaFromRow = (row, isVideo = false) => {
-  const mediaElement = row?.querySelector(isVideo ? 'a' : 'picture');
-  moveInstrumentation(row, mediaElement);
-  if (mediaElement) return mediaElement;
-  return null;
-};
 
 /** Extract hero properties from rows
  *
@@ -291,15 +286,15 @@ const extractMediaFromRow = (row, isVideo = false) => {
  */
 export const extractHeroPropertiesFromRows = (rows) => {
   const isVideoBackground = extractBooleanValueFromRow(rows[1]);
-  const heroBackground = extractMediaFromRow(rows[0], isVideoBackground);
+  const heroBackground = extractMediaElementFromRow(rows[0]);
   const showHeroLogo = extractBooleanValueFromRow(rows[2]);
-  const heroLogo = extractMediaFromRow(rows[3]);
+  const heroLogo = extractMediaElementFromRow(rows[3]);
   const title = rows[4];
   const subtitleBold = rows[5];
   const subtitle = rows[6];
   const showHeroBulletList = extractBooleanValueFromRow(rows[7]);
   const bulletList = [rows[8], rows[9], rows[10]].filter(
-    (row) => row.firstChild,
+    (row) => row?.firstChild,
   );
   // Button properties
   const showHeroButton = extractBooleanValueFromRow(rows[11]);
