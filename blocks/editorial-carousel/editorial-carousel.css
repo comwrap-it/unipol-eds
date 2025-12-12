@@ -1,5 +1,8 @@
 .editorial-carousel-wrapper {
     width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .editorial-carousel-container {
@@ -7,7 +10,7 @@
     flex-direction: column;
     align-items: center;
     gap: var(--Carousel-Widget-Gap-D-Ds, var(--Space-700-48));
-    width: 100%;
+    /* width: 100%; */
 
     &.swiper {
         overflow: visible;
@@ -15,9 +18,10 @@
 
     & .editorial-carousel {
         display: flex;
-        width: 100%;
+        /* width: 100%; */
         max-width: var(--Column-Size-Col-12, 82rem);
         align-items: stretch;
+        /* justify-content: center; */
         gap: var(--Carousel-Editorial-Gap, var(--Space-300-16));
     }
 }
