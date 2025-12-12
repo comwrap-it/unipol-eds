@@ -8,7 +8,6 @@
   padding: var(--Layout-Section-Vertical-Padding, 4rem) var(--Layout-Section-Margin-Horizontal-Padding, 4rem);
   overflow-wrap: break-word;
   word-wrap: break-word;
-  word-break: break-word;
 }
 
 .legal-info-content p,
