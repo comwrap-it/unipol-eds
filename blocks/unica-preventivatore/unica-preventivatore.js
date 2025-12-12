@@ -3,33 +3,33 @@ import { loadCSS, loadScript } from '../../scripts/aem.js';
 import { setupAssetPathInterceptor } from '../../static/js/utils.js';
 
 export default async function decorate(block) {
-  // Crea l'elemento Angular custom element
+  // Creates the Angular custom element
   const angularElement = document.createElement('tpd-disambiguazione-widget');
   block.appendChild(angularElement);
 
-  // Configura l'interceptor per i path degli asset PRIMA di caricare Angular
-  // Il selettore 'tpd-disambiguazione-widget' identifica l'elemento root da osservare
+  // Configures the asset path interceptor before loading Angular
+  // The selector 'tpd-disambiguazione-widget' identifies the root element to observe
   setupAssetPathInterceptor('tpd-disambiguazione-widget');
 
   try {
-    // Carica il CSS
+    // Loads the CSS
     await loadCSS('/static/css/standalone/styles.css');
-    console.log('CSS caricato per componente Unica Preventivatore');
+    console.log('CSS loaded for Unica Preventivatore component');
 
-    // Carica i file JavaScript in ordine (tutti type="module")
-    // L'ordine è importante: runtime -> polyfills -> vendor -> main
+    // Loads the JavaScript files in order (all type="module")
+    // The order is important: runtime -> polyfills -> vendor -> main
     await loadScript('/static/js/standalone/runtime.js', { type: 'module' });
-    console.log('runtime.js caricato');
+    console.log('runtime.js loaded');
 
     await loadScript('/static/js/standalone/polyfills.js', { type: 'module' });
-    console.log('polyfills.js caricato');
+    console.log('polyfills.js loaded');
 
     await loadScript('/static/js/standalone/vendor.js', { type: 'module' });
-    console.log('vendor.js caricato');
+    console.log('vendor.js loaded');
 
     await loadScript('/static/js/standalone/main.js', { type: 'module' });
-    console.log('main.js caricato - Componente Angular Unica Preventivatore pronto');
+    console.log('main.js loaded - Angular Unica Preventivatore component ready');
   } catch (error) {
-    console.error('Errore nel caricamento del componente Angular Unica Preventivatore:', error);
+    console.error('Error loading the Angular Unica Preventivatore component:', error);
   }
 }
