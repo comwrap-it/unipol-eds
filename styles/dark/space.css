@@ -1,0 +1,31 @@
+/**
+ * This file was generated automatically by Supernova.io and should not be changed manually.
+ * To modify the format or content of this file, please contact your design system team. 
+ */
+
+.theme-dark {
+  --Spacing-Padding-24-16: var(--Space-400-24);
+  --Spacing-Gap-24-16: var(--Space-400-24);
+  --Spacing-Padding-4-2: var(--Space-100-4);
+  --Spacing-Padding-16-12: var(--Space-300-16);
+  --Spacing-Gap-16-8: var(--Space-300-16);
+  --Spacing-Gap-8-4: var(--Space-200-8);
+  --Spacing-Padding-32-24: var(--Space-500-32);
+  --Spacing-Gap-32-24: var(--Space-500-32);
+  --Spacing-Gap-48-40: var(--Space-700-48);
+  --Spacing-Gap-80-48: var(--Space-1000-80);
+  --Carousel-Widget-Gap-D-Ds: var(--Space-700-48);
+  --Carousel-Widget-Gap-M-Tp: var(--Space-600-40);
+  --Carousel-Widget-Review-Text-Gap: var(--Space-300-16);
+  --Carousel-Widget-Review-Text-Gap-M: var(--Space-200-8);
+  --Kpi-Highlights-Widget-Gap-D-Ds: var(--Space-800-56);
+  --Kpi-Highlights-Widget-Gap-M-Tp: var(--Space-600-40);
+  --Carousel-Widget-Product-Highlights-Vertical-Padding: var(--Space-900-64);
+  --Carousel-Widget-Product-Highlights-Logo-Text-Gap-D-Ds: var(--Space-500-32);
+  --Carousel-Widget-Product-Highlights-Logo-Text-Gap-M: var(--Space-400-24);
+  --Spacing-Padding-8-4: var(--Space-200-8);
+  --Carousel-Widget-Gap-M-Alt: var(--Space-500-32);
+  --Spacing-Gap-56-40: var(--Space-800-56);
+  --Carousel-Widget-Vertical-Gap: var(--Spacing-Gap-48-40);
+  --Kpi-Highlights-Widget-Vertical-Gap: var(--Spacing-Gap-56-40);
+}

@@ -99,6 +99,16 @@
               "...": "../atoms/radio-button/radio-button-field/_radio-button-field.json#/models/radio-button-field/fields"
             }
           ]
+        },
+        {
+          "component": "container",
+          "name": "test-accordion",
+          "label": "Configurazione Accordion",
+          "fields": [
+            {
+              "...": "../accordion/_accordion.json#/models/accordion/fields"
+            }
+          ]
         }
       ]
     }

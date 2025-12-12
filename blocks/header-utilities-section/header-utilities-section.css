@@ -8,8 +8,32 @@
     background: var(--Header-Background);
 }
 
+.header-utilities-container [class^="un-icon-"],
+.header-utilities-container [class*=" un-icon-"] {
+    line-height: unset;
+}
+
+.pill-hide-label {
+  display: none;
+}
+
+@media (width <= 1200px) {
+    .header-utilities-container a,
+    .header-utilities-container button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--Header-Background);
+        border-radius: var(--Header-Radius);
+        font-size: var(--Icon-200-20);
+        height: 44px;
+        width: 44px;
+    }
+}
+
+
 @media (width <= 768px) {
-  .header-utilities-container > :not(:last-child) {
+  .header-utilities-container > :not(:first-child) {
     display: none;
   }
 }

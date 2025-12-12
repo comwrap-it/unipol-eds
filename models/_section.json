@@ -55,7 +55,9 @@
         "options-list",
         "text-list",
         "prodotto-unico",
-        "prodotto-unico-header"
+        "prodotto-unico-header",
+        "image-text-grid",
+        "accordion"
       ]
     }
   ]

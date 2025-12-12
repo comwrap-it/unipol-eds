@@ -7,7 +7,8 @@
       "insurance-product-carousel-widget",
       "hero-widget",
       "mini-hero-widget",
-      "blog-carousel-widget"
+      "blog-carousel-widget",
+      "faq-widget-section"
     ]
   },
   {
@@ -41,11 +42,17 @@
       "options-list",
       "text-list",
       "prodotto-unico",
-      "prodotto-unico-header"
+      "prodotto-unico-header",
+      "image-text-grid",
+      "accordion"
     ]
   },
   {
     "id": "kpi-highlights-widget",
+    "components": []
+  },
+  {
+    "id": "faq-widget-section",
     "components": []
   },
   {
@@ -77,6 +84,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "faq-widget",
+    "components": [
+      "fragment"
     ]
   },
   {
@@ -114,6 +127,14 @@
     "components": [
       "full-screen-hero-carousel"
     ]
+  },
+  {
+    "id": "image-text-grid",
+    "components": [
+      "image-text-item"
+    ],
+    "min": 1,
+    "max": 4
   },
   {
     "id": "insurance-product-carousel-widget",
