@@ -1889,7 +1889,7 @@
         "valueType": "string",
         "validation": {
           "maxLength": 1000,
-          "customErrorMsg": "Testo troppo lungo"
+          "customErrorMsg": "Testo troppo lungo (Max 1000 caratteri)"
         },
         "required": true
       }

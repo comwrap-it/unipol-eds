@@ -896,7 +896,7 @@
           }
         },
         {
-          "title": "legal-info-widget",
+          "title": "Legal Info Widget",
           "id": "legal-info-widget",
           "plugins": {
             "xwalk": {
