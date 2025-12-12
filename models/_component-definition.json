@@ -50,6 +50,18 @@
           "...": "../blocks/insurance-product-card/_insurance-product-card.json#/definitions"
         },
         {
+          "...": "../blocks/editorial-carousel-widget/_editorial-carousel-widget.json#/definitions"
+        },
+        {
+          "...": "../blocks/editorial-carousel/_editorial-carousel.json#/definitions"
+        },
+        {
+          "...": "../blocks/editorial-carousel-card/_editorial-carousel-card.json#/definitions"
+        },
+        {
+          "...": "../blocks/hero-widget/_hero-widget.json#/definitions"
+        },
+        {
           "...": "../blocks/full-screen-hero-carousel/_full-screen-hero-carousel.json#/definitions"
         },
         {
