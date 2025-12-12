@@ -1,15 +1,9 @@
-main .section.header-logo-container ,
-main .sectionheader-navigation-section-container ,
-main .sectionheader-utilities-section-container {
-    position: relative;
-    padding-top: 150px;
-}
-
 body main .section.header-logo-container,
-body main .sectionheader-navigation-section-container,
-body main .sectionheader-utilities-section-container {
+body main .section.header-navigation-section-container,
+body main .section.header-utilities-section-container {
     margin-top: 100px;
     background: #00000080;
+    position: relative;
 }
 
 body main .section.header-logo-container,
