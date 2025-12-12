@@ -1,309 +1,268 @@
 /* eslint-disable no-console */
 /**
- * Utility per riscrivere i path degli asset da /assets/ a /static/assets/
- * per correggere i riferimenti hardcoded nelle applicazioni Angular integrate in AEM EDS
+ * A tiny, safe, and idempotent DOM interceptor that rewrites hardcoded asset paths.
  *
- * @param {string} elementSelector - Selettore CSS per l'elemento root da osservare
- * @param {Object} options - Opzioni di configurazione
- * @param {boolean} options.enableLogging - Abilita il logging delle riscritture (default: true)
+ * Why this exists:
+ * - Some embedded apps (e.g. Angular custom elements) reference assets as `/assets/...`
+ * - In AEM EDS these assets live under `/static/assets/...`
+ *
+ * Design goals:
+ * - **No infinite loops** (never produces `/static/static/...`)
+ * - **Idempotent** (running multiple times is safe)
+ * - **Low overhead** (MutationObserver + throttled work; no prototype monkey-patching)
+ * - **Fail-safe** (guards everywhere; errors never break the page)
+ *
+ * @param {string} elementSelector - CSS selector for the root element to observe.
+ * @param {object} [options]
+ * @param {string} [options.fromPrefix='/assets/'] - Prefix to replace.
+ * @param {string} [options.toPrefix='/static/assets/'] - Replacement prefix.
+ * @param {string[]} [options.attributes] - Attributes to rewrite.
+ * @param {boolean} [options.enableLogging=false] - Enable debug logging.
+ * @param {number} [options.pollIntervalMs=100] - Poll interval while waiting for the root.
+ * @param {number} [options.pollTimeoutMs=10000] - Max wait time for the root.
+ * @returns {{ dispose: () => void }} A disposer you can call to disconnect observers.
  */
 export function setupAssetPathInterceptor(elementSelector, options = {}) {
-  const { enableLogging = true } = options;
-
-  // Funzione helper per riscrivere i path
-  const rewriteAssetPath = (path) => {
-    if (typeof path !== 'string') return path;
-    
-    // Evita loop infiniti: se il path contiene già /static/static/, non riscrivere
-    if (path.includes('/static/static/')) {
-      return path;
-    }
-    
-    // Se il path inizia già con /static/assets/, non riscrivere
-    if (path.startsWith('/static/assets/')) {
-      return path;
-    }
-    
-    // Riscrivi solo se inizia con /assets/ (e non è già stato riscritto)
-    if (path.startsWith('/assets/')) {
-      return path.replace(/^\/assets\//, '/static/assets/');
-    }
-    
-    return path;
+  const cfg = {
+    fromPrefix: '/assets/',
+    toPrefix: '/static/assets/',
+    attributes: ['src', 'href', 'data-src', 'data-href', 'poster'],
+    enableLogging: false,
+    pollIntervalMs: 100,
+    pollTimeoutMs: 10000,
+    ...options,
   };
 
-  // Funzione helper per riscrivere i path nei background-image (può contenere url())
-  const rewriteBackgroundImagePath = (bgImage) => {
-    if (typeof bgImage !== 'string') return bgImage;
-    
-    // Evita loop infiniti: se contiene già /static/static/, non riscrivere
-    if (bgImage.includes('/static/static/')) {
-      return bgImage;
-    }
-    
-    // Se contiene già /static/assets/, non riscrivere
-    if (bgImage.includes('/static/assets/')) {
-      return bgImage;
-    }
-    
-    // Riscrivi solo se contiene /assets/ (e non è già stato riscritto)
-    if (bgImage.includes('/assets/')) {
-      return bgImage.replace(/\/assets\//g, '/static/assets/');
-    }
-    
-    return bgImage;
-  };
-
-  // Funzione per loggare (se abilitato)
-  const log = (message) => {
-    if (enableLogging) {
-      console.log(message);
-    }
-  };
-
-  // Funzione per riscrivere i path in un elemento e nei suoi figli
-  const rewriteElementPaths = (element) => {
-    if (!element || element.nodeType !== Node.ELEMENT_NODE) return;
-
-    // Riscrivi attributi src e href
-    ['src', 'href', 'data-src', 'data-href'].forEach((attr) => {
-      if (element.hasAttribute(attr)) {
-        const value = element.getAttribute(attr);
-        if (value && value.startsWith('/assets/')) {
-          const newValue = rewriteAssetPath(value);
-          element.setAttribute(attr, newValue);
-          log(`[Asset Interceptor] ${attr}: ${value} -> ${newValue}`);
+  // Global registry to avoid multiple observers doing the same work.
+  // This keeps the interceptor idempotent even if multiple blocks call it.
+  /** @type {Map<string, { count: number, dispose: () => void }>} */
+  const registry = window.__edsAssetPathInterceptorRegistry
+    || (window.__edsAssetPathInterceptorRegistry = new Map());
+  const registryKey = `${elementSelector}|${cfg.fromPrefix}|${cfg.toPrefix}`;
+  const existing = registry.get(registryKey);
+  if (existing) {
+    existing.count += 1;
+    return {
+      dispose: () => {
+        existing.count -= 1;
+        if (existing.count <= 0) {
+          existing.dispose();
+          registry.delete(registryKey);
         }
-      }
-    });
-
-    // Riscrivi background-image negli stili inline
-    if (element.style && element.style.backgroundImage) {
-      const bgImage = element.style.backgroundImage;
-      const newBgImage = rewriteBackgroundImagePath(bgImage);
-      if (newBgImage !== bgImage) {
-        element.style.backgroundImage = newBgImage;
-        log(`[Asset Interceptor] background-image: ${bgImage} -> ${newBgImage}`);
-      }
-    }
-
-    // Controlla anche gli elementi figli
-    const elementsWithSrc = element.querySelectorAll('[src^="/assets/"]');
-    elementsWithSrc.forEach((el) => {
-      const oldSrc = el.getAttribute('src');
-      el.setAttribute('src', rewriteAssetPath(oldSrc));
-      log(`[Asset Interceptor] src (child): ${oldSrc} -> ${rewriteAssetPath(oldSrc)}`);
-    });
-
-    const elementsWithHref = element.querySelectorAll('[href^="/assets/"]');
-    elementsWithHref.forEach((el) => {
-      const oldHref = el.getAttribute('href');
-      el.setAttribute('href', rewriteAssetPath(oldHref));
-      log(`[Asset Interceptor] href (child): ${oldHref} -> ${rewriteAssetPath(oldHref)}`);
-    });
-  };
-
-  // Intercetta anche la creazione di elementi con createElement
-  const originalCreateElement = document.createElement.bind(document);
-  document.createElement = function interceptedCreateElement(tagName, options) {
-    const element = originalCreateElement(tagName, options);
-
-    // Intercetta l'assegnazione di src e href
-    ['src', 'href', 'data-src', 'data-href'].forEach((attr) => {
-      const descriptor = Object.getOwnPropertyDescriptor(element, attr);
-      if (descriptor && descriptor.set) {
-        Object.defineProperty(element, attr, {
-          set: function interceptedAttrSetter(value) {
-            let modifiedValue = value;
-            if (typeof modifiedValue === 'string' && modifiedValue.startsWith('/assets/')) {
-              modifiedValue = rewriteAssetPath(modifiedValue);
-              log(`[Asset Interceptor] ${attr} property: ${value} -> ${modifiedValue}`);
-            }
-            descriptor.set.call(this, modifiedValue);
-          },
-          get: descriptor.get,
-          configurable: true,
-          enumerable: true,
-        });
-      }
-    });
-
-    return element;
-  };
-
-  // Intercetta le modifiche al DOM per riscrivere src, href, e background-image
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      // Gestisci i nuovi nodi aggiunti
-      mutation.addedNodes.forEach((node) => {
-        rewriteElementPaths(node);
-      });
-
-      // Gestisci le modifiche agli attributi
-      if (mutation.type === 'attributes') {
-        const { target } = mutation;
-        const attrName = mutation.attributeName;
-        if (['src', 'href', 'style'].includes(attrName)) {
-          rewriteElementPaths(target);
-        }
-      }
-    });
-  });
-
-  // Avvia l'osservazione sull'elemento specificato quando è disponibile
-  const startObserver = () => {
-    const targetElement = document.querySelector(elementSelector);
-    if (targetElement) {
-      observer.observe(targetElement, {
-        childList: true,
-        subtree: true,
-        attributes: true,
-        attributeFilter: ['src', 'href', 'style'],
-      });
-      // Riscrivi anche gli elementi già presenti
-      rewriteElementPaths(targetElement);
-      return true;
-    }
-    return false;
-  };
-
-  // Funzione per riscrivere tutti i path nel DOM periodicamente
-  const scanAndRewriteAllPaths = () => {
-    const targetElement = document.querySelector(elementSelector);
-    if (targetElement) {
-      // Cerca tutti gli elementi con path /assets/ in tutto il subtree
-      const allElements = targetElement.querySelectorAll('*');
-      allElements.forEach((el) => {
-        rewriteElementPaths(el);
-      });
-      rewriteElementPaths(targetElement);
-    }
-  };
-
-  // Prova ad avviare l'observer immediatamente
-  if (!startObserver()) {
-    // Se l'elemento non è ancora disponibile, riprova dopo il caricamento
-    const checkInterval = setInterval(() => {
-      if (startObserver()) {
-        clearInterval(checkInterval);
-        // Esegui una scansione completa dopo che l'observer è attivo
-        setTimeout(scanAndRewriteAllPaths, 500);
-      }
-    }, 100);
-
-    // Timeout di sicurezza dopo 10 secondi
-    setTimeout(() => {
-      clearInterval(checkInterval);
-      // Esegui una scansione finale anche se l'observer non si è attivato
-      scanAndRewriteAllPaths();
-    }, 10000);
-  } else {
-    // Se l'observer si è avviato immediatamente, esegui una scansione dopo un breve delay
-    setTimeout(scanAndRewriteAllPaths, 1000);
-  }
-
-  // Esegui scansioni periodiche per catturare elementi creati dinamicamente
-  const periodicScan = setInterval(() => {
-    scanAndRewriteAllPaths();
-  }, 2000);
-
-  // Ferma la scansione periodica dopo 30 secondi (dovrebbe essere sufficiente)
-  setTimeout(() => clearInterval(periodicScan), 30000);
-
-  // Intercetta le richieste fetch per riscrivere i path
-  const originalFetch = window.fetch;
-  window.fetch = function interceptedFetch(...args) {
-    const modifiedArgs = [...args];
-    if (typeof modifiedArgs[0] === 'string' && modifiedArgs[0].startsWith('/assets/')) {
-      const originalUrl = modifiedArgs[0];
-      modifiedArgs[0] = rewriteAssetPath(originalUrl);
-      log(`[Asset Interceptor] Fetch: ${originalUrl} -> ${modifiedArgs[0]}`);
-    }
-    return originalFetch.apply(this, modifiedArgs);
-  };
-
-  // Intercetta le richieste XMLHttpRequest per riscrivere i path
-  const originalOpen = XMLHttpRequest.prototype.open;
-  XMLHttpRequest.prototype.open = function interceptedOpen(method, url, ...rest) {
-    let modifiedUrl = url;
-    if (typeof modifiedUrl === 'string' && modifiedUrl.startsWith('/assets/')) {
-      const originalUrl = modifiedUrl;
-      modifiedUrl = rewriteAssetPath(originalUrl);
-      log(`[Asset Interceptor] XHR: ${originalUrl} -> ${modifiedUrl}`);
-    }
-    return originalOpen.call(this, method, modifiedUrl, ...rest);
-  };
-
-  // Intercetta le modifiche agli stili tramite setProperty
-  const originalSetProperty = CSSStyleDeclaration.prototype.setProperty;
-  CSSStyleDeclaration.prototype.setProperty = function interceptedSetProperty(
-    property,
-    value,
-    priority,
-  ) {
-    let modifiedValue = value;
-    if (property === 'background-image' && typeof modifiedValue === 'string') {
-      const newValue = rewriteBackgroundImagePath(modifiedValue);
-      if (newValue !== modifiedValue) {
-        modifiedValue = newValue;
-        log(`[Asset Interceptor] setProperty background-image: ${value} -> ${modifiedValue}`);
-      }
-    }
-    return originalSetProperty.call(this, property, modifiedValue, priority);
-  };
-
-  // Intercetta anche l'assegnazione diretta a backgroundImage
-  const styleDescriptor = Object.getOwnPropertyDescriptor(
-    CSSStyleDeclaration.prototype,
-    'backgroundImage',
-  );
-  if (styleDescriptor && styleDescriptor.set) {
-    const originalSet = styleDescriptor.set;
-    Object.defineProperty(CSSStyleDeclaration.prototype, 'backgroundImage', {
-      set: function interceptedBackgroundImageSetter(value) {
-        let modifiedValue = value;
-        if (typeof modifiedValue === 'string') {
-          const newValue = rewriteBackgroundImagePath(modifiedValue);
-          if (newValue !== modifiedValue) {
-            modifiedValue = newValue;
-            log(`[Asset Interceptor] backgroundImage setter: ${value} -> ${modifiedValue}`);
-          }
-        }
-        originalSet.call(this, modifiedValue);
       },
-      get: styleDescriptor.get,
-      configurable: true,
-      enumerable: true,
-    });
+    };
   }
 
-  // Intercetta anche la creazione di elementi Image
-  const originalImage = window.Image;
-  window.Image = function InterceptedImage(...args) {
-    const img = Reflect.construct(originalImage, args);
-    const originalSrcSetter = Object.getOwnPropertyDescriptor(
-      HTMLImageElement.prototype,
-      'src',
-    )?.set;
-    if (originalSrcSetter) {
-      Object.defineProperty(img, 'src', {
-        set: function interceptedSrcSetter(value) {
-          let modifiedValue = value;
-          if (typeof modifiedValue === 'string' && modifiedValue.startsWith('/assets/')) {
-            modifiedValue = rewriteAssetPath(modifiedValue);
-            log(`[Asset Interceptor] Image.src: ${value} -> ${modifiedValue}`);
-          }
-          originalSrcSetter.call(this, modifiedValue);
-        },
-        get: Object.getOwnPropertyDescriptor(HTMLImageElement.prototype, 'src')?.get,
-        configurable: true,
-        enumerable: true,
-      });
-    }
-    return img;
+  /** @type {number | null} */
+  let pollTimer = null;
+  /** @type {MutationObserver | null} */
+  let observer = null;
+  /** @type {Element | null} */
+  let root = null;
+  let disposed = false;
+  let scheduled = false;
+  let applying = false;
+
+  const log = (msg) => {
+    if (cfg.enableLogging) console.log(msg);
   };
-  window.Image.prototype = originalImage.prototype;
 
-  log(`Asset path interceptor configurato per ${elementSelector}: /assets/ -> /static/assets/`);
+  const safeString = (value) => (typeof value === 'string' ? value : null);
+
+  // Compute how much `toPrefix` overlaps with `fromPrefix` to prevent re-rewrites.
+  // Example: fromPrefix="/assets/", toPrefix="/static/assets/" => overlapPrefix="/static"
+  const overlapLen = Math.max(0, cfg.toPrefix.length - cfg.fromPrefix.length);
+  const overlapPrefix = overlapLen > 0 ? cfg.toPrefix.slice(0, overlapLen) : '';
+
+  /**
+   * Replace occurrences of `fromPrefix` with `toPrefix`, but never:
+   * - create `/static/static/...`
+   * - rewrite already rewritten paths (where the match is part of `toPrefix`)
+   */
+  const rewriteInString = (input) => {
+    const str = safeString(input);
+    if (!str) return input;
+
+    if (!str.includes(cfg.fromPrefix)) return str;
+    if (str.includes('/static/static/')) return str;
+    if (str.includes(cfg.toPrefix)) return str;
+
+    let out = '';
+    let idx = 0;
+    while (true) {
+      const pos = str.indexOf(cfg.fromPrefix, idx);
+      if (pos === -1) break;
+
+      out += str.slice(idx, pos);
+
+      const isPartOfToPrefix = overlapLen > 0
+        && pos >= overlapLen
+        && str.slice(pos - overlapLen, pos) === overlapPrefix;
+
+      if (isPartOfToPrefix) {
+        out += cfg.fromPrefix;
+      } else {
+        out += cfg.toPrefix;
+      }
+
+      idx = pos + cfg.fromPrefix.length;
+    }
+
+    out += str.slice(idx);
+    return out;
+  };
+
+  const rewriteAttr = (el, attr) => {
+    try {
+      if (!el.hasAttribute(attr)) return;
+      const current = el.getAttribute(attr);
+      const next = rewriteInString(current);
+      if (next !== current) {
+        applying = true;
+        el.setAttribute(attr, next);
+        applying = false;
+        log(`[asset-interceptor] ${attr}: ${current} -> ${next}`);
+      }
+    } catch (e) {
+      // Never throw; this must be fail-safe.
+      applying = false;
+    }
+  };
+
+  const rewriteInlineStyleAttr = (el) => {
+    try {
+      if (!el.hasAttribute('style')) return;
+      const current = el.getAttribute('style');
+      const next = rewriteInString(current);
+      if (next !== current) {
+        applying = true;
+        el.setAttribute('style', next);
+        applying = false;
+        log('[asset-interceptor] style attribute rewritten');
+      }
+    } catch (e) {
+      applying = false;
+    }
+  };
+
+  const processElement = (el) => {
+    cfg.attributes.forEach((attr) => rewriteAttr(el, attr));
+    rewriteInlineStyleAttr(el);
+  };
+
+  const processSubtree = (node) => {
+    if (!node || node.nodeType !== Node.ELEMENT_NODE) return;
+    const el = /** @type {Element} */ (node);
+
+    processElement(el);
+
+    // Only query the minimal set of elements that can contain URLs.
+    const selector = [
+      ...cfg.attributes.map((a) => `[${a}]`),
+      '[style]',
+    ].join(',');
+
+    el.querySelectorAll(selector).forEach((child) => {
+      processElement(child);
+    });
+  };
+
+  const scheduleProcess = () => {
+    if (scheduled || disposed) return;
+    scheduled = true;
+    requestAnimationFrame(() => {
+      scheduled = false;
+      if (disposed || !root) return;
+      processSubtree(root);
+    });
+  };
+
+  const attachObserver = (target) => {
+    if (observer || disposed) return;
+
+    observer = new MutationObserver((mutations) => {
+      if (disposed) return;
+      if (applying) return;
+
+      for (let i = 0; i < mutations.length; i += 1) {
+        const m = mutations[i];
+        if (m.type === 'childList') {
+          m.addedNodes.forEach((n) => processSubtree(n));
+        } else if (m.type === 'attributes') {
+          const t = /** @type {Element} */ (m.target);
+          // Process only the changed element; no full rescan.
+          processElement(t);
+        }
+      }
+    });
+
+    observer.observe(target, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: [...cfg.attributes, 'style'],
+    });
+
+    // One initial pass over existing DOM.
+    processSubtree(target);
+    log(`[asset-interceptor] attached to ${elementSelector}`);
+  };
+
+  const findAndAttach = () => {
+    try {
+      root = document.querySelector(elementSelector);
+      if (root) attachObserver(root);
+      return Boolean(root);
+    } catch (e) {
+      return false;
+    }
+  };
+
+  // Start immediately, otherwise poll for the root (custom element boot timing).
+  const start = () => {
+    if (disposed) return;
+    if (findAndAttach()) return;
+
+    const startedAt = Date.now();
+    pollTimer = window.setInterval(() => {
+      if (disposed) return;
+      if (findAndAttach()) {
+        if (pollTimer) window.clearInterval(pollTimer);
+        pollTimer = null;
+        return;
+      }
+      if (Date.now() - startedAt > cfg.pollTimeoutMs) {
+        if (pollTimer) window.clearInterval(pollTimer);
+        pollTimer = null;
+      }
+    }, cfg.pollIntervalMs);
+
+    // Throttled safety: if something sets attributes in bulk, this keeps cost low.
+    scheduleProcess();
+  };
+
+  start();
+
+  const internalDispose = () => {
+    disposed = true;
+    if (pollTimer) window.clearInterval(pollTimer);
+    pollTimer = null;
+    if (observer) observer.disconnect();
+    observer = null;
+    root = null;
+  };
+
+  registry.set(registryKey, { count: 1, dispose: internalDispose });
+
+  return {
+    dispose: () => {
+      const entry = registry.get(registryKey);
+      if (!entry) return;
+      entry.count -= 1;
+      if (entry.count <= 0) {
+        entry.dispose();
+        registry.delete(registryKey);
+      }
+    },
+  };
 }
-
