@@ -189,12 +189,6 @@ const handleAuthorMode = (hero) => {
   if (isInAuthorMode) {
     const windowHeight = window.innerHeight;
     hero.style.height = `${windowHeight}px`;
-    window.addEventListener('resize', () => {
-      const newWindowHeight = window.innerHeight;
-      requestAnimationFrame(() => {
-        hero.style.height = `${newWindowHeight}px`;
-      });
-    });
   }
 };
 
