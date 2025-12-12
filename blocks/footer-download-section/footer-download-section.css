@@ -81,7 +81,7 @@
 }
 
 /* Tablet */
-@media (width > 395px) and (width <= 768px) {
+@media (width > 375px) and (width <= 768px) {
     .footer-download-section-wrapper {
         margin-left: unset;
     }
@@ -101,7 +101,7 @@
     }
 }
 
-@media (width > 395px) and (width <= 565px) {
+@media (width > 375px) and (width <= 565px) {
     .footer-download-app-google img {
         width: 110px;
     }
@@ -113,7 +113,7 @@
 
 
 /* Mobile */
-@media (width <= 395px) {
+@media (width <= 375px) {
     .footer-download-section-wrapper {
         margin-left: unset;
     }
