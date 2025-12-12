@@ -426,5 +426,4 @@ export default async function decorate(block) {
   });
 
   navigationResponsiveController(block);
-  console.log('Template meta content:', getTemplateMetaContent());
 }
