@@ -1,0 +1,53 @@
+[
+  {
+    "id": "main",
+    "components": [
+      "section",
+      "kpi-highlights-widget",
+      "insurance-product-carousel-widget",
+      "editorial-carousel-widget",
+      "hero-widget",
+      "blog-carousel-widget"
+    ]
+  },
+  {
+    "id": "footer-template",
+    "components": [
+      "unipol-footer"
+    ]
+  },
+  {
+    "id": "header-template",
+    "components": [
+      "unipol-header"
+    ]
+  },
+  {
+    "id": "disable-add",
+    "components": []
+  },
+  {
+    "...": "./_section.json#/filters"
+  },
+  {
+    "...": "./_kpi-highlights-widget.json#/filters"
+  },
+  {
+    "...": "../blocks/insurance-product-carousel-widget/_insurance-product-carousel-widget.json#/filters"
+  },
+  {
+    "...": "../blocks/editorial-carousel-widget/_editorial-carousel-widget.json#/filters"
+  },
+  {
+    "...": "../blocks/*/_*.json#/filters"
+  },
+  {
+    "...": "../blocks/atoms/**/_*.json#/filters"
+  },
+  {
+    "...": "./_unipol-header.json#/filters"
+  },
+  {
+    "...": "./_unipol-footer.json#/filters"
+  }
+]
