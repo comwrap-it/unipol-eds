@@ -39,14 +39,14 @@
       "columns",
       "fragment",
       "text-block",
-      "test-buttons",
       "options-list",
       "text-list",
       "prodotto-unico",
       "unica-preventivatore",
       "prodotto-unico-header",
       "image-text-grid",
-      "accordion"
+      "accordion",
+      "legal-info-widget"
     ]
   },
   {
@@ -58,8 +58,16 @@
     "components": []
   },
   {
-    "id": "editorial-carousel-widget",
-    "components": []
+    "id": "hero-widget",
+    "components": [
+      "full-screen-hero-carousel"
+    ]
+  },
+  {
+    "id": "mini-hero-widget",
+    "components": [
+      "mini-hero-carousel"
+    ]
   },
   {
     "id": "blog-carousel-widget",
@@ -69,6 +77,10 @@
   },
   {
     "id": "insurance-product-carousel-widget",
+    "components": []
+  },
+  {
+    "id": "editorial-carousel-widget",
     "components": []
   },
   {
@@ -103,6 +115,12 @@
     ],
     "min": 1,
     "max": 8
+  },
+  {
+    "id": "faq-widget",
+    "components": [
+      "fragment"
+    ]
   },
   {
     "id": "footer-privacy-section",
@@ -160,12 +178,6 @@
     "id": "prodotto-unico-header",
     "components": [
       "prodotto-unico-header"
-    ]
-  },
-  {
-    "id": "options-list",
-    "components": [
-      "unipol-option"
     ]
   },
   {

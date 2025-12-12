@@ -42,9 +42,6 @@
 @import url("./mobile/string.css");
 @import url("./mobile/dimension.css");
 
-/* Icons */
-@import url("./icons.css");
-
 /* Import file Unipol header styling */
 @import url("./unipol-header.css");
 
