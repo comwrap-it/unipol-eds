@@ -1,4 +1,4 @@
-@import "./../atoms/buttons/standard-button/standard-button.css";
+@import url("./../atoms/buttons/standard-button/standard-button.css");
 
 .image-text-grid {
   width: 100%;
