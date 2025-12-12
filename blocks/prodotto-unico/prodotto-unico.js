@@ -239,7 +239,7 @@ function setupAssetPathInterceptor() {
   // Intercetta anche la creazione di elementi Image
   const originalImage = window.Image;
   window.Image = function InterceptedImage(...args) {
-    const img = new originalImage(...args);
+    const img = Reflect.construct(originalImage, args);
     const originalSrcSetter = Object.getOwnPropertyDescriptor(
       HTMLImageElement.prototype,
       'src',
