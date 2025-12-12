@@ -294,7 +294,7 @@ export const extractHeroPropertiesFromRows = (rows) => {
   const subtitle = rows[6];
   const showHeroBulletList = extractBooleanValueFromRow(rows[7]);
   const bulletList = [rows[8], rows[9], rows[10]].filter(
-    (row) => row.firstChild,
+    (row) => row?.firstChild,
   );
   // Button properties
   const showHeroButton = extractBooleanValueFromRow(rows[11]);

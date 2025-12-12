@@ -72,20 +72,13 @@ body.appear {
 }
 
 main {
-    display: flex;
-    flex-direction: column;
     margin: 0 auto;
     overflow-x: hidden;
-    gap: var(--Layout-Page-Gap);
 }
 
 .section:not(:has(.hero, .mini-hero)) {
     padding-inline: var(--Layout-Section-Margin-Horizontal-Padding, 4rem);
-    padding-block: var(--Layout-Section-Vertical-Padding, 0);
-
-    &:last-of-type {
-        padding-bottom: var(--Layout-Page-Gap, 4rem);
-    }
+    padding-block: var(--Layout-Section-Vertical-Padding, 4rem);
 }
 
 header .header,

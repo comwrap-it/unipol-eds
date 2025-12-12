@@ -242,7 +242,7 @@ export const extractMiniHeroPropertiesFromRows = (rows) => {
   const subtitleRow = rows[3];
   const showHeroBulletList = extractBooleanValueFromRow(rows[4]);
   const bulletListRows = [rows[5], rows[6], rows[7]].filter(
-    (row) => row.firstChild,
+    (row) => row?.firstChild,
   );
   // Button properties
   const showHeroButton = extractBooleanValueFromRow(rows[8]);
