@@ -95,29 +95,32 @@ function setupAssetPathInterceptor() {
 
   // Intercetta le richieste fetch per riscrivere i path
   const originalFetch = window.fetch;
-  window.fetch = function(...args) {
-    if (typeof args[0] === 'string' && args[0].startsWith('/assets/')) {
-      args[0] = rewriteAssetPath(args[0]);
+  window.fetch = function interceptedFetch(...args) {
+    const modifiedArgs = [...args];
+    if (typeof modifiedArgs[0] === 'string' && modifiedArgs[0].startsWith('/assets/')) {
+      modifiedArgs[0] = rewriteAssetPath(modifiedArgs[0]);
     }
-    return originalFetch.apply(this, args);
+    return originalFetch.apply(this, modifiedArgs);
   };
 
   // Intercetta le richieste XMLHttpRequest per riscrivere i path
   const originalOpen = XMLHttpRequest.prototype.open;
-  XMLHttpRequest.prototype.open = function(method, url, ...rest) {
-    if (typeof url === 'string' && url.startsWith('/assets/')) {
-      url = rewriteAssetPath(url);
+  XMLHttpRequest.prototype.open = function interceptedOpen(method, url, ...rest) {
+    let modifiedUrl = url;
+    if (typeof modifiedUrl === 'string' && modifiedUrl.startsWith('/assets/')) {
+      modifiedUrl = rewriteAssetPath(modifiedUrl);
     }
-    return originalOpen.call(this, method, url, ...rest);
+    return originalOpen.call(this, method, modifiedUrl, ...rest);
   };
 
   // Intercetta le modifiche agli stili tramite setProperty
   const originalSetProperty = CSSStyleDeclaration.prototype.setProperty;
-  CSSStyleDeclaration.prototype.setProperty = function(property, value, priority) {
-    if (property === 'background-image' && typeof value === 'string' && value.includes('/assets/')) {
-      value = value.replace(/\/assets\//g, '/static/assets/');
+  CSSStyleDeclaration.prototype.setProperty = function interceptedSetProperty(property, value, priority) {
+    let modifiedValue = value;
+    if (property === 'background-image' && typeof modifiedValue === 'string' && modifiedValue.includes('/assets/')) {
+      modifiedValue = modifiedValue.replace(/\/assets\//g, '/static/assets/');
     }
-    return originalSetProperty.call(this, property, value, priority);
+    return originalSetProperty.call(this, property, modifiedValue, priority);
   };
 
   // Intercetta anche l'assegnazione diretta a backgroundImage
@@ -125,11 +128,12 @@ function setupAssetPathInterceptor() {
   if (styleDescriptor && styleDescriptor.set) {
     const originalSet = styleDescriptor.set;
     Object.defineProperty(CSSStyleDeclaration.prototype, 'backgroundImage', {
-      set: function(value) {
-        if (typeof value === 'string' && value.includes('/assets/')) {
-          value = value.replace(/\/assets\//g, '/static/assets/');
+      set: function interceptedBackgroundImageSetter(value) {
+        let modifiedValue = value;
+        if (typeof modifiedValue === 'string' && modifiedValue.includes('/assets/')) {
+          modifiedValue = modifiedValue.replace(/\/assets\//g, '/static/assets/');
         }
-        originalSet.call(this, value);
+        originalSet.call(this, modifiedValue);
       },
       get: styleDescriptor.get,
       configurable: true,
