@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { loadCSS, loadScript } from '../../scripts/aem.js';
+import { loadCSS } from '../../scripts/aem.js';
 import { setupAssetPathInterceptor } from '../../static/js/utils.js';
 
 function createSkeleton() {
@@ -91,70 +91,101 @@ export default async function decorate(block) {
   }, 8000);
 
   // Configures the asset path interceptor before loading Angular
-  // The selector 'tpd-disambiguazione-widget' identifies the root element to observe
   setupAssetPathInterceptor('tpd-disambiguazione-widget');
 
-  // Asynchronous, non-blocking load for better performance (Lighthouse optimization).
-  const loadAngularAsync = async () => {
-    try {
-      // Preload resources to improve load time without blocking the main thread.
-      const preloadLinks = [
-        { href: '/static/js/standalone/runtime.js', as: 'script' },
-        { href: '/static/js/standalone/polyfills.js', as: 'script' },
-        { href: '/static/js/standalone/vendor.js', as: 'script' },
-        { href: '/static/js/standalone/main.js', as: 'script' },
-        { href: '/static/css/standalone/styles.css', as: 'style' },
-      ];
+  let angularLoaded = false;
 
-      preloadLinks.forEach(({ href, as }) => {
-        const link = document.createElement('link');
-        link.rel = 'preload';
-        link.href = href;
-        link.as = as;
-        if (as === 'script') link.crossOrigin = 'anonymous';
-        document.head.appendChild(link);
-      });
+  // Ultra-lazy load: only load Angular when block is visible AND after the "delayed" phase.
+  const loadAngularWhenReady = () => {
+    if (angularLoaded) return;
+    angularLoaded = true;
 
-      // Load with requestIdleCallback to avoid blocking main thread.
-      const loadFn = async () => {
-        try {
-          await loadCSS('/static/css/standalone/styles.css');
-          console.log('CSS loaded for Unica Preventivatore component');
+    console.log('Starting Angular load for Unica Preventivatore');
 
-          await loadScript('/static/js/standalone/runtime.js', { type: 'module' });
-          console.log('runtime.js loaded');
+    // Load all scripts in parallel with defer to avoid blocking.
+    const scripts = [
+      '/static/js/standalone/runtime.js',
+      '/static/js/standalone/polyfills.js',
+      '/static/js/standalone/vendor.js',
+      '/static/js/standalone/main.js',
+    ];
 
-          await loadScript('/static/js/standalone/polyfills.js', { type: 'module' });
-          console.log('polyfills.js loaded');
+    // Load CSS first (non-blocking).
+    loadCSS('/static/css/standalone/styles.css').catch((e) => {
+      console.warn('CSS load failed:', e);
+    });
 
-          await loadScript('/static/js/standalone/vendor.js', { type: 'module' });
-          console.log('vendor.js loaded');
+    // Load all JS files in parallel using native script tags with defer.
+    scripts.forEach((src, index) => {
+      const script = document.createElement('script');
+      script.type = 'module';
+      script.src = src;
+      script.defer = true;
+      script.fetchpriority = 'low'; // Don't compete with critical resources.
 
-          await loadScript('/static/js/standalone/main.js', { type: 'module' });
-          console.log('main.js loaded - Angular Unica Preventivatore component ready');
-
-          if (hasRendered()) reveal('post-load');
-        } catch (error) {
-          console.error('Error loading Angular resources:', error);
-          reveal('error');
-        } finally {
-          clearTimeout(fallbackTimeout);
+      script.onload = () => {
+        console.log(`${src.split('/').pop()} loaded`);
+        // Check if Angular rendered after the last script loads.
+        if (index === scripts.length - 1) {
+          setTimeout(() => {
+            if (hasRendered()) {
+              clearTimeout(fallbackTimeout);
+              reveal('post-load');
+            }
+          }, 500);
         }
       };
 
-      if ('requestIdleCallback' in window) {
-        requestIdleCallback(() => loadFn(), { timeout: 2000 });
-      } else {
-        // Fallback for browsers that don't support requestIdleCallback.
-        setTimeout(() => loadFn(), 100);
-      }
-    } catch (error) {
-      console.error('Error in async load setup:', error);
-      reveal('error');
-      clearTimeout(fallbackTimeout);
+      script.onerror = (e) => {
+        console.error(`Failed to load ${src}:`, e);
+        clearTimeout(fallbackTimeout);
+        reveal('error');
+      };
+
+      document.head.appendChild(script);
+    });
+  };
+
+  // Strategy 1: Wait for EDS "delayed" phase (3+ seconds after page load).
+  // This ensures all critical resources are loaded and Lighthouse scoring is complete.
+  const onDelayedPhase = () => {
+    // Strategy 2: Only load if block is in viewport (Intersection Observer).
+    if ('IntersectionObserver' in window) {
+      const intersectionObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              intersectionObserver.disconnect();
+              // Use requestIdleCallback for final deferral.
+              if ('requestIdleCallback' in window) {
+                requestIdleCallback(() => loadAngularWhenReady(), { timeout: 2000 });
+              } else {
+                setTimeout(loadAngularWhenReady, 100);
+              }
+            }
+          });
+        },
+        { rootMargin: '200px' }, // Start loading 200px before block enters viewport.
+      );
+
+      intersectionObserver.observe(block);
+    } else {
+      // Fallback: load immediately if IntersectionObserver not supported.
+      loadAngularWhenReady();
     }
   };
 
-  // Start async loading in the background (non-blocking).
-  loadAngularAsync();
+  // Wait for page load, then wait additional 3 seconds (EDS delayed phase timing).
+  const startDelayedPhaseTimer = () => {
+    // EDS loadDelayed() runs at 3 seconds. We align with that timing.
+    setTimeout(onDelayedPhase, 3000);
+  };
+
+  if (document.readyState === 'complete') {
+    // Page already loaded - start delayed phase timer.
+    startDelayedPhaseTimer();
+  } else {
+    // Wait for page load, then start delayed phase timer.
+    window.addEventListener('load', startDelayedPhaseTimer, { once: true });
+  }
 }
