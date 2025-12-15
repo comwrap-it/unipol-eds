@@ -20,7 +20,8 @@
               "card-grid": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Card Grid",
-                "filter": "card-grid"
+                "filter": "card-grid",
+                "model": "card-grid"
               }
             }
           }
