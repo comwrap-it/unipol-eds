@@ -28,7 +28,7 @@ export function createAccordion(accordionLabel, accordionDescription) {
 
   const content = document.createElement('div');
   content.className = 'accordion-content';
-  content.replaceChildren(accordionDescription?.value);
+  content.append(...accordionDescription?.value);
   if (isAuthorMode(content)) {
     wrapper.classList.add('open');
   }

@@ -133,7 +133,7 @@ export function getValuesFromBlock(block, keys) {
       let value;
       // if richtext get the first child, the must ends with Richtext
       if (key.endsWith('Richtext')) {
-        value = valueNode.firstChild;
+        value = valueNode.children;
       } else {
         value = valueNode?.textContent?.trim() || '';
       }
