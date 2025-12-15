@@ -51,6 +51,9 @@
 /* Import swiper base styles */
 @import url("./swiper.css");
 
+/* Icons */
+@import url("./icons.css");
+
 body * {
     box-sizing: border-box;
 }
