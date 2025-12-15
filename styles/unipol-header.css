@@ -29,6 +29,10 @@ main .section.header-utilities-section-container {
     margin-top: unset;
 }
 
+.adobe-ue-edit .section.header-navigation-section-container .header-box-text-content{
+    display: none;
+}
+
 @media (width <= 1200px) {
     main .section.header-navigation-section-container .navigation-pill-container {
         margin-bottom: 60px;
