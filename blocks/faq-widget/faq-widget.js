@@ -142,6 +142,7 @@ function setupShowMoreButton(
     BUTTON_ICON_SIZES.MEDIUM,
     '',
     '',
+    // eslint-disable-next-line max-len
     showMoreButtonLabel && showMoreButtonLabel.instrumentation ? showMoreButtonLabel.instrumentation : {},
   );
 
