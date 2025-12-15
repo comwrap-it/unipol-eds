@@ -68,7 +68,7 @@ export default async function decorateAccordion(block) {
   if (!block) return;
   const properties = ['accordionLabel', 'accordionDescriptionRichtext'];
   const values = getValuesFromBlock(block, properties);
-  const accordionElement = createAccordion(values.accordionLabel, values.accordionDescription);
+  const accordionElement = createAccordion(values.accordionLabel, values.accordionDescriptionRichtext);
 
   block.textContent = '';
   block.appendChild(accordionElement);
