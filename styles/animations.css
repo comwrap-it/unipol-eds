@@ -5,8 +5,7 @@
     --reveal-delay: 350ms;
 }
 
-html:not(.adobe-ue-preview),
-html:not(.adobe-ue-edit) {
+html:not(.adobe-ue-preview, .adobe-ue-edit) {
     .reveal-in {
         opacity: 0;
         transform: none;
@@ -85,7 +84,7 @@ html:not(.adobe-ue-edit) {
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
-    .reveal.in,
+    .reveal-in,
     .reveal-in-up {
         opacity: 1 !important;
         transform: none !important;
