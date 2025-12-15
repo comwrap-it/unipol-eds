@@ -30,7 +30,7 @@ main .section.header-utilities-section-container {
 }
 
 .adobe-ue-edit .section.header-navigation-section-container .header-box-text-container {
-    display: none;
+    display: none !important;
 }
 
 @media (width <= 1200px) {
