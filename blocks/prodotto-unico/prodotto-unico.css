@@ -1,4 +1,9 @@
 /* Base styles for Prodotto Unico Angular component */
+.section.prodotto-unico-container {
+  padding-inline: 0;
+  padding-block: 0;
+}
+
 .prodotto-unico {
   width: 100%;
   min-height: 400px;

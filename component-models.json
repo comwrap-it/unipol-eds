@@ -2214,47 +2214,27 @@
         "required": true
       },
       {
-        "component": "text",
-        "valueType": "string",
+        "component": "aem-content",
         "name": "logoLink",
-        "label": "Link del Logo",
-        "default": "/"
+        "label": "Link URL",
+        "description": "Link del Logo"
+      }
+    ]
+  },
+  {
+    "id": "prodotto-unico-header-buttons-actions",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "headerButtonsActionsIcon",
+        "label": "Icona Pulsante Azione",
+        "multi": false
       },
       {
-        "component": "multifield",
-        "name": "actions",
-        "label": "Pulsanti Azione (Destra)",
-        "multi": true,
-        "valueType": "string",
-        "fields": [
-          {
-            "component": "select",
-            "name": "icon",
-            "label": "Nome Icona",
-            "valueType": "string",
-            "options": [
-              {
-                "name": "Carrello",
-                "value": "cart"
-              },
-              {
-                "name": "Telefono",
-                "value": "phone"
-              },
-              {
-                "name": "Utente",
-                "value": "user"
-              }
-            ]
-          },
-          {
-            "component": "text",
-            "name": "link",
-            "label": "Link Destinazione",
-            "valueType": "string",
-            "default": "#"
-          }
-        ]
+        "component": "aem-content",
+        "name": "headerButtonsActionsLink",
+        "label": "Link Pulsante Azione"
       }
     ]
   },

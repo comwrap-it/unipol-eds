@@ -993,6 +993,21 @@
           }
         },
         {
+          "title": "Prodotto Unico Header Buttons Actions",
+          "id": "prodotto-unico-header-buttons-actions",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Prodotto Unico Header Buttons Actions",
+                  "model": "prodotto-unico-header-buttons-actions"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Prodotto Unico",
           "id": "prodotto-unico",
           "plugins": {
