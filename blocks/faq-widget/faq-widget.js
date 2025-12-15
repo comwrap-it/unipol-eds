@@ -15,6 +15,7 @@
 import { createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
 import { getValuesFromBlock, restoreInstrumentation } from '../../scripts/utils.js';
 import { loadFragment } from '../fragment/fragment.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
 
 let isStylesLoaded = false;
 
@@ -74,6 +75,8 @@ async function createFaqAccordion(reference) {
     section.classList.remove('section');
     wrapper.appendChild(section);
   }
+
+  moveInstrumentation(reference, wrapper);
 
   return wrapper;
 }
