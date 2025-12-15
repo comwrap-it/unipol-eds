@@ -29,7 +29,8 @@
           "description": "max 40 caratteri",
           "required": true,
           "validation": {
-            "maxLength": 40
+            "maxLength": 40,
+            "customErrorMsg": "Testo troppo lungo"
           }
         },
         {
@@ -39,7 +40,8 @@
           "description": "max 150 caratteri",
           "required": true,
           "validation": {
-            "maxLength": 150
+            "maxLength": 150,
+            "customErrorMsg": "Testo troppo lungo"
           }
         },
         {
@@ -48,7 +50,8 @@
           "label": "Testo pulsante carica altro",
           "description": "Default \"Mostra di più\"",
           "validation": {
-            "maxLength": 15
+            "maxLength": 15,
+            "customErrorMsg": "Testo troppo lungo"
           }
         }
       ]
