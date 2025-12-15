@@ -1,8 +1,15 @@
 .card-grid {
     display: flex;
+    flex-flow: column wrap;
     width: 100%;
     align-items: flex-start;
-    align-content: flex-start;
-    gap: var(--Card-Grid-Gap, 16px) 0;
-    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--Card-Grid-Gap, 16px);
+}
+
+@media (width >= 768px) {
+    .card-grid {
+        flex-direction: row;
+        justify-content: flex-start;
+    }
 }

@@ -3,6 +3,7 @@
  * @typedef {import('../../types/types.js').LinkButtonConf} LinkButtonConf
  */
 
+import { loadCSS } from '../../scripts/aem.js';
 import { createIconElementFromCssClass } from '../../scripts/domHelpers.js';
 import { BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
 
@@ -36,6 +37,7 @@ export const createWarrantyCard = async (
 
   if (tagConfig?.label) {
     const { createTag } = await import('../atoms/tag/tag.js');
+    await loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`);
     const tagElement = createTag(
       tagConfig.label,
       tagConfig.category,
@@ -62,6 +64,7 @@ export const createWarrantyCard = async (
     const { createLinkButton } = await import(
       '../atoms/buttons/link-button/link-button.js'
     );
+    await loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`);
     const linkButtonElement = createLinkButton(
       linkButtonConfig.label,
       linkButtonConfig.href,
