@@ -42,13 +42,28 @@ function getRows(block) {
  * @returns {HTMLElement|null} image container or null when no image row is provided
  */
 function buildImageSection(rows) {
-  const imageRow = rows[13];
-  if (!imageRow) return null;
+  const candidates = [
+    { imageIndex: 10, altIndex: 11 },
+    { imageIndex: 13, altIndex: 14 },
+  ];
+
+  const selection = candidates.find(({ imageIndex }) => {
+    const row = rows[imageIndex];
+    return row && (
+      row.querySelector('picture')
+      || row.querySelector('img')
+      || row.querySelector('a')
+    );
+  });
+
+  if (!selection) return null;
+
+  const imageRow = rows[selection.imageIndex];
 
   const cardImage = document.createElement('div');
   cardImage.className = 'editorial-carousel-card-image';
 
-  const altText = rows[14]?.textContent?.trim() || '';
+  const altText = rows[selection.altIndex]?.textContent?.trim() || '';
   const picture = imageRow.querySelector('picture');
   if (picture) {
     picture.querySelector('img')?.setAttribute('alt', altText);
