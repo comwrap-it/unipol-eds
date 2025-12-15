@@ -10,7 +10,7 @@
  */
 
 import { createLinkButtonFromRows } from '../atoms/buttons/link-button/link-button.js';
-import { createOptimizedPicture, loadCSS } from '../../scripts/aem.js';
+import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /**
@@ -152,7 +152,7 @@ const STANDARD_BUTTON_VARIANTS = new Set(['primary', 'secondary', 'accent']);
 // #region UTILS
 
 /** @type {boolean} */
-let dependenciesLoaded = false;
+let isStylesLoaded = false;
 
 /**
  * Loads any CSS dependencies needed by the card.
@@ -162,12 +162,15 @@ let dependenciesLoaded = false;
  *
  * @returns {Promise<void>} Resolves when styles are loaded.
  */
-async function loadDependencies() {
-  if (dependenciesLoaded) return;
-  await loadCSS(
-    `${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`,
-  );
-  dependenciesLoaded = true;
+async function ensureStylesLoaded() {
+  if (isStylesLoaded) return;
+  const { loadCSS } = await import('../../scripts/aem.js');
+  await Promise.all([
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/insurance-product-card/insurance-product-card.css`,
+    ),
+  ]);
+  isStylesLoaded = true;
 }
 
 /**
@@ -478,7 +481,7 @@ export default async function decorateEditorialCarouselCard(block) {
   );
   if (existingCard) return;
 
-  await loadDependencies();
+  await ensureStylesLoaded();
 
   const model = parseCardRows(block);
   const card = renderCard(model, block);

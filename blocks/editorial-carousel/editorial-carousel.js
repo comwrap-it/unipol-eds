@@ -17,8 +17,6 @@
  * - Preserves Universal Editor (AUE) instrumentation by moving/copying attributes from the
  *   authored rows into the rendered DOM.
  */
-
-import { loadBlock, loadCSS } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
 import {
@@ -106,7 +104,7 @@ const SELECTORS = {
 
 // #region DEPENDENCIES
 
-let stylesLoaded = false;
+let isStylesLoaded = false;
 
 /**
  * Ensures widget CSS is loaded once.
@@ -115,15 +113,25 @@ let stylesLoaded = false;
  *
  * @returns {Promise<void>}
  */
+/** @type {boolean} */
+/**
+ * Loads any CSS dependencies needed by the card.
+ *
+ * The decoration function can run multiple times (e.g. Universal Editor
+ * re-renders after edits), so this function memoizes the request.
+ *
+ * @returns {Promise<void>} Resolves when styles are loaded.
+ */
 async function ensureStylesLoaded() {
-  if (stylesLoaded) return;
-
-  const widgetCssPath = `${window.hlx.codeBasePath}/blocks/editorial-carousel-widget/editorial-carousel-widget.css`;
-  await loadCSS(widgetCssPath);
-
-  stylesLoaded = true;
+  if (isStylesLoaded) return;
+  const { loadCSS } = await import('../../scripts/aem.js');
+  await Promise.all([
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/insurance-product-card/insurance-product-card.css`,
+    ),
+  ]);
+  isStylesLoaded = true;
 }
-
 // #endregion
 
 // #region PARSE
@@ -218,11 +226,6 @@ async function createSlideFromRow(row, decorateCard) {
 
   slide.appendChild(cardBlock);
   await decorateCard(cardBlock);
-
-  const decoratedCard = slide.querySelector(SELECTORS.decoratedCard) || slide.firstElementChild;
-  if (decoratedCard?.dataset?.blockName) {
-    await loadBlock(decoratedCard);
-  }
 
   return slide;
 }
