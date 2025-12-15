@@ -16,8 +16,10 @@ export function createAccordion(accordionLabel, accordionDescription) {
 
   const labelEl = document.createElement('span');
   labelEl.className = 'accordion-label';
-  labelEl.textContent = accordionLabel.value || '';
-  restoreInstrumentation(labelEl, accordionLabel.instrumentation);
+  labelEl.textContent = accordionLabel?.value || '';
+  if (accordionLabel?.instrumentation) {
+    restoreInstrumentation(labelEl, accordionLabel.instrumentation);
+  }
 
   const icon = document.createElement('span');
   icon.className = 'accordion-icon un-icon-plus';
@@ -26,11 +28,13 @@ export function createAccordion(accordionLabel, accordionDescription) {
 
   const content = document.createElement('div');
   content.className = 'accordion-content';
-  content.textContent = accordionDescription.value || '';
+  content.textContent = accordionDescription?.value || '';
   if (isAuthorMode(content)) {
     wrapper.classList.add('open');
   }
-  restoreInstrumentation(content, accordionDescription.instrumentation);
+  if (accordionDescription?.instrumentation) {
+    restoreInstrumentation(content, accordionDescription.instrumentation);
+  }
 
   wrapper.append(header, content);
 
