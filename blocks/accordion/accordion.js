@@ -68,6 +68,7 @@ export default async function decorateAccordion(block) {
   if (!block) return;
   const properties = ['accordionLabel', 'accordionDescriptionRichtext'];
   const values = getValuesFromBlock(block, properties);
+  // eslint-disable-next-line max-len
   const accordionElement = createAccordion(values.accordionLabel, values.accordionDescriptionRichtext);
 
   block.textContent = '';
