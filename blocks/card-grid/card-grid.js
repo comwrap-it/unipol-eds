@@ -1,3 +1,5 @@
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
 /**
  * ensures styles are loaded only once
  */
@@ -30,6 +32,7 @@ export default async function decorate(block) {
       createWarrantyCardFromRows,
     } = await import('../warranty-card/warranty-card.js');
     const card = await createWarrantyCardFromRows(childrenRows);
+    moveInstrumentation(row, card);
     cardGrid.appendChild(card);
   });
   await Promise.all(cardPromises);
