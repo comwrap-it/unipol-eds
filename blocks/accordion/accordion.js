@@ -4,8 +4,8 @@ import { getValuesFromBlock, restoreInstrumentation, isAuthorMode } from '../../
  * Creates Accordion
  *
  * @returns {HTMLElement}
- * @param accordionLabel
- * @param accordionDescription
+ * @param accordionLabel object that contains value and instrumentation for EDS component
+ * @param accordionDescription object that contains value and instrumentation for EDS component
  */
 export function createAccordion(accordionLabel, accordionDescription) {
   const wrapper = document.createElement('div');
