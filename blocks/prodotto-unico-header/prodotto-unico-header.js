@@ -65,29 +65,29 @@ export default async function decorate(block) {
     const iconRow = actionRows[i];
     const linkRow = actionRows[i + 1];
     
-    if (!iconRow || !linkRow) continue;
+    if (iconRow && linkRow) {
+      const iconCols = Array.from(iconRow.children);
+      const linkCols = Array.from(linkRow.children);
 
-    const iconCols = Array.from(iconRow.children);
-    const linkCols = Array.from(linkRow.children);
+      const fieldName1 = iconCols[0]?.textContent?.trim();
+      const fieldName2 = linkCols[0]?.textContent?.trim();
 
-    const fieldName1 = iconCols[0]?.textContent?.trim();
-    const fieldName2 = linkCols[0]?.textContent?.trim();
+      if (fieldName1 === 'icon' && fieldName2 === 'link') {
+        const iconValue = iconCols[1]?.textContent?.trim().toLowerCase();
+        const linkValue = linkCols[1]?.querySelector('a')?.href
+                          || linkCols[1]?.textContent?.trim();
 
-    if (fieldName1 !== 'icon' || fieldName2 !== 'link') continue;
-
-    const iconValue = iconCols[1]?.textContent?.trim().toLowerCase();
-    const linkValue = linkCols[1]?.querySelector('a')?.href
-                      || linkCols[1]?.textContent?.trim();
-
-    if (iconValue && linkValue) {
-      actions.push({
-        icon: iconValue,
-        link: linkValue,
-        iconRow,
-        linkRow,
-        iconCell: iconCols[1],
-        linkCell: linkCols[1],
-      });
+        if (iconValue && linkValue) {
+          actions.push({
+            icon: iconValue,
+            link: linkValue,
+            iconRow,
+            linkRow,
+            iconCell: iconCols[1],
+            linkCell: linkCols[1],
+          });
+        }
+      }
     }
   }
 
