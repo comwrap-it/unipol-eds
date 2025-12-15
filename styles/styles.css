@@ -42,9 +42,6 @@
 @import url("./mobile/string.css");
 @import url("./mobile/dimension.css");
 
-/* Icons */
-@import url("./icons.css");
-
 /* Import file Unipol header styling */
 @import url("./unipol-header.css");
 
@@ -53,6 +50,9 @@
 
 /* Import swiper base styles */
 @import url("./swiper.css");
+
+/* Icons */
+@import url("./icons.css");
 
 body * {
     box-sizing: border-box;
@@ -72,19 +72,13 @@ body.appear {
 }
 
 main {
-    display: flex;
-    flex-direction: column;
     margin: 0 auto;
-    gap: var(--Layout-Page-Gap);
+    overflow-x: hidden;
 }
 
-.section:not(:has(.hero)) {
+.section:not(:has(.hero, .mini-hero)) {
     padding-inline: var(--Layout-Section-Margin-Horizontal-Padding, 4rem);
-    padding-block: var(--Layout-Section-Vertical-Padding, 0);
-
-    &:last-of-type {
-        padding-bottom: var(--Layout-Page-Gap, 4rem);
-    }
+    padding-block: var(--Layout-Section-Vertical-Padding, 4rem);
 }
 
 header .header,

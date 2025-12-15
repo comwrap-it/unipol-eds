@@ -15,11 +15,10 @@ export default function decorate(block, isFirstBlock = false) {
     item.classList.add('image-text-item');
 
     // Automatic alignment
-    const align =
-      (initialAlignment === 'left' && index % 2 === 0) ||
-      (initialAlignment === 'right' && index % 2 !== 0)
-        ? 'left'
-        : 'right';
+    const align = (initialAlignment === 'left' && index % 2 === 0)
+      || (initialAlignment === 'right' && index % 2 !== 0)
+      ? 'left'
+      : 'right';
 
     item.classList.add(`image-${align}`);
 
@@ -34,10 +33,9 @@ export default function decorate(block, isFirstBlock = false) {
 
       if (el.tagName === 'PICTURE') return el;
 
-      const src =
-        (el.tagName === 'IMG' && el.src) ||
-        (el.tagName === 'A' && el.href) ||
-        null;
+      const src = (el.tagName === 'IMG' && el.src)
+        || (el.tagName === 'A' && el.href)
+        || null;
 
       if (!src) return null;
 
@@ -46,11 +44,11 @@ export default function decorate(block, isFirstBlock = false) {
         altText,
         isFirstBlock,
         [
-          { media: '(min-width: 1313px)', width: '648' },  // Desktop
-          { media: '(min-width: 1152px) and (max-width: 1312px)', width: '600' },  // Desktop small
-          { media: '(min-width: 768px) and (max-width: 1152px)', width: '364' },  // Tablet
-          { media: '(max-width: 768px)', width: '343' },   // Mobile
-        ]
+          { media: '(min-width: 1313px)', width: '648' }, // Desktop
+          { media: '(min-width: 1152px) and (max-width: 1312px)', width: '600' }, // Desktop small
+          { media: '(min-width: 768px) and (max-width: 1152px)', width: '364' }, // Tablet
+          { media: '(max-width: 768px)', width: '343' }, // Mobile
+        ],
       );
 
       const newImg = optimizedPic.querySelector('img');
@@ -66,21 +64,21 @@ export default function decorate(block, isFirstBlock = false) {
     // Retrieving items data
     const rows = [...item.children].filter((c) => c !== imgElement);
 
-    const title              = rows[1]?.textContent.trim() || '';
-    const description        = rows[2]?.textContent.trim() || '';
-    const btnLabel           = rows[3]?.textContent.trim() || '';
-    const btnVariant         = rows[4]?.textContent.trim() || 'primary';
+    const title = rows[1]?.textContent.trim() || '';
+    const description = rows[2]?.textContent.trim() || '';
+    const btnLabel = rows[3]?.textContent.trim() || '';
+    const btnVariant = rows[4]?.textContent.trim() || 'primary';
 
-    const btnHrefEl         = rows[5]?.querySelector('a');
-    const btnHref           = btnHrefEl?.getAttribute('href') || '';
+    const btnHrefEl = rows[5]?.querySelector('a');
+    const btnHref = btnHrefEl?.getAttribute('href') || '';
 
-    const btnSize           = rows[6]?.textContent.trim() || 'medium';
+    const btnSize = rows[6]?.textContent.trim() || 'medium';
 
-    const rawOpen           = rows[7]?.textContent.trim().toLowerCase();
-    const btnOpenInNewTab   = rawOpen === 'true' || rawOpen === '1' || rawOpen === 'yes';
+    const rawOpen = rows[7]?.textContent.trim().toLowerCase();
+    const btnOpenInNewTab = rawOpen === 'true' || rawOpen === '1' || rawOpen === 'yes';
 
-    const btnLeftIcon       = rows[8]?.textContent.trim() || '';
-    const btnRightIcon      = rows[9]?.textContent.trim() || '';
+    const btnLeftIcon = rows[8]?.textContent.trim() || '';
+    const btnRightIcon = rows[9]?.textContent.trim() || '';
 
     // Button
     let buttonElement = null;

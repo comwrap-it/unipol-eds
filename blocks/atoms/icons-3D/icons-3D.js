@@ -27,7 +27,7 @@ export function create3Dicons(
     vehicleIcon.className = 'icons-3d-icon icon-mobility';
     const vehicleImg = document.createElement('img');
     vehicleImg.className = 'icon-img';
-    vehicleImg.src = `${window.hlx.codeBasePath}/icons/vehicles.png`;
+    vehicleImg.src = `${window.hlx.codeBasePath}/assets/vehicles.webp`;
     vehicleImg.alt = '';
     vehicleIcon.appendChild(vehicleImg);
     iconsContainer.appendChild(vehicleIcon);
@@ -38,7 +38,7 @@ export function create3Dicons(
     homeIcon.className = 'icons-3d-icon icon-property';
     const homeImg = document.createElement('img');
     homeImg.className = 'icon-img';
-    homeImg.src = `${window.hlx.codeBasePath}/icons/property.png`;
+    homeImg.src = `${window.hlx.codeBasePath}/assets/property.webp`;
     homeImg.alt = '';
     homeIcon.appendChild(homeImg);
     iconsContainer.appendChild(homeIcon);
@@ -49,7 +49,7 @@ export function create3Dicons(
     personalIcon.className = 'icons-3d-icon icon-welfare';
     const personalImg = document.createElement('img');
     personalImg.className = 'icon-img';
-    personalImg.src = `${window.hlx.codeBasePath}/icons/welfare.png`;
+    personalImg.src = `${window.hlx.codeBasePath}/assets/welfare.webp`;
     personalImg.alt = '';
     personalIcon.appendChild(personalImg);
     iconsContainer.appendChild(personalIcon);
@@ -117,7 +117,7 @@ export default function decorate3Dicons(block) {
         vehicleIcon.className = `icons-3d-icon icon-${vehicleIconShow}`;
         const vehicleImg = document.createElement('img');
         vehicleImg.className = 'icon-img';
-        vehicleImg.src = `${window.hlx.codeBasePath}/icons/vehicles.png`;
+        vehicleImg.src = `${window.hlx.codeBasePath}/assets/vehicles.webp`;
         vehicleImg.alt = '';
         vehicleIcon.appendChild(vehicleImg);
         icons3Delement.appendChild(vehicleIcon);
@@ -127,7 +127,7 @@ export default function decorate3Dicons(block) {
         homeIcon.className = `icons-3d-icon icon-${homeIconShow}`;
         const homeImg = document.createElement('img');
         homeImg.className = 'icon-img';
-        homeImg.src = `${window.hlx.codeBasePath}/icons/property.png`;
+        homeImg.src = `${window.hlx.codeBasePath}/assets/property.webp`;
         homeImg.alt = '';
         homeIcon.appendChild(homeImg);
         icons3Delement.appendChild(homeIcon);
@@ -137,7 +137,7 @@ export default function decorate3Dicons(block) {
         personalIcon.className = `icons-3d-icon icon-${personalIconShow}`;
         const personalImg = document.createElement('img');
         personalImg.className = 'icon-img';
-        personalImg.src = `${window.hlx.codeBasePath}/icons/welfare.png`;
+        personalImg.src = `${window.hlx.codeBasePath}/assets/welfare.webp`;
         personalImg.alt = '';
         personalIcon.appendChild(personalImg);
         icons3Delement.appendChild(personalImg);

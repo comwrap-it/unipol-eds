@@ -82,6 +82,7 @@ start(
    - JavaScript (in ordine):
      - `/static/js/runtime.js`
      - `/static/js/polyfills.js`
+     - `/static/js/vendor.js`
      - `/static/js/main.js`
 5. L'applicazione Angular si inizializza nell'elemento `<tpd-interprete-angular-dx-api-pu>`
 

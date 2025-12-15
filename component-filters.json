@@ -5,7 +5,9 @@
       "section",
       "kpi-highlights-widget",
       "insurance-product-carousel-widget",
+      "editorial-carousel-widget",
       "hero-widget",
+      "mini-hero-widget",
       "blog-carousel-widget",
       "faq-widget-section"
     ]
@@ -36,15 +38,15 @@
       "cards",
       "columns",
       "fragment",
-      "full-screen-hero-carousel",
       "text-block",
-      "test-buttons",
       "options-list",
       "text-list",
       "prodotto-unico",
+      "unica-preventivatore",
       "prodotto-unico-header",
       "image-text-grid",
-      "accordion"
+      "accordion",
+      "legal-info-widget"
     ]
   },
   {
@@ -56,14 +58,30 @@
     "components": []
   },
   {
-    "id": "insurance-product-carousel-widget",
-    "components": []
+    "id": "hero-widget",
+    "components": [
+      "full-screen-hero-carousel"
+    ]
+  },
+  {
+    "id": "mini-hero-widget",
+    "components": [
+      "mini-hero-carousel"
+    ]
   },
   {
     "id": "blog-carousel-widget",
     "components": [
       "blog-carousel"
     ]
+  },
+  {
+    "id": "insurance-product-carousel-widget",
+    "components": []
+  },
+  {
+    "id": "editorial-carousel-widget",
+    "components": []
   },
   {
     "id": "cards",
@@ -87,6 +105,18 @@
     ]
   },
   {
+    "id": "editorial-carousel-widget",
+    "components": []
+  },
+  {
+    "id": "editorial-carousel",
+    "components": [
+      "editorial-carousel-card"
+    ],
+    "min": 1,
+    "max": 8
+  },
+  {
     "id": "faq-widget",
     "components": [
       "fragment"
@@ -108,9 +138,7 @@
     "id": "full-screen-hero-carousel",
     "components": [
       "hero"
-    ],
-    "min": 1,
-    "max": 8
+    ]
   },
   {
     "id": "header-navigation-section",
@@ -125,22 +153,12 @@
     ]
   },
   {
-    "id": "hero-widget",
-    "components": [
-      "full-screen-hero-carousel"
-    ]
-  },
-  {
     "id": "image-text-grid",
     "components": [
       "image-text-item"
     ],
     "min": 1,
     "max": 4
-  },
-  {
-    "id": "insurance-product-carousel-widget",
-    "components": []
   },
   {
     "id": "insurance-product-carousel",
@@ -151,15 +169,15 @@
     "max": 8
   },
   {
-    "id": "prodotto-unico-header",
+    "id": "mini-hero-carousel",
     "components": [
-      "prodotto-unico-header"
+      "mini-hero"
     ]
   },
   {
-    "id": "options-list",
+    "id": "prodotto-unico-header",
     "components": [
-      "unipol-option"
+      "prodotto-unico-header"
     ]
   },
   {

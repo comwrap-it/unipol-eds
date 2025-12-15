@@ -50,15 +50,15 @@
         "cards",
         "columns",
         "fragment",
-        "full-screen-hero-carousel",
         "text-block",
-        "test-buttons",
         "options-list",
         "text-list",
         "prodotto-unico",
+        "unica-preventivatore",
         "prodotto-unico-header",
         "image-text-grid",
-        "accordion"
+        "accordion",
+        "legal-info-widget"
       ]
     }
   ]

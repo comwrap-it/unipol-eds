@@ -1,0 +1,43 @@
+{
+  "definitions": [
+    {
+      "title": "Editorial Carousel",
+      "id": "editorial-carousel",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "editorial-carousel",
+              "name": "Editorial Carousel"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "editorial-carousel",
+      "fields": [
+        {
+          "component": "text",
+          "name": "showMoreButtonLabel",
+          "label": "Testo bottone per dispositivi mobile",
+          "description": "Default \"Mostra di più\"",
+          "maxlength": 15
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "editorial-carousel",
+      "components": [
+        "editorial-carousel-card"
+      ],
+      "min": 1,
+      "max": 8
+    }
+  ]
+}

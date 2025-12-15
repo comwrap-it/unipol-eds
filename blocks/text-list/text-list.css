@@ -28,6 +28,10 @@
     color: var(--Footer-Primary-Text, #F9F9F7);
 }
 
+.unipol-footer .text-list-wrapper .un-icon-plus {
+    display: none;
+}
+
 /* FOOTER ACCORDION */
 @media (width <= 768px) {
    .unipol-footer .text-list-wrapper {
@@ -41,15 +45,12 @@
         cursor: pointer;
     }
 
-    .unipol-footer .text-list-wrapper .text-link-title::after {
-      content: "";
+    .unipol-footer .text-list-wrapper .un-icon-plus {
+      display: block;
       position: absolute;
       right: 0;
       top: 50%;
       transform: translateY(-50%);
-      width: 16px;
-      height: 16px;
-      background-image: url("/content/dam/unipol/unipol-footer/Plus.svg");
     }
 }
 

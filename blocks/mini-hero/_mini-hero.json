@@ -1,0 +1,136 @@
+{
+  "definitions": [
+    {
+      "title": "Mini Hero",
+      "id": "mini-hero",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Mini Hero",
+              "model": "mini-hero"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "mini-hero",
+      "fields": [
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "miniHeroBackgroundMediaSrc",
+          "label": "Media di sfondo del Mini Hero",
+          "description": "Immagine o video di sfondo"
+        },
+        {
+          "component": "boolean",
+          "name": "isVideoBackground",
+          "label": "Sfondo video",
+          "description": "Abilita o disabilita lo sfondo video",
+          "valueType": "boolean"
+        },
+        {
+          "component": "text",
+          "label": "Titolo Mini Hero",
+          "name": "miniHeroMainLabel",
+          "required": true,
+          "validation": {
+            "maxLength": 50,
+            "customErrorMsg": "Testo troppo lungo"
+          }
+        },
+        {
+          "component": "text",
+          "name": "miniHeroSubtitle",
+          "label": "Sottotitolo Mini Hero",
+          "validation": {
+            "maxLength": 50,
+            "customErrorMsg": "Testo troppo lungo"
+          }
+        },
+        {
+          "component": "boolean",
+          "name": "showMiniHeroBulletList",
+          "label": "Mostra elenco puntato Mini Hero",
+          "description": "Abilita fino a 3 punti elenco",
+          "valueType": "boolean"
+        },
+        {
+          "component": "text",
+          "name": "miniHeroBullet1",
+          "label": "Punto elenco 1",
+          "validation": {
+            "maxLength": 40,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": {
+            "===": [
+              {
+                "var": "showMiniHeroBulletList"
+              },
+              true
+            ]
+          }
+        },
+        {
+          "component": "text",
+          "name": "miniHeroBullet2",
+          "label": "Punto elenco 2",
+          "validation": {
+            "maxLength": 40,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": {
+            "===": [
+              {
+                "var": "showMiniHeroBulletList"
+              },
+              true
+            ]
+          }
+        },
+        {
+          "component": "text",
+          "name": "miniHeroBullet3",
+          "label": "Punto elenco 3",
+          "validation": {
+            "maxLength": 40,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": {
+            "===": [
+              {
+                "var": "showMiniHeroBulletList"
+              },
+              true
+            ]
+          }
+        },
+        {
+          "component": "boolean",
+          "name": "showMiniHeroButton",
+          "label": "Mostra pulsante Mini Hero",
+          "description": "Mostra o nascondi il pulsante del Mini Hero",
+          "valueType": "boolean"
+        },
+        {
+          "component": "container",
+          "name": "mini-hero-button-container",
+          "label": "Configurazione Pulsante",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

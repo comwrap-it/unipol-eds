@@ -134,6 +134,7 @@
 
     .second-pill-right-icon {
         display: block;
+        opacity: 1 !important;
     }
 
     .mobile-nav-hidden-pills .mobile-nav-item .navigation-pill {

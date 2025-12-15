@@ -1,10 +1,11 @@
-@import "./../atoms/buttons/standard-button/standard-button.css";
+@import url("./../atoms/buttons/standard-button/standard-button.css");
 
 .image-text-grid {
   width: 100%;
+  padding: var(--Layout-Section-Vertical-Padding, 4rem) var(--Layout-Section-Margin-Horizontal-Padding, 4rem);
   display: flex;
   flex-direction: column;
-  gap: 3rem;
+  gap: var(--Section-Widget-Gap-D, 7.5rem);
 }
 
 /* Image */
@@ -12,18 +13,12 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 2.5rem;
-}
-
-.image-text-item .image-wrapper,
-.image-text-item .content-wrapper {
-  flex: 1;
 }
 
 .image-text-item .image-wrapper img {
     display: flex;
-    max-width: 40.5rem;
-    max-height: 30.375rem;
+    width: 40.5rem;
+    height: 30.375rem;
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
@@ -44,7 +39,6 @@
   flex-direction: column;
   align-items: flex-start;
   gap: var(--Section-Gap, 2rem);
-  flex-shrink: 0;
 }
 
 .image-text-item .content-wrapper .title {
@@ -77,38 +71,50 @@
 
 /* Desktop small */
 @media (1152px <= width <= 1312px) {
+    .image-text-grid {
+        gap: var(--Section-Widget-Gap-Ds, 6rem);
+    }
+
     .image-text-item .image-wrapper img {
-        max-width: 37.5rem;
-        max-height: 28.125rem;
+        width: 37.5rem;
+        height: 28.125rem;
     }
 }
 
 /* Tablet */
 @media (768px <= width <= 1152px) {
+    .image-text-grid {
+        gap: var(--Section-Widget-Gap-M, 6rem);
+    }
+
     .image-text-item .image-wrapper img {
-        max-width: 22.75rem;
-        max-height: 17.0625rem;
+        width: 22.75rem;
+        height: 17.0625rem;
     }
 }
 
 /* Mobile */
 @media (width <= 768px) {
-  .image-text-item {
-    flex-direction: column-reverse !important;
-    text-align: center;
-    align-items: center;
+  .image-text-grid {
+    max-width: 46rem;
+    gap: var(--Section-Widget-Gap-M, 3rem);
   }
 
-  .image-wrapper picture,
-  .image-wrapper img {
-    max-width: 21.4375rem;
-    max-height: 16.07813rem;
+  .image-text-item {
+    flex-direction: column-reverse !important;
+    align-items: center;
+    gap: var(--Section-Image-Gap-M, 3rem);
+  }
+
+  .image-text-item .image-wrapper picture,
+  .image-text-item .image-wrapper img {
+    width: 21.4375rem;
+    height: 16.07813rem;
   }
 
   .image-text-item .content-wrapper {
     width: 100%;
-    align-items: center;
-    text-align: center;
+    max-width: 21.4375rem;
   }
 
   .image-text-item .content-wrapper .title {

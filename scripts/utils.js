@@ -69,17 +69,13 @@ export const addAnimationClassToNearestSection = (
  * @returns {boolean} true if in author mode, false otherwise
  */
 export const isAuthorMode = (htmlElement) => {
-  if (!htmlElement || !htmlElement.ownerDocument) {
-    console.warn('Invalid htmlElement provided to isAuthorMode');
-    return false;
-  }
-  const doc = htmlElement.ownerDocument;
-  const root = doc.documentElement;
-  if (!root) {
-    return false;
-  }
-  const isInAuthorMode = root.classList.contains('adobe-ue-preview')
-    || root.classList.contains('adobe-ue-edit');
+  const currentUrl = window.location.href;
+  const doc = htmlElement?.ownerDocument;
+  const root = doc?.documentElement;
+  const isInAuthorMode = root?.classList.contains('adobe-ue-preview')
+    || root?.classList.contains('adobe-ue-edit')
+    || currentUrl.includes('author-')
+    || currentUrl.includes('universal-editor');
   return isInAuthorMode;
 };
 
@@ -149,3 +145,14 @@ export function getValuesFromBlock(block, keys) {
 
   return result;
 }
+
+/**
+ * Returns the value of the <meta name="template"> tag content
+ *
+ * @returns {string|null} the content value (e.g. "homepage") or null if not found
+ */
+export const getTemplateMetaContent = () => {
+  const meta = document.querySelector('meta[name="template"]');
+  const content = meta?.getAttribute('content') || null;
+  return content;
+};

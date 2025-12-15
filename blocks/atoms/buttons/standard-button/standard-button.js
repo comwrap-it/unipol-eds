@@ -85,10 +85,16 @@ export function createButton(
   // add left icon if provided
   if (leftIcon) {
     const leftIconSpan = document.createElement('span');
+    leftIconSpan.id = 'left-icon';
     leftIconSpan.className = `icon icon-${
       iconSize || BUTTON_ICON_SIZES.MEDIUM
     } ${leftIcon}`;
     element.appendChild(leftIconSpan);
+  } else {
+    const alreadyPresentIcon = element.querySelector('#left-icon');
+    if (alreadyPresentIcon) {
+      alreadyPresentIcon.remove();
+    }
   }
 
   const buttonTextSpan = document.createElement('span');
@@ -98,10 +104,16 @@ export function createButton(
   // add right icon if provided
   if (rightIcon) {
     const rightIconSpan = document.createElement('span');
+    rightIconSpan.id = 'right-icon';
     rightIconSpan.className = `icon icon-${
       iconSize || BUTTON_ICON_SIZES.MEDIUM
     } ${rightIcon}`;
     element.appendChild(rightIconSpan);
+  } else {
+    const alreadyPresentIcon = element.querySelector('#right-icon');
+    if (alreadyPresentIcon) {
+      alreadyPresentIcon.remove();
+    }
   }
 
   // Add keyboard support for buttons
