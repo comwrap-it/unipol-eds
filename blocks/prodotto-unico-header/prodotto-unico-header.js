@@ -2,69 +2,52 @@ import { decorateIcons } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /**
- * Decorates the Prodotto Unico Header block
- * @param {Element} block The block element
+ * Extract logo data from the first 2 rows
  */
-export default async function decorate(block) {
-  const rows = Array.from(block.children);
-
-  // Validazione minima
-  if (rows.length < 1) return;
-
-  // --- 1. GESTIONE LOGO (Prime 2 righe: logoImage e logoLink) ---
-  // Struttura: [nome_campo | valore]
-  // Riga 0: logoImage | [img]
-  // Riga 1: logoLink | [url]
+function extractLogoData(rows) {
   const logoImageRow = rows[0];
   const logoLinkRow = rows[1];
 
   let logoImg = null;
   let logoLinkUrl = '/';
+  let logoImageCell = null;
+  let logoLinkCell = null;
 
   if (logoImageRow) {
     const cols = Array.from(logoImageRow.children);
-    logoImg = cols[1]?.querySelector('img');
+    [, logoImageCell] = cols;
+    logoImg = logoImageCell?.querySelector('img');
   }
 
   if (logoLinkRow) {
     const cols = Array.from(logoLinkRow.children);
-    logoLinkUrl = cols[1]?.querySelector('a')?.href
-                  || cols[1]?.textContent?.trim()
+    [, logoLinkCell] = cols;
+    logoLinkUrl = logoLinkCell?.querySelector('a')?.href
+                  || logoLinkCell?.textContent?.trim()
                   || '/';
   }
 
-  if (logoImg && logoImageRow) {
-    logoImageRow.className = 'header-brand';
-    logoImageRow.innerHTML = '';
+  return {
+    logoImg,
+    logoLinkUrl,
+    logoImageRow,
+    logoLinkRow,
+    logoImageCell,
+    logoLinkCell,
+  };
+}
 
-    // Ottimizzazione LCP
-    logoImg.setAttribute('alt', 'UnipolSai Assicurazioni');
-    logoImg.loading = 'eager';
-    logoImg.fetchPriority = 'high';
-
-    const anchor = document.createElement('a');
-    anchor.href = logoLinkUrl;
-    anchor.title = 'Vai alla Home';
-    anchor.appendChild(logoImg);
-    logoImageRow.appendChild(anchor);
-  }
-
-  // Nascondi riga logoLink
-  if (logoLinkRow) {
-    logoLinkRow.style.display = 'none';
-  }
-
-  // --- 2. GESTIONE TOOLBAR (Righe successive a coppie: icon, link) ---
-  // Struttura: ogni action ha 2 righe
-  // Riga N: icon | [cart/user/phone]
-  // Riga N+1: link | [url]
+/**
+ * Extract action items from rows (starting from row 2)
+ */
+function extractActionItems(rows) {
   const actionRows = rows.slice(2);
   const actions = [];
-  
+
   for (let i = 0; i < actionRows.length; i += 2) {
     const iconRow = actionRows[i];
     const linkRow = actionRows[i + 1];
-    
+
     if (iconRow && linkRow) {
       const iconCols = Array.from(iconRow.children);
       const linkCols = Array.from(linkRow.children);
@@ -91,6 +74,51 @@ export default async function decorate(block) {
     }
   }
 
+  return actions;
+}
+
+/**
+ * Decorates the Prodotto Unico Header block
+ * @param {Element} block The block element
+ */
+export default async function decorate(block) {
+  if (!block) return;
+
+  const rows = Array.from(block.children);
+  if (rows.length < 2) return;
+
+  // Extract data
+  const logoData = extractLogoData(rows);
+  const actions = extractActionItems(rows);
+
+  // Build logo
+  if (logoData.logoImg && logoData.logoImageRow) {
+    logoData.logoImageRow.className = 'header-brand';
+    logoData.logoImageRow.innerHTML = '';
+
+    const anchor = document.createElement('a');
+    anchor.href = logoData.logoLinkUrl;
+    anchor.title = 'Vai alla Home';
+
+    logoData.logoImg.setAttribute('alt', 'Unipol');
+    logoData.logoImg.loading = 'eager';
+    logoData.logoImg.fetchPriority = 'high';
+
+    anchor.appendChild(logoData.logoImg);
+    logoData.logoImageRow.appendChild(anchor);
+
+    // Move instrumentation
+    if (logoData.logoImageCell) {
+      moveInstrumentation(logoData.logoImageCell, anchor);
+    }
+  }
+
+  // Hide logoLink row
+  if (logoData.logoLinkRow) {
+    logoData.logoLinkRow.style.display = 'none';
+  }
+
+  // Build actions
   if (actions.length > 0) {
     const toolsWrapper = document.createElement('div');
     toolsWrapper.className = 'header-tools';
@@ -112,14 +140,13 @@ export default async function decorate(block) {
 
       buttonWrapper.appendChild(a);
       li.appendChild(buttonWrapper);
+      toolsList.appendChild(li);
 
-      // Instrumentation
+      // Move instrumentation
       moveInstrumentation(action.iconCell, buttonWrapper);
       moveInstrumentation(action.linkCell, a);
 
-      toolsList.appendChild(li);
-
-      // Nascondi le righe originali
+      // Hide original rows
       action.iconRow.style.display = 'none';
       action.linkRow.style.display = 'none';
     });
@@ -128,6 +155,6 @@ export default async function decorate(block) {
     block.appendChild(toolsWrapper);
   }
 
-  // Carica gli SVG
+  // Decorate icons
   decorateIcons(block);
 }
