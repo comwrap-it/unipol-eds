@@ -82,7 +82,7 @@ const MEDIA_QUERIES = {
 const THRESHOLDS = {
   mobileVisibleCards: 4,
   tabletNavCards: 3,
-  desktopNavCards: 5,
+  desktopNavCards: 4,
 };
 
 const CLASS_NAMES = {
@@ -104,34 +104,41 @@ const SELECTORS = {
 
 // #region DEPENDENCIES
 
+/** @type {boolean} */
 let isStylesLoaded = false;
 
 /**
- * Ensures widget CSS is loaded once.
+ * Loads CSS dependencies used by the carousel UI.
  *
- * The carousel uses widget styling (navigation, dots, etc.).
+ * - `editorial-carousel.css`: layout + breakpoints.
+ * - `standard-button.css`: mobile "show more" button styling.
+ * - `icon-button.css` + `scroll-indicator.css`: navigation UI styling.
  *
  * @returns {Promise<void>}
  */
-/** @type {boolean} */
-/**
- * Loads any CSS dependencies needed by the card.
- *
- * The decoration function can run multiple times (e.g. Universal Editor
- * re-renders after edits), so this function memoizes the request.
- *
- * @returns {Promise<void>} Resolves when styles are loaded.
- */
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
+
   const { loadCSS } = await import('../../scripts/aem.js');
+
   await Promise.all([
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/editorial-carousel/editorial-carousel.css`,
     ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`,
+    ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/buttons/icon-button/icon-button.css`,
+    ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/scroll-indicator/scroll-indicator.css`,
+    ),
   ]);
+
   isStylesLoaded = true;
 }
+
 // #endregion
 
 // #region PARSE
