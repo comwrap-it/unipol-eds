@@ -267,16 +267,22 @@
         "component": "text",
         "name": "accordionLabel",
         "label": "Domanda",
-        "description": "Descrizione della domanda (max 120 caratteri)",
-        "maxlength": 120,
+        "description": "Descrizione della domanda",
+        "validation": {
+          "maxLength": 120,
+          "customErrorMsg": "Testo troppo lungo"
+        },
         "value": ""
       },
       {
-        "component": "text",
-        "name": "accordionDescription",
+        "component": "richtext",
+        "name": "accordionDescriptionRichtext",
         "label": "Risposta",
-        "description": "Risposta contenuta nell'accordion (max 800 caratteri)",
-        "maxlength": 800,
+        "description": "Risposta contenuta nell'accordion",
+        "validation": {
+          "maxLength": 800,
+          "customErrorMsg": "Testo troppo lungo"
+        },
         "value": ""
       }
     ]
@@ -619,24 +625,31 @@
         "component": "text",
         "name": "title",
         "label": "Titolo",
-        "description": "max 40 caratteri",
         "required": true,
-        "maxlength": 40
+        "validation": {
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "text",
         "name": "description",
         "label": "Descrizione",
-        "description": "max 150 caratteri",
         "required": true,
-        "maxlength": 150
+        "validation": {
+          "maxLength": 150,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "text",
         "name": "showMoreButtonLabel",
         "label": "Testo pulsante carica altro",
         "description": "Default \"Mostra di più\"",
-        "maxlength": 15
+        "validation": {
+          "maxLength": 15,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       }
     ]
   },
