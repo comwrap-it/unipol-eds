@@ -169,6 +169,9 @@ async function ensureStylesLoaded() {
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/editorial-carousel-card/editorial-carousel-card.css`,
     ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`,
+    ),
   ]);
   isStylesLoaded = true;
 }
