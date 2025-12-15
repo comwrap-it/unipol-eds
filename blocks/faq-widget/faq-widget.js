@@ -19,6 +19,11 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 let isStylesLoaded = false;
 
+/**
+ * Loads the Accordion stylesheet once prior to initializing FAQ Widget.
+ *
+ * @return {Promise<void>}
+ */
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
@@ -31,6 +36,7 @@ async function ensureStylesLoaded() {
 }
 
 /**
+ * Creates the text block with title and subtitle
  *
  * @param valuesFromBlock obj that contain title and description objs with value and instrumentation
  * @return {HTMLDivElement}
@@ -61,6 +67,7 @@ const createTextBlock = (valuesFromBlock) => {
 };
 
 /**
+ * Creates the Accordion from a given page path
  *
  * @param reference
  * @return {Promise<HTMLDivElement>}
@@ -86,24 +93,39 @@ async function createFaqAccordion(reference) {
   return wrapper;
 }
 
-async function buildFaqAccordions(references = []) {
-  return Promise.all(
-    references.map(createFaqAccordion),
-  );
+/**
+ * Builds all the accordion configured
+ *
+ * @param isAuthor true in AEM env, false otherwise
+ * @param references
+ * @return {Promise<Awaited<HTMLDivElement>[]>}
+ */
+async function buildFaqAccordions(isAuthor, references = []) {
+  let refs = [];
+
+  if (Array.isArray(references)) {
+    refs = isAuthor
+      ? references
+      : references.filter((ref) => ref.querySelector('a[href]'));
+  }
+
+  return Promise.all(refs.map(createFaqAccordion));
 }
 
 /**
+ * Init the visibility of FAQs
  *
+ * @param isAuthor true in AEM env, false otherwise
  * @param faqElements
  * @param container
  * @param visibleCount
  * @return {number}
  */
-function initFaqVisibility(faqElements, container, visibleCount = 5) {
+function initFaqVisibility(isAuthor, faqElements, container, visibleCount = 5) {
   let hiddenCount = 0;
 
   faqElements.forEach((faq, index) => {
-    if (index >= visibleCount && !isAuthorMode(container)) {
+    if (index >= visibleCount && !isAuthor) {
       faq.classList.add('hidden');
       hiddenCount += 1;
     }
@@ -114,6 +136,7 @@ function initFaqVisibility(faqElements, container, visibleCount = 5) {
 }
 
 /**
+ * Sets the show more button
  *
  * @param faqElements
  * @param container
@@ -167,12 +190,14 @@ function setupShowMoreButton(
 }
 
 /**
+ * Creates the FAQ widget
  *
  * @param valuesFromBlock
  * @param references
+ * @param isAuthor true in AEM env, false otherwise
  * @return {Promise<HTMLDivElement>}
  */
-export async function createFaqWidget(valuesFromBlock, references) {
+export async function createFaqWidget(valuesFromBlock, references, isAuthor = false) {
   await ensureStylesLoaded();
 
   const faqSection = document.createElement('div');
@@ -184,9 +209,10 @@ export async function createFaqWidget(valuesFromBlock, references) {
   const faqAccordionsButton = document.createElement('div');
   faqAccordionsButton.className = 'faq-accordions-button';
 
-  const faqElements = await buildFaqAccordions(references ?? []);
+  const faqElements = await buildFaqAccordions(isAuthor, references ?? []);
 
   const hiddenCount = initFaqVisibility(
+    isAuthor,
     faqElements,
     faqAccordionsButton,
     5,
@@ -206,7 +232,7 @@ export async function createFaqWidget(valuesFromBlock, references) {
 }
 
 /**
- * Decorates the FAQ Widget block
+ * Decorates the FAQ Widget
  * @param {HTMLElement} block - The FAQ block element
  */
 export default async function decorate(block) {
@@ -220,7 +246,9 @@ export default async function decorate(block) {
   const rows = Array.from(block.children);
   const references = rows.slice(3);
 
-  const faqWidget = await createFaqWidget(valuesFromBlock, references);
+  const isAuthor = isAuthorMode(block);
+
+  const faqWidget = await createFaqWidget(valuesFromBlock, references, isAuthor);
 
   // Preserve blockName if present
   if (block.dataset.blockName) {
