@@ -46,20 +46,36 @@
                 flex-direction: column;
                 gap: var(--Faq-Widget-Gap-Accordion, 1rem);
                 width: 100%;
+
+                &.hidden {
+                    display: none;
+                }
             }
         }
     }
 }
 
 @media (width < 768px) {
-    .faq-widget-wrapper .faq-section {
-        flex-direction: column;
+    .faq-widget-wrapper {
+        & .faq-section {
+            flex-direction: column;
+            align-items: center;
 
-        .faq-text,
-        .faq-accordions-button {
-            margin-left: 0;
-            width: 100%;
-            flex: none;
+            & .faq-text {
+                text-align: center;
+                max-width: none;
+
+                & .faq-title,
+                & .faq-subtitle {
+                    justify-content: center;
+                }
+            }
+
+            & .faq-accordions-button {
+                margin-left: 0;
+                width: 100%;
+                flex: none;
+            }
         }
     }
 }
@@ -81,4 +97,3 @@
         letter-spacing: -0.025rem;
     }
 }
-
