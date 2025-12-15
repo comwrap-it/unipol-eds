@@ -206,7 +206,7 @@ export async function createFaqWidget(valuesFromBlock, references, isAuthor = fa
   await ensureStylesLoaded();
 
   const faqSection = document.createElement('div');
-  faqSection.className = 'faq-section';
+  faqSection.className = 'faq-section reveal-in-up';
 
   const faqText = createTextBlock(valuesFromBlock);
   faqSection.appendChild(faqText);
