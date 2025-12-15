@@ -1,6 +1,6 @@
 const extractLegalText = (rows) => {
   const richtextContainer = rows[0];
-  if (!richtextContainer) return "";
+  if (!richtextContainer) return '';
   return richtextContainer.innerHTML.trim();
 };
 
@@ -11,7 +11,7 @@ const extractLegalText = (rows) => {
  */
 export const createLegalInfoWidget = (htmlContent) => {
   const container = document.createElement('div');
-  container.className = "legal-info-content";
+  container.className = 'legal-info-content';
   container.innerHTML = htmlContent;
   return container;
 };
@@ -28,10 +28,9 @@ export default function decorateLegalInfoWidget(block) {
     rows = Array.from(wrapper.children);
   }
 
-  const hasInstrumentation =
-    block.hasAttribute('data-aue-resource') ||
-    block.querySelector('[data-aue-resource]') ||
-    block.querySelector('[data-richtext-prop]');
+  const hasInstrumentation = block.hasAttribute('data-aue-resource')
+    || block.querySelector('[data-aue-resource]')
+    || block.querySelector('[data-richtext-prop]');
 
   const htmlContent = extractLegalText(rows);
 
