@@ -8,8 +8,6 @@
  * - It initializes Swiper once per carousel (guarded via `data-initialized`).
  * - It applies an optional dark theme to the closest section.
  */
-
-import { loadCSS } from '../../scripts/aem.js';
 import loadSwiper from '../../scripts/delayed.js';
 
 /**
@@ -34,7 +32,7 @@ const SELECTORS = {
 
 // #region DEPENDENCIES
 
-let stylesLoaded = false;
+let isStylesLoaded = false;
 
 /**
  * Ensures widget CSS is loaded once.
@@ -42,12 +40,14 @@ let stylesLoaded = false;
  * @returns {Promise<void>}
  */
 async function ensureStylesLoaded() {
-  if (stylesLoaded) return;
-
-  const widgetCssPath = `${window.hlx.codeBasePath}/blocks/editorial-carousel-widget/editorial-carousel-widget.css`;
-  await loadCSS(widgetCssPath);
-
-  stylesLoaded = true;
+  if (isStylesLoaded) return;
+  const { loadCSS } = await import('../../scripts/aem.js');
+  await Promise.all([
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/editorial-carousel-widget/editorial-carousel.-widgetcss`,
+    ),
+  ]);
+  isStylesLoaded = true;
 }
 
 // #endregion

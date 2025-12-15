@@ -167,7 +167,7 @@ async function ensureStylesLoaded() {
   const { loadCSS } = await import('../../scripts/aem.js');
   await Promise.all([
     loadCSS(
-      `${window.hlx.codeBasePath}/blocks/insurance-product-card/insurance-product-card.css`,
+      `${window.hlx.codeBasePath}/blocks/editorial-carousel-card/editorial-carousel-card.css`,
     ),
   ]);
   isStylesLoaded = true;
