@@ -46,13 +46,6 @@
           ]
         },
         {
-          "component": "text",
-          "name": "note",
-          "label": "Note",
-          "maxlength": 60,
-          "required": true
-        },
-        {
           "component": "reference",
           "valueType": "string",
           "name": "image",

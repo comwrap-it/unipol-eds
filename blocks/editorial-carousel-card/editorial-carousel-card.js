@@ -28,7 +28,6 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
  * @property {string} cta
  * @property {string} title
  * @property {string} description
- * @property {string} note
  */
 
 /**
@@ -37,7 +36,6 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
  * @property {number} description
  * @property {number} ctaStart Inclusive.
  * @property {number} ctaEnd Exclusive.
- * @property {number} note
  */
 
 /**
@@ -59,7 +57,6 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
  * @property {CtaLayout} ctaLayout Detected layout used for normalization.
  * @property {number} ctaRawCount
  * @property {number} ctaNormalizedCount
- * @property {HTMLElement | null} noteRow
  * @property {HTMLElement | null} imageRow
  * @property {HTMLElement | null} imageAltRow
  * @property {string | null} imageLayoutId Selected `IMAGE_ROW_CANDIDATES` id.
@@ -97,7 +94,6 @@ const CARD_CLASSES = {
   cta: 'button-subdescription',
   title: 'title',
   description: 'description',
-  note: 'subdescription',
 };
 
 /**
@@ -106,7 +102,6 @@ const CARD_CLASSES = {
  * - `title`: title row
  * - `description`: description row
  * - `ctaStart..ctaEnd`: CTA configuration rows (from the standard-button model)
- * - `note`: note row under the CTA
  *
  * Image indices are handled via `IMAGE_ROW_CANDIDATES`.
  *
@@ -117,7 +112,6 @@ const ROW_INDEX = {
   description: 1,
   ctaStart: 2,
   ctaEnd: 9, // exclusive
-  note: 9,
 };
 
 /**
@@ -330,15 +324,6 @@ function renderCard(model, sourceBlock) {
     ctaContainer.className = CARD_CLASSES.cta;
     ctaContainer.appendChild(linkButton);
 
-    const note = createTextFromRow(model.noteRow, {
-      existingSelector: 'p',
-      fallbackTag: 'p',
-      className: CARD_CLASSES.note,
-      requireText: true,
-    });
-
-    if (note) ctaContainer.appendChild(note);
-
     ctaSection = ctaContainer;
   }
 
@@ -364,7 +349,6 @@ function renderCard(model, sourceBlock) {
  * - 0: Title
  * - 1: Description
  * - 2..8: CTA configuration (standard-button fields)
- * - 9: Note
  * - 10: Image
  * - 11: Image alt text
  *
@@ -434,7 +418,6 @@ function parseCardRows(block) {
     ctaLayout,
     ctaRawCount: rawCtaRows.length,
     ctaNormalizedCount: normalizedCtaRows.length,
-    noteRow: rows[ROW_INDEX.note] || null,
     imageRow,
     imageAltRow: altRow,
     imageLayoutId: layoutId,
