@@ -227,7 +227,7 @@ export default {
     title: 'Tecnologia Unibox',
     description: 'Con i nostri dispositivi satellitari Unibox, puoi ottenere sconti personalizzati sul premio in base al tuo stile di guida.',
     note: '',
-    buttonLabel: 'Scopri di pi?',
+    buttonLabel: 'Scopri di piu',
     buttonVariant: BUTTON_VARIANTS.PRIMARY,
     buttonHref: 'https://example.com',
     buttonHrefLabel: 'https://example.com',
