@@ -434,14 +434,14 @@
         "component": "text",
         "name": "title",
         "label": "Titolo",
-        "maxlength": 15,
+        "maxlength": 65,
         "required": true
       },
       {
         "component": "text",
         "name": "description",
         "label": "Descrizione",
-        "maxlength": 130,
+        "maxlength": 200,
         "required": true
       },
       {
@@ -566,13 +566,6 @@
             ]
           }
         ]
-      },
-      {
-        "component": "text",
-        "name": "note",
-        "label": "Note",
-        "maxlength": 60,
-        "required": true
       },
       {
         "component": "reference",

@@ -1,9 +1,13 @@
 
 .editorial-carousel-card-wrapper {
     display: flex;
+    align-items: stretch;
+    height: 100%;
 
     & .editorial-carousel-card-container {
         display: flex;
+        height: 100%;
+        align-self: stretch;
         width: 100%;
         max-width: var(--Column-Size-Col-3, 19.75rem);
         flex-direction: column;
