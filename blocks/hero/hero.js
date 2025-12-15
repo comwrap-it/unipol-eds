@@ -104,7 +104,7 @@ const createHeroMainSection = (
   }
   const titleEl = createTextElementFromRow(titleRow, 'hero-title', 'h2');
   mainSection.appendChild(titleEl);
-  if (subtitleBoldRow.firstChild) {
+  if (subtitleBoldRow?.firstChild) {
     const subtitleBoldEl = createTextElementFromRow(
       subtitleBoldRow,
       'hero-subtitle-bold',
@@ -112,7 +112,7 @@ const createHeroMainSection = (
     );
     mainSection.appendChild(subtitleBoldEl);
   }
-  if (subtitleRow.firstChild) {
+  if (subtitleRow?.firstChild) {
     const subtitleEl = createTextElementFromRow(
       subtitleRow,
       'hero-subtitle',

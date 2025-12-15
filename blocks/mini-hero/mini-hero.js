@@ -93,7 +93,7 @@ const createMiniHeroMainSection = (
   mainSection.className = `main-section${isCarousel ? ' carousel' : ''}`;
   const titleEl = createTextElementFromRow(titleRow, 'hero-title', 'h2');
   mainSection.appendChild(titleEl);
-  if (subtitleRow.firstChild) {
+  if (subtitleRow?.firstChild) {
     const subtitleBoldEl = createTextElementFromRow(
       subtitleRow,
       'hero-subtitle',
