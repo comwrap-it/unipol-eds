@@ -6,50 +6,53 @@ import { decorateIcons } from '../../scripts/aem.js';
  */
 export default async function decorate(block) {
   // 1. Estrazione dei dati dal DOM (che arriva dal documento o UE)
-  let rows = Array.from(block.children);
-  const wrapper = block.querySelector('.default-content-wrapper');
-  if (wrapper) {
-    rows = Array.from(wrapper.children);
-  }
+  const rows = Array.from(block.children);
 
-  // Assumiamo che la prima riga sia il Logo, e le successive siano le azioni
-  const logoRow = rows[0];
-  const actionRows = rows.slice(1);
+  // 2. Estrazione dei campi del modello principale (logoImage, logoLink)
+  // Prima riga: logoImage
+  // Seconda riga: logoLink
+  const logoImageRow = rows[0];
+  const logoLinkRow = rows[1];
 
-  // 2. Costruzione della struttura del Logo
+  const logoImg = logoImageRow?.querySelector('img');
+  const logoLink = logoLinkRow?.querySelector('a')?.href
+    || logoLinkRow?.textContent?.trim()
+    || '/';
+
+  // Rimuove le righe del modello principale
+  if (logoImageRow) logoImageRow.remove();
+  if (logoLinkRow) logoLinkRow.remove();
+
+  // 3. Costruzione della struttura del Logo
   const logoWrapper = document.createElement('div');
   logoWrapper.className = 'header-brand';
 
-  if (logoRow) {
-    const img = logoRow.querySelector('img');
-    const link = logoRow.querySelector('a')?.href || '/';
+  if (logoImg) {
+    // Ottimizzazione: assicuriamo dimensioni corrette e lazy loading off per LCP
+    logoImg.setAttribute('alt', 'UnipolSai Assicurazioni');
+    logoImg.loading = 'eager';
 
-    if (img) {
-      // Ottimizzazione: assicuriamo dimensioni corrette e lazy loading off per LCP
-      img.setAttribute('alt', 'UnipolSai Assicurazioni');
-      img.loading = 'eager';
-
-      const anchor = document.createElement('a');
-      anchor.href = link;
-      anchor.title = 'Vai alla Home';
-      anchor.appendChild(img);
-      logoWrapper.appendChild(anchor);
-    }
+    const anchor = document.createElement('a');
+    anchor.href = logoLink;
+    anchor.title = 'Vai alla Home';
+    anchor.appendChild(logoImg);
+    logoWrapper.appendChild(anchor);
   }
 
-  // 3. Costruzione della Toolbar (Destra) - Legge configurazione da AEM EDS Universal Editor
+  // 4. Costruzione della Toolbar (Destra) - Legge configurazione da AEM EDS Universal Editor
   const toolsWrapper = document.createElement('div');
   toolsWrapper.className = 'header-tools';
   const toolsList = document.createElement('ul');
 
   // Estrae le azioni configurate dagli items del blocco
-  // Ogni item è rappresentato da due righe consecutive:
+  // Le righe rimanenti sono gli items (ogni item ha 2 righe)
   // 1. headerButtonsActionsIcon -> tipo di icona (cart/phone/user)
   // 2. headerButtonsActionsLink -> URL del link
+  const remainingRows = Array.from(block.children);
   const configuredActions = [];
   let currentAction = {};
 
-  actionRows.forEach((row) => {
+  remainingRows.forEach((row) => {
     const cols = [...row.children];
     if (cols.length < 2) return;
 
