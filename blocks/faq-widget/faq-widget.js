@@ -135,14 +135,14 @@ function setupShowMoreButton(
   if (faqElements.length <= step) return;
 
   const button = createButton(
-    showMoreButtonLabel.value ? showMoreButtonLabel.value : 'Carica altro',
+    showMoreButtonLabel && showMoreButtonLabel.value ? showMoreButtonLabel.value : 'Carica altro',
     '',
     false,
     BUTTON_VARIANTS.PRIMARY,
     BUTTON_ICON_SIZES.MEDIUM,
     '',
     '',
-    showMoreButtonLabel.instrumentation,
+    showMoreButtonLabel && showMoreButtonLabel.instrumentation ? showMoreButtonLabel.instrumentation : {},
   );
 
   button.addEventListener('click', (e) => {
