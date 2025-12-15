@@ -42,94 +42,52 @@ export default async function decorate(block) {
   toolsWrapper.className = 'header-tools';
   const toolsList = document.createElement('ul');
 
-  // Mappa delle configurazioni dei bottoni basata sul tipo di icona
-  const buttonConfigMap = {
-    cart: {
-      id: 'cart-button',
-      ariaLabel: 'Carrello',
-      className: 'header-button header-button-cart',
-    },
-    phone: {
-      id: 'contact-button',
-      ariaLabel: 'Richiesta contatto',
-      className: 'header-button header-button-contact',
-    },
-    user: {
-      id: 'access-button',
-      ariaLabel: 'Accesso',
-      className: 'header-button header-button-access',
-    },
-  };
-
-  // Estrae le azioni configurate dal multifield "actions"
-  // In AEM EDS, ogni elemento del multifield può essere rappresentato come:
-  // - Una riga con tutte le colonne dei campi (icon, link)
-  // - Righe separate per ogni campo (icon, link)
+  // Estrae le azioni configurate dagli items del blocco
+  // Ogni item è rappresentato da due righe consecutive:
+  // 1. headerButtonsActionsIcon -> tipo di icona (cart/phone/user)
+  // 2. headerButtonsActionsLink -> URL del link
   const configuredActions = [];
-  let currentAction = null;
+  let currentAction = {};
 
   actionRows.forEach((row) => {
     const cols = [...row.children];
+    if (cols.length < 2) return;
 
-    // Cerca se questa riga contiene tutti i campi di un'azione (icon + link)
-    if (cols.length >= 4) {
-      // Struttura: colonna 0 = "icon", colonna 1 = valore icon,
-      // colonna 2 = "link", colonna 3 = valore link
-      const iconLabel = cols[0]?.textContent?.trim().toLowerCase();
-      const iconValue = cols[1]?.textContent?.trim().toLowerCase() || '';
-      const linkLabel = cols[2]?.textContent?.trim().toLowerCase();
-      const linkValue = cols[3]?.querySelector('a')?.href
-        || cols[3]?.textContent?.trim()
-        || '#';
+    const fieldName = cols[0]?.textContent?.trim();
+    const fieldValue = cols[1]?.querySelector('a')?.href
+      || cols[1]?.textContent?.trim()
+      || '';
 
-      if (iconLabel === 'icon' && linkLabel === 'link' && iconValue) {
-        configuredActions.push({
-          icon: iconValue,
-          link: linkValue,
-        });
-        return;
+    if (fieldName === 'headerButtonsActionsIcon') {
+      // Salva l'azione precedente se completa
+      if (currentAction.icon) {
+        configuredActions.push(currentAction);
       }
-    }
-
-    // Altrimenti, gestisci come righe separate per campo
-    if (cols.length >= 2) {
-      const fieldName = cols[0]?.textContent?.trim().toLowerCase();
-      const fieldValue = cols[1]?.querySelector('a')?.href
-        || cols[1]?.textContent?.trim()
-        || '';
-
-      if (fieldName === 'icon') {
-        // Nuova azione: salva quella precedente se esiste e inizia una nuova
-        if (currentAction && currentAction.icon) {
-          configuredActions.push(currentAction);
-        }
-        currentAction = { icon: fieldValue.toLowerCase() };
-      } else if (fieldName === 'link' && currentAction) {
-        // Completa l'azione corrente con il link
-        currentAction.link = fieldValue || '#';
-      }
+      // Inizia una nuova azione
+      currentAction = { icon: fieldValue.toLowerCase() };
+    } else if (fieldName === 'headerButtonsActionsLink') {
+      // Completa l'azione corrente con il link
+      currentAction.link = fieldValue;
     }
   });
 
-  // Aggiungi l'ultima azione se presente (per il caso di righe separate)
-  if (currentAction && currentAction.icon) {
+  // Aggiungi l'ultima azione se completa
+  if (currentAction.icon) {
     configuredActions.push(currentAction);
   }
 
   // Crea i bottoni solo se configurati
   configuredActions.forEach((action) => {
-    const config = buttonConfigMap[action.icon];
-    if (!config) return; // Salta icone non riconosciute
+    if (!action.icon || !action.link) return;
 
     const li = document.createElement('li');
     const buttonWrapper = document.createElement('div');
-    buttonWrapper.className = config.className;
-    buttonWrapper.id = config.id;
+    buttonWrapper.className = `header-button header-button-${action.icon}`;
 
     const a = document.createElement('a');
-    a.href = action.link || '#';
+    a.href = action.link;
     a.className = 'tool-btn';
-    a.setAttribute('aria-label', config.ariaLabel);
+    a.setAttribute('aria-label', action.icon);
 
     // Inseriamo lo span per l'icona che EDS trasformerà in SVG
     const iconSpan = document.createElement('span');

@@ -2225,16 +2225,33 @@
     "id": "prodotto-unico-header-buttons-actions",
     "fields": [
       {
-        "component": "reference",
+        "component": "select",
         "valueType": "string",
         "name": "headerButtonsActionsIcon",
-        "label": "Icona Pulsante Azione",
-        "multi": false
+        "label": "Tipo Pulsante Azione",
+        "description": "Seleziona il tipo di pulsante da mostrare",
+        "required": true,
+        "options": [
+          {
+            "name": "Carrello",
+            "value": "cart"
+          },
+          {
+            "name": "Contatto",
+            "value": "phone"
+          },
+          {
+            "name": "Account",
+            "value": "user"
+          }
+        ]
       },
       {
         "component": "aem-content",
         "name": "headerButtonsActionsLink",
-        "label": "Link Pulsante Azione"
+        "label": "Link Pulsante Azione",
+        "description": "URL di destinazione del pulsante",
+        "required": true
       }
     ]
   },
