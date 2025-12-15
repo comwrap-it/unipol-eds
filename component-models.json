@@ -628,7 +628,9 @@
         "label": "Titolo",
         "description": "max 40 caratteri",
         "required": true,
-        "maxlength": 40
+        "validation": {
+          "maxLength": 40
+        }
       },
       {
         "component": "text",
@@ -636,14 +638,18 @@
         "label": "Descrizione",
         "description": "max 150 caratteri",
         "required": true,
-        "maxlength": 150
+        "validation": {
+          "maxLength": 150
+        }
       },
       {
         "component": "text",
         "name": "showMoreButtonLabel",
         "label": "Testo pulsante carica altro",
         "description": "Default \"Mostra di più\"",
-        "maxlength": 15
+        "validation": {
+          "maxLength": 15
+        }
       }
     ]
   },
