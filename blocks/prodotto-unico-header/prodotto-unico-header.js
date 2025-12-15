@@ -3,6 +3,7 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /**
  * Extract logo data from the first 2 rows
+ * Rows contain only values (no label column) when using model
  */
 function extractLogoData(rows) {
   const logoImageRow = rows[0];
@@ -14,14 +15,12 @@ function extractLogoData(rows) {
   let logoLinkCell = null;
 
   if (logoImageRow) {
-    const cols = Array.from(logoImageRow.children);
-    [, logoImageCell] = cols;
+    logoImageCell = logoImageRow.children[0];
     logoImg = logoImageCell?.querySelector('img');
   }
 
   if (logoLinkRow) {
-    const cols = Array.from(logoLinkRow.children);
-    [, logoLinkCell] = cols;
+    logoLinkCell = logoLinkRow.children[0];
     logoLinkUrl = logoLinkCell?.querySelector('a')?.href
                   || logoLinkCell?.textContent?.trim()
                   || '/';
@@ -39,42 +38,28 @@ function extractLogoData(rows) {
 
 /**
  * Extract action items from rows (starting from row 2)
+ * Each row contains all fields as columns: [icon | link]
  */
 function extractActionItems(rows) {
   const actionRows = rows.slice(2);
-  const actions = [];
+  
+  return actionRows.map((row) => {
+    const iconCell = row.children[0];
+    const linkCell = row.children[1];
 
-  for (let i = 0; i < actionRows.length; i += 2) {
-    const iconRow = actionRows[i];
-    const linkRow = actionRows[i + 1];
+    const iconValue = iconCell?.textContent?.trim().toLowerCase() || '';
+    const linkValue = linkCell?.querySelector('a')?.href
+                      || linkCell?.textContent?.trim()
+                      || '#';
 
-    if (iconRow && linkRow) {
-      const iconCols = Array.from(iconRow.children);
-      const linkCols = Array.from(linkRow.children);
-
-      const fieldName1 = iconCols[0]?.textContent?.trim();
-      const fieldName2 = linkCols[0]?.textContent?.trim();
-
-      if (fieldName1 === 'icon' && fieldName2 === 'link') {
-        const iconValue = iconCols[1]?.textContent?.trim().toLowerCase();
-        const linkValue = linkCols[1]?.querySelector('a')?.href
-                          || linkCols[1]?.textContent?.trim();
-
-        if (iconValue && linkValue) {
-          actions.push({
-            icon: iconValue,
-            link: linkValue,
-            iconRow,
-            linkRow,
-            iconCell: iconCols[1],
-            linkCell: linkCols[1],
-          });
-        }
-      }
-    }
-  }
-
-  return actions;
+    return {
+      icon: iconValue,
+      link: linkValue,
+      row,
+      iconCell,
+      linkCell,
+    };
+  }).filter((action) => action.icon);
 }
 
 /**
@@ -140,19 +125,21 @@ export default async function decorate(block) {
 
       buttonWrapper.appendChild(a);
       li.appendChild(buttonWrapper);
-      toolsList.appendChild(li);
 
       // Move instrumentation
       moveInstrumentation(action.iconCell, buttonWrapper);
       moveInstrumentation(action.linkCell, a);
 
-      // Hide original rows
-      action.iconRow.style.display = 'none';
-      action.linkRow.style.display = 'none';
+      toolsList.appendChild(li);
     });
 
     toolsWrapper.appendChild(toolsList);
     block.appendChild(toolsWrapper);
+
+    // Hide original action rows
+    actions.forEach((action) => {
+      action.row.style.display = 'none';
+    });
   }
 
   // Decorate icons

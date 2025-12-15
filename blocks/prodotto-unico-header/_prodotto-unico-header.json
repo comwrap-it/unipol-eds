@@ -58,7 +58,7 @@
         {
           "component": "select",
           "name": "icon",
-          "label": "Icona",
+          "label": "Tipo di azione",
           "options": [
             {"name": "Carrello", "value": "cart"},
             {"name": "Utente", "value": "user"},

@@ -2239,7 +2239,7 @@
       {
         "component": "select",
         "name": "icon",
-        "label": "Icona",
+        "label": "Tipo di azione",
         "options": [
           {
             "name": "Carrello",
