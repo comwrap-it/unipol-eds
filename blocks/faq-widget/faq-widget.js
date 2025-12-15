@@ -124,13 +124,18 @@ async function buildFaqAccordions(isAuthor, references = []) {
 function initFaqVisibility(isAuthor, faqElements, container, visibleCount = 5) {
   let hiddenCount = 0;
 
+  const faqAccordions = document.createElement('div');
+  faqAccordions.className = 'faq-accordions-container';
+
   faqElements.forEach((faq, index) => {
     if (index >= visibleCount && !isAuthor) {
       faq.classList.add('hidden');
       hiddenCount += 1;
     }
-    container.appendChild(faq);
+    faqAccordions.appendChild(faq);
   });
+
+  container.appendChild(faqAccordions);
 
   return hiddenCount;
 }
