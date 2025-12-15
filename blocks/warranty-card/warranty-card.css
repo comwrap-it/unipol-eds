@@ -1,0 +1,164 @@
+.warranty-card {
+    display: flex;
+    width: 343px;
+    padding: var(--Card-Warranty-Card-Vertical-Padding, 24px)
+        var(--Card-Warranty-Card-Horizontal-Padding, 24px);
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--Card-Warranty-Card-Gap, 24px);
+    border-radius: var(--Card-Radius, 24px);
+    background: var(--Card-Warranty-Card-Background, #fff);
+    box-shadow: var(--Depth-050---2, 2px) var(--Depth-050---2, 2px)
+        var(--Blur-200---8, 8px) 0 rgb(0 0 0 / 8%);
+
+    & .icon-tag-wrapper {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+
+        & .icon-wrapper {
+            display: flex;
+            width: var(--Card-Warranty-Card-Bg-Icon-Size, 56px);
+            height: var(--Card-Warranty-Card-Bg-Icon-Size, 56px);
+            justify-content: center;
+            align-items: center;
+            aspect-ratio: 1/1;
+            border-radius: var(--Card-Warranty-Card-Radius-Icon, 9999px);
+            background: var(--Card-Warranty-Card-Background-Icon, #e5f1ff);
+
+            & .icon {
+                width: var(--Card-Warranty-Card-Icon-Size, 32px);
+                height: var(--Card-Warranty-Card-Icon-Size, 32px);
+                aspect-ratio: 1/1;
+            }
+        }
+    }
+
+    &.mobility {
+        background: var(--Card-Warranty-Card-Background-Mobilty, #e5f1ff);
+
+        & .icon-tag-wrapper {
+            & .icon-wrapper {
+                & .icon {
+                    color: var(--Card-Warranty-Card-Icon-Mobility, #004aad);
+                }
+            }
+        }
+    }
+
+    &.welfare {
+        background: var(--Card-Warranty-Card-Background-Welfare, #fff0e5);
+
+        & .icon-tag-wrapper {
+            & .icon-wrapper {
+                & .icon {
+                    color: var(--Card-Warranty-Card-Icon-Welfare, #ff6200);
+                }
+            }
+        }
+    }
+
+    &.property {
+        background: var(--Card-Warranty-Card-Background-Property, #e5fff4);
+
+        & .icon-tag-wrapper {
+            & .icon-wrapper {
+                & .icon {
+                    color: var(--Card-Warranty-Card-Icon-Property, #00a86b);
+                }
+            }
+        }
+    }
+
+    &.default-mobility {
+        & .icon-tag-wrapper {
+            & .icon-wrapper {
+                background: var(
+                    --Card-Warranty-Card-Background-Mobilty,
+                    #e5f1ff
+                );
+
+                & .icon {
+                    color: var(--Card-Warranty-Card-Icon-Mobility, #004aad);
+                }
+            }
+        }
+    }
+
+    &.default-welfare {
+        & .icon-tag-wrapper {
+            & .icon-wrapper {
+                background: var(
+                    --Card-Warranty-Card-Background-Welfare,
+                    #fff0e5
+                );
+
+                & .icon {
+                    color: var(--Card-Warranty-Card-Icon-Welfare, #ff6200);
+                }
+            }
+        }
+    }
+
+    &.default-property {
+        & .icon-tag-wrapper {
+            & .icon-wrapper {
+                background: var(
+                    --Card-Warranty-Card-Background-Property,
+                    #e5fff4
+                );
+
+                & .icon {
+                    color: var(--Card-Warranty-Card-Icon-Property, #00a86b);
+                }
+            }
+        }
+    }
+
+    & .text-content {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--Card-Warranty-Card-Text-Gap, 8px);
+
+        & .title {
+            color: var(--Card-Warranty-Card-Title, #001c35);
+            font-family: var(--Family-Font-2, Manrope);
+            font-size: var(--Font-Size-Heading, 24px);
+            font-style: normal;
+            font-weight: 600;
+            line-height: 125%;
+            letter-spacing: -0.24px;
+        }
+
+        & .description {
+            color: var(--Card-Warranty-Card-Body, #001c35);
+            font-family: var(--Family-Font-2, Manrope);
+            font-size: var(--Size-16, 16px);
+            font-style: normal;
+            font-weight: 400;
+            line-height: 140%;
+        }
+    }
+}
+
+/* TABLET */
+@media (width >= 768px) {
+    .warranty-card {
+        width: 364px;
+    }
+}
+
+/* DESKTOP SMALL */
+@media (width >= 1280px) {
+    .warranty-card {
+        width: 394px;
+    }
+}
+
+/* DESKTOP LARGE */
+@media (width >= 1440px) {
+    .warranty-card {
+        width: 426.5px;
+    }
+}

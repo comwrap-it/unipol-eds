@@ -9,7 +9,8 @@
       "hero-widget",
       "mini-hero-widget",
       "blog-carousel-widget",
-      "faq-widget-section"
+      "faq-widget-section",
+      "card-grid-widget"
     ]
   },
   {

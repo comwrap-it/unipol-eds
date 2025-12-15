@@ -1,0 +1,8 @@
+.card-grid {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    align-content: flex-start;
+    gap: var(--Card-Grid-Gap, 16px) 0;
+    flex-wrap: wrap;
+}

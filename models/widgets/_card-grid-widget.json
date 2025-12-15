@@ -1,0 +1,57 @@
+{
+  "definitions": [
+    {
+      "title": "Card Grid Widget",
+      "id": "card-grid-widget",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/section/v1/section",
+            "template": {
+              "filter": "card-grid-widget",
+              "name": "Card Grid Widget",
+              "model": "card-grid-widget",
+              "style": "card-grid-widget",
+              "text-block": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Text Block",
+                "model": "text-block"
+              },
+              "card-grid": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Card Grid",
+                "filter": "card-grid"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "card-grid-widget",
+      "fields": [
+        {
+          "component": "text",
+          "name": "card-grid-widget-name",
+          "label": "Nome sezione Card Grid Widget"
+        },
+        {
+          "component": "toggle",
+          "name": "card-grid-widget-dark-theme",
+          "label": "Tema scuro",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "card-grid-widget",
+      "components": [
+        "card-grid"
+      ]
+    }
+  ]
+}

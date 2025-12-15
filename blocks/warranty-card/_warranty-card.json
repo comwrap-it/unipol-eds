@@ -1,0 +1,123 @@
+{
+    "definitions": [
+        {
+            "title": "Warranty Card",
+            "id": "warranty-card",
+            "plugins": {
+                "xwalk": {
+                    "page": {
+                        "resourceType": "core/franklin/components/block/v1/block/item",
+                        "template": {
+                            "name": "Warranty Card",
+                            "model": "warranty-card"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "models": [
+        {
+            "id": "warranty-card",
+            "fields": [
+                {
+                    "component": "select",
+                    "name": "category",
+                    "label": "Categoria",
+                    "required": true,
+                    "value": "default-mobility",
+                    "options": [
+                        {
+                            "name": "Mobility",
+                            "value": "mobility"
+                        },
+                        {
+                            "name": "Welfare",
+                            "value": "welfare"
+                        },
+                        {
+                            "name": "Property",
+                            "value": "property"
+                        },
+                        {
+                            "name": "Default Mobility",
+                            "value": "default-mobility"
+                        },
+                        {
+                            "name": "Default Welfare",
+                            "value": "default-welfare"
+                        },
+                        {
+                            "name": "Default Property",
+                            "value": "default-property"
+                        }
+                    ]
+                },
+                {
+                    "component": "text",
+                    "name": "title",
+                    "label": "Titolo",
+                    "required": true,
+                    "validation": {
+                        "maxLength": 30,
+                        "customErrorMsg": "Titolo troppo lungo"
+                    }
+                },
+                {
+                    "component": "text",
+                    "name": "description",
+                    "label": "Descrizione",
+                    "required": true,
+                    "validation": {
+                        "maxLength": 200,
+                        "customErrorMsg": "Descrizione troppo lunga"
+                    }
+                },
+                {
+                    "component": "select",
+                    "name": "warranty-card-icon",
+                    "label": "Icona della Card",
+                    "required": true,
+                    "value": "un-icon-newspaper",
+                    "options": [
+                        {
+                            "value": "un-icon-newspaper",
+                            "name": "Newspaper"
+                        },
+                        {
+                            "value": "un-icon-headphones",
+                            "name": "Headphones"
+                        },
+                        {
+                            "value": "un-icon-play-circle",
+                            "name": "Play Circle"
+                        }
+                    ]
+                },
+                {
+                    "component": "container",
+                    "name": "button-container",
+                    "label": "Configurazione Pulsante",
+                    "collapsible": true,
+                    "fields": [
+                        {
+                            "...": "../atoms/buttons/link-button/_link-button.json#/models/link-button/fields"
+                        }
+                    ]
+                },
+                {
+                    "component": "container",
+                    "name": "tag",
+                    "label": "Configurazione Tag",
+                    "collapsible": true,
+                    "fields": [
+                        {
+                            "...": "../atoms/tag/_tag.json#/models/tag/fields"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "filters": []
+}
