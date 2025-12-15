@@ -1,8 +1,7 @@
-@import "./../atoms/buttons/standard-button/standard-button.css";
+@import url("./../atoms/buttons/standard-button/standard-button.css");
 
 .image-text-grid {
   width: 100%;
-  padding: var(--Layout-Section-Vertical-Padding, 4rem) var(--Layout-Section-Margin-Horizontal-Padding, 4rem);
   display: flex;
   flex-direction: column;
   gap: var(--Section-Widget-Gap-D, 7.5rem);
@@ -114,7 +113,6 @@
 
   .image-text-item .content-wrapper {
     width: 100%;
-    align-items: center;
     max-width: 21.4375rem;
   }
 

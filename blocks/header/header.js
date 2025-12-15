@@ -7,7 +7,7 @@ import { loadFragment } from '../fragment/fragment.js';
  */
 export default async function decorate(block) {
   // load header as fragment
-  const headerMeta = getMetadata('header');
+  const headerMeta = getMetadata('nav');
   const headerPath = headerMeta ? new URL(headerMeta, window.location).pathname : '/nav';
   const fragment = await loadFragment(headerPath);
 

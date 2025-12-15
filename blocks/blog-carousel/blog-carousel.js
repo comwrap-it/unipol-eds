@@ -57,15 +57,19 @@ const initSwiper = (
       addIcons: false,
     },
     slidesPerView: 'auto',
+    speed: 700,
     allowTouchMove: true,
-    a11y: { enabled: false },
-    touchStartPreventDefault: false,
-    resistanceRatio: 0.85,
-    watchOverflow: true,
     breakpoints: {
-      768: { allowTouchMove: false },
-      1312: { allowTouchMove: false },
+      // width >= 1200
+      1200: {
+        allowTouchMove: false,
+      },
     },
+    resistanceRatio: 0.85,
+    touchReleaseOnEdges: true,
+    effect: 'slide',
+    // Optional accessibility tweaks
+    a11y: { enabled: false },
   });
 
   return swiper;

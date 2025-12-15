@@ -170,48 +170,45 @@
     ]
   },
   {
-    "id": "insurance-product-carousel-widget",
+    "id": "faq-widget-section",
     "fields": [
       {
-        "component": "text",
-        "name": "insurance-product-carousel-widget-name",
-        "label": "Nome sezione Insurance Product Carousel Widget"
-      },
-      {
         "component": "toggle",
-        "name": "insurance-product-carousel-widget-dark-theme",
+        "name": "faq-widget-section-dark-theme",
         "label": "Tema scuro",
         "default": false
       }
     ]
   },
   {
-    "id": "accordion",
+    "id": "hero-widget",
     "fields": [
       {
         "component": "text",
-        "name": "accordionLabel",
-        "label": "Label",
-        "description": "Header label (max 100 characters)",
-        "maxlength": 100,
-        "value": ""
+        "name": "hero-widget-name",
+        "label": "Nome sezione Hero Widget"
       },
       {
-        "component": "textarea",
-        "name": "accordionDescription",
-        "label": "Description",
-        "description": "Accordion content (max 500 characters)",
-        "maxlength": 500,
-        "value": ""
+        "component": "toggle",
+        "name": "hero-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "mini-hero-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "mini-hero-widget-name",
+        "label": "Nome sezione Mini Hero Widget"
       },
       {
-        "component": "aem-content",
-        "valueType": "string",
-        "name": "accordionRootpath",
-        "label": "Percorso CF elementi accordion",
-        "validation": {
-          "rootPath": "/content/dam/unipol/cf"
-        }
+        "component": "toggle",
+        "name": "mini-hero-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
       }
     ]
   },
@@ -228,6 +225,59 @@
         "name": "blog-carousel-widget-dark-theme",
         "label": "Tema scuro",
         "default": false
+      }
+    ]
+  },
+  {
+    "id": "insurance-product-carousel-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "insurance-product-carousel-widget-name",
+        "label": "Nome sezione Insurance Product Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "insurance-product-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "editorial-carousel-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "editorial-carousel-widget-name",
+        "label": "Nome sezione Editorial Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "editorial-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "accordion",
+    "fields": [
+      {
+        "component": "text",
+        "name": "accordionLabel",
+        "label": "Domanda",
+        "description": "Descrizione della domanda (max 120 caratteri)",
+        "maxlength": 120,
+        "value": ""
+      },
+      {
+        "component": "text",
+        "name": "accordionDescription",
+        "label": "Risposta",
+        "description": "Risposta contenuta nell'accordion (max 800 caratteri)",
+        "maxlength": 800,
+        "value": ""
       }
     ]
   },
@@ -374,6 +424,226 @@
         "name": "rows",
         "value": "",
         "label": "Rows"
+      }
+    ]
+  },
+  {
+    "id": "editorial-carousel-card",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Titolo",
+        "maxlength": 15,
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "description",
+        "label": "Descrizione",
+        "maxlength": 130,
+        "required": true
+      },
+      {
+        "component": "container",
+        "name": "button-container",
+        "label": "Configurazione Pulsante",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "standardButtonLabel",
+            "label": "Button Text",
+            "required": false
+          },
+          {
+            "component": "select",
+            "name": "standardButtonVariant",
+            "label": "Variante",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Accent",
+                "value": "accent"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "URL del bottone"
+          },
+          {
+            "component": "boolean",
+            "label": "Apri in una nuova scheda",
+            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+            "name": "standardButtonOpenInNewTab",
+            "valueType": "boolean",
+            "value": false
+          },
+          {
+            "component": "select",
+            "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
+            "label": "Dimensione Icone",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonLeftIcon",
+            "label": "Icona Sinistra",
+            "description": "Select the left icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonRightIcon",
+            "label": "Icona Destra",
+            "description": "Select the right icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "note",
+        "label": "Note",
+        "maxlength": 60,
+        "required": true
+      },
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Immagine",
+        "multi": false,
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageSR",
+        "label": "Testo alternativo per l'immagine",
+        "required": true
+      }
+    ]
+  },
+  {
+    "id": "editorial-carousel-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "editorial-carousel-widget-name",
+        "label": "Nome sezione Editorial Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "editorial-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "editorial-carousel",
+    "fields": [
+      {
+        "component": "text",
+        "name": "showMoreButtonLabel",
+        "label": "Testo bottone per dispositivi mobile",
+        "description": "Default \"Mostra di più\"",
+        "maxlength": 15
+      }
+    ]
+  },
+  {
+    "id": "faq-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Titolo",
+        "description": "max 40 caratteri",
+        "required": true,
+        "maxlength": 40
+      },
+      {
+        "component": "text",
+        "name": "description",
+        "label": "Descrizione",
+        "description": "max 150 caratteri",
+        "required": true,
+        "maxlength": 150
+      },
+      {
+        "component": "text",
+        "name": "showMoreButtonLabel",
+        "label": "Testo pulsante carica altro",
+        "description": "Default \"Mostra di più\"",
+        "maxlength": 15
       }
     ]
   },
@@ -606,11 +876,11 @@
           },
           {
             "name": "AI Star Icon big",
-            "value": "un-icon-AI-star-big"
+            "value": "un-icon-ai-star-big"
           },
           {
             "name": "AI Star Icon small",
-            "value": "un-icon-AI-star-small"
+            "value": "un-icon-ai-star-small"
           }
         ]
       },
@@ -678,11 +948,11 @@
           },
           {
             "name": "AI Star Icon big",
-            "value": "un-icon-AI-star-big"
+            "value": "un-icon-ai-star-big"
           },
           {
             "name": "AI Star Icon small",
-            "value": "un-icon-AI-star-small"
+            "value": "un-icon-ai-star-small"
           }
         ]
       },
@@ -801,11 +1071,11 @@
           },
           {
             "name": "AI Star Icon big",
-            "value": "un-icon-AI-star-big"
+            "value": "un-icon-ai-star-big"
           },
           {
             "name": "AI Star Icon small",
-            "value": "un-icon-AI-star-small"
+            "value": "un-icon-ai-star-small"
           }
         ]
       },
@@ -873,11 +1143,11 @@
           },
           {
             "name": "AI Star Icon big",
-            "value": "un-icon-AI-star-big"
+            "value": "un-icon-ai-star-big"
           },
           {
             "name": "AI Star Icon small",
-            "value": "un-icon-AI-star-small"
+            "value": "un-icon-ai-star-small"
           }
         ]
       },
@@ -908,51 +1178,35 @@
     ]
   },
   {
-    "id": "hero-widget",
-    "fields": [
-      {
-        "component": "text",
-        "name": "hero-widget-name",
-        "label": "Nome sezione Hero Widget"
-      },
-      {
-        "component": "toggle",
-        "name": "hero-widget-dark-theme",
-        "label": "Tema scuro",
-        "default": false
-      }
-    ]
-  },
-  {
     "id": "hero",
     "fields": [
       {
         "component": "reference",
         "valueType": "string",
         "name": "heroBackgroundMediaSrc",
-        "label": "Hero Background Media",
-        "description": "URL of the background image or video"
+        "label": "Media di sfondo dell'Hero",
+        "description": "Immagine o video di sfondo"
       },
       {
         "component": "boolean",
         "name": "isVideoBackground",
-        "label": "Is Video Background",
-        "description": "Toggle to enable or disable video background",
+        "label": "Sfondo video",
+        "description": "Abilita o disabilita lo sfondo video",
         "valueType": "boolean"
       },
       {
         "component": "boolean",
         "name": "showHeroLogo",
-        "label": "Show Hero Logo",
-        "description": "Toggle to show or hide the hero logo",
+        "label": "Mostra logo Hero",
+        "description": "Mostra o nascondi il logo nell'hero",
         "valueType": "boolean"
       },
       {
         "component": "reference",
         "valueType": "string",
         "name": "heroLogoMediaSrc",
-        "label": "Hero Logo Media",
-        "description": "URL of the logo image",
+        "label": "Media logo Hero",
+        "description": "URL dell'immagine del logo",
         "condition": {
           "===": [
             {
@@ -964,7 +1218,7 @@
       },
       {
         "component": "text",
-        "label": "Hero Title",
+        "label": "Titolo Hero",
         "name": "heroMainLabel",
         "required": true,
         "validation": {
@@ -975,7 +1229,7 @@
       {
         "component": "text",
         "name": "heroSubtitleBold",
-        "label": "Hero Subtitle Bold",
+        "label": "Sottotitolo Hero (grassetto)",
         "validation": {
           "maxLength": 50,
           "customErrorMsg": "Testo troppo lungo"
@@ -984,7 +1238,7 @@
       {
         "component": "richtext",
         "name": "heroSubtitle",
-        "label": "Hero Subtitle",
+        "label": "Sottotitolo Hero",
         "valueType": "string",
         "validation": {
           "maxLength": 150,
@@ -994,14 +1248,14 @@
       {
         "component": "boolean",
         "name": "showHeroBulletList",
-        "label": "Show Hero Bullet List",
-        "description": "Enable up to 3 bullet points",
+        "label": "Mostra elenco puntato Hero",
+        "description": "Abilita fino a 3 punti elenco",
         "valueType": "boolean"
       },
       {
         "component": "text",
         "name": "heroBullet1",
-        "label": "Bullet 1",
+        "label": "Punto elenco 1",
         "validation": {
           "maxLength": 40,
           "customErrorMsg": "Testo troppo lungo"
@@ -1018,7 +1272,7 @@
       {
         "component": "text",
         "name": "heroBullet2",
-        "label": "Bullet 2",
+        "label": "Punto elenco 2",
         "validation": {
           "maxLength": 40,
           "customErrorMsg": "Testo troppo lungo"
@@ -1035,7 +1289,7 @@
       {
         "component": "text",
         "name": "heroBullet3",
-        "label": "Bullet 3",
+        "label": "Punto elenco 3",
         "validation": {
           "maxLength": 40,
           "customErrorMsg": "Testo troppo lungo"
@@ -1052,8 +1306,8 @@
       {
         "component": "boolean",
         "name": "showHeroButton",
-        "label": "Show Hero Button",
-        "description": "Toggle to show or hide the hero button",
+        "label": "Mostra pulsante Hero",
+        "description": "Mostra o nascondi il pulsante dell'hero",
         "valueType": "boolean"
       },
       {
@@ -1365,15 +1619,21 @@
         "component": "text",
         "name": "title",
         "label": "Titolo",
-        "maxlength": 15,
-        "required": true
+        "required": true,
+        "validation": {
+          "maxLength": 15,
+          "customErrorMsg": "Titolo troppo lungo (max 15 caratteri)"
+        }
       },
       {
         "component": "text",
         "name": "description",
         "label": "Descrizione",
-        "maxlength": 130,
-        "required": true
+        "required": true,
+        "validation": {
+          "maxLength": 130,
+          "customErrorMsg": "Descrizione troppo lunga (max 130 caratteri)"
+        }
       },
       {
         "component": "container",
@@ -1502,8 +1762,11 @@
         "component": "text",
         "name": "note",
         "label": "Note",
-        "maxlength": 60,
-        "required": true
+        "required": true,
+        "validation": {
+          "maxLength": 60,
+          "customErrorMsg": "Note troppo lunghe (max 60 caratteri)"
+        }
       },
       {
         "component": "container",
@@ -1613,22 +1876,6 @@
     ]
   },
   {
-    "id": "insurance-product-carousel-widget",
-    "fields": [
-      {
-        "component": "text",
-        "name": "insurance-product-carousel-widget-name",
-        "label": "Nome sezione Insurance Product Carousel Widget"
-      },
-      {
-        "component": "toggle",
-        "name": "insurance-product-carousel-widget-dark-theme",
-        "label": "Tema scuro",
-        "default": false
-      }
-    ]
-  },
-  {
     "id": "insurance-product-carousel",
     "fields": [
       {
@@ -1636,158 +1883,136 @@
         "name": "showMoreButtonLabel",
         "label": "Testo bottone per dispositivi mobile",
         "description": "Default \"Mostra di più\"",
-        "maxlength": 15
+        "validation": {
+          "maxLength": 15,
+          "customErrorMsg": "Testo troppo lungo (max 15 caratteri)"
+        }
       }
     ]
   },
   {
-    "id": "number-block",
+    "id": "legal-info-widget",
     "fields": [
       {
-        "component": "tab",
-        "label": "Configurazione blocco 1",
-        "name": "numberBlock1"
-      },
-      {
-        "component": "text",
-        "label": "Titolo blocco 1",
-        "name": "numberBlockText1",
-        "validation": {
-          "maxLength": 7,
-          "customErrorMsg": "Testo troppo lungo"
-        }
-      },
-      {
         "component": "richtext",
-        "name": "numberBlockSubText1",
-        "label": "Descrizione blocco 1",
+        "name": "text",
+        "label": "Testo",
+        "value": "",
         "valueType": "string",
         "validation": {
-          "maxLength": 40,
-          "customErrorMsg": "Testo troppo lungo"
-        }
-      },
-      {
-        "component": "tab",
-        "label": "Configurazione blocco 2",
-        "name": "numberBlock2"
-      },
-      {
-        "component": "text",
-        "label": "Titolo blocco 2",
-        "name": "numberBlockText2",
-        "validation": {
-          "maxLength": 7,
-          "customErrorMsg": "Testo troppo lungo"
-        }
-      },
-      {
-        "component": "richtext",
-        "name": "numberBlockSubText2",
-        "label": "Descrizione blocco 2",
-        "valueType": "string",
-        "validation": {
-          "maxLength": 40,
-          "customErrorMsg": "Testo troppo lungo"
-        }
-      },
-      {
-        "component": "tab",
-        "label": "Configurazione blocco 3",
-        "name": "numberBlock3"
-      },
-      {
-        "component": "text",
-        "label": "Titolo blocco 3",
-        "name": "numberBlockText3",
-        "validation": {
-          "maxLength": 7,
-          "customErrorMsg": "Testo troppo lungo"
-        }
-      },
-      {
-        "component": "richtext",
-        "name": "numberBlockSubText3",
-        "label": "Descrizione blocco 3",
-        "valueType": "string",
-        "validation": {
-          "maxLength": 40,
-          "customErrorMsg": "Testo troppo lungo"
-        }
+          "maxLength": 1000,
+          "customErrorMsg": "Testo troppo lungo (Max 1000 caratteri)"
+        },
+        "required": true
       }
     ]
   },
   {
-    "id": "preventivatore",
-    "fields": []
-  },
-  {
-    "id": "prodotto-unico-header",
+    "id": "mini-hero",
     "fields": [
       {
         "component": "reference",
         "valueType": "string",
-        "name": "logoImage",
-        "label": "Logo",
-        "multi": false,
-        "required": true
+        "name": "miniHeroBackgroundMediaSrc",
+        "label": "Media di sfondo del Mini Hero",
+        "description": "Immagine o video di sfondo"
+      },
+      {
+        "component": "boolean",
+        "name": "isVideoBackground",
+        "label": "Sfondo video",
+        "description": "Abilita o disabilita lo sfondo video",
+        "valueType": "boolean"
       },
       {
         "component": "text",
-        "valueType": "string",
-        "name": "logoLink",
-        "label": "Link del Logo",
-        "default": "/"
+        "label": "Titolo Mini Hero",
+        "name": "miniHeroMainLabel",
+        "required": true,
+        "validation": {
+          "maxLength": 50,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
-        "component": "multifield",
-        "name": "actions",
-        "label": "Pulsanti Azione (Destra)",
-        "multi": true,
-        "valueType": "string",
-        "fields": [
-          {
-            "component": "select",
-            "name": "icon",
-            "label": "Nome Icona",
-            "valueType": "string",
-            "options": [
-              {
-                "name": "Carrello",
-                "value": "cart"
-              },
-              {
-                "name": "Telefono",
-                "value": "phone"
-              },
-              {
-                "name": "Utente",
-                "value": "user"
-              }
-            ]
-          },
-          {
-            "component": "text",
-            "name": "link",
-            "label": "Link Destinazione",
-            "valueType": "string",
-            "default": "#"
-          }
-        ]
-      }
-    ]
-  },
-  {
-    "id": "prodotto-unico",
-    "fields": []
-  },
-  {
-    "id": "test-buttons",
-    "fields": [
+        "component": "text",
+        "name": "miniHeroSubtitle",
+        "label": "Sottotitolo Mini Hero",
+        "validation": {
+          "maxLength": 50,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      },
+      {
+        "component": "boolean",
+        "name": "showMiniHeroBulletList",
+        "label": "Mostra elenco puntato Mini Hero",
+        "description": "Abilita fino a 3 punti elenco",
+        "valueType": "boolean"
+      },
+      {
+        "component": "text",
+        "name": "miniHeroBullet1",
+        "label": "Punto elenco 1",
+        "validation": {
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "showMiniHeroBulletList"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "miniHeroBullet2",
+        "label": "Punto elenco 2",
+        "validation": {
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "showMiniHeroBulletList"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "miniHeroBullet3",
+        "label": "Punto elenco 3",
+        "validation": {
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "showMiniHeroBulletList"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "boolean",
+        "name": "showMiniHeroButton",
+        "label": "Mostra pulsante Mini Hero",
+        "description": "Mostra o nascondi il pulsante del Mini Hero",
+        "valueType": "boolean"
+      },
       {
         "component": "container",
-        "name": "test-button-container-standard",
-        "label": "Configurazione Bottone Standard",
+        "name": "mini-hero-button-container",
+        "label": "Configurazione Pulsante",
+        "collapsible": true,
         "fields": [
           {
             "component": "text",
@@ -1905,785 +2130,142 @@
             ]
           }
         ]
-      },
-      {
-        "component": "container",
-        "name": "test-button-container-icon",
-        "label": "Configurazione Bottone Icona",
-        "fields": [
-          {
-            "component": "select",
-            "name": "iconButtonIcon",
-            "label": "Icona",
-            "required": true,
-            "description": "Seleziona l'icona",
-            "options": [
-              {
-                "name": "Nessuna",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "un-icon-chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "un-icon-chevron-right"
-              },
-              {
-                "name": "Search Icon",
-                "value": "un-icon-search"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "iconButtonVariant",
-            "label": "Variante",
-            "value": "primary",
-            "options": [
-              {
-                "name": "Primary",
-                "value": "primary"
-              },
-              {
-                "name": "Secondary",
-                "value": "secondary"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "iconButtonSize",
-            "label": "Size",
-            "value": "medium",
-            "options": [
-              {
-                "name": "Small",
-                "value": "small"
-              },
-              {
-                "name": "Medium",
-                "value": "medium"
-              },
-              {
-                "name": "Large",
-                "value": "large"
-              },
-              {
-                "name": "Extra Large",
-                "value": "extra-large"
-              }
-            ]
-          },
-          {
-            "component": "aem-content",
-            "name": "iconButtonHref",
-            "label": "URL del link",
-            "description": "Optional URL to make this a link button"
-          },
-          {
-            "component": "boolean",
-            "label": "Apri in una nuova scheda",
-            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
-            "name": "iconButtonOpenInNewTab",
-            "valueType": "boolean",
-            "value": false
-          }
-        ]
-      },
-      {
-        "component": "container",
-        "name": "test-button-container-link",
-        "label": "Configurazione Bottone Link",
-        "fields": [
-          {
-            "component": "text",
-            "name": "linkButtonLabel",
-            "label": "Testo del link",
-            "required": true,
-            "validation": {
-              "maxLength": 30,
-              "customErrorMsg": "Testo troppo lungo (max 30 caratteri)"
-            }
-          },
-          {
-            "component": "aem-content",
-            "name": "linkButtonHref",
-            "label": "Link URL",
-            "description": "URL di destinazione per questo link",
-            "required": true
-          },
-          {
-            "component": "boolean",
-            "label": "Apri in una nuova scheda",
-            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
-            "name": "linkButtonOpenInNewTab",
-            "valueType": "boolean",
-            "value": false
-          },
-          {
-            "component": "select",
-            "name": "linkButtonLeftIcon",
-            "label": "Icona a sinistra",
-            "description": "Opzionale icona a sinistra.",
-            "options": [
-              {
-                "name": "None",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "un-icon-chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "un-icon-chevron-right"
-              },
-              {
-                "name": "Search Icon",
-                "value": "un-icon-search"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "linkButtonRightIcon",
-            "label": "Icona a destra",
-            "description": "Opzionale icona a destra. Non utilizzare se già presente un'icona a sinistra, salvo eccezioni funzionali.",
-            "options": [
-              {
-                "name": "None",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "un-icon-chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "un-icon-chevron-right"
-              },
-              {
-                "name": "Search Icon",
-                "value": "un-icon-search"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "linkButtonLeftIconSize",
-            "label": "Dimensione icona a sinistra",
-            "value": "medium",
-            "options": [
-              {
-                "name": "Small",
-                "value": "small"
-              },
-              {
-                "name": "Medium",
-                "value": "medium"
-              },
-              {
-                "name": "Large",
-                "value": "large"
-              },
-              {
-                "name": "Extra Large",
-                "value": "extra-large"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "linkButtonRightIconSize",
-            "label": "Dimensione icona a destra",
-            "value": "medium",
-            "options": [
-              {
-                "name": "Small",
-                "value": "small"
-              },
-              {
-                "name": "Medium",
-                "value": "medium"
-              },
-              {
-                "name": "Large",
-                "value": "large"
-              },
-              {
-                "name": "Extra Large",
-                "value": "extra-large"
-              }
-            ]
-          },
-          {
-            "component": "switch",
-            "name": "linkButtonDisabled",
-            "label": "Disabled",
-            "description": "Toggle to disable the link button",
-            "value": false
-          }
-        ]
-      },
-      {
-        "component": "container",
-        "name": "test-button-container-category-chip",
-        "label": "Configurazione Category Chip",
-        "fields": [
-          {
-            "component": "select",
-            "name": "categoryChipCategory",
-            "label": "Category",
-            "required": true,
-            "value": "mobility",
-            "options": [
-              {
-                "name": "Mobility",
-                "value": "mobility"
-              },
-              {
-                "name": "Welfare",
-                "value": "welfare"
-              },
-              {
-                "name": "Property",
-                "value": "property"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "categoryChipIcon",
-            "label": "Icon",
-            "required": true,
-            "description": "Select the icon",
-            "options": [
-              {
-                "name": "Search",
-                "value": "un-icon-search"
-              },
-              {
-                "name": "Chevron Left",
-                "value": "un-icon-chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "un-icon-chevron-right"
-              },
-              {
-                "name": "Phone",
-                "value": "un-icon-phone"
-              },
-              {
-                "name": "Phone Call",
-                "value": "un-icon-phone-call"
-              },
-              {
-                "name": "Placeholder",
-                "value": "un-icon-placeholder"
-              },
-              {
-                "name": "Plant",
-                "value": "un-icon-plant"
-              },
-              {
-                "name": "Play Circle",
-                "value": "un-icon-play-circle"
-              },
-              {
-                "name": "Play Pause",
-                "value": "un-icon-play-pause"
-              },
-              {
-                "name": "Plus",
-                "value": "un-icon-plus"
-              },
-              {
-                "name": "Prohibit",
-                "value": "un-icon-prohibit"
-              },
-              {
-                "name": "Push Pin",
-                "value": "un-icon-push-pin"
-              },
-              {
-                "name": "Question",
-                "value": "un-icon-question"
-              },
-              {
-                "name": "Quotes",
-                "value": "un-icon-quotes"
-              },
-              {
-                "name": "Share",
-                "value": "un-icon-share"
-              },
-              {
-                "name": "Share Big",
-                "value": "un-icon-share-big"
-              },
-              {
-                "name": "Shield Check",
-                "value": "un-icon-shield-check"
-              },
-              {
-                "name": "Shield Plus",
-                "value": "un-icon-shield-plus"
-              },
-              {
-                "name": "Shield Slash",
-                "value": "un-icon-shield-slash"
-              },
-              {
-                "name": "Sign In",
-                "value": "un-icon-sign-in"
-              },
-              {
-                "name": "Sign Out",
-                "value": "un-icon-sign-out"
-              },
-              {
-                "name": "Skip Back Circle",
-                "value": "un-icon-skip-back-circle"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "component": "container",
-        "name": "test-button-container-category-tab",
-        "label": "Configurazione Category Tab",
-        "fields": [
-          {
-            "component": "text",
-            "name": "categoryTabLabel",
-            "label": "Category tab text",
-            "required": true
-          },
-          {
-            "component": "select",
-            "name": "categoryTabIcon",
-            "label": "Icon",
-            "required": true,
-            "description": "Select the icon",
-            "options": [
-              {
-                "name": "Search",
-                "value": "un-icon-search"
-              },
-              {
-                "name": "Chevron Left",
-                "value": "un-icon-chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "un-icon-chevron-right"
-              },
-              {
-                "name": "Phone",
-                "value": "un-icon-phone"
-              },
-              {
-                "name": "Phone Call",
-                "value": "un-icon-phone-call"
-              },
-              {
-                "name": "Placeholder",
-                "value": "un-icon-placeholder"
-              },
-              {
-                "name": "Plant",
-                "value": "un-icon-plant"
-              },
-              {
-                "name": "Play Circle",
-                "value": "un-icon-play-circle"
-              },
-              {
-                "name": "Play Pause",
-                "value": "un-icon-play-pause"
-              },
-              {
-                "name": "Plus",
-                "value": "un-icon-plus"
-              },
-              {
-                "name": "Prohibit",
-                "value": "un-icon-prohibit"
-              },
-              {
-                "name": "Push Pin",
-                "value": "un-icon-push-pin"
-              },
-              {
-                "name": "Question",
-                "value": "un-icon-question"
-              },
-              {
-                "name": "Quotes",
-                "value": "un-icon-quotes"
-              },
-              {
-                "name": "Share",
-                "value": "un-icon-share"
-              },
-              {
-                "name": "Share Big",
-                "value": "un-icon-share-big"
-              },
-              {
-                "name": "Shield Check",
-                "value": "un-icon-shield-check"
-              },
-              {
-                "name": "Shield Plus",
-                "value": "un-icon-shield-plus"
-              },
-              {
-                "name": "Shield Slash",
-                "value": "un-icon-shield-slash"
-              },
-              {
-                "name": "Sign In",
-                "value": "un-icon-sign-in"
-              },
-              {
-                "name": "Sign Out",
-                "value": "un-icon-sign-out"
-              },
-              {
-                "name": "Skip Back Circle",
-                "value": "un-icon-skip-back-circle"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "categoryTabIconSize",
-            "label": "Icon size",
-            "value": "medium",
-            "options": [
-              {
-                "name": "Small",
-                "value": "small"
-              },
-              {
-                "name": "Medium",
-                "value": "medium"
-              },
-              {
-                "name": "Large",
-                "value": "large"
-              },
-              {
-                "name": "Extra Large",
-                "value": "extra-large"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "component": "container",
-        "name": "test-button-container-tag",
-        "label": "Configurazione Tag",
-        "fields": [
-          {
-            "component": "text",
-            "name": "tagLabel",
-            "label": "Tag text",
-            "required": true
-          },
-          {
-            "component": "select",
-            "name": "tagCategory",
-            "label": "Tag Category",
-            "required": true,
-            "value": "mobility",
-            "options": [
-              {
-                "name": "Mobility",
-                "value": "mobility"
-              },
-              {
-                "name": "Welfare",
-                "value": "welfare"
-              },
-              {
-                "name": "Property",
-                "value": "property"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "tagVariant",
-            "label": "Tag type",
-            "required": true,
-            "value": "default",
-            "options": [
-              {
-                "name": "Default",
-                "value": "default"
-              },
-              {
-                "name": "Secondary",
-                "value": "secondary"
-              },
-              {
-                "name": "Neutral",
-                "value": "neutral"
-              },
-              {
-                "name": "Custom",
-                "value": "custom"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "component": "container",
-        "name": "test-button-container-navigation-pill",
-        "label": "Configurazione Navigation Pill",
-        "fields": [
-          {
-            "component": "boolean",
-            "label": "Nascondi label",
-            "description": "Attivo: nasconde il contenuto testuale della label. Disattivo: rende visibile il contenuto testuale della label.",
-            "name": "showNavigationPillLabel",
-            "valueType": "boolean",
-            "value": false
-          },
-          {
-            "component": "text",
-            "name": "navigationPillLabel",
-            "label": "Label",
-            "required": true
-          },
-          {
-            "component": "select",
-            "name": "navigationPillVariant",
-            "label": "Variante",
-            "value": "primary",
-            "options": [
-              {
-                "name": "Primary",
-                "value": "primary"
-              },
-              {
-                "name": "Secondary",
-                "value": "secondary"
-              }
-            ]
-          },
-          {
-            "component": "aem-content",
-            "name": "navigationPillHref",
-            "label": "Link URL",
-            "description": "Optional URL the pill points to"
-          },
-          {
-            "component": "select",
-            "name": "navigationPillLeftIcon",
-            "label": "Icona Sinistra",
-            "description": "Optional icon on the left",
-            "options": [
-              {
-                "name": "None",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "un-icon-chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "un-icon-chevron-right"
-              },
-              {
-                "name": "Arrow up right Icon",
-                "value": "un-icon-arrow-up-right"
-              },
-              {
-                "name": "Search Icon",
-                "value": "un-icon-search"
-              },
-              {
-                "name": "Math Operations Icon",
-                "value": "un-icon-math-operations"
-              },
-              {
-                "name": "User Icon",
-                "value": "un-icon-user"
-              },
-              {
-                "name": "Basket Icon",
-                "value": "un-icon-basket"
-              },
-              {
-                "name": "AI Star Icon big",
-                "value": "un-icon-AI-star-big"
-              },
-              {
-                "name": "AI Star Icon small",
-                "value": "un-icon-AI-star-small"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "navigationPillLeftIconSize",
-            "label": "Dimensione Icone",
-            "value": "medium",
-            "options": [
-              {
-                "name": "Small",
-                "value": "small"
-              },
-              {
-                "name": "Medium",
-                "value": "medium"
-              },
-              {
-                "name": "Large",
-                "value": "large"
-              },
-              {
-                "name": "Extra Large",
-                "value": "extra-large"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "navigationPillRightIcon",
-            "label": "Icona Destra",
-            "description": "Optional icon on the right",
-            "options": [
-              {
-                "name": "None",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "un-icon-chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "un-icon-chevron-right"
-              },
-              {
-                "name": "Arrow up right Icon",
-                "value": "un-icon-arrow-up-right"
-              },
-              {
-                "name": "Search Icon",
-                "value": "un-icon-search"
-              },
-              {
-                "name": "Math Operations Icon",
-                "value": "un-icon-math-operations"
-              },
-              {
-                "name": "User Icon",
-                "value": "un-icon-user"
-              },
-              {
-                "name": "Basket Icon",
-                "value": "un-icon-basket"
-              },
-              {
-                "name": "AI Star Icon big",
-                "value": "un-icon-AI-star-big"
-              },
-              {
-                "name": "AI Star Icon small",
-                "value": "un-icon-AI-star-small"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "navigationPillRightIconSize",
-            "label": "Dimensione Icone",
-            "value": "medium",
-            "options": [
-              {
-                "name": "Small",
-                "value": "small"
-              },
-              {
-                "name": "Medium",
-                "value": "medium"
-              },
-              {
-                "name": "Large",
-                "value": "large"
-              },
-              {
-                "name": "Extra Large",
-                "value": "extra-large"
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "component": "container",
-        "name": "test-button-container-radio-field",
-        "label": "Configurazione Radio Button Field",
-        "fields": [
-          {
-            "component": "text",
-            "name": "radioButtonlabel",
-            "label": "Radio Button Label",
-            "description": "Primary text displayed next to the radio",
-            "value": ""
-          },
-          {
-            "component": "text",
-            "name": "radioButtonDescription",
-            "label": "Radio Button Description",
-            "description": "Secondary text displayed below the label",
-            "value": ""
-          },
-          {
-            "component": "container",
-            "name": "radio-button-field-radio",
-            "label": "Radio Button Of The Field",
-            "fields": [
-              {
-                "component": "select",
-                "name": "type",
-                "label": "Type",
-                "value": "unchecked",
-                "options": [
-                  {
-                    "name": "Unchecked",
-                    "value": "unchecked"
-                  },
-                  {
-                    "name": "Checked",
-                    "value": "checked"
-                  }
-                ]
-              },
-              {
-                "component": "switch",
-                "name": "disabled",
-                "label": "Disabled",
-                "description": "Toggle to disable the radio button",
-                "value": false
-              }
-            ]
-          }
-        ]
       }
     ]
+  },
+  {
+    "id": "number-block",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Configurazione blocco 1",
+        "name": "numberBlock1"
+      },
+      {
+        "component": "text",
+        "label": "Titolo blocco 1",
+        "name": "numberBlockText1",
+        "validation": {
+          "maxLength": 7,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      },
+      {
+        "component": "richtext",
+        "name": "numberBlockSubText1",
+        "label": "Descrizione blocco 1",
+        "valueType": "string",
+        "validation": {
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione blocco 2",
+        "name": "numberBlock2"
+      },
+      {
+        "component": "text",
+        "label": "Titolo blocco 2",
+        "name": "numberBlockText2",
+        "validation": {
+          "maxLength": 7,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      },
+      {
+        "component": "richtext",
+        "name": "numberBlockSubText2",
+        "label": "Descrizione blocco 2",
+        "valueType": "string",
+        "validation": {
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione blocco 3",
+        "name": "numberBlock3"
+      },
+      {
+        "component": "text",
+        "label": "Titolo blocco 3",
+        "name": "numberBlockText3",
+        "validation": {
+          "maxLength": 7,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      },
+      {
+        "component": "richtext",
+        "name": "numberBlockSubText3",
+        "label": "Descrizione blocco 3",
+        "valueType": "string",
+        "validation": {
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      }
+    ]
+  },
+  {
+    "id": "preventivatore",
+    "fields": []
+  },
+  {
+    "id": "prodotto-unico-header",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "logoImage",
+        "label": "Logo Brand",
+        "multi": false,
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "logoLink",
+        "label": "Link Logo",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "prodotto-unico-header-action",
+    "fields": [
+      {
+        "component": "select",
+        "name": "icon",
+        "label": "Icona",
+        "options": [
+          {
+            "name": "Carrello",
+            "value": "cart"
+          },
+          {
+            "name": "Utente",
+            "value": "user"
+          },
+          {
+            "name": "Telefono",
+            "value": "phone"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "link",
+        "label": "URL Destinazione",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "prodotto-unico",
+    "fields": []
   },
   {
     "id": "text-block",
@@ -3023,6 +2605,10 @@
         }
       }
     ]
+  },
+  {
+    "id": "unica-preventivatore",
+    "fields": []
   },
   {
     "id": "icon-button",
@@ -4408,11 +3994,11 @@
           },
           {
             "name": "AI Star Icon big",
-            "value": "un-icon-AI-star-big"
+            "value": "un-icon-ai-star-big"
           },
           {
             "name": "AI Star Icon small",
-            "value": "un-icon-AI-star-small"
+            "value": "un-icon-ai-star-small"
           }
         ]
       },
@@ -4480,11 +4066,11 @@
           },
           {
             "name": "AI Star Icon big",
-            "value": "un-icon-AI-star-big"
+            "value": "un-icon-ai-star-big"
           },
           {
             "name": "AI Star Icon small",
-            "value": "un-icon-AI-star-small"
+            "value": "un-icon-ai-star-small"
           }
         ]
       },

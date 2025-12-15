@@ -7,7 +7,7 @@ const mockBlogCards = () => new Promise((resolve) => {
       durationText: '5 min read',
       tagLabel: 'Esplorare in serenità',
       tagCategory: 'mobility',
-      tagType: 'secondary',
+      tagType: 'default',
     },
     {
       image: './media_166d35f6d8f8e6c33f7251cbd4e137c2198cfb3ad.jpg',
@@ -25,7 +25,7 @@ const mockBlogCards = () => new Promise((resolve) => {
       durationText: '15 min listen',
       tagLabel: 'Esplorare in serenità',
       tagCategory: 'property',
-      tagType: 'custom',
+      tagType: 'default',
     },
     {
       image: './media_1a49929ed153c7e4c9267107cfa318e2a0e5f7d74.png',
@@ -34,7 +34,7 @@ const mockBlogCards = () => new Promise((resolve) => {
       durationText: '8 min read',
       tagLabel: 'Article',
       tagCategory: 'mobility',
-      tagType: 'secondary',
+      tagType: 'default',
     },
     {
       image: './media_1a49929ed153c7e4c9267107cfa318e2a0e5f7d74.png',

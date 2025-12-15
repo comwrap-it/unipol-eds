@@ -13,16 +13,18 @@
     position: absolute;
     width: 55%;
     top: 120%;
-    padding: var(--Quote-Tool-Full-Quote-Tool-Padding, 16px);
-    background-color: var(--Quote-Tool-Full-Quote-Tool-Background, #F9F9F7);
-    border-radius: var(--Quote-Tool-Radius, 16px);
     overflow: hidden;
     opacity: 0;
     transform: translateY(-10px);
     transition:
-        min-height 0.4s ease,
-        opacity 0.35s ease,
-        transform 0.45s ease;
+        opacity 0.5s ease,
+        transform 0.40s ease;
+}
+
+.header-box-text-content {
+    background-color: var(--Quote-Tool-Full-Quote-Tool-Background, #F9F9F7);
+    padding: var(--Quote-Tool-Full-Quote-Tool-Padding, 16px);
+    border-radius: var(--Quote-Tool-Radius, 16px);
 }
 
 .nav-header-sticky .header-box-text-container {
@@ -48,6 +50,7 @@
   left: 50%;
   transform: translateX(-50%);
   z-index: 2;
+  backdrop-filter: blur(4px);
 }
 
 .navigation-pill-wrapper {
@@ -77,23 +80,66 @@
   display: inline-flex;
 }
 
+.header-box-text-container button.un-close-btn {
+    display: none;
+}
+
 @media (width <= 1200px) {
     .navigation-pill-container {
         position: fixed;
+        width: max-content;
+        left: 50%;
         bottom: var(--Header-Vertical-Padding-M-Tp,24px);
         transform: translateX(-50%);
         z-index: 2;
+        backdrop-filter: blur(4px);
     }
 
     .header-box-text-container {
+        flex-direction: column;
+        gap: var(--Header-Vertical-Gap-M, 8px);
+        align-items: center;
         width: 100%;
         bottom: 120%;
         top: unset;
     }
 
-  .navigation-pill-container .navigation-pill-wrapper:nth-child(n+3) {
-    display: none;
-  }
+    .header-box-text-container button.un-close-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid var(--Icon-Button-Secondary-Default-Border);
+        border-radius: var(--Header-Radius);
+        background: var(--Header-Background);
+        padding: var(--Space-100-4, 4px);
+    }
+
+    .header-box-text-container button.un-close-btn span {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        line-height: unset;
+        font-size: var(--Icon-200-20);
+        background: var(--Icon-Button-Secondary-Default-Background);
+        border-radius: var(--Button-Radius-Default, 24px);
+        padding: var(--Space-250-12);
+        height: var(--Icon-Button-Dimentions);
+        width: var(--Icon-Button-Dimentions);
+    }
+
+    .navigation-pill-container .navigation-pill-wrapper:nth-child(n+3) {
+        display: none;
+    }
+
+    .second-pill-right-icon {
+        display: block;
+        opacity: 1 !important;
+    }
+
+    .mobile-nav-hidden-pills .mobile-nav-item .navigation-pill {
+        width: unset;
+        height: unset;
+    }
 }
 
 
