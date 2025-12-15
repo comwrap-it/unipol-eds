@@ -12,72 +12,29 @@
  *
  */
 
-import { moveInstrumentation } from '../../scripts/scripts.js';
 import { createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
 import { getValuesFromBlock, restoreInstrumentation } from '../../scripts/utils.js';
 import { loadFragment } from '../fragment/fragment.js';
 
+let isStylesLoaded = false;
+
+async function ensureStylesLoaded() {
+  if (isStylesLoaded) return;
+  const { loadCSS } = await import('../../scripts/aem.js');
+  await Promise.all([
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/accordion/accordion.css`,
+    ),
+  ]);
+  isStylesLoaded = true;
+}
+
 /**
- * Decorates the FAQ Widget block
- * @param {HTMLElement} block - The FAQ block element
+ *
+ * @param valuesFromBlock obj that contain title and description objs with value and instrumentation
+ * @return {HTMLDivElement}
  */
-export default async function decorate(block) {
-  if (!block) return;
-
-  let isStylesLoaded = false;
-  async function ensureStylesLoaded() {
-    if (isStylesLoaded) return;
-    const { loadCSS } = await import('../../scripts/aem.js');
-    await Promise.all([
-      loadCSS(
-        `${window.hlx.codeBasePath}/blocks/accordion/accordion.css`,
-      ),
-    ]);
-    isStylesLoaded = true;
-  }
-
-  await ensureStylesLoaded();
-
-  const properties = ['title', 'description', 'showMoreButtonLabel'];
-  const valuesFromBlock = getValuesFromBlock(block, properties);
-
-  const showMoreLabel = valuesFromBlock.showMoreButtonLabel.value || 'Carica altro';
-
-  const rows = Array.from(block.children);
-  const references = rows.slice(3);
-
-  if (references && references.length === 0) {
-    // eslint-disable-next-line no-console
-    console.warn('No FAQ configured!');
-    return;
-  }
-
-  // Process each row as a fragment containing one Accordion
-  const faqsPromises = references.map(async (reference) => {
-    const faqAccordionWrapper = document.createElement('div');
-    faqAccordionWrapper.className = 'faq-accordion-wrapper';
-
-    const link = reference.querySelector('a');
-    const path = link ? link.getAttribute('href') : reference.textContent.trim();
-    const fragment = await loadFragment(path);
-
-    if (fragment) {
-      const fragmentSection = fragment.querySelector(':scope .section');
-      if (fragmentSection) {
-        fragmentSection.classList.remove('section');
-        faqAccordionWrapper.appendChild(fragmentSection);
-      }
-    }
-
-    // Preserve instrumentation from faq to faqWrapper
-    moveInstrumentation(reference, faqAccordionWrapper);
-
-    return faqAccordionWrapper;
-  });
-
-  const faqSection = document.createElement('div');
-  faqSection.className = 'faq-section';
-
+const createTextBlock = (valuesFromBlock) => {
   const faqText = document.createElement('div');
   faqText.className = 'faq-text';
 
@@ -94,37 +51,151 @@ export default async function decorate(block) {
   faqText.appendChild(faqTitle);
   faqText.appendChild(faqSubtitle);
 
+  return faqText;
+};
+
+/**
+ *
+ * @param reference
+ * @return {Promise<HTMLDivElement>}
+ */
+async function createFaqAccordion(reference) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'faq-accordion-wrapper';
+
+  const link = reference.querySelector('a');
+  const path = link ? link.getAttribute('href') : reference.textContent.trim();
+  const fragment = await loadFragment(path);
+
+  if (!fragment) return wrapper;
+
+  const section = fragment.querySelector(':scope .section');
+  if (section) {
+    section.classList.remove('section');
+    wrapper.appendChild(section);
+  }
+
+  return wrapper;
+}
+
+async function buildFaqAccordions(references = []) {
+  return Promise.all(
+    references.map(createFaqAccordion),
+  );
+}
+
+/**
+ *
+ * @param faqElements
+ * @param container
+ * @param visibleCount
+ * @return {number}
+ */
+function initFaqVisibility(faqElements, container, visibleCount = 5) {
+  let hiddenCount = 0;
+
+  faqElements.forEach((faq, index) => {
+    if (index >= visibleCount) {
+      faq.classList.add('hidden');
+      hiddenCount += 1;
+    }
+    container.appendChild(faq);
+  });
+
+  return hiddenCount;
+}
+
+/**
+ *
+ * @param faqElements
+ * @param container
+ * @param showMoreButtonLabel
+ * @param initialHiddenCount
+ * @param step
+ */
+function setupShowMoreButton(
+  {
+    faqElements,
+    container,
+    showMoreButtonLabel,
+    initialHiddenCount,
+    step = 5,
+  },
+) {
+  let hiddenCount = initialHiddenCount;
+
+  if (hiddenCount <= 0) return;
+
+  const button = createButton(
+    showMoreButtonLabel.value ? showMoreButtonLabel.value : 'Carica altro',
+    '',
+    false,
+    BUTTON_VARIANTS.PRIMARY,
+    BUTTON_ICON_SIZES.MEDIUM,
+    '',
+    '',
+    showMoreButtonLabel.instrumentation,
+  );
+
+  button.addEventListener('click', (e) => {
+    e.preventDefault();
+    let shown = 0;
+
+    faqElements.forEach((faq) => {
+      if (faq.classList.contains('hidden') && shown < step) {
+        faq.classList.remove('hidden');
+        hiddenCount -= 1;
+        shown += 1;
+      }
+    });
+
+    if (hiddenCount <= 0) {
+      button.remove();
+    }
+  });
+
+  container.appendChild(button);
+}
+
+/**
+ * Decorates the FAQ Widget block
+ * @param {HTMLElement} block - The FAQ block element
+ */
+export default async function decorate(block) {
+  if (!block) return;
+
+  await ensureStylesLoaded();
+
+  const properties = ['title', 'description', 'showMoreButtonLabel'];
+  const valuesFromBlock = getValuesFromBlock(block, properties);
+
+  const rows = Array.from(block.children);
+  const references = rows.slice(3);
+
+  const faqSection = document.createElement('div');
+  faqSection.className = 'faq-section';
+
+  const faqText = createTextBlock(valuesFromBlock);
   faqSection.appendChild(faqText);
 
   const faqAccordionsButton = document.createElement('div');
   faqAccordionsButton.className = 'faq-accordions-button';
 
-  // Wait for all cards to be processed
-  const faqElements = await Promise.all(faqsPromises);
-  faqElements.forEach((faq) => {
-    faqAccordionsButton.appendChild(faq);
+  const faqElements = await buildFaqAccordions(references ?? []);
+
+  const hiddenCount = initFaqVisibility(
+    faqElements,
+    faqAccordionsButton,
+    5,
+  );
+
+  setupShowMoreButton({
+    faqElements,
+    container: faqAccordionsButton,
+    showMoreButtonLabel: valuesFromBlock.showMoreButtonLabel,
+    initialHiddenCount: hiddenCount,
+    step: 5,
   });
-
-  let showMoreButton;
-
-  /* function handleShowMoreButton(e) {
-    e.preventDefault();
-    faqElements.forEach((slide) => {
-      if (slide.classList.contains('hidden')) {
-        slide.classList.remove('hidden');
-      }
-    });
-    showMoreButton.remove();
-  } */
-
-  if (faqElements && faqElements.length > 5) {
-    showMoreButton = createButton(showMoreLabel, '', false, BUTTON_VARIANTS.PRIMARY, BUTTON_ICON_SIZES.MEDIUM, '', '', valuesFromBlock.showMoreButtonLabel.instrumentation);
-    // showMoreButton.addEventListener('click', handleShowMoreButton);
-  }
-
-  if (showMoreButton) {
-    faqAccordionsButton.appendChild(showMoreButton);
-  }
 
   faqSection.appendChild(faqAccordionsButton);
 
