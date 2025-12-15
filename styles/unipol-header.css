@@ -29,7 +29,7 @@ main .section.header-utilities-section-container {
     margin-top: unset;
 }
 
-.adobe-ue-edit .section.header-navigation-section-container .header-box-text-content{
+.adobe-ue-edit .section.header-navigation-section-container .header-box-text-container {
     display: none;
 }
 
