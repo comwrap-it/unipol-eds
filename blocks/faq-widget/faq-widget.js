@@ -73,6 +73,8 @@ async function createFaqAccordion(reference) {
   const path = link ? link.getAttribute('href') : reference.textContent.trim();
   const fragment = await loadFragment(path);
 
+  moveInstrumentation(reference, wrapper);
+
   if (!fragment) return wrapper;
 
   const section = fragment.querySelector(':scope .section');
@@ -80,8 +82,6 @@ async function createFaqAccordion(reference) {
     section.classList.remove('section');
     wrapper.appendChild(section);
   }
-
-  moveInstrumentation(reference, wrapper);
 
   return wrapper;
 }
