@@ -2221,49 +2221,45 @@
         "component": "reference",
         "valueType": "string",
         "name": "logoImage",
-        "label": "Logo",
+        "label": "Logo Brand",
         "multi": false,
         "required": true
       },
       {
-        "component": "aem-content",
+        "component": "text",
         "name": "logoLink",
-        "label": "Link URL",
-        "description": "Link del Logo"
+        "label": "Link Logo",
+        "valueType": "string"
       }
     ]
   },
   {
-    "id": "prodotto-unico-header-buttons-actions",
+    "id": "prodotto-unico-header-action",
     "fields": [
       {
         "component": "select",
-        "valueType": "string",
-        "name": "headerButtonsActionsIcon",
-        "label": "Tipo Pulsante Azione",
-        "description": "Seleziona il tipo di pulsante da mostrare",
-        "required": true,
+        "name": "icon",
+        "label": "Icona",
         "options": [
           {
             "name": "Carrello",
             "value": "cart"
           },
           {
-            "name": "Contatto",
-            "value": "phone"
+            "name": "Utente",
+            "value": "user"
           },
           {
-            "name": "Account",
-            "value": "user"
+            "name": "Telefono",
+            "value": "phone"
           }
         ]
       },
       {
-        "component": "aem-content",
-        "name": "headerButtonsActionsLink",
-        "label": "Link Pulsante Azione",
-        "description": "URL di destinazione del pulsante",
-        "required": true
+        "component": "text",
+        "name": "link",
+        "label": "URL Destinazione",
+        "valueType": "string"
       }
     ]
   },

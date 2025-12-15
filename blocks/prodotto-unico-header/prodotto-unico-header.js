@@ -1,120 +1,107 @@
 import { decorateIcons } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
+/**
+ * Decorates the Prodotto Unico Header block
+ * @param {Element} block The block element
+ */
 export default async function decorate(block) {
   const rows = Array.from(block.children);
 
-  // --- BEST PRACTICE: Validazione Input ---
-  if (rows.length < 2) return; // Evita errori se il blocco è vuoto
+  // Validazione minima
+  if (rows.length < 1) return;
 
-  // 1. LOGO & LINK (Prime 2 righe fisse come da modello)
-  // Nota: È meglio usare destructuring per chiarezza
-  const [logoImgRow, logoLinkRow, ...actionRows] = rows;
+  // --- 1. GESTIONE LOGO (Assumiamo sia sempre la prima riga) ---
+  // Strategia: La prima riga contiene [Immagine Logo] e [Link Logo]
+  // Questa è una struttura "a tabella" anche per la config principale.
+  const logoRow = rows[0];
+  const logoCols = Array.from(logoRow.children);
 
-  const logoImg = logoImgRow?.querySelector('img');
-  // Supporto sia per link raw che per HTML anchor
-  const logoLink = logoLinkRow?.querySelector('a')?.href 
-    || logoLinkRow?.textContent?.trim();
+  const logoImgCol = logoCols[0]; // Colonna 1: Immagine
+  const logoLinkCol = logoCols[1]; // Colonna 2: Link (Opzionale)
 
-  // Pulizia DOM Logo
+  const logoImg = logoImgCol?.querySelector('img');
+  const logoLinkUrl = logoLinkCol?.querySelector('a')?.href
+                   || logoLinkCol?.textContent?.trim()
+                   || '/';
+
   if (logoImg) {
-    logoImgRow.className = 'header-brand';
-    logoImgRow.innerHTML = ''; // Svuota per ricostruire pulito
-    
-    // LCP Optimization
+    logoRow.className = 'header-brand';
+    logoRow.innerHTML = ''; // Puliamo la riga per ricostruire l'HTML semantico
+
+    // Ottimizzazione LCP (Cruciale per l'header)
     logoImg.setAttribute('alt', 'UnipolSai Assicurazioni');
     logoImg.loading = 'eager';
-    logoImg.fetchPriority = 'high'; // Aggiunta moderna per LCP
+    logoImg.fetchPriority = 'high';
 
     const anchor = document.createElement('a');
-    anchor.href = logoLink || '/';
+    anchor.href = logoLinkUrl;
     anchor.title = 'Vai alla Home';
     anchor.appendChild(logoImg);
-    logoImgRow.appendChild(anchor);
-    
-    // IMPORTANTE: Sposta l'instrumentation sul container visibile o sull'anchor
-    moveInstrumentation(logoImg, anchor); 
+    logoRow.appendChild(anchor);
+
+    // Spostiamo l'instrumentation UE dall'immagine originale al nuovo link wrapper
+    if (logoImgCol) moveInstrumentation(logoImgCol, anchor);
   }
-  
-  // Rimuovi la riga del link dal DOM invece di nasconderla (più pulito)
-  // A meno che l'instrumentation non sia su quella riga specifica.
-  if (logoLinkRow) logoLinkRow.remove();
 
-  // 2. TOOLBAR (Parsing più robusto)
-  const toolsList = document.createElement('ul');
-  
-  // Qui assumo che il tuo modello JSON attuale generi righe separate per proprietà.
-  // Tuttavia, per robustezza, proviamo a parsare gli items in modo più sicuro.
-  
-  let currentItem = {};
-  
-  actionRows.forEach((row) => {
-    const cols = [...row.children];
-    // Controllo difensivo
-    if (cols.length < 2) return;
+  // --- 2. GESTIONE TOOLBAR (Tutte le righe successive alla prima) ---
+  const actionRows = rows.slice(1);
 
-    const key = cols[0].textContent.trim();
-    const contentCell = cols[1];
+  if (actionRows.length > 0) {
+    const toolsWrapper = document.createElement('div');
+    toolsWrapper.className = 'header-tools';
+    const toolsList = document.createElement('ul');
 
-    // Logica Key-Value (quella che usi tu)
-    if (key === 'headerButtonsActionsIcon') {
-        // Se c'era un item precedente in sospeso, processalo (edge case)
-        if (currentItem.icon && currentItem.link) buildToolItem(currentItem, toolsList);
-        
-        // Nuovo item
-        currentItem = { 
-            icon: contentCell.textContent.trim().toLowerCase(), 
-            iconEl: contentCell // Salviamo l'elemento per l'instrumentation
-        };
-        row.remove(); // Rimuovi riga processata
-    } 
-    else if (key === 'headerButtonsActionsLink') {
-        if (currentItem) {
-            currentItem.link = contentCell.querySelector('a')?.href || contentCell.textContent.trim();
-            currentItem.linkEl = contentCell; // Salviamo l'elemento per l'instrumentation
-            
-            // Item completo? Costruiscilo
-            if (currentItem.icon && currentItem.link) {
-                buildToolItem(currentItem, toolsList);
-                currentItem = {}; // Reset
-            }
-        }
-        row.remove(); // Rimuovi riga processata
-    }
-  });
+    actionRows.forEach((row) => {
+      const cols = Array.from(row.children);
+      // Skip righe malformate (meno di 2 colonne)
+      if (cols.length < 2) return;
 
-  // Se abbiamo trovato items, creiamo il wrapper
-  if (toolsList.children.length > 0) {
-      const toolsWrapper = document.createElement('div');
-      toolsWrapper.className = 'header-tools';
-      toolsWrapper.appendChild(toolsList);
-      
-      // Inseriamo la toolbar nella prima riga disponibile o nel blocco stesso
-      // Creiamo un container dedicato per layout flex
-      const headerInner = document.createElement('div');
-      headerInner.className = 'prodotto-unico-header-inner';
-      // Appendiamo Logo (già modificato in place su logoImgRow) e Tools
-      // Nota: logoImgRow è già nel block. 
-      // La cosa più pulita in EDS è appendere il wrapper tools alla fine del blocco
-      // e usare CSS grid/flex sul blocco stesso.
-      block.appendChild(toolsWrapper); 
+      // Colonna 1: Icona (es. 'cart', 'user')
+      // Colonna 2: Link
+      const iconCol = cols[0];
+      const linkCol = cols[1];
+
+      const iconName = iconCol.textContent.trim().toLowerCase();
+      const linkUrl = linkCol.querySelector('a')?.href || linkCol.textContent.trim();
+
+      if (!iconName || !linkUrl) return;
+
+      // Creazione Item
+      const li = document.createElement('li');
+      const buttonWrapper = document.createElement('div');
+      buttonWrapper.className = `header-button header-button-${iconName}`;
+
+      const a = document.createElement('a');
+      a.href = linkUrl;
+      a.className = 'tool-btn';
+      a.setAttribute('aria-label', iconName);
+
+      // Struttura icona per il plugin aem.js
+      a.innerHTML = `<span class="icon icon-${iconName}"></span>`;
+
+      // Instrumentation: Fondamentale per far funzionare l'editor sulle singole celle
+      // Colleghiamo l'editabilità della cella icona all'intero bottone o all'icona stessa
+      moveInstrumentation(iconCol, a);
+
+      // Nota: Potremmo voler preservare anche l'instrumentation del link,
+      // ma di solito basta mappare l'elemento principale.
+
+      buttonWrapper.appendChild(a);
+      li.appendChild(buttonWrapper);
+      toolsList.appendChild(li);
+
+      // Rimuoviamo la riga originale dal DOM visibile (ora trasformata in LI)
+      row.remove();
+    });
+
+    toolsWrapper.appendChild(toolsList);
+
+    // Aggiungiamo il wrapper dei tools al blocco
+    // Nota: logoRow è già dentro block (è rows[0]), quindi appendiamo toolsWrapper dopo.
+    block.appendChild(toolsWrapper);
   }
-  
+
+  // Carica gli SVG
   decorateIcons(block);
-}
-
-// Helper function per tenere il decorate() pulito
-function buildToolItem(item, container) {
-    const li = document.createElement('li');
-    const a = document.createElement('a');
-    a.className = 'tool-btn';
-    a.href = item.link;
-    a.innerHTML = `<span class="icon icon-${item.icon}"></span>`;
-    
-    // Sposta instrumentation dagli elementi originali al nuovo wrapper
-    // Questo permette di cliccare sull'icona in UE e aprire il campo giusto
-    if (item.iconEl) moveInstrumentation(item.iconEl, a);
-    
-    li.appendChild(a);
-    container.appendChild(li);
 }
