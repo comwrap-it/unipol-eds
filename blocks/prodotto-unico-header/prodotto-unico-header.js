@@ -15,12 +15,12 @@ function extractLogoData(rows) {
   let logoLinkCell = null;
 
   if (logoImageRow) {
-    logoImageCell = logoImageRow.children[0];
+    [logoImageCell] = logoImageRow.children;
     logoImg = logoImageCell?.querySelector('img');
   }
 
   if (logoLinkRow) {
-    logoLinkCell = logoLinkRow.children[0];
+    [logoLinkCell] = logoLinkRow.children;
     logoLinkUrl = logoLinkCell?.querySelector('a')?.href
                   || logoLinkCell?.textContent?.trim()
                   || '/';
@@ -42,7 +42,7 @@ function extractLogoData(rows) {
  */
 function extractActionItems(rows) {
   const actionRows = rows.slice(2);
-  
+
   return actionRows.map((row) => {
     const iconCell = row.children[0];
     const linkCell = row.children[1];
