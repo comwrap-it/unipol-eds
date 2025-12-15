@@ -13,7 +13,7 @@
  */
 
 import { createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
-import { getValuesFromBlock, restoreInstrumentation } from '../../scripts/utils.js';
+import {getValuesFromBlock, isAuthorMode, restoreInstrumentation} from '../../scripts/utils.js';
 import { loadFragment } from '../fragment/fragment.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
@@ -98,7 +98,7 @@ function initFaqVisibility(faqElements, container, visibleCount = 5) {
   let hiddenCount = 0;
 
   faqElements.forEach((faq, index) => {
-    if (index >= visibleCount) {
+    if (index >= visibleCount && !isAuthorMode(container)) {
       faq.classList.add('hidden');
       hiddenCount += 1;
     }
