@@ -1,4 +1,8 @@
 /* Unica Preventivatore - lightweight skeleton (performance-oriented) */
+.section.unica-preventivatore-container {
+  padding-inline: 0;
+  padding-block: 0;
+}
 
 main > .section > div.unica-preventivatore-wrapper {
   max-width: 100%;

@@ -5,6 +5,11 @@
     --header-bg: #fff;
     --icon-size: 24px;
   }
+
+  header .section.prodotto-unico-header-container {
+    padding-inline: 0;
+    padding-block: 0;
+  }
   
   header .prodotto-unico-header-wrapper {
     background-color: var(--header-bg);
@@ -53,6 +58,13 @@
     margin: 0;
   }
   
+  /* Wrapper per ogni bottone */
+  .header-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
   .tool-btn {
     display: flex;
     align-items: center;
@@ -60,6 +72,8 @@
     color: var(--unipol-blue);
     text-decoration: none;
     transition: transform 0.2s ease, opacity 0.2s;
+    width: 100%;
+    height: 100%;
   }
   
   .tool-btn:hover {
@@ -67,7 +81,6 @@
     transform: scale(1.05);
   }
   
-  /* Gestione Icone EDS */
   .tool-btn .icon {
     width: var(--icon-size);
     height: var(--icon-size);
@@ -77,12 +90,12 @@
   .tool-btn .icon svg {
     width: 100%;
     height: 100%;
-    fill: currentcolor; /* Prende il colore del testo (blu) */
+    fill: currentcolor;
   }
   
-  /* Specifico per il pulsante User (se serve un bordo o stile diverso come nello screen) */
-  .tool-btn.tool-user {
-    /* Esempio: se l'icona user ha bisogno di essere leggermente più grande o diversa */
+  /* Stili specifici per ogni bottone */
+  .header-button-access {
+    width: var(--icon-size);
   }
   
   /* Responsive */
