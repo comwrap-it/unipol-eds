@@ -49,6 +49,7 @@ const createTextBlock = (valuesFromBlock) => {
   const faqSubtitle = document.createElement('div');
   faqSubtitle.className = 'faq-subtitle';
   faqSubtitle.textContent = valuesFromBlock?.description?.value || '';
+  // eslint-disable-next-line max-len
   if (valuesFromBlock && valuesFromBlock.description && valuesFromBlock.description.instrumentation) {
     restoreInstrumentation(faqSubtitle, valuesFromBlock.description.instrumentation);
   }
