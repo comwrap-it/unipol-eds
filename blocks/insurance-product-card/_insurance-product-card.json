@@ -24,14 +24,20 @@
           "component": "text",
           "name": "title",
           "label": "Titolo",
-          "maxlength": 15,
+          "validation": {
+            "maxLength": 15,
+            "customErrorMsg": "Testo troppo lungo"
+          },
           "required": true
         },
         {
           "component": "text",
           "name": "description",
           "label": "Descrizione",
-          "maxlength": 130,
+          "validation": {
+            "maxLength": 130,
+            "customErrorMsg": "Testo troppo lungo"
+          },
           "required": true
         },
         {
@@ -49,7 +55,10 @@
           "component": "text",
           "name": "note",
           "label": "Note",
-          "maxlength": 60,
+          "validation": {
+            "maxLength": 60,
+            "customErrorMsg": "Testo troppo lungo"
+          },
           "required": true
         },
         {

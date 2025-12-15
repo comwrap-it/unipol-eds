@@ -626,7 +626,6 @@
         "component": "text",
         "name": "title",
         "label": "Titolo",
-        "description": "max 40 caratteri",
         "required": true,
         "validation": {
           "maxLength": 40,
@@ -637,7 +636,6 @@
         "component": "text",
         "name": "description",
         "label": "Descrizione",
-        "description": "max 150 caratteri",
         "required": true,
         "validation": {
           "maxLength": 150,
@@ -1628,14 +1626,20 @@
         "component": "text",
         "name": "title",
         "label": "Titolo",
-        "maxlength": 15,
+        "validation": {
+          "maxLength": 15,
+          "customErrorMsg": "Testo troppo lungo"
+        },
         "required": true
       },
       {
         "component": "text",
         "name": "description",
         "label": "Descrizione",
-        "maxlength": 130,
+        "validation": {
+          "maxLength": 130,
+          "customErrorMsg": "Testo troppo lungo"
+        },
         "required": true
       },
       {
@@ -1765,7 +1769,10 @@
         "component": "text",
         "name": "note",
         "label": "Note",
-        "maxlength": 60,
+        "validation": {
+          "maxLength": 60,
+          "customErrorMsg": "Testo troppo lungo"
+        },
         "required": true
       },
       {
@@ -1883,7 +1890,10 @@
         "name": "showMoreButtonLabel",
         "label": "Testo bottone per dispositivi mobile",
         "description": "Default \"Mostra di più\"",
-        "maxlength": 15
+        "validation": {
+          "maxLength": 15,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       }
     ]
   },
