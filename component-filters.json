@@ -81,6 +81,12 @@
     "components": []
   },
   {
+    "id": "card-grid-widget",
+    "components": [
+      "card-grid"
+    ]
+  },
+  {
     "id": "editorial-carousel-widget",
     "components": []
   },

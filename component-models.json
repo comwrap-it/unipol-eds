@@ -245,6 +245,22 @@
     ]
   },
   {
+    "id": "card-grid-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "card-grid-widget-name",
+        "label": "Nome sezione Card Grid Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "card-grid-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
     "id": "editorial-carousel-widget",
     "fields": [
       {

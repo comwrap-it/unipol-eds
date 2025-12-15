@@ -44,6 +44,9 @@
           "...": "./widgets/_insurance-product-carousel-widget.json#/definitions"
         },
         {
+          "...": "./widgets/_card-grid-widget.json#/definitions"
+        },
+        {
           "...": "../blocks/insurance-product-carousel/_insurance-product-carousel.json#/definitions"
         },
         {
