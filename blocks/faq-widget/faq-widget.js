@@ -158,19 +158,13 @@ function setupShowMoreButton(
 }
 
 /**
- * Decorates the FAQ Widget block
- * @param {HTMLElement} block - The FAQ block element
+ *
+ * @param valuesFromBlock
+ * @param references
+ * @return {Promise<HTMLDivElement>}
  */
-export default async function decorate(block) {
-  if (!block) return;
-
+export async function createFaqWidget(valuesFromBlock, references) {
   await ensureStylesLoaded();
-
-  const properties = ['title', 'description', 'showMoreButtonLabel'];
-  const valuesFromBlock = getValuesFromBlock(block, properties);
-
-  const rows = Array.from(block.children);
-  const references = rows.slice(3);
 
   const faqSection = document.createElement('div');
   faqSection.className = 'faq-section';
@@ -199,14 +193,34 @@ export default async function decorate(block) {
 
   faqSection.appendChild(faqAccordionsButton);
 
+  return faqSection;
+}
+
+/**
+ * Decorates the FAQ Widget block
+ * @param {HTMLElement} block - The FAQ block element
+ */
+export default async function decorate(block) {
+  if (!block) return;
+
+  await ensureStylesLoaded();
+
+  const properties = ['title', 'description', 'showMoreButtonLabel'];
+  const valuesFromBlock = getValuesFromBlock(block, properties);
+
+  const rows = Array.from(block.children);
+  const references = rows.slice(3);
+
+  const faqWidget = await createFaqWidget(valuesFromBlock, references);
+
   // Preserve blockName if present
   if (block.dataset.blockName) {
-    faqSection.dataset.blockName = block.dataset.blockName;
+    faqWidget.dataset.blockName = block.dataset.blockName;
   }
 
   block.innerText = '';
   // Preserve block class
-  faqSection.classList.add('block');
+  faqWidget.classList.add('block');
   // Replace block with carousel
-  block.appendChild(faqSection);
+  block.appendChild(faqWidget);
 }
