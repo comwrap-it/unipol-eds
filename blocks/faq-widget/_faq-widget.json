@@ -26,7 +26,6 @@
           "component": "text",
           "name": "title",
           "label": "Titolo",
-          "description": "max 40 caratteri",
           "required": true,
           "validation": {
             "maxLength": 40,
@@ -37,7 +36,6 @@
           "component": "text",
           "name": "description",
           "label": "Descrizione",
-          "description": "max 150 caratteri",
           "required": true,
           "validation": {
             "maxLength": 150,
