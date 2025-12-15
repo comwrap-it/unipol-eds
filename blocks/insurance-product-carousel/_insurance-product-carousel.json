@@ -25,7 +25,10 @@
           "name": "showMoreButtonLabel",
           "label": "Testo bottone per dispositivi mobile",
           "description": "Default \"Mostra di più\"",
-          "maxlength": 15
+          "validation": {
+            "maxLength": 15,
+            "customErrorMsg": "Testo troppo lungo (max 15 caratteri)"
+          }
         }
       ]
     }
