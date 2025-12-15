@@ -13,7 +13,7 @@
  */
 
 import { createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
-import {getValuesFromBlock, isAuthorMode, restoreInstrumentation} from '../../scripts/utils.js';
+import { getValuesFromBlock, isAuthorMode, restoreInstrumentation } from '../../scripts/utils.js';
 import { loadFragment } from '../fragment/fragment.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
@@ -41,12 +41,12 @@ const createTextBlock = (valuesFromBlock) => {
 
   const faqTitle = document.createElement('div');
   faqTitle.className = 'faq-title';
-  faqTitle.textContent = valuesFromBlock.title.value;
+  faqTitle.textContent = valuesFromBlock?.title?.value || '';
   restoreInstrumentation(faqTitle, valuesFromBlock.title.instrumentation);
 
   const faqSubtitle = document.createElement('div');
   faqSubtitle.className = 'faq-subtitle';
-  faqSubtitle.textContent = valuesFromBlock.description.value;
+  faqSubtitle.textContent = valuesFromBlock?.description?.value || '';
   restoreInstrumentation(faqSubtitle, valuesFromBlock.description.instrumentation);
 
   faqText.appendChild(faqTitle);
@@ -127,7 +127,7 @@ function setupShowMoreButton(
 ) {
   let hiddenCount = initialHiddenCount;
 
-  if (hiddenCount <= 0) return;
+  if (faqElements.length <= step) return;
 
   const button = createButton(
     showMoreButtonLabel.value ? showMoreButtonLabel.value : 'Carica altro',
