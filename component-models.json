@@ -1472,14 +1472,20 @@
         "label": "Titolo",
         "name": "title",
         "valueType": "string",
-        "maxLength": 50
+        "validation": {
+          "maxLength": 50,
+          "customErrorMsg": "Testo troppo lungo (max 50 caratteri)"
+        }
       },
       {
         "component": "text",
         "label": "Descrizione",
         "name": "description",
         "valueType": "string",
-        "maxLength": 240
+        "validation": {
+          "maxLength": 240,
+          "customErrorMsg": "Testo troppo lungo (max 240 caratteri)"
+        }
       },
       {
         "component": "container",
@@ -1869,6 +1875,23 @@
         "label": "Testo bottone per dispositivi mobile",
         "description": "Default \"Mostra di più\"",
         "maxlength": 15
+      }
+    ]
+  },
+  {
+    "id": "legal-info-widget",
+    "fields": [
+      {
+        "component": "richtext",
+        "name": "text",
+        "label": "Testo",
+        "value": "",
+        "valueType": "string",
+        "validation": {
+          "maxLength": 1000,
+          "customErrorMsg": "Testo troppo lungo (Max 1000 caratteri)"
+        },
+        "required": true
       }
     ]
   },

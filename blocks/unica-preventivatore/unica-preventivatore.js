@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { loadCSS } from '../../scripts/aem.js';
 import { setupAssetPathInterceptor } from '../../static/js/utils.js';
+import { isAuthorMode } from '../../scripts/utils.js';
 
 function createSkeleton() {
   const skeleton = document.createElement('div');
@@ -44,6 +45,19 @@ export default async function decorate(block) {
   // Show a skeleton immediately to improve perceived performance (LCP/CLS).
   const skeleton = createSkeleton();
   block.appendChild(skeleton);
+
+  // In Universal Editor mode, show only the skeleton (no Angular loading).
+  // This provides visual feedback to editors that the component is present.
+  if (isAuthorMode(block)) {
+    console.log('Universal Editor detected: showing skeleton only');
+    skeleton.classList.add('editor-mode');
+    // Add a visual indicator that this is editor mode.
+    const editorBadge = document.createElement('div');
+    editorBadge.className = 'ups-editor-badge';
+    editorBadge.textContent = 'Unica Preventivatore (Preview only)';
+    skeleton.appendChild(editorBadge);
+    return; // Don't load Angular in editor mode.
+  }
 
   // Creates the Angular custom element (hidden until it actually renders).
   const angularElement = document.createElement('tpd-disambiguazione-widget');

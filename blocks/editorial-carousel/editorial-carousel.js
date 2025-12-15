@@ -12,6 +12,7 @@ import { handleSlideChange } from '../../scripts/utils.js';
 import { initCarouselAnimations } from '../../scripts/reveal.js';
 
 let stylesLoaded = false;
+const DEFAULT_ARIA_LABEL = 'Carosello editoriale';
 
 /**
  * Ensures the carousel widget CSS is fetched once before decoration.
@@ -83,7 +84,7 @@ const createCarouselStructure = () => {
   const carousel = document.createElement('div');
   carousel.className = 'editorial-carousel-container swiper';
   carousel.setAttribute('role', 'region');
-  carousel.setAttribute('aria-label', 'Product carousel');
+  carousel.setAttribute('aria-label', DEFAULT_ARIA_LABEL);
   carousel.setAttribute('tabindex', '0');
 
   const track = document.createElement('div');
@@ -144,12 +145,13 @@ const createSlide = async (row, decorateCard) => {
  * @param {HTMLElement[]} slides - List of slide elements
  * @param {HTMLElement} track - Swiper track element
  * @param {boolean} instrumented - Whether Universal Editor instrumentation is present
- * @param {MediaQueryList} mq - Media query determining desktop/tablet vs mobile
+ * @param {MediaQueryList} mqTablet - Media query determining tablet/desktop vs mobile
  */
-const appendSlides = (slides, track, instrumented, mq) => {
+const appendSlides = (slides, track, instrumented, mqTablet) => {
   slides.forEach((slide, index) => {
-    if (slide && !instrumented && slide.innerText) {
-      if (index >= 4 && !mq.matches) {
+    const hasContent = slide?.innerText?.trim() || slide?.querySelector('img, picture');
+    if (slide && !instrumented && hasContent) {
+      if (index >= 4 && !mqTablet.matches) {
         slide.classList.add('hidden');
       }
       track.appendChild(slide);
@@ -164,15 +166,20 @@ const appendSlides = (slides, track, instrumented, mq) => {
  * or a "show more" button on mobile when needed.
  *
  * @param {HTMLElement[]} cardElements - Slides representing each card
- * @param {MediaQueryList} mq - Media query for min-width: 768px
+ * @param {MediaQueryList} mqTablet - Media query for min-width: 768px
+ * @param {MediaQueryList} mqDesktop - Media query for min-width: 1200px
  * @param {string} showMoreButtonLabel - Text for the mobile expansion button
  * @returns {Promise<{scrollIndicatorProps: Object, showMoreButton: HTMLElement | undefined}>}
  */
-const createNavigation = async (cardElements, mq, showMoreButtonLabel) => {
+const createNavigation = async (cardElements, mqTablet, mqDesktop, showMoreButtonLabel) => {
   const scrollIndicatorProps = {};
   let showMoreButton;
+  const totalCards = cardElements.length;
 
-  if (mq.matches && cardElements.length > 0) {
+  const isDesktop = mqDesktop.matches;
+  const isTablet = mqTablet.matches && !mqDesktop.matches;
+
+  if ((isDesktop && totalCards > 4) || (isTablet && totalCards > 3)) {
     const {
       leftIconButton,
       scrollIndicator,
@@ -183,7 +190,7 @@ const createNavigation = async (cardElements, mq, showMoreButtonLabel) => {
     scrollIndicatorProps.scrollIndicator = scrollIndicator;
     scrollIndicatorProps.rightIconButton = rightIconButton;
     scrollIndicatorProps.setExpandedDot = setExpandedDot;
-  } else if (!mq.matches && cardElements.length > 4) {
+  } else if (!mqTablet.matches && totalCards > 4) {
     showMoreButton = createButton(
       showMoreButtonLabel,
       '',
@@ -283,7 +290,7 @@ export default async function decorateEditorialCarousel(block) {
   const { wrapper, carousel, track } = createCarouselStructure();
   const rows = Array.from(block.children);
   const showMoreElement = rows.shift();
-  const showMoreButtonLabel = showMoreElement?.textContent?.trim() || 'Mostra di piu';
+  const showMoreButtonLabel = showMoreElement?.textContent?.trim() || 'Mostra di più';
   if (rows.length === 0) {
     // eslint-disable-next-line no-console
     console.warn('Editorial Carousel: No cards found');
@@ -291,14 +298,16 @@ export default async function decorateEditorialCarousel(block) {
   }
 
   const cardPromises = rows.map((row) => createSlide(row, decorateEditorialProductCard));
-  const mq = window.matchMedia('(min-width: 768px)');
+  const mqTablet = window.matchMedia('(min-width: 768px)');
+  const mqDesktop = window.matchMedia('(min-width: 1200px)');
   const cardElements = await Promise.all(cardPromises);
 
-  appendSlides(cardElements, track, instrumented, mq);
+  appendSlides(cardElements, track, instrumented, mqTablet);
 
   const { scrollIndicatorProps, showMoreButton } = await createNavigation(
     cardElements,
-    mq,
+    mqTablet,
+    mqDesktop,
     showMoreButtonLabel,
   );
   bindShowMore(showMoreButton, cardElements);
@@ -316,7 +325,11 @@ export default async function decorateEditorialCarousel(block) {
   wrapper.appendChild(carousel);
   block.appendChild(wrapper);
 
-  if (mq.matches) {
+  const totalSlides = track.children.length;
+  const isDesktop = mqDesktop.matches;
+  const isTablet = mqTablet.matches && !mqDesktop.matches;
+
+  if ((isDesktop && totalSlides > 4) || (isTablet && totalSlides > 3)) {
     await initDesktopSwiper(carousel, scrollIndicatorProps);
   }
 }

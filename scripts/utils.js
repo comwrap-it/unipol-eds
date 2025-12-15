@@ -145,3 +145,14 @@ export function getValuesFromBlock(block, keys) {
 
   return result;
 }
+
+/**
+ * Returns the value of the <meta name="template"> tag content
+ *
+ * @returns {string|null} the content value (e.g. "homepage") or null if not found
+ */
+export const getTemplateMetaContent = () => {
+  const meta = document.querySelector('meta[name="template"]');
+  const content = meta?.getAttribute('content') || null;
+  return content;
+};
