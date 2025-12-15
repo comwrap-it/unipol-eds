@@ -42,12 +42,16 @@ const createTextBlock = (valuesFromBlock) => {
   const faqTitle = document.createElement('div');
   faqTitle.className = 'faq-title';
   faqTitle.textContent = valuesFromBlock?.title?.value || '';
-  restoreInstrumentation(faqTitle, valuesFromBlock.title.instrumentation);
+  if (valuesFromBlock && valuesFromBlock.title && valuesFromBlock.title.instrumentation) {
+    restoreInstrumentation(faqTitle, valuesFromBlock.title.instrumentation);
+  }
 
   const faqSubtitle = document.createElement('div');
   faqSubtitle.className = 'faq-subtitle';
   faqSubtitle.textContent = valuesFromBlock?.description?.value || '';
-  restoreInstrumentation(faqSubtitle, valuesFromBlock.description.instrumentation);
+  if (valuesFromBlock && valuesFromBlock.description && valuesFromBlock.description.instrumentation) {
+    restoreInstrumentation(faqSubtitle, valuesFromBlock.description.instrumentation);
+  }
 
   faqText.appendChild(faqTitle);
   faqText.appendChild(faqSubtitle);
