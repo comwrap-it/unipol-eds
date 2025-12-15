@@ -18,17 +18,7 @@ import loadSwiper from '../../scripts/delayed.js';
  * @property {boolean} enabled
  */
 
-/**
- * @typedef {Object} SwiperInitResult
- * @property {boolean} alreadyInitialized
- * @property {number | null} slides
- */
-
 // #region CONFIGS
-
-const DEBUG_FEATURE = 'editorial-carousel-widget';
-const DEBUG_SNAPSHOT_STORE = '__EDS_DEBUG_SNAPSHOTS__';
-const DEBUG_MAX_SNAPSHOTS = 50;
 
 const SELECTORS = {
   carousel: '.editorial-carousel-container',
@@ -59,107 +49,6 @@ async function ensureStylesLoaded() {
 
   stylesLoaded = true;
 }
-
-// #endregion
-
-// #region DEBUG
-
-let debugEnabledMemo;
-
-/**
- * Memoized debug check for this feature.
- *
- * @returns {boolean}
- */
-function isDebugEnabled() {
-  if (typeof debugEnabledMemo === 'boolean') return debugEnabledMemo;
-
-  const parseSelector = (value) => {
-    const normalized = (value || '').trim().toLowerCase();
-    if (!normalized) return false;
-
-    if (['1', 'true', 'on', 'yes', '*', 'all'].includes(normalized)) return true;
-
-    return normalized
-      .split(',')
-      .map((part) => part.trim())
-      .filter(Boolean)
-      .includes(DEBUG_FEATURE);
-  };
-
-  let enabled = false;
-
-  try {
-    const params = new URLSearchParams(window.location.search);
-    if (params.has('debug-editorial-carousel-widget')) enabled = true;
-
-    const fromQuery = params.get('eds-debug') || params.get('debug');
-    if (parseSelector(fromQuery)) enabled = true;
-  } catch (e) {
-    // ignore
-  }
-
-  try {
-    const perComponent = window.localStorage?.getItem('eds-debug-editorial-carousel-widget');
-    if (parseSelector(perComponent)) enabled = true;
-
-    const globalFlag = window.localStorage?.getItem('eds-debug');
-    if (parseSelector(globalFlag)) enabled = true;
-  } catch (e) {
-    // ignore
-  }
-
-  const global = window.EDS_DEBUG;
-  if (global === true) enabled = true;
-  if (typeof global === 'string' && parseSelector(global)) enabled = true;
-  if (Array.isArray(global)) {
-    const normalized = global.map((value) => String(value).toLowerCase());
-    if (normalized.includes(DEBUG_FEATURE)) enabled = true;
-  }
-
-  debugEnabledMemo = enabled;
-  return enabled;
-}
-
-/* eslint-disable no-console */
-/**
- * Emits a debug snapshot in console and stores it in `window.__EDS_DEBUG_SNAPSHOTS__`.
- *
- * @param {HTMLElement | undefined} root
- * @param {Object} payload
- */
-function debugSnapshot(root, payload) {
-  if (!isDebugEnabled()) return;
-  const id = (
-    root?.getAttribute?.('data-aue-resource')
-    || root?.dataset?.blockName
-    || root?.id
-    || root?.className
-    || 'page'
-  );
-
-  const snapshot = { id, ...payload };
-
-  const store = window[DEBUG_SNAPSHOT_STORE] || (window[DEBUG_SNAPSHOT_STORE] = {});
-  const list = store[DEBUG_FEATURE] || (store[DEBUG_FEATURE] = []);
-
-  list.push(snapshot);
-  if (list.length > DEBUG_MAX_SNAPSHOTS) {
-    list.splice(0, list.length - DEBUG_MAX_SNAPSHOTS);
-  }
-
-  const stage = snapshot.stage ? ` ${snapshot.stage}` : '';
-  const label = `[EDS][${DEBUG_FEATURE}] ${snapshot.id}${stage}`;
-
-  if (console.groupCollapsed) {
-    console.groupCollapsed(label);
-    console.debug(snapshot);
-    console.groupEnd();
-  } else {
-    console.debug(label, snapshot);
-  }
-}
-/* eslint-enable no-console */
 
 // #endregion
 
@@ -211,9 +100,7 @@ function createExpandingDotsPluginFromCarousel(carousel) {
     dots[index]?.classList.add('expanded');
   };
 
-  return function editorialCarousel({ extendParams, on }) {
-    extendParams({ debugger: false });
-
+  return function editorialCarousel({ on }) {
     let edgeState = null;
 
     on('init', () => {
@@ -247,13 +134,10 @@ function createExpandingDotsPluginFromCarousel(carousel) {
  *
  * @param {HTMLElement} carousel
  * @param {Function} SwiperLib
- * @returns {SwiperInitResult}
+ * @returns {Object | null} Swiper instance, or null if already initialized.
  */
 function createSwiperFromCarousel(carousel, SwiperLib) {
-  if (carousel.dataset.initialized) {
-    return { alreadyInitialized: true, slides: null };
-  }
-
+  if (carousel.dataset.initialized) return null;
   carousel.dataset.initialized = 'true';
 
   const plugin = createExpandingDotsPluginFromCarousel(carousel);
@@ -281,13 +165,9 @@ function createSwiperFromCarousel(carousel, SwiperLib) {
     resistanceRatio: 0.85,
     touchReleaseOnEdges: true,
     effect: 'slide',
-    debugger: true,
   });
 
-  return {
-    alreadyInitialized: false,
-    slides: swiperInstance.slides?.length ?? null,
-  };
+  return swiperInstance;
 }
 
 // #endregion
@@ -295,23 +175,26 @@ function createSwiperFromCarousel(carousel, SwiperLib) {
 // #region RENDER
 
 /**
- * Renders (enhances) all editorial carousel instances found.
+ * Enhances all editorial carousel instances found.
  *
  * Assembly is kept monolithic (except for `create*From*` helpers).
  *
- * @param {HTMLElement | undefined} block
  * @param {HTMLElement[]} carousels
  * @param {Function} SwiperLib
  */
-function renderEditorialCarouselWidget(block, carousels, SwiperLib) {
-  debugSnapshot(block, {
-    stage: 'init',
-    carousels: carousels.length,
-  });
-
-  const results = carousels.map((carousel) => {
+function renderEditorialCarouselWidget(carousels, SwiperLib) {
+  /**
+   * LOOP: enhance each carousel instance.
+   */
+  carousels.forEach((carousel) => {
+    /**
+     * PARSE: read per-carousel configuration (dark theme flag).
+     */
     const darkTheme = parseDarkThemeFlagFromCarousel(carousel);
 
+    /**
+     * APPLY: toggle section theme.
+     */
     const section = carousel.closest('.section');
     if (darkTheme.enabled) {
       section?.classList.add('theme-dark');
@@ -319,22 +202,10 @@ function renderEditorialCarouselWidget(block, carousels, SwiperLib) {
       section?.classList.remove('theme-dark');
     }
 
-    const init = createSwiperFromCarousel(carousel, SwiperLib);
-
-    return {
-      id: carousel.getAttribute('data-aue-resource')
-        || carousel.dataset.blockName
-        || carousel.id
-        || carousel.className,
-      darkTheme,
-      ...init,
-    };
-  });
-
-  debugSnapshot(block, {
-    stage: 'done',
-    results: results.slice(0, 20),
-    truncated: results.length > 20,
+    /**
+     * INIT: Swiper (only once per carousel).
+     */
+    createSwiperFromCarousel(carousel, SwiperLib);
   });
 }
 
@@ -351,9 +222,19 @@ function renderEditorialCarouselWidget(block, carousels, SwiperLib) {
  * @returns {Promise<void>}
  */
 export default async function decorateEditorialCarouselWidget(block) {
+  if (block) {
+    // no-op: parameter is accepted for block-loader compatibility
+  }
+
+  /**
+   * DISCOVER: find all carousel containers.
+   */
   const carousels = Array.from(document.querySelectorAll(SELECTORS.carousel));
   if (!carousels.length) return;
 
+  /**
+   * LOAD: CSS + Swiper library.
+   */
   await ensureStylesLoaded();
 
   let SwiperLib;
@@ -363,7 +244,10 @@ export default async function decorateEditorialCarouselWidget(block) {
     return;
   }
 
-  renderEditorialCarouselWidget(block, carousels, SwiperLib);
+  /**
+   * RENDER: enhance all instances.
+   */
+  renderEditorialCarouselWidget(carousels, SwiperLib);
 }
 
 // #endregion

@@ -73,10 +73,6 @@ import { initCarouselAnimations } from '../../scripts/reveal.js';
 
 // #region CONFIGS
 
-const DEBUG_FEATURE = 'editorial-carousel';
-const DEBUG_SNAPSHOT_STORE = '__EDS_DEBUG_SNAPSHOTS__';
-const DEBUG_MAX_SNAPSHOTS = 50;
-
 const DEFAULT_ARIA_LABEL = 'Carosello editoriale';
 const DEFAULT_SHOW_MORE_LABEL = 'Mostra di più';
 
@@ -88,7 +84,7 @@ const MEDIA_QUERIES = {
 const THRESHOLDS = {
   mobileVisibleCards: 4,
   tabletNavCards: 3,
-  desktopNavCards: 4,
+  desktopNavCards: 5,
 };
 
 const CLASS_NAMES = {
@@ -126,127 +122,6 @@ async function ensureStylesLoaded() {
   await loadCSS(widgetCssPath);
 
   stylesLoaded = true;
-}
-
-// #endregion
-
-// #region DEBUG
-
-let debugEnabledMemo;
-
-/**
- * Memoized debug check for this feature.
- *
- * Supported sources:
- * - `?debug-editorial-carousel`
- * - `?eds-debug=...` / `?debug=...` (supports lists, e.g. `a,b,editorial-carousel`)
- * - localStorage: `eds-debug` / `eds-debug-editorial-carousel`
- * - `window.EDS_DEBUG`
- *
- * @returns {boolean}
- */
-function isDebugEnabled() {
-  if (typeof debugEnabledMemo === 'boolean') return debugEnabledMemo;
-
-  const parseSelector = (value) => {
-    const normalized = (value || '').trim().toLowerCase();
-    if (!normalized) return false;
-
-    if (['1', 'true', 'on', 'yes', '*', 'all'].includes(normalized)) return true;
-
-    return normalized
-      .split(',')
-      .map((part) => part.trim())
-      .filter(Boolean)
-      .includes(DEBUG_FEATURE);
-  };
-
-  let enabled = false;
-
-  try {
-    const params = new URLSearchParams(window.location.search);
-    if (params.has('debug-editorial-carousel')) enabled = true;
-
-    const fromQuery = params.get('eds-debug') || params.get('debug');
-    if (parseSelector(fromQuery)) enabled = true;
-  } catch (e) {
-    // ignore
-  }
-
-  try {
-    const perComponent = window.localStorage?.getItem('eds-debug-editorial-carousel');
-    if (parseSelector(perComponent)) enabled = true;
-
-    const globalFlag = window.localStorage?.getItem('eds-debug');
-    if (parseSelector(globalFlag)) enabled = true;
-  } catch (e) {
-    // ignore
-  }
-
-  const global = window.EDS_DEBUG;
-  if (global === true) enabled = true;
-  if (typeof global === 'string' && parseSelector(global)) enabled = true;
-  if (Array.isArray(global)) {
-    const normalized = global.map((value) => String(value).toLowerCase());
-    if (normalized.includes(DEBUG_FEATURE)) enabled = true;
-  }
-
-  debugEnabledMemo = enabled;
-  return enabled;
-}
-
-/* eslint-disable no-console */
-/**
- * Emits a debug snapshot in console and stores it in `window.__EDS_DEBUG_SNAPSHOTS__`.
- *
- * @param {HTMLElement} block
- * @param {Object} payload
- */
-function debugSnapshot(block, payload) {
-  if (!isDebugEnabled()) return;
-  const id = (
-    block?.getAttribute('data-aue-resource')
-    || block?.dataset?.blockName
-    || block?.id
-    || 'unknown'
-  );
-
-  const snapshot = { id, ...payload };
-
-  const store = window[DEBUG_SNAPSHOT_STORE] || (window[DEBUG_SNAPSHOT_STORE] = {});
-  const list = store[DEBUG_FEATURE] || (store[DEBUG_FEATURE] = []);
-
-  list.push(snapshot);
-  if (list.length > DEBUG_MAX_SNAPSHOTS) {
-    list.splice(0, list.length - DEBUG_MAX_SNAPSHOTS);
-  }
-
-  const stage = snapshot.stage ? ` ${snapshot.stage}` : '';
-  const label = `[EDS][${DEBUG_FEATURE}] ${snapshot.id}${stage}`;
-
-  if (console.groupCollapsed) {
-    console.groupCollapsed(label);
-    console.debug(snapshot);
-    console.groupEnd();
-  } else {
-    console.debug(label, snapshot);
-  }
-}
-/* eslint-enable no-console */
-
-/**
- * Truncates user-provided text for debug output.
- *
- * @param {string} value
- * @param {number} [maxLen=120]
- * @returns {string}
- */
-function trimText(value, maxLen = 120) {
-  const str = (value || '').toString().trim();
-  if (str.length <= maxLen) return str;
-
-  const suffix = '...';
-  return `${str.slice(0, Math.max(0, maxLen - suffix.length))}${suffix}`;
 }
 
 // #endregion
@@ -428,7 +303,6 @@ async function createSwiperFromCarousel(carousel, navigation) {
     resistanceRatio: 0.85,
     touchReleaseOnEdges: true,
     effect: 'slide',
-    debugger: true,
   });
 }
 
@@ -447,6 +321,9 @@ async function createSwiperFromCarousel(carousel, navigation) {
  * @returns {Promise<void>}
  */
 async function renderCarousel(block, model, decorateCard) {
+  /**
+   * VIEWPORT: determine responsive behavior.
+   */
   const mqTablet = window.matchMedia(MEDIA_QUERIES.tablet);
   const mqDesktop = window.matchMedia(MEDIA_QUERIES.desktop);
 
@@ -457,12 +334,21 @@ async function renderCarousel(block, model, decorateCard) {
     isMobile: !mqTablet.matches,
   };
 
+  /**
+   * CREATE: static skeleton (wrapper, container, track).
+   */
   const { wrapper, carousel, track } = createCarouselSkeletonFromConfig();
 
+  /**
+   * CREATE: build slides by decorating nested `editorial-carousel-card` blocks.
+   */
   const slides = await Promise.all(
     model.cardRows.map((row) => createSlideFromRow(row, decorateCard)),
   );
 
+  /**
+   * ASSEMBLE: append slides and apply mobile truncation when not instrumented.
+   */
   const appendedSlides = [];
   let appendedIndex = 0;
 
@@ -474,6 +360,7 @@ async function renderCarousel(block, model, decorateCard) {
     );
 
     if (!model.instrumented && !hasContent) return;
+
     if (
       !model.instrumented
       && viewport.isMobile
@@ -487,12 +374,18 @@ async function renderCarousel(block, model, decorateCard) {
     appendedIndex += 1;
   });
 
+  /**
+   * CREATE: navigation UI (scroll indicator for tablet/desktop, show-more on mobile).
+   */
   const navigation = await createNavigationFromState({
     totalSlides: appendedSlides.length,
     viewport,
     showMoreLabel: model.showMoreLabel,
   });
 
+  /**
+   * ASSEMBLE: mount navigation and wire show-more behavior.
+   */
   if (navigation.scrollIndicator) {
     carousel.appendChild(navigation.scrollIndicator);
   } else if (navigation.showMoreButton) {
@@ -505,8 +398,14 @@ async function renderCarousel(block, model, decorateCard) {
     carousel.appendChild(navigation.showMoreButton);
   }
 
+  /**
+   * CLEANUP: remove the authored show-more label row.
+   */
   model.showMoreRow?.remove();
 
+  /**
+   * MOUNT: replace the block content with the built carousel.
+   */
   if (block.dataset.blockName) {
     carousel.dataset.blockName = block.dataset.blockName;
   }
@@ -515,24 +414,14 @@ async function renderCarousel(block, model, decorateCard) {
   carousel.classList.add('block', 'editorial-carousel-block');
   block.appendChild(wrapper);
 
+  /**
+   * INIT: reveal animations.
+   */
   initCarouselAnimations(carousel);
 
-  debugSnapshot(block, {
-    stage: 'render',
-    instrumented: model.instrumented,
-    viewport,
-    slides: {
-      built: slides.length,
-      appended: appendedSlides.length,
-      hiddenOnMobile: appendedSlides.filter((s) => s.classList.contains(CLASS_NAMES.hidden)).length,
-    },
-    navigation: {
-      mode: navigation.mode,
-      hasScrollIndicator: Boolean(navigation.scrollIndicator),
-      hasShowMoreButton: Boolean(navigation.showMoreButton),
-    },
-  });
-
+  /**
+   * INIT: Swiper + scroll indicator (tablet/desktop only).
+   */
   if (navigation.mode !== 'scroll-indicator') return;
 
   const swiperInstance = await createSwiperFromCarousel(carousel, navigation);
@@ -558,8 +447,6 @@ async function renderCarousel(block, model, decorateCard) {
       navigation.rightIconButton.disabled = swiperInstance.isEnd;
     }
   }
-
-  debugSnapshot(block, { stage: 'swiper-ready' });
 }
 
 // #endregion
@@ -577,32 +464,26 @@ export default async function decorateEditorialCarousel(block) {
 
   await ensureStylesLoaded();
 
+  /**
+   * PARSE: build the model from authored rows.
+   */
   const model = parseCarouselBlock(block);
 
   if (!model.cardRows.length) {
-    debugSnapshot(block, {
-      stage: 'empty',
-      instrumented: model.instrumented,
-      rows: model.rowCount,
-    });
-
     /* eslint-disable no-console */
     console.warn('Editorial Carousel: No cards found');
     /* eslint-enable no-console */
-
     return;
   }
 
-  debugSnapshot(block, {
-    stage: 'parse',
-    instrumented: model.instrumented,
-    rows: model.rowCount,
-    cards: model.cardRows.length,
-    showMoreLabel: trimText(model.showMoreLabel),
-  });
-
+  /**
+   * LOAD: card decorator.
+   */
   const decorateCard = (await import('../editorial-carousel-card/editorial-carousel-card.js')).default;
 
+  /**
+   * RENDER: assemble the final carousel.
+   */
   await renderCarousel(block, model, decorateCard);
 }
 

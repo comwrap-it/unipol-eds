@@ -247,6 +247,9 @@ function createTextFromRow(
  * @returns {HTMLElement} Card container.
  */
 function renderCard(model, sourceBlock) {
+  /**
+   * CREATE: card root and preserve instrumentation.
+   */
   const card = document.createElement('div');
   card.className = CARD_CLASSES.container;
 
@@ -258,6 +261,11 @@ function renderCard(model, sourceBlock) {
 
   card.classList.add('card-block');
 
+  /**
+   * CREATE: image section.
+   * - Preserve an authored <picture> when present.
+   * - Otherwise build an optimized picture from an <img> or <a>.
+   */
   let imageSection = null;
 
   if (model.imageRow) {
@@ -294,6 +302,9 @@ function renderCard(model, sourceBlock) {
     }
   }
 
+  /**
+   * CREATE: text section (title + description).
+   */
   const textContainer = document.createElement('div');
   textContainer.className = CARD_CLASSES.text;
 
@@ -316,6 +327,9 @@ function renderCard(model, sourceBlock) {
 
   const textSection = textContainer.children.length ? textContainer : null;
 
+  /**
+   * CREATE: CTA section (link button + optional note).
+   */
   let ctaSection = null;
 
   const linkButton = createLinkButtonFromRows(model.ctaRows);
@@ -324,9 +338,21 @@ function renderCard(model, sourceBlock) {
     ctaContainer.className = CARD_CLASSES.cta;
     ctaContainer.appendChild(linkButton);
 
+    const note = createTextFromRow(model.noteRow, {
+      existingSelector: 'p',
+      fallbackTag: 'p',
+      className: CARD_CLASSES.note,
+      requireText: true,
+    });
+
+    if (note) ctaContainer.appendChild(note);
+
     ctaSection = ctaContainer;
   }
 
+  /**
+   * ASSEMBLE: card sections.
+   */
   if (imageSection) card.appendChild(imageSection);
 
   const content = document.createElement('div');
@@ -349,6 +375,7 @@ function renderCard(model, sourceBlock) {
  * - 0: Title
  * - 1: Description
  * - 2..8: CTA configuration (standard-button fields)
+ * - 9: Note
  * - 10: Image
  * - 11: Image alt text
  *
