@@ -34,7 +34,7 @@
         },
         {
           "component": "richtext",
-          "name": "accordionDescription",
+          "name": "accordionDescriptionRichtext",
           "label": "Risposta",
           "description": "Risposta contenuta nell'accordion",
           "validation": {

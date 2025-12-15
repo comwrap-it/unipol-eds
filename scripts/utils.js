@@ -107,7 +107,10 @@ export function restoreInstrumentation(element, instrumentation) {
 }
 
 /**
- * Extracts editorial values from UE
+ *
+ * @param block
+ * @param keys
+ * @return {{}}
  */
 export function getValuesFromBlock(block, keys) {
   const result = {};
@@ -126,7 +129,14 @@ export function getValuesFromBlock(block, keys) {
         'data-aue-type': 'text',
         'data-aue-prop': key,
       };
-      const value = valueNode.querySelector('a')?.getAttribute('href') || valueNode.textContent.trim();
+
+      let value;
+      // if richtext get the first child, the must ends with Richtext
+      if (key.endsWith('Richtext')) {
+        value = valueNode.firstChild;
+      } else {
+        value = valueNode?.textContent?.trim() || '';
+      }
 
       if (keys.includes(key)) {
         const newItem = { value, instrumentation };
