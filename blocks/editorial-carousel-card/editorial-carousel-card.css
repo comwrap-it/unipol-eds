@@ -1,6 +1,15 @@
 
 .editorial-carousel-card-wrapper {
     display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    & > .editorial-carousel-card {
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+        flex: 1 1 auto;
+    }
 
     & .editorial-carousel-card-container {
         display: flex;
@@ -8,7 +17,7 @@
         max-width: var(--Column-Size-Col-3, 19.75rem);
         flex-direction: column;
         align-items: flex-start;
-        flex: 0 0 auto;
+        flex: auto;
         overflow: hidden;
         border-radius: var(--Card-Radius, 1.5rem);
         background: var(--Card-Insurance-Product-Card-Background, #fff);
@@ -33,6 +42,12 @@
                 height: 11.1095rem;
                 border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem)
                     var(--Radius-0, 0) var(--Radius-0, 0);
+            }
+
+            & img,
+            & picture img {
+                object-fit: cover;
+                object-position: top;
             }
         }
 
@@ -127,7 +142,7 @@
 
                 & img,
                 & picture {
-                    width: 15rem;
+                    width: 100%;
                     height: 10.26575rem;
                 }
             }
@@ -177,7 +192,7 @@
 
                 & img,
                 & picture {
-                    width: 21.4375rem;
+                    width: 100%;
                     height: 12.05875rem;
                 }
             }
