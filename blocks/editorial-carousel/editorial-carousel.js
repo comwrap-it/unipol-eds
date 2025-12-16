@@ -285,10 +285,11 @@ export default async function decorate(block) {
     showMoreButton.addEventListener('click', handleShowMoreButton);
   }
 
-  carousel.appendChild(track);
   if (Object.keys(scrollIndicatorProps).length === 0) {
     carousel.className = 'editorial-carousel-container-centered swiper';
   }
+
+  carousel.appendChild(track);
   initCarouselAnimations(carousel);
 
   if (scrollIndicatorProps.scrollIndicator) {
