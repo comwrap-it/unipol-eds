@@ -176,13 +176,7 @@
                     "sling:resourceType": "core/franklin/components/block/v1/block",
                     "name": "Data table",
                     "filter": "data-table",
-                    "model": "data-table",
-                    "data-table-row": {
-                      "sling:resourceType": "core/franklin/components/block/v1/block/item",
-                      "name": "Data table row",
-                      "filter": "data-table-row",
-                      "model": "data-table-row"
-                    }
+                    "model": "data-table"
                   }
                 }
               }
