@@ -1,0 +1,37 @@
+{
+  "definitions": [
+    {
+      "title": "Data table row",
+      "id": "data-table-row",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Data table row",
+              "model": "data-table-row"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "data-table-row",
+      "fields": [
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Titolo",
+          "required": true,
+          "validation": {
+            "maxLength": 15,
+            "customErrorMsg": "Titolo troppo lungo (max 15 caratteri)"
+          }
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

@@ -60,6 +60,10 @@
     ]
   },
   {
+    "id": "data-table-widget",
+    "components": []
+  },
+  {
     "id": "editorial-carousel-widget",
     "components": []
   },
@@ -102,6 +106,12 @@
       "image",
       "button",
       "title"
+    ]
+  },
+  {
+    "id": "data-table",
+    "components": [
+      "data-table-row"
     ]
   },
   {
