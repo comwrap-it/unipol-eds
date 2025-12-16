@@ -86,7 +86,6 @@ function createCardItemRows({
   buttonIconSize,
   leftIcon,
   rightIcon,
-  note,
   imageSrc,
   imageAlt,
 }) {
@@ -105,9 +104,6 @@ function createCardItemRows({
     createPlainRow(buttonIconSize),
     createPlainRow(leftIcon),
     createPlainRow(rightIcon),
-
-    // 9: Note
-    createTextRow('p', note || ''),
 
     // 10: Image
     createImageRow(imageSrc),
@@ -144,7 +140,6 @@ function createEditorialCarouselBlock(args) {
       buttonIconSize: args.buttonIconSize,
       leftIcon: args.leftIcon,
       rightIcon: args.rightIcon,
-      note: args.note,
       imageSrc,
       imageAlt: args.imageAlt,
     });
@@ -191,11 +186,6 @@ export default {
     description: {
       control: 'text',
       description: 'Shared description for all cards.',
-      table: { category: 'Card Content' },
-    },
-    note: {
-      control: 'text',
-      description: 'Optional note below the CTA for all cards.',
       table: { category: 'Card Content' },
     },
     buttonLabel: {
@@ -248,7 +238,6 @@ export default {
     cardCount: 6,
     titlePrefix: 'Editorial Card',
     description: 'Esempio di descrizione: contenuto editoriale per il carosello, con testo coerente e leggibile.',
-    note: '',
     buttonLabel: 'Scopri di piu',
     buttonVariant: BUTTON_VARIANTS.PRIMARY,
     buttonHref: 'https://example.com',
@@ -265,11 +254,5 @@ export const Default = {};
 export const FewCardsNoNavigation = {
   args: {
     cardCount: 3,
-  },
-};
-
-export const WithNote = {
-  args: {
-    note: 'Condizioni applicabili. Maggiori dettagli nella pagina dedicata.',
   },
 };

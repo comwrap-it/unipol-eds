@@ -24,15 +24,19 @@
           "component": "text",
           "name": "title",
           "label": "Titolo",
-          "maxlength": 65,
-          "required": true
+          "required": true,
+          "validation": {
+            "maxLength": 65
+          }
         },
         {
           "component": "text",
           "name": "description",
           "label": "Descrizione",
-          "maxlength": 200,
-          "required": true
+          "required": true,
+          "validation": {
+            "maxLength": 200
+          }
         },
         {
           "component": "container",
