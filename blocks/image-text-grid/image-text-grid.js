@@ -65,10 +65,6 @@ export default function decorate(block, isFirstBlock = false) {
     const rows = [...item.children].filter((c) => c !== imgElement);
     const titleEl = rows[1];
     const descriptionEl = rows[2];
-
-
-    const title = rows[1]?.textContent.trim() || '';
-    const description = rows[2]?.textContent.trim() || '';
     const btnLabel = rows[3]?.textContent.trim() || '';
     const btnVariant = rows[4]?.textContent.trim() || 'primary';
 
