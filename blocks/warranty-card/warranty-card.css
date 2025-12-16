@@ -24,7 +24,7 @@
             align-items: center;
             aspect-ratio: 1/1;
             border-radius: var(--Card-Warranty-Card-Radius-Icon, 9999px);
-            background: var(--Card-Warranty-Card-Background-Icon, #e5f1ff);
+            background: var(--Card-Warranty-Card-Background, #fff);
         }
 
         & .tag {
@@ -116,6 +116,7 @@
     & .text-content {
         display: flex;
         flex-direction: column;
+        flex: 1;
         align-items: flex-start;
         gap: var(--Card-Warranty-Card-Text-Gap, 8px);
 
@@ -136,6 +137,7 @@
             font-style: normal;
             font-weight: 400;
             line-height: 140%;
+            flex: 1;
         }
     }
 }

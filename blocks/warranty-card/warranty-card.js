@@ -60,7 +60,7 @@ export const createWarrantyCard = async (
   textContent.className = 'text-content';
   let titleEl;
   if (titleRow?.firstChild) {
-    titleEl = createTextElementFromRow(titleRow, 'h3', 'title');
+    titleEl = createTextElementFromRow(titleRow, 'title', 'h3');
   } else {
     titleEl = document.createElement('h3');
     titleEl.className = 'title';
@@ -71,8 +71,8 @@ export const createWarrantyCard = async (
   if (descriptionRow?.firstChild) {
     descriptionEl = createTextElementFromRow(
       descriptionRow,
-      'p',
       'description',
+      'p',
     );
   } else {
     descriptionEl = document.createElement('p');
@@ -130,7 +130,7 @@ export const extractWarrantyCardValuesFromRows = (rows) => {
     const isDefaultCategory = category.startsWith('default-');
     tagConfig.label = rows[12]?.textContent?.trim() || '';
     tagConfig.category = isDefaultCategory ? '' : category;
-    tagConfig.type = isDefaultCategory ? 'custom' : 'default';
+    tagConfig.type = isDefaultCategory ? 'custom' : 'secondary';
   }
   return {
     category,
