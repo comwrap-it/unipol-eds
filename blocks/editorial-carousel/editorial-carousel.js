@@ -73,23 +73,11 @@ import { initCarouselAnimations } from '../../scripts/reveal.js';
 const DEFAULT_ARIA_LABEL = 'Carosello editoriale';
 const DEFAULT_SHOW_MORE_LABEL = 'Mostra di più';
 
-const MEDIA_QUERIES = {
-  tablet: '(min-width: 768px)',
-  desktop: '(min-width: 1200px)',
-};
-
-const THRESHOLDS = {
-  mobileVisibleCards: 4,
-  tabletNavCards: 3,
-  desktopNavCards: 4,
-};
-
 const CLASS_NAMES = {
   carousel: 'editorial-carousel-container',
   track: 'editorial-carousel',
   slide: 'editorial-carousel-card-wrapper',
   cardBlock: 'editorial-carousel-card',
-  hidden: 'hidden',
 };
 
 const SELECTORS = {
@@ -98,6 +86,12 @@ const SELECTORS = {
   navNext: '.swiper-button-next',
 };
 
+const THRESHOLDS = {
+  mobileVisibleCards: 4,
+  tabletNavCards: 3,
+  desktopSmallNavCards: 4,
+  desktopNavCards: 4,
+};
 // #endregion
 
 // #region DEPENDENCIES
@@ -237,13 +231,14 @@ async function createSlideFromRow(row, decorateCard) {
  * @param {{ totalSlides: number, viewport: ViewportFlags, showMoreLabel: string }} params
  * @returns {Promise<CarouselNavigation>}
  */
-async function createNavigationFromState({ totalSlides, viewport, showMoreLabel }) {
-  const needsScrollIndicator = (
-    (viewport.isDesktop && totalSlides > THRESHOLDS.desktopNavCards)
-    || (viewport.isTablet && totalSlides > THRESHOLDS.tabletNavCards)
+async function createNavigationFromState({ totalSlides, showMoreLabel }) {
+  const needsScrollShow = (
+    (totalSlides > THRESHOLDS.desktopNavCards)
+    || (totalSlides > THRESHOLDS.desktopSmallNavCards)
+    || (totalSlides > THRESHOLDS.tabletNavCards)
   );
 
-  if (needsScrollIndicator) {
+  if (needsScrollShow) {
     const {
       leftIconButton,
       scrollIndicator,
@@ -251,17 +246,6 @@ async function createNavigationFromState({ totalSlides, viewport, showMoreLabel 
       setExpandedDot,
     } = await createScrollIndicator();
 
-    return {
-      mode: 'scroll-indicator',
-      leftIconButton,
-      rightIconButton,
-      scrollIndicator,
-      setExpandedDot,
-    };
-  }
-
-  const needsShowMore = viewport.isMobile && totalSlides > THRESHOLDS.mobileVisibleCards;
-  if (needsShowMore) {
     const showMoreButton = createButton(
       showMoreLabel,
       '',
@@ -271,10 +255,15 @@ async function createNavigationFromState({ totalSlides, viewport, showMoreLabel 
       '',
       '',
     );
+    showMoreButton.classList.add('showMore');
 
     return {
-      mode: 'show-more',
+      mode: 'scroll-show',
       showMoreButton,
+      leftIconButton,
+      rightIconButton,
+      scrollIndicator,
+      setExpandedDot,
     };
   }
 
@@ -305,13 +294,11 @@ async function createSwiperFromCarousel(carousel, navigation) {
     effect: 'slide',
   };
 
-  if (navigation.mode === 'scroll-indicator') {
-    config.navigation = {
-      prevEl: navigation.leftIconButton || carousel.querySelector(SELECTORS.navPrev),
-      nextEl: navigation.rightIconButton || carousel.querySelector(SELECTORS.navNext),
-      addIcons: false,
-    };
-  }
+  config.navigation = {
+    prevEl: navigation.leftIconButton || carousel.querySelector(SELECTORS.navPrev),
+    nextEl: navigation.rightIconButton || carousel.querySelector(SELECTORS.navNext),
+    addIcons: false,
+  };
 
   return new SwiperLib(carousel, config);
 }
@@ -332,19 +319,6 @@ async function createSwiperFromCarousel(carousel, navigation) {
  */
 async function renderCarousel(block, model, decorateCard) {
   /**
-   * VIEWPORT: determine responsive behavior.
-   */
-  const mqTablet = window.matchMedia(MEDIA_QUERIES.tablet);
-  const mqDesktop = window.matchMedia(MEDIA_QUERIES.desktop);
-
-  /** @type {ViewportFlags} */
-  const viewport = {
-    isDesktop: mqDesktop.matches,
-    isTablet: mqTablet.matches && !mqDesktop.matches,
-    isMobile: !mqTablet.matches,
-  };
-
-  /**
    * CREATE: static skeleton (wrapper, container, track).
    */
   const { carousel, track } = createCarouselSkeletonFromConfig();
@@ -360,7 +334,6 @@ async function renderCarousel(block, model, decorateCard) {
    * ASSEMBLE: append slides and apply mobile truncation when not instrumented.
    */
   const appendedSlides = [];
-  let appendedIndex = 0;
 
   slides.forEach((slide) => {
     if (!slide) return;
@@ -371,42 +344,49 @@ async function renderCarousel(block, model, decorateCard) {
 
     if (!model.instrumented && !hasContent) return;
 
-    if (
-      !model.instrumented
-      && viewport.isMobile
-      && appendedIndex >= THRESHOLDS.mobileVisibleCards
-    ) {
-      slide.classList.add(CLASS_NAMES.hidden);
-    }
-
     track.appendChild(slide);
     appendedSlides.push(slide);
-    appendedIndex += 1;
   });
+
+  /**
+   * Keep only the first four slides on mobile (<768px) and restore all slides otherwise.
+   */
+  const applyMobileSlideLimit = () => {
+    const isMobile = window.innerWidth < 768;
+
+    appendedSlides.forEach((slide, index) => {
+      const isAppended = slide.parentElement === track;
+      if (isMobile && index >= THRESHOLDS.mobileVisibleCards && isAppended) {
+        slide.classList.remove('hidden');
+      } else if (!isMobile && !isAppended) {
+        slide.classList.ad('hidden');
+      }
+    });
+  };
+
+  applyMobileSlideLimit();
+  window.addEventListener('resize', applyMobileSlideLimit);
 
   /**
    * CREATE: navigation UI (scroll indicator for tablet/desktop, show-more on mobile).
    */
   const navigation = await createNavigationFromState({
     totalSlides: appendedSlides.length,
-    viewport,
     showMoreLabel: model.showMoreLabel,
   });
 
   /**
    * ASSEMBLE: mount navigation and wire show-more behavior.
    */
-  if (navigation.scrollIndicator) {
-    carousel.appendChild(navigation.scrollIndicator);
-  } else if (navigation.showMoreButton) {
-    navigation.showMoreButton.addEventListener('click', (event) => {
-      event.preventDefault();
-      appendedSlides.forEach((slide) => slide.classList.remove(CLASS_NAMES.hidden));
-      navigation.showMoreButton?.remove();
-    });
+  carousel.appendChild(navigation.scrollIndicator);
 
-    carousel.appendChild(navigation.showMoreButton);
-  }
+  navigation.showMoreButton.addEventListener('click', (event) => {
+    event.preventDefault();
+    appendedSlides.forEach((slide) => slide.classList.remove('hidden'));
+    navigation.showMoreButton?.remove();
+  });
+
+  carousel.appendChild(navigation.showMoreButton);
 
   /**
    * CLEANUP: remove the authored show-more label row.
@@ -438,8 +418,6 @@ async function renderCarousel(block, model, decorateCard) {
   /**
    * INIT: Swiper (tablet/desktop only).
    */
-  if (viewport.isMobile) return;
-
   const swiperInstance = await createSwiperFromCarousel(carousel, navigation);
 
   /**

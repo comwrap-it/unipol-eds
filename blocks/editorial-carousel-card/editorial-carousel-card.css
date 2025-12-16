@@ -174,9 +174,12 @@
 
 @media (width < 768px) {
     .editorial-carousel-card-wrapper {
+        height:fit-content;
+        
         & .editorial-carousel-card-container {
             width: 100%;
             max-width: 100%;
+            height:fit-content;
 
             & .editorial-carousel-card-image {
                 height: 12.05875rem;
@@ -198,6 +201,7 @@
                     var(--Card-Editorial-Card-Horizontal-Padding-M, 1rem);
                 gap: var(--Card-Editorial-Card-Gap, 1rem);
 
+                height:fit-content;
                 & .img-vector {
                     width: 16.125rem;
                     height: 5rem;

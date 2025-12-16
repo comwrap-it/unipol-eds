@@ -1,6 +1,8 @@
 .editorial-carousel-wrapper {
     /* this wrapper is added from eds */
     width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 .editorial-carousel-container {
@@ -30,10 +32,21 @@
             }
         }
     }
+
+    & .showMore {
+        display: none;
+    }
 }
 
 /* Tablet Portrait */
 @media (768px <= width < 1200px) {
+    .editorial-carousel-wrapper {
+        /* this wrapper is added from eds */
+        width: 100%;
+        display: flex;
+        justify-content: start;
+    }
+
     .editorial-carousel-container {
         margin-inline: auto;
         gap: var(--Carousel-Widget-Gap-M-Tp, var(--Space-600-40));
@@ -91,6 +104,14 @@
             & .swiper-slide {
                 margin-inline-end: 0;
             }
+        }
+
+        & .scroll-indicator {
+            display: none;
+        }
+
+        & .showMore {
+            display: block;
         }
     }
 }
