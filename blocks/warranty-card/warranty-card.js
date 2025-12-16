@@ -11,29 +11,12 @@ import {
 import { BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
 
 /**
- * @param {string} category (required)
- * @param {string} title (required)
- * @param {string} description (required)
+ * Create icon and tag container
  * @param {string} icon the icon class (required)
- * @param {LinkButtonConf} linkButtonConfig config for link button (optional)
  * @param {TagConf} tagConfig config for tag (optional)
- * @param {HTMLElement} titleRow the title row element (optional)
- * @param {HTMLElement} descriptionRow the description row element (optional)
- * @returns {Promise<HTMLElement>} The warranty card element
+ * @returns {Promise<HTMLElement>} The icon and tag container element
  */
-export const createWarrantyCard = async (
-  category,
-  title,
-  description,
-  icon,
-  linkButtonConfig = {},
-  tagConfig = {},
-  titleRow = null,
-  descriptionRow = null,
-) => {
-  const card = document.createElement('div');
-  card.className = `warranty-card${category ? ` ${category}` : ''}`;
-
+const createIconAndTagContainer = async (icon, tagConfig) => {
   const iconAndTagContainer = document.createElement('div');
   iconAndTagContainer.className = 'icon-tag-wrapper';
 
@@ -54,8 +37,18 @@ export const createWarrantyCard = async (
     iconAndTagContainer.appendChild(tagElement);
   }
 
-  card.appendChild(iconAndTagContainer);
+  return iconAndTagContainer;
+};
 
+/**
+ *
+ * @param {string} title
+ * @param {HTMLElement|null} titleRow
+ * @param {string} description
+ * @param {HTMLElement|null} descriptionRow
+ * @returns {Promise<HTMLElement>}
+ */
+const createTextContent = (title, titleRow, description, descriptionRow) => {
   const textContent = document.createElement('div');
   textContent.className = 'text-content';
   let titleEl;
@@ -80,26 +73,69 @@ export const createWarrantyCard = async (
     descriptionEl.textContent = description;
   }
   textContent.appendChild(descriptionEl);
+
+  return textContent;
+};
+
+/**
+ *
+ * @param {LinkButtonConf} linkButtonConfig
+ * @returns {Promise<HTMLElement>}
+ */
+const createCardLinkButton = async (linkButtonConfig) => {
+  const { createLinkButton } = await import(
+    '../atoms/buttons/link-button/link-button.js'
+  );
+  await loadCSS(
+    `${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`,
+  );
+  const linkButtonElement = createLinkButton(
+    linkButtonConfig.label,
+    linkButtonConfig.href,
+    linkButtonConfig.openInNewTab,
+    linkButtonConfig.leftIcon,
+    linkButtonConfig.rightIcon,
+    linkButtonConfig.leftIconSize,
+    linkButtonConfig.rightIconSize,
+    linkButtonConfig.disabled,
+  );
+
+  return linkButtonElement;
+};
+
+/**
+ * @param {string} category (required)
+ * @param {string} title (required)
+ * @param {string} description (required)
+ * @param {string} icon the icon class (required)
+ * @param {LinkButtonConf} linkButtonConfig config for link button (optional)
+ * @param {TagConf} tagConfig config for tag (optional)
+ * @param {HTMLElement} titleRow the title row element (optional)
+ * @param {HTMLElement} descriptionRow the description row element (optional)
+ * @returns {Promise<HTMLElement>} The warranty card element
+ */
+export const createWarrantyCard = async (
+  category,
+  title,
+  description,
+  icon,
+  linkButtonConfig = {},
+  tagConfig = {},
+  titleRow = null,
+  descriptionRow = null,
+) => {
+  const card = document.createElement('div');
+  card.className = `warranty-card${category ? ` ${category}` : ''}`;
+
+  const iconAndTagContainer = await createIconAndTagContainer(icon, tagConfig);
+  card.appendChild(iconAndTagContainer);
+
+  const textContent = await createTextContent(title, titleRow, description, descriptionRow);
   card.appendChild(textContent);
 
   if (linkButtonConfig?.label && linkButtonConfig?.href) {
-    const { createLinkButton } = await import(
-      '../atoms/buttons/link-button/link-button.js'
-    );
-    await loadCSS(
-      `${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`,
-    );
-    const linkButtonElement = createLinkButton(
-      linkButtonConfig.label,
-      linkButtonConfig.href,
-      linkButtonConfig.openInNewTab,
-      linkButtonConfig.leftIcon,
-      linkButtonConfig.rightIcon,
-      linkButtonConfig.leftIconSize,
-      linkButtonConfig.rightIconSize,
-      linkButtonConfig.disabled,
-    );
-    card.appendChild(linkButtonElement);
+    const linkButton = await createCardLinkButton(linkButtonConfig);
+    card.appendChild(linkButton);
   }
 
   return card;
