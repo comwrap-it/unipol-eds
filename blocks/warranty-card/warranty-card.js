@@ -8,7 +8,7 @@ import {
   createIconElementFromCssClass,
   createTextElementFromRow,
 } from '../../scripts/domHelpers.js';
-import { BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
+import { loadFragment } from '../fragment/fragment.js';
 
 /**
  * Create icon and tag container
@@ -78,29 +78,36 @@ const createTextContent = (title, titleRow, description, descriptionRow) => {
 };
 
 /**
- *
- * @param {LinkButtonConf} linkButtonConfig
- * @returns {Promise<HTMLElement>}
+ * Handles the link click to load the respective fragment
+ * @param {Event} event
+ * @param {HTMLElement} card
  */
-const createCardLinkButton = async (linkButtonConfig) => {
-  const { createLinkButton } = await import(
-    '../atoms/buttons/link-button/link-button.js'
-  );
+const handleLinkClick = async (event, card) => {
+  event.stopPropagation();
+  event.preventDefault();
+  const link = event.currentTarget;
+  const href = link.getAttribute('href');
+  if (href) {
+    const fragment = await loadFragment(href);
+    if (fragment) {
+      const fragmentSection = fragment.querySelector(':scope .section');
+      if (fragmentSection) {
+        fragmentSection.classList.remove('section');
+        card.appendChild(fragmentSection);
+      }
+    }
+  }
+};
+
+const createCardLinkButton = async (label, href, card) => {
   await loadCSS(
     `${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`,
   );
-  const linkButtonElement = createLinkButton(
-    linkButtonConfig.label,
-    linkButtonConfig.href,
-    linkButtonConfig.openInNewTab,
-    linkButtonConfig.leftIcon,
-    linkButtonConfig.rightIcon,
-    linkButtonConfig.leftIconSize,
-    linkButtonConfig.rightIconSize,
-    linkButtonConfig.disabled,
-  );
-
-  return linkButtonElement;
+  const linkButton = document.createElement('a');
+  linkButton.className = 'link-btn';
+  linkButton.href = href;
+  linkButton.textContent = label;
+  linkButton.onclick = (event) => handleLinkClick(event, card);
 };
 
 /**
@@ -108,7 +115,7 @@ const createCardLinkButton = async (linkButtonConfig) => {
  * @param {string} title (required)
  * @param {string} description (required)
  * @param {string} icon the icon class (required)
- * @param {LinkButtonConf} linkButtonConfig config for link button (optional)
+ * @param {Pick<LinkButtonConf, "label" | "href">} linkButtonConfig config for button (optional)
  * @param {TagConf} tagConfig config for tag (optional)
  * @param {HTMLElement} titleRow the title row element (optional)
  * @param {HTMLElement} descriptionRow the description row element (optional)
@@ -130,11 +137,20 @@ export const createWarrantyCard = async (
   const iconAndTagContainer = await createIconAndTagContainer(icon, tagConfig);
   card.appendChild(iconAndTagContainer);
 
-  const textContent = await createTextContent(title, titleRow, description, descriptionRow);
+  const textContent = await createTextContent(
+    title,
+    titleRow,
+    description,
+    descriptionRow,
+  );
   card.appendChild(textContent);
 
   if (linkButtonConfig?.label && linkButtonConfig?.href) {
-    const linkButton = await createCardLinkButton(linkButtonConfig);
+    const linkButton = createCardLinkButton(
+      linkButtonConfig.label,
+      linkButtonConfig.href,
+      card,
+    );
     card.appendChild(linkButton);
   }
 
@@ -149,22 +165,12 @@ export const extractWarrantyCardValuesFromRows = (rows) => {
   const linkButtonConfig = {};
   const tagConfig = {};
   if (rows[4]?.textContent?.trim()) {
-    linkButtonConfig.label = rows[4]?.textContent?.trim() || 'Link';
-    linkButtonConfig.href = rows[5]?.querySelector('a')?.href || rows[5]?.textContent?.trim() || '#';
-    linkButtonConfig.openInNewTab = rows[6]?.textContent?.trim() === 'true';
-    linkButtonConfig.leftIcon = rows[7]?.textContent?.trim() || '';
-    linkButtonConfig.rightIcon = rows[8]?.textContent?.trim() || '';
-    linkButtonConfig.leftIconSize = (
-      rows[9]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM
-    ).toLowerCase();
-    linkButtonConfig.rightIconSize = (
-      rows[10]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM
-    ).toLowerCase();
-    linkButtonConfig.disabled = rows[11]?.textContent?.trim() === 'true';
+    linkButtonConfig.label = rows[4]?.textContent?.trim() || '';
+    linkButtonConfig.href = rows[5]?.textContent?.trim() || '';
   }
-  if (rows[12]?.textContent?.trim()) {
+  if (rows[6]?.textContent?.trim()) {
     const isDefaultCategory = category.startsWith('default-');
-    tagConfig.label = rows[12]?.textContent?.trim() || '';
+    tagConfig.label = rows[6]?.textContent?.trim() || '';
     tagConfig.category = isDefaultCategory ? '' : category;
     tagConfig.type = isDefaultCategory ? 'custom' : 'secondary';
   }

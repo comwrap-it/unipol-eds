@@ -2698,138 +2698,22 @@
         ]
       },
       {
-        "component": "container",
-        "name": "button-container",
-        "label": "Configurazione Pulsante",
-        "collapsible": true,
+        "component": "text",
+        "name": "button-label",
+        "label": "Testo Bottone"
+      },
+      {
+        "id": "aem-content-picker",
         "fields": [
           {
-            "component": "text",
-            "name": "linkButtonLabel",
-            "label": "Testo del link",
-            "required": true,
-            "validation": {
-              "maxLength": 30,
-              "customErrorMsg": "Testo troppo lungo (max 30 caratteri)"
-            }
-          },
-          {
             "component": "aem-content",
-            "name": "linkButtonHref",
-            "label": "Link URL",
-            "description": "URL di destinazione per questo link",
-            "required": true
-          },
-          {
-            "component": "boolean",
-            "label": "Apri in una nuova scheda",
-            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
-            "name": "linkButtonOpenInNewTab",
-            "valueType": "boolean",
-            "value": false
-          },
-          {
-            "component": "select",
-            "name": "linkButtonLeftIcon",
-            "label": "Icona a sinistra",
-            "description": "Opzionale icona a sinistra.",
-            "options": [
-              {
-                "name": "None",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "un-icon-chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "un-icon-chevron-right"
-              },
-              {
-                "name": "Search Icon",
-                "value": "un-icon-search"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "linkButtonRightIcon",
-            "label": "Icona a destra",
-            "description": "Opzionale icona a destra. Non utilizzare se già presente un'icona a sinistra, salvo eccezioni funzionali.",
-            "options": [
-              {
-                "name": "None",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "un-icon-chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "un-icon-chevron-right"
-              },
-              {
-                "name": "Search Icon",
-                "value": "un-icon-search"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "linkButtonLeftIconSize",
-            "label": "Dimensione icona a sinistra",
-            "value": "medium",
-            "options": [
-              {
-                "name": "Small",
-                "value": "small"
-              },
-              {
-                "name": "Medium",
-                "value": "medium"
-              },
-              {
-                "name": "Large",
-                "value": "large"
-              },
-              {
-                "name": "Extra Large",
-                "value": "extra-large"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "linkButtonRightIconSize",
-            "label": "Dimensione icona a destra",
-            "value": "medium",
-            "options": [
-              {
-                "name": "Small",
-                "value": "small"
-              },
-              {
-                "name": "Medium",
-                "value": "medium"
-              },
-              {
-                "name": "Large",
-                "value": "large"
-              },
-              {
-                "name": "Extra Large",
-                "value": "extra-large"
-              }
-            ]
-          },
-          {
-            "component": "switch",
-            "name": "linkButtonDisabled",
-            "label": "Disabled",
-            "description": "Toggle to disable the link button",
-            "value": false
+            "name": "reference",
+            "value": "",
+            "label": "AEM Content Picker",
+            "valueType": "string",
+            "validation": {
+              "rootPath": "/content/unipol"
+            }
           }
         ]
       },
