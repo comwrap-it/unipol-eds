@@ -51,34 +51,14 @@
     ]
   },
   {
-    "id": "kpi-highlights-widget",
-    "components": []
-  },
-  {
     "id": "faq-widget-section",
     "components": []
-  },
-  {
-    "id": "hero-widget",
-    "components": [
-      "full-screen-hero-carousel"
-    ]
-  },
-  {
-    "id": "mini-hero-widget",
-    "components": [
-      "mini-hero-carousel"
-    ]
   },
   {
     "id": "blog-carousel-widget",
     "components": [
       "blog-carousel"
     ]
-  },
-  {
-    "id": "insurance-product-carousel-widget",
-    "components": []
   },
   {
     "id": "card-grid-widget",
@@ -89,6 +69,26 @@
   {
     "id": "editorial-carousel-widget",
     "components": []
+  },
+  {
+    "id": "hero-widget",
+    "components": [
+      "full-screen-hero-carousel"
+    ]
+  },
+  {
+    "id": "insurance-product-carousel-widget",
+    "components": []
+  },
+  {
+    "id": "kpi-highlights-widget",
+    "components": []
+  },
+  {
+    "id": "mini-hero-widget",
+    "components": [
+      "mini-hero-carousel"
+    ]
   },
   {
     "id": "card-grid",
@@ -116,10 +116,6 @@
       "button",
       "title"
     ]
-  },
-  {
-    "id": "editorial-carousel-widget",
-    "components": []
   },
   {
     "id": "editorial-carousel",
@@ -190,8 +186,10 @@
   {
     "id": "prodotto-unico-header",
     "components": [
-      "prodotto-unico-header"
-    ]
+      "prodotto-unico-header-action"
+    ],
+    "min": 1,
+    "max": 3
   },
   {
     "id": "text-list",

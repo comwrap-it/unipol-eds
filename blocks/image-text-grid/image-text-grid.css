@@ -2,7 +2,6 @@
 
 .image-text-grid {
   width: 100%;
-  padding: var(--Layout-Section-Vertical-Padding, 4rem) var(--Layout-Section-Margin-Horizontal-Padding, 4rem);
   display: flex;
   flex-direction: column;
   gap: var(--Section-Widget-Gap-D, 7.5rem);

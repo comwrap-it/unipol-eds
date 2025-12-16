@@ -26,24 +26,31 @@
           "component": "text",
           "name": "title",
           "label": "Titolo",
-          "description": "max 40 caratteri",
           "required": true,
-          "maxlength": 40
+          "validation": {
+            "maxLength": 40,
+            "customErrorMsg": "Testo troppo lungo"
+          }
         },
         {
           "component": "text",
           "name": "description",
           "label": "Descrizione",
-          "description": "max 150 caratteri",
           "required": true,
-          "maxlength": 150
+          "validation": {
+            "maxLength": 150,
+            "customErrorMsg": "Testo troppo lungo"
+          }
         },
         {
           "component": "text",
           "name": "showMoreButtonLabel",
           "label": "Testo pulsante carica altro",
           "description": "Default \"Mostra di più\"",
-          "maxlength": 15
+          "validation": {
+            "maxLength": 15,
+            "customErrorMsg": "Testo troppo lungo"
+          }
         }
       ]
     }

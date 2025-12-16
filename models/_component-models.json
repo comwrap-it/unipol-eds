@@ -18,28 +18,7 @@
     "...": "./_section.json#/models"
   },
   {
-    "...": "./_kpi-highlights-widget.json#/models"
-  },
-  {
-    "...": "./widgets/_FAQ-widget.json#/models"
-  },
-  {
-    "...": "./widgets/_hero-widget.json#/models"
-  },
-  {
-    "...": "./widgets/_mini-hero-widget.json#/models"
-  },
-  {
-    "...": "./widgets/_blog-carousel-widget.json#/models"
-  },
-  {
-    "...": "./widgets/_insurance-product-carousel-widget.json#/models"
-  },
-  {
-    "...": "./widgets/_card-grid-widget.json#/models"
-  },
-  {
-    "...": "../blocks/editorial-carousel-widget/_editorial-carousel-widget.json#/models"
+    "...": "./widgets/_*.json#/models"
   },
   {
     "...": "../blocks/*/_*.json#/models"

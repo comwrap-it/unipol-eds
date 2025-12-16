@@ -5,7 +5,6 @@
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
-  padding: var(--Layout-Section-Vertical-Padding, 4rem) var(--Layout-Section-Margin-Horizontal-Padding, 4rem);
   overflow-wrap: break-word;
   word-wrap: break-word;
 }

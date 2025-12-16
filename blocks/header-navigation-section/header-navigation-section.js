@@ -86,6 +86,14 @@ async function closeBox(pill, box) {
   pill?.setAttribute('aria-expanded', 'false');
 }
 
+async function closeOpenBoxOnScroll(openBoxRef) {
+  if (!openBoxRef?.box || !openBoxRef?.pill) return;
+
+  await closeBox(openBoxRef.pill, openBoxRef.box);
+  openBoxRef.box = null;
+  openBoxRef.pill = null;
+}
+
 function addCloseIconToBox(box, pill) {
   if (!box || !pill) return;
   if (window.innerWidth > 1200) return;
@@ -404,6 +412,20 @@ export default async function decorate(block) {
       .map((pillEl) => loadBlock(pillEl)),
   );
 
+  let scrollTicking = false;
+
+  const onScrollCloseBox = () => {
+    if (scrollTicking) return;
+
+    scrollTicking = true;
+    requestAnimationFrame(async () => {
+      await closeOpenBoxOnScroll(openBoxRef);
+      scrollTicking = false;
+    });
+  };
+
+  window.addEventListener('scroll', onScrollCloseBox, { passive: true });
+
   document.addEventListener('click', async (e) => {
     const { box, pill } = openBoxRef;
     if (!box) return;
@@ -414,6 +436,7 @@ export default async function decorate(block) {
     openBoxRef.box = null;
     openBoxRef.pill = null;
   });
+
   window.addEventListener('resize', () => {
     pillToBoxMap.forEach((box, pill) => {
       if (window.innerWidth <= 1200) {

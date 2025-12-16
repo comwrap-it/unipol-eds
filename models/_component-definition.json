@@ -26,40 +26,7 @@
           "...": "./_section.json#/definitions"
         },
         {
-          "...": "./_kpi-highlights-widget.json#/definitions"
-        },
-        {
-          "...": "./widgets/_FAQ-widget.json#/definitions"
-        },
-        {
-          "...": "./widgets/_hero-widget.json#/definitions"
-        },
-        {
-          "...": "./widgets/_mini-hero-widget.json#/definitions"
-        },
-        {
-          "...": "./widgets/_blog-carousel-widget.json#/definitions"
-        },
-        {
-          "...": "./widgets/_insurance-product-carousel-widget.json#/definitions"
-        },
-        {
-          "...": "./widgets/_card-grid-widget.json#/definitions"
-        },
-        {
-          "...": "../blocks/insurance-product-carousel/_insurance-product-carousel.json#/definitions"
-        },
-        {
-          "...": "../blocks/insurance-product-card/_insurance-product-card.json#/definitions"
-        },
-        {
-          "...": "../blocks/editorial-carousel-widget/_editorial-carousel-widget.json#/definitions"
-        },
-        {
-          "...": "../blocks/editorial-carousel/_editorial-carousel.json#/definitions"
-        },
-        {
-          "...": "../blocks/editorial-carousel-card/_editorial-carousel-card.json#/definitions"
+          "...": "./widgets/_*.json#/definitions"
         },
         {
           "...": "./_unipol-header.json#/definitions"

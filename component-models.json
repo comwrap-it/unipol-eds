@@ -142,71 +142,11 @@
     ]
   },
   {
-    "id": "kpi-highlights-widget",
-    "fields": [
-      {
-        "component": "text",
-        "name": "kpi-highlights-widget-name",
-        "label": "Nome sezione KPI Highlights Widget"
-      },
-      {
-        "component": "select",
-        "name": "style",
-        "value": "",
-        "label": "Background Color",
-        "description": "Colore sfondo della sezione KPI Highlights Widget",
-        "valueType": "string",
-        "options": [
-          {
-            "name": "Bianco",
-            "value": "bg-white"
-          },
-          {
-            "name": "Grigio scuro",
-            "value": "bg-dark-gray"
-          }
-        ]
-      }
-    ]
-  },
-  {
     "id": "faq-widget-section",
     "fields": [
       {
         "component": "toggle",
         "name": "faq-widget-section-dark-theme",
-        "label": "Tema scuro",
-        "default": false
-      }
-    ]
-  },
-  {
-    "id": "hero-widget",
-    "fields": [
-      {
-        "component": "text",
-        "name": "hero-widget-name",
-        "label": "Nome sezione Hero Widget"
-      },
-      {
-        "component": "toggle",
-        "name": "hero-widget-dark-theme",
-        "label": "Tema scuro",
-        "default": false
-      }
-    ]
-  },
-  {
-    "id": "mini-hero-widget",
-    "fields": [
-      {
-        "component": "text",
-        "name": "mini-hero-widget-name",
-        "label": "Nome sezione Mini Hero Widget"
-      },
-      {
-        "component": "toggle",
-        "name": "mini-hero-widget-dark-theme",
         "label": "Tema scuro",
         "default": false
       }
@@ -223,22 +163,6 @@
       {
         "component": "toggle",
         "name": "blog-carousel-widget-dark-theme",
-        "label": "Tema scuro",
-        "default": false
-      }
-    ]
-  },
-  {
-    "id": "insurance-product-carousel-widget",
-    "fields": [
-      {
-        "component": "text",
-        "name": "insurance-product-carousel-widget-name",
-        "label": "Nome sezione Insurance Product Carousel Widget"
-      },
-      {
-        "component": "toggle",
-        "name": "insurance-product-carousel-widget-dark-theme",
         "label": "Tema scuro",
         "default": false
       }
@@ -277,22 +201,104 @@
     ]
   },
   {
+    "id": "hero-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "hero-widget-name",
+        "label": "Nome sezione Hero Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "hero-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "insurance-product-carousel-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "insurance-product-carousel-widget-name",
+        "label": "Nome sezione Insurance Product Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "insurance-product-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "kpi-highlights-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "kpi-highlights-widget-name",
+        "label": "Nome sezione KPI Highlights Widget"
+      },
+      {
+        "component": "select",
+        "name": "style",
+        "value": "",
+        "label": "Background Color",
+        "description": "Colore sfondo della sezione KPI Highlights Widget",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "Bianco",
+            "value": "bg-white"
+          },
+          {
+            "name": "Grigio scuro",
+            "value": "bg-dark-gray"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "mini-hero-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "mini-hero-widget-name",
+        "label": "Nome sezione Mini Hero Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "mini-hero-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
     "id": "accordion",
     "fields": [
       {
         "component": "text",
         "name": "accordionLabel",
         "label": "Domanda",
-        "description": "Descrizione della domanda (max 120 caratteri)",
-        "maxlength": 120,
+        "description": "Descrizione della domanda",
+        "validation": {
+          "maxLength": 120,
+          "customErrorMsg": "Testo troppo lungo"
+        },
         "value": ""
       },
       {
-        "component": "text",
-        "name": "accordionDescription",
+        "component": "richtext",
+        "name": "accordionDescriptionRichtext",
         "label": "Risposta",
-        "description": "Risposta contenuta nell'accordion (max 800 caratteri)",
-        "maxlength": 800,
+        "description": "Risposta contenuta nell'accordion",
+        "validation": {
+          "maxLength": 800,
+          "customErrorMsg": "Testo troppo lungo"
+        },
         "value": ""
       }
     ]
@@ -450,14 +456,14 @@
         "component": "text",
         "name": "title",
         "label": "Titolo",
-        "maxlength": 15,
+        "maxlength": 65,
         "required": true
       },
       {
         "component": "text",
         "name": "description",
         "label": "Descrizione",
-        "maxlength": 130,
+        "maxlength": 200,
         "required": true
       },
       {
@@ -584,13 +590,6 @@
         ]
       },
       {
-        "component": "text",
-        "name": "note",
-        "label": "Note",
-        "maxlength": 60,
-        "required": true
-      },
-      {
         "component": "reference",
         "valueType": "string",
         "name": "image",
@@ -604,22 +603,6 @@
         "name": "imageSR",
         "label": "Testo alternativo per l'immagine",
         "required": true
-      }
-    ]
-  },
-  {
-    "id": "editorial-carousel-widget",
-    "fields": [
-      {
-        "component": "text",
-        "name": "editorial-carousel-widget-name",
-        "label": "Nome sezione Editorial Carousel Widget"
-      },
-      {
-        "component": "toggle",
-        "name": "editorial-carousel-widget-dark-theme",
-        "label": "Tema scuro",
-        "default": false
       }
     ]
   },
@@ -642,24 +625,31 @@
         "component": "text",
         "name": "title",
         "label": "Titolo",
-        "description": "max 40 caratteri",
         "required": true,
-        "maxlength": 40
+        "validation": {
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "text",
         "name": "description",
         "label": "Descrizione",
-        "description": "max 150 caratteri",
         "required": true,
-        "maxlength": 150
+        "validation": {
+          "maxLength": 150,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "text",
         "name": "showMoreButtonLabel",
         "label": "Testo pulsante carica altro",
         "description": "Default \"Mostra di più\"",
-        "maxlength": 15
+        "validation": {
+          "maxLength": 15,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       }
     ]
   },
@@ -1635,15 +1625,21 @@
         "component": "text",
         "name": "title",
         "label": "Titolo",
-        "maxlength": 15,
-        "required": true
+        "required": true,
+        "validation": {
+          "maxLength": 15,
+          "customErrorMsg": "Titolo troppo lungo (max 15 caratteri)"
+        }
       },
       {
         "component": "text",
         "name": "description",
         "label": "Descrizione",
-        "maxlength": 130,
-        "required": true
+        "required": true,
+        "validation": {
+          "maxLength": 130,
+          "customErrorMsg": "Descrizione troppo lunga (max 130 caratteri)"
+        }
       },
       {
         "component": "container",
@@ -1772,8 +1768,11 @@
         "component": "text",
         "name": "note",
         "label": "Note",
-        "maxlength": 60,
-        "required": true
+        "required": true,
+        "validation": {
+          "maxLength": 60,
+          "customErrorMsg": "Note troppo lunghe (max 60 caratteri)"
+        }
       },
       {
         "component": "container",
@@ -1890,7 +1889,10 @@
         "name": "showMoreButtonLabel",
         "label": "Testo bottone per dispositivi mobile",
         "description": "Default \"Mostra di più\"",
-        "maxlength": 15
+        "validation": {
+          "maxLength": 15,
+          "customErrorMsg": "Testo troppo lungo (max 15 caratteri)"
+        }
       }
     ]
   },
@@ -2225,52 +2227,45 @@
         "component": "reference",
         "valueType": "string",
         "name": "logoImage",
-        "label": "Logo",
+        "label": "Logo Brand",
         "multi": false,
         "required": true
       },
       {
         "component": "text",
-        "valueType": "string",
         "name": "logoLink",
-        "label": "Link del Logo",
-        "default": "/"
-      },
+        "label": "Link Logo",
+        "valueType": "string"
+      }
+    ]
+  },
+  {
+    "id": "prodotto-unico-header-action",
+    "fields": [
       {
-        "component": "multifield",
-        "name": "actions",
-        "label": "Pulsanti Azione (Destra)",
-        "multi": true,
-        "valueType": "string",
-        "fields": [
+        "component": "select",
+        "name": "icon",
+        "label": "Tipo di azione",
+        "options": [
           {
-            "component": "select",
-            "name": "icon",
-            "label": "Nome Icona",
-            "valueType": "string",
-            "options": [
-              {
-                "name": "Carrello",
-                "value": "cart"
-              },
-              {
-                "name": "Telefono",
-                "value": "phone"
-              },
-              {
-                "name": "Utente",
-                "value": "user"
-              }
-            ]
+            "name": "Carrello",
+            "value": "cart"
           },
           {
-            "component": "text",
-            "name": "link",
-            "label": "Link Destinazione",
-            "valueType": "string",
-            "default": "#"
+            "name": "Utente",
+            "value": "user"
+          },
+          {
+            "name": "Telefono",
+            "value": "phone"
           }
         ]
+      },
+      {
+        "component": "text",
+        "name": "link",
+        "label": "URL Destinazione",
+        "valueType": "string"
       }
     ]
   },
