@@ -60,6 +60,10 @@
     ]
   },
   {
+    "id": "editorial-carousel-widget",
+    "components": []
+  },
+  {
     "id": "hero-widget",
     "components": [
       "full-screen-hero-carousel"
@@ -78,10 +82,6 @@
     "components": [
       "mini-hero-carousel"
     ]
-  },
-  {
-    "id": "editorial-carousel-widget",
-    "components": []
   },
   {
     "id": "cards",
@@ -103,10 +103,6 @@
       "button",
       "title"
     ]
-  },
-  {
-    "id": "editorial-carousel-widget",
-    "components": []
   },
   {
     "id": "editorial-carousel",

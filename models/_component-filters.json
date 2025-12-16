@@ -35,9 +35,6 @@
     "...": "./widgets/_*.json#/filters"
   },
   {
-    "...": "../blocks/editorial-carousel-widget/_editorial-carousel-widget.json#/filters"
-  },
-  {
     "...": "../blocks/*/_*.json#/filters"
   },
   {
