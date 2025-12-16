@@ -103,9 +103,6 @@ function createEditorialCarouselCardBlock(args) {
     createPlainRow(args.buttonIconSize),
     createPlainRow(args.leftIcon),
     createPlainRow(args.rightIcon),
-
-    // 9: Note
-    createTextRow('p', args.note || ''),
   ];
 
   if (args.imageLayout === IMAGE_LAYOUTS.LEGACY) {
@@ -155,11 +152,6 @@ export default {
     description: {
       control: 'text',
       description: 'Card description (row 1).',
-      table: { category: 'Content' },
-    },
-    note: {
-      control: 'text',
-      description: 'Optional note below the CTA (row 9).',
       table: { category: 'Content' },
     },
     buttonLabel: {
@@ -226,7 +218,6 @@ export default {
   args: {
     title: 'Tecnologia Unibox',
     description: 'Con i nostri dispositivi satellitari Unibox, puoi ottenere sconti personalizzati sul premio in base al tuo stile di guida.',
-    note: '',
     buttonLabel: 'Scopri di piu',
     buttonVariant: BUTTON_VARIANTS.PRIMARY,
     buttonHref: 'https://example.com',
@@ -242,12 +233,6 @@ export default {
 };
 
 export const Default = {};
-
-export const WithNote = {
-  args: {
-    note: 'Condizioni applicabili. Maggiori dettagli nella pagina dedicata.',
-  },
-};
 
 export const LegacyImageRows = {
   args: {
