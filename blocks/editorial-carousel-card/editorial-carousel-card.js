@@ -16,15 +16,6 @@ export const EDITORIAL_CAROUSEL_CARD_SIZES = {
   M: 'm',
 };
 
-export const EDITORIAL_CAROUSEL_CARD_GLOBAL = (() => {
-  const root = globalThis;
-  root.unipolEds = root.unipolEds || {};
-  root.unipolEds.editorialCarouselCard = root.unipolEds.editorialCarouselCard || {
-    size: EDITORIAL_CAROUSEL_CARD_SIZES.S,
-  };
-  return root.unipolEds.editorialCarouselCard;
-})();
-
 const resolveEditorialCarouselCardSize = (value) => {
   const normalized = String(value || '').trim().toLowerCase();
   if (['m', 'md', 'medium'].includes(normalized)) return EDITORIAL_CAROUSEL_CARD_SIZES.M;
@@ -131,7 +122,7 @@ export function createEditorialCarouselCard(
   {
     title = '',
     description = '',
-    size = null,
+    size = 'm',
     imageSrc = '',
     imageAlt = '',
     imageElement = null,
@@ -146,9 +137,7 @@ export function createEditorialCarouselCard(
   const card = document.createElement('div');
   card.className = 'editorial-carousel-card-container card-block';
 
-  const resolvedSize = resolveEditorialCarouselCardSize(
-    size || EDITORIAL_CAROUSEL_CARD_GLOBAL.size,
-  );
+  const resolvedSize = resolveEditorialCarouselCardSize(size);
   card.dataset.editorialCardSize = resolvedSize;
   card.style.setProperty(
     '--editorial-card-size',
@@ -309,9 +298,7 @@ export default async function decorateEditorialCarouselCard(block, isFirstCard =
   const imageAlt = imageRowIndex >= 0
     ? rows[imageRowIndex + 1]?.textContent?.trim() || ''
     : '';
-  const resolvedSize = resolveEditorialCarouselCardSize(
-    block.dataset.editorialCardSize || EDITORIAL_CAROUSEL_CARD_GLOBAL.size,
-  );
+  const resolvedSize = resolveEditorialCarouselCardSize(block.dataset.editorialCardSize);
 
   let imageElement = null;
   if (imageRow) {

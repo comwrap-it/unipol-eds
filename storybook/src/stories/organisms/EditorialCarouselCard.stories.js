@@ -1,10 +1,5 @@
 import { html } from 'lit';
 
-import {
-  createEditorialCarouselCard,
-  EDITORIAL_CAROUSEL_CARD_GLOBAL,
-  EDITORIAL_CAROUSEL_CARD_SIZES,
-} from '@blocks/editorial-carousel-card/editorial-carousel-card.js';
 import { BUTTON_ICON_SIZES } from '@blocks/atoms/buttons/standard-button/standard-button.js';
 
 // CSS is loaded globally in preview-head.html
@@ -49,8 +44,6 @@ export default {
   title: 'Organisms/Editorial Carousel Card',
   tags: ['autodocs'],
   render: (args) => {
-    EDITORIAL_CAROUSEL_CARD_GLOBAL.size = args.size;
-
     const outer = document.createElement('div');
     outer.style.display = 'flex';
     outer.style.justifyContent = 'center';
