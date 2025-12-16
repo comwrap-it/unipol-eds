@@ -1,0 +1,47 @@
+{
+  "definitions": [
+    {
+      "title": "Tooltip",
+      "id": "tooltip",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Tooltip",
+              "model": "tooltip"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "tooltip",
+      "fields": [
+        {
+          "component": "text",
+          "name": "toolTip",
+          "label": "Titolo tooltip",
+          "required": true,
+          "validation": {
+            "maxLength": 60,
+            "customErrorMsg": "Testo troppo lungo"
+          }
+        },
+        {
+          "component": "richtext",
+          "name": "toolTipSub",
+          "label": "Sottotitolo Tooltip",
+          "valueType": "string",
+          "validation": {
+            "maxLength": 300,
+            "customErrorMsg": "Testo troppo lungo"
+          }
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

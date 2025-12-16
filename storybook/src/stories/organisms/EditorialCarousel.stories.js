@@ -1,10 +1,11 @@
 import { html } from 'lit';
 
-import decorateEditorialCarousel from '@blocks/editorial-carousel/editorial-carousel.js';
+import { createEditorialCarousel } from '@blocks/editorial-carousel/editorial-carousel.js';
 import {
-  BUTTON_ICON_SIZES,
-  BUTTON_VARIANTS,
-} from '@blocks/atoms/buttons/standard-button/standard-button.js';
+  EDITORIAL_CAROUSEL_CARD_GLOBAL,
+  EDITORIAL_CAROUSEL_CARD_SIZES,
+} from '@blocks/editorial-carousel-card/editorial-carousel-card.js';
+import { BUTTON_ICON_SIZES } from '@blocks/atoms/buttons/standard-button/standard-button.js';
 
 // CSS is loaded globally in preview-head.html
 
@@ -44,133 +45,59 @@ function createPlaceholderImageDataUri({
   return `data:image/svg+xml,${encodeURIComponent(svg)}`;
 }
 
-function createRowWithElement(element) {
-  const row = document.createElement('div');
-  row.appendChild(element);
-  return row;
-}
-
-function createTextRow(tagName, text) {
-  const element = document.createElement(tagName);
-  element.textContent = text;
-  return createRowWithElement(element);
-}
-
-function createPlainRow(text) {
-  const row = document.createElement('div');
-  row.textContent = text;
-  return row;
-}
-
-function createLinkRow(href, label) {
-  const link = document.createElement('a');
-  link.href = href;
-  link.textContent = label || href;
-  return createRowWithElement(link);
-}
-
-function createImageRow(src) {
-  const img = document.createElement('img');
-  img.src = src;
-  img.alt = '';
-  return createRowWithElement(img);
-}
-
-function createCardItemRows({
-  title,
-  description,
-  buttonLabel,
-  buttonVariant,
-  buttonHref,
-  openInNewTab,
-  buttonIconSize,
-  leftIcon,
-  rightIcon,
-  imageSrc,
-  imageAlt,
-}) {
-  return [
-    // 0: Title
-    createTextRow('h3', title),
-
-    // 1: Description
-    createTextRow('p', description),
-
-    // 2..8: CTA (standard-button authoring model)
-    createPlainRow(buttonLabel),
-    createPlainRow(buttonVariant),
-    createLinkRow(buttonHref, buttonHref),
-    createPlainRow(String(Boolean(openInNewTab))),
-    createPlainRow(buttonIconSize),
-    createPlainRow(leftIcon),
-    createPlainRow(rightIcon),
-
-    // 10: Image
-    createImageRow(imageSrc),
-
-    // 11: Alt
-    createPlainRow(imageAlt),
-  ];
-}
-
-function createEditorialCarouselBlock(args) {
-  const block = document.createElement('div');
-  block.className = 'editorial-carousel';
-  block.dataset.blockName = 'editorial-carousel';
-
-  // Row 0: "Show more" label.
-  block.appendChild(createPlainRow(args.showMoreLabel));
-
-  // Row 1..n: card item rows.
-  for (let i = 0; i < args.cardCount; i += 1) {
-    const imageSrc = createPlaceholderImageDataUri({
-      label: `Card ${i + 1}`,
-      background: i % 2 ? '#D9E2FF' : '#E7F6F2',
-      foreground: i % 2 ? '#0A1F44' : '#003D2B',
-    });
-
-    const item = document.createElement('div');
-    const rows = createCardItemRows({
-      title: `${args.titlePrefix} ${i + 1}`,
-      description: args.description,
-      buttonLabel: args.buttonLabel,
-      buttonVariant: args.buttonVariant,
-      buttonHref: args.buttonHref,
-      openInNewTab: args.openInNewTab,
-      buttonIconSize: args.buttonIconSize,
-      leftIcon: args.leftIcon,
-      rightIcon: args.rightIcon,
-      imageSrc,
-      imageAlt: args.imageAlt,
-    });
-
-    rows.forEach((row) => item.appendChild(row));
-    block.appendChild(item);
-  }
-
-  return block;
-}
-
 export default {
   title: 'Organisms/Editorial Carousel',
   tags: ['autodocs'],
   render: (args) => {
-    const container = document.createElement('div');
+    EDITORIAL_CAROUSEL_CARD_GLOBAL.size = args.cardSize;
 
-    const block = createEditorialCarouselBlock(args);
-    container.appendChild(block);
+    const wrapper = document.createElement('div');
+    wrapper.className = 'editorial-carousel-wrapper';
 
-    // Decorate after insertion.
-    requestAnimationFrame(() => {
-      decorateEditorialCarousel(block);
+    const cards = Array.from({ length: args.cardCount }, (_, index) => {
+      const imageSrc = createPlaceholderImageDataUri({
+        label: `Card ${index + 1}`,
+        background: index % 2 ? '#D9E2FF' : '#E7F6F2',
+        foreground: index % 2 ? '#0A1F44' : '#003D2B',
+      });
+
+      return {
+        title: `${args.titlePrefix} ${index + 1}`,
+        description: args.description,
+        imageSrc,
+        imageAlt: args.imageAlt,
+        note: args.note,
+        buttonConfig: args.buttonLabel ? {
+          label: args.buttonLabel,
+          href: args.buttonHref,
+          openInNewTab: args.openInNewTab,
+          iconSize: args.buttonIconSize,
+          leftIcon: args.leftIcon,
+          rightIcon: args.rightIcon,
+          disabled: !args.buttonHref,
+        } : null,
+      };
     });
 
-    return html`${container}`;
+    const carousel = createEditorialCarousel({
+      cards,
+      showMoreButtonLabel: args.showMoreLabel,
+    });
+    carousel.classList.add('block', 'editorial-carousel-block');
+
+    wrapper.appendChild(carousel);
+    return html`${wrapper}`;
   },
   argTypes: {
+    cardSize: {
+      control: { type: 'select' },
+      options: Object.values(EDITORIAL_CAROUSEL_CARD_SIZES),
+      description: 'Global size for all cards: `s` (small) or `m` (medium).',
+      table: { category: 'Layout' },
+    },
     showMoreLabel: {
       control: 'text',
-      description: 'Mobile-only label for the "show more" CTA (row 0).',
+      description: 'Mobile-only label for the "show more" CTA.',
       table: { category: 'Carousel' },
     },
     cardCount: {
@@ -188,15 +115,14 @@ export default {
       description: 'Shared description for all cards.',
       table: { category: 'Card Content' },
     },
+    note: {
+      control: 'text',
+      description: 'Optional note shown under the CTA.',
+      table: { category: 'Card Content' },
+    },
     buttonLabel: {
       control: 'text',
       description: 'CTA label for all cards.',
-      table: { category: 'CTA' },
-    },
-    buttonVariant: {
-      control: { type: 'select' },
-      options: Object.values(BUTTON_VARIANTS),
-      description: 'CTA variant for all cards.',
       table: { category: 'CTA' },
     },
     buttonHref: {
@@ -234,12 +160,13 @@ export default {
     },
   },
   args: {
+    cardSize: EDITORIAL_CAROUSEL_CARD_SIZES.S,
     showMoreLabel: 'Mostra di piu',
     cardCount: 6,
     titlePrefix: 'Editorial Card',
     description: 'Esempio di descrizione: contenuto editoriale per il carosello, con testo coerente e leggibile.',
+    note: '',
     buttonLabel: 'Scopri di piu',
-    buttonVariant: BUTTON_VARIANTS.PRIMARY,
     buttonHref: 'https://example.com',
     openInNewTab: false,
     buttonIconSize: BUTTON_ICON_SIZES.MEDIUM,

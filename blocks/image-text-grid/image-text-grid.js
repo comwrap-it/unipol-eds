@@ -63,9 +63,8 @@ export default function decorate(block, isFirstBlock = false) {
 
     // Retrieving items data
     const rows = [...item.children].filter((c) => c !== imgElement);
-
-    const title = rows[1]?.textContent.trim() || '';
-    const description = rows[2]?.textContent.trim() || '';
+    const titleEl = rows[1];
+    const descriptionEl = rows[2];
     const btnLabel = rows[3]?.textContent.trim() || '';
     const btnVariant = rows[4]?.textContent.trim() || 'primary';
 
@@ -111,19 +110,16 @@ export default function decorate(block, isFirstBlock = false) {
     const textWrapper = document.createElement('div');
     textWrapper.classList.add('text-wrapper');
 
-    if (title) {
-      const t = document.createElement('div');
-      t.classList.add('title');
-      t.innerHTML = `<p>${title}</p>`;
-      textWrapper.appendChild(t);
+    if (titleEl) {
+      titleEl.classList.add('title');
+      textWrapper.appendChild(titleEl);
     }
 
-    if (description) {
-      const d = document.createElement('div');
-      d.classList.add('description');
-      d.innerHTML = `<p>${description}</p>`;
-      textWrapper.appendChild(d);
+    if (descriptionEl) {
+      descriptionEl.classList.add('description');
+      textWrapper.appendChild(descriptionEl);
     }
+
 
     contentWrapper.appendChild(textWrapper);
 

@@ -1,51 +1,40 @@
-
 .editorial-carousel-card-wrapper {
     display: flex;
-    flex-direction: column;
-    align-items: stretch;
-
-    & > .editorial-carousel-card {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        flex: 1 1 auto;
-    }
+    flex: 0 0 auto;
 
     & .editorial-carousel-card-container {
         display: flex;
-        width: 100%;
-        max-width: var(--Column-Size-Col-3, 19.75rem);
         flex-direction: column;
         align-items: flex-start;
-        flex: auto;
-        overflow: hidden;
-        border-radius: var(--Card-Radius, 1.5rem);
-        background: var(--Card-Editorial-Card-Background, #fff);
-        box-shadow: var(--Depth-050-2, 2px) var(--Depth-050-2, 2px)
-            var(--Blur-200-8, 8px) 0 rgb(0 0 0 / 8%);
+        flex: 0 0 auto;
+        max-width: 100%;
+
+        /* Size via var (0=S, 1=M) */
+        --_size: var(--editorial-card-size, 0); /* 0=S (default), 1=M */
+        --_w-s: var(--editorial-card-width-s);
+        --_w-m: var(--editorial-card-width-m, var(--editorial-card-width-s)); /* fallback se M non esiste */
+        width: calc(var(--_w-s) + (var(--_w-m) - var(--_w-s)) * var(--_size));
+
+        border-radius: var(--editorial-card-border-radius, var(--Card-Radius, 1.5rem));
+        background: var(--Card-Insurance-Product-Card-Background, #FFF);
+        box-shadow: var(--Depth-050-2, 2px) var(--Depth-050-2, 2px) var(--Blur-200-8, 8px) 0 rgb(0 0 0 / 8%);
 
         & .editorial-carousel-card-image {
             position: relative;
             display: flex;
-            width: 100%;
-            height: 11.1095rem;
             justify-content: center;
             align-items: center;
             align-self: stretch;
-            aspect-ratio: 316 / 177.75;
-            border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem)
-                var(--Radius-0, 0) var(--Radius-0, 0);
+            aspect-ratio: 316.00/177.75;
+            border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem) var(--Radius-0, 0) var(--Radius-0, 0);
+            overflow: hidden;
 
             & img,
             & picture {
+                display: block;
                 width: 100%;
-                height: 11.1095rem;
-                border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem)
-                    var(--Radius-0, 0) var(--Radius-0, 0);
-            }
-
-            & img,
-            & picture img {
+                height: 100%;
+                border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem) var(--Radius-0, 0) var(--Radius-0, 0);
                 object-fit: cover;
                 object-position: top;
             }
@@ -55,27 +44,23 @@
             flex: 1;
             display: flex;
             position: relative;
-            padding: 0
-                var(--Card-Editorial-Card-Horizontal-Padding, 1.5rem)
-                var(--Card-Editorial-Card-Vertical-Padding, 1.5rem)
-                var(--Card-Editorial-Card-Horizontal-Padding, 1.5rem);
+            padding: var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem);
             flex-direction: column;
             justify-content: space-between;
-            align-items: center;
-            gap: var(--Card-Editorial-Card-Gap, 1rem);
+            align-items: start;
+            gap: var(--Card-Insurance-Product-Card-Gap, 1.5rem);
             align-self: stretch;
 
             & .editorial-carousel-card-text {
                 display: flex;
-                padding-top: var(--Card-Editorial-Card-Vertical-Padding, 24px);
                 flex-direction: column;
-                align-items: center;
-                gap: var(--Card-Editorial-Card-Text-Gap, 0.5rem);
+                align-items: start;
+                gap: var(--Card-Insurance-Product-Card-Text-Gap, 0.5rem);
                 align-self: stretch;
 
                 & .title {
                     align-self: stretch;
-                    color: var(--Card-Editorial-Card-Title, #001c35);
+                    color: var(--Card-Insurance-Product-Card-Title, #001C35);
                     text-align: start;
                     font-family: var(--Family-Font-2, Manrope);
                     font-size: var(--Font-Size-Heading, 1.5rem);
@@ -87,7 +72,7 @@
 
                 & .description {
                     align-self: stretch;
-                    color: var(--Card-Editorial-Card-Body, #001c35);
+                    color: var(--Card-Insurance-Product-Card-Body, #001C35);
                     text-align: start;
                     font-family: var(--Family-Font-2, Manrope);
                     font-size: var(--Size-16, 1rem);
@@ -101,12 +86,12 @@
                 display: flex;
                 flex-direction: column;
                 align-items: start;
-                gap: var(--Card-Editorial-Card-Text-Gap, 0.5rem);
+                gap: var(--Card-Insurance-Product-Card-Button-Gap, 0.5rem);
                 align-self: stretch;
 
                 & .subdescription {
                     align-self: stretch;
-                    color: var(--Text-Neutral-Secondary, #63727d);
+                    color: var(--Card-Insurance-Product-Card-Details, #63727D);
                     text-align: start;
                     font-family: var(--Family-Font-2, Manrope);
                     font-size: var(--Size-14, 0.875rem);
@@ -115,43 +100,59 @@
                     line-height: 140%;
                 }
             }
-
-            & .img-vector {
-                width: 16.25rem;
-                height: 5.1875rem;
-                position: absolute;
-                left: 1.75rem;
-                top: -2.6095rem;
-            }
         }
     }
 }
 
+/* Mobile (default): S (343px) */
+.editorial-carousel-card-container {
+    --editorial-card-width-s: 343px;
+    --editorial-card-border-radius: var(--radius-1, var(--Card-Radius, 1.5rem));
+}
+
+/* Tablet Portrait: S (302px) */
+@media (768px <= width < 1024px) {
+    .editorial-carousel-card-container {
+        --editorial-card-width-s: 302px;
+        --editorial-card-border-radius: var(--radius-1, var(--Card-Radius, 1.5rem));
+    }
+}
+
+/* Desktop Small: S (276px), M (373px) */
+@media (1024px <= width < 1200px) {
+    .editorial-carousel-card-container {
+        --editorial-card-width-s: 276px;
+        --editorial-card-width-m: 373px;
+        --editorial-card-border-radius: var(--Card-Radius, 1.5rem);
+    }
+}
+
+/* Desktop: S (316px), M (426px) */
+@media (width >= 1200px) {
+    .editorial-carousel-card-container {
+        --editorial-card-width-s: 316px;
+        --editorial-card-width-m: 426px;
+        --editorial-card-border-radius: var(--Card-Radius, 1.5rem);
+    }
+}
+
+/* Tablet Portrait */
 @media (768px <= width < 1200px) {
     .editorial-carousel-card-wrapper {
         & .editorial-carousel-card-container {
-            width: 15rem;
-            max-width: 15rem;
-
             & .editorial-carousel-card-image {
-                height: 10.26575rem;
-                aspect-ratio: 292 / 164.25;
+                aspect-ratio: 292.00/164.25;
 
                 & img,
                 & picture {
                     width: 100%;
-                    height: 10.26575rem;
                 }
             }
 
             & .editorial-carousel-card-content {
-                padding: 0
-                    var(--Card-Editorial-Card-Horizontal-Padding, 1.5rem)
-                    var(--Card-Editorial-Card-Vertical-Padding, 1.5rem)
-                    var(--Card-Editorial-Card-Horizontal-Padding, 1.5rem);
+                padding: var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem);
 
                 & .editorial-carousel-card-text {
-                    padding-top: var(--Card-Editorial-Card-Vertical-Padding, 24px);
 
                     & .title {
                         font-size: var(--Size-20, 1.25rem);
@@ -161,50 +162,29 @@
                     }
                 }
 
-                & .img-vector {
-                    width: 13rem;
-                    height: 4rem;
-                    left: 1rem;
-                    top: -1.98456rem;
-                }
             }
         }
     }
 }
 
+/* Mobile */
 @media (width < 768px) {
     .editorial-carousel-card-wrapper {
-        & .editorial-carousel-card-container {
-            width: 100%;
-            max-width: 100%;
-
+        .editorial-carousel-card-container {
             & .editorial-carousel-card-image {
-                height: 12.05875rem;
-                aspect-ratio: 343 / 192.94;
-                border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem)
-                    var(--Radius-0, 0) var(--Radius-0, 0);
+                aspect-ratio: 343.00/192.94;
+                border-radius: var(--Images-Radius, 1.5rem) var(--Images-Radius, 1.5rem) var(--Radius-0, 0) var(--Radius-0, 0);
 
                 & img,
                 & picture {
                     width: 100%;
-                    height: 12.05875rem;
                 }
             }
 
             & .editorial-carousel-card-content {
-                padding: 0
-                    var(--Card-Editorial-Card-Horizontal-Padding-M, 1rem)
-                    var(--Card-Editorial-Card-Vertical-Padding, 1.5rem)
-                    var(--Card-Editorial-Card-Horizontal-Padding-M, 1rem);
-                gap: var(--Card-Editorial-Card-Gap, 1rem);
+                padding: 0 var(--Card-Insurance-Product-Card-Horizontal-Padding-M, 1rem) var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Horizontal-Padding-M, 1rem);
+                gap: var(--Card-Insurance-Product-Card-Gap, 1.5rem);
 
-                & .img-vector {
-                    width: 16.125rem;
-                    height: 5rem;
-                    right: 2.6875rem;
-                    left: auto;
-                    top: -2.48081rem;
-                }
             }
         }
 

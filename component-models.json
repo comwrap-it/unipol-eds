@@ -185,6 +185,39 @@
     ]
   },
   {
+    "id": "data-table-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "data-table-widget-name",
+        "label": "Nome sezione Data Table Widget"
+      },
+      {
+        "component": "select",
+        "name": "dataTableWidgetBckcolor",
+        "value": "none",
+        "options": [
+          {
+            "name": "none",
+            "value": ""
+          },
+          {
+            "name": "mobility",
+            "value": "mobility"
+          },
+          {
+            "name": "welfare",
+            "value": "welfare"
+          },
+          {
+            "name": "property",
+            "value": "property"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "editorial-carousel-widget",
     "fields": [
       {
@@ -446,6 +479,303 @@
         "name": "rows",
         "value": "",
         "label": "Rows"
+      }
+    ]
+  },
+  {
+    "id": "data-table-row",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Configurazione Colonna 1",
+        "name": "data-table-col"
+      },
+      {
+        "component": "boolean",
+        "description": "Attivo: rende il titolo un pulsante e rende configurabile il tooltip associato",
+        "name": "showDataTableRow",
+        "valueType": "boolean",
+        "value": false
+      },
+      {
+        "component": "text",
+        "name": "titleDataTableRow",
+        "label": "Titolo Riga",
+        "validation": {
+          "maxLength": 25,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      },
+      {
+        "component": "container",
+        "name": "data-table-tooltip",
+        "label": "Configurazione tooltip",
+        "condition": {
+          "===": [
+            {
+              "var": "showDataTableRow"
+            },
+            true
+          ]
+        },
+        "fields": [
+          {
+            "component": "text",
+            "name": "toolTip",
+            "label": "Titolo tooltip",
+            "required": true,
+            "validation": {
+              "maxLength": 60,
+              "customErrorMsg": "Testo troppo lungo"
+            }
+          },
+          {
+            "component": "richtext",
+            "name": "toolTipSub",
+            "label": "Sottotitolo Tooltip",
+            "valueType": "string",
+            "validation": {
+              "maxLength": 300,
+              "customErrorMsg": "Testo troppo lungo"
+            }
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Colonna 2",
+        "name": "data-table-col-2"
+      },
+      {
+        "component": "boolean",
+        "description": "Attivo: rende il contenuto della cella un titolo",
+        "name": "changeTableTextContent",
+        "valueType": "boolean",
+        "value": false
+      },
+      {
+        "component": "text",
+        "name": "titleDataTableRow2",
+        "label": "Titolo",
+        "validation": {
+          "maxLength": 20,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "changeTableTextContent"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "titleDataTableRow3",
+        "label": "Contenuto Testuale",
+        "validation": {
+          "maxLength": 50,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "changeTableTextContent"
+            },
+            false
+          ]
+        }
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Colonna 3",
+        "name": "data-table-col-3"
+      },
+      {
+        "component": "boolean",
+        "description": "Attivo: rende il contenuto della cella un titolo",
+        "name": "changeTableTextContent2",
+        "valueType": "boolean",
+        "value": false
+      },
+      {
+        "component": "text",
+        "name": "titleDataTableRow4",
+        "label": "Titolo",
+        "validation": {
+          "maxLength": 20,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "changeTableTextContent2"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "titleDataTableRow5",
+        "label": "Contenuto Testuale",
+        "validation": {
+          "maxLength": 35,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "changeTableTextContent2"
+            },
+            false
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "titleDataTableRow6",
+        "label": "Contenuto Testuale Benefit",
+        "validation": {
+          "maxLength": 35,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "changeTableTextContent2"
+            },
+            false
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "data-table",
+    "fields": [
+      {
+        "component": "container",
+        "name": "show-more-data-table",
+        "label": "Data table: Configurazione pulsante",
+        "fields": [
+          {
+            "component": "text",
+            "name": "standardButtonLabel",
+            "label": "Button Text",
+            "required": false
+          },
+          {
+            "component": "select",
+            "name": "standardButtonVariant",
+            "label": "Variante",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Accent",
+                "value": "accent"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "URL del bottone"
+          },
+          {
+            "component": "boolean",
+            "label": "Apri in una nuova scheda",
+            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+            "name": "standardButtonOpenInNewTab",
+            "valueType": "boolean",
+            "value": false
+          },
+          {
+            "component": "select",
+            "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
+            "label": "Dimensione Icone",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonLeftIcon",
+            "label": "Icona Sinistra",
+            "description": "Select the left icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonRightIcon",
+            "label": "Icona Destra",
+            "description": "Select the right icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -2612,6 +2942,31 @@
             },
             false
           ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "tooltip",
+    "fields": [
+      {
+        "component": "text",
+        "name": "toolTip",
+        "label": "Titolo tooltip",
+        "required": true,
+        "validation": {
+          "maxLength": 60,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      },
+      {
+        "component": "richtext",
+        "name": "toolTipSub",
+        "label": "Sottotitolo Tooltip",
+        "valueType": "string",
+        "validation": {
+          "maxLength": 300,
+          "customErrorMsg": "Testo troppo lungo"
         }
       }
     ]
