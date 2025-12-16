@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Data Table",
+      "title": "Data table",
       "id": "data-table",
       "plugins": {
         "xwalk": {
@@ -29,17 +29,12 @@
       "id": "data-table",
       "fields": [
         {
-          "id": "data-table",
+          "component": "container",
+          "name": "show-more-data-table",
+          "label": "Configurazione Pulsante",
           "fields": [
             {
-              "component": "container",
-              "name": "show-more-data-table",
-              "label": "Configurazione Pulsante",
-              "fields": [
-                {
-                  "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
-                }
-              ]
+              "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
             }
           ]
         }
@@ -51,7 +46,9 @@
       "id": "data-table",
       "components": [
         "data-table-row"
-      ]
+      ],
+      "min": 4,
+      "max": 8
     }
   ]
 }

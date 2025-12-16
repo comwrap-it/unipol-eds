@@ -489,11 +489,7 @@
         "component": "text",
         "name": "title",
         "label": "Titolo",
-        "required": true,
-        "validation": {
-          "maxLength": 15,
-          "customErrorMsg": "Titolo troppo lungo (max 15 caratteri)"
-        }
+        "required": true
       }
     ]
   },
@@ -501,127 +497,122 @@
     "id": "data-table",
     "fields": [
       {
-        "id": "data-table",
+        "component": "container",
+        "name": "show-more-data-table",
+        "label": "Configurazione Pulsante",
         "fields": [
           {
-            "component": "container",
-            "name": "show-more-data-table",
-            "label": "Configurazione Pulsante",
-            "fields": [
+            "component": "text",
+            "name": "standardButtonLabel",
+            "label": "Button Text",
+            "required": false
+          },
+          {
+            "component": "select",
+            "name": "standardButtonVariant",
+            "label": "Variante",
+            "value": "primary",
+            "options": [
               {
-                "component": "text",
-                "name": "standardButtonLabel",
-                "label": "Button Text",
-                "required": false
+                "name": "Primary",
+                "value": "primary"
               },
               {
-                "component": "select",
-                "name": "standardButtonVariant",
-                "label": "Variante",
-                "value": "primary",
-                "options": [
-                  {
-                    "name": "Primary",
-                    "value": "primary"
-                  },
-                  {
-                    "name": "Secondary",
-                    "value": "secondary"
-                  },
-                  {
-                    "name": "Accent",
-                    "value": "accent"
-                  }
-                ]
+                "name": "Secondary",
+                "value": "secondary"
               },
               {
-                "component": "aem-content",
-                "name": "standardButtonHref",
-                "label": "Link URL",
-                "description": "URL del bottone"
+                "name": "Accent",
+                "value": "accent"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "URL del bottone"
+          },
+          {
+            "component": "boolean",
+            "label": "Apri in una nuova scheda",
+            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+            "name": "standardButtonOpenInNewTab",
+            "valueType": "boolean",
+            "value": false
+          },
+          {
+            "component": "select",
+            "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
+            "label": "Dimensione Icone",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
               },
               {
-                "component": "boolean",
-                "label": "Apri in una nuova scheda",
-                "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
-                "name": "standardButtonOpenInNewTab",
-                "valueType": "boolean",
-                "value": false
+                "name": "Medium",
+                "value": "medium"
               },
               {
-                "component": "select",
-                "name": "standardButtonSize",
-                "description": "Modifica la dimensione delle icone del bottone",
-                "label": "Dimensione Icone",
-                "value": "medium",
-                "options": [
-                  {
-                    "name": "Small",
-                    "value": "small"
-                  },
-                  {
-                    "name": "Medium",
-                    "value": "medium"
-                  },
-                  {
-                    "name": "Large",
-                    "value": "large"
-                  },
-                  {
-                    "name": "Extra Large",
-                    "value": "extra-large"
-                  }
-                ]
+                "name": "Large",
+                "value": "large"
               },
               {
-                "component": "select",
-                "name": "standardButtonLeftIcon",
-                "label": "Icona Sinistra",
-                "description": "Select the left icon",
-                "value": "",
-                "options": [
-                  {
-                    "name": "None",
-                    "value": ""
-                  },
-                  {
-                    "name": "Chevron Left",
-                    "value": "un-icon-chevron-left"
-                  },
-                  {
-                    "name": "Chevron Right",
-                    "value": "un-icon-chevron-right"
-                  },
-                  {
-                    "name": "Search Icon",
-                    "value": "un-icon-search"
-                  }
-                ]
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonLeftIcon",
+            "label": "Icona Sinistra",
+            "description": "Select the left icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
               },
               {
-                "component": "select",
-                "name": "standardButtonRightIcon",
-                "label": "Icona Destra",
-                "description": "Select the right icon",
-                "value": "",
-                "options": [
-                  {
-                    "name": "None",
-                    "value": ""
-                  },
-                  {
-                    "name": "Chevron Left",
-                    "value": "un-icon-chevron-left"
-                  },
-                  {
-                    "name": "Chevron Right",
-                    "value": "un-icon-chevron-right"
-                  },
-                  {
-                    "name": "Search Icon",
-                    "value": "un-icon-search"
-                  }
-                ]
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonRightIcon",
+            "label": "Icona Destra",
+            "description": "Select the right icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
               }
             ]
           }

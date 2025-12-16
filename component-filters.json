@@ -125,7 +125,9 @@
     "id": "data-table",
     "components": [
       "data-table-row"
-    ]
+    ],
+    "min": 4,
+    "max": 8
   },
   {
     "id": "editorial-carousel",

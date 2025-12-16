@@ -24,11 +24,7 @@
           "component": "text",
           "name": "title",
           "label": "Titolo",
-          "required": true,
-          "validation": {
-            "maxLength": 15,
-            "customErrorMsg": "Titolo troppo lungo (max 15 caratteri)"
-          }
+          "required": true
         }
       ]
     }

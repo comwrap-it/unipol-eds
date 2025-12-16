@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Data Table Widget",
+      "title": "Data table widget",
       "id": "data-table-widget",
       "plugins": {
         "xwalk": {
@@ -9,7 +9,7 @@
             "resourceType": "core/franklin/components/section/v1/section",
             "template": {
               "filter": "data-table-widget",
-              "name": "Data Table Widget",
+              "name": "Data table widget",
               "model": "data-table-widget",
               "style": "data-table-widget",
               "text-block": {
@@ -20,14 +20,13 @@
               "data-table": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Data table",
-                "model": "data-table",
                 "filter": "data-table",
-                "template": {
-                  "data-table-row": {
-                    "sling:resourceType": "core/franklin/components/block/v1/block/item",
-                    "name": "Data table row",
-                    "model": "data-table-row"
-                  }
+                "model": "data-table",
+                "data-table-row": {
+                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                  "name": "Data table row",
+                  "filter": "data-table-row",
+                  "model": "data-table-row"
                 }
               }
             }
@@ -59,10 +58,8 @@
       ]
     }
   ],
-  "filters": [
-    {
-      "id": "data-table-widget",
-      "components": []
-    }
-  ]
+  "filters": [{
+    "id": "data-table-widget",
+    "components": []
+  }]
 }
