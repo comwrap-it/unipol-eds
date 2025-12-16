@@ -20,7 +20,7 @@
         flex: auto;
         overflow: hidden;
         border-radius: var(--Card-Radius, 1.5rem);
-        background: var(--Card-Insurance-Product-Card-Background, #fff);
+        background: var(--Card-Editorial-Card-Background, #fff);
         box-shadow: var(--Depth-050-2, 2px) var(--Depth-050-2, 2px)
             var(--Blur-200-8, 8px) 0 rgb(0 0 0 / 8%);
 
@@ -56,29 +56,26 @@
             display: flex;
             position: relative;
             padding: 0
-                var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem)
-                var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem)
-                var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem);
+                var(--Card-Editorial-Card-Horizontal-Padding, 1.5rem)
+                var(--Card-Editorial-Card-Vertical-Padding, 1.5rem)
+                var(--Card-Editorial-Card-Horizontal-Padding, 1.5rem);
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            gap: var(--Card-Insurance-Product-Card-Gap, 1.5rem);
+            gap: var(--Card-Editorial-Card-Gap, 1rem);
             align-self: stretch;
 
             & .editorial-carousel-card-text {
                 display: flex;
-                padding-top: var(
-                    --Card-Insurance-Product-Card-Vertical-Padding-Top,
-                    24px
-                );
+                padding-top: var(--Card-Editorial-Card-Vertical-Padding, 24px);
                 flex-direction: column;
                 align-items: center;
-                gap: var(--Card-Insurance-Product-Card-Text-Gap, 0.5rem);
+                gap: var(--Card-Editorial-Card-Text-Gap, 0.5rem);
                 align-self: stretch;
 
                 & .title {
                     align-self: stretch;
-                    color: var(--Card-Insurance-Product-Card-Title, #001c35);
+                    color: var(--Card-Editorial-Card-Title, #001c35);
                     text-align: start;
                     font-family: var(--Family-Font-2, Manrope);
                     font-size: var(--Font-Size-Heading, 1.5rem);
@@ -90,7 +87,7 @@
 
                 & .description {
                     align-self: stretch;
-                    color: var(--Card-Insurance-Product-Card-Body, #001c35);
+                    color: var(--Card-Editorial-Card-Body, #001c35);
                     text-align: start;
                     font-family: var(--Family-Font-2, Manrope);
                     font-size: var(--Size-16, 1rem);
@@ -104,12 +101,12 @@
                 display: flex;
                 flex-direction: column;
                 align-items: start;
-                gap: var(--Card-Insurance-Product-Card-Button-Gap, 0.5rem);
+                gap: var(--Card-Editorial-Card-Text-Gap, 0.5rem);
                 align-self: stretch;
 
                 & .subdescription {
                     align-self: stretch;
-                    color: var(--Card-Insurance-Product-Card-Details, #63727d);
+                    color: var(--Text-Neutral-Secondary, #63727d);
                     text-align: start;
                     font-family: var(--Family-Font-2, Manrope);
                     font-size: var(--Size-14, 0.875rem);
@@ -149,15 +146,12 @@
 
             & .editorial-carousel-card-content {
                 padding: 0
-                    var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem)
-                    var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem)
-                    var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem);
+                    var(--Card-Editorial-Card-Horizontal-Padding, 1.5rem)
+                    var(--Card-Editorial-Card-Vertical-Padding, 1.5rem)
+                    var(--Card-Editorial-Card-Horizontal-Padding, 1.5rem);
 
                 & .editorial-carousel-card-text {
-                    padding-top: var(
-                        --Card-Insurance-Product-Card-Vertical-Padding-Top,
-                        24px
-                    );
+                    padding-top: var(--Card-Editorial-Card-Vertical-Padding, 24px);
 
                     & .title {
                         font-size: var(--Size-20, 1.25rem);
@@ -199,10 +193,10 @@
 
             & .editorial-carousel-card-content {
                 padding: 0
-                    var(--Card-Insurance-Product-Card-Horizontal-Padding-M, 1rem)
-                    var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem)
-                    var(--Card-Insurance-Product-Card-Horizontal-Padding-M, 1rem);
-                gap: var(--Card-Insurance-Product-Card-Gap, 1.5rem);
+                    var(--Card-Editorial-Card-Horizontal-Padding-M, 1rem)
+                    var(--Card-Editorial-Card-Vertical-Padding, 1.5rem)
+                    var(--Card-Editorial-Card-Horizontal-Padding-M, 1rem);
+                gap: var(--Card-Editorial-Card-Gap, 1rem);
 
                 & .img-vector {
                     width: 16.125rem;
