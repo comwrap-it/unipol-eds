@@ -10,12 +10,7 @@
             "template": {
               "name": "Data Table",
               "model": "data-table",
-              "filter": "data-table",
-                "data-table-row": {
-                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
-                  "name": "Data table row",
-                  "model": "data-table-row"
-                }
+              "filter": "data-table"
             }
           }
         }
@@ -29,7 +24,7 @@
         {
           "component": "container",
           "name": "show-more-data-table",
-          "label": "Configurazione Pulsante",
+          "label": "Data table: Configurazione pulsante",
           "fields": [
             {
               "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"

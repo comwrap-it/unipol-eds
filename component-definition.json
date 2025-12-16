@@ -176,7 +176,27 @@
                     "sling:resourceType": "core/franklin/components/block/v1/block",
                     "name": "Data table",
                     "filter": "data-table",
-                    "model": "data-table"
+                    "model": "data-table",
+                    "data-table-row-1": {
+                      "sling:resourceType": "core/franklin/components/block/v1/block",
+                      "name": "Data table row",
+                      "model": "data-table-row"
+                    },
+                    "data-table-row-2": {
+                      "sling:resourceType": "core/franklin/components/block/v1/block",
+                      "name": "Data table row",
+                      "model": "data-table-row"
+                    },
+                    "data-table-row-3": {
+                      "sling:resourceType": "core/franklin/components/block/v1/block",
+                      "name": "Data table row",
+                      "model": "data-table-row"
+                    },
+                    "data-table-row-4": {
+                      "sling:resourceType": "core/franklin/components/block/v1/block",
+                      "name": "Data table row",
+                      "model": "data-table-row"
+                    }
                   }
                 }
               }
@@ -554,7 +574,7 @@
           "plugins": {
             "xwalk": {
               "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
+                "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
                   "name": "Data table row",
                   "model": "data-table-row"
@@ -573,12 +593,7 @@
                 "template": {
                   "name": "Data Table",
                   "model": "data-table",
-                  "filter": "data-table",
-                  "data-table-row": {
-                    "sling:resourceType": "core/franklin/components/block/v1/block/item",
-                    "name": "Data table row",
-                    "model": "data-table-row"
-                  }
+                  "filter": "data-table"
                 }
               }
             }
@@ -1090,6 +1105,21 @@
                 "template": {
                   "name": "Text-Link",
                   "model": "text-link"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Tooltip",
+          "id": "tooltip",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Tooltip",
+                  "model": "tooltip"
                 }
               }
             }

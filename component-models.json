@@ -486,10 +486,60 @@
     "id": "data-table-row",
     "fields": [
       {
+        "component": "tab",
+        "label": "Configurazione Colonna 1",
+        "name": "data-table-col"
+      },
+      {
+        "component": "boolean",
+        "description": "Attivo: rende il titolo un pulsante e rende configurabile il tooltip associato",
+        "name": "showDataTableRow",
+        "valueType": "boolean",
+        "value": false
+      },
+      {
         "component": "text",
-        "name": "title",
-        "label": "Titolo",
-        "required": true
+        "name": "titleDataTableRow",
+        "label": "Titolo Riga",
+        "validation": {
+          "maxLength": 25,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      },
+      {
+        "component": "container",
+        "name": "data-table-tooltip",
+        "label": "Configurazione tooltip",
+        "condition": {
+          "===": [
+            {
+              "var": "data-table-tooltip/showDataTableRow"
+            },
+            true
+          ]
+        },
+        "fields": [
+          {
+            "component": "text",
+            "name": "toolTip",
+            "label": "Titolo tooltip",
+            "required": true,
+            "validation": {
+              "maxLength": 60,
+              "customErrorMsg": "Testo troppo lungo"
+            }
+          },
+          {
+            "component": "richtext",
+            "name": "toolTipSub",
+            "label": "Sottotitolo Tooltip",
+            "valueType": "string",
+            "validation": {
+              "maxLength": 300,
+              "customErrorMsg": "Testo troppo lungo"
+            }
+          }
+        ]
       }
     ]
   },
@@ -499,7 +549,7 @@
       {
         "component": "container",
         "name": "show-more-data-table",
-        "label": "Configurazione Pulsante",
+        "label": "Data table: Configurazione pulsante",
         "fields": [
           {
             "component": "text",
@@ -2779,6 +2829,31 @@
             },
             false
           ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "tooltip",
+    "fields": [
+      {
+        "component": "text",
+        "name": "toolTip",
+        "label": "Titolo tooltip",
+        "required": true,
+        "validation": {
+          "maxLength": 60,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      },
+      {
+        "component": "richtext",
+        "name": "toolTipSub",
+        "label": "Sottotitolo Tooltip",
+        "valueType": "string",
+        "validation": {
+          "maxLength": 300,
+          "customErrorMsg": "Testo troppo lungo"
         }
       }
     ]
