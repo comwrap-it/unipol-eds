@@ -1,6 +1,10 @@
 import { html } from 'lit';
 
 import { createEditorialCarousel } from '@blocks/editorial-carousel/editorial-carousel.js';
+import {
+  EDITORIAL_CAROUSEL_CARD_GLOBAL,
+  EDITORIAL_CAROUSEL_CARD_SIZES,
+} from '@blocks/editorial-carousel-card/editorial-carousel-card.js';
 import { BUTTON_ICON_SIZES } from '@blocks/atoms/buttons/standard-button/standard-button.js';
 
 // CSS is loaded globally in preview-head.html
@@ -45,6 +49,8 @@ export default {
   title: 'Organisms/Editorial Carousel',
   tags: ['autodocs'],
   render: (args) => {
+    EDITORIAL_CAROUSEL_CARD_GLOBAL.size = args.cardSize;
+
     const wrapper = document.createElement('div');
     wrapper.className = 'editorial-carousel-wrapper';
 
@@ -83,6 +89,12 @@ export default {
     return html`${wrapper}`;
   },
   argTypes: {
+    cardSize: {
+      control: { type: 'select' },
+      options: Object.values(EDITORIAL_CAROUSEL_CARD_SIZES),
+      description: 'Global size for all cards: `s` (small) or `m` (medium).',
+      table: { category: 'Layout' },
+    },
     showMoreLabel: {
       control: 'text',
       description: 'Mobile-only label for the "show more" CTA.',
@@ -148,6 +160,7 @@ export default {
     },
   },
   args: {
+    cardSize: EDITORIAL_CAROUSEL_CARD_SIZES.S,
     showMoreLabel: 'Mostra di piu',
     cardCount: 6,
     titlePrefix: 'Editorial Card',

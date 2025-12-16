@@ -44,8 +44,9 @@
             gap: 0;
 
             & .swiper-slide {
-                width: calc(100% / 2.3);
                 height: -webkit-fill-available;
+                flex: 0 0 auto;
+                width: auto;
                 margin-inline-end: var(
                     --Carousel-Insurance-Product-Gap-M-Tp,
                     0.5rem
@@ -64,20 +65,10 @@
     .editorial-carousel-container {
         .editorial-carousel {
             & .swiper-slide {
-                width: calc(100% / 3.6);
                 margin-inline-end: var(--Carousel-Insurance-Product-Gap, 1rem);
             }
         }
     }
 }
 
-/* Desktop */
-@media (width >= 1200px) {
-    .editorial-carousel-container {
-        .editorial-carousel {
-            & .swiper-slide {
-                width: calc(100% / 4.3);
-            }
-        }
-    }
-}
+/* Desktop: widths are driven by card size tokens */

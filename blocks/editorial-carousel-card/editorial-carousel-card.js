@@ -11,11 +11,44 @@ import { createLinkButton } from '../atoms/buttons/link-button/link-button.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-const DEFAULT_IMAGE_BREAKPOINTS = [
-  { media: '(min-width: 769)', width: '316' },
-  { media: '(max-width: 768)', width: '240' },
-  { media: '(max-width: 392)', width: '343' },
-];
+export const EDITORIAL_CAROUSEL_CARD_SIZES = {
+  S: 's',
+  M: 'm',
+};
+
+export const EDITORIAL_CAROUSEL_CARD_GLOBAL = (() => {
+  const root = globalThis;
+  root.unipolEds = root.unipolEds || {};
+  root.unipolEds.editorialCarouselCard = root.unipolEds.editorialCarouselCard || {
+    size: EDITORIAL_CAROUSEL_CARD_SIZES.S,
+  };
+  return root.unipolEds.editorialCarouselCard;
+})();
+
+const resolveEditorialCarouselCardSize = (value) => {
+  const normalized = String(value || '').trim().toLowerCase();
+  if (['m', 'md', 'medium'].includes(normalized)) return EDITORIAL_CAROUSEL_CARD_SIZES.M;
+  return EDITORIAL_CAROUSEL_CARD_SIZES.S;
+};
+
+const IMAGE_BREAKPOINTS_BY_SIZE = {
+  [EDITORIAL_CAROUSEL_CARD_SIZES.S]: [
+    { media: '(min-width: 1200px)', width: '316' },
+    { media: '(min-width: 1024px)', width: '276' },
+    { media: '(min-width: 768px)', width: '302' },
+    { media: '(max-width: 767px)', width: '343' },
+  ],
+  [EDITORIAL_CAROUSEL_CARD_SIZES.M]: [
+    { media: '(min-width: 1200px)', width: '426' },
+    { media: '(min-width: 1024px)', width: '373' },
+    { media: '(min-width: 768px)', width: '302' },
+    { media: '(max-width: 767px)', width: '343' },
+  ],
+};
+
+const getImageBreakpoints = (size) => IMAGE_BREAKPOINTS_BY_SIZE[
+  resolveEditorialCarouselCardSize(size)
+] || IMAGE_BREAKPOINTS_BY_SIZE[EDITORIAL_CAROUSEL_CARD_SIZES.S];
 
 const extractInstrumentationAttributes = (element) => {
   const instrumentation = {};
@@ -98,6 +131,7 @@ export function createEditorialCarouselCard(
   {
     title = '',
     description = '',
+    size = null,
     imageSrc = '',
     imageAlt = '',
     imageElement = null,
@@ -111,6 +145,15 @@ export function createEditorialCarouselCard(
 ) {
   const card = document.createElement('div');
   card.className = 'editorial-carousel-card-container card-block';
+
+  const resolvedSize = resolveEditorialCarouselCardSize(
+    size || EDITORIAL_CAROUSEL_CARD_GLOBAL.size,
+  );
+  card.dataset.editorialCardSize = resolvedSize;
+  card.style.setProperty(
+    '--editorial-card-size',
+    resolvedSize === EDITORIAL_CAROUSEL_CARD_SIZES.M ? '1' : '0',
+  );
 
   if (blockName) {
     card.dataset.blockName = blockName;
@@ -126,7 +169,7 @@ export function createEditorialCarouselCard(
       imageSrc,
       imageAlt,
       isFirstCard,
-      DEFAULT_IMAGE_BREAKPOINTS,
+      getImageBreakpoints(resolvedSize),
     );
   }
 
@@ -266,6 +309,9 @@ export default async function decorateEditorialCarouselCard(block, isFirstCard =
   const imageAlt = imageRowIndex >= 0
     ? rows[imageRowIndex + 1]?.textContent?.trim() || ''
     : '';
+  const resolvedSize = resolveEditorialCarouselCardSize(
+    block.dataset.editorialCardSize || EDITORIAL_CAROUSEL_CARD_GLOBAL.size,
+  );
 
   let imageElement = null;
   if (imageRow) {
@@ -279,7 +325,7 @@ export default async function decorateEditorialCarouselCard(block, isFirstCard =
           img.src,
           imageAlt,
           isFirstCard,
-          DEFAULT_IMAGE_BREAKPOINTS,
+          getImageBreakpoints(resolvedSize),
         );
         const newImg = optimizedPic.querySelector('img');
         if (newImg) moveInstrumentation(img, newImg);
@@ -291,7 +337,7 @@ export default async function decorateEditorialCarouselCard(block, isFirstCard =
             link.href,
             imageAlt,
             isFirstCard,
-            DEFAULT_IMAGE_BREAKPOINTS,
+            getImageBreakpoints(resolvedSize),
           );
           const newImg = optimizedPic.querySelector('img');
           if (newImg) moveInstrumentation(link, newImg);
@@ -381,6 +427,7 @@ export default async function decorateEditorialCarouselCard(block, isFirstCard =
   const card = createEditorialCarouselCard({
     title: titleElement,
     description: descriptionElement,
+    size: resolvedSize,
     imageElement,
     imageAlt,
     buttonElement,
