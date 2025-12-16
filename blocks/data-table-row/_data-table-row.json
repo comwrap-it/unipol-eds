@@ -139,7 +139,7 @@
           "name": "titleDataTableRow5",
           "label": "Contenuto Testuale",
           "validation": {
-            "maxLength": 50,
+            "maxLength": 35,
             "customErrorMsg": "Testo troppo lungo"
           },
           "condition": {
