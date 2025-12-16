@@ -7,9 +7,9 @@ export default function decorate(block) {
   if (!block) return;
 
   const properties = [
-    'dialogTitle',
-    'dialogSubtitle',
-    'dialogDescription',
+    'dialogTitleLabel',
+    'dialogSubtitleLabel',
+    'dialogDescriptionLabel',
     'actionButtonConfig',
   ];
 
@@ -42,15 +42,15 @@ export default function decorate(block) {
 
   const titleEl = document.createElement('h2');
   titleEl.className = 'dialog-title';
-  titleEl.textContent = values.dialogTitle.value || '';
-  restoreInstrumentation(titleEl, values.dialogTitle.instrumentation);
+  titleEl.textContent = values.dialogTitleLabel.value || '';
+  restoreInstrumentation(titleEl, values.dialogTitleLabel.instrumentation);
   header.appendChild(titleEl);
 
-  if (values.dialogSubtitle?.value) {
+  if (values.dialogSubtitleLabel?.value) {
     const subtitleEl = document.createElement('p');
     subtitleEl.className = 'dialog-subtitle';
-    subtitleEl.textContent = values.dialogSubtitle.value;
-    restoreInstrumentation(subtitleEl, values.dialogSubtitle.instrumentation);
+    subtitleEl.textContent = values.dialogSubtitleLabel.value;
+    restoreInstrumentation(subtitleEl, values.dialogSubtitleLabel.instrumentation);
     header.appendChild(subtitleEl);
   }
 
@@ -60,8 +60,8 @@ export default function decorate(block) {
 
   const descriptionEl = document.createElement('p');
   descriptionEl.className = 'dialog-description';
-  descriptionEl.textContent = values.dialogDescription.value || '';
-  restoreInstrumentation(descriptionEl, values.dialogDescription.instrumentation);
+  descriptionEl.textContent = values.dialogDescriptionLabel.value || '';
+  restoreInstrumentation(descriptionEl, values.dialogDescriptionLabel.instrumentation);
   body.appendChild(descriptionEl);
 
   /* Footer */

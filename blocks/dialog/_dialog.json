@@ -23,8 +23,8 @@
       "fields": [
         {
           "component": "text",
-          "name": "dialogTitle",
-          "label": "Title",
+          "name": "dialogTitleLabel",
+          "label": "Titolo",
           "required": true,
           "validation": {
             "maxLength": 80,
@@ -33,8 +33,8 @@
         },
         {
           "component": "text",
-          "name": "dialogSubtitle",
-          "label": "Subtitle",
+          "name": "dialogSubtitleLabel",
+          "label": "Sottotitolo",
           "validation": {
             "maxLength": 100,
             "customErrorMsg": "Testo troppo lungo (Max 100 caratteri)"
@@ -42,8 +42,8 @@
         },
         {
           "component": "textarea",
-          "name": "dialogDescription",
-          "label": "Description",
+          "name": "dialogDescriptionLabel",
+          "label": "Descrizione",
           "required": true,
           "validation": {
             "maxLength": 600,
@@ -54,7 +54,7 @@
           "component": "container",
           "name": "actionButtonConfig",
           "label": "Pulsante di azione",
-          "collapsible": false,
+          "collapsible": true,
           "fields": [
             {
               "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
