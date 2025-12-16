@@ -1,6 +1,10 @@
 import { html } from 'lit';
 
-import { createEditorialCarouselCard } from '@blocks/editorial-carousel-card/editorial-carousel-card.js';
+import {
+  createEditorialCarouselCard,
+  EDITORIAL_CAROUSEL_CARD_GLOBAL,
+  EDITORIAL_CAROUSEL_CARD_SIZES,
+} from '@blocks/editorial-carousel-card/editorial-carousel-card.js';
 import { BUTTON_ICON_SIZES } from '@blocks/atoms/buttons/standard-button/standard-button.js';
 
 // CSS is loaded globally in preview-head.html
@@ -45,6 +49,8 @@ export default {
   title: 'Organisms/Editorial Carousel Card',
   tags: ['autodocs'],
   render: (args) => {
+    EDITORIAL_CAROUSEL_CARD_GLOBAL.size = args.size;
+
     const outer = document.createElement('div');
     outer.style.display = 'flex';
     outer.style.justifyContent = 'center';
@@ -77,6 +83,12 @@ export default {
     return html`${outer}`;
   },
   argTypes: {
+    size: {
+      control: { type: 'select' },
+      options: Object.values(EDITORIAL_CAROUSEL_CARD_SIZES),
+      description: 'Card size: `s` (small) or `m` (medium).',
+      table: { category: 'Layout' },
+    },
     title: {
       control: 'text',
       description: 'Card title.',
@@ -137,6 +149,7 @@ export default {
     },
   },
   args: {
+    size: EDITORIAL_CAROUSEL_CARD_SIZES.S,
     title: 'Tecnologia Unibox',
     description: 'Con i nostri dispositivi satellitari Unibox, puoi ottenere sconti personalizzati sul premio in base al tuo stile di guida.',
     note: '',
@@ -159,4 +172,3 @@ export const WithoutCta = {
     buttonHref: '',
   },
 };
-
