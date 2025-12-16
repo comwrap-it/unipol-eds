@@ -99,16 +99,17 @@ function applyWidgetModel(hostSection, model) {
 /**
  * Decorates the Editorial Carousel Widget.
  *
+ * When invoked by `blocks/editorial-carousel/editorial-carousel.js`, `block` is the
+ * carousel block instance and the widget is resolved from its closest section.
+ *
  * @param {HTMLElement} [block]
  * @returns {Promise<void>}
  */
 export default async function decorateEditorialCarouselWidget(block) {
-  if (block) {
-    // no-op: parameter is accepted for block-loader compatibility
-  }
-
-  const hostSection = document.querySelector(SELECTORS.section)
-    || document.querySelector(SELECTORS.fallback);
+  const resolvedSection = block?.closest?.('.section') || null;
+  const hostSection = resolvedSection
+    || document.querySelector(SELECTORS.section)
+    || document.querySelector(SELECTORS.fallback)?.closest?.('.section');
 
   if (!hostSection) return;
 

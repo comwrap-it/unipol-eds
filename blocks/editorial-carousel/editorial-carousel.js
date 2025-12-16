@@ -46,7 +46,6 @@ import { initCarouselAnimations } from '../../scripts/reveal.js';
 
 /**
  * @typedef {Object} CarouselSkeleton
- * @property {HTMLDivElement} wrapper
  * @property {HTMLDivElement} carousel
  * @property {HTMLDivElement} track
  */
@@ -86,7 +85,6 @@ const THRESHOLDS = {
 };
 
 const CLASS_NAMES = {
-  wrapper: 'editorial-carousel-wrapper',
   carousel: 'editorial-carousel-container',
   track: 'editorial-carousel',
   slide: 'editorial-carousel-card-wrapper',
@@ -182,9 +180,6 @@ function parseCarouselBlock(block) {
  * @returns {CarouselSkeleton}
  */
 function createCarouselSkeletonFromConfig({ ariaLabel = DEFAULT_ARIA_LABEL } = {}) {
-  const wrapper = document.createElement('div');
-  wrapper.className = CLASS_NAMES.wrapper;
-
   const carousel = document.createElement('div');
   carousel.className = `${CLASS_NAMES.carousel} swiper`;
   carousel.setAttribute('role', 'region');
@@ -196,9 +191,8 @@ function createCarouselSkeletonFromConfig({ ariaLabel = DEFAULT_ARIA_LABEL } = {
   track.setAttribute('role', 'list');
 
   carousel.appendChild(track);
-  wrapper.appendChild(carousel);
 
-  return { wrapper, carousel, track };
+  return { carousel, track };
 }
 
 /**
@@ -353,7 +347,7 @@ async function renderCarousel(block, model, decorateCard) {
   /**
    * CREATE: static skeleton (wrapper, container, track).
    */
-  const { wrapper, carousel, track } = createCarouselSkeletonFromConfig();
+  const { carousel, track } = createCarouselSkeletonFromConfig();
 
   /**
    * CREATE: build slides by decorating nested `editorial-carousel-card` blocks.
@@ -428,12 +422,18 @@ async function renderCarousel(block, model, decorateCard) {
 
   block.textContent = '';
   carousel.classList.add('block', 'editorial-carousel-block');
-  block.appendChild(wrapper);
+  block.appendChild(carousel);
 
   /**
    * INIT: reveal animations.
    */
   initCarouselAnimations(carousel);
+
+  /**
+   * INIT: section widget (theme + section-level styles).
+   */
+  const decorateWidget = (await import('../editorial-carousel-widget/editorial-carousel-widget.js')).default;
+  await decorateWidget(block);
 
   /**
    * INIT: Swiper (tablet/desktop only).
