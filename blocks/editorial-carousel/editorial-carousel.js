@@ -286,6 +286,9 @@ export default async function decorate(block) {
   }
 
   carousel.appendChild(track);
+  if (Object.keys(scrollIndicatorProps).length === 0) {
+    carousel.className = 'editorial-carousel-container-centered swiper';
+  }
   initCarouselAnimations(carousel);
 
   if (scrollIndicatorProps.scrollIndicator) {
