@@ -35,7 +35,7 @@
         {
           "component": "text",
           "name": "titleDataTableRow",
-          "label": "Titolo Riga",
+          "label": "Titolo",
           "validation": {
             "maxLength": 25,
             "customErrorMsg": "Testo troppo lungo"
@@ -58,6 +58,115 @@
               "...": "../tooltip/_tooltip.json#/models/tooltip/fields"
             }
           ]
+        },
+        {
+          "component": "tab",
+          "label": "Configurazione Colonna 2",
+          "name": "data-table-col-2"
+        },
+        {
+          "component": "boolean",
+          "description": "Attivo: rende il contenuto della cella un titolo",
+          "name": "changeTableTextContent",
+          "valueType": "boolean",
+          "value": false
+        },
+        {
+          "component": "text",
+          "name": "titleDataTableRow2",
+          "label": "Titolo",
+          "validation": {
+            "maxLength": 20,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": {
+            "===": [
+              {
+                "var": "changeTableTextContent"
+              },
+              true
+            ]
+          }
+        },
+        {
+          "component": "text",
+          "name": "titleDataTableRow3",
+          "label": "Contenuto Testuale",
+          "validation": {
+            "maxLength": 50,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": {
+            "===": [
+              {
+                "var": "changeTableTextContent"
+              },
+              false
+            ]
+          }
+        },
+        {
+          "component": "tab",
+          "label": "Configurazione Colonna 3",
+          "name": "data-table-col-3"
+        },
+        {
+          "component": "boolean",
+          "description": "Attivo: rende il contenuto della cella un titolo",
+          "name": "changeTableTextContent2",
+          "valueType": "boolean",
+          "value": false
+        },
+        {
+          "component": "text",
+          "name": "titleDataTableRow4",
+          "label": "Titolo",
+          "validation": {
+            "maxLength": 20,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": {
+            "===": [
+              {
+                "var": "changeTableTextContent"
+              },
+              true
+            ]
+          }
+        },
+        {
+          "component": "text",
+          "name": "titleDataTableRow5",
+          "label": "Contenuto Testuale",
+          "validation": {
+            "maxLength": 50,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": {
+            "===": [
+              {
+                "var": "changeTableTextContent"
+              },
+              false
+            ]
+          }
+        },
+        {
+          "component": "text",
+          "name": "titleDataTableRow6",
+          "label": "Contenuto Testuale Benefit",
+          "validation": {
+            "maxLength": 35,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": {
+            "===": [
+              {
+                "var": "changeTableTextContent"
+              },
+              false
+            ]
+          }
         }
       ]
     }
