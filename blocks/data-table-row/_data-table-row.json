@@ -35,7 +35,7 @@
         {
           "component": "text",
           "name": "titleDataTableRow",
-          "label": "Titolo",
+          "label": "Titolo Riga",
           "validation": {
             "maxLength": 25,
             "customErrorMsg": "Testo troppo lungo"
@@ -128,7 +128,7 @@
           "condition": {
             "===": [
               {
-                "var": "changeTableTextContent"
+                "var": "changeTableTextContent2"
               },
               true
             ]
@@ -145,7 +145,7 @@
           "condition": {
             "===": [
               {
-                "var": "changeTableTextContent"
+                "var": "changeTableTextContent2"
               },
               false
             ]
@@ -162,7 +162,7 @@
           "condition": {
             "===": [
               {
-                "var": "changeTableTextContent"
+                "var": "changeTableTextContent2"
               },
               false
             ]
