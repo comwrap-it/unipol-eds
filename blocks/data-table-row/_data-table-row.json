@@ -48,7 +48,7 @@
           "condition": {
             "===": [
               {
-                "var": "data-table-tooltip/showDataTableRow"
+                "var": "showDataTableRow"
               },
               true
             ]
