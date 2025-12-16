@@ -16,7 +16,6 @@
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
 
-import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
 import {
@@ -24,6 +23,7 @@ import {
   BUTTON_VARIANTS,
   BUTTON_ICON_SIZES,
 } from '../atoms/buttons/standard-button/standard-button.js';
+import { createEditorialCarouselCard } from '../editorial-carousel-card/editorial-carousel-card.js';
 import { initCarouselAnimations } from '../../scripts/reveal.js';
 import loadSwiper from '../../scripts/delayed.js';
 import { handleSlideChange } from '../../scripts/utils.js';
@@ -39,6 +39,69 @@ async function ensureStylesLoaded() {
   ]);
   isStylesLoaded = true;
 }
+
+export function createEditorialCarousel(
+  {
+    cards = [],
+    showMoreButtonLabel = 'Mostra di più',
+  } = {},
+) {
+  const carousel = document.createElement('div');
+  carousel.className = 'editorial-carousel-container swiper';
+  carousel.setAttribute('role', 'region');
+  carousel.setAttribute('aria-label', 'Editorial carousel');
+  carousel.setAttribute('tabindex', '0');
+
+  const track = document.createElement('div');
+  track.className = 'editorial-carousel swiper-wrapper';
+  track.setAttribute('role', 'list');
+
+  const mq = window.matchMedia('(min-width: 768px)');
+  const slideElements = (cards || []).map((card, index) => {
+    const slide = document.createElement('div');
+    slide.className = 'editorial-carousel-card-wrapper swiper-slide reveal-in-up';
+    slide.setAttribute('role', 'listitem');
+
+    const cardElement = card instanceof HTMLElement
+      ? card
+      : createEditorialCarouselCard({ ...card, isFirstCard: index === 0 });
+
+    slide.appendChild(cardElement);
+
+    if (!mq.matches && index >= 4) {
+      slide.classList.add('hidden');
+    }
+
+    return slide;
+  });
+
+  slideElements.forEach((slide) => track.appendChild(slide));
+  carousel.appendChild(track);
+
+  if (!mq.matches && slideElements.length > 4) {
+    const button = createButton(
+      showMoreButtonLabel,
+      '',
+      false,
+      BUTTON_VARIANTS.SECONDARY,
+      BUTTON_ICON_SIZES.MEDIUM,
+      '',
+      '',
+    );
+
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      slideElements.forEach((slide) => slide.classList.remove('hidden'));
+      button.remove();
+    });
+
+    carousel.appendChild(button);
+  }
+
+  return carousel;
+}
+
+export const create = createEditorialCarousel;
 
 /**
  *
@@ -162,13 +225,6 @@ export default async function decorate(block) {
     // First card (index 0) is LCP candidate - optimize image loading
     const isFirstCard = index === 0;
     await decorateEditorialCarouselCard(cardBlock, isFirstCard);
-
-    // Load card styles
-    const decoratedCard = slide.querySelector('.editorial-carousel-card-container, .card')
-      || slide.firstElementChild;
-    if (decoratedCard && decoratedCard.dataset.blockName) {
-      await loadBlock(decoratedCard);
-    }
 
     return slide;
   });
