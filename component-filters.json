@@ -9,7 +9,8 @@
       "hero-widget",
       "mini-hero-widget",
       "blog-carousel-widget",
-      "faq-widget-section"
+      "faq-widget-section",
+      "card-grid-widget"
     ]
   },
   {
@@ -60,6 +61,12 @@
     ]
   },
   {
+    "id": "card-grid-widget",
+    "components": [
+      "card-grid"
+    ]
+  },
+  {
     "id": "data-table-widget",
     "components": []
   },
@@ -85,6 +92,12 @@
     "id": "mini-hero-widget",
     "components": [
       "mini-hero-carousel"
+    ]
+  },
+  {
+    "id": "card-grid",
+    "components": [
+      "warranty-card"
     ]
   },
   {

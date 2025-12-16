@@ -169,6 +169,22 @@
     ]
   },
   {
+    "id": "card-grid-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "card-grid-widget-name",
+        "label": "Nome sezione Card Grid Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "card-grid-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
     "id": "data-table-widget",
     "fields": [
       {
@@ -2779,6 +2795,226 @@
   {
     "id": "unica-preventivatore",
     "fields": []
+  },
+  {
+    "id": "warranty-card",
+    "fields": [
+      {
+        "component": "select",
+        "name": "category",
+        "label": "Categoria",
+        "required": true,
+        "value": "default-mobility",
+        "options": [
+          {
+            "name": "Mobility",
+            "value": "mobility"
+          },
+          {
+            "name": "Welfare",
+            "value": "welfare"
+          },
+          {
+            "name": "Property",
+            "value": "property"
+          },
+          {
+            "name": "Default Mobility",
+            "value": "default-mobility"
+          },
+          {
+            "name": "Default Welfare",
+            "value": "default-welfare"
+          },
+          {
+            "name": "Default Property",
+            "value": "default-property"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Titolo",
+        "required": true,
+        "validation": {
+          "maxLength": 30,
+          "customErrorMsg": "Titolo troppo lungo"
+        }
+      },
+      {
+        "component": "text",
+        "name": "description",
+        "label": "Descrizione",
+        "required": true,
+        "validation": {
+          "maxLength": 200,
+          "customErrorMsg": "Descrizione troppo lunga"
+        }
+      },
+      {
+        "component": "select",
+        "name": "warranty-card-icon",
+        "label": "Icona della Card",
+        "required": true,
+        "value": "un-icon-newspaper",
+        "options": [
+          {
+            "value": "un-icon-newspaper",
+            "name": "Newspaper"
+          },
+          {
+            "value": "un-icon-headphones",
+            "name": "Headphones"
+          },
+          {
+            "value": "un-icon-play-circle",
+            "name": "Play Circle"
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "button-container",
+        "label": "Configurazione Pulsante",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "linkButtonLabel",
+            "label": "Testo del link",
+            "required": true,
+            "validation": {
+              "maxLength": 30,
+              "customErrorMsg": "Testo troppo lungo (max 30 caratteri)"
+            }
+          },
+          {
+            "component": "aem-content",
+            "name": "linkButtonHref",
+            "label": "Link URL",
+            "description": "URL di destinazione per questo link",
+            "required": true
+          },
+          {
+            "component": "boolean",
+            "label": "Apri in una nuova scheda",
+            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+            "name": "linkButtonOpenInNewTab",
+            "valueType": "boolean",
+            "value": false
+          },
+          {
+            "component": "select",
+            "name": "linkButtonLeftIcon",
+            "label": "Icona a sinistra",
+            "description": "Opzionale icona a sinistra.",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "linkButtonRightIcon",
+            "label": "Icona a destra",
+            "description": "Opzionale icona a destra. Non utilizzare se già presente un'icona a sinistra, salvo eccezioni funzionali.",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "linkButtonLeftIconSize",
+            "label": "Dimensione icona a sinistra",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "linkButtonRightIconSize",
+            "label": "Dimensione icona a destra",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "switch",
+            "name": "linkButtonDisabled",
+            "label": "Disabled",
+            "description": "Toggle to disable the link button",
+            "value": false
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "tag-label",
+        "label": "Tag Label"
+      }
+    ]
   },
   {
     "id": "icon-button",

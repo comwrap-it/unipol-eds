@@ -1,6 +1,5 @@
-import {
-  extractInstrumentationAttributes,
-} from '../buttons/standard-button/standard-button.js';
+import { createTextElementFromRow } from '../../../scripts/domHelpers.js';
+import { extractInstrumentationAttributes } from '../buttons/standard-button/standard-button.js';
 
 /**
  * Create a tag element with styling
@@ -8,13 +7,25 @@ import {
  * @param {string} category - Category name (required)
  * @param {string} type - Tag type (required)
  * @param {Object} instrumentation - Instrumentation attributes (optional)
+ * @param {HTMLElement} labelRow - The label row element (optional)
  * @returns {HTMLElement} The tag element
  */
-export const createTag = (label, category, type, instrumentation = {}) => {
+export const createTag = (
+  label,
+  category,
+  type,
+  instrumentation = {},
+  labelRow = null,
+) => {
   const tag = document.createElement('div');
   tag.className = `tag ${category} ${type}`;
 
-  tag.textContent = label;
+  if (labelRow) {
+    const textElement = createTextElementFromRow(labelRow, 'tag-label', 'span');
+    tag.appendChild(textElement);
+  } else {
+    tag.textContent = label;
+  }
 
   // Restore instrumentation to button element
   Object.entries(instrumentation).forEach(([name, value]) => {
@@ -39,6 +50,7 @@ const extractValuesFromRows = (rows) => {
     category,
     type,
     instrumentation,
+    labelRow: rows[0],
   };
 };
 
@@ -53,21 +65,13 @@ export function createTagFromRows(rows) {
   if (!rows || rows.length === 0) return null;
 
   const {
-    label,
-    category,
-    type,
-    instrumentation,
+    label, category, type, instrumentation, labelRow,
   } = extractValuesFromRows(rows);
 
   // Don't tag if there's no label text
   if (!label) return null;
 
-  return createTag(
-    label,
-    category,
-    type,
-    instrumentation,
-  );
+  return createTag(label, category, type, instrumentation, labelRow);
 }
 
 /**
