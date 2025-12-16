@@ -100,19 +100,14 @@
                     "label": "Testo Bottone"
                 },
                 {
-                    "id": "aem-content-picker",
-                    "fields": [
-                        {
-                            "component": "aem-content",
-                            "name": "reference",
-                            "value": "",
-                            "label": "AEM Content Picker",
-                            "valueType": "string",
-                            "validation": {
-                                "rootPath": "/content/unipol"
-                            }
-                        }
-                    ]
+                    "component": "aem-content",
+                    "name": "reference",
+                    "value": "",
+                    "label": "AEM Content Picker",
+                    "valueType": "string",
+                    "validation": {
+                        "rootPath": "/content/unipol"
+                    }
                 },
                 {
                     "component": "text",
