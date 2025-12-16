@@ -41,7 +41,7 @@
           }
         },
         {
-          "component": "textarea",
+          "component": "text",
           "name": "dialogDescriptionLabel",
           "label": "Descrizione",
           "required": true,
