@@ -108,6 +108,8 @@ const createCardLinkButton = async (label, href, card) => {
   linkButton.href = href;
   linkButton.textContent = label;
   linkButton.onclick = (event) => handleLinkClick(event, card);
+
+  return linkButton;
 };
 
 /**
