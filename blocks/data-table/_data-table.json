@@ -11,13 +11,11 @@
               "name": "Data Table",
               "model": "data-table",
               "filter": "data-table",
-              "template": {
                 "data-table-row": {
                   "sling:resourceType": "core/franklin/components/block/v1/block/item",
                   "name": "Data table row",
                   "model": "data-table-row"
                 }
-              }
             }
           }
         }
