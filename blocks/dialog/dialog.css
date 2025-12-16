@@ -1,5 +1,5 @@
 .dialog {
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
   display: flex;
@@ -18,11 +18,23 @@
 }
 
 .dialog-overlay {
-  position: absolute;
+  position: fixed;
   inset: 0;
-  background: rgb(0 0 0 / 50%);
-  z-index: 50;
-  animation: fade-in 0.5s ease forwards;
+  flex-shrink: 0;
+  border-radius: var(--Overlay-Radius, 0);
+  background: var(--Overlay-Default-Background, rgb(0 0 0 / 40%));
+  backdrop-filter: blur(calc(var(--Blur-400---24, 24px) / 2));
+}
+
+.dialog-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 101;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
 /* Header */
@@ -85,7 +97,6 @@
 
 /* Footer button */
 .dialog-footer {
-  position: sticky;
   bottom: 0;
   width: 100%;
 }
