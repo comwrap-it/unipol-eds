@@ -46,7 +46,6 @@ import { initCarouselAnimations } from '../../scripts/reveal.js';
 
 /**
  * @typedef {Object} CarouselSkeleton
- * @property {HTMLDivElement} wrapper
  * @property {HTMLDivElement} carousel
  * @property {HTMLDivElement} track
  */
@@ -86,7 +85,6 @@ const THRESHOLDS = {
 };
 
 const CLASS_NAMES = {
-  wrapper: 'editorial-carousel-wrapper',
   carousel: 'editorial-carousel-container',
   track: 'editorial-carousel',
   slide: 'editorial-carousel-card-wrapper',
@@ -182,9 +180,6 @@ function parseCarouselBlock(block) {
  * @returns {CarouselSkeleton}
  */
 function createCarouselSkeletonFromConfig({ ariaLabel = DEFAULT_ARIA_LABEL } = {}) {
-  const wrapper = document.createElement('div');
-  wrapper.className = CLASS_NAMES.wrapper;
-
   const carousel = document.createElement('div');
   carousel.className = `${CLASS_NAMES.carousel} swiper`;
   carousel.setAttribute('role', 'region');
@@ -196,9 +191,8 @@ function createCarouselSkeletonFromConfig({ ariaLabel = DEFAULT_ARIA_LABEL } = {
   track.setAttribute('role', 'list');
 
   carousel.appendChild(track);
-  wrapper.appendChild(carousel);
 
-  return { wrapper, carousel, track };
+  return { carousel, track };
 }
 
 /**
@@ -297,13 +291,9 @@ async function createNavigationFromState({ totalSlides, viewport, showMoreLabel 
 async function createSwiperFromCarousel(carousel, navigation) {
   const SwiperLib = await loadSwiper();
 
-  return new SwiperLib(carousel, {
-    a11y: false,
-    navigation: {
-      prevEl: navigation.leftIconButton || carousel.querySelector(SELECTORS.navPrev),
-      nextEl: navigation.rightIconButton || carousel.querySelector(SELECTORS.navNext),
-      addIcons: false,
-    },
+  /** @type {Record<string, any>} */
+  const config = {
+    a11y: { enabled: false },
     speed: 700,
     slidesPerView: 'auto',
     allowTouchMove: true,
@@ -313,7 +303,17 @@ async function createSwiperFromCarousel(carousel, navigation) {
     resistanceRatio: 0.85,
     touchReleaseOnEdges: true,
     effect: 'slide',
-  });
+  };
+
+  if (navigation.mode === 'scroll-indicator') {
+    config.navigation = {
+      prevEl: navigation.leftIconButton || carousel.querySelector(SELECTORS.navPrev),
+      nextEl: navigation.rightIconButton || carousel.querySelector(SELECTORS.navNext),
+      addIcons: false,
+    };
+  }
+
+  return new SwiperLib(carousel, config);
 }
 
 // #endregion
@@ -347,7 +347,7 @@ async function renderCarousel(block, model, decorateCard) {
   /**
    * CREATE: static skeleton (wrapper, container, track).
    */
-  const { wrapper, carousel, track } = createCarouselSkeletonFromConfig();
+  const { carousel, track } = createCarouselSkeletonFromConfig();
 
   /**
    * CREATE: build slides by decorating nested `editorial-carousel-card` blocks.
@@ -422,7 +422,7 @@ async function renderCarousel(block, model, decorateCard) {
 
   block.textContent = '';
   carousel.classList.add('block', 'editorial-carousel-block');
-  block.appendChild(wrapper);
+  block.appendChild(carousel);
 
   /**
    * INIT: reveal animations.
@@ -430,32 +430,41 @@ async function renderCarousel(block, model, decorateCard) {
   initCarouselAnimations(carousel);
 
   /**
-   * INIT: Swiper + scroll indicator (tablet/desktop only).
+   * INIT: section widget (theme + section-level styles).
    */
-  if (navigation.mode !== 'scroll-indicator') return;
+  const decorateWidget = (await import('../editorial-carousel-widget/editorial-carousel-widget.js')).default;
+  await decorateWidget(block);
+
+  /**
+   * INIT: Swiper (tablet/desktop only).
+   */
+  if (viewport.isMobile) return;
 
   const swiperInstance = await createSwiperFromCarousel(carousel, navigation);
 
-  if (navigation.setExpandedDot) {
-    handleSlideChange(
-      swiperInstance,
-      navigation.setExpandedDot,
-      navigation.leftIconButton,
-      navigation.rightIconButton,
-    );
+  /**
+   * INIT: scroll indicator behavior (when present).
+   */
+  if (navigation.mode !== 'scroll-indicator' || !navigation.setExpandedDot) return;
 
-    navigation.setExpandedDot({
-      isBeginning: swiperInstance.isBeginning,
-      isEnd: swiperInstance.isEnd,
-    });
+  handleSlideChange(
+    swiperInstance,
+    navigation.setExpandedDot,
+    navigation.leftIconButton,
+    navigation.rightIconButton,
+  );
 
-    if (navigation.leftIconButton) {
-      navigation.leftIconButton.disabled = swiperInstance.isBeginning;
-    }
+  navigation.setExpandedDot({
+    isBeginning: swiperInstance.isBeginning,
+    isEnd: swiperInstance.isEnd,
+  });
 
-    if (navigation.rightIconButton) {
-      navigation.rightIconButton.disabled = swiperInstance.isEnd;
-    }
+  if (navigation.leftIconButton) {
+    navigation.leftIconButton.disabled = swiperInstance.isBeginning;
+  }
+
+  if (navigation.rightIconButton) {
+    navigation.rightIconButton.disabled = swiperInstance.isEnd;
   }
 }
 
@@ -478,13 +487,7 @@ export default async function decorateEditorialCarousel(block) {
    * PARSE: build the model from authored rows.
    */
   const model = parseCarouselBlock(block);
-
-  if (!model.cardRows.length) {
-    /* eslint-disable no-console */
-    console.warn('Editorial Carousel: No cards found');
-    /* eslint-enable no-console */
-    return;
-  }
+  if (!model.cardRows.length) return;
 
   /**
    * LOAD: card decorator.

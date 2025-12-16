@@ -1,52 +1,54 @@
 /**
  * Editorial Carousel Widget
  *
- * Enhances all `.editorial-carousel-container` instances on the page with Swiper behavior.
+ * Section-level enhancer for Editorial Carousel.
  *
- * This module is designed as a page-level enhancer:
- * - It scans the document for carousel instances.
- * - It initializes Swiper once per carousel (guarded via `data-initialized`).
- * - It applies an optional dark theme to the closest section.
+ * Responsibilities:
+ * - Reads the section configuration authored in Universal Editor.
+ * - Applies optional section theme (`theme-dark`).
+ * - Loads widget CSS.
+ *
+ * Notes:
+ * - Swiper initialization is handled by `blocks/editorial-carousel/editorial-carousel.js`.
+ * - This widget must not initialize Swiper to avoid double-initialization and navigation bugs.
  */
-import loadSwiper from '../../scripts/delayed.js';
 
 /**
- * @typedef {Object} DarkThemeFlag
- * @property {string | null} raw
- * @property {boolean} enabled
+ * @typedef {Object} EditorialCarouselWidgetModel
+ * @property {string | null} rawDarkTheme Raw string value of the toggle.
+ * @property {boolean} darkTheme Whether the dark theme is enabled.
  */
 
 // #region CONFIGS
 
 const SELECTORS = {
-  carousel: '.editorial-carousel-container',
-  expandingDots: '.expanding-dots',
-  dot: 'span',
-  swiperIcon: '.swiper-navigation-icon',
-  swiperNotification: '.swiper-notification',
-  navPrev: '.swiper-button-prev',
-  navNext: '.swiper-button-next',
+  section: '.section.editorial-carousel-container',
+  fallback: '.editorial-carousel-container',
 };
 
 // #endregion
 
 // #region DEPENDENCIES
 
+/** @type {boolean} */
 let isStylesLoaded = false;
 
 /**
- * Ensures widget CSS is loaded once.
+ * Loads widget CSS once.
  *
  * @returns {Promise<void>}
  */
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
+
   const { loadCSS } = await import('../../scripts/aem.js');
+
   await Promise.all([
     loadCSS(
-      `${window.hlx.codeBasePath}/blocks/editorial-carousel-widget/editorial-carousel.-widgetcss`,
+      `${window.hlx.codeBasePath}/blocks/editorial-carousel-widget/editorial-carousel-widget.css`,
     ),
   ]);
+
   isStylesLoaded = true;
 }
 
@@ -55,119 +57,24 @@ async function ensureStylesLoaded() {
 // #region PARSE
 
 /**
- * Parses the dark theme flag for a given carousel.
+ * Parses the widget configuration from the host section.
  *
- * Note: the flag is currently derived from the second child node of the carousel container.
+ * Universal Editor models the widget fields as sequential child nodes.
+ * Current model:
+ * - Row 0: widget name (string)
+ * - Row 1: dark theme toggle (true/false)
  *
- * @param {HTMLElement} carousel
- * @returns {DarkThemeFlag}
+ * @param {HTMLElement} hostSection
+ * @returns {EditorialCarouselWidgetModel}
  */
-function parseDarkThemeFlagFromCarousel(carousel) {
-  const rows = Array.from(carousel.children);
-  const raw = rows[1]?.textContent?.trim().toLowerCase();
+function parseWidgetModel(hostSection) {
+  const rows = Array.from(hostSection.children);
+  const rawDarkTheme = rows[1]?.textContent?.trim().toLowerCase() ?? null;
 
   return {
-    raw: raw ?? null,
-    enabled: raw === 'true',
+    rawDarkTheme,
+    darkTheme: rawDarkTheme === 'true',
   };
-}
-
-// #endregion
-
-// #region CREATE
-
-/**
- * Creates a Swiper plugin that controls the "expanding dots" indicator.
- *
- * @param {HTMLElement} carousel
- * @returns {(params: { extendParams: Function, on: Function }) => void}
- */
-function createExpandingDotsPluginFromCarousel(carousel) {
-  const getDots = () => {
-    const container = carousel.querySelector(SELECTORS.expandingDots);
-    return container?.querySelectorAll(SELECTORS.dot) || [];
-  };
-
-  const setExpandedDot = (position) => {
-    const dots = getDots();
-    dots.forEach((dot) => dot.classList.remove('expanded'));
-
-    if (!dots.length) return;
-
-    const indexByPosition = { start: 0, middle: 1, end: 2 };
-    const index = indexByPosition[position] ?? indexByPosition.middle;
-
-    dots[index]?.classList.add('expanded');
-  };
-
-  return function editorialCarousel({ on }) {
-    let edgeState = null;
-
-    on('init', () => {
-      carousel.querySelectorAll(SELECTORS.swiperIcon).forEach((el) => el.remove());
-      carousel.querySelectorAll(SELECTORS.swiperNotification).forEach((el) => el.remove());
-    });
-
-    on('slideChange', () => {
-      if (edgeState) return;
-      setExpandedDot('middle');
-    });
-
-    on('fromEdge', () => {
-      edgeState = null;
-    });
-
-    on('reachBeginning', () => {
-      edgeState = 'start';
-      setExpandedDot('start');
-    });
-
-    on('reachEnd', () => {
-      edgeState = 'end';
-      setExpandedDot('end');
-    });
-  };
-}
-
-/**
- * Creates the Swiper instance for a carousel, guarded by `data-initialized`.
- *
- * @param {HTMLElement} carousel
- * @param {Function} SwiperLib
- * @returns {Object | null} Swiper instance, or null if already initialized.
- */
-function createSwiperFromCarousel(carousel, SwiperLib) {
-  if (carousel.dataset.initialized) return null;
-  carousel.dataset.initialized = 'true';
-
-  const plugin = createExpandingDotsPluginFromCarousel(carousel);
-
-  const swiperInstance = new SwiperLib(carousel, {
-    modules: [plugin],
-    a11y: false,
-    navigation: {
-      nextEl: carousel.querySelector(SELECTORS.navNext),
-      prevEl: carousel.querySelector(SELECTORS.navPrev),
-    },
-    speed: 700,
-    slidesPerView: 3,
-    slidesPerGroup: 1,
-    breakpoints: {
-      1200: {
-        slidesPerView: 4,
-        allowTouch: false,
-      },
-      768: {
-        slidesPerView: 3,
-        allowTouchMove: false,
-      },
-    },
-    resistanceRatio: 0.85,
-    touchReleaseOnEdges: true,
-    effect: 'slide',
-  });
-
-  return swiperInstance;
 }
 
 // #endregion
@@ -175,38 +82,14 @@ function createSwiperFromCarousel(carousel, SwiperLib) {
 // #region RENDER
 
 /**
- * Enhances all editorial carousel instances found.
+ * Applies the widget model to the section.
  *
- * Assembly is kept monolithic (except for `create*From*` helpers).
- *
- * @param {HTMLElement[]} carousels
- * @param {Function} SwiperLib
+ * @param {HTMLElement} hostSection
+ * @param {EditorialCarouselWidgetModel} model
  */
-function renderEditorialCarouselWidget(carousels, SwiperLib) {
-  /**
-   * LOOP: enhance each carousel instance.
-   */
-  carousels.forEach((carousel) => {
-    /**
-     * PARSE: read per-carousel configuration (dark theme flag).
-     */
-    const darkTheme = parseDarkThemeFlagFromCarousel(carousel);
-
-    /**
-     * APPLY: toggle section theme.
-     */
-    const section = carousel.closest('.section');
-    if (darkTheme.enabled) {
-      section?.classList.add('theme-dark');
-    } else {
-      section?.classList.remove('theme-dark');
-    }
-
-    /**
-     * INIT: Swiper (only once per carousel).
-     */
-    createSwiperFromCarousel(carousel, SwiperLib);
-  });
+function applyWidgetModel(hostSection, model) {
+  const section = hostSection.closest('.section') || hostSection;
+  section.classList.toggle('theme-dark', model.darkTheme);
 }
 
 // #endregion
@@ -216,38 +99,24 @@ function renderEditorialCarouselWidget(carousels, SwiperLib) {
 /**
  * Decorates the Editorial Carousel Widget.
  *
- * This is a page-level enhancer: it scans the document for carousels.
+ * When invoked by `blocks/editorial-carousel/editorial-carousel.js`, `block` is the
+ * carousel block instance and the widget is resolved from its closest section.
  *
  * @param {HTMLElement} [block]
  * @returns {Promise<void>}
  */
 export default async function decorateEditorialCarouselWidget(block) {
-  if (block) {
-    // no-op: parameter is accepted for block-loader compatibility
-  }
+  const resolvedSection = block?.closest?.('.section') || null;
+  const hostSection = resolvedSection
+    || document.querySelector(SELECTORS.section)
+    || document.querySelector(SELECTORS.fallback)?.closest?.('.section');
 
-  /**
-   * DISCOVER: find all carousel containers.
-   */
-  const carousels = Array.from(document.querySelectorAll(SELECTORS.carousel));
-  if (!carousels.length) return;
+  if (!hostSection) return;
 
-  /**
-   * LOAD: CSS + Swiper library.
-   */
   await ensureStylesLoaded();
 
-  let SwiperLib;
-  try {
-    SwiperLib = await loadSwiper();
-  } catch (e) {
-    return;
-  }
-
-  /**
-   * RENDER: enhance all instances.
-   */
-  renderEditorialCarouselWidget(carousels, SwiperLib);
+  const model = parseWidgetModel(hostSection);
+  applyWidgetModel(hostSection, model);
 }
 
 // #endregion
