@@ -5,8 +5,7 @@
  *
  * The Universal Editor serializes each field as a row element. Over time, the
  * underlying content model changed, which shifted the row indices of the image
- * and its alternative text. This module supports both the current and a legacy
- * layout by selecting the first matching entry in `IMAGE_ROW_CANDIDATES`.
+ * and its alternative text.
  */
 
 import { createLinkButtonFromRows } from '../atoms/buttons/link-button/link-button.js';
@@ -59,7 +58,6 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
  * @property {number} ctaNormalizedCount
  * @property {HTMLElement | null} imageRow
  * @property {HTMLElement | null} imageAltRow
- * @property {string | null} imageLayoutId Selected `IMAGE_ROW_CANDIDATES` id.
  * @property {number | null} imageIndex Selected image row index.
  * @property {number | null} imageAltIndex Selected alt row index.
  * @property {number} rowCount Total rows detected.
@@ -103,8 +101,6 @@ const CARD_CLASSES = {
  * - `description`: description row
  * - `ctaStart..ctaEnd`: CTA configuration rows (from the standard-button model)
  *
- * Image indices are handled via `IMAGE_ROW_CANDIDATES`.
- *
  * @type {Readonly<RowIndexConfig>}
  */
 const ROW_INDEX = {
@@ -113,31 +109,6 @@ const ROW_INDEX = {
   ctaStart: 2,
   ctaEnd: 9, // exclusive
 };
-
-/**
- * Candidate mappings used to locate the image and alt-text rows.
- *
- * Universal Editor stores fields as sequential row elements. When the model
- * changes, later fields can shift indices in the resulting DOM.
- *
- * `parseCardRows()` iterates this list and selects the first candidate whose
- * `imageIndex` row contains image-like content (`picture`, `img`, or an `a`
- * pointing to an asset).
- *
- * Current layout:
- * - image: `rows[10]`
- * - alt:   `rows[11]`
- *
- * Legacy layout:
- * - image: `rows[13]`
- * - alt:   `rows[14]`
- *
- * @type {ReadonlyArray<ImageRowCandidate>}
- */
-const IMAGE_ROW_CANDIDATES = [
-  { id: 'current', imageIndex: 10, altIndex: 11 },
-  { id: 'legacy', imageIndex: 13, altIndex: 14 },
-];
 
 /**
  * Allowed standard-button variants.
@@ -385,8 +356,6 @@ function renderCard(model, sourceBlock) {
  * - 10: Image
  * - 11: Image alt text
  *
- * Legacy layouts may shift image indices; see `IMAGE_ROW_CANDIDATES`.
- *
  * @param {HTMLElement} block Editorial card block.
  * @returns {EditorialCarouselCardModel}
  */
@@ -394,20 +363,10 @@ function parseCardRows(block) {
   const wrapper = block.querySelector('.default-content-wrapper');
   const rows = wrapper ? Array.from(wrapper.children) : Array.from(block.children);
 
-  const match = IMAGE_ROW_CANDIDATES.find(({ imageIndex }) => Boolean(
-    rows[imageIndex]
-      && (
-        rows[imageIndex].querySelector('picture')
-        || rows[imageIndex].querySelector('img')
-        || rows[imageIndex].querySelector('a')
-      ),
-  ));
-
-  const imageRow = match ? rows[match.imageIndex] : null;
-  const altRow = match ? rows[match.altIndex] : null;
-  const layoutId = match?.id || null;
-  const imageIndex = match?.imageIndex ?? null;
-  const altIndex = match?.altIndex ?? null;
+  const imageRow = rows[9];
+  const altRow = rows[10];
+  const imageIndex = 9;
+  const altIndex = 10;
 
   const rawCtaRows = rows.slice(ROW_INDEX.ctaStart, ROW_INDEX.ctaEnd);
 
@@ -453,7 +412,6 @@ function parseCardRows(block) {
     ctaNormalizedCount: normalizedCtaRows.length,
     imageRow,
     imageAltRow: altRow,
-    imageLayoutId: layoutId,
     imageIndex,
     imageAltIndex: altIndex,
     rowCount: rows.length,
