@@ -2835,64 +2835,9 @@
         ]
       },
       {
-        "component": "container",
-        "name": "tag",
-        "label": "Configurazione Tag",
-        "collapsible": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "tagLabel",
-            "label": "Tag text",
-            "required": true
-          },
-          {
-            "component": "select",
-            "name": "tagCategory",
-            "label": "Tag Category",
-            "required": true,
-            "value": "mobility",
-            "options": [
-              {
-                "name": "Mobility",
-                "value": "mobility"
-              },
-              {
-                "name": "Welfare",
-                "value": "welfare"
-              },
-              {
-                "name": "Property",
-                "value": "property"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "tagVariant",
-            "label": "Tag type",
-            "required": true,
-            "value": "default",
-            "options": [
-              {
-                "name": "Default",
-                "value": "default"
-              },
-              {
-                "name": "Secondary",
-                "value": "secondary"
-              },
-              {
-                "name": "Neutral",
-                "value": "neutral"
-              },
-              {
-                "name": "Custom",
-                "value": "custom"
-              }
-            ]
-          }
-        ]
+        "component": "text",
+        "name": "tag-label",
+        "label": "Tag Label"
       }
     ]
   },

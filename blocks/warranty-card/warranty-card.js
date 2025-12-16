@@ -4,7 +4,10 @@
  */
 
 import { loadCSS } from '../../scripts/aem.js';
-import { createIconElementFromCssClass } from '../../scripts/domHelpers.js';
+import {
+  createIconElementFromCssClass,
+  createTextElementFromRow,
+} from '../../scripts/domHelpers.js';
 import { BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-button.js';
 
 /**
@@ -14,6 +17,9 @@ import { BUTTON_ICON_SIZES } from '../atoms/buttons/standard-button/standard-but
  * @param {string} icon the icon class (required)
  * @param {LinkButtonConf} linkButtonConfig config for link button (optional)
  * @param {TagConf} tagConfig config for tag (optional)
+ * @param {HTMLElement} titleRow the title row element (optional)
+ * @param {HTMLElement} descriptionRow the description row element (optional)
+ * @returns {Promise<HTMLElement>} The warranty card element
  */
 export const createWarrantyCard = async (
   category,
@@ -22,6 +28,8 @@ export const createWarrantyCard = async (
   icon,
   linkButtonConfig = {},
   tagConfig = {},
+  titleRow = null,
+  descriptionRow = null,
 ) => {
   const card = document.createElement('div');
   card.className = `warranty-card${category ? ` ${category}` : ''}`;
@@ -50,21 +58,37 @@ export const createWarrantyCard = async (
 
   const textContent = document.createElement('div');
   textContent.className = 'text-content';
-  const titleElement = document.createElement('h3');
-  titleElement.className = 'title';
-  titleElement.textContent = title;
-  textContent.appendChild(titleElement);
-  const descriptionElement = document.createElement('p');
-  descriptionElement.className = 'description';
-  descriptionElement.textContent = description;
-  textContent.appendChild(descriptionElement);
+  let titleEl;
+  if (titleRow?.firstChild) {
+    titleEl = createTextElementFromRow(titleRow, 'h3', 'title');
+  } else {
+    titleEl = document.createElement('h3');
+    titleEl.className = 'title';
+    titleEl.textContent = title;
+  }
+  textContent.appendChild(titleEl);
+  let descriptionEl;
+  if (descriptionRow?.firstChild) {
+    descriptionEl = createTextElementFromRow(
+      descriptionRow,
+      'p',
+      'description',
+    );
+  } else {
+    descriptionEl = document.createElement('p');
+    descriptionEl.className = 'description';
+    descriptionEl.textContent = description;
+  }
+  textContent.appendChild(descriptionEl);
   card.appendChild(textContent);
 
   if (linkButtonConfig?.label && linkButtonConfig?.href) {
     const { createLinkButton } = await import(
       '../atoms/buttons/link-button/link-button.js'
     );
-    await loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`);
+    await loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`,
+    );
     const linkButtonElement = createLinkButton(
       linkButtonConfig.label,
       linkButtonConfig.href,
@@ -82,7 +106,7 @@ export const createWarrantyCard = async (
 };
 
 export const extractWarrantyCardValuesFromRows = (rows) => {
-  const category = rows[0]?.textContent?.trim() || '';
+  const category = rows[0]?.textContent?.trim() || 'default-mobility';
   const title = rows[1]?.textContent?.trim() || '';
   const description = rows[2]?.textContent?.trim() || '';
   const icon = rows[3]?.textContent?.trim() || '';
@@ -103,9 +127,10 @@ export const extractWarrantyCardValuesFromRows = (rows) => {
     linkButtonConfig.disabled = rows[11]?.textContent?.trim() === 'true';
   }
   if (rows[12]?.textContent?.trim()) {
+    const isDefaultCategory = category.startsWith('default-');
     tagConfig.label = rows[12]?.textContent?.trim() || '';
-    tagConfig.category = rows[13]?.textContent?.trim() || '';
-    tagConfig.type = rows[14]?.textContent?.trim() || '';
+    tagConfig.category = isDefaultCategory ? '' : category;
+    tagConfig.type = isDefaultCategory ? 'custom' : 'default';
   }
   return {
     category,
@@ -114,12 +139,21 @@ export const extractWarrantyCardValuesFromRows = (rows) => {
     icon,
     linkButtonConfig,
     tagConfig,
+    titleRow: rows[1],
+    descriptionRow: rows[2],
   };
 };
 
 export const createWarrantyCardFromRows = async (rows) => {
   const {
-    category, title, description, icon, linkButtonConfig, tagConfig,
+    category,
+    title,
+    description,
+    icon,
+    linkButtonConfig,
+    tagConfig,
+    titleRow,
+    descriptionRow,
   } = extractWarrantyCardValuesFromRows(rows);
   const warrantyCard = await createWarrantyCard(
     category,
@@ -128,6 +162,8 @@ export const createWarrantyCardFromRows = async (rows) => {
     icon,
     linkButtonConfig,
     tagConfig,
+    titleRow,
+    descriptionRow,
   );
   return warrantyCard;
 };

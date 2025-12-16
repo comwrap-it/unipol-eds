@@ -25,12 +25,10 @@
             aspect-ratio: 1/1;
             border-radius: var(--Card-Warranty-Card-Radius-Icon, 9999px);
             background: var(--Card-Warranty-Card-Background-Icon, #e5f1ff);
+        }
 
-            & .icon {
-                width: var(--Card-Warranty-Card-Icon-Size, 32px);
-                height: var(--Card-Warranty-Card-Icon-Size, 32px);
-                aspect-ratio: 1/1;
-            }
+        & .tag {
+            align-self: flex-start;
         }
     }
 

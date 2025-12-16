@@ -106,15 +106,9 @@
                     ]
                 },
                 {
-                    "component": "container",
-                    "name": "tag",
-                    "label": "Configurazione Tag",
-                    "collapsible": true,
-                    "fields": [
-                        {
-                            "...": "../atoms/tag/_tag.json#/models/tag/fields"
-                        }
-                    ]
+                    "component": "text",
+                    "name": "tag-label",
+                    "label": "Tag Label"
                 }
             ]
         }
