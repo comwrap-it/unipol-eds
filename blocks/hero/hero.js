@@ -1,9 +1,9 @@
 import {
   createTextElementFromRow,
   extractBooleanValueFromRow,
+  extractMediaElementFromRow,
 } from '../../scripts/domHelpers.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import { isAuthorMode } from '../../scripts/utils.js';
 import {
   BUTTON_ICON_SIZES,
   BUTTON_VARIANTS,
@@ -104,7 +104,7 @@ const createHeroMainSection = (
   }
   const titleEl = createTextElementFromRow(titleRow, 'hero-title', 'h2');
   mainSection.appendChild(titleEl);
-  if (subtitleBoldRow.firstChild) {
+  if (subtitleBoldRow?.firstChild) {
     const subtitleBoldEl = createTextElementFromRow(
       subtitleBoldRow,
       'hero-subtitle-bold',
@@ -112,7 +112,7 @@ const createHeroMainSection = (
     );
     mainSection.appendChild(subtitleBoldEl);
   }
-  if (subtitleRow.firstChild) {
+  if (subtitleRow?.firstChild) {
     const subtitleEl = createTextElementFromRow(
       subtitleRow,
       'hero-subtitle',
@@ -180,18 +180,6 @@ const createHeroButtonSection = async (
 };
 
 /**
- * Adjusts hero height in authoring mode to fit viewport height.
- * @param {HTMLDivElement} hero
- */
-const handleAuthorMode = (hero) => {
-  const isInAuthorMode = isAuthorMode(hero);
-  if (isInAuthorMode) {
-    const screenHeight = window.innerHeight;
-    hero.style.height = `${screenHeight}px`;
-  }
-};
-
-/**
  * Creates a Hero component
  *
  * @param {HTMLElement} heroBackground - the background media source
@@ -235,8 +223,6 @@ export async function createHero(
   isCarousel = false,
 ) {
   const hero = setupHeroWithBg(heroBackground, isVideoBackground, isCarousel);
-  // since hero uses 100vh in author i have to calculate it dinamically
-  handleAuthorMode(hero);
   const heroContent = document.createElement('div');
   heroContent.className = 'hero-content';
   const mainSection = createHeroMainSection(
@@ -270,18 +256,6 @@ export async function createHero(
   hero.appendChild(heroContent);
   return hero;
 }
-/** Get media source URL from a row
- *
- * @param {HTMLElement} row - The row element
- * @param {boolean} isVideo - Flag to indicate if media is video
- * @returns {HTMLElement|null} The media element (video or picture) or null if not found
- */
-const extractMediaFromRow = (row, isVideo = false) => {
-  const mediaElement = row?.querySelector(isVideo ? 'a' : 'picture');
-  moveInstrumentation(row, mediaElement);
-  if (mediaElement) return mediaElement;
-  return null;
-};
 
 /** Extract hero properties from rows
  *
@@ -291,15 +265,15 @@ const extractMediaFromRow = (row, isVideo = false) => {
  */
 export const extractHeroPropertiesFromRows = (rows) => {
   const isVideoBackground = extractBooleanValueFromRow(rows[1]);
-  const heroBackground = extractMediaFromRow(rows[0], isVideoBackground);
+  const heroBackground = extractMediaElementFromRow(rows[0]);
   const showHeroLogo = extractBooleanValueFromRow(rows[2]);
-  const heroLogo = extractMediaFromRow(rows[3]);
+  const heroLogo = extractMediaElementFromRow(rows[3]);
   const title = rows[4];
   const subtitleBold = rows[5];
   const subtitle = rows[6];
   const showHeroBulletList = extractBooleanValueFromRow(rows[7]);
   const bulletList = [rows[8], rows[9], rows[10]].filter(
-    (row) => row.firstChild,
+    (row) => row?.firstChild,
   );
   // Button properties
   const showHeroButton = extractBooleanValueFromRow(rows[11]);

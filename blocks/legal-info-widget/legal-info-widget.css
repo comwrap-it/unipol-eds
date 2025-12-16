@@ -1,0 +1,63 @@
+.legal-info-content {
+  color: var(--Legal-Info-Widget-Text, #001C35);
+  font-family: var(--Family-Font-2, Manrope);
+  font-size: var(--Size-12, 0.75rem);
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+}
+
+.legal-info-content p,
+.legal-info-content div {
+  margin: 0;
+}
+
+.legal-info-content p + p,
+.legal-info-content div + div,
+.legal-info-content p + div,
+.legal-info-content div + p {
+  margin-top: var(--Legal-Info-Widget-Gap, 0.25rem);
+}
+
+.legal-info-content br {
+  display: block;
+  margin-top: var(--Legal-Info-Widget-Gap, 0.25rem);
+}
+
+/* Desktop small */
+@media (1152px <= width <= 1312px) {
+  .legal-info-content {
+    color: var(--Legal-Info-Widget-Text, #001C35);
+    font-family: var(--Family-Font-2, Manrope);
+    font-size: var(--Size-12, 0.75rem);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+  }
+}
+
+/* Tablet */
+@media (768px <= width <= 1152px) {
+  .legal-info-content {
+    color: var(--Legal-Info-Widget-Text, #001C35);
+    font-family: var(--Family-Font-2, Manrope);
+    font-size: var(--Size-12, 0.75rem);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+  }
+}
+
+/* Mobile */
+@media (width <= 768px) {
+  .legal-info-content {
+    color: var(--Legal-Info-Widget-Text, #001C35);
+    font-family: var(--Family-Font-2, Manrope);
+    font-size: var(--Size-12, 0.75rem);
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+  }
+}

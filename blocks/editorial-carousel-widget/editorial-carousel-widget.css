@@ -1,0 +1,7 @@
+.section {
+    &.editorial-carousel-container {
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+    }
+}

@@ -524,9 +524,9 @@
   --Tag-Default-Welfare-Text: var(--Text-Default-Primary);
   --Tag-Default-Mobility-Border: var(--Border-Brand-Mobility);
   --Tag-Default-Mobility-Text: var(--Text-Default-Primary);
-  --Tooltip-Background: var(--Background-Default-Tertiary);
+  --Tooltip-Background: var(--Background-Default-Secondary);
   --Tooltip-Select-Border: var(--Border-Default-Primary);
-  --Tooltip-Title: var(--Text-Neutral-Tertiary);
+  --Tooltip-Title: var(--Text-Default-Primary);
   --Tooltip-Body-Text: var(--Text-Neutral-Primary);
   --Icon-Button-Primary-Default-Background: var(--Null-000);
   --Icon-Button-Primary-Default-Border: var(--Border-Default-Primary);
@@ -660,7 +660,7 @@
   --Section-Background: var(--Null-000);
   --Section-Text: var(--Text-Default-Primary);
   --Text-Block-Body: var(--Text-Default-Primary);
-  --Tooltip-Icon: var(--Icon-Neutral-Tertiary);
+  --Tooltip-Icon: var(--Icon-Default-Primary);
   --Label-Input-Fields-Secondary-Background: var(--Background-Default-Secondary-Fixed);
   --Label-Input-Fields-Secondary-Text: var(--Text-Default-Primary);
   --Input-Fields-Warning-Background: var(--Null-000);
@@ -887,4 +887,6 @@
   --Hero-Text: var(--Text-Neutral-Tertiary);
   --Article-Faq-Widget-Text: var(--Text-Default-Primary);
   --Carousel-Photo-Background: var(--Background-Default-Secondary-Fixed);
+  --Ai-Search-Results-Background: var(--Background-Default-Accent-Light);
+  --Ai-Search-Results-Text: var(--Text-Default-Primary);
 }

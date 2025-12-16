@@ -5,8 +5,12 @@
       "section",
       "kpi-highlights-widget",
       "insurance-product-carousel-widget",
+      "editorial-carousel-widget",
       "hero-widget",
-      "blog-carousel-widget"
+      "mini-hero-widget",
+      "blog-carousel-widget",
+      "faq-widget-section",
+      "card-grid-widget"
     ]
   },
   {
@@ -29,10 +33,7 @@
     "...": "./_section.json#/filters"
   },
   {
-    "...": "./_kpi-highlights-widget.json#/filters"
-  },
-  {
-    "...": "../blocks/insurance-product-carousel-widget/_insurance-product-carousel-widget.json#/filters"
+    "...": "./widgets/_*.json#/filters"
   },
   {
     "...": "../blocks/*/_*.json#/filters"

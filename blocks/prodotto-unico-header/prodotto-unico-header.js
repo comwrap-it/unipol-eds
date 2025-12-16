@@ -1,71 +1,147 @@
 import { decorateIcons } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
+
+/**
+ * Extract logo data from the first 2 rows
+ * Rows contain only values (no label column) when using model
+ */
+function extractLogoData(rows) {
+  const logoImageRow = rows[0];
+  const logoLinkRow = rows[1];
+
+  let logoImg = null;
+  let logoLinkUrl = '/';
+  let logoImageCell = null;
+  let logoLinkCell = null;
+
+  if (logoImageRow) {
+    [logoImageCell] = logoImageRow.children;
+    logoImg = logoImageCell?.querySelector('img');
+  }
+
+  if (logoLinkRow) {
+    [logoLinkCell] = logoLinkRow.children;
+    logoLinkUrl = logoLinkCell?.querySelector('a')?.href
+                  || logoLinkCell?.textContent?.trim()
+                  || '/';
+  }
+
+  return {
+    logoImg,
+    logoLinkUrl,
+    logoImageRow,
+    logoLinkRow,
+    logoImageCell,
+    logoLinkCell,
+  };
+}
+
+/**
+ * Extract action items from rows (starting from row 2)
+ * Each row contains all fields as columns: [icon | link]
+ */
+function extractActionItems(rows) {
+  const actionRows = rows.slice(2);
+
+  return actionRows.map((row) => {
+    const iconCell = row.children[0];
+    const linkCell = row.children[1];
+
+    const iconValue = iconCell?.textContent?.trim().toLowerCase() || '';
+    const linkValue = linkCell?.querySelector('a')?.href
+                      || linkCell?.textContent?.trim()
+                      || '#';
+
+    return {
+      icon: iconValue,
+      link: linkValue,
+      row,
+      iconCell,
+      linkCell,
+    };
+  }).filter((action) => action.icon);
+}
 
 /**
  * Decorates the Prodotto Unico Header block
  * @param {Element} block The block element
  */
 export default async function decorate(block) {
-  // 1. Estrazione dei dati dal DOM (che arriva dal documento o UE)
-  // Assumiamo che la prima riga sia il Logo, e le successive siano le azioni
-  const [logoRow, ...actionRows] = [...block.children];
+  if (!block) return;
 
-  // 2. Costruzione della struttura del Logo
-  const logoWrapper = document.createElement('div');
-  logoWrapper.className = 'header-brand';
+  const rows = Array.from(block.children);
+  if (rows.length < 2) return;
 
-  if (logoRow) {
-    const img = logoRow.querySelector('img');
-    const link = logoRow.querySelector('a')?.href || '/';
+  // Extract data
+  const logoData = extractLogoData(rows);
+  const actions = extractActionItems(rows);
 
-    if (img) {
-      // Ottimizzazione: assicuriamo dimensioni corrette e lazy loading off per LCP
-      img.setAttribute('alt', 'UnipolSai Assicurazioni');
-      img.loading = 'eager';
+  // Build logo
+  if (logoData.logoImg && logoData.logoImageRow) {
+    logoData.logoImageRow.className = 'header-brand';
+    logoData.logoImageRow.innerHTML = '';
 
-      const anchor = document.createElement('a');
-      anchor.href = link;
-      anchor.title = 'Vai alla Home';
-      anchor.appendChild(img);
-      logoWrapper.appendChild(anchor);
+    const anchor = document.createElement('a');
+    anchor.href = logoData.logoLinkUrl;
+    anchor.title = 'Vai alla Home';
+
+    logoData.logoImg.setAttribute('alt', 'Unipol');
+    logoData.logoImg.loading = 'eager';
+    logoData.logoImg.fetchPriority = 'high';
+
+    anchor.appendChild(logoData.logoImg);
+    logoData.logoImageRow.appendChild(anchor);
+
+    // Move instrumentation
+    if (logoData.logoImageCell) {
+      moveInstrumentation(logoData.logoImageCell, anchor);
     }
   }
 
-  // 3. Costruzione della Toolbar (Destra)
-  const toolsWrapper = document.createElement('div');
-  toolsWrapper.className = 'header-tools';
-  const toolsList = document.createElement('ul');
+  // Hide logoLink row
+  if (logoData.logoLinkRow) {
+    logoData.logoLinkRow.style.display = 'none';
+  }
 
-  actionRows.forEach((row) => {
-    // La prima colonna è il nome icona, la seconda è il link
-    const cols = [...row.children];
-    const iconName = cols[0]?.textContent?.trim().toLowerCase();
-    const actionLink = cols[1]?.querySelector('a')?.href || cols[1]?.textContent?.trim() || '#';
+  // Build actions
+  if (actions.length > 0) {
+    const toolsWrapper = document.createElement('div');
+    toolsWrapper.className = 'header-tools';
+    const toolsList = document.createElement('ul');
 
-    if (iconName) {
+    actions.forEach((action) => {
       const li = document.createElement('li');
+      const buttonWrapper = document.createElement('div');
+      buttonWrapper.className = `header-button header-button-${action.icon}`;
 
       const a = document.createElement('a');
-      a.href = actionLink;
-      a.className = `tool-btn tool-${iconName}`;
-      a.setAttribute('aria-label', iconName); // Accessibilità
+      a.href = action.link;
+      a.className = 'tool-btn';
+      a.setAttribute('aria-label', action.icon);
 
-      // Inseriamo lo span per l'icona che EDS trasformerà in SVG
       const iconSpan = document.createElement('span');
-      iconSpan.className = `icon icon-${iconName}`;
-
+      iconSpan.className = `icon icon-${action.icon}`;
       a.appendChild(iconSpan);
-      li.appendChild(a);
+
+      buttonWrapper.appendChild(a);
+      li.appendChild(buttonWrapper);
+
+      // Move instrumentation
+      moveInstrumentation(action.iconCell, buttonWrapper);
+      moveInstrumentation(action.linkCell, a);
+
       toolsList.appendChild(li);
-    }
-  });
+    });
 
-  toolsWrapper.appendChild(toolsList);
+    toolsWrapper.appendChild(toolsList);
+    block.appendChild(toolsWrapper);
 
-  // 4. Pulizia del DOM e assemblaggio finale
-  block.textContent = ''; // Svuota il contenuto originale
-  block.appendChild(logoWrapper);
-  block.appendChild(toolsWrapper);
+    // Hide original action rows
+    actions.forEach((action) => {
+      action.row.style.display = 'none';
+    });
+  }
 
-  // 5. Trigger per caricare gli SVG delle icone (cart.svg, phone.svg, user.svg)
+  // Decorate icons
   decorateIcons(block);
 }

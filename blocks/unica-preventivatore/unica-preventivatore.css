@@ -1,0 +1,153 @@
+/* Unica Preventivatore - lightweight skeleton (performance-oriented) */
+.section.unica-preventivatore-container {
+  padding-inline: 0;
+  padding-block: 0;
+}
+
+main > .section > div.unica-preventivatore-wrapper {
+  max-width: 100%;
+  padding: 0;
+}
+
+.unica-preventivatore {
+  width: 100%;
+}
+
+.unica-preventivatore .unica-preventivatore-skeleton {
+  width: 100%;
+  max-width: var(--max-width-content);
+  margin: 0 auto;
+  padding: var(--spacing-md);
+}
+
+.unica-preventivatore .ups-card {
+  border: var(--border-width-thin) solid var(--color-gray-medium);
+  border-radius: var(--border-radius-md);
+  padding: 24px;
+  background: var(--color-white);
+}
+
+.unica-preventivatore .ups-title {
+  height: 18px;
+  width: min(520px, 90%);
+  margin: 0 auto 18px;
+}
+
+.unica-preventivatore .ups-field {
+  margin-bottom: 18px;
+}
+
+.unica-preventivatore .ups-label {
+  height: 14px;
+  width: 180px;
+  margin-bottom: 8px;
+}
+
+.unica-preventivatore .ups-input {
+  height: 48px;
+  width: 100%;
+  border-radius: 6px;
+}
+
+.unica-preventivatore .ups-date-row {
+  display: grid;
+  grid-template-columns: 1fr 48px;
+  gap: 10px;
+  align-items: center;
+}
+
+.unica-preventivatore .ups-date-icon {
+  height: 48px;
+  width: 48px;
+  border-radius: 6px;
+}
+
+.unica-preventivatore .ups-button {
+  height: 52px;
+  width: 100%;
+  margin-top: 22px;
+  border-radius: 6px;
+  background: #c80f2e; /* brand-like red */
+}
+
+.unica-preventivatore .ups-links {
+  margin-top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.unica-preventivatore .ups-link {
+  height: 14px;
+  width: min(260px, 80%);
+}
+
+/* Skeleton blocks: cheap shimmer (transform only) */
+.unica-preventivatore .ups-title,
+.unica-preventivatore .ups-label,
+.unica-preventivatore .ups-input,
+.unica-preventivatore .ups-date-icon,
+.unica-preventivatore .ups-button,
+.unica-preventivatore .ups-link {
+  position: relative;
+  overflow: hidden;
+  background: #f0f0f0;
+}
+
+.unica-preventivatore .ups-title::before,
+.unica-preventivatore .ups-label::before,
+.unica-preventivatore .ups-input::before,
+.unica-preventivatore .ups-date-icon::before,
+.unica-preventivatore .ups-button::before,
+.unica-preventivatore .ups-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(255 255 255 / 40%),
+    transparent
+  );
+  animation: ups-skeleton-shimmer 1.8s infinite;
+  will-change: transform;
+}
+
+@keyframes ups-skeleton-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .unica-preventivatore .ups-title::before,
+  .unica-preventivatore .ups-label::before,
+  .unica-preventivatore .ups-input::before,
+  .unica-preventivatore .ups-date-icon::before,
+  .unica-preventivatore .ups-button::before,
+  .unica-preventivatore .ups-link::before {
+    animation: none;
+  }
+}
+
+/* Universal Editor mode - visual indicator */
+.ups-editor-badge {
+  margin-top: 20px;
+  padding: 12px 16px;
+  background: #0265dc;
+  color: white;
+  text-align: center;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.unica-preventivatore-skeleton.editor-mode {
+  opacity: 0.9;
+  border: 2px dashed #0265dc;
+}

@@ -18,10 +18,7 @@
     "...": "./_section.json#/models"
   },
   {
-    "...": "./_kpi-highlights-widget.json#/models"
-  },
-  {
-    "...": "../blocks/insurance-product-carousel-widget/_insurance-product-carousel-widget.json#/models"
+    "...": "./widgets/_*.json#/models"
   },
   {
     "...": "../blocks/*/_*.json#/models"

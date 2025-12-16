@@ -1,0 +1,71 @@
+{
+  "definitions": [
+    {
+      "title": "Editorial Card",
+      "id": "editorial-carousel-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Editorial card",
+              "model": "editorial-carousel-card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "editorial-carousel-card",
+      "fields": [
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Titolo",
+          "required": true,
+          "validation": {
+            "maxLength": 65
+          }
+        },
+        {
+          "component": "text",
+          "name": "description",
+          "label": "Descrizione",
+          "required": true,
+          "validation": {
+            "maxLength": 200
+          }
+        },
+        {
+          "component": "container",
+          "name": "button-container",
+          "label": "Configurazione Pulsante",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
+            }
+          ]
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Immagine",
+          "multi": false,
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageSR",
+          "label": "Testo alternativo per l'immagine",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

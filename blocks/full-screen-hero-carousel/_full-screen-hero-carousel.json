@@ -28,9 +28,7 @@
             "id": "full-screen-hero-carousel",
             "components": [
                 "hero"
-            ],
-            "min": 1,
-            "max": 8
+            ]
         }
     ]
 }

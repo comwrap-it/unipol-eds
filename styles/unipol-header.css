@@ -1,23 +1,6 @@
-main .section.header-logo-container ,
-main .sectionheader-navigation-section-container ,
-main .sectionheader-utilities-section-container {
-    position: relative;
-    padding-top: 150px;
-}
-
-body main .section.header-logo-container,
-body main .sectionheader-navigation-section-container,
-body main .sectionheader-utilities-section-container {
-    margin-top: 100px;
-    background: #00000080;
-}
-
-body main .section.header-logo-container,
-body main .section.header-navigation-section-container,
-body main .section.header-utilities-section-container,
-body .header .section.header-logo-container,
-body .header .sectionheader-navigation-section-container,
-body .header .sectionheader-utilities-section-container {
+.section.header-logo-container,
+.section.header-navigation-section-container,
+.section.header-utilities-section-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -30,8 +13,27 @@ body .header .sectionheader-utilities-section-container {
     padding-bottom: 0 !important;
 }
 
+main .section.header-logo-container,
+main .section.header-navigation-section-container,
+main .section.header-utilities-section-container {
+    background: #00000080;
+    position: relative;
+}
+
+
+.adobe-ue-edit .section.header-logo-container,
+.adobe-ue-edit .section.header-navigation-section-container,
+.adobe-ue-edit .section.header-utilities-section-container {
+    position: relative;
+    margin-top: unset;
+}
+
+.adobe-ue-edit .section.header-navigation-section-container .header-box-text-container {
+    display: none !important;
+}
+
 @media (width <= 1200px) {
-    body main .section.header-navigation-section-container .navigation-pill-container {
+    main .section.header-navigation-section-container .navigation-pill-container {
         margin-bottom: 60px;
     }
 }

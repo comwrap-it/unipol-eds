@@ -2,3 +2,54 @@
     width: 100px;
     height: var(--Header-Logo-Height, 40px);
 }
+
+.hamburger-menu-container {
+    display: none;
+}
+
+@media (width <= 1200px) {
+    .header-logo-wrapper {
+        width: 100%;
+    }
+
+    .header-logo {
+        display: flex;
+    }
+
+    .header-logo-link {
+        margin: auto;
+    }
+
+    .hamburger-menu-container {
+        display: block;
+    }
+
+    .hamburger-menu-container a,
+    .hamburger-menu-container button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--Header-Background);
+        border-radius: var(--Header-Radius);
+        font-size: var(--Icon-200-20);
+        height: 44px;
+        width: 44px;
+    }
+
+    .hamburger-dropdown {
+      display: none;
+      background: white;
+      position: absolute;
+      top: 100px;
+      padding: 20px;
+      min-width: 200px;
+      min-height: 200px;
+      box-shadow: 0 4px 20px rgb(0 0 0 / 10%);
+      z-index: 9999;
+    }
+
+    .hamburger-dropdown.open {
+      display: block;
+    }
+
+}

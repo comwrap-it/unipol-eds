@@ -25,8 +25,19 @@ const initSwiper = (
       addIcons: false,
     },
     slidesPerView: 1,
+    speed: 700,
+    allowTouchMove: true,
+    breakpoints: {
+      // width >= 1200
+      1200: {
+        allowTouchMove: false,
+      },
+    },
+    resistanceRatio: 0.85,
+    touchReleaseOnEdges: true,
+    effect: 'slide',
     // Optional accessibility tweaks
-    a11y: { enabled: true },
+    a11y: { enabled: false },
   });
 
   return swiper;

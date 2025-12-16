@@ -1,0 +1,64 @@
+{
+  "definitions": [
+    {
+      "title": "FAQ Widget",
+      "id": "faq-widget",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "key-value": true,
+              "filter": "faq-widget",
+              "name": "FAQ Widget",
+              "model": "faq-widget"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "faq-widget",
+      "fields": [
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Titolo",
+          "required": true,
+          "validation": {
+            "maxLength": 40,
+            "customErrorMsg": "Testo troppo lungo"
+          }
+        },
+        {
+          "component": "text",
+          "name": "description",
+          "label": "Descrizione",
+          "required": true,
+          "validation": {
+            "maxLength": 150,
+            "customErrorMsg": "Testo troppo lungo"
+          }
+        },
+        {
+          "component": "text",
+          "name": "showMoreButtonLabel",
+          "label": "Testo pulsante carica altro",
+          "description": "Default \"Mostra di più\"",
+          "validation": {
+            "maxLength": 15,
+            "customErrorMsg": "Testo troppo lungo"
+          }
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "faq-widget",
+      "components": ["fragment"]
+    }
+  ]
+}

@@ -69,12 +69,12 @@ export const createIconElementFromCssClass = (
  */
 export const extractMediaElementFromRow = (row) => {
   if (!row) return null;
-  const pictureElement = row.querySelector('picture');
+  const pictureElement = row.querySelector('picture') || row.querySelector('img');
   if (pictureElement) {
     moveInstrumentation(row, pictureElement);
     return pictureElement;
   }
-  const videoElement = row?.querySelector('a');
+  const videoElement = row.querySelector('video') || row.querySelector('a');
   moveInstrumentation(row, videoElement);
   if (videoElement) return videoElement;
   return null;
