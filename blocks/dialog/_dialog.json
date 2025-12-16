@@ -54,7 +54,6 @@
           "component": "container",
           "name": "actionButtonConfig",
           "label": "Pulsante di azione",
-          "collapsible": true,
           "fields": [
             {
               "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"

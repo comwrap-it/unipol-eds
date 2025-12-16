@@ -463,7 +463,6 @@
         "component": "container",
         "name": "actionButtonConfig",
         "label": "Pulsante di azione",
-        "collapsible": true,
         "fields": [
           {
             "component": "text",
