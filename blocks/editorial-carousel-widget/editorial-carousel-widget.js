@@ -1,112 +1,153 @@
+/**
+ * Editorial Carousel Widget
+ *
+ * Enhances all `.editorial-carousel-container` instances on the page with Swiper behavior.
+ *
+ * This module is designed as a page-level enhancer:
+ * - It scans the document for carousel instances.
+ * - It initializes Swiper once per carousel (guarded via `data-initialized`).
+ * - It applies an optional dark theme to the closest section.
+ */
 import loadSwiper from '../../scripts/delayed.js';
 
-let stylesLoaded = false;
+/**
+ * @typedef {Object} DarkThemeFlag
+ * @property {string | null} raw
+ * @property {boolean} enabled
+ */
+
+// #region CONFIGS
+
+const SELECTORS = {
+  carousel: '.editorial-carousel-container',
+  expandingDots: '.expanding-dots',
+  dot: 'span',
+  swiperIcon: '.swiper-navigation-icon',
+  swiperNotification: '.swiper-notification',
+  navPrev: '.swiper-button-prev',
+  navNext: '.swiper-button-next',
+};
+
+// #endregion
+
+// #region DEPENDENCIES
+
+let isStylesLoaded = false;
 
 /**
- * Loads the widget stylesheet once prior to initializing Swiper behavior.
+ * Ensures widget CSS is loaded once.
  *
- * @returns {Promise<void>} resolves when the CSS is fetched
+ * @returns {Promise<void>}
  */
 async function ensureStylesLoaded() {
-  if (stylesLoaded) return;
+  if (isStylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
-  const widgetCssPath = `${window.hlx.codeBasePath}/blocks/editorial-carousel-widget/editorial-carousel-widget.css`;
-  await Promise.all([loadCSS(widgetCssPath)]);
-  stylesLoaded = true;
+  await Promise.all([
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/editorial-carousel-widget/editorial-carousel.-widgetcss`,
+    ),
+  ]);
+  isStylesLoaded = true;
 }
 
+// #endregion
+
+// #region PARSE
+
 /**
- * Applies or removes the dark theme on the closest section based on authored data.
+ * Parses the dark theme flag for a given carousel.
  *
- * @param {HTMLElement} carousel - Carousel element containing the dark theme flag row
+ * Note: the flag is currently derived from the second child node of the carousel container.
+ *
+ * @param {HTMLElement} carousel
+ * @returns {DarkThemeFlag}
  */
-function applyDarkTheme(carousel) {
-  const rows = [...carousel.children];
-  const darkThemeText = rows[1]?.textContent?.trim().toLowerCase();
-  const darkThemeValue = darkThemeText === 'true';
-  const section = carousel.closest('.section');
-  if (darkThemeValue) {
-    section?.classList.add('theme-dark');
-  } else {
-    section?.classList.remove('theme-dark');
-  }
+function parseDarkThemeFlagFromCarousel(carousel) {
+  const rows = Array.from(carousel.children);
+  const raw = rows[1]?.textContent?.trim().toLowerCase();
+
+  return {
+    raw: raw ?? null,
+    enabled: raw === 'true',
+  };
 }
 
+// #endregion
+
+// #region CREATE
+
 /**
- * Creates a Swiper plugin that syncs expanding dots and navigation state.
+ * Creates a Swiper plugin that controls the "expanding dots" indicator.
  *
- * @param {HTMLElement} carousel - Carousel element the plugin will control
- * @returns {(params: Object) => void} Swiper module initializer
+ * @param {HTMLElement} carousel
+ * @returns {(params: { extendParams: Function, on: Function }) => void}
  */
-function createPlugin(carousel) {
-  return function editorialCarousel({ extendParams, on }) {
-    extendParams({ debugger: false });
+function createExpandingDotsPluginFromCarousel(carousel) {
+  const getDots = () => {
+    const container = carousel.querySelector(SELECTORS.expandingDots);
+    return container?.querySelectorAll(SELECTORS.dot) || [];
+  };
 
-    let endReached = false;
-    let startReached = false;
+  const setExpandedDot = (position) => {
+    const dots = getDots();
+    dots.forEach((dot) => dot.classList.remove('expanded'));
 
-    const setExpandedDot = ({ isBeginning, isEnd }) => {
-      const expandingDots = carousel.querySelector('.expanding-dots');
-      const dots = expandingDots?.querySelectorAll('span') || [];
-      dots.forEach((dot) => dot.classList.remove('expanded'));
-      if (isBeginning) {
-        dots[0]?.classList.add('expanded');
-      } else if (isEnd) {
-        dots[2]?.classList.add('expanded');
-      } else {
-        dots[1]?.classList.add('expanded');
-      }
-    };
+    if (!dots.length) return;
+
+    const indexByPosition = { start: 0, middle: 1, end: 2 };
+    const index = indexByPosition[position] ?? indexByPosition.middle;
+
+    dots[index]?.classList.add('expanded');
+  };
+
+  return function editorialCarousel({ on }) {
+    let edgeState = null;
 
     on('init', () => {
-      carousel.querySelectorAll('.swiper-navigation-icon').forEach((el) => el.remove());
-      carousel.querySelectorAll('.swiper-notification').forEach((el) => el.remove());
+      carousel.querySelectorAll(SELECTORS.swiperIcon).forEach((el) => el.remove());
+      carousel.querySelectorAll(SELECTORS.swiperNotification).forEach((el) => el.remove());
     });
 
     on('slideChange', () => {
-      if (endReached || startReached) return;
-      endReached = false;
-      startReached = false;
-      setExpandedDot({ isBeginning: false, isEnd: false });
+      if (edgeState) return;
+      setExpandedDot('middle');
     });
 
     on('fromEdge', () => {
-      endReached = false;
-      startReached = false;
+      edgeState = null;
     });
 
     on('reachBeginning', () => {
-      startReached = true;
-      setExpandedDot({ isBeginning: true, isEnd: false });
+      edgeState = 'start';
+      setExpandedDot('start');
     });
 
     on('reachEnd', () => {
-      endReached = true;
-      setExpandedDot({ isBeginning: false, isEnd: true });
+      edgeState = 'end';
+      setExpandedDot('end');
     });
   };
 }
 
 /**
- * Initializes Swiper on a carousel element using the expanding-dots plugin.
- * Guards against double initialization via a data flag.
+ * Creates the Swiper instance for a carousel, guarded by `data-initialized`.
  *
- * @param {HTMLElement} carousel - Carousel to enhance with Swiper
- * @param {typeof Swiper} SwiperLib - Swiper constructor from CDN
+ * @param {HTMLElement} carousel
+ * @param {Function} SwiperLib
+ * @returns {Object | null} Swiper instance, or null if already initialized.
  */
-function initSwiper(carousel, SwiperLib) {
-  if (carousel.dataset.initialized) return;
+function createSwiperFromCarousel(carousel, SwiperLib) {
+  if (carousel.dataset.initialized) return null;
   carousel.dataset.initialized = 'true';
 
-  const plugin = createPlugin(carousel);
+  const plugin = createExpandingDotsPluginFromCarousel(carousel);
 
-  // eslint-disable-next-line no-unused-vars
-  const swiper = new SwiperLib(carousel, {
+  const swiperInstance = new SwiperLib(carousel, {
     modules: [plugin],
     a11y: false,
     navigation: {
-      nextEl: carousel.querySelector('.swiper-button-next'),
-      prevEl: carousel.querySelector('.swiper-button-prev'),
+      nextEl: carousel.querySelector(SELECTORS.navNext),
+      prevEl: carousel.querySelector(SELECTORS.navPrev),
     },
     speed: 700,
     slidesPerView: 3,
@@ -124,31 +165,89 @@ function initSwiper(carousel, SwiperLib) {
     resistanceRatio: 0.85,
     touchReleaseOnEdges: true,
     effect: 'slide',
-    debugger: true,
+  });
+
+  return swiperInstance;
+}
+
+// #endregion
+
+// #region RENDER
+
+/**
+ * Enhances all editorial carousel instances found.
+ *
+ * Assembly is kept monolithic (except for `create*From*` helpers).
+ *
+ * @param {HTMLElement[]} carousels
+ * @param {Function} SwiperLib
+ */
+function renderEditorialCarouselWidget(carousels, SwiperLib) {
+  /**
+   * LOOP: enhance each carousel instance.
+   */
+  carousels.forEach((carousel) => {
+    /**
+     * PARSE: read per-carousel configuration (dark theme flag).
+     */
+    const darkTheme = parseDarkThemeFlagFromCarousel(carousel);
+
+    /**
+     * APPLY: toggle section theme.
+     */
+    const section = carousel.closest('.section');
+    if (darkTheme.enabled) {
+      section?.classList.add('theme-dark');
+    } else {
+      section?.classList.remove('theme-dark');
+    }
+
+    /**
+     * INIT: Swiper (only once per carousel).
+     */
+    createSwiperFromCarousel(carousel, SwiperLib);
   });
 }
 
+// #endregion
+
+// #region DECORATE
+
 /**
- * Bootstraps all editorial carousel instances on the page: loads styles,
- * fetches Swiper, applies theme toggles, and initializes navigation behavior.
+ * Decorates the Editorial Carousel Widget.
  *
- * @returns {Promise<void>} resolves when initialization completes or exits early
+ * This is a page-level enhancer: it scans the document for carousels.
+ *
+ * @param {HTMLElement} [block]
+ * @returns {Promise<void>}
  */
-export default async function handleEditorialCarouselWidget() {
-  const carousels = document.querySelectorAll('.editorial-carousel-container');
+export default async function decorateEditorialCarouselWidget(block) {
+  if (block) {
+    // no-op: parameter is accepted for block-loader compatibility
+  }
+
+  /**
+   * DISCOVER: find all carousel containers.
+   */
+  const carousels = Array.from(document.querySelectorAll(SELECTORS.carousel));
   if (!carousels.length) return;
 
+  /**
+   * LOAD: CSS + Swiper library.
+   */
   await ensureStylesLoaded();
 
   let SwiperLib;
   try {
     SwiperLib = await loadSwiper();
-  } catch {
+  } catch (e) {
     return;
   }
 
-  carousels.forEach((carousel) => {
-    applyDarkTheme(carousel);
-    initSwiper(carousel, SwiperLib);
-  });
+  /**
+   * RENDER: enhance all instances.
+   */
+  renderEditorialCarouselWidget(carousels, SwiperLib);
 }
+
+// #endregion
