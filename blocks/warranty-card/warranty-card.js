@@ -148,12 +148,14 @@ export const createWarrantyCard = async (
   card.appendChild(textContent);
 
   if (linkButtonConfig?.label && linkButtonConfig?.href) {
-    const linkButton = createCardLinkButton(
+    const linkButton = await createCardLinkButton(
       linkButtonConfig.label,
       linkButtonConfig.href,
       card,
     );
-    card.appendChild(linkButton);
+    if (linkButton) {
+      card.appendChild(linkButton);
+    }
   }
 
   return card;
