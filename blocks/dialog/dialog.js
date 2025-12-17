@@ -28,8 +28,7 @@ export default async function decorate(block) {
 
   const properties = [
     'dialogTitleLabel',
-    'dialogSubtitleLabel',
-    'dialogDescriptionLabel',
+    'dialogTextContentRichtext',
     'standardButtonLabel',
     'standardButtonVariant',
     'standardButtonHref',
@@ -84,35 +83,11 @@ export default async function decorate(block) {
   restoreInstrumentation(titleEl, values.dialogTitleLabel?.instrumentation);
   textContent.appendChild(titleEl);
 
-  /* dialog-subtexts-wrapper */
-  const dialogSubtextsWrapper = document.createElement('div');
-  dialogSubtextsWrapper.className = 'dialog-subtexts-wrapper';
-
-  /* Subtitle */
-  if (values.dialogSubtitleLabel?.value) {
-    const subtitleEl = document.createElement('p');
-    subtitleEl.className = 'dialog-subtitle';
-    subtitleEl.textContent = values.dialogSubtitleLabel.value;
-    restoreInstrumentation(
-      subtitleEl,
-      values.dialogSubtitleLabel.instrumentation,
-    );
-    dialogSubtextsWrapper.appendChild(subtitleEl);
+  /* Richtext */
+  if (values.dialogTextContentRichtext?.value) {
+    console.log('🚀 ~ decorate ~ values.dialogTextContentRichtext?.value:', values.dialogTextContentRichtext?.value);
   }
 
-  /* Description */
-  if (values.dialogDescriptionLabel?.value) {
-    const descriptionEl = document.createElement('p');
-    descriptionEl.className = 'dialog-description';
-    descriptionEl.textContent = values.dialogDescriptionLabel.value;
-    restoreInstrumentation(
-      descriptionEl,
-      values.dialogDescriptionLabel.instrumentation,
-    );
-    dialogSubtextsWrapper.appendChild(descriptionEl);
-  }
-
-  textContent.appendChild(dialogSubtextsWrapper);
   panel.appendChild(textContent);
 
   /* Footer */

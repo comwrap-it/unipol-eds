@@ -32,23 +32,11 @@
           }
         },
         {
-          "component": "text",
-          "name": "dialogSubtitleLabel",
-          "label": "Sottotitolo",
-          "validation": {
-            "maxLength": 100,
-            "customErrorMsg": "Testo troppo lungo (Max 100 caratteri)"
-          }
-        },
-        {
-          "component": "text",
-          "name": "dialogDescriptionLabel",
-          "label": "Descrizione",
-          "required": true,
-          "validation": {
-            "maxLength": 600,
-            "customErrorMsg": "Testo troppo lungo (Max 600 caratteri)"
-          }
+          "component": "richtext",
+          "name": "dialogTextContentRichtext",
+          "label": "Contenuto testuale dialog",
+          "description": "Contenuto testuale della dialog",
+          "value": ""
         },
         {
           "component": "container",
