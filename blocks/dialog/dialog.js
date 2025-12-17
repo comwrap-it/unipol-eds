@@ -10,8 +10,21 @@ import {
   BUTTON_ICON_SIZES,
 } from "../atoms/buttons/standard-button/standard-button.js";
 
-export default function decorate(block) {
+let isStylesLoaded = false;
+async function ensureStylesLoaded() {
+  if (isStylesLoaded) return;
+  const { loadCSS } = await import('../../../../scripts/aem.js');
+  await Promise.all([
+    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`),
+    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/icon-button/icon-button.css`),
+  ]);
+  isStylesLoaded = true;
+}
+
+export default async function decorate(block) {
   if (!block) return;
+
+  await ensureStylesLoaded();
 
   const properties = [
     "dialogTitleLabel",
