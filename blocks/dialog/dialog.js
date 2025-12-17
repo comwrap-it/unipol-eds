@@ -85,7 +85,7 @@ export default async function decorate(block) {
 
   /* Richtext */
   if (values.dialogTextContentRichtext?.value) {
-    textContent.appendChild(...(values.dialogTextContentRichtext.value));
+    textContent.append(...(values.dialogTextContentRichtext.value));
   }
 
   panel.appendChild(textContent);
