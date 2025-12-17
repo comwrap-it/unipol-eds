@@ -1,3 +1,10 @@
+/* this is the text block button that is hide in small devices */
+.section.text-block-container.blog-carousel-container {
+    & .text-block-button {
+        display: none;
+    }
+}
+
 .blog-carousel-wrapper {
     /* this wrapper is added from eds */
     width: 100%;
@@ -17,12 +24,12 @@
         align-items: flex-start;
 
         & .swiper {
-          overflow: visible;
+            overflow: visible;
         }
 
         /* Mobile ~1.3 slides visible */
         & .swiper-slide {
-            width: calc(100%/1.3);
+            width: calc(100% / 1.3);
             max-width: 35rem;
             margin-inline-end: var(--Carousel-Blog-Gap-D-Tl, 1rem);
 
@@ -31,18 +38,37 @@
             }
         }
     }
+
+    /* this is the button for small devices */
+    & .blog-carousel-button {
+        display: block;
+    }
 }
 
 /* Tablet ≥ 768px: ~2.3 slides visible */
 @media (width >= 768px) {
-  .blog-carousel-container .blog-carousel .swiper-slide {
-    width: calc(100%/2.3);
-  }
+    /* this is the text block button that is hide in small devices */
+    .section.text-block-container.blog-carousel-container {
+        & .text-block-button {
+            display: block;
+        }
+    }
+
+    .blog-carousel-container {
+        & .blog-carousel .swiper-slide {
+            width: calc(100% / 2.3);
+        }
+
+        /* this is the button for small devices */
+        & .blog-carousel-button {
+            display: none;
+        }
+    }
 }
 
 /* Desktop ≥ 1312px: ~3.3 slides visible */
 @media (width >= 1312px) {
-  .blog-carousel-container .blog-carousel .swiper-slide {
-    width: calc(100%/3.3);
-  }
+    .blog-carousel-container .blog-carousel .swiper-slide {
+        width: calc(100% / 3.3);
+    }
 }

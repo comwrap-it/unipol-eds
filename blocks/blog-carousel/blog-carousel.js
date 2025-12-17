@@ -22,6 +22,7 @@ import mockBlogCards from '../../scripts/mock.js';
 import { initCarouselAnimations } from '../../scripts/reveal.js';
 import { createBlogCard } from '../blog-preview-card/blog-preview-card.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
+import { createButtonFromRows } from '../atoms/buttons/standard-button/standard-button.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -101,9 +102,11 @@ export default async function decorate(block) {
 
   if (rows.length === 0) {
     // eslint-disable-next-line no-console
-    console.warn('Blog Carousel: No cards found');
+    console.warn('Blog Carousel: No button configured for small devices.');
     return;
   }
+  const smallDevicesButton = createButtonFromRows(rows);
+  smallDevicesButton.classList.add('blog-carousel-button');
 
   const cardsData = await mockBlogCards();
   const isThereMultipleCards = cardsData.length > 1;
@@ -141,6 +144,7 @@ export default async function decorate(block) {
       leftIconButton, scrollIndicator, rightIconButton, setExpandedDot,
     } = await createScrollIndicator();
     carousel.appendChild(scrollIndicator);
+    carousel.appendChild(smallDevicesButton);
     block.replaceChildren(carousel);
 
     // Initialize Swiper after DOM insertion
@@ -159,6 +163,7 @@ export default async function decorate(block) {
     );
   } else {
     // If only one card, no need for carousel functionality
+    carousel.appendChild(smallDevicesButton);
     block.replaceChildren(carousel);
   }
 }
