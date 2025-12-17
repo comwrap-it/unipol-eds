@@ -48,16 +48,6 @@
                 flex-direction: column;
                 justify-content: flex-end;
                 gap: var(--Dialog-Gap, 1.5rem);
-            }
-
-            & .dialog-text-content {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: var(--Dialog-Gap, 1.5rem);
-                overflow-y: auto;
-                flex: 1 0 0;
-                align-self: stretch;
 
                 & .dialog-title {
                     color: var(--Dialog-Title, #001c35);
@@ -68,6 +58,16 @@
                     line-height: 120%; /* 1.8rem */
                     letter-spacing: -0.015rem;
                 }
+            }
+
+            & .dialog-text-content {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--Dialog-Gap, 1.5rem);
+                overflow-y: auto;
+                flex: 1 0 0;
+                align-self: stretch;
 
                 & .dialog-subtexts-wrapper {
                     display: flex;
