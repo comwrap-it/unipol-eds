@@ -166,3 +166,22 @@ export const getTemplateMetaContent = () => {
   const content = meta?.getAttribute('content') || null;
   return content;
 };
+
+/**
+ * Blocks body scroll in current page
+ */
+export function lockBodyScroll() {
+  const scrollbarWidth =
+    window.innerWidth - document.documentElement.clientWidth;
+
+  document.body.classList.add('hide-scrollbar');
+  document.body.style.paddingRight = `${scrollbarWidth}px`;
+}
+
+/**
+ * Applies body scroll in current page
+ */
+export function unlockBodyScroll() {
+  document.body.classList.remove('hide-scrollbar');
+  document.body.style.paddingRight = '';
+}
