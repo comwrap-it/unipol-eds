@@ -171,8 +171,7 @@ export const getTemplateMetaContent = () => {
  * Blocks body scroll in current page
  */
 export function lockBodyScroll() {
-  const scrollbarWidth =
-    window.innerWidth - document.documentElement.clientWidth;
+  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
 
   document.body.classList.add('hide-scrollbar');
   document.body.style.paddingRight = `${scrollbarWidth}px`;

@@ -1,6 +1,3 @@
-body.hide-scrollbar {
-  overflow-y: hidden;
-}
 
 .dialog-wrapper {
     position: absolute;
@@ -68,7 +65,7 @@ body.hide-scrollbar {
                 display: flex;
                 flex-direction: column;
                 align-items: flex-start;
-                gap: var(--Dialog-Gap, 1.5rem);
+                gap: var(--Dialog-Text-Gap, 1rem);
                 overflow-y: auto;
                 flex: 1 0 0;
                 align-self: stretch;
