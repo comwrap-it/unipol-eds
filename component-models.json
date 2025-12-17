@@ -311,7 +311,6 @@
         "name": "button-container",
         "label": "Configurazione pulsante visibile su schermi piccoli",
         "collapsible": true,
-        "required": true,
         "fields": [
           {
             "component": "text",

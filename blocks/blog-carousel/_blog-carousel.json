@@ -25,7 +25,6 @@
           "name": "button-container",
           "label": "Configurazione pulsante visibile su schermi piccoli",
           "collapsible": true,
-          "required": true,
           "fields": [
             {
               "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
