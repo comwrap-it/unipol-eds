@@ -1,453 +1,429 @@
 /**
- * Editorial Carousel Card
+ * Editorial Carousel Card - Molecule
  *
- * Renders a card from Universal Editor-authored rows.
+ * Uses link-button as an atom component for call-to-action buttons.
+ * This component can be used as a molecule within editorial-carousel.
  *
- * The Universal Editor serializes each field as a row element. Over time, the
- * underlying content model changed, which shifted the row indices of the image
- * and its alternative text.
+ * Preserves Universal Editor instrumentation for AEM EDS.
  */
 
-import { createLinkButtonFromRows } from '../atoms/buttons/link-button/link-button.js';
+import { createLinkButton } from '../atoms/buttons/link-button/link-button.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-/**
- * @typedef {Object} ImageBreakpoint
- * @property {string} media CSS media query passed to `createOptimizedPicture`.
- * @property {string} width Target width (in pixels, as a string).
- */
-
-/**
- * @typedef {Object} CardClasses
- * @property {string} container
- * @property {string} image
- * @property {string} content
- * @property {string} text
- * @property {string} cta
- * @property {string} title
- * @property {string} description
- */
-
-/**
- * @typedef {Object} RowIndexConfig
- * @property {number} title
- * @property {number} description
- * @property {number} ctaStart Inclusive.
- * @property {number} ctaEnd Exclusive.
- */
-
-/**
- * @typedef {Object} ImageRowCandidate
- * @property {string} id Human readable layout identifier.
- * @property {number} imageIndex Row index containing the image/picture/link.
- * @property {number} altIndex Row index containing the alt text.
- */
-
-/**
- * @typedef {'standard-button' | 'link-button'} CtaLayout
- */
-
-/**
- * @typedef {Object} EditorialCarouselCardModel
- * @property {HTMLElement | null} titleRow
- * @property {HTMLElement | null} descriptionRow
- * @property {HTMLElement[]} ctaRows Normalized rows for `createLinkButtonFromRows`.
- * @property {CtaLayout} ctaLayout Detected layout used for normalization.
- * @property {number} ctaRawCount
- * @property {number} ctaNormalizedCount
- * @property {HTMLElement | null} imageRow
- * @property {HTMLElement | null} imageAltRow
- * @property {number | null} imageIndex Selected image row index.
- * @property {number | null} imageAltIndex Selected alt row index.
- * @property {number} rowCount Total rows detected.
- */
-
-/**
- * @typedef {Object} CreateTextFromRowOptions
- * @property {string} [existingSelector]
- *   Selector used to preserve an authored semantic element (e.g. a heading).
- * @property {keyof HTMLElementTagNameMap} fallbackTag
- *   Tag name used when no existing element is found.
- * @property {string} className Class applied to the returned element.
- * @property {boolean} [requireText=true]
- *   When true, returns null if the resulting element has no visible text.
- */
-
-// #region CONFIGS
-
-/** @type {ImageBreakpoint[]} */
-const IMAGE_BREAKPOINTS = [
-  { media: '(min-width: 769)', width: '316' },
-  { media: '(max-width: 768)', width: '240' },
-  { media: '(max-width: 392)', width: '343' },
-];
-
-/** @type {Readonly<CardClasses>} */
-const CARD_CLASSES = {
-  container: 'editorial-carousel-card-container',
-  image: 'editorial-carousel-card-image',
-  content: 'editorial-carousel-card-content',
-  text: 'editorial-carousel-card-text',
-  cta: 'button-subdescription',
-  title: 'title',
-  description: 'description',
+export const EDITORIAL_CAROUSEL_CARD_SIZES = {
+  S: 's',
+  M: 'm',
 };
 
-/**
- * Indices for the current content model.
- *
- * - `title`: title row
- * - `description`: description row
- * - `ctaStart..ctaEnd`: CTA configuration rows (from the standard-button model)
- *
- * @type {Readonly<RowIndexConfig>}
- */
-const ROW_INDEX = {
-  title: 0,
-  description: 1,
-  ctaStart: 2,
-  ctaEnd: 9, // exclusive
+const resolveEditorialCarouselCardSize = (value) => {
+  const normalized = String(value || '').trim().toLowerCase();
+  if (['m', 'md', 'medium'].includes(normalized)) return EDITORIAL_CAROUSEL_CARD_SIZES.M;
+  return EDITORIAL_CAROUSEL_CARD_SIZES.S;
 };
 
-/**
- * Allowed standard-button variants.
- * Used to infer if CTA rows are authored using the standard-button model.
- *
- * @type {Set<'primary' | 'secondary' | 'accent'>}
- */
-const STANDARD_BUTTON_VARIANTS = new Set(['primary', 'secondary', 'accent']);
+const IMAGE_BREAKPOINTS_BY_SIZE = {
+  [EDITORIAL_CAROUSEL_CARD_SIZES.S]: [
+    { media: '(min-width: 1200px)', width: '316' },
+    { media: '(min-width: 1024px)', width: '276' },
+    { media: '(min-width: 768px)', width: '302' },
+    { media: '(max-width: 767px)', width: '343' },
+  ],
+  [EDITORIAL_CAROUSEL_CARD_SIZES.M]: [
+    { media: '(min-width: 1200px)', width: '426' },
+    { media: '(min-width: 1024px)', width: '373' },
+    { media: '(min-width: 768px)', width: '302' },
+    { media: '(max-width: 767px)', width: '343' },
+  ],
+};
 
-// #endregion
+const getImageBreakpoints = (size) => IMAGE_BREAKPOINTS_BY_SIZE[
+  resolveEditorialCarouselCardSize(size)
+] || IMAGE_BREAKPOINTS_BY_SIZE[EDITORIAL_CAROUSEL_CARD_SIZES.S];
 
-// #region UTILS
+const extractInstrumentationAttributes = (element) => {
+  const instrumentation = {};
 
-/** @type {boolean} */
+  if (!element) return instrumentation;
+
+  [...element.attributes].forEach((attr) => {
+    if (
+      attr.name.startsWith('data-aue-')
+      || attr.name.startsWith('data-richtext-')
+    ) {
+      instrumentation[attr.name] = attr.value;
+    }
+  });
+
+  return instrumentation;
+};
+
+const DEFAULT_ICON_SIZE = 'medium';
+
 let isStylesLoaded = false;
-
-/**
- * Loads any CSS dependencies needed by the card.
- *
- * The decoration function can run multiple times (e.g. Universal Editor
- * re-renders after edits), so this function memoizes the request.
- *
- * @returns {Promise<void>} Resolves when styles are loaded.
- */
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
   await Promise.all([
-    loadCSS(
-      `${window.hlx.codeBasePath}/blocks/editorial-carousel-card/editorial-carousel-card.css`,
-    ),
-    loadCSS(
-      `${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`,
-    ),
+    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`),
   ]);
   isStylesLoaded = true;
 }
 
-/**
- * Best-effort check for URL-like strings.
- *
- * This is used to infer the CTA layout when the authored rows can be in
- * different shapes (e.g. link vs variant).
- *
- * @param {string} value
- * @returns {boolean}
- */
-function looksLikeUrl(value) {
-  const v = (value || '').trim().toLowerCase();
-  if (!v) return false;
-  return (
-    v === '#'
-    || v.startsWith('/')
-    || v.startsWith('http://')
-    || v.startsWith('https://')
-    || v.startsWith('mailto:')
-    || v.startsWith('tel:')
+const createLinkButtonFromStandardButtonRows = (rows) => {
+  if (!rows || rows.length === 0) return null;
+
+  const label = rows[0]?.textContent?.trim() || '';
+  if (!label) return null;
+
+  const href = rows[2]?.querySelector('a')?.href || rows[2]?.textContent?.trim() || '';
+  const openInNewTab = rows[3]?.textContent?.trim() === 'true';
+  const iconSize = (rows[4]?.textContent || '').trim().toLowerCase() || DEFAULT_ICON_SIZE;
+  const leftIcon = rows[5]?.textContent?.trim() || '';
+  const rightIcon = rows[6]?.textContent?.trim() || '';
+  const disabled = !href;
+
+  const linkButton = createLinkButton(
+    label,
+    href || '#',
+    openInNewTab,
+    leftIcon,
+    rightIcon,
+    iconSize,
+    iconSize,
+    disabled,
   );
-}
 
-// #endregion
+  const instrumentation = extractInstrumentationAttributes(rows[0]);
+  Object.entries(instrumentation).forEach(([name, value]) => {
+    linkButton.setAttribute(name, value);
+  });
 
-// #region DOM
+  return linkButton;
+};
 
-/**
- * Creates (or reuses) a semantic element from an authored row.
- *
- * - If `existingSelector` matches, the existing element is reused (preserving
- *   semantics like `h2`, `p`, etc.).
- * - Otherwise, a new element is created using `fallbackTag` and the row
- *   children are moved into it.
- * - Universal Editor instrumentation is moved from the row container to the
- *   returned element.
- *
- * @param {HTMLElement | null | undefined} row Row element.
- * @param {CreateTextFromRowOptions} options
- * @returns {HTMLElement | null} The created element, or null if empty/missing.
- */
-function createTextFromRow(
-  row,
+const findImageRowIndex = (rows) => {
+  if (!rows || rows.length === 0) return -1;
+
+  for (let index = rows.length - 1; index >= 0; index -= 1) {
+    const row = rows[index];
+    if (row?.querySelector('picture, img')) return index;
+  }
+
+  for (let index = rows.length - 1; index >= 9; index -= 1) {
+    const row = rows[index];
+    if (row?.querySelector('a[href]')) return index;
+  }
+
+  return -1;
+};
+
+export function createEditorialCarouselCard(
   {
-    existingSelector,
-    fallbackTag,
-    className,
-    requireText = true,
-  },
+    title = '',
+    description = '',
+    size = 'm',
+    imageSrc = '',
+    imageAlt = '',
+    imageElement = null,
+    buttonElement = null,
+    buttonConfig = null,
+    note = '',
+    instrumentation = {},
+    blockName = 'editorial-carousel-card',
+    isFirstCard = false,
+  } = {},
 ) {
-  if (!row) return null;
-
-  const existing = existingSelector
-    ? row.querySelector(existingSelector)
-    : null;
-  const element = existing || document.createElement(fallbackTag);
-  element.className = className;
-
-  if (!existing) {
-    while (row?.firstChild) {
-      element.appendChild(row.firstChild);
-    }
-  }
-
-  moveInstrumentation(row, element);
-
-  if (requireText && !element.textContent?.trim()) return null;
-  return element;
-}
-
-/**
- * Renders the final card DOM from the parsed model.
- *
- * @param {EditorialCarouselCardModel} model Parsed card model.
- * @param {HTMLElement} sourceBlock Original block used to preserve instrumentation.
- * @returns {HTMLElement} Card container.
- */
-function renderCard(model, sourceBlock) {
-  /**
-   * CREATE: card root and preserve instrumentation.
-   */
   const card = document.createElement('div');
-  card.className = CARD_CLASSES.container;
+  card.className = 'editorial-carousel-card-container card-block';
 
-  moveInstrumentation(sourceBlock, card);
+  const resolvedSize = resolveEditorialCarouselCardSize(size);
+  card.dataset.editorialCardSize = resolvedSize;
+  card.style.setProperty(
+    '--editorial-card-size',
+    resolvedSize === EDITORIAL_CAROUSEL_CARD_SIZES.M ? '1' : '0',
+  );
 
-  if (sourceBlock.dataset.blockName) {
-    card.dataset.blockName = sourceBlock.dataset.blockName;
+  if (blockName) {
+    card.dataset.blockName = blockName;
   }
 
-  card.classList.add('card-block');
+  Object.entries(instrumentation).forEach(([name, value]) => {
+    card.setAttribute(name, value);
+  });
 
-  /**
-   * CREATE: image section.
-   * - Preserve an authored <picture> when present.
-   * - Otherwise build an optimized picture from an <img> or <a>.
-   */
-  let imageSection = null;
+  let mediaElement = imageElement;
+  if (!mediaElement && imageSrc) {
+    mediaElement = createOptimizedPicture(
+      imageSrc,
+      imageAlt,
+      isFirstCard,
+      getImageBreakpoints(resolvedSize),
+    );
+  }
 
-  if (model.imageRow) {
-    const imageSectionContainer = document.createElement('div');
-    imageSectionContainer.className = CARD_CLASSES.image;
+  if (mediaElement) {
+    const cardImage = document.createElement('div');
+    cardImage.className = 'editorial-carousel-card-image';
 
-    const altText = model.imageAltRow?.textContent?.trim() || '';
-    const picture = model.imageRow.querySelector('picture');
-
-    if (picture) {
-      picture.querySelector('img')?.setAttribute('alt', altText);
-      imageSectionContainer.appendChild(picture);
-      imageSection = imageSectionContainer;
-    } else {
-      const img = model.imageRow.querySelector('img');
-      const link = model.imageRow.querySelector('a');
-      const src = img?.src || link?.href;
-
-      if (src) {
-        const optimized = createOptimizedPicture(
-          src,
-          altText,
-          false,
-          IMAGE_BREAKPOINTS,
-        );
-
-        const optimizedImg = optimized.querySelector('img');
-        if (optimizedImg && img) moveInstrumentation(img, optimizedImg);
-        if (optimizedImg && link) moveInstrumentation(link, optimizedImg);
-
-        imageSectionContainer.appendChild(optimized);
-        imageSection = imageSectionContainer;
+    const img = mediaElement.querySelector?.('img')
+      || (mediaElement.tagName === 'IMG' ? mediaElement : null);
+    if (img) {
+      img.setAttribute('alt', imageAlt);
+      if (isFirstCard) {
+        img.setAttribute('loading', 'eager');
+        img.setAttribute('fetchpriority', 'high');
       }
     }
+
+    cardImage.appendChild(mediaElement);
+    card.appendChild(cardImage);
   }
 
-  /**
-   * CREATE: text section (title + description).
-   */
-  const textContainer = document.createElement('div');
-  textContainer.className = CARD_CLASSES.text;
+  const cardContent = document.createElement('div');
+  cardContent.className = 'editorial-carousel-card-content';
 
-  const title = createTextFromRow(model.titleRow, {
-    existingSelector: 'h1, h2, h3, h4, h5, h6',
-    fallbackTag: 'h3',
-    className: CARD_CLASSES.title,
-    requireText: true,
-  });
+  const cardTextContent = document.createElement('div');
+  cardTextContent.className = 'editorial-carousel-card-text';
 
-  const description = createTextFromRow(model.descriptionRow, {
-    existingSelector: 'p',
-    fallbackTag: 'p',
-    className: CARD_CLASSES.description,
-    requireText: true,
-  });
-
-  if (title) textContainer.appendChild(title);
-  if (description) textContainer.appendChild(description);
-
-  const textSection = textContainer.children.length ? textContainer : null;
-
-  /**
-   * CREATE: CTA section (link button + optional note).
-   */
-  let ctaSection = null;
-
-  const linkButton = createLinkButtonFromRows(model.ctaRows);
-  if (linkButton) {
-    const ctaContainer = document.createElement('div');
-    ctaContainer.className = CARD_CLASSES.cta;
-    ctaContainer.appendChild(linkButton);
-
-    const note = createTextFromRow(model.noteRow, {
-      existingSelector: 'p',
-      fallbackTag: 'p',
-      className: CARD_CLASSES.note,
-      requireText: true,
-    });
-
-    if (note) ctaContainer.appendChild(note);
-
-    ctaSection = ctaContainer;
+  if (title) {
+    const titleElement = title instanceof HTMLElement ? title : document.createElement('h3');
+    if (!(title instanceof HTMLElement)) titleElement.textContent = title;
+    titleElement.className = 'title';
+    if (title instanceof HTMLElement || titleElement.textContent?.trim()) {
+      cardTextContent.appendChild(titleElement);
+    }
   }
 
-  /**
-   * ASSEMBLE: card sections.
-   */
-  if (imageSection) card.appendChild(imageSection);
+  if (description) {
+    const descriptionElement = description instanceof HTMLElement ? description : document.createElement('p');
+    if (!(description instanceof HTMLElement)) descriptionElement.textContent = description;
+    descriptionElement.className = 'description';
+    if (description instanceof HTMLElement || descriptionElement.textContent?.trim()) {
+      cardTextContent.appendChild(descriptionElement);
+    }
+  }
 
-  const content = document.createElement('div');
-  content.className = CARD_CLASSES.content;
+  if (cardTextContent.children.length > 0) {
+    cardContent.appendChild(cardTextContent);
+  }
 
-  if (textSection) content.appendChild(textSection);
-  if (ctaSection) content.appendChild(ctaSection);
+  let finalButtonElement = buttonElement;
+  if (!finalButtonElement && buttonConfig?.label) {
+    finalButtonElement = createLinkButton(
+      buttonConfig.label,
+      buttonConfig.href || '#',
+      Boolean(buttonConfig.openInNewTab),
+      buttonConfig.leftIcon || '',
+      buttonConfig.rightIcon || '',
+      buttonConfig.iconSize || DEFAULT_ICON_SIZE,
+      buttonConfig.iconSize || DEFAULT_ICON_SIZE,
+      Boolean(buttonConfig.disabled),
+    );
+  }
 
-  if (content.children.length) {
-    card.appendChild(content);
+  if (finalButtonElement) {
+    const buttonsContainer = document.createElement('div');
+    buttonsContainer.className = 'button-subdescription';
+    buttonsContainer.appendChild(finalButtonElement);
+
+    if (note) {
+      const noteElement = note instanceof HTMLElement ? note : document.createElement('p');
+      if (!(note instanceof HTMLElement)) noteElement.textContent = note;
+      noteElement.className = 'subdescription';
+      if (note instanceof HTMLElement || noteElement.textContent?.trim()) {
+        buttonsContainer.appendChild(noteElement);
+      }
+    }
+
+    if (buttonsContainer.children.length > 0) {
+      cardContent.appendChild(buttonsContainer);
+    }
+  }
+
+  if (cardContent.children.length > 0) {
+    card.appendChild(cardContent);
   }
 
   return card;
 }
 
-/**
- * Parses the authored block DOM into a normalized model.
- *
- * Current row layout (after wrapper extraction):
- * - 0: Title
- * - 1: Description
- * - 2..8: CTA configuration (standard-button fields)
- * - 9: Note
- * - 10: Image
- * - 11: Image alt text
- *
- * @param {HTMLElement} block Editorial card block.
- * @returns {EditorialCarouselCardModel}
- */
-function parseCardRows(block) {
-  const wrapper = block.querySelector('.default-content-wrapper');
-  const rows = wrapper ? Array.from(wrapper.children) : Array.from(block.children);
-
-  const imageRow = rows[9];
-  const altRow = rows[10];
-  const imageIndex = 9;
-  const altIndex = 10;
-
-  const rawCtaRows = rows.slice(ROW_INDEX.ctaStart, ROW_INDEX.ctaEnd);
-
-  /** @type {CtaLayout} */
-  let ctaLayout = 'standard-button';
-
-  const second = rawCtaRows[1]?.textContent?.trim()?.toLowerCase() || '';
-  if (STANDARD_BUTTON_VARIANTS.has(second)) ctaLayout = 'standard-button';
-
-  const hasLinkInSecond = Boolean(rawCtaRows[1]?.querySelector('a')) || looksLikeUrl(second);
-  const thirdText = rawCtaRows[2]?.textContent?.trim() || '';
-  const hasLinkInThird = Boolean(rawCtaRows[2]?.querySelector('a')) || looksLikeUrl(thirdText);
-
-  if (hasLinkInSecond && !hasLinkInThird) ctaLayout = 'link-button';
-  if (!hasLinkInSecond && hasLinkInThird) ctaLayout = 'standard-button';
-
-  let normalizedCtaRows = rawCtaRows.filter(Boolean);
-  if (ctaLayout === 'standard-button') {
-    const labelRow = rawCtaRows[0];
-    const hrefRow = rawCtaRows[2];
-    const openInNewTabRow = rawCtaRows[3];
-    const sizeRow = rawCtaRows[4];
-    const leftIconRow = rawCtaRows[5];
-    const rightIconRow = rawCtaRows[6];
-
-    normalizedCtaRows = [
-      labelRow,
-      hrefRow,
-      openInNewTabRow,
-      leftIconRow,
-      rightIconRow,
-      sizeRow,
-      sizeRow,
-    ].filter(Boolean);
-  }
-
-  return {
-    titleRow: rows[ROW_INDEX.title] || null,
-    descriptionRow: rows[ROW_INDEX.description] || null,
-    ctaRows: normalizedCtaRows,
-    ctaLayout,
-    ctaRawCount: rawCtaRows.length,
-    ctaNormalizedCount: normalizedCtaRows.length,
-    imageRow,
-    imageAltRow: altRow,
-    imageIndex,
-    imageAltIndex: altIndex,
-    rowCount: rows.length,
-  };
-}
-
-// #endregion
-
-// #region DECORATE
+export const create = createEditorialCarouselCard;
 
 /**
- * Decorates an Editorial Carousel Card block.
- *
- * - Avoids re-decoration when Universal Editor re-renders.
- * - Loads required CSS only once.
- * - Preserves instrumentation by moving it from authored rows onto the
- *   generated semantic elements.
- *
- * @param {HTMLElement} block Block instance to decorate.
- * @returns {Promise<void>}
+ * Decorates a card block element
+ * @param {HTMLElement} block - The card block element
+ * @param {boolean} [isFirstCard=false] - Whether this is the first card (LCP candidate)
  */
-export default async function decorateEditorialCarouselCard(block) {
+export default async function decorateEditorialCarouselCard(block, isFirstCard = false) {
   if (!block) return;
-  if (block.classList.contains('card-block')) return;
 
-  const existingCard = block.querySelector(
-    `:scope > .${CARD_CLASSES.container}.card-block`,
-  );
-  if (existingCard) return;
-
+  // Ensure CSS is loaded
   await ensureStylesLoaded();
 
-  const model = parseCardRows(block);
-  const card = renderCard(model, block);
+  // Check if card is already decorated (has card-block class)
+  // This happens when Universal Editor re-renders after an edit
+  if (block.classList.contains('card-block')) {
+    return;
+  }
 
-  block.replaceChildren(card);
+  // Get rows from block
+  let rows = Array.from(block.children);
+  const wrapper = block.querySelector('.default-content-wrapper');
+  if (wrapper) {
+    rows = Array.from(wrapper.children);
+  }
+
+  const instrumentation = {
+    ...extractInstrumentationAttributes(block),
+    ...extractInstrumentationAttributes(rows[0]),
+  };
+
+  // Extract card data
+  // Row 0:  Title
+  // Row 1:  Description
+  // Row 2:  Button label
+  // Row 3:  Button variant (unused by link-button)
+  // Row 4:  Button link
+  // Row 5:  Button target
+  // Row 6:  Button size
+  // Row 7:  Button left icon
+  // Row 8:  Button right icon
+  // Row 9:  Note
+  // Row 13: Image
+  // Row 14: Image Alternative Text
+
+  const imageRowIndex = findImageRowIndex(rows);
+  const imageRow = imageRowIndex >= 0 ? rows[imageRowIndex] : null;
+  const imageAlt = imageRowIndex >= 0
+    ? rows[imageRowIndex + 1]?.textContent?.trim() || ''
+    : '';
+  const resolvedSize = resolveEditorialCarouselCardSize(block.dataset.editorialCardSize);
+
+  let imageElement = null;
+  if (imageRow) {
+    const picture = imageRow.querySelector('picture');
+    if (picture) {
+      imageElement = picture;
+    } else {
+      const img = imageRow.querySelector('img');
+      if (img?.src) {
+        const optimizedPic = createOptimizedPicture(
+          img.src,
+          imageAlt,
+          isFirstCard,
+          getImageBreakpoints(resolvedSize),
+        );
+        const newImg = optimizedPic.querySelector('img');
+        if (newImg) moveInstrumentation(img, newImg);
+        imageElement = optimizedPic;
+      } else {
+        const link = imageRow.querySelector('a[href]');
+        if (link?.href) {
+          const optimizedPic = createOptimizedPicture(
+            link.href,
+            imageAlt,
+            isFirstCard,
+            getImageBreakpoints(resolvedSize),
+          );
+          const newImg = optimizedPic.querySelector('img');
+          if (newImg) moveInstrumentation(link, newImg);
+          imageElement = optimizedPic;
+        }
+      }
+    }
+  }
+
+  // Card Title - preserve original element and instrumentation
+  const titleRow = rows[0];
+  let titleElement = null;
+  if (titleRow) {
+    // Try to preserve existing heading element
+    const existingHeading = titleRow.querySelector('h1, h2, h3, h4, h5, h6');
+    if (existingHeading) {
+      // Move existing heading and preserve instrumentation
+      moveInstrumentation(titleRow, existingHeading);
+      titleElement = existingHeading;
+    } else {
+      // Create new heading but preserve instrumentation
+      const title = document.createElement('h3');
+      // Clone child nodes to preserve richtext instrumentation
+      while (titleRow.firstChild) {
+        title.appendChild(titleRow.firstChild);
+      }
+      // Move instrumentation from row to title
+      moveInstrumentation(titleRow, title);
+      titleElement = title.textContent?.trim() ? title : null;
+    }
+  }
+
+  // Card Subtitle - preserve original element and instrumentation
+  const subtitleRow = rows[1];
+  let descriptionElement = null;
+
+  // ALWAYS create subtitle element (even if row doesn't exist or is empty)
+  // This ensures subtitle is always visible in the DOM for editing
+  if (subtitleRow) {
+    // Try to preserve existing paragraph
+    const existingPara = subtitleRow.querySelector('p');
+    if (existingPara) {
+      moveInstrumentation(subtitleRow, existingPara);
+      descriptionElement = existingPara;
+    } else if (subtitleRow.textContent?.trim()) {
+      // Create new paragraph but preserve instrumentation
+      const subtitle = document.createElement('p');
+      // Clone child nodes to preserve richtext instrumentation
+      while (subtitleRow.firstChild) {
+        subtitle.appendChild(subtitleRow.firstChild);
+      }
+      // Move instrumentation from row to subtitle
+      moveInstrumentation(subtitleRow, subtitle);
+      descriptionElement = subtitle;
+    }
+  }
+
+  // Card Button - Rows 2-9 (optional)
+  // Universal Editor creates separate rows for each button field
+  const buttonRows = rows.slice(2, 9);
+  const buttonElement = createLinkButtonFromStandardButtonRows(buttonRows);
+  let noteElement = null;
+
+  if (buttonElement) {
+    const note = imageRowIndex === 9 ? null : rows[9];
+    if (note) {
+      // Try to preserve existing paragraph
+      const existingPara = note.querySelector('p');
+      if (existingPara) {
+        moveInstrumentation(note, existingPara);
+        noteElement = existingPara;
+      } else if (note.textContent?.trim()) {
+        // Create new paragraph but preserve instrumentation
+        const noteFromHTML = document.createElement('p');
+        // Clone child nodes to preserve richtext instrumentation
+        while (note.firstChild) {
+          noteFromHTML.appendChild(note.firstChild);
+        }
+        // Move instrumentation from row to note
+        moveInstrumentation(note, noteFromHTML);
+        noteElement = noteFromHTML;
+      }
+    }
+  }
+
+  const blockName = block.dataset.blockName || 'editorial-carousel-card';
+  const card = createEditorialCarouselCard({
+    title: titleElement,
+    description: descriptionElement,
+    size: resolvedSize,
+    imageElement,
+    imageAlt,
+    buttonElement,
+    note: noteElement,
+    instrumentation,
+    blockName,
+    isFirstCard,
+  });
+
+  // Replace block content with card
+  block.replaceWith(card);
 }
-
-// #endregion

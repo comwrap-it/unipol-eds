@@ -10,7 +10,8 @@
       "mini-hero-widget",
       "blog-carousel-widget",
       "faq-widget-section",
-      "card-grid-widget"
+      "card-grid-widget",
+      "data-table-widget"
     ]
   },
   {
@@ -67,6 +68,10 @@
     ]
   },
   {
+    "id": "data-table-widget",
+    "components": []
+  },
+  {
     "id": "editorial-carousel-widget",
     "components": []
   },
@@ -116,6 +121,14 @@
       "button",
       "title"
     ]
+  },
+  {
+    "id": "data-table",
+    "components": [
+      "data-table-row"
+    ],
+    "min": 4,
+    "max": 8
   },
   {
     "id": "editorial-carousel",
