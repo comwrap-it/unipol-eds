@@ -80,9 +80,8 @@ const createTextContent = (title, titleRow, description, descriptionRow) => {
 /**
  * Handles the link click to load the respective fragment
  * @param {Event} event
- * @param {HTMLElement} card
  */
-const handleLinkClick = async (event, card) => {
+const handleLinkClick = async (event) => {
   event.stopPropagation();
   event.preventDefault();
   const link = event.currentTarget;
@@ -93,13 +92,13 @@ const handleLinkClick = async (event, card) => {
       const fragmentSection = fragment.querySelector(':scope .section');
       if (fragmentSection) {
         fragmentSection.classList.remove('section');
-        card.appendChild(fragmentSection);
+        document.body.appendChild(fragmentSection);
       }
     }
   }
 };
 
-const createCardLinkButton = async (label, href, card) => {
+const createCardLinkButton = async (label, href) => {
   await loadCSS(
     `${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`,
   );
@@ -107,7 +106,7 @@ const createCardLinkButton = async (label, href, card) => {
   linkButton.className = 'link-btn';
   linkButton.href = href;
   linkButton.textContent = label;
-  linkButton.onclick = (event) => handleLinkClick(event, card);
+  linkButton.onclick = (event) => handleLinkClick(event);
 
   return linkButton;
 };
@@ -151,7 +150,6 @@ export const createWarrantyCard = async (
     const linkButton = await createCardLinkButton(
       linkButtonConfig.label,
       linkButtonConfig.href,
-      card,
     );
     if (linkButton) {
       card.appendChild(linkButton);

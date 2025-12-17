@@ -15,6 +15,7 @@
             background: var(--Overlay-Default-Background, rgb(0 0 0 / 40%));
             backdrop-filter: blur(calc(var(--Blur-400---24, 24px) / 2));
             z-index: 3;
+            animation: fade-in 0.5s ease forwards;
 
             &.is-closing {
                 animation: fade-in 0.5s reverse forwards;
