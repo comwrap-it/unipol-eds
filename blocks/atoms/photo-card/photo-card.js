@@ -151,7 +151,7 @@ export default async function decorate(block) {
   const rows = getRows(block);
   const imageRow = rows[0] || null; // fallback
   const imageAltRow = rows[1] || null; // fallback
-  const titleRow = rows[2] || null; // fallback
+  const titleRow = rows[1] || null; // fallback
   const sizeRow = rows[3] || null; // fallback
 
   const size = resolvePhotoCardSize(sizeRow?.textContent);
