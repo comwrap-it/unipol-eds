@@ -2,106 +2,146 @@ import { decorateIcons } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 /**
+ * Extract logo data from the first 2 rows
+ * Rows contain only values (no label column) when using model
+ */
+function extractLogoData(rows) {
+  const logoImageRow = rows[0];
+  const logoLinkRow = rows[1];
+
+  let logoImg = null;
+  let logoLinkUrl = '/';
+  let logoImageCell = null;
+  let logoLinkCell = null;
+
+  if (logoImageRow) {
+    [logoImageCell] = logoImageRow.children;
+    logoImg = logoImageCell?.querySelector('img');
+  }
+
+  if (logoLinkRow) {
+    [logoLinkCell] = logoLinkRow.children;
+    logoLinkUrl = logoLinkCell?.querySelector('a')?.href
+                  || logoLinkCell?.textContent?.trim()
+                  || '/';
+  }
+
+  return {
+    logoImg,
+    logoLinkUrl,
+    logoImageRow,
+    logoLinkRow,
+    logoImageCell,
+    logoLinkCell,
+  };
+}
+
+/**
+ * Extract action items from rows (starting from row 2)
+ * Each row contains all fields as columns: [icon | link]
+ */
+function extractActionItems(rows) {
+  const actionRows = rows.slice(2);
+
+  return actionRows.map((row) => {
+    const iconCell = row.children[0];
+    const linkCell = row.children[1];
+
+    const iconValue = iconCell?.textContent?.trim().toLowerCase() || '';
+    const linkValue = linkCell?.querySelector('a')?.href
+                      || linkCell?.textContent?.trim()
+                      || '#';
+
+    return {
+      icon: iconValue,
+      link: linkValue,
+      row,
+      iconCell,
+      linkCell,
+    };
+  }).filter((action) => action.icon);
+}
+
+/**
  * Decorates the Prodotto Unico Header block
  * @param {Element} block The block element
  */
 export default async function decorate(block) {
+  if (!block) return;
+
   const rows = Array.from(block.children);
+  if (rows.length < 2) return;
 
-  // Validazione minima
-  if (rows.length < 1) return;
+  // Extract data
+  const logoData = extractLogoData(rows);
+  const actions = extractActionItems(rows);
 
-  // --- 1. GESTIONE LOGO (Assumiamo sia sempre la prima riga) ---
-  // Strategia: La prima riga contiene [Immagine Logo] e [Link Logo]
-  // Questa è una struttura "a tabella" anche per la config principale.
-  const logoRow = rows[0];
-  const logoCols = Array.from(logoRow.children);
-
-  const logoImgCol = logoCols[0]; // Colonna 1: Immagine
-  const logoLinkCol = logoCols[1]; // Colonna 2: Link (Opzionale)
-
-  const logoImg = logoImgCol?.querySelector('img');
-  const logoLinkUrl = logoLinkCol?.querySelector('a')?.href
-                   || logoLinkCol?.textContent?.trim()
-                   || '/';
-
-  if (logoImg) {
-    logoRow.className = 'header-brand';
-    logoRow.innerHTML = ''; // Puliamo la riga per ricostruire l'HTML semantico
-
-    // Ottimizzazione LCP (Cruciale per l'header)
-    logoImg.setAttribute('alt', 'UnipolSai Assicurazioni');
-    logoImg.loading = 'eager';
-    logoImg.fetchPriority = 'high';
+  // Build logo
+  if (logoData.logoImg && logoData.logoImageRow) {
+    logoData.logoImageRow.className = 'header-brand';
+    logoData.logoImageRow.innerHTML = '';
 
     const anchor = document.createElement('a');
-    anchor.href = logoLinkUrl;
+    anchor.href = logoData.logoLinkUrl;
     anchor.title = 'Vai alla Home';
-    anchor.appendChild(logoImg);
-    logoRow.appendChild(anchor);
 
-    // Spostiamo l'instrumentation UE dall'immagine originale al nuovo link wrapper
-    if (logoImgCol) moveInstrumentation(logoImgCol, anchor);
+    logoData.logoImg.setAttribute('alt', 'Unipol');
+    logoData.logoImg.loading = 'eager';
+    logoData.logoImg.fetchPriority = 'high';
+
+    anchor.appendChild(logoData.logoImg);
+    logoData.logoImageRow.appendChild(anchor);
+
+    // Move instrumentation
+    if (logoData.logoImageCell) {
+      moveInstrumentation(logoData.logoImageCell, anchor);
+    }
   }
 
-  // --- 2. GESTIONE TOOLBAR (Tutte le righe successive alla prima) ---
-  const actionRows = rows.slice(1);
+  // Hide logoLink row
+  if (logoData.logoLinkRow) {
+    logoData.logoLinkRow.style.display = 'none';
+  }
 
-  if (actionRows.length > 0) {
+  // Build actions
+  if (actions.length > 0) {
     const toolsWrapper = document.createElement('div');
     toolsWrapper.className = 'header-tools';
     const toolsList = document.createElement('ul');
 
-    actionRows.forEach((row) => {
-      const cols = Array.from(row.children);
-      // Skip righe malformate (meno di 2 colonne)
-      if (cols.length < 2) return;
-
-      // Colonna 1: Icona (es. 'cart', 'user')
-      // Colonna 2: Link
-      const iconCol = cols[0];
-      const linkCol = cols[1];
-
-      const iconName = iconCol.textContent.trim().toLowerCase();
-      const linkUrl = linkCol.querySelector('a')?.href || linkCol.textContent.trim();
-
-      if (!iconName || !linkUrl) return;
-
-      // Creazione Item
+    actions.forEach((action) => {
       const li = document.createElement('li');
       const buttonWrapper = document.createElement('div');
-      buttonWrapper.className = `header-button header-button-${iconName}`;
+      buttonWrapper.className = `header-button header-button-${action.icon}`;
 
       const a = document.createElement('a');
-      a.href = linkUrl;
+      a.href = action.link;
       a.className = 'tool-btn';
-      a.setAttribute('aria-label', iconName);
+      a.setAttribute('aria-label', action.icon);
 
-      // Struttura icona per il plugin aem.js
-      a.innerHTML = `<span class="icon icon-${iconName}"></span>`;
-
-      // Instrumentation: Fondamentale per far funzionare l'editor sulle singole celle
-      // Colleghiamo l'editabilità della cella icona all'intero bottone o all'icona stessa
-      moveInstrumentation(iconCol, a);
-
-      // Nota: Potremmo voler preservare anche l'instrumentation del link,
-      // ma di solito basta mappare l'elemento principale.
+      const iconSpan = document.createElement('span');
+      iconSpan.className = `icon icon-${action.icon}`;
+      a.appendChild(iconSpan);
 
       buttonWrapper.appendChild(a);
       li.appendChild(buttonWrapper);
-      toolsList.appendChild(li);
 
-      // Rimuoviamo la riga originale dal DOM visibile (ora trasformata in LI)
-      row.remove();
+      // Move instrumentation
+      moveInstrumentation(action.iconCell, buttonWrapper);
+      moveInstrumentation(action.linkCell, a);
+
+      toolsList.appendChild(li);
     });
 
     toolsWrapper.appendChild(toolsList);
-
-    // Aggiungiamo il wrapper dei tools al blocco
-    // Nota: logoRow è già dentro block (è rows[0]), quindi appendiamo toolsWrapper dopo.
     block.appendChild(toolsWrapper);
+
+    // Hide original action rows
+    actions.forEach((action) => {
+      action.row.style.display = 'none';
+    });
   }
 
-  // Carica gli SVG
+  // Decorate icons
   decorateIcons(block);
 }

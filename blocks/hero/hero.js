@@ -40,16 +40,20 @@ const setupHeroWithBg = (
   } else if (heroBackground) {
     const videoPath = heroBackground.href;
     const videoBg = document.createElement('video');
-    videoBg.src = videoPath;
+    videoBg.muted = true;
     moveInstrumentation(heroBackground, videoBg);
     videoBg.className = 'hero-bg';
     videoBg.setAttribute('aria-hidden', 'true');
     videoBg.preload = 'auto';
     videoBg.autoplay = true;
-    videoBg.muted = true;
     videoBg.loop = true;
     videoBg.playsInline = true;
+    videoBg.src = videoPath;
     hero.appendChild(videoBg);
+
+    videoBg.addEventListener('canplay', () => {
+      videoBg.play();
+    });
 
     const pauseIcon = document.createElement('button');
     pauseIcon.className = 'hero-icon un-icon-pause-circle icon-extra-large';
@@ -97,7 +101,7 @@ const createHeroMainSection = (
 ) => {
   const mainSection = document.createElement('div');
   mainSection.className = `main-section${isCarousel ? ' carousel' : ''}`;
-  if (showHeroLogo) {
+  if (showHeroLogo && heroLogo) {
     const logo = heroLogo.cloneNode(true);
     logo.className = 'hero-logo';
     mainSection.appendChild(logo);

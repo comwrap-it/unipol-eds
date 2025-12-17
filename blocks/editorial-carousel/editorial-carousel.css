@@ -1,89 +1,80 @@
 .editorial-carousel-wrapper {
+    /* this wrapper is added from eds */
     width: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
 }
 
 .editorial-carousel-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--Carousel-Widget-Gap-D-Ds, var(--Space-700-48));
-
-    /* width: 100%; */
-
-    &.swiper {
-        overflow: visible;
-    }
+    gap: var(--Carousel-Widget-Gap-D-Ds, 3rem);
+    width: 100%;
 
     & .editorial-carousel {
         display: flex;
+        flex-direction: column;
+        width: 21.4375rem;
+        margin-inline: auto;
+        gap: var(--Carousel-Insurance-Product-Gap, 1rem);
+    }
+}
 
-        /* width: 100%; */
-        max-width: var(--Column-Size-Col-12, 82rem);
-        align-items: stretch;
-
-        /* justify-content: center; */
-        gap: var(--Carousel-Editorial-Gap, var(--Space-300-16));
+@media (width < 400px) {
+    .editorial-carousel-container {
+        & .editorial-carousel {
+            width: 100%;
+        }
     }
 }
 
 /* Tablet Portrait */
-@media (768px <= width < 1200px) {
+@media (width >= 768px) {
     .editorial-carousel-container {
         margin-inline: auto;
-        gap: var(--Carousel-Widget-Gap-M-Tp, var(--Space-600-40));
+        gap: var(--Carousel-Widget-Gap-M-Tp, 2.5rem);
 
         &.swiper {
             overflow: visible;
+        }
 
-            & .scroll-indicator {
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                align-self: stretch;
-                min-width: 36.4375rem;
+        .editorial-carousel {
+            flex-direction: row;
+            width: 100%;
+            align-items: flex-start;
+            gap: 0;
 
-                & .expanding-dots {
-                    order: 1;
-                    margin-right: auto;
-                }
+            & .swiper-slide {
+                height: -webkit-fill-available;
+                flex: 0 0 auto;
+                width: auto;
+                margin-inline-end: var(
+                    --Carousel-Insurance-Product-Gap-M-Tp,
+                    0.5rem
+                );
 
-                & .left-icon-button {
-                    order: 2;
-                }
-
-                & .right-icon-button {
-                    order: 3;
-                }
-
-                & .arrows {
-                    display: flex;
-                    align-items: center;
-                    gap: var(--Scroll-Indicator-Gap-Icon-M, 1.5rem);
+                &:last-child {
+                    margin-inline-end: 0;
                 }
             }
         }
 
-        & .editorial-carousel {
-            width: 100%;
-            max-width: var(--Column-Size-Col-8, 54.313rem);
+        &.no-scroll-indicator {
+            .editorial-carousel {
+                justify-content: center;
+            }
         }
     }
 }
 
-/* Mobile */
-@media (width < 768px) {
+/* Tablet Landscape */
+@media (width >= 1024px) {
     .editorial-carousel-container {
-        gap: var(--Carousel-Widget-Gap-M-Tp, var(--Space-600-40));
-
-        & .editorial-carousel {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            max-width: var(--Container-Width-L3-M6-S12, var(--Column-Size-Col-3));
-            gap: var(--Carousel-Editorial-Gap, var(--Space-300-16));
+        .editorial-carousel {
+            & .swiper-slide {
+                margin-inline-end: var(--Carousel-Insurance-Product-Gap, 1rem);
+            }
         }
     }
 }
+
+/* Desktop: widths are driven by card size tokens */

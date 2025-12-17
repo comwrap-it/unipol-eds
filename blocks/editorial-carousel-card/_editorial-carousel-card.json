@@ -24,15 +24,19 @@
           "component": "text",
           "name": "title",
           "label": "Titolo",
-          "maxlength": 15,
-          "required": true
+          "required": true,
+          "validation": {
+            "maxLength": 65
+          }
         },
         {
           "component": "text",
           "name": "description",
           "label": "Descrizione",
-          "maxlength": 130,
-          "required": true
+          "required": true,
+          "validation": {
+            "maxLength": 200
+          }
         },
         {
           "component": "container",
@@ -44,13 +48,6 @@
               "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
             }
           ]
-        },
-        {
-          "component": "text",
-          "name": "note",
-          "label": "Note",
-          "maxlength": 60,
-          "required": true
         },
         {
           "component": "reference",

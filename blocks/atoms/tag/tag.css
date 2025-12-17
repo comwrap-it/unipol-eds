@@ -2,8 +2,8 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    padding: var(--Tag-Vertical-Padding) var(--Tag-Horizontal-Padding);
-    border-radius: var(--Tag-Radius);
+    padding: var(--Tag-Vertical-Padding, 4px) var(--Tag-Horizontal-Padding, 12px);
+    border-radius: var(--Tag-Radius-rounded, 8px) var(--Tag-Radius-sharp, 0);
     border: var(--Tag-Border) solid; 
     font-size: var(--Size-12);
     font-weight: var(--Weight-Semi-Bold);

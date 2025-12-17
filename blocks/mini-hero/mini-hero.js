@@ -40,16 +40,20 @@ const setupMiniHeroWithBg = (
   } else if (heroBackground) {
     const videoPath = heroBackground.href;
     const videoBg = document.createElement('video');
-    videoBg.src = videoPath;
     moveInstrumentation(heroBackground, videoBg);
+    videoBg.muted = true;
     videoBg.className = 'hero-bg';
     videoBg.setAttribute('aria-hidden', 'true');
     videoBg.preload = 'auto';
     videoBg.autoplay = true;
-    videoBg.muted = true;
     videoBg.loop = true;
     videoBg.playsInline = true;
+    videoBg.src = videoPath;
     hero.appendChild(videoBg);
+
+    videoBg.addEventListener('canplay', () => {
+      videoBg.play();
+    });
 
     const pauseIcon = document.createElement('button');
     pauseIcon.className = 'hero-icon un-icon-pause-circle icon-extra-large';
@@ -197,7 +201,11 @@ export async function createMiniHero(
   btnRightIcon,
   isCarousel = false,
 ) {
-  const hero = setupMiniHeroWithBg(heroBackground, isVideoBackground, isCarousel);
+  const hero = setupMiniHeroWithBg(
+    heroBackground,
+    isVideoBackground,
+    isCarousel,
+  );
   const heroContent = document.createElement('div');
   heroContent.className = 'hero-content';
   const mainSection = createMiniHeroMainSection(

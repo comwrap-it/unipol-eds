@@ -1,221 +1,429 @@
 /**
- * Editorial Carousel Card - modular version.
+ * Editorial Carousel Card - Molecule
+ *
+ * Uses link-button as an atom component for call-to-action buttons.
+ * This component can be used as a molecule within editorial-carousel.
+ *
+ * Preserves Universal Editor instrumentation for AEM EDS.
  */
-import { createLinkButtonFromRows } from '../atoms/buttons/link-button/link-button.js';
+
+import { createLinkButton } from '../atoms/buttons/link-button/link-button.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
-let stylesLoaded = false;
+export const EDITORIAL_CAROUSEL_CARD_SIZES = {
+  S: 's',
+  M: 'm',
+};
 
-/**
- * Lazily loads CSS dependencies for link buttons, and icons.
- * Uses a memoized flag to avoid redundant requests on repeated decorations.
- *
- * @returns {Promise<void>} resolves when all dependent stylesheets are loaded
- */
-async function ensureStylesLoaded() {
-  if (stylesLoaded) return;
-  const { loadCSS } = await import('../../scripts/aem.js');
-  await Promise.all([
-    loadCSS(
-      `${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`,
-    ),
-  ]);
-  stylesLoaded = true;
-}
+const resolveEditorialCarouselCardSize = (value) => {
+  const normalized = String(value || '').trim().toLowerCase();
+  if (['m', 'md', 'medium'].includes(normalized)) return EDITORIAL_CAROUSEL_CARD_SIZES.M;
+  return EDITORIAL_CAROUSEL_CARD_SIZES.S;
+};
 
-/**
- * Retrieves the rows that describe the card content.
- *
- * @param {HTMLElement} block - The editorial carousel card block wrapper
- * @returns {HTMLElement[]} ordered rows either from the default wrapper or the block children
- */
-function getRows(block) {
-  const wrapper = block.querySelector('.default-content-wrapper');
-  return wrapper ? Array.from(wrapper.children) : Array.from(block.children);
-}
+const IMAGE_BREAKPOINTS_BY_SIZE = {
+  [EDITORIAL_CAROUSEL_CARD_SIZES.S]: [
+    { media: '(min-width: 1200px)', width: '316' },
+    { media: '(min-width: 1024px)', width: '276' },
+    { media: '(min-width: 768px)', width: '302' },
+    { media: '(max-width: 767px)', width: '343' },
+  ],
+  [EDITORIAL_CAROUSEL_CARD_SIZES.M]: [
+    { media: '(min-width: 1200px)', width: '426' },
+    { media: '(min-width: 1024px)', width: '373' },
+    { media: '(min-width: 768px)', width: '302' },
+    { media: '(max-width: 767px)', width: '343' },
+  ],
+};
 
-/**
- * Creates the image section including the optional overlay and optimized picture fallback.
- *
- * @param {HTMLElement[]} rows - Structured rows aligned with the card content model
- * @returns {HTMLElement|null} image container or null when no image row is provided
- */
-function buildImageSection(rows) {
-  const candidates = [
-    { imageIndex: 10, altIndex: 11 },
-    { imageIndex: 13, altIndex: 14 },
-  ];
+const getImageBreakpoints = (size) => IMAGE_BREAKPOINTS_BY_SIZE[
+  resolveEditorialCarouselCardSize(size)
+] || IMAGE_BREAKPOINTS_BY_SIZE[EDITORIAL_CAROUSEL_CARD_SIZES.S];
 
-  const selection = candidates.find(({ imageIndex }) => {
-    const row = rows[imageIndex];
-    return row && (
-      row.querySelector('picture')
-      || row.querySelector('img')
-      || row.querySelector('a')
-    );
+const extractInstrumentationAttributes = (element) => {
+  const instrumentation = {};
+
+  if (!element) return instrumentation;
+
+  [...element.attributes].forEach((attr) => {
+    if (
+      attr.name.startsWith('data-aue-')
+      || attr.name.startsWith('data-richtext-')
+    ) {
+      instrumentation[attr.name] = attr.value;
+    }
   });
 
-  if (!selection) return null;
+  return instrumentation;
+};
 
-  const imageRow = rows[selection.imageIndex];
+const DEFAULT_ICON_SIZE = 'medium';
 
-  const cardImage = document.createElement('div');
-  cardImage.className = 'editorial-carousel-card-image';
-
-  const altText = rows[selection.altIndex]?.textContent?.trim() || '';
-  const picture = imageRow.querySelector('picture');
-  if (picture) {
-    picture.querySelector('img')?.setAttribute('alt', altText);
-    cardImage.appendChild(picture);
-  } else {
-    const img = imageRow.querySelector('img');
-    const link = imageRow.querySelector('a');
-    const src = img?.src || link?.href;
-
-    if (src) {
-      const optimizedPic = createOptimizedPicture(
-        src,
-        altText,
-        false,
-        [
-          { media: '(min-width: 769)', width: '316' },
-          { media: '(max-width: 768)', width: '240' },
-          { media: '(max-width: 392)', width: '343' },
-        ],
-      );
-      const newImg = optimizedPic.querySelector('img');
-      if (newImg && img) moveInstrumentation(img, newImg);
-      if (newImg && link) moveInstrumentation(link, newImg);
-      cardImage.appendChild(optimizedPic);
-    }
-  }
-
-  return cardImage.children.length ? cardImage : null;
+let isStylesLoaded = false;
+async function ensureStylesLoaded() {
+  if (isStylesLoaded) return;
+  const { loadCSS } = await import('../../scripts/aem.js');
+  await Promise.all([
+    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/link-button/link-button.css`),
+  ]);
+  isStylesLoaded = true;
 }
 
-/**
- * Builds the textual stack (title and description), preserving authored semantics
- * and instrumentation when present.
- *
- * @param {HTMLElement[]} rows - Structured rows aligned with the card content model
- * @returns {HTMLElement} container with the populated title and description
- */
-function buildTextSection(rows) {
-  const cardTextContent = document.createElement('div');
-  cardTextContent.className = 'editorial-carousel-card-text';
+const createLinkButtonFromStandardButtonRows = (rows) => {
+  if (!rows || rows.length === 0) return null;
 
-  const titleRow = rows[0];
-  if (titleRow) {
-    const existingHeading = titleRow.querySelector('h1, h2, h3, h4, h5, h6');
-    if (existingHeading) {
-      existingHeading.className = 'title';
-      moveInstrumentation(titleRow, existingHeading);
-      cardTextContent.appendChild(existingHeading);
-    } else {
-      const title = document.createElement('h3');
-      title.className = 'title';
-      while (titleRow.firstChild) {
-        title.appendChild(titleRow.firstChild);
-      }
-      moveInstrumentation(titleRow, title);
-      if (title.textContent?.trim()) {
-        cardTextContent.appendChild(title);
-      }
-    }
+  const label = rows[0]?.textContent?.trim() || '';
+  if (!label) return null;
+
+  const href = rows[2]?.querySelector('a')?.href || rows[2]?.textContent?.trim() || '';
+  const openInNewTab = rows[3]?.textContent?.trim() === 'true';
+  const iconSize = (rows[4]?.textContent || '').trim().toLowerCase() || DEFAULT_ICON_SIZE;
+  const leftIcon = rows[5]?.textContent?.trim() || '';
+  const rightIcon = rows[6]?.textContent?.trim() || '';
+  const disabled = !href;
+
+  const linkButton = createLinkButton(
+    label,
+    href || '#',
+    openInNewTab,
+    leftIcon,
+    rightIcon,
+    iconSize,
+    iconSize,
+    disabled,
+  );
+
+  const instrumentation = extractInstrumentationAttributes(rows[0]);
+  Object.entries(instrumentation).forEach(([name, value]) => {
+    linkButton.setAttribute(name, value);
+  });
+
+  return linkButton;
+};
+
+const findImageRowIndex = (rows) => {
+  if (!rows || rows.length === 0) return -1;
+
+  for (let index = rows.length - 1; index >= 0; index -= 1) {
+    const row = rows[index];
+    if (row?.querySelector('picture, img')) return index;
   }
 
-  const subtitleRow = rows[1];
-  if (subtitleRow) {
-    const existingPara = subtitleRow.querySelector('p');
-    if (existingPara) {
-      existingPara.className = 'description';
-      moveInstrumentation(subtitleRow, existingPara);
-      cardTextContent.appendChild(existingPara);
-    } else if (subtitleRow.textContent?.trim()) {
-      const subtitle = document.createElement('p');
-      subtitle.className = 'description';
-      while (subtitleRow.firstChild) {
-        subtitle.appendChild(subtitleRow.firstChild);
-      }
-      moveInstrumentation(subtitleRow, subtitle);
-      cardTextContent.appendChild(subtitle);
-    }
+  for (let index = rows.length - 1; index >= 9; index -= 1) {
+    const row = rows[index];
+    if (row?.querySelector('a[href]')) return index;
   }
 
-  return cardTextContent;
-}
+  return -1;
+};
 
-/**
- * Builds the CTA area and optional supporting note beneath the button.
- *
- * @param {HTMLElement[]} rows - Structured rows aligned with the card content model
- * @returns {HTMLElement|null} wrapper containing the button and note, or null when absent
- */
-function buildButtonsSection(rows) {
-  const buttonRows = rows.slice(2, 9);
-  const buttonElement = createLinkButtonFromRows(buttonRows);
-  if (!buttonElement) return null;
-
-  const buttonsContainer = document.createElement('div');
-  buttonsContainer.className = 'button-subdescription';
-  buttonsContainer.appendChild(buttonElement);
-
-  const note = rows[9];
-  if (note) {
-    const existingPara = note.querySelector('p');
-    if (existingPara) {
-      existingPara.className = 'subdescription';
-      moveInstrumentation(note, existingPara);
-      buttonsContainer.appendChild(existingPara);
-    } else if (note.textContent?.trim()) {
-      const noteFromHTML = document.createElement('p');
-      noteFromHTML.className = 'subdescription';
-      while (note.firstChild) {
-        noteFromHTML.appendChild(note.firstChild);
-      }
-      moveInstrumentation(note, noteFromHTML);
-      buttonsContainer.appendChild(noteFromHTML);
-    }
-  }
-
-  return buttonsContainer;
-}
-
-/**
- * Decorates an editorial carousel card block by rebuilding its structure,
- * applying instrumentation, and attaching required styles.
- *
- * @param {HTMLElement} block - The block instance to decorate
- * @returns {Promise<void>} resolves when the card is fully transformed
- */
-export default async function decorateEditorialCarouselCard(block) {
-  if (!block || block.classList.contains('card-block')) return;
-  await ensureStylesLoaded();
-
-  const rows = getRows(block);
+export function createEditorialCarouselCard(
+  {
+    title = '',
+    description = '',
+    size = 'm',
+    imageSrc = '',
+    imageAlt = '',
+    imageElement = null,
+    buttonElement = null,
+    buttonConfig = null,
+    note = '',
+    instrumentation = {},
+    blockName = 'editorial-carousel-card',
+    isFirstCard = false,
+  } = {},
+) {
   const card = document.createElement('div');
-  card.className = 'editorial-carousel-card-container';
+  card.className = 'editorial-carousel-card-container card-block';
 
-  moveInstrumentation(block, card);
-  if (block.dataset.blockName) {
-    card.dataset.blockName = block.dataset.blockName;
+  const resolvedSize = resolveEditorialCarouselCardSize(size);
+  card.dataset.editorialCardSize = resolvedSize;
+  card.style.setProperty(
+    '--editorial-card-size',
+    resolvedSize === EDITORIAL_CAROUSEL_CARD_SIZES.M ? '1' : '0',
+  );
+
+  if (blockName) {
+    card.dataset.blockName = blockName;
+  }
+
+  Object.entries(instrumentation).forEach(([name, value]) => {
+    card.setAttribute(name, value);
+  });
+
+  let mediaElement = imageElement;
+  if (!mediaElement && imageSrc) {
+    mediaElement = createOptimizedPicture(
+      imageSrc,
+      imageAlt,
+      isFirstCard,
+      getImageBreakpoints(resolvedSize),
+    );
+  }
+
+  if (mediaElement) {
+    const cardImage = document.createElement('div');
+    cardImage.className = 'editorial-carousel-card-image';
+
+    const img = mediaElement.querySelector?.('img')
+      || (mediaElement.tagName === 'IMG' ? mediaElement : null);
+    if (img) {
+      img.setAttribute('alt', imageAlt);
+      if (isFirstCard) {
+        img.setAttribute('loading', 'eager');
+        img.setAttribute('fetchpriority', 'high');
+      }
+    }
+
+    cardImage.appendChild(mediaElement);
+    card.appendChild(cardImage);
   }
 
   const cardContent = document.createElement('div');
   cardContent.className = 'editorial-carousel-card-content';
 
-  const imageSection = buildImageSection(rows);
-  const textSection = buildTextSection(rows);
-  const buttonsSection = buildButtonsSection(rows);
+  const cardTextContent = document.createElement('div');
+  cardTextContent.className = 'editorial-carousel-card-text';
 
-  if (imageSection) card.appendChild(imageSection);
-  if (textSection) cardContent.appendChild(textSection);
-  if (buttonsSection) cardContent.appendChild(buttonsSection);
+  if (title) {
+    const titleElement = title instanceof HTMLElement ? title : document.createElement('h3');
+    if (!(title instanceof HTMLElement)) titleElement.textContent = title;
+    titleElement.className = 'title';
+    if (title instanceof HTMLElement || titleElement.textContent?.trim()) {
+      cardTextContent.appendChild(titleElement);
+    }
+  }
+
+  if (description) {
+    const descriptionElement = description instanceof HTMLElement ? description : document.createElement('p');
+    if (!(description instanceof HTMLElement)) descriptionElement.textContent = description;
+    descriptionElement.className = 'description';
+    if (description instanceof HTMLElement || descriptionElement.textContent?.trim()) {
+      cardTextContent.appendChild(descriptionElement);
+    }
+  }
+
+  if (cardTextContent.children.length > 0) {
+    cardContent.appendChild(cardTextContent);
+  }
+
+  let finalButtonElement = buttonElement;
+  if (!finalButtonElement && buttonConfig?.label) {
+    finalButtonElement = createLinkButton(
+      buttonConfig.label,
+      buttonConfig.href || '#',
+      Boolean(buttonConfig.openInNewTab),
+      buttonConfig.leftIcon || '',
+      buttonConfig.rightIcon || '',
+      buttonConfig.iconSize || DEFAULT_ICON_SIZE,
+      buttonConfig.iconSize || DEFAULT_ICON_SIZE,
+      Boolean(buttonConfig.disabled),
+    );
+  }
+
+  if (finalButtonElement) {
+    const buttonsContainer = document.createElement('div');
+    buttonsContainer.className = 'button-subdescription';
+    buttonsContainer.appendChild(finalButtonElement);
+
+    if (note) {
+      const noteElement = note instanceof HTMLElement ? note : document.createElement('p');
+      if (!(note instanceof HTMLElement)) noteElement.textContent = note;
+      noteElement.className = 'subdescription';
+      if (note instanceof HTMLElement || noteElement.textContent?.trim()) {
+        buttonsContainer.appendChild(noteElement);
+      }
+    }
+
+    if (buttonsContainer.children.length > 0) {
+      cardContent.appendChild(buttonsContainer);
+    }
+  }
+
   if (cardContent.children.length > 0) {
     card.appendChild(cardContent);
   }
 
-  card.classList.add('card-block');
-  block.replaceChildren(card);
+  return card;
+}
+
+export const create = createEditorialCarouselCard;
+
+/**
+ * Decorates a card block element
+ * @param {HTMLElement} block - The card block element
+ * @param {boolean} [isFirstCard=false] - Whether this is the first card (LCP candidate)
+ */
+export default async function decorateEditorialCarouselCard(block, isFirstCard = false) {
+  if (!block) return;
+
+  // Ensure CSS is loaded
+  await ensureStylesLoaded();
+
+  // Check if card is already decorated (has card-block class)
+  // This happens when Universal Editor re-renders after an edit
+  if (block.classList.contains('card-block')) {
+    return;
+  }
+
+  // Get rows from block
+  let rows = Array.from(block.children);
+  const wrapper = block.querySelector('.default-content-wrapper');
+  if (wrapper) {
+    rows = Array.from(wrapper.children);
+  }
+
+  const instrumentation = {
+    ...extractInstrumentationAttributes(block),
+    ...extractInstrumentationAttributes(rows[0]),
+  };
+
+  // Extract card data
+  // Row 0:  Title
+  // Row 1:  Description
+  // Row 2:  Button label
+  // Row 3:  Button variant (unused by link-button)
+  // Row 4:  Button link
+  // Row 5:  Button target
+  // Row 6:  Button size
+  // Row 7:  Button left icon
+  // Row 8:  Button right icon
+  // Row 9:  Note
+  // Row 13: Image
+  // Row 14: Image Alternative Text
+
+  const imageRowIndex = findImageRowIndex(rows);
+  const imageRow = imageRowIndex >= 0 ? rows[imageRowIndex] : null;
+  const imageAlt = imageRowIndex >= 0
+    ? rows[imageRowIndex + 1]?.textContent?.trim() || ''
+    : '';
+  const resolvedSize = resolveEditorialCarouselCardSize(block.dataset.editorialCardSize);
+
+  let imageElement = null;
+  if (imageRow) {
+    const picture = imageRow.querySelector('picture');
+    if (picture) {
+      imageElement = picture;
+    } else {
+      const img = imageRow.querySelector('img');
+      if (img?.src) {
+        const optimizedPic = createOptimizedPicture(
+          img.src,
+          imageAlt,
+          isFirstCard,
+          getImageBreakpoints(resolvedSize),
+        );
+        const newImg = optimizedPic.querySelector('img');
+        if (newImg) moveInstrumentation(img, newImg);
+        imageElement = optimizedPic;
+      } else {
+        const link = imageRow.querySelector('a[href]');
+        if (link?.href) {
+          const optimizedPic = createOptimizedPicture(
+            link.href,
+            imageAlt,
+            isFirstCard,
+            getImageBreakpoints(resolvedSize),
+          );
+          const newImg = optimizedPic.querySelector('img');
+          if (newImg) moveInstrumentation(link, newImg);
+          imageElement = optimizedPic;
+        }
+      }
+    }
+  }
+
+  // Card Title - preserve original element and instrumentation
+  const titleRow = rows[0];
+  let titleElement = null;
+  if (titleRow) {
+    // Try to preserve existing heading element
+    const existingHeading = titleRow.querySelector('h1, h2, h3, h4, h5, h6');
+    if (existingHeading) {
+      // Move existing heading and preserve instrumentation
+      moveInstrumentation(titleRow, existingHeading);
+      titleElement = existingHeading;
+    } else {
+      // Create new heading but preserve instrumentation
+      const title = document.createElement('h3');
+      // Clone child nodes to preserve richtext instrumentation
+      while (titleRow.firstChild) {
+        title.appendChild(titleRow.firstChild);
+      }
+      // Move instrumentation from row to title
+      moveInstrumentation(titleRow, title);
+      titleElement = title.textContent?.trim() ? title : null;
+    }
+  }
+
+  // Card Subtitle - preserve original element and instrumentation
+  const subtitleRow = rows[1];
+  let descriptionElement = null;
+
+  // ALWAYS create subtitle element (even if row doesn't exist or is empty)
+  // This ensures subtitle is always visible in the DOM for editing
+  if (subtitleRow) {
+    // Try to preserve existing paragraph
+    const existingPara = subtitleRow.querySelector('p');
+    if (existingPara) {
+      moveInstrumentation(subtitleRow, existingPara);
+      descriptionElement = existingPara;
+    } else if (subtitleRow.textContent?.trim()) {
+      // Create new paragraph but preserve instrumentation
+      const subtitle = document.createElement('p');
+      // Clone child nodes to preserve richtext instrumentation
+      while (subtitleRow.firstChild) {
+        subtitle.appendChild(subtitleRow.firstChild);
+      }
+      // Move instrumentation from row to subtitle
+      moveInstrumentation(subtitleRow, subtitle);
+      descriptionElement = subtitle;
+    }
+  }
+
+  // Card Button - Rows 2-9 (optional)
+  // Universal Editor creates separate rows for each button field
+  const buttonRows = rows.slice(2, 9);
+  const buttonElement = createLinkButtonFromStandardButtonRows(buttonRows);
+  let noteElement = null;
+
+  if (buttonElement) {
+    const note = imageRowIndex === 9 ? null : rows[9];
+    if (note) {
+      // Try to preserve existing paragraph
+      const existingPara = note.querySelector('p');
+      if (existingPara) {
+        moveInstrumentation(note, existingPara);
+        noteElement = existingPara;
+      } else if (note.textContent?.trim()) {
+        // Create new paragraph but preserve instrumentation
+        const noteFromHTML = document.createElement('p');
+        // Clone child nodes to preserve richtext instrumentation
+        while (note.firstChild) {
+          noteFromHTML.appendChild(note.firstChild);
+        }
+        // Move instrumentation from row to note
+        moveInstrumentation(note, noteFromHTML);
+        noteElement = noteFromHTML;
+      }
+    }
+  }
+
+  const blockName = block.dataset.blockName || 'editorial-carousel-card';
+  const card = createEditorialCarouselCard({
+    title: titleElement,
+    description: descriptionElement,
+    size: resolvedSize,
+    imageElement,
+    imageAlt,
+    buttonElement,
+    note: noteElement,
+    instrumentation,
+    blockName,
+    isFirstCard,
+  });
+
+  // Replace block content with card
+  block.replaceWith(card);
 }

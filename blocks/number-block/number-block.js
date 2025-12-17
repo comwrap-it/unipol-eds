@@ -1,5 +1,8 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
+export const MAX_TITLE_LENGTH = 7;
+export const MAX_DESCRIPTION_LENGTH = 40;
+
 /**
  * Creates the DOM for a single Number Item
  */

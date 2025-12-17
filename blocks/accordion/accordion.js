@@ -4,8 +4,8 @@ import { getValuesFromBlock, restoreInstrumentation, isAuthorMode } from '../../
  * Creates Accordion
  *
  * @returns {HTMLElement}
- * @param accordionLabel
- * @param accordionDescription
+ * @param accordionLabel object that contains value and instrumentation for EDS component
+ * @param accordionDescription object that contains value and instrumentation for EDS component
  */
 export function createAccordion(accordionLabel, accordionDescription) {
   const wrapper = document.createElement('div');
@@ -16,8 +16,10 @@ export function createAccordion(accordionLabel, accordionDescription) {
 
   const labelEl = document.createElement('span');
   labelEl.className = 'accordion-label';
-  labelEl.textContent = accordionLabel.value || '';
-  restoreInstrumentation(labelEl, accordionLabel.instrumentation);
+  labelEl.textContent = accordionLabel?.value || '';
+  if (accordionLabel?.instrumentation) {
+    restoreInstrumentation(labelEl, accordionLabel.instrumentation);
+  }
 
   const icon = document.createElement('span');
   icon.className = 'accordion-icon un-icon-plus';
@@ -26,11 +28,13 @@ export function createAccordion(accordionLabel, accordionDescription) {
 
   const content = document.createElement('div');
   content.className = 'accordion-content';
-  content.textContent = accordionDescription.value || '';
+  content.append(...(accordionDescription?.value ?? []));
   if (isAuthorMode(content)) {
     wrapper.classList.add('open');
   }
-  restoreInstrumentation(content, accordionDescription.instrumentation);
+  if (accordionDescription?.instrumentation) {
+    restoreInstrumentation(content, accordionDescription.instrumentation);
+  }
 
   wrapper.append(header, content);
 
@@ -62,9 +66,10 @@ export function createAccordion(accordionLabel, accordionDescription) {
  */
 export default async function decorateAccordion(block) {
   if (!block) return;
-  const properties = ['accordionLabel', 'accordionDescription'];
+  const properties = ['accordionLabel', 'accordionDescriptionRichtext'];
   const values = getValuesFromBlock(block, properties);
-  const accordionElement = createAccordion(values.accordionLabel, values.accordionDescription);
+  // eslint-disable-next-line max-len
+  const accordionElement = createAccordion(values.accordionLabel, values.accordionDescriptionRichtext);
 
   block.textContent = '';
   block.appendChild(accordionElement);

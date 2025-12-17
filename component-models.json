@@ -142,6 +142,130 @@
     ]
   },
   {
+    "id": "faq-widget-section",
+    "fields": [
+      {
+        "component": "toggle",
+        "name": "faq-widget-section-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "blog-carousel-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "blog-carousel-widget-name",
+        "label": "Nome sezione Blog Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "blog-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "card-grid-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "card-grid-widget-name",
+        "label": "Nome sezione Card Grid Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "card-grid-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "data-table-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "data-table-widget-name",
+        "label": "Nome sezione Data Table Widget"
+      },
+      {
+        "component": "select",
+        "name": "dataTableWidgetBckcolor",
+        "value": "none",
+        "options": [
+          {
+            "name": "none",
+            "value": ""
+          },
+          {
+            "name": "mobility",
+            "value": "mobility"
+          },
+          {
+            "name": "welfare",
+            "value": "welfare"
+          },
+          {
+            "name": "property",
+            "value": "property"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "editorial-carousel-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "editorial-carousel-widget-name",
+        "label": "Nome sezione Editorial Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "editorial-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "hero-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "hero-widget-name",
+        "label": "Nome sezione Hero Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "hero-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
+    "id": "insurance-product-carousel-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "insurance-product-carousel-widget-name",
+        "label": "Nome sezione Insurance Product Carousel Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "insurance-product-carousel-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
     "id": "kpi-highlights-widget",
     "fields": [
       {
@@ -170,33 +294,6 @@
     ]
   },
   {
-    "id": "faq-widget-section",
-    "fields": [
-      {
-        "component": "toggle",
-        "name": "faq-widget-section-dark-theme",
-        "label": "Tema scuro",
-        "default": false
-      }
-    ]
-  },
-  {
-    "id": "hero-widget",
-    "fields": [
-      {
-        "component": "text",
-        "name": "hero-widget-name",
-        "label": "Nome sezione Hero Widget"
-      },
-      {
-        "component": "toggle",
-        "name": "hero-widget-dark-theme",
-        "label": "Tema scuro",
-        "default": false
-      }
-    ]
-  },
-  {
     "id": "mini-hero-widget",
     "fields": [
       {
@@ -213,71 +310,157 @@
     ]
   },
   {
-    "id": "blog-carousel-widget",
-    "fields": [
-      {
-        "component": "text",
-        "name": "blog-carousel-widget-name",
-        "label": "Nome sezione Blog Carousel Widget"
-      },
-      {
-        "component": "toggle",
-        "name": "blog-carousel-widget-dark-theme",
-        "label": "Tema scuro",
-        "default": false
-      }
-    ]
-  },
-  {
-    "id": "insurance-product-carousel-widget",
-    "fields": [
-      {
-        "component": "text",
-        "name": "insurance-product-carousel-widget-name",
-        "label": "Nome sezione Insurance Product Carousel Widget"
-      },
-      {
-        "component": "toggle",
-        "name": "insurance-product-carousel-widget-dark-theme",
-        "label": "Tema scuro",
-        "default": false
-      }
-    ]
-  },
-  {
-    "id": "editorial-carousel-widget",
-    "fields": [
-      {
-        "component": "text",
-        "name": "editorial-carousel-widget-name",
-        "label": "Nome sezione Editorial Carousel Widget"
-      },
-      {
-        "component": "toggle",
-        "name": "editorial-carousel-widget-dark-theme",
-        "label": "Tema scuro",
-        "default": false
-      }
-    ]
-  },
-  {
     "id": "accordion",
     "fields": [
       {
         "component": "text",
         "name": "accordionLabel",
         "label": "Domanda",
-        "description": "Descrizione della domanda (max 120 caratteri)",
-        "maxlength": 120,
+        "description": "Descrizione della domanda",
+        "validation": {
+          "maxLength": 120,
+          "customErrorMsg": "Testo troppo lungo"
+        },
         "value": ""
       },
       {
-        "component": "text",
-        "name": "accordionDescription",
+        "component": "richtext",
+        "name": "accordionDescriptionRichtext",
         "label": "Risposta",
-        "description": "Risposta contenuta nell'accordion (max 800 caratteri)",
-        "maxlength": 800,
+        "description": "Risposta contenuta nell'accordion",
+        "validation": {
+          "maxLength": 800,
+          "customErrorMsg": "Testo troppo lungo"
+        },
         "value": ""
+      }
+    ]
+  },
+  {
+    "id": "blog-carousel",
+    "fields": [
+      {
+        "component": "container",
+        "name": "button-container",
+        "label": "Configurazione pulsante visibile su schermi piccoli",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "standardButtonLabel",
+            "label": "Button Text",
+            "required": false
+          },
+          {
+            "component": "select",
+            "name": "standardButtonVariant",
+            "label": "Variante",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Accent",
+                "value": "accent"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "URL del bottone"
+          },
+          {
+            "component": "boolean",
+            "label": "Apri in una nuova scheda",
+            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+            "name": "standardButtonOpenInNewTab",
+            "valueType": "boolean",
+            "value": false
+          },
+          {
+            "component": "select",
+            "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
+            "label": "Dimensione Icone",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonLeftIcon",
+            "label": "Icona Sinistra",
+            "description": "Select the left icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonRightIcon",
+            "label": "Icona Destra",
+            "description": "Select the right icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -424,6 +607,303 @@
         "name": "rows",
         "value": "",
         "label": "Rows"
+      }
+    ]
+  },
+  {
+    "id": "data-table-row",
+    "fields": [
+      {
+        "component": "tab",
+        "label": "Configurazione Colonna 1",
+        "name": "data-table-col"
+      },
+      {
+        "component": "boolean",
+        "description": "Attivo: rende il titolo un pulsante e rende configurabile il tooltip associato",
+        "name": "showDataTableRow",
+        "valueType": "boolean",
+        "value": false
+      },
+      {
+        "component": "text",
+        "name": "titleDataTableRow",
+        "label": "Titolo Riga",
+        "validation": {
+          "maxLength": 25,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      },
+      {
+        "component": "container",
+        "name": "data-table-tooltip",
+        "label": "Configurazione tooltip",
+        "condition": {
+          "===": [
+            {
+              "var": "showDataTableRow"
+            },
+            true
+          ]
+        },
+        "fields": [
+          {
+            "component": "text",
+            "name": "toolTip",
+            "label": "Titolo tooltip",
+            "required": true,
+            "validation": {
+              "maxLength": 60,
+              "customErrorMsg": "Testo troppo lungo"
+            }
+          },
+          {
+            "component": "richtext",
+            "name": "toolTipSub",
+            "label": "Sottotitolo Tooltip",
+            "valueType": "string",
+            "validation": {
+              "maxLength": 300,
+              "customErrorMsg": "Testo troppo lungo"
+            }
+          }
+        ]
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Colonna 2",
+        "name": "data-table-col-2"
+      },
+      {
+        "component": "boolean",
+        "description": "Attivo: rende il contenuto della cella un titolo",
+        "name": "changeTableTextContent",
+        "valueType": "boolean",
+        "value": false
+      },
+      {
+        "component": "text",
+        "name": "titleDataTableRow2",
+        "label": "Titolo",
+        "validation": {
+          "maxLength": 20,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "changeTableTextContent"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "titleDataTableRow3",
+        "label": "Contenuto Testuale",
+        "validation": {
+          "maxLength": 50,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "changeTableTextContent"
+            },
+            false
+          ]
+        }
+      },
+      {
+        "component": "tab",
+        "label": "Configurazione Colonna 3",
+        "name": "data-table-col-3"
+      },
+      {
+        "component": "boolean",
+        "description": "Attivo: rende il contenuto della cella un titolo",
+        "name": "changeTableTextContent2",
+        "valueType": "boolean",
+        "value": false
+      },
+      {
+        "component": "text",
+        "name": "titleDataTableRow4",
+        "label": "Titolo",
+        "validation": {
+          "maxLength": 20,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "changeTableTextContent2"
+            },
+            true
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "titleDataTableRow5",
+        "label": "Contenuto Testuale",
+        "validation": {
+          "maxLength": 35,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "changeTableTextContent2"
+            },
+            false
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "titleDataTableRow6",
+        "label": "Contenuto Testuale Benefit",
+        "validation": {
+          "maxLength": 35,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "changeTableTextContent2"
+            },
+            false
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "data-table",
+    "fields": [
+      {
+        "component": "container",
+        "name": "show-more-data-table",
+        "label": "Data table: Configurazione pulsante",
+        "fields": [
+          {
+            "component": "text",
+            "name": "standardButtonLabel",
+            "label": "Button Text",
+            "required": false
+          },
+          {
+            "component": "select",
+            "name": "standardButtonVariant",
+            "label": "Variante",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Accent",
+                "value": "accent"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "URL del bottone"
+          },
+          {
+            "component": "boolean",
+            "label": "Apri in una nuova scheda",
+            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+            "name": "standardButtonOpenInNewTab",
+            "valueType": "boolean",
+            "value": false
+          },
+          {
+            "component": "select",
+            "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
+            "label": "Dimensione Icone",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonLeftIcon",
+            "label": "Icona Sinistra",
+            "description": "Select the left icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonRightIcon",
+            "label": "Icona Destra",
+            "description": "Select the right icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -591,15 +1071,19 @@
         "component": "text",
         "name": "title",
         "label": "Titolo",
-        "maxlength": 15,
-        "required": true
+        "required": true,
+        "validation": {
+          "maxLength": 65
+        }
       },
       {
         "component": "text",
         "name": "description",
         "label": "Descrizione",
-        "maxlength": 130,
-        "required": true
+        "required": true,
+        "validation": {
+          "maxLength": 200
+        }
       },
       {
         "component": "container",
@@ -725,13 +1209,6 @@
         ]
       },
       {
-        "component": "text",
-        "name": "note",
-        "label": "Note",
-        "maxlength": 60,
-        "required": true
-      },
-      {
         "component": "reference",
         "valueType": "string",
         "name": "image",
@@ -745,22 +1222,6 @@
         "name": "imageSR",
         "label": "Testo alternativo per l'immagine",
         "required": true
-      }
-    ]
-  },
-  {
-    "id": "editorial-carousel-widget",
-    "fields": [
-      {
-        "component": "text",
-        "name": "editorial-carousel-widget-name",
-        "label": "Nome sezione Editorial Carousel Widget"
-      },
-      {
-        "component": "toggle",
-        "name": "editorial-carousel-widget-dark-theme",
-        "label": "Tema scuro",
-        "default": false
       }
     ]
   },
@@ -783,24 +1244,31 @@
         "component": "text",
         "name": "title",
         "label": "Titolo",
-        "description": "max 40 caratteri",
         "required": true,
-        "maxlength": 40
+        "validation": {
+          "maxLength": 40,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "text",
         "name": "description",
         "label": "Descrizione",
-        "description": "max 150 caratteri",
         "required": true,
-        "maxlength": 150
+        "validation": {
+          "maxLength": 150,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
         "component": "text",
         "name": "showMoreButtonLabel",
         "label": "Testo pulsante carica altro",
         "description": "Default \"Mostra di più\"",
-        "maxlength": 15
+        "validation": {
+          "maxLength": 15,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       }
     ]
   },
@@ -2396,7 +2864,7 @@
       {
         "component": "select",
         "name": "icon",
-        "label": "Icona",
+        "label": "Tipo di azione",
         "options": [
           {
             "name": "Carrello",
@@ -2764,8 +3232,132 @@
     ]
   },
   {
+    "id": "tooltip",
+    "fields": [
+      {
+        "component": "text",
+        "name": "toolTip",
+        "label": "Titolo tooltip",
+        "required": true,
+        "validation": {
+          "maxLength": 60,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      },
+      {
+        "component": "richtext",
+        "name": "toolTipSub",
+        "label": "Sottotitolo Tooltip",
+        "valueType": "string",
+        "validation": {
+          "maxLength": 300,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      }
+    ]
+  },
+  {
     "id": "unica-preventivatore",
     "fields": []
+  },
+  {
+    "id": "warranty-card",
+    "fields": [
+      {
+        "component": "select",
+        "name": "category",
+        "label": "Categoria",
+        "required": true,
+        "value": "default-mobility",
+        "options": [
+          {
+            "name": "Mobility",
+            "value": "mobility"
+          },
+          {
+            "name": "Welfare",
+            "value": "welfare"
+          },
+          {
+            "name": "Property",
+            "value": "property"
+          },
+          {
+            "name": "Default Mobility",
+            "value": "default-mobility"
+          },
+          {
+            "name": "Default Welfare",
+            "value": "default-welfare"
+          },
+          {
+            "name": "Default Property",
+            "value": "default-property"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Titolo",
+        "required": true,
+        "validation": {
+          "maxLength": 30,
+          "customErrorMsg": "Titolo troppo lungo"
+        }
+      },
+      {
+        "component": "text",
+        "name": "description",
+        "label": "Descrizione",
+        "required": true,
+        "validation": {
+          "maxLength": 200,
+          "customErrorMsg": "Descrizione troppo lunga"
+        }
+      },
+      {
+        "component": "select",
+        "name": "warranty-card-icon",
+        "label": "Icona della Card",
+        "required": true,
+        "value": "un-icon-newspaper",
+        "options": [
+          {
+            "value": "un-icon-newspaper",
+            "name": "Newspaper"
+          },
+          {
+            "value": "un-icon-headphones",
+            "name": "Headphones"
+          },
+          {
+            "value": "un-icon-play-circle",
+            "name": "Play Circle"
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "button-label",
+        "label": "Testo Bottone"
+      },
+      {
+        "component": "aem-content",
+        "name": "reference",
+        "value": "",
+        "label": "AEM Content Picker",
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/unipol"
+        }
+      },
+      {
+        "component": "text",
+        "name": "tag-label",
+        "label": "Tag Label"
+      }
+    ]
   },
   {
     "id": "icon-button",
