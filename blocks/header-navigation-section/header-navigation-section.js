@@ -63,6 +63,7 @@ function closeBoxWithAnimation(box) {
       resolve();
       return;
     }
+    box.classList.add('closing');
     box.classList.remove('header-box-open');
     let finished = false;
     const onEnd = (e) => {
@@ -70,11 +71,20 @@ function closeBoxWithAnimation(box) {
         finished = true;
         box.removeEventListener('transitionend', onEnd);
         box.style.display = 'none';
+        box.classList.remove('closing');
         resolve();
       }
     };
     box.addEventListener('transitionend', onEnd, { once: true });
-    setTimeout(() => { if (!finished) { finished = true; box.style.display = 'none'; resolve(); } }, 50);
+
+    setTimeout(() => {
+      if (!finished) {
+        finished = true;
+        box.style.display = 'none';
+        box.classList.remove('closing');
+        resolve();
+      }
+    }, 150);
   });
 }
 
@@ -84,22 +94,6 @@ async function closeBox(pill, box) {
 
   pill?.classList.remove('header-nav-pill-active');
   pill?.setAttribute('aria-expanded', 'false');
-}
-
-function getCurrentlyOpenBox(pillToBoxMap) {
-  const entry = Array.from(pillToBoxMap.entries()).find(
-    ([pill, box]) => box.style.display !== 'none'
-      && pill.getAttribute('aria-expanded') === 'true',
-  );
-
-  return entry ? { pill: entry[0], box: entry[1] } : null;
-}
-
-async function closeOpenBoxOnScroll(pillToBoxMap) {
-  const open = getCurrentlyOpenBox(pillToBoxMap);
-  if (!open) return;
-
-  await closeBox(open.pill, open.box);
 }
 
 function addCloseIconToBox(box, pill) {
@@ -139,17 +133,17 @@ async function closeAllBoxesExcept(map, currentPill, currentBox) {
 
 function showSecondRightIcon() {
   const icon = document.querySelector('.second-pill-right-icon');
-  if (icon) icon.style.opacity = '1';
+  if (icon) icon.style.display = 'block';
 }
 
 function hideSecondRightIcon() {
   const icon = document.querySelector('.second-pill-right-icon');
-  if (icon) icon.style.opacity = '0';
+  if (icon) icon.style.display = 'none';
 }
 
 function showMobileSecondRightIcon() {
   const icon = document.querySelector('.second-pill-right-icon');
-  if (icon) icon.style.opacity = '1';
+  if (icon) icon.style.display = 'block';
 }
 
 function updateContainerWidth(container) {
@@ -167,6 +161,7 @@ function updateContainerWidth(container) {
   });
   container.style.width = `${width}px`;
 }
+let homepageCanHidePills = true;
 
 function observeHeaderPassingFirstSection(container) {
   const header = document.querySelector('header');
@@ -184,6 +179,26 @@ function observeHeaderPassingFirstSection(container) {
       } else {
         sectionWrapper.classList.add('header-sticky-gradient');
       }
+    },
+    {
+      root: null,
+      threshold: 0,
+      rootMargin: `-${header.offsetHeight}px 0px 0px 0px`,
+    },
+  );
+
+  observer.observe(firstSectionAfterMain);
+}
+
+function observeHomepageFirstSectionForPills(container) {
+  const header = document.querySelector('header');
+  const firstSectionAfterMain = document.querySelector('main .section');
+
+  if (!header || !firstSectionAfterMain || !container) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      homepageCanHidePills = !entry.isIntersecting;
     },
     {
       root: null,
@@ -263,10 +278,14 @@ function makeNavigationSticky(block) {
     }
 
     if (scrollingDown) {
-      hidePills();
+      if (getTemplateMetaContent() !== 'homepage' || homepageCanHidePills) {
+        hidePills();
+      }
       sectionWrapper.classList.add('nav-header-sticky');
     } else {
-      showPills();
+      if (getTemplateMetaContent() !== 'homepage' || homepageCanHidePills) {
+        showPills();
+      }
       sectionWrapper.classList.add('nav-header-sticky');
     }
   };
@@ -422,12 +441,27 @@ export default async function decorate(block) {
 
   block.innerHTML = '';
   block.appendChild(container);
+  const template = getTemplateMetaContent();
+
+  if (template === 'pagina-prodotto') {
+    const firstPill = container.querySelector(
+      '.navigation-pill-wrapper .navigation-pill',
+    );
+
+    if (firstPill) {
+      firstPill.classList.remove('navigation-pill-secondary');
+      firstPill.classList.add('navigation-pill-primary');
+    }
+  }
+
   observeHeaderPassingFirstSection(container);
+  if (getTemplateMetaContent() === 'homepage') {
+    observeHomepageFirstSectionForPills(container);
+  }
   block.classList.add('header-navigation-pill-and-box');
   buildMobileMenu(container);
   updateContainerWidth(container);
 
-  const template = getTemplateMetaContent();
   if (template === 'homepage') {
     const firstWrapper = container.querySelector('.navigation-pill-wrapper');
     if (firstWrapper) {
@@ -443,8 +477,25 @@ export default async function decorate(block) {
 
         openBoxRef.box = firstBox;
         openBoxRef.pill = firstPill;
-
         addCloseIconToBox(firstBox, firstPill);
+        let firstScrollHandled = false;
+        const startScrollY = window.scrollY || window.pageYOffset;
+
+        const onFirstScrollCloseBox = async () => {
+          if (firstScrollHandled) return;
+
+          const currentScrollY = window.scrollY || window.pageYOffset;
+          const delta = currentScrollY - startScrollY;
+          if (delta < 8) return;
+          firstScrollHandled = true;
+          if (openBoxRef.box) {
+            await closeBox(openBoxRef.pill, openBoxRef.box);
+            openBoxRef.box = null;
+            openBoxRef.pill = null;
+          }
+          window.removeEventListener('scroll', onFirstScrollCloseBox);
+        };
+        window.addEventListener('scroll', onFirstScrollCloseBox, { passive: true });
       }
     }
   }
@@ -454,7 +505,7 @@ export default async function decorate(block) {
     const rightIconEl = secondWrapper.querySelector('.icon:last-child');
     if (rightIconEl) {
       rightIconEl.classList.add('second-pill-right-icon');
-      rightIconEl.style.opacity = '0';
+      rightIconEl.style.display = 'none';
     }
   }
 
@@ -463,20 +514,6 @@ export default async function decorate(block) {
       .filter((el) => el.classList.contains('navigation-pill'))
       .map((pillEl) => loadBlock(pillEl)),
   );
-
-  let scrollTicking = false;
-
-  const onScrollCloseBox = () => {
-    if (scrollTicking) return;
-
-    scrollTicking = true;
-    requestAnimationFrame(async () => {
-      await closeOpenBoxOnScroll(pillToBoxMap);
-      scrollTicking = false;
-    });
-  };
-
-  window.addEventListener('scroll', onScrollCloseBox, { passive: true });
 
   document.addEventListener('click', async (e) => {
     const { box, pill } = openBoxRef;
