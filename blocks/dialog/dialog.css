@@ -16,7 +16,7 @@
             z-index: 3;
 
             &.is-closing {
-                animation: slide-out-bottom 0.5s ease forwards;
+                animation: fade-in 0.5s reverse forwards;
             }
         }
 
@@ -115,7 +115,7 @@
         & .dialog {
             & .dialog-overlay {
                 &.is-closing {
-                    animation: slide-out-right 0.5s ease forwards;
+                    animation: fade-in 0.5s reverse forwards;
                 }
             }
 

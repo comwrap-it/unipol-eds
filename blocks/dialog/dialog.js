@@ -15,11 +15,30 @@ async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
   await Promise.all([
-    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`),
-    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/icon-button/icon-button.css`),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`,
+    ),
+    loadCSS(
+      `${window.hlx.codeBasePath}/blocks/atoms/buttons/icon-button/icon-button.css`,
+    ),
   ]);
   isStylesLoaded = true;
 }
+
+/**
+ * Closes the dialog with animation and removes it from DOM
+ * @param {HTMLElement} block The dialog block
+ * @param {HTMLElement} panel The dialog panel
+ * @param {HTMLElement} overlay The dialog overlay
+ */
+const closeDialog = (block, panel, overlay) => {
+  panel.classList.add('is-closing');
+  overlay.classList.add('is-closing');
+
+  setTimeout(() => {
+    block.remove();
+  }, 600);
+};
 
 export default async function decorate(block) {
   if (!block) return;
@@ -65,8 +84,7 @@ export default async function decorate(block) {
   );
   closeButton.classList.add('dialog-close');
   closeButton.onclick = () => {
-    panel.classList.add('is-closing');
-    overlay.classList.add('is-closing');
+    closeDialog(block, panel, overlay);
   };
   header.appendChild(closeButton);
 
@@ -85,7 +103,7 @@ export default async function decorate(block) {
 
   /* Richtext */
   if (values.dialogTextContentRichtext?.value) {
-    textContent.append(...(values.dialogTextContentRichtext.value));
+    textContent.append(...values.dialogTextContentRichtext.value);
   }
 
   panel.appendChild(textContent);
