@@ -101,7 +101,7 @@ const createHeroMainSection = (
 ) => {
   const mainSection = document.createElement('div');
   mainSection.className = `main-section${isCarousel ? ' carousel' : ''}`;
-  if (showHeroLogo) {
+  if (showHeroLogo && heroLogo) {
     const logo = heroLogo.cloneNode(true);
     logo.className = 'hero-logo';
     mainSection.appendChild(logo);

@@ -337,6 +337,134 @@
     ]
   },
   {
+    "id": "blog-carousel",
+    "fields": [
+      {
+        "component": "container",
+        "name": "button-container",
+        "label": "Configurazione pulsante visibile su schermi piccoli",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "standardButtonLabel",
+            "label": "Button Text",
+            "required": false
+          },
+          {
+            "component": "select",
+            "name": "standardButtonVariant",
+            "label": "Variante",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Accent",
+                "value": "accent"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "standardButtonHref",
+            "label": "Link URL",
+            "description": "URL del bottone"
+          },
+          {
+            "component": "boolean",
+            "label": "Apri in una nuova scheda",
+            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+            "name": "standardButtonOpenInNewTab",
+            "valueType": "boolean",
+            "value": false
+          },
+          {
+            "component": "select",
+            "name": "standardButtonSize",
+            "description": "Modifica la dimensione delle icone del bottone",
+            "label": "Dimensione Icone",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonLeftIcon",
+            "label": "Icona Sinistra",
+            "description": "Select the left icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "standardButtonRightIcon",
+            "label": "Icona Destra",
+            "description": "Select the right icon",
+            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "blog-preview-card",
     "fields": [
       {
@@ -3053,140 +3181,19 @@
         ]
       },
       {
-        "component": "container",
-        "name": "button-container",
-        "label": "Configurazione Pulsante",
-        "collapsible": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "linkButtonLabel",
-            "label": "Testo del link",
-            "required": true,
-            "validation": {
-              "maxLength": 30,
-              "customErrorMsg": "Testo troppo lungo (max 30 caratteri)"
-            }
-          },
-          {
-            "component": "aem-content",
-            "name": "linkButtonHref",
-            "label": "Link URL",
-            "description": "URL di destinazione per questo link",
-            "required": true
-          },
-          {
-            "component": "boolean",
-            "label": "Apri in una nuova scheda",
-            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
-            "name": "linkButtonOpenInNewTab",
-            "valueType": "boolean",
-            "value": false
-          },
-          {
-            "component": "select",
-            "name": "linkButtonLeftIcon",
-            "label": "Icona a sinistra",
-            "description": "Opzionale icona a sinistra.",
-            "options": [
-              {
-                "name": "None",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "un-icon-chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "un-icon-chevron-right"
-              },
-              {
-                "name": "Search Icon",
-                "value": "un-icon-search"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "linkButtonRightIcon",
-            "label": "Icona a destra",
-            "description": "Opzionale icona a destra. Non utilizzare se già presente un'icona a sinistra, salvo eccezioni funzionali.",
-            "options": [
-              {
-                "name": "None",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "un-icon-chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "un-icon-chevron-right"
-              },
-              {
-                "name": "Search Icon",
-                "value": "un-icon-search"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "linkButtonLeftIconSize",
-            "label": "Dimensione icona a sinistra",
-            "value": "medium",
-            "options": [
-              {
-                "name": "Small",
-                "value": "small"
-              },
-              {
-                "name": "Medium",
-                "value": "medium"
-              },
-              {
-                "name": "Large",
-                "value": "large"
-              },
-              {
-                "name": "Extra Large",
-                "value": "extra-large"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "linkButtonRightIconSize",
-            "label": "Dimensione icona a destra",
-            "value": "medium",
-            "options": [
-              {
-                "name": "Small",
-                "value": "small"
-              },
-              {
-                "name": "Medium",
-                "value": "medium"
-              },
-              {
-                "name": "Large",
-                "value": "large"
-              },
-              {
-                "name": "Extra Large",
-                "value": "extra-large"
-              }
-            ]
-          },
-          {
-            "component": "switch",
-            "name": "linkButtonDisabled",
-            "label": "Disabled",
-            "description": "Toggle to disable the link button",
-            "value": false
-          }
-        ]
+        "component": "text",
+        "name": "button-label",
+        "label": "Testo Bottone"
+      },
+      {
+        "component": "aem-content",
+        "name": "reference",
+        "value": "",
+        "label": "AEM Content Picker",
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/unipol"
+        }
       },
       {
         "component": "text",
