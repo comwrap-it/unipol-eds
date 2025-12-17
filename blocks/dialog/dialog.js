@@ -1,6 +1,8 @@
 import createOverlay from '../atoms/overlay/overlay.js';
 import {
   getValuesFromBlock,
+  lockBodyScroll,
+  unlockBodyScroll,
   restoreInstrumentation,
 } from '../../scripts/utils.js';
 import { createIconButton } from '../atoms/buttons/icon-button/icon-button.js';
@@ -25,6 +27,7 @@ export default async function decorate(block) {
   if (!block) return;
 
   await ensureStylesLoaded();
+  lockBodyScroll();
 
   const properties = [
     'dialogTitleLabel',
@@ -67,6 +70,7 @@ export default async function decorate(block) {
   closeButton.onclick = () => {
     panel.classList.add('is-closing');
     overlay.classList.add('is-closing');
+    unlockBodyScroll();
   };
   header.appendChild(closeButton);
 

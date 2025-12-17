@@ -1,3 +1,7 @@
+body.hide-scrollbar {
+  overflow-y: hidden;
+}
+
 .dialog-wrapper {
     position: absolute;
     inset: 0;
