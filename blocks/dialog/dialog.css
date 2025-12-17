@@ -37,21 +37,17 @@
             z-index: 4;
             animation: slide-in-bottom 0.5s ease forwards;
 
+            & button {
+                display: flex;
+                align-self: flex-end;
+            }
+
             & .dialog-header {
                 width: 100%;
                 display: flex;
-                justify-content: flex-end;
-                align-items: center;
-            }
-
-            & .dialog-text-content {
-                display: flex;
                 flex-direction: column;
-                align-items: flex-start;
+                justify-content: flex-end;
                 gap: var(--Dialog-Gap, 1.5rem);
-                overflow-y: auto;
-                flex: 1 0 0;
-                align-self: stretch;
 
                 & .dialog-title {
                     color: var(--Dialog-Title, #001c35);
@@ -62,6 +58,16 @@
                     line-height: 120%; /* 1.8rem */
                     letter-spacing: -0.015rem;
                 }
+            }
+
+            & .dialog-text-content {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: var(--Dialog-Gap, 1.5rem);
+                overflow-y: auto;
+                flex: 1 0 0;
+                align-self: stretch;
 
                 & .dialog-subtexts-wrapper {
                     display: flex;

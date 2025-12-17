@@ -70,18 +70,18 @@ export default async function decorate(block) {
   };
   header.appendChild(closeButton);
 
-  panel.appendChild(header);
-
-  /* Text content */
-  const textContent = document.createElement('div');
-  textContent.className = 'dialog-text-content';
-
   /* Title */
   const titleEl = document.createElement('h2');
   titleEl.className = 'dialog-title';
   titleEl.textContent = values.dialogTitleLabel?.value || '';
   restoreInstrumentation(titleEl, values.dialogTitleLabel?.instrumentation);
-  textContent.appendChild(titleEl);
+  header.appendChild(titleEl);
+
+  panel.appendChild(header);
+
+  /* Text content */
+  const textContent = document.createElement('div');
+  textContent.className = 'dialog-text-content';
 
   /* Richtext */
   if (values.dialogTextContentRichtext?.value) {
