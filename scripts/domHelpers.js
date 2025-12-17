@@ -39,8 +39,9 @@ export const createTextElementFromRow = (
   }
 
   if (originalRow) {
-    const rowTextContent = originalRow.textContent.trim() ?? '';
-    el.textContent = rowTextContent;
+    while (originalRow.firstChild) {
+      el.appendChild(originalRow.firstChild);
+    }
     moveInstrumentation(originalRow, el);
   }
   return el;
