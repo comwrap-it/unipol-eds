@@ -1,3 +1,35 @@
+/* Mobile (default): S (343px) */
+.editorial-carousel-card-container {
+    --editorial-card-width-s: 343px;
+    --editorial-card-border-radius: var(--radius-1, var(--Card-Radius, 1.5rem));
+}
+
+/* Tablet Portrait: S (302px) */
+@media (768px <= width < 1024px) {
+    .editorial-carousel-card-container {
+        --editorial-card-width-s: 302px;
+        --editorial-card-border-radius: var(--radius-1, var(--Card-Radius, 1.5rem));
+    }
+}
+
+/* Desktop Small: S (276px), M (373px) */
+@media (1024px <= width < 1200px) {
+    .editorial-carousel-card-container {
+        --editorial-card-width-s: 276px;
+        --editorial-card-width-m: 373px;
+        --editorial-card-border-radius: var(--Card-Radius, 1.5rem);
+    }
+}
+
+/* Desktop: S (316px), M (426px) */
+@media (width >= 1200px) {
+    .editorial-carousel-card-container {
+        --editorial-card-width-s: 316px;
+        --editorial-card-width-m: 426px;
+        --editorial-card-border-radius: var(--Card-Radius, 1.5rem);
+    }
+}
+
 .editorial-carousel-card-wrapper {
     display: flex;
     flex: 0 0 auto;
@@ -13,8 +45,8 @@
         --_size: var(--editorial-card-size, 0); /* 0=S (default), 1=M */
         --_w-s: var(--editorial-card-width-s);
         --_w-m: var(--editorial-card-width-m, var(--editorial-card-width-s)); /* fallback se M non esiste */
-        width: calc(var(--_w-s) + (var(--_w-m) - var(--_w-s)) * var(--_size));
 
+        width: calc(var(--_w-s) + (var(--_w-m) - var(--_w-s)) * var(--_size));
         border-radius: var(--editorial-card-border-radius, var(--Card-Radius, 1.5rem));
         background: var(--Card-Insurance-Product-Card-Background, #FFF);
         box-shadow: var(--Depth-050-2, 2px) var(--Depth-050-2, 2px) var(--Blur-200-8, 8px) 0 rgb(0 0 0 / 8%);
@@ -104,38 +136,6 @@
     }
 }
 
-/* Mobile (default): S (343px) */
-.editorial-carousel-card-container {
-    --editorial-card-width-s: 343px;
-    --editorial-card-border-radius: var(--radius-1, var(--Card-Radius, 1.5rem));
-}
-
-/* Tablet Portrait: S (302px) */
-@media (768px <= width < 1024px) {
-    .editorial-carousel-card-container {
-        --editorial-card-width-s: 302px;
-        --editorial-card-border-radius: var(--radius-1, var(--Card-Radius, 1.5rem));
-    }
-}
-
-/* Desktop Small: S (276px), M (373px) */
-@media (1024px <= width < 1200px) {
-    .editorial-carousel-card-container {
-        --editorial-card-width-s: 276px;
-        --editorial-card-width-m: 373px;
-        --editorial-card-border-radius: var(--Card-Radius, 1.5rem);
-    }
-}
-
-/* Desktop: S (316px), M (426px) */
-@media (width >= 1200px) {
-    .editorial-carousel-card-container {
-        --editorial-card-width-s: 316px;
-        --editorial-card-width-m: 426px;
-        --editorial-card-border-radius: var(--Card-Radius, 1.5rem);
-    }
-}
-
 /* Tablet Portrait */
 @media (768px <= width < 1200px) {
     .editorial-carousel-card-wrapper {
@@ -153,7 +153,6 @@
                 padding: var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Horizontal-Padding, 1.5rem);
 
                 & .editorial-carousel-card-text {
-
                     & .title {
                         font-size: var(--Size-20, 1.25rem);
                         font-weight: 600;
