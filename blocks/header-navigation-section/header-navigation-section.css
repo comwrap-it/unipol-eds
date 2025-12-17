@@ -21,7 +21,7 @@
 .header-box-text-container {
     position: absolute;
     width: 50%;
-    top: 90%;
+    top: 110%;
     overflow: hidden;
     opacity: 0;
     transform: translateY(-10px);
@@ -46,10 +46,15 @@
     transform: translateY(0);
 }
 
+.nav-header-sticky .header-box-open {
+    top: 90%;
+}
+
 .navigation-pill-container .navigation-pill-wrapper .header-nav-pill-active,
 .navigation-pill-container .navigation-pill-wrapper .header-nav-pill-active:hover {
     background-color: var(--Navigation-Pill-Active-Background, #f9f9f7);
     color: var(--Navigation-Pill-Active-Text);
+    outline: var(--Stroke-200-2) solid var(--Border-Default-Focused);
 }
 
 .nav-header-sticky {
@@ -79,7 +84,7 @@
   flex-shrink: 0;
 }
 
-.header-navigation-section  .navigation-pill:focus{
+.header-navigation-section .navigation-pill:focus{
   outline: none;
 }
 
@@ -103,6 +108,10 @@
 }
 
 @media (width <= 1200px) {
+    .header-navigation-section-wrapper {
+        width:unset;
+    }
+
     .navigation-pill-container {
         position: fixed;
         width: max-content;
