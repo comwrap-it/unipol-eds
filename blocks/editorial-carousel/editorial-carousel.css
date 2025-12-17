@@ -57,6 +57,12 @@
                 }
             }
         }
+
+        &.no-scroll-indicator {
+            .editorial-carousel {
+                justify-content: center;
+            }
+        }
     }
 }
 
