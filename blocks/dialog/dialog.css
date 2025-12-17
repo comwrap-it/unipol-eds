@@ -13,6 +13,7 @@
             border-radius: var(--Overlay-Radius, 0);
             background: var(--Overlay-Default-Background, rgb(0 0 0 / 40%));
             backdrop-filter: blur(calc(var(--Blur-400---24, 24px) / 2));
+            z-index: 3;
 
             &.is-closing {
                 animation: slide-out-bottom 0.5s ease forwards;
@@ -33,7 +34,7 @@
                 var(--Dialog-Horizontal-Padding, 1rem);
             border-radius: var(--Dialog-Radius, 0);
             background: var(--Dialog-Background, #f9f9f7);
-            z-index: 2;
+            z-index: 4;
             animation: slide-in-bottom 0.5s ease forwards;
 
             & .dialog-header {
