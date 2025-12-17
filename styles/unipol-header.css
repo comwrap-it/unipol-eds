@@ -23,7 +23,10 @@ main .section.header-utilities-section-container {
 
 .adobe-ue-edit .section.header-logo-container,
 .adobe-ue-edit .section.header-navigation-section-container,
-.adobe-ue-edit .section.header-utilities-section-container {
+.adobe-ue-edit .section.header-utilities-section-container ,
+.adobe-ue-preview .section.header-logo-container,
+.adobe-ue-preview .section.header-navigation-section-container,
+.adobe-ue-preview .section.header-utilities-section-container {
     position: relative;
     margin-top: unset;
 }

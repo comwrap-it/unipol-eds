@@ -86,12 +86,20 @@ async function closeBox(pill, box) {
   pill?.setAttribute('aria-expanded', 'false');
 }
 
-async function closeOpenBoxOnScroll(openBoxRef) {
-  if (!openBoxRef?.box || !openBoxRef?.pill) return;
+function getCurrentlyOpenBox(pillToBoxMap) {
+  const entry = Array.from(pillToBoxMap.entries()).find(
+    ([pill, box]) => box.style.display !== 'none'
+      && pill.getAttribute('aria-expanded') === 'true',
+  );
 
-  await closeBox(openBoxRef.pill, openBoxRef.box);
-  openBoxRef.box = null;
-  openBoxRef.pill = null;
+  return entry ? { pill: entry[0], box: entry[1] } : null;
+}
+
+async function closeOpenBoxOnScroll(pillToBoxMap) {
+  const open = getCurrentlyOpenBox(pillToBoxMap);
+  if (!open) return;
+
+  await closeBox(open.pill, open.box);
 }
 
 function addCloseIconToBox(box, pill) {
@@ -419,7 +427,7 @@ export default async function decorate(block) {
 
     scrollTicking = true;
     requestAnimationFrame(async () => {
-      await closeOpenBoxOnScroll(openBoxRef);
+      await closeOpenBoxOnScroll(pillToBoxMap);
       scrollTicking = false;
     });
   };
