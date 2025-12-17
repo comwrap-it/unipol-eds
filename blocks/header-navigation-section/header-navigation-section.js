@@ -139,17 +139,17 @@ async function closeAllBoxesExcept(map, currentPill, currentBox) {
 
 function showSecondRightIcon() {
   const icon = document.querySelector('.second-pill-right-icon');
-  if (icon) icon.style.opacity = '1';
+  if (icon) icon.style.display = 'block';
 }
 
 function hideSecondRightIcon() {
   const icon = document.querySelector('.second-pill-right-icon');
-  if (icon) icon.style.opacity = '0';
+  if (icon) icon.style.display = 'none';
 }
 
 function showMobileSecondRightIcon() {
   const icon = document.querySelector('.second-pill-right-icon');
-  if (icon) icon.style.opacity = '1';
+  if (icon) icon.style.display = 'block';
 }
 
 function updateContainerWidth(container) {
@@ -167,6 +167,7 @@ function updateContainerWidth(container) {
   });
   container.style.width = `${width}px`;
 }
+let homepageCanHidePills = true;
 
 function observeHeaderPassingFirstSection(container) {
   const header = document.querySelector('header');
@@ -184,6 +185,26 @@ function observeHeaderPassingFirstSection(container) {
       } else {
         sectionWrapper.classList.add('header-sticky-gradient');
       }
+    },
+    {
+      root: null,
+      threshold: 0,
+      rootMargin: `-${header.offsetHeight}px 0px 0px 0px`,
+    },
+  );
+
+  observer.observe(firstSectionAfterMain);
+}
+
+function observeHomepageFirstSectionForPills(container) {
+  const header = document.querySelector('header');
+  const firstSectionAfterMain = document.querySelector('main .section');
+
+  if (!header || !firstSectionAfterMain || !container) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      homepageCanHidePills = !entry.isIntersecting;
     },
     {
       root: null,
@@ -263,10 +284,14 @@ function makeNavigationSticky(block) {
     }
 
     if (scrollingDown) {
-      hidePills();
+      if (getTemplateMetaContent() !== 'homepage' || homepageCanHidePills) {
+        hidePills();
+      }
       sectionWrapper.classList.add('nav-header-sticky');
     } else {
-      showPills();
+      if (getTemplateMetaContent() !== 'homepage' || homepageCanHidePills) {
+        showPills();
+      }
       sectionWrapper.classList.add('nav-header-sticky');
     }
   };
@@ -422,12 +447,27 @@ export default async function decorate(block) {
 
   block.innerHTML = '';
   block.appendChild(container);
+  const template = getTemplateMetaContent();
+
+  if (template === 'pagina-prodotto') {
+    const firstPill = container.querySelector(
+      '.navigation-pill-wrapper .navigation-pill',
+    );
+
+    if (firstPill) {
+      firstPill.classList.remove('navigation-pill-secondary');
+      firstPill.classList.add('navigation-pill-primary');
+    }
+  }
+
   observeHeaderPassingFirstSection(container);
+  if (getTemplateMetaContent() === 'homepage') {
+    observeHomepageFirstSectionForPills(container);
+  }
   block.classList.add('header-navigation-pill-and-box');
   buildMobileMenu(container);
   updateContainerWidth(container);
 
-  const template = getTemplateMetaContent();
   if (template === 'homepage') {
     const firstWrapper = container.querySelector('.navigation-pill-wrapper');
     if (firstWrapper) {
@@ -454,7 +494,7 @@ export default async function decorate(block) {
     const rightIconEl = secondWrapper.querySelector('.icon:last-child');
     if (rightIconEl) {
       rightIconEl.classList.add('second-pill-right-icon');
-      rightIconEl.style.opacity = '0';
+      rightIconEl.style.display = 'none';
     }
   }
 
