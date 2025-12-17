@@ -170,7 +170,7 @@ export const extractWarrantyCardValuesFromRows = (rows) => {
   const tagConfig = {};
   if (rows[4]?.textContent?.trim()) {
     linkButtonConfig.label = rows[4]?.textContent?.trim() || '';
-    linkButtonConfig.href = rows[5]?.textContent?.trim() || '';
+    linkButtonConfig.href = rows[5]?.querySelector('a')?.getAttribute('href') || '';
   }
   if (rows[6]?.textContent?.trim()) {
     const isDefaultCategory = category.startsWith('default-');
