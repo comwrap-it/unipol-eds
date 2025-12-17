@@ -65,6 +65,10 @@ export default async function decorate(block) {
     BUTTON_ICON_SIZES.MEDIUM,
   );
   closeButton.classList.add('dialog-close');
+  closeButton.onclick = () => {
+    panel.classList.add('is-closing');
+    overlay.classList.add('is-closing');
+  };
   header.appendChild(closeButton);
 
   panel.appendChild(header);
@@ -116,7 +120,6 @@ export default async function decorate(block) {
   footer.className = 'dialog-footer';
 
   /* Action button */
-  console.log('🚀 ~ decorate ~ values:', values);
   if (values.standardButtonLabel?.value) {
     const button = createButton(
       values.standardButtonLabel?.value,

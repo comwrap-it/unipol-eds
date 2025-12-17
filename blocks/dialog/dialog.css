@@ -13,6 +13,10 @@
             border-radius: var(--Overlay-Radius, 0);
             background: var(--Overlay-Default-Background, rgb(0 0 0 / 40%));
             backdrop-filter: blur(calc(var(--Blur-400---24, 24px) / 2));
+
+            &.is-closing {
+                animation: slide-out-bottom 0.5s ease forwards;
+            }
         }
 
         & .dialog-panel {
@@ -90,6 +94,10 @@
                     width: 100%;
                 }
             }
+
+            &.is-closing {
+                animation: slide-out-bottom 0.5s ease forwards;
+            }
         }
     }
 }
@@ -98,9 +106,19 @@
 @media (width >= 768px) {
     .dialog-wrapper {
         & .dialog {
+            & .dialog-overlay {
+                &.is-closing {
+                    animation: slide-out-right 0.5s ease forwards;
+                }
+            }
+
             & .dialog-panel {
                 animation: slide-in-right 0.5s ease forwards;
                 width: 27.6875rem;
+
+                &.is-closing {
+                    animation: slide-out-right 0.5s ease forwards;
+                }
             }
         }
     }
@@ -108,7 +126,7 @@
 
 /* Desktop */
 @media (width >= 1152px) {
-  .dialog-wrapper {
+    .dialog-wrapper {
         & .dialog {
             & .dialog-panel {
                 width: 30.9375rem;
