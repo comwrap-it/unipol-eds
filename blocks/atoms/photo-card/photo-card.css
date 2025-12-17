@@ -1,0 +1,21 @@
+.photo-card {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.photo-card-media {
+    width: 100%;
+}
+
+.photo-card-media picture,
+.photo-card-media img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.photo-card-title {
+    font: var(--Text-Styles-Heading);
+}
+

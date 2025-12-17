@@ -1,0 +1,47 @@
+{
+  "definitions": [
+    {
+      "title": "Photo Card",
+      "id": "photo-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Photo Card",
+              "model": "photo-card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "photo-card",
+      "fields": [
+        {
+          "component": "reference",
+          "name": "image",
+          "label": "Immagine",
+          "multi": false,
+          "required": true
+        },
+        {
+          "component": "text",
+          "name": "imageAlt",
+          "label": "Testo alternativo",
+          "required": true
+        },
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Titolo",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
+

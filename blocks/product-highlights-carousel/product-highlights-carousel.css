@@ -1,0 +1,14 @@
+.product-highlights-carousel-track {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-block: 0.25rem;
+}
+
+.product-highlights-carousel-track > * {
+    flex: 0 0 auto;
+    width: min(320px, 80vw);
+    scroll-snap-align: start;
+}
+
