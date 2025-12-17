@@ -120,7 +120,6 @@ export default function decorate(block, isFirstBlock = false) {
       textWrapper.appendChild(descriptionEl);
     }
 
-
     contentWrapper.appendChild(textWrapper);
 
     // Button
