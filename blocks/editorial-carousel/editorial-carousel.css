@@ -17,15 +17,6 @@
         margin-inline: auto;
         gap: var(--Carousel-Insurance-Product-Gap, 1rem);
     }
-
-    & .editorial-carousel-centered {
-        display: flex;
-        flex-direction: column;
-        width: 21.4375rem;
-        margin-inline: auto;
-        justify-content: center;
-        gap: var(--Carousel-Insurance-Product-Gap, 1rem);
-    }
 }
 
 @media (width < 400px) {
@@ -64,6 +55,12 @@
                 &:last-child {
                     margin-inline-end: 0;
                 }
+            }
+        }
+
+        &.no-scroll-indicator {
+            .editorial-carousel {
+                justify-content: center;
             }
         }
     }

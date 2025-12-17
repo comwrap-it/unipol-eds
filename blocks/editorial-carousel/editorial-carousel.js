@@ -78,6 +78,11 @@ export function createEditorialCarousel(
   slideElements.forEach((slide) => track.appendChild(slide));
   carousel.appendChild(track);
 
+  // When we don't render navigation (few cards on desktop), center the slides group.
+  if (mq.matches && slideElements.length <= 4) {
+    carousel.classList.add('no-scroll-indicator');
+  }
+
   if (!mq.matches && slideElements.length > 4) {
     const button = createButton(
       showMoreButtonLabel,
@@ -285,8 +290,9 @@ export default async function decorate(block) {
     showMoreButton.addEventListener('click', handleShowMoreButton);
   }
 
-  if (Object.keys(scrollIndicatorProps).length === 0) {
-    carousel.className = 'editorial-carousel-container-centered swiper';
+  // If no scroll-indicator is present on desktop, center the (non-scrollable) slides group.
+  if (mq.matches && !scrollIndicatorProps.scrollIndicator) {
+    carousel.classList.add('no-scroll-indicator');
   }
 
   carousel.appendChild(track);
