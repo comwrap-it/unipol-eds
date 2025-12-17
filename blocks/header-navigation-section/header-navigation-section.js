@@ -162,10 +162,37 @@ function updateContainerWidth(container) {
   let width = 0;
   wrappers.forEach((w) => {
     if (!w.classList.contains('nav-pill-hidden')) {
-      width += w.offsetWidth + 3.5;
+      width += w.offsetWidth + 3.8;
     }
   });
   container.style.width = `${width}px`;
+}
+
+function observeHeaderPassingFirstSection(container) {
+  const header = document.querySelector('header');
+  const firstSectionAfterMain = document.querySelector('main .section');
+
+  if (!header || !firstSectionAfterMain || !container) return;
+
+  const sectionWrapper = container.closest('.header-navigation-section-wrapper');
+  if (!sectionWrapper) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        sectionWrapper.classList.remove('header-sticky-gradient');
+      } else {
+        sectionWrapper.classList.add('header-sticky-gradient');
+      }
+    },
+    {
+      root: null,
+      threshold: 0,
+      rootMargin: `-${header.offsetHeight}px 0px 0px 0px`,
+    },
+  );
+
+  observer.observe(firstSectionAfterMain);
 }
 
 /* ------------------------------------------------------------------
@@ -176,15 +203,15 @@ function makeNavigationSticky(block) {
 
   const container = block.querySelector('.navigation-pill-container');
   if (!container) return () => {};
-  const header = document.querySelector('header');
-  if (!header) return () => {};
 
-  const headerBottom = header.offsetTop + header.offsetHeight;
-  let isSticky = false;
-  let animating = false;
+  const sectionWrapper = block.closest('.header-navigation-section-wrapper');
+  if (!sectionWrapper) return () => {};
 
   const pillWrappers = Array.from(container.children)
     .filter((el) => el.classList.contains('navigation-pill-wrapper'));
+
+  let lastScrollY = window.scrollY || window.pageYOffset;
+  let animating = false;
 
   const hidePills = () => {
     if (animating) return;
@@ -195,7 +222,10 @@ function makeNavigationSticky(block) {
         wrapper.classList.add('nav-pill-hidden');
         updateContainerWidth(container);
         updateHiddenPillsAccessibility(container);
-        if (i === wrappersToHide.length - 1) { animating = false; showSecondRightIcon(); }
+        if (i === wrappersToHide.length - 1) {
+          animating = false;
+          showSecondRightIcon();
+        }
       }, i * 20);
     });
   };
@@ -209,22 +239,35 @@ function makeNavigationSticky(block) {
         wrapper.classList.remove('nav-pill-hidden');
         updateContainerWidth(container);
         updateHiddenPillsAccessibility(container);
-        if (i === wrappersToShow.length - 1) { animating = false; hideSecondRightIcon(); }
+        if (i === wrappersToShow.length - 1) {
+          animating = false;
+          hideSecondRightIcon();
+        }
       }, i * 20);
     });
   };
 
+  const offsetTop = sectionWrapper.offsetTop + 20;
+
   const onScroll = () => {
     if (window.innerWidth <= 1200) return;
+
     const scrollY = window.scrollY || window.pageYOffset;
-    if (scrollY > headerBottom && !isSticky) {
-      isSticky = true;
-      container.classList.add('nav-header-sticky');
-      hidePills();
-    } else if (scrollY <= headerBottom && isSticky) {
-      isSticky = false;
-      container.classList.remove('nav-header-sticky');
+    const scrollingDown = scrollY > lastScrollY;
+    lastScrollY = scrollY;
+
+    if (scrollY <= offsetTop) {
       showPills();
+      sectionWrapper.classList.remove('nav-header-sticky');
+      return;
+    }
+
+    if (scrollingDown) {
+      hidePills();
+      sectionWrapper.classList.add('nav-header-sticky');
+    } else {
+      showPills();
+      sectionWrapper.classList.add('nav-header-sticky');
     }
   };
 
@@ -232,7 +275,7 @@ function makeNavigationSticky(block) {
 
   return () => {
     window.removeEventListener('scroll', onScroll);
-    container.classList.remove('nav-header-sticky');
+    sectionWrapper.classList.remove('nav-header-sticky');
     pillWrappers.forEach((w) => w.classList.remove('nav-pill-hidden'));
     updateHiddenPillsAccessibility(container);
     hideSecondRightIcon();
@@ -379,6 +422,7 @@ export default async function decorate(block) {
 
   block.innerHTML = '';
   block.appendChild(container);
+  observeHeaderPassingFirstSection(container);
   block.classList.add('header-navigation-pill-and-box');
   buildMobileMenu(container);
   updateContainerWidth(container);
