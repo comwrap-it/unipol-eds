@@ -21,26 +21,38 @@
       "id": "insurance-product-card",
       "fields": [
         {
-          "component": "text",
+          "component": "container",
           "name": "title",
           "label": "Titolo",
           "required": true,
-          "validation": {
-            "minLength": 1,
-            "maxLength": 25,
-            "customErrorMsg": "Numero di caratteri non valido"
-          }
+          "fields": [
+            {
+              "component": "text",
+              "name": "value",
+              "label": "Testo",
+              "validation": {
+                "maxLength": 25,
+                "customErrorMsg": "Numero di caratteri non valido"
+              }
+            }
+          ]
         },
         {
-          "component": "text",
+          "component": "container",
           "name": "description",
           "label": "Descrizione",
           "required": true,
-          "validation": {
-            "minLength": 1,
-            "maxLength": 130,
-            "customErrorMsg": "Numero di caratteri non valido"
-          }
+          "fields": [
+            {
+              "component": "text",
+              "name": "value",
+              "label": "Testo",
+              "validation": {
+                "maxLength": 130,
+                "customErrorMsg": "Numero di caratteri non valido"
+              }
+            }
+          ]
         },
         {
           "component": "container",
@@ -54,15 +66,21 @@
           ]
         },
         {
-          "component": "text",
+          "component": "container",
           "name": "note",
           "label": "Note",
           "required": true,
-          "validation": {
-            "minLength": 1,
-            "maxLength": 25,
-            "customErrorMsg": "Numero di caratteri non valido"
-          }
+          "fields": [
+            {
+              "component": "text",
+              "name": "value",
+              "label": "Testo",
+              "validation": {
+                "maxLength": 25,
+                "customErrorMsg": "Numero di caratteri non valido"
+              }
+            }
+          ]
         },
         {
           "component": "container",
