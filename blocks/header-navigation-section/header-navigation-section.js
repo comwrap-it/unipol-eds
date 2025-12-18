@@ -10,6 +10,8 @@ import {
 
 let isStylesLoaded = false;
 const openBoxRef = { box: null, pill: null };
+let blockScrollHide = false;
+
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
@@ -64,6 +66,10 @@ function closeBoxWithAnimation(pill, box) {
   const animator = box.querySelector('.header-box-text-content');
   if (!animator) return;
 
+  const logoContainer = document.querySelector('.section.header-logo-container.header-navigation-section-container');
+  const logoWrapper = document.querySelector('.header-logo-wrapper');
+  const utilitiesWrapper = document.querySelector('.header-utilities-section-wrapper');
+
   const height = animator.scrollHeight;
   animator.style.height = `${height}px`;
   animator.style.opacity = '1';
@@ -83,62 +89,21 @@ function closeBoxWithAnimation(pill, box) {
     pill?.classList.remove('header-nav-pill-active');
     pill?.setAttribute('aria-expanded', 'false');
 
+    if (logoContainer && logoWrapper && utilitiesWrapper) {
+      logoContainer.style.position = '';
+      logoContainer.style.top = '';
+      logoContainer.style.zIndex = '';
+      logoContainer.style.paddingTop = '';
+
+      logoWrapper.style.zIndex = '';
+      utilitiesWrapper.style.zIndex = '';
+    }
+    blockScrollHide = false;
+
     animator.removeEventListener('transitionend', onEnd);
   };
 
   animator.addEventListener('transitionend', onEnd);
-}
-
-function openBoxWithAnimation(pill, box, { defaultOpen = false } = {}) {
-  if (!box) return;
-
-  const animator = box.querySelector('.header-box-text-content');
-  if (!animator) return;
-
-  // Chiudi tutti gli altri box aperti e aggiorna i rispettivi pulsanti
-  document.querySelectorAll('.header-box-text-container.is-open').forEach((otherBox) => {
-    if (otherBox !== box) {
-      const otherAnimator = otherBox.querySelector('.header-box-text-content');
-      if (!otherAnimator) return;
-
-      otherAnimator.style.height = '';
-      otherAnimator.style.opacity = '';
-      otherBox.classList.remove('is-open');
-
-      // Aggiorna anche lo stato del pulsante associato
-      const otherPill = document.querySelector(`[aria-controls="${otherBox.id}"]`);
-      if (otherPill) {
-        otherPill.classList.remove('header-nav-pill-active');
-        otherPill.setAttribute('aria-expanded', 'false');
-      }
-    }
-  });
-
-  // Apri il box selezionato
-  box.classList.add('is-open');
-  pill.classList.add('header-nav-pill-active');
-  pill.setAttribute('aria-expanded', 'true');
-
-  if (!defaultOpen) {
-    animator.style.height = '0px';
-    animator.style.opacity = '0';
-
-    requestAnimationFrame(() => {
-      const height = animator.scrollHeight;
-      animator.style.height = `${height}px`;
-      animator.style.opacity = '1';
-    });
-
-    const onEnd = (e) => {
-      if (e.propertyName !== 'height') return;
-      animator.style.height = '';
-      animator.removeEventListener('transitionend', onEnd);
-    };
-    animator.addEventListener('transitionend', onEnd);
-  } else {
-    animator.style.height = '';
-    animator.style.opacity = '1';
-  }
 }
 
 async function closeBox(pill, box) {
@@ -201,7 +166,108 @@ function updateContainerWidth(container) {
   });
   container.style.width = `${width}px`;
 }
+
 let homepageCanHidePills = true;
+
+function applyStickyHeaderRulesIfBoxOpen() {
+  const sectionWrapper = document.querySelector('.header-navigation-section-wrapper');
+  const logoContainer = document.querySelector('.section.header-logo-container.header-navigation-section-container');
+  const logoWrapper = document.querySelector('.header-logo-wrapper');
+  const utilitiesWrapper = document.querySelector('.header-utilities-section-wrapper');
+  const container = document.querySelector('.navigation-pill-container');
+
+  const openBox = document.querySelector('.header-box-text-container.is-open');
+
+  if (!sectionWrapper || !openBox) return;
+
+  if (sectionWrapper.classList.contains('nav-header-sticky') && logoContainer && logoWrapper && utilitiesWrapper) {
+    logoContainer.style.position = 'fixed';
+    logoContainer.style.top = '0';
+    logoContainer.style.zIndex = '222';
+    logoContainer.style.paddingTop = '20px';
+
+    logoWrapper.style.zIndex = '3';
+    utilitiesWrapper.style.zIndex = '3';
+    if (container) {
+      const hiddenWrappers = container.querySelectorAll('.nav-pill-hidden');
+      hiddenWrappers.forEach((wrapper) => wrapper.classList.remove('nav-pill-hidden'));
+      updateHiddenPillsAccessibility(container);
+      updateContainerWidth(container);
+    }
+  }
+}
+
+function openBoxWithAnimation(pill, box, { defaultOpen = false } = {}) {
+  if (!box) return;
+
+  const animator = box.querySelector('.header-box-text-content');
+  if (!animator) return;
+
+  const sectionWrapper = document.querySelector('.header-navigation-section-wrapper');
+  const logoContainer = document.querySelector('.section.header-logo-container.header-navigation-section-container');
+  const logoWrapper = document.querySelector('.header-logo-wrapper');
+  const utilitiesWrapper = document.querySelector('.header-utilities-section-wrapper');
+  const container = box.parentElement;
+
+  document.querySelectorAll('.header-box-text-container.is-open').forEach((otherBox) => {
+    if (otherBox !== box) {
+      const otherAnimator = otherBox.querySelector('.header-box-text-content');
+      if (!otherAnimator) return;
+
+      otherAnimator.style.height = '';
+      otherAnimator.style.opacity = '';
+      otherBox.classList.remove('is-open');
+
+      const otherPill = document.querySelector(`[aria-controls="${otherBox.id}"]`);
+      if (otherPill) {
+        otherPill.classList.remove('header-nav-pill-active');
+        otherPill.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+
+  box.classList.add('is-open');
+  pill.classList.add('header-nav-pill-active');
+  pill.setAttribute('aria-expanded', 'true');
+  if (sectionWrapper?.classList.contains('nav-header-sticky') && logoContainer && logoWrapper && utilitiesWrapper) {
+    logoContainer.style.position = 'fixed';
+    logoContainer.style.top = '0';
+    logoContainer.style.zIndex = '3';
+    logoContainer.style.paddingTop = '24px';
+
+    logoWrapper.style.zIndex = '3';
+    utilitiesWrapper.style.zIndex = '3';
+
+    if (container) {
+      const hiddenWrappers = container.querySelectorAll('.nav-pill-hidden');
+      hiddenWrappers.forEach((wrapper) => wrapper.classList.remove('nav-pill-hidden'));
+      updateHiddenPillsAccessibility(container);
+      updateContainerWidth(container);
+    }
+    blockScrollHide = true;
+  }
+
+  if (!defaultOpen) {
+    animator.style.height = '0px';
+    animator.style.opacity = '0';
+
+    requestAnimationFrame(() => {
+      const height = animator.scrollHeight;
+      animator.style.height = `${height}px`;
+      animator.style.opacity = '1';
+    });
+
+    const onEnd = (e) => {
+      if (e.propertyName !== 'height') return;
+      animator.style.height = '';
+      animator.removeEventListener('transitionend', onEnd);
+    };
+    animator.addEventListener('transitionend', onEnd);
+  } else {
+    animator.style.height = '';
+    animator.style.opacity = '1';
+  }
+}
 
 function observeHeaderPassingFirstSection(container) {
   const header = document.querySelector('header');
@@ -269,7 +335,7 @@ function makeNavigationSticky(block) {
   let animating = false;
 
   const hidePills = () => {
-    if (animating) return;
+    if (animating || blockScrollHide) return;
     animating = true;
     const wrappersToHide = pillWrappers.slice(2).reverse();
     wrappersToHide.forEach((wrapper, i) => {
@@ -310,6 +376,14 @@ function makeNavigationSticky(block) {
     const scrollY = window.scrollY || window.pageYOffset;
     const scrollingDown = scrollY > lastScrollY;
     lastScrollY = scrollY;
+
+    const openBox = document.querySelector('.header-box-text-container.is-open');
+
+    if (openBox) {
+      sectionWrapper.classList.add('nav-header-sticky');
+      applyStickyHeaderRulesIfBoxOpen();
+      return;
+    }
 
     if (scrollY <= offsetTop) {
       showPills();
