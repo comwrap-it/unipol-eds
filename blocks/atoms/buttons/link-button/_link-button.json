@@ -95,32 +95,8 @@
         },
         {
           "component": "select",
-          "name": "linkButtonLeftIconSize",
-          "label": "Dimensione icona a sinistra",
-          "value": "medium",
-          "options": [
-            {
-              "name": "Small",
-              "value": "small"
-            },
-            {
-              "name": "Medium",
-              "value": "medium"
-            },
-            {
-              "name": "Large",
-              "value": "large"
-            },
-            {
-              "name": "Extra Large",
-              "value": "extra-large"
-            }
-          ]
-        },
-        {
-          "component": "select",
-          "name": "linkButtonRightIconSize",
-          "label": "Dimensione icona a destra",
+          "name": "linkButtonIconSize",
+          "label": "Dimensione Icone",
           "value": "medium",
           "options": [
             {

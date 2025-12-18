@@ -90,7 +90,6 @@ const createLinkButtonFromStandardButtonRows = (rows) => {
     leftIcon,
     rightIcon,
     iconSize,
-    iconSize,
     disabled,
   );
 
@@ -216,7 +215,6 @@ export function createEditorialCarouselCard(
       Boolean(buttonConfig.openInNewTab),
       buttonConfig.leftIcon || '',
       buttonConfig.rightIcon || '',
-      buttonConfig.iconSize || DEFAULT_ICON_SIZE,
       buttonConfig.iconSize || DEFAULT_ICON_SIZE,
       Boolean(buttonConfig.disabled),
     );

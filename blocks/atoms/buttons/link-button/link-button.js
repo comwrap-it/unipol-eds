@@ -15,8 +15,7 @@ import { BUTTON_ICON_SIZES } from '../standard-button/standard-button.js';
  * @param {boolean} openInNewTab - Open link in new tab (optional)
  * @param {boolean} leftIcon - left icon class
  * @param {boolean} rightIcon - right icon class
- * @param {string} leftIconSize - size of left icon
- * @param {string} rightIconSize - size of right icon
+ * @param {string} iconSize - size of the icons
  * @param {boolean} disabled - Disabled state (optional)
  * @returns {HTMLElement} link element
  */
@@ -26,8 +25,7 @@ export function createLinkButton(
   openInNewTab,
   leftIcon,
   rightIcon,
-  leftIconSize = BUTTON_ICON_SIZES.SMALL,
-  rightIconSize = BUTTON_ICON_SIZES.SMALL,
+  iconSize = BUTTON_ICON_SIZES.MEDIUM,
   disabled = false,
 ) {
   const link = document.createElement('a');
@@ -52,13 +50,13 @@ export function createLinkButton(
 
   if (leftIcon) {
     const span = document.createElement('span');
-    span.className = `icon icon-${leftIconSize || BUTTON_ICON_SIZES.MEDIUM} ${leftIcon}`;
+    span.className = `icon icon-${iconSize || BUTTON_ICON_SIZES.MEDIUM} ${leftIcon}`;
     link.prepend(span);
   }
 
   if (rightIcon) {
     const span = document.createElement('span');
-    span.className = `icon icon-${rightIconSize || BUTTON_ICON_SIZES.MEDIUM} ${rightIcon}`;
+    span.className = `icon icon-${iconSize || BUTTON_ICON_SIZES.MEDIUM} ${rightIcon}`;
     link.appendChild(span);
   }
 
@@ -92,9 +90,8 @@ export function createLinkButtonFromRows(rows) {
   const openInNewTab = rows[2]?.textContent?.trim() === 'true';
   const leftIcon = rows[3]?.textContent?.trim() || '';
   const rightIcon = rows[4]?.textContent?.trim() || '';
-  const leftIconSize = (rows[5]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM).toLowerCase();
-  const rightIconSize = (rows[6]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM).toLowerCase();
-  const disabled = rows[7]?.textContent?.trim() === 'true';
+  const iconSize = (rows[5]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM).toLowerCase();
+  const disabled = rows[6]?.textContent?.trim() === 'true';
 
   return createLinkButton(
     text,
@@ -102,8 +99,7 @@ export function createLinkButtonFromRows(rows) {
     openInNewTab,
     leftIcon,
     rightIcon,
-    leftIconSize,
-    rightIconSize,
+    iconSize,
     disabled,
   );
 }
@@ -129,9 +125,8 @@ export default function decorateLinkButton(block) {
   const openInNewTab = rows[2]?.textContent?.trim() === 'true';
   const leftIcon = rows[3]?.textContent?.trim() || '';
   const rightIcon = rows[4]?.textContent?.trim() || '';
-  const leftIconSize = (rows[5]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM).toLowerCase();
-  const rightIconSize = (rows[6]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM).toLowerCase();
-  const disabled = rows[7]?.textContent?.trim() === 'true';
+  const iconSize = (rows[5]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM).toLowerCase();
+  const disabled = rows[6]?.textContent?.trim() === 'true';
 
   if (hasInstrumentation) {
     let linkElement = block.querySelector('a');
@@ -142,8 +137,7 @@ export default function decorateLinkButton(block) {
         openInNewTab,
         leftIcon,
         rightIcon,
-        leftIconSize,
-        rightIconSize,
+        iconSize,
         disabled,
       );
       block.textContent = '';
@@ -165,13 +159,13 @@ export default function decorateLinkButton(block) {
       linkElement.querySelectorAll('.link-btn-icon').forEach((icon) => icon.remove());
       if (leftIcon) {
         const span = document.createElement('span');
-        span.className = `icon icon-${leftIconSize || BUTTON_ICON_SIZES.MEDIUM} ${leftIcon}`;
+        span.className = `icon icon-${iconSize || BUTTON_ICON_SIZES.MEDIUM} ${leftIcon}`;
         linkElement.prepend(span);
       }
 
       if (rightIcon) {
         const span = document.createElement('span');
-        span.className = `icon icon-${rightIconSize || BUTTON_ICON_SIZES.MEDIUM} ${rightIcon}`;
+        span.className = `icon icon-${iconSize || BUTTON_ICON_SIZES.MEDIUM} ${rightIcon}`;
         linkElement.appendChild(span);
       }
     }
@@ -182,8 +176,7 @@ export default function decorateLinkButton(block) {
       openInNewTab,
       leftIcon,
       rightIcon,
-      leftIconSize,
-      rightIconSize,
+      iconSize,
       disabled,
     );
     block.textContent = '';
