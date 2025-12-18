@@ -77,12 +77,13 @@ export default {
       });
     }
 
-    const block = createProductHighlightsCarousel({ cards });
-
     const outer = document.createElement('div');
     outer.style.display = 'flex';
     outer.style.justifyContent = 'center';
-    outer.appendChild(block);
+
+    createProductHighlightsCarousel({ cards }).then((block) => {
+      outer.appendChild(block);
+    });
 
     return html`${outer}`;
   },

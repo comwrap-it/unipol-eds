@@ -1,14 +1,22 @@
 let isStylesLoaded = false;
+let stylesLoadingPromise = null;
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
-  const { loadCSS } = await import('../../scripts/aem.js');
-  await Promise.all([
-    loadCSS(
-      `${window.hlx.codeBasePath}/blocks/product-highlights-carousel/product-highlights-carousel.css`,
-      `${window.hlx.codeBasePath}/blocks/photo-card/photo-card.css`,
-    ),
-  ]);
-  isStylesLoaded = true;
+  if (!stylesLoadingPromise) {
+    stylesLoadingPromise = (async () => {
+      const { loadCSS } = await import('../../scripts/aem.js');
+      await Promise.all([
+        loadCSS(
+          `${window.hlx.codeBasePath}/blocks/product-highlights-carousel/product-highlights-carousel.css`,
+        ),
+        loadCSS(
+          `${window.hlx.codeBasePath}/blocks/photo-card/photo-card.css`,
+        ),
+      ]);
+      isStylesLoaded = true;
+    })();
+  }
+  await stylesLoadingPromise;
 }
 
 export async function createProductHighlightsCarousel({
@@ -26,14 +34,19 @@ export async function createProductHighlightsCarousel({
   if (trackElement.parentElement !== carousel) carousel.appendChild(trackElement);
 
   const { default: decoratePhotoCard, createPhotoCard } = await import('../photo-card/photo-card.js');
-  await Promise.all((cards || []).forEach((card) => {
-    const cardElement = card instanceof HTMLElement
-      ? decoratePhotoCard(card)
-      : createPhotoCard(card);
+  const cardElements = await Promise.all((cards || []).map(async (card) => {
+    if (card instanceof HTMLElement) {
+      await decoratePhotoCard(card);
+      return card;
+    }
+    return createPhotoCard(card);
+  }));
+
+  cardElements.forEach((cardElement) => {
     if (cardElement && cardElement.parentElement !== trackElement) {
       trackElement.appendChild(cardElement);
     }
-  }));
+  });
 
   return carousel;
 }
@@ -56,5 +69,5 @@ export default async function decorate(block) {
   await ensureStylesLoaded();
 
   const props = parse(block);
-  createProductHighlightsCarousel({ root: block, ...props });
+  await createProductHighlightsCarousel({ root: block, ...props });
 }
