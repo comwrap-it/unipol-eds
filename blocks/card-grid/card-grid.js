@@ -23,7 +23,7 @@ export default async function decorate(block) {
 
   // Create card grid container
   const cardGrid = document.createElement('div');
-  cardGrid.className = 'card-grid';
+  cardGrid.className = 'card-grid reveal-in-up';
 
   // Process each row as a warranty card
   const cardPromises = rows.map(async (row) => {
