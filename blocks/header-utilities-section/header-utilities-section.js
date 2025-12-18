@@ -28,9 +28,8 @@ function extractNavigationPillValues(row) {
   const variant = rows[2]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_VARIANTS.PRIMARY;
   const href = rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || undefined;
   const leftIcon = rows[4]?.textContent?.trim() || '';
-  const lftIcnSze = rows[5]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
-  const rightIcon = rows[6]?.textContent?.trim() || '';
-  const rhtIcnSze = rows[7]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
+  const rightIcon = rows[5]?.textContent?.trim() || '';
+  const icnSze = rows[6]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
   const instrumentation = extractInstrumentationAttributes(rows[1]);
 
   return {
@@ -39,9 +38,8 @@ function extractNavigationPillValues(row) {
     variant,
     href,
     leftIcon,
-    lftIcnSze,
     rightIcon,
-    rhtIcnSze,
+    icnSze,
     instrumentation,
   };
 }
@@ -53,9 +51,8 @@ function buildNavigationPill(row) {
     cfg.href,
     cfg.variant,
     cfg.leftIcon,
-    cfg.lftIcnSze,
     cfg.rightIcon,
-    cfg.rhtIcnSze,
+    cfg.icnSze,
     cfg.instrumentation,
     cfg.hideLabel,
   );

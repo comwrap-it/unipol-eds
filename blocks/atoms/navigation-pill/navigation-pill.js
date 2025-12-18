@@ -40,9 +40,8 @@ export function extractInstrumentationAttributes(element) {
  * @param {string} [href] - link.
  * @param {string} variant - "primary" or "secondary".
  * @param {string} [leftIcon] - Left Icon className.
- * @param {string} [leftIconSize] - Left Icon size.
  * @param {string} [rightIcon] - Right Icon className.
- * @param {string} [rightIconSize] - Right Icon size.
+ * @param {string} [iconSize] - Icons size.
  * @param {Object} [instrumentation={}] - AEM attributes.
  * @param {boolean} hideLabel - If true, hide label and use aria-label.
  * @returns {HTMLElement}
@@ -52,9 +51,8 @@ export function createNavigationPill(
   href,
   variant,
   leftIcon,
-  leftIconSize,
   rightIcon,
-  rightIconSize,
+  iconSize,
   instrumentation = {},
   hideLabel = false,
 ) {
@@ -63,7 +61,7 @@ export function createNavigationPill(
 
   if (leftIcon) {
     const span = document.createElement('span');
-    span.className = `icon icon-${leftIconSize || NAVIGATION_PILL_ICON_SIZES.MEDIUM} ${leftIcon}`;
+    span.className = `icon icon-${iconSize || NAVIGATION_PILL_ICON_SIZES.MEDIUM} ${leftIcon}`;
     el.appendChild(span);
   }
 
@@ -77,7 +75,7 @@ export function createNavigationPill(
 
   if (rightIcon) {
     const span = document.createElement('span');
-    span.className = `icon icon-${rightIconSize || NAVIGATION_PILL_ICON_SIZES.MEDIUM} ${rightIcon}`;
+    span.className = `icon icon-${iconSize || NAVIGATION_PILL_ICON_SIZES.MEDIUM} ${rightIcon}`;
     el.appendChild(span);
   }
 
@@ -128,10 +126,9 @@ function extractValuesFromRows(rows) {
     || '';
 
   const leftIcon = rows[4]?.textContent?.trim() || '';
-  const leftIconSize = rows[5]?.textContent?.trim() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
+  const rightIcon = rows[5]?.textContent?.trim() || '';
+  const iconSize = rows[6]?.textContent?.trim() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
 
-  const rightIcon = rows[6]?.textContent?.trim() || '';
-  const rightIconSize = rows[7]?.textContent?.trim() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
 
   const instrumentation = extractInstrumentationAttributes(rows[1]);
 
@@ -141,9 +138,8 @@ function extractValuesFromRows(rows) {
     variant,
     href,
     leftIcon,
-    leftIconSize,
     rightIcon,
-    rightIconSize,
+    iconSize,
     instrumentation,
   };
 }
@@ -167,9 +163,8 @@ export default function decorateNavigationPill(block) {
     variant,
     href,
     leftIcon,
-    leftIconSize,
     rightIcon,
-    rightIconSize,
+    iconSize,
     instrumentation,
   } = extractValuesFromRows(rows);
 
@@ -189,9 +184,8 @@ export default function decorateNavigationPill(block) {
         href,
         variant,
         leftIcon,
-        leftIconSize,
         rightIcon,
-        rightIconSize,
+        iconSize,
         instrumentation,
       );
 
@@ -209,9 +203,8 @@ export default function decorateNavigationPill(block) {
           href,
           variant,
           leftIcon,
-          leftIconSize,
           rightIcon,
-          rightIconSize,
+          iconSize,
           instrumentation,
         ),
       );
@@ -224,9 +217,8 @@ export default function decorateNavigationPill(block) {
       href,
       variant,
       leftIcon,
-      leftIconSize,
       rightIcon,
-      rightIconSize,
+      iconSize,
       {},
     );
     block.appendChild(pillElement);
