@@ -9,6 +9,7 @@ import {
 } from '../atoms/navigation-pill/navigation-pill.js';
 
 let isStylesLoaded = false;
+const openBoxRef = { box: null, pill: null };
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
@@ -57,35 +58,87 @@ function updateHiddenPillsAccessibility(container) {
   });
 }
 
-function closeBoxWithAnimation(box) {
-  return new Promise((resolve) => {
-    if (!box) {
-      resolve();
-      return;
-    }
-    box.classList.add('closing');
-    box.classList.remove('header-box-open');
-    let finished = false;
-    const onEnd = (e) => {
-      if (!(e && e.propertyName && !['max-height', 'opacity', 'transform'].includes(e.propertyName)) && !finished) {
-        finished = true;
-        box.removeEventListener('transitionend', onEnd);
-        box.style.display = 'none';
-        box.classList.remove('closing');
-        resolve();
-      }
-    };
-    box.addEventListener('transitionend', onEnd, { once: true });
+function closeBoxWithAnimation(pill, box) {
+  if (!box) return;
 
-    setTimeout(() => {
-      if (!finished) {
-        finished = true;
-        box.style.display = 'none';
-        box.classList.remove('closing');
-        resolve();
-      }
-    }, 150);
+  const animator = box.querySelector('.header-box-text-content');
+  if (!animator) return;
+
+  const height = animator.scrollHeight;
+  animator.style.height = `${height}px`;
+  animator.style.opacity = '1';
+
+  requestAnimationFrame(() => {
+    animator.style.height = '0px';
+    animator.style.opacity = '0';
   });
+
+  const onEnd = (e) => {
+    if (e.propertyName !== 'height') return;
+
+    animator.style.height = '';
+    animator.style.opacity = '';
+
+    box.classList.remove('is-open');
+    pill?.classList.remove('header-nav-pill-active');
+    pill?.setAttribute('aria-expanded', 'false');
+
+    animator.removeEventListener('transitionend', onEnd);
+  };
+
+  animator.addEventListener('transitionend', onEnd);
+}
+
+function openBoxWithAnimation(pill, box, { defaultOpen = false } = {}) {
+  if (!box) return;
+
+  const animator = box.querySelector('.header-box-text-content');
+  if (!animator) return;
+
+  // Chiudi tutti gli altri box aperti e aggiorna i rispettivi pulsanti
+  document.querySelectorAll('.header-box-text-container.is-open').forEach((otherBox) => {
+    if (otherBox !== box) {
+      const otherAnimator = otherBox.querySelector('.header-box-text-content');
+      if (!otherAnimator) return;
+
+      otherAnimator.style.height = '';
+      otherAnimator.style.opacity = '';
+      otherBox.classList.remove('is-open');
+
+      // Aggiorna anche lo stato del pulsante associato
+      const otherPill = document.querySelector(`[aria-controls="${otherBox.id}"]`);
+      if (otherPill) {
+        otherPill.classList.remove('header-nav-pill-active');
+        otherPill.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+
+  // Apri il box selezionato
+  box.classList.add('is-open');
+  pill.classList.add('header-nav-pill-active');
+  pill.setAttribute('aria-expanded', 'true');
+
+  if (!defaultOpen) {
+    animator.style.height = '0px';
+    animator.style.opacity = '0';
+
+    requestAnimationFrame(() => {
+      const height = animator.scrollHeight;
+      animator.style.height = `${height}px`;
+      animator.style.opacity = '1';
+    });
+
+    const onEnd = (e) => {
+      if (e.propertyName !== 'height') return;
+      animator.style.height = '';
+      animator.removeEventListener('transitionend', onEnd);
+    };
+    animator.addEventListener('transitionend', onEnd);
+  } else {
+    animator.style.height = '';
+    animator.style.opacity = '1';
+  }
 }
 
 async function closeBox(pill, box) {
@@ -116,19 +169,6 @@ function addCloseIconToBox(box, pill) {
   });
 
   box.appendChild(closeBtn);
-}
-
-async function closeAllBoxesExcept(map, currentPill, currentBox) {
-  if (!map || typeof map.entries !== 'function') return;
-
-  const tasks = [];
-  map.forEach((box, pill) => {
-    if (box !== currentBox) {
-      tasks.push(closeBox(pill, box));
-    }
-  });
-
-  await Promise.all(tasks);
 }
 
 function showSecondRightIcon() {
@@ -262,7 +302,7 @@ function makeNavigationSticky(block) {
     });
   };
 
-  const offsetTop = sectionWrapper.offsetTop + 20;
+  const offsetTop = sectionWrapper.offsetTop + 32;
 
   const onScroll = () => {
     if (window.innerWidth <= 1200) return;
@@ -370,7 +410,6 @@ export default async function decorate(block) {
     || block.querySelector('[data-aue-resource]')
     || block.querySelector('[data-richtext-prop]');
 
-  const openBoxRef = { current: null };
   const pillToBoxMap = new Map();
 
   const buildNavigationPill = (row) => {
@@ -394,7 +433,6 @@ export default async function decorate(block) {
     if (cfg.boxText) {
       boxEl = document.createElement('div');
       boxEl.className = 'header-box-text-container';
-      boxEl.style.display = 'none';
       const textWrapper = document.createElement('div');
       textWrapper.className = 'header-box-text-content';
       textWrapper.textContent = cfg.boxText;
@@ -406,23 +444,16 @@ export default async function decorate(block) {
       pillToBoxMap.set(pillEl, boxEl);
       addCloseIconToBox(boxEl, pillEl);
 
-      pillEl.addEventListener('click', async () => {
+      pillEl.addEventListener('click', () => {
         const box = pillToBoxMap.get(pillEl);
         if (!box) return;
-        const isClosed = box.style.display === 'none';
-        await closeAllBoxesExcept(pillToBoxMap, pillEl, box);
-        if (isClosed) {
-          box.style.display = 'flex';
-          requestAnimationFrame(() => box.classList.add('header-box-open'));
-          pillEl.classList.add('header-nav-pill-active');
-          pillEl.setAttribute('aria-expanded', 'true');
-          openBoxRef.box = box;
-          openBoxRef.pill = pillEl;
-          addCloseIconToBox(box, pillEl);
+
+        const isOpen = box.classList.contains('is-open');
+
+        if (isOpen) {
+          closeBoxWithAnimation(pillEl, box);
         } else {
-          await closeBox(pillEl, box);
-          openBoxRef.box = null;
-          openBoxRef.pill = null;
+          openBoxWithAnimation(pillEl, box);
         }
       });
     }
@@ -463,40 +494,26 @@ export default async function decorate(block) {
   updateContainerWidth(container);
 
   if (template === 'homepage') {
-    const firstWrapper = container.querySelector('.navigation-pill-wrapper');
-    if (firstWrapper) {
-      const firstPill = firstWrapper.querySelector('.navigation-pill');
-      const firstBox = pillToBoxMap.get(firstPill);
+    const firstPill = container.querySelector('.navigation-pill');
+    const firstBox = pillToBoxMap.get(firstPill);
 
-      if (firstPill && firstBox) {
-        firstBox.style.display = 'flex';
-        requestAnimationFrame(() => firstBox.classList.add('header-box-open'));
+    if (firstPill && firstBox) {
+      openBoxWithAnimation(firstPill, firstBox, { defaultOpen: true });
 
-        firstPill.classList.add('header-nav-pill-active');
-        firstPill.setAttribute('aria-expanded', 'true');
+      let closedOnScroll = false;
+      const startScrollY = window.scrollY;
 
-        openBoxRef.box = firstBox;
-        openBoxRef.pill = firstPill;
-        addCloseIconToBox(firstBox, firstPill);
-        let firstScrollHandled = false;
-        const startScrollY = window.scrollY || window.pageYOffset;
+      const onScroll = () => {
+        if (closedOnScroll) return;
 
-        const onFirstScrollCloseBox = async () => {
-          if (firstScrollHandled) return;
+        if (Math.abs(window.scrollY - startScrollY) > 8) {
+          closeBoxWithAnimation(firstPill, firstBox);
+          closedOnScroll = true;
+          window.removeEventListener('scroll', onScroll);
+        }
+      };
 
-          const currentScrollY = window.scrollY || window.pageYOffset;
-          const delta = currentScrollY - startScrollY;
-          if (delta < 8) return;
-          firstScrollHandled = true;
-          if (openBoxRef.box) {
-            await closeBox(openBoxRef.pill, openBoxRef.box);
-            openBoxRef.box = null;
-            openBoxRef.pill = null;
-          }
-          window.removeEventListener('scroll', onFirstScrollCloseBox);
-        };
-        window.addEventListener('scroll', onFirstScrollCloseBox, { passive: true });
-      }
+      window.addEventListener('scroll', onScroll, { passive: true });
     }
   }
 
