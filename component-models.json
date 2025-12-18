@@ -2230,13 +2230,13 @@
     "fields": [
       {
         "component": "container",
-        "name": "title",
+        "name": "titleContainer",
         "label": "Titolo",
         "required": true,
         "fields": [
           {
             "component": "text",
-            "name": "value",
+            "name": "title",
             "label": "Testo",
             "validation": {
               "maxLength": 25,
@@ -2247,13 +2247,13 @@
       },
       {
         "component": "container",
-        "name": "description",
+        "name": "descriptionContainer",
         "label": "Descrizione",
         "required": true,
         "fields": [
           {
             "component": "text",
-            "name": "value",
+            "name": "description",
             "label": "Testo",
             "validation": {
               "maxLength": 130,
@@ -2387,13 +2387,13 @@
       },
       {
         "component": "container",
-        "name": "note",
+        "name": "noteContainer",
         "label": "Note",
         "required": true,
         "fields": [
           {
             "component": "text",
-            "name": "value",
+            "name": "note",
             "label": "Testo",
             "validation": {
               "maxLength": 25,
