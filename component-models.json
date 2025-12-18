@@ -2229,38 +2229,24 @@
     "id": "insurance-product-card",
     "fields": [
       {
-        "component": "container",
-        "name": "titleContainer",
+        "component": "text",
+        "name": "title",
         "label": "Titolo",
         "required": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "title",
-            "label": "Testo",
-            "validation": {
-              "maxLength": 25,
-              "customErrorMsg": "Numero di caratteri non valido"
-            }
-          }
-        ]
+        "validation": {
+          "maxLength": 25,
+          "customErrorMsg": "Titolo troppo lungo (max 15 caratteri)"
+        }
       },
       {
-        "component": "container",
-        "name": "descriptionContainer",
+        "component": "text",
+        "name": "description",
         "label": "Descrizione",
         "required": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "description",
-            "label": "Testo",
-            "validation": {
-              "maxLength": 130,
-              "customErrorMsg": "Numero di caratteri non valido"
-            }
-          }
-        ]
+        "validation": {
+          "maxLength": 130,
+          "customErrorMsg": "Descrizione troppo lunga (max 130 caratteri)"
+        }
       },
       {
         "component": "container",
@@ -2386,21 +2372,14 @@
         ]
       },
       {
-        "component": "container",
-        "name": "noteContainer",
+        "component": "text",
+        "name": "note",
         "label": "Note",
         "required": true,
-        "fields": [
-          {
-            "component": "text",
-            "name": "note",
-            "label": "Testo",
-            "validation": {
-              "maxLength": 25,
-              "customErrorMsg": "Numero di caratteri non valido"
-            }
-          }
-        ]
+        "validation": {
+          "maxLength": 25,
+          "customErrorMsg": "Note troppo lunghe (max 60 caratteri)"
+        }
       },
       {
         "component": "container",
