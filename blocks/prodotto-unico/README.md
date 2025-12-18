@@ -1,3 +1,27 @@
+# Prodotto Unico
+
+## Overview
+Embeds an Angular-based custom element with a performant skeleton-first experience. In Universal Editor mode it shows a preview-only skeleton; in runtime it lazy-loads Angular assets and reveals the component when rendering starts.
+
+## Field Reference (UE Model)
+- No configurable fields on the block. Behavior is driven by external Angular assets under `static/js/interprete/*` and `static/css/interprete/styles.css`.
+
+## Runtime Behavior
+- Skeleton: Renders `.prodotto-unico-skeleton` with branded header, cards, form, summary, and actions.
+- Author Mode: If `isAuthorMode(block)` returns true, the block stays as a skeleton and shows a `pus-editor-badge` to indicate preview-only.
+- Angular element: Appends `<tpd-interprete-angular-dx-api-pu>` (hidden). Observes its DOM; once content appears, removes the skeleton and reveals the element.
+- Loading: Uses `setupAssetPathInterceptor('tpd-interprete-angular-dx-api-pu')`, loads `styles.css` via `loadCSS`, and injects `runtime.js`, `polyfills.js`, `vendor.js`, and `main.js` with `type="module"` and `defer`.
+- Timing: Defers load until after an EDS “delayed” phase (~3s post-load) and when the block is near the viewport (IntersectionObserver). Optionally schedules via `requestIdleCallback`.
+- Fallback: If rendering doesn’t start, reveals after ~8s.
+
+## Authoring Notes
+- No rows/fields required. Place the block where the Angular app should render.
+- In Universal Editor, the skeleton is intentional to keep editing lightweight.
+- Ensure the external Angular bundles are deployed and accessible at the configured paths.
+
+## Defaults and Fallbacks
+- On script load failure, the skeleton is removed and the custom element is revealed to avoid visual dead-ends.
+- Asset loads are parallelized and CSS is non-blocking to keep page performance healthy.
 # Prodotto Unico Component
 
 ## Overview
