@@ -26,8 +26,9 @@
           "label": "Titolo",
           "required": true,
           "validation": {
-            "maxLength": 15,
-            "customErrorMsg": "Titolo troppo lungo (max 15 caratteri)"
+            "minLength": 1,
+            "maxLength": 25,
+            "customErrorMsg": "Numero di caratteri non valido"
           }
         },
         {
@@ -36,8 +37,9 @@
           "label": "Descrizione",
           "required": true,
           "validation": {
+            "minLength": 1,
             "maxLength": 130,
-            "customErrorMsg": "Descrizione troppo lunga (max 130 caratteri)"
+            "customErrorMsg": "Numero di caratteri non valido"
           }
         },
         {
@@ -57,8 +59,9 @@
           "label": "Note",
           "required": true,
           "validation": {
-            "maxLength": 60,
-            "customErrorMsg": "Note troppo lunghe (max 60 caratteri)"
+            "minLength": 1,
+            "maxLength": 25,
+            "customErrorMsg": "Numero di caratteri non valido"
           }
         },
         {
