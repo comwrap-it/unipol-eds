@@ -1,9 +1,9 @@
 import { html } from 'lit';
 
-import { createPhotoCard, PHOTO_CARD_SIZES } from '@blocks/atoms/photo-card/photo-card.js';
+import { createPhotoCard, PHOTO_CARD_SIZES } from '@blocks/photo-card/photo-card.js';
 
 const DIMENSIONS_BY_SIZE = {
-  [PHOTO_CARD_SIZES.S]: { width: 380, height: 240 },
+  [PHOTO_CARD_SIZES.S]: { width: 380, height: 285 },
   [PHOTO_CARD_SIZES.M]: { width: 870, height: 489 },
 };
 
@@ -109,7 +109,7 @@ export const SideBySide = {
     const cardS = createPhotoCard({
       size: PHOTO_CARD_SIZES.S,
       title: 'Text',
-      imageSrc: createPlaceholderImageDataUri({ label: 'S', width: 380, height: 240 }),
+      imageSrc: createPlaceholderImageDataUri({ label: 'S', width: 380, height: 285 }),
       imageAlt: 'Photo card size S',
     });
 
@@ -128,4 +128,3 @@ export const SideBySide = {
     `;
   },
 };
-

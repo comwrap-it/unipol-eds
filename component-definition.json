@@ -1041,6 +1041,21 @@
           }
         },
         {
+          "title": "Photo Card",
+          "id": "photo-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Photo Card",
+                  "model": "photo-card"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Preventivatore",
           "id": "preventivatore",
           "plugins": {

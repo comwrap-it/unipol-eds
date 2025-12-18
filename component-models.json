@@ -2702,6 +2702,46 @@
     ]
   },
   {
+    "id": "photo-card",
+    "fields": [
+      {
+        "component": "reference",
+        "name": "image",
+        "label": "Immagine",
+        "multi": false,
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "imageAlt",
+        "label": "Testo alternativo",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Titolo",
+        "required": true
+      },
+      {
+        "component": "select",
+        "name": "size",
+        "label": "Size",
+        "value": "s",
+        "options": [
+          {
+            "name": "S",
+            "value": "s"
+          },
+          {
+            "name": "M",
+            "value": "m"
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "preventivatore",
     "fields": []
   },
@@ -4783,46 +4823,6 @@
         "label": "Show Checkbox",
         "description": "Toggle to show or hide the checkbox",
         "value": false
-      }
-    ]
-  },
-  {
-    "id": "photo-card",
-    "fields": [
-      {
-        "component": "reference",
-        "name": "image",
-        "label": "Immagine",
-        "multi": false,
-        "required": true
-      },
-      {
-        "component": "text",
-        "name": "imageAlt",
-        "label": "Testo alternativo",
-        "required": true
-      },
-      {
-        "component": "text",
-        "name": "title",
-        "label": "Titolo",
-        "required": true
-      },
-      {
-        "component": "select",
-        "name": "size",
-        "label": "Size",
-        "value": "s",
-        "options": [
-          {
-            "name": "S",
-            "value": "s"
-          },
-          {
-            "name": "M",
-            "value": "m"
-          }
-        ]
       }
     ]
   },

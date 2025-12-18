@@ -5,9 +5,49 @@ async function ensureStylesLoaded() {
   await Promise.all([
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/product-highlights-carousel/product-highlights-carousel.css`,
+      `${window.hlx.codeBasePath}/blocks/photo-card/photo-card.css`,
     ),
   ]);
   isStylesLoaded = true;
+}
+
+export async function createProductHighlightsCarousel({
+  cards = [],
+  root = null,
+  track = null,
+} = {}) {
+  const carousel = root || document.createElement('div');
+  carousel.classList.add('product-highlights-carousel');
+
+  const trackElement = track
+    || carousel.querySelector(':scope > .product-highlights-carousel-track')
+    || document.createElement('div');
+  trackElement.classList.add('product-highlights-carousel-track');
+  if (trackElement.parentElement !== carousel) carousel.appendChild(trackElement);
+
+  const { default: decoratePhotoCard, createPhotoCard } = await import('../photo-card/photo-card.js');
+  await Promise.all((cards || []).forEach((card) => {
+    const cardElement = card instanceof HTMLElement
+      ? decoratePhotoCard(card)
+      : createPhotoCard(card);
+    if (cardElement && cardElement.parentElement !== trackElement) {
+      trackElement.appendChild(cardElement);
+    }
+  }));
+
+  return carousel;
+}
+
+function parse(block) {
+  const existingTrack = block.querySelector(':scope > .product-highlights-carousel-track');
+  if (existingTrack) {
+    return { track: existingTrack, cards: Array.from(existingTrack.children) };
+  }
+
+  const wrapper = block.querySelector(':scope > .default-content-wrapper');
+  const cards = wrapper ? Array.from(wrapper.children) : Array.from(block.children);
+
+  return { track: wrapper, cards };
 }
 
 export default async function decorate(block) {
@@ -15,26 +55,6 @@ export default async function decorate(block) {
 
   await ensureStylesLoaded();
 
-  const wrapper = block.querySelector(':scope > .default-content-wrapper');
-  const items = wrapper ? Array.from(wrapper.children) : Array.from(block.children);
-
-  const track = document.createElement('div');
-  track.className = 'product-highlights-carousel-track';
-
-  const { default: decoratePhotoCard } = await import('../atoms/photo-card/photo-card.js');
-
-  await Promise.all(items.map(async (item) => {
-    await decoratePhotoCard(item);
-  }));
-
-  items.forEach((item) => track.appendChild(item));
-
-  block.textContent = '';
-  block.appendChild(track);
-
-  const handleProductHighlightsWidget = await import(
-    '../product-highlights-widget/product-highlights-widget.js'
-  );
-
-  await handleProductHighlightsWidget.default();
+  const props = parse(block);
+  createProductHighlightsCarousel({ root: block, ...props });
 }

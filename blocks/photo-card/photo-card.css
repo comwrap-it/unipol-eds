@@ -1,0 +1,75 @@
+.photo-card {
+    --photo-card-width-s: var(--Card-Photo-Card-Width-S, 380px);
+    --photo-card-width-m: var(--Card-Photo-Card-Width-M, 870px);
+    --photo-card-image-height-s: var(--Card-Photo-Card-Image-Height-S, 285px);
+    --photo-card-image-height-m: var(--Card-Photo-Card-Image-Height-M, 489px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--Card-Photo-Card-Gap, 16px);
+    width: var(--photo-card-width-s);
+
+    & .photo-card-media {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        align-self: stretch;
+        width: 100%;
+        height: var(--photo-card-image-height-s);
+        aspect-ratio: 4/3;
+        border-radius: var(--Images-Radius, 24px);
+        overflow: hidden;
+
+        & picture {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        & img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+    }
+
+    & .photo-card-title {
+        color: var(--Card-Photo-Card-Title, var(--Text-Default-Primary, #001C35));
+        font: var(--Text-Styles-Body-Base, 400 1rem/140% var(--Family-Font-2, system-ui));
+        width: 100%;
+        text-align: center;
+
+        /* Text styles/Heading */
+        font-family: var(--Family-Font-2, Manrope);
+        font-size: var(--Font-Size-Heading, 24px);
+        font-style: normal;
+        font-weight: 600;
+        line-height: 125%; /* 30px */
+        letter-spacing: -0.24px;
+    }
+
+    &[data-photo-card-size="m"] {
+        align-items: flex-start;
+        width: var(--photo-card-width-m);
+
+        & .photo-card-media {
+            height: var(--photo-card-image-height-m);
+            aspect-ratio: 290/163;
+        }
+
+        & .photo-card-title {
+            text-align: start;
+            color: var(--Card-Photo-Card-Title, #001C35);
+
+            /* Text styles/Heading */
+            font-family: var(--Family-Font-2, Manrope);
+            font-size: var(--Font-Size-Heading, 24px);
+            font-style: normal;
+            font-weight: 600;
+            line-height: 125%; /* 30px */
+            letter-spacing: -0.24px;
+        }
+    }
+}
