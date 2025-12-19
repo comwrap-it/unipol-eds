@@ -1,6 +1,137 @@
-.product-highlights-widget {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+.section.product-highlights-widget {
+    --product-highlights-widget-bg: var(
+        --Carousel-Widget-Product-Highlights-Background-Color,
+        var(--Background-Default-Tertiary, #001c35)
+    );
+    --product-highlights-widget-text: var(--Text-Neutral-Tertiary, #ffffff);
+
+    padding: 0;
+    color: var(--product-highlights-widget-text);
+
+    & .product-highlights-widget__panel {
+        width: min(100%, var(--Layout-Page-Page-Width, 1440px));
+        margin-inline: auto;
+        padding: var(--Carousel-Widget-Product-Highlights-Vertical-Padding, 64px)
+            var(--Layout-Section-Margin-Horizontal-Padding, 4rem);
+        background: var(--product-highlights-widget-bg);
+        border-radius: var(--Carousel-Widget-Product-Highlights-Radius, 24px);
+        display: grid;
+        gap: var(--Carousel-Widget-Product-Highlights-Logo-Text-Gap-D-Ds, 32px);
+        justify-items: center;
+        position: relative;
+        box-sizing: border-box;
+    }
+
+    & .product-highlights-widget__header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: var(--Text-Block-Centered-Text-Gap, 16px);
+        max-width: min(100%, 48rem);
+    }
+
+    & .product-highlights-widget__logo {
+        margin-bottom: var(--Carousel-Widget-Product-Highlights-Logo-Text-Gap-D-Ds, 32px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & img,
+        & picture {
+            max-width: clamp(96px, 20vw, 160px);
+            height: auto;
+        }
+    }
+
+    & .product-highlights-widget__title {
+        margin: 0;
+        font: var(--Text-Styles-Heading, 600 1.5rem/125% var(--Family-Font-2, system-ui));
+        color: inherit;
+    }
+
+    & .product-highlights-widget__description {
+        margin: 0;
+        font: var(--Text-Styles-Body-Base, 400 1rem/140% var(--Family-Font-2, system-ui));
+        color: inherit;
+    }
+
+    & .product-highlights-widget__carousel {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    & .product-highlights-widget__cta {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    & .product-highlights-widget__button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: var(--Space-200-8, 8px) var(--Space-400-24, 24px);
+        border-radius: var(--Radius-9999, 999px);
+        background: var(--Neutral-50, #ffffff);
+        color: var(--Text-Default-Primary, #001c35);
+        text-decoration: none;
+        border: none;
+        font: var(--Text-Styles-Body-Base, 400 1rem/140% var(--Family-Font-2, system-ui));
+        cursor: pointer;
+    }
+
+    & .product-highlights-widget__button:focus-visible {
+        outline: 2px solid var(--product-highlights-widget-text);
+        outline-offset: 2px;
+    }
+
+    & .product-highlights-widget__pause {
+        position: absolute;
+        bottom: var(--Space-300-16, 16px);
+        right: var(--Space-300-16, 16px);
+        width: 32px;
+        height: 32px;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: transparent;
+        color: var(--product-highlights-widget-text);
+        border: none;
+        font-size: 16px;
+        line-height: 1;
+        cursor: pointer;
+    }
+
+    & .product-highlights-widget__pause:focus-visible {
+        outline: 2px solid var(--product-highlights-widget-text);
+        outline-offset: 2px;
+    }
+
+    & .photo-card {
+        align-items: center;
+    }
+
+    & .photo-card-title {
+        color: var(--product-highlights-widget-text);
+        text-align: center;
+    }
+
+    & .photo-card[data-photo-card-size="m"] .photo-card-title {
+        text-align: center;
+    }
 }
 
+@media (width < 768px) {
+    .section.product-highlights-widget {
+        & .product-highlights-widget__panel {
+            padding: var(--Space-700-48, 48px) var(--Space-400-24, 24px);
+            gap: var(--Carousel-Widget-Product-Highlights-Logo-Text-Gap-M, 24px);
+        }
+
+        & .product-highlights-widget__logo {
+            margin-bottom: var(--Carousel-Widget-Product-Highlights-Logo-Text-Gap-M, 24px);
+        }
+    }
+}

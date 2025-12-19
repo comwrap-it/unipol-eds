@@ -318,6 +318,58 @@
         "component": "text",
         "name": "product-highlights-widget-name",
         "label": "Nome sezione Product Highlights Widget"
+      },
+      {
+        "component": "reference",
+        "name": "logo",
+        "label": "Logo",
+        "multi": false,
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "logoAlt",
+        "label": "Logo alt",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Titolo",
+        "required": true,
+        "validation": {
+          "maxLength": 65,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      },
+      {
+        "component": "richtext",
+        "name": "description",
+        "label": "Descrizione",
+        "required": true,
+        "validation": {
+          "maxLength": 200,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      },
+      {
+        "component": "text",
+        "name": "buttonLabel",
+        "label": "Testo bottone",
+        "required": true
+      },
+      {
+        "component": "aem-content",
+        "name": "buttonLink",
+        "label": "Link bottone",
+        "description": "URL del bottone"
+      },
+      {
+        "component": "boolean",
+        "label": "Apri in nuova scheda",
+        "name": "buttonOpenInNewTab",
+        "valueType": "boolean",
+        "value": false
       }
     ]
   },

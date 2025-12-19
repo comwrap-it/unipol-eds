@@ -216,7 +216,7 @@
     "components": [
       "photo-card"
     ],
-    "min": 1,
+    "min": 5,
     "max": 8
   },
   {
