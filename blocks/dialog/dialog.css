@@ -70,6 +70,7 @@
                 /* i have commented this out because we are handling it with a richtext */
 
                 /* gap: var(--Dialog-Text-Gap, 1rem); */
+
                 overflow-y: auto;
                 flex: 1 0 0;
                 align-self: stretch;

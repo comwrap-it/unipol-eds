@@ -1,11 +1,19 @@
-import { getValuesFromBlock, restoreInstrumentation, isAuthorMode } from '../../scripts/utils.js';
+import {
+  getValuesFromBlock,
+  restoreInstrumentation,
+  isAuthorMode,
+} from '../../scripts/utils.js';
 
 /**
  * Creates Accordion
  *
- * @returns {HTMLElement}
- * @param accordionLabel object that contains value and instrumentation for EDS component
- * @param accordionDescription object that contains value and instrumentation for EDS component
+ * @param {Object} accordionLabel
+ * @param {string} accordionLabel.value - The label text for the accordion
+ * @param {Object} accordionLabel.instrumentation - The instrumentation object for the label
+ * @param {Object} accordionDescription
+ * @param {string} accordionDescription.value - The description content for the accordion
+ * @param {Object} accordionDescription.instrumentation - The instrumentation for description
+ * @returns {HTMLElement} The accordion wrapper element
  */
 export function createAccordion(accordionLabel, accordionDescription) {
   const wrapper = document.createElement('div');
@@ -69,7 +77,10 @@ export default async function decorateAccordion(block) {
   const properties = ['accordionLabel', 'accordionDescriptionRichtext'];
   const values = getValuesFromBlock(block, properties);
   // eslint-disable-next-line max-len
-  const accordionElement = createAccordion(values.accordionLabel, values.accordionDescriptionRichtext);
+  const accordionElement = createAccordion(
+    values.accordionLabel,
+    values.accordionDescriptionRichtext,
+  );
 
   block.textContent = '';
   block.appendChild(accordionElement);
