@@ -1,0 +1,91 @@
+{
+  "definitions": [
+    {
+      "title": "Category Card",
+      "id": "category-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Category Card",
+              "model": "category-card",
+              "filter": "category-card",
+              "key-value": true
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "category-card",
+      "fields": [
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Titolo",
+          "required": true,
+          "validation": {
+            "maxLength": 15,
+            "customErrorMsg": "Titolo troppo lungo (max 15 caratteri)"
+          }
+        },
+        {
+          "component": "text",
+          "name": "description",
+          "label": "Descrizione",
+          "required": true,
+          "validation": {
+            "maxLength": 130,
+            "customErrorMsg": "Descrizione troppo lunga (max 130 caratteri)"
+          }
+        },
+        {
+          "component": "container",
+          "name": "category-chips-container",
+          "label": "Configurazione Category Chips",
+          "collapsible": true,
+          "multi": true,
+          "fields": [
+            {
+              "...": "../atoms/category-chip/_category-chip.json#/models/category-chip/fields"
+            }
+          ]
+        },
+        {
+          "component": "text",
+          "name": "note",
+          "label": "Note",
+          "required": true,
+          "validation": {
+            "maxLength": 25,
+            "customErrorMsg": "Note troppo lunghe (max 60 caratteri)"
+          }
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Immagine",
+          "multi": false,
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageSR",
+          "label": "Testo alternativo per l'immagine",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "category-card",
+      "components": []
+    }
+  ]
+}
