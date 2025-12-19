@@ -154,19 +154,14 @@ html.adobe-ue-edit .hero {
 }
 
 /* TABLET */
-@media (width >= 768px) and (width < 1280px) {
+@media (width >= 768px) and (width < 1200px) {
     .hero {
         padding: 0 var(--Hero-Full-Screen-Horizontal-Padding-M-Tp, 16px)
-            var(--Hero-Full-Screen-Bottom-Padding-Tl-Tp, 80px)
+            var(--Hero-Full-Screen-Bottom-Padding-Tp, 120px)
             var(--Hero-Full-Screen-Horizontal-Padding-M-Tp, 16px);
 
         & .hero-content {
             & .main-section {
-                /* set the space for scroll indicator to 0 */
-                &.carousel {
-                    padding-bottom: 0;
-                }
-
                 & .hero-logo {
                     padding-bottom: var(--spacing-s, 16px);
                 }
@@ -174,13 +169,12 @@ html.adobe-ue-edit .hero {
         }
     }
 }
-
-/* DESKTOP */
-@media (width >= 1280px) {
+/* DESKTOP SMALL */
+@media (width >= 1200px) {
     .hero {
-        padding: 0 var(--Hero-Full-Screen-Horizontal-Padding-D, 64px)
-            var(--Hero-Full-Screen-Bottom-Padding-Tl-Tp, 80px)
-            var(--Hero-Full-Screen-Horizontal-Padding-D, 64px);
+        padding: 0 var(--Hero-Full-Screen-Horizontal-Padding-Ds, 24px)
+            var(--Hero-Full-Screen-Bottom-Padding-Ds, 80px)
+            var(--Hero-Full-Screen-Horizontal-Padding-Ds, 24px);
 
         & .hero-content {
             flex-direction: row;
@@ -205,5 +199,14 @@ html.adobe-ue-edit .hero {
                 width: auto;
             }
         }
+    }
+}
+
+/* DESKTOP */
+@media (width >= 1440px) {
+    .hero {
+        padding: 0 var(--Hero-Full-Screen-Horizontal-Padding-D, 64px)
+            var(--Hero-Full-Screen-Bottom-Padding-Ds, 80px)
+            var(--Hero-Full-Screen-Horizontal-Padding-D, 64px);
     }
 }
