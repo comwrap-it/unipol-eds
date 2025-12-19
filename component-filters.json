@@ -69,6 +69,10 @@
     ]
   },
   {
+    "id": "category-carousel-widget",
+    "components": []
+  },
+  {
     "id": "data-table-widget",
     "components": []
   },
@@ -107,6 +111,14 @@
     "components": [
       "card"
     ]
+  },
+  {
+    "id": "category-card",
+    "components": []
+  },
+  {
+    "id": "category-carousel",
+    "components": []
   },
   {
     "id": "columns",

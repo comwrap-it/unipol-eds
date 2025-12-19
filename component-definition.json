@@ -157,6 +157,57 @@
           }
         },
         {
+          "title": "Category Carousel Widget",
+          "id": "category-carousel-widget",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {
+                  "filter": "category-carousel-widget",
+                  "name": "Category Carousel Widget",
+                  "model": "category-carousel-widget",
+                  "style": "category-carousel-widget",
+                  "key-value": true,
+                  "text-block": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Text Block",
+                    "model": "text-block"
+                  },
+                  "category-carousel": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Category Carousel",
+                    "filter": "category-carousel",
+                    "model": "category-carousel",
+                    "key-value": true,
+                    "category-card-vehicles": {
+                      "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                      "name": "Category Card Veicoli",
+                      "filter": "category-card",
+                      "model": "category-card",
+                      "key-value": true
+                    },
+                    "category-card-home": {
+                      "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                      "name": "Category Card Casa e Famiglia",
+                      "filter": "category-card",
+                      "model": "category-card",
+                      "key-value": true
+                    },
+                    "category-card-welfare": {
+                      "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                      "name": "Category Card Salute",
+                      "filter": "category-card",
+                      "model": "category-card",
+                      "key-value": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Data table widget",
           "id": "data-table-widget",
           "plugins": {
@@ -549,6 +600,40 @@
                 "template": {
                   "name": "Card",
                   "model": "card"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Category Card",
+          "id": "category-card",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Category Card",
+                  "model": "category-card",
+                  "filter": "category-card",
+                  "key-value": true
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Category Carousel",
+          "id": "category-carousel",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "category-carousel",
+                  "name": "Category Carousel",
+                  "model": "category-carousel",
+                  "key-value": true
                 }
               }
             }
