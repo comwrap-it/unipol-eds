@@ -2234,7 +2234,7 @@
         "label": "Titolo",
         "required": true,
         "validation": {
-          "maxLength": 15,
+          "maxLength": 25,
           "customErrorMsg": "Titolo troppo lungo (max 15 caratteri)"
         }
       },
@@ -2377,7 +2377,7 @@
         "label": "Note",
         "required": true,
         "validation": {
-          "maxLength": 60,
+          "maxLength": 25,
           "customErrorMsg": "Note troppo lunghe (max 60 caratteri)"
         }
       },
