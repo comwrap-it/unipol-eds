@@ -1,3 +1,5 @@
+/* eslint-disable no-unused-vars */
+
 /**
  * Category Carousel Component
  *
@@ -163,46 +165,18 @@ export default async function decorate(block) {
     return slide;
   });
 
-  const mq = window.matchMedia('(min-width: 768px)');
-
   // Wait for all cards to be processed
   const cardElements = await Promise.all(cardPromises);
   cardElements.forEach((slide, index) => {
     if (slide && !hasInstrumentation && slide.innerText) {
-      if (index >= 4 && !mq.matches) {
-        slide.classList.add('hidden');
-      }
       track.appendChild(slide);
     } else if (slide && hasInstrumentation) {
       track.appendChild(slide);
     }
   });
 
-  let scrollIndicatorProps = {};
-
-  if (mq.matches) {
-    if (cardElements && cardElements.length > 4) {
-      const {
-        leftIconButton,
-        scrollIndicator,
-        rightIconButton,
-        setExpandedDot,
-      } = await createScrollIndicator();
-      scrollIndicatorProps = {
-        leftIconButton,
-        scrollIndicator,
-        rightIconButton,
-        setExpandedDot,
-      };
-    }
-  }
-
   carousel.appendChild(track);
   initCarouselAnimations(carousel);
-
-  if (scrollIndicatorProps.scrollIndicator) {
-    carousel.appendChild(scrollIndicatorProps.scrollIndicator);
-  }
 
   // Preserve blockName if present
   if (block.dataset.blockName) {
@@ -211,29 +185,7 @@ export default async function decorate(block) {
 
   block.innerText = '';
   // Preserve block class
-  carousel.classList.add('block', 'insurance-product-carousel-block');
+  carousel.classList.add('block', 'category-carousel-block');
   // Replace block with carousel
   block.appendChild(carousel);
-
-  if (mq.matches) {
-    // Initialize Swiper after DOM insertion
-    const Swiper = await loadSwiper();
-    const swiperInstance = initSwiper(
-      Swiper,
-      carousel,
-      scrollIndicatorProps.leftIconButton,
-      scrollIndicatorProps.rightIconButton,
-    );
-    handleSlideChange(
-      swiperInstance,
-      scrollIndicatorProps.setExpandedDot,
-      scrollIndicatorProps.leftIconButton,
-      scrollIndicatorProps.rightIconButton,
-    );
-
-    const handleInsuranceProductCarouselWidget = await import(
-      '../category-carousel-widget/category-carousel-widget.js'
-    );
-    handleInsuranceProductCarouselWidget.default();
-  }
 }

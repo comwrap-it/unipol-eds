@@ -9,8 +9,8 @@
 
 import { create3DiconsFromRows } from '../atoms/icons-3D/icons-3D.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
-import { getValuesFromBlock, restoreInstrumentation } from '../../scripts/utils.js';
-import { createTextElementFromObj } from '../../scripts/domHelpers.js';
+import { createTextElementFromRow } from '../../scripts/domHelpers.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -24,18 +24,19 @@ async function ensureStylesLoaded() {
 
 /**
  *
- * @param { { value, instrumentation } || null } image
- * @param { { value, instrumentation } || null } altText
+ * @param image
+ * @param altText
  * @return {HTMLDivElement}
  */
 const createImageCard = (image, altText) => {
   const cardImage = document.createElement('div');
   cardImage.className = 'category-card-image';
 
-  if (image && image.value) {
+  if (image) {
+    const src = image.querySelector('img').getAttribute('src');
     const optimizedPic = createOptimizedPicture(
-      image.value,
-      altText?.value || '',
+      src,
+      altText?.textContent?.trim() || '',
       false,
       [{ media: '(min-width: 769)', width: '316' }, { media: '(max-width: 768)', width: '240' }, { media: '(max-width: 392)', width: '343' }],
     );
@@ -43,7 +44,7 @@ const createImageCard = (image, altText) => {
     // Preserve instrumentation from link
     const newImg = optimizedPic.querySelector('img');
     if (newImg && image.instrumentation) {
-      restoreInstrumentation(newImg, image.instrumentation);
+      moveInstrumentation(image, newImg);
     }
 
     cardImage.appendChild(optimizedPic);
@@ -56,8 +57,8 @@ const createCardContent = (title, subTitle) => {
   const cardContent = document.createElement('div');
   cardContent.className = 'category-card-inner-content';
 
-  const titleElement = createTextElementFromObj(title, 'title', 'h3');
-  const subTitleElement = createTextElementFromObj(subTitle, 'subtitle', 'p');
+  const titleElement = createTextElementFromRow(title, 'title', 'h3');
+  const subTitleElement = createTextElementFromRow(subTitle, 'subtitle', 'p');
 
   cardContent.appendChild(titleElement);
   cardContent.appendChild(subTitleElement);
@@ -84,25 +85,30 @@ export default async function decorateCategoryCard(block) {
   const card = document.createElement('div');
   card.className = 'category-card-content';
 
-  const properties = ['title', 'description', 'note', 'image', 'imageSR'];
-  const valuesFromBlock = getValuesFromBlock(block, properties);
+  /*
+  rows[0] --> title
+  rows[1] --> description
+  rows[2] --> note
+  rows[3] --> image
+  rows[4] --> imageSR
+   */
+  const rows = Array.from(block.children);
 
-  const image = createImageCard(valuesFromBlock.image, valuesFromBlock.imageSR);
+  const image = createImageCard(rows[3], rows[4]);
   card.appendChild(image);
 
-  const cardContent = createCardContent(valuesFromBlock.title, valuesFromBlock.description);
+  const cardContent = createCardContent(rows[0], rows[1]);
   card.appendChild(cardContent);
 
-  const rows = Array.from(block.children);
-  const iconsRows = rows.slice(2, 6);
-  const iconsElement = create3DiconsFromRows(iconsRows);
+  /*const iconsRows = rows.slice(2, 6);
+  const iconsElement = create3DiconsFromRows(iconsRows);*/
 
-  if (iconsElement && iconsElement.children.length > 0) {
+  /*if (iconsElement && iconsElement.children.length > 0) {
     const imgVector = document.createElement('div');
     imgVector.className = 'img-vector';
     imgVector.appendChild(iconsElement);
     card.appendChild(imgVector);
-  }
+  }*/
 
   // Append card content
   if (cardContent.children.length > 0) {
@@ -117,5 +123,5 @@ export default async function decorateCategoryCard(block) {
   // Replace block content with card
   // Preserve block class and instrumentation
   card.classList.add('card-block');
-  block.replaceChildren(card);
+  block.replaceWith(card);
 }
