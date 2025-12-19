@@ -1,6 +1,12 @@
 import { loadCSS } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import decorateProductHighlightsCarousel from '../product-highlights-carousel/product-highlights-carousel.js';
+import {
+  createButton,
+  BUTTON_ICON_SIZES,
+  BUTTON_VARIANTS,
+} from '../atoms/buttons/standard-button/standard-button.js';
+import { createIconButton } from '../atoms/buttons/icon-button/icon-button.js';
 
 const WIDGET_CLASS = 'product-highlights-widget';
 const DECORATED_ATTR = 'data-product-highlights-widget';
@@ -197,26 +203,31 @@ function createCta(buttonLabelRow, buttonLinkRow, buttonNewTabRow, datasetConfig
     ? parseBoolean(buttonNewTabRow)
     : parseBooleanValue(datasetConfig?.buttonOpenInNewTab);
 
-  const cta = document.createElement(href ? 'a' : 'button');
-  if (href) cta.href = href;
-  if (!href) cta.type = 'button';
-  if (openInNewTab) {
-    cta.target = '_blank';
-    cta.rel = 'noopener noreferrer';
-  }
-  cta.className = 'product-highlights-widget-button';
-  cta.textContent = label;
+  const cta = createButton(
+    label,
+    href,
+    openInNewTab,
+    BUTTON_VARIANTS.SECONDARY,
+    BUTTON_ICON_SIZES.MEDIUM,
+  );
+  cta.classList.add('product-highlights-widget-button');
+  if (cta.tagName === 'BUTTON') cta.type = 'button';
 
   if (buttonLabelRow) moveInstrumentation(buttonLabelRow, cta);
   if (buttonLinkRow) moveInstrumentation(buttonLinkRow, cta);
+  if (buttonNewTabRow) moveInstrumentation(buttonNewTabRow, cta);
 
   return cta;
 }
 
 function createPauseButton() {
-  const pauseButton = document.createElement('button');
-  pauseButton.type = 'button';
-  pauseButton.className = 'product-highlights-widget-pause un-icon-pause-circle';
+  const pauseButton = createIconButton(
+    'un-icon-pause-circle',
+    BUTTON_VARIANTS.PRIMARY,
+    BUTTON_ICON_SIZES.SMALL,
+  );
+  pauseButton.classList.add('product-highlights-widget-pause');
+  if (pauseButton.tagName === 'BUTTON') pauseButton.type = 'button';
   pauseButton.setAttribute('aria-label', 'Pausa animazione');
   return pauseButton;
 }
@@ -314,28 +325,30 @@ async function decorateWidgetSection(section, block) {
 export default async function decorateProductHighlightsWidget(block) {
   await ensureStylesLoaded();
 
+  const scope = block instanceof Element ? block : document;
+  const sections = [];
+
   if (block instanceof Element) {
     if (block.classList.contains('product-highlights-carousel')) {
       const section = block.closest('.section');
-      await decorateWidgetSection(section, section?.querySelector(`.${WIDGET_CLASS}`));
-      return;
-    }
-
-    if (block.classList.contains('section') || block.classList.contains(WIDGET_CLASS)) {
+      if (section) sections.push(section);
+    } else if (block.classList.contains('section') || block.classList.contains(WIDGET_CLASS)) {
       const section = block.classList.contains('section') ? block : block.closest('.section');
-      await decorateWidgetSection(section, block.classList.contains(WIDGET_CLASS) ? block : null);
-      return;
+      if (section) sections.push(section);
     }
   }
 
-  const scope = block instanceof Element ? block : document;
-  const sections = Array.from(scope.querySelectorAll(`.section.${WIDGET_CLASS}`));
+  if (!sections.length) {
+    sections.push(...Array.from(scope.querySelectorAll(`.section.${WIDGET_CLASS}`)));
+  }
+
   if (!sections.length) {
     sections.push(
       ...Array.from(scope.querySelectorAll('.section'))
         .filter((section) => section.querySelector('.product-highlights-carousel')),
     );
   }
+
   (await Promise.all(sections)).forEach(async (section) => {
     await decorateWidgetSection(section, section.querySelector(`.${WIDGET_CLASS}`));
   });
