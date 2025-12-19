@@ -1,5 +1,6 @@
 import { BUTTON_ICON_SIZES } from '../blocks/atoms/buttons/standard-button/standard-button.js';
 import { moveInstrumentation } from './scripts.js';
+import { restoreInstrumentation } from './utils.js';
 
 /**
 Allowed text tags for authored content.
@@ -44,6 +45,39 @@ export const createTextElementFromRow = (
     }
     moveInstrumentation(originalRow, el);
   }
+  return el;
+};
+
+/**
+Creates a text element from an authored obj, preserving UE instrumentation.
+@param {{value, instrumentation} | null} originalObj
+@param {string | string[]} classesToApply
+@param {AvailableTag} elementTag
+@returns {HTMLElement}
+*/
+export const createTextElementFromObj = (
+  originalObj,
+  classesToApply = [],
+  elementTag = 'span',
+) => {
+  const tag = AUTHORIZED_TEXT_TAGS.includes(elementTag) ? elementTag : 'span';
+  const el = document.createElement(tag);
+
+  if (Array.isArray(classesToApply)) {
+    const cls = classesToApply.filter(Boolean);
+    if (cls.length) el.classList.add(...cls);
+  } else if (classesToApply) {
+    el.classList.add(classesToApply);
+  }
+
+  if (originalObj && originalObj.value) {
+    el.textContent = originalObj.value;
+  }
+
+  if (originalObj && originalObj.instrumentation) {
+    restoreInstrumentation(el, originalObj.instrumentation);
+  }
+
   return el;
 };
 
