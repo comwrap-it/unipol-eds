@@ -102,15 +102,15 @@ export default async function decorateCategoryCard(block) {
   const cardContent = createCardContent(rows[0], rows[1]);
   card.appendChild(cardContent);
 
-  /*const iconsRows = rows.slice(2, 6);
-  const iconsElement = create3DiconsFromRows(iconsRows);*/
+  /* const iconsRows = rows.slice(2, 6);
+  const iconsElement = create3DiconsFromRows(iconsRows); */
 
-  /*if (iconsElement && iconsElement.children.length > 0) {
+  /* if (iconsElement && iconsElement.children.length > 0) {
     const imgVector = document.createElement('div');
     imgVector.className = 'img-vector';
     imgVector.appendChild(iconsElement);
     card.appendChild(imgVector);
-  }*/
+  } */
 
   // Append card content
   if (cardContent.children.length > 0) {
