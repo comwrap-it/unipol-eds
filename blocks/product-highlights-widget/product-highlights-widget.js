@@ -100,7 +100,7 @@ function createLogo(logoRow, logoAltRow) {
   if (!mediaElement) return null;
 
   const logo = document.createElement('div');
-  logo.className = 'product-highlights-widget__logo';
+  logo.className = 'product-highlights-widget-logo';
   logo.appendChild(mediaElement);
 
   const altText = parseTextContent(logoAltRow);
@@ -119,7 +119,7 @@ function createTitle(titleRow) {
   const titleText = parseTextContent(titleRow);
   if (!titleText) return null;
   const title = document.createElement('h2');
-  title.className = 'product-highlights-widget__title';
+  title.className = 'product-highlights-widget-title';
   title.textContent = titleText;
   if (titleRow) moveInstrumentation(titleRow, title);
   return title;
@@ -128,7 +128,7 @@ function createTitle(titleRow) {
 function createDescription(descriptionRow) {
   if (!descriptionRow) return null;
   const description = document.createElement('div');
-  description.className = 'product-highlights-widget__description';
+  description.className = 'product-highlights-widget-description';
 
   const fragment = parseFragmentFromRow(descriptionRow);
   if (fragment && fragment.textContent?.trim()) {
@@ -158,7 +158,7 @@ function createCta(buttonLabelRow, buttonLinkRow, buttonNewTabRow) {
     cta.target = '_blank';
     cta.rel = 'noopener noreferrer';
   }
-  cta.className = 'product-highlights-widget__button';
+  cta.className = 'product-highlights-widget-button';
   cta.textContent = label;
 
   if (buttonLabelRow) moveInstrumentation(buttonLabelRow, cta);
@@ -170,7 +170,7 @@ function createCta(buttonLabelRow, buttonLinkRow, buttonNewTabRow) {
 function createPauseButton() {
   const pauseButton = document.createElement('button');
   pauseButton.type = 'button';
-  pauseButton.className = 'product-highlights-widget__pause un-icon-pause-circle';
+  pauseButton.className = 'product-highlights-widget-pause un-icon-pause-circle';
   pauseButton.setAttribute('aria-label', 'Pausa animazione');
   return pauseButton;
 }
@@ -205,14 +205,14 @@ async function decorateWidgetSection(section, block) {
   const panel = container && container.classList.contains(WIDGET_CLASS)
     ? container
     : document.createElement('div');
-  panel.classList.add('product-highlights-widget__panel');
+  panel.classList.add('product-highlights-widget-panel');
 
   const originalCarouselWrapper = carousel.parentElement;
 
   panel.textContent = '';
 
   const header = document.createElement('div');
-  header.className = 'product-highlights-widget__header';
+  header.className = 'product-highlights-widget-header';
   if (logo) header.appendChild(logo);
   if (title) header.appendChild(title);
   if (description) header.appendChild(description);
@@ -222,13 +222,13 @@ async function decorateWidgetSection(section, block) {
   }
 
   const carouselWrap = document.createElement('div');
-  carouselWrap.className = 'product-highlights-widget__carousel';
+  carouselWrap.className = 'product-highlights-widget-carousel';
   carouselWrap.appendChild(carousel);
   panel.appendChild(carouselWrap);
 
   if (cta) {
     const ctaWrap = document.createElement('div');
-    ctaWrap.className = 'product-highlights-widget__cta';
+    ctaWrap.className = 'product-highlights-widget-cta';
     ctaWrap.appendChild(cta);
     panel.appendChild(ctaWrap);
   }
