@@ -10,8 +10,7 @@
             "template": {
               "name": "Category Card",
               "model": "category-card",
-              "filter": "category-card",
-              "key-value": true
+              "filter": "category-card"
             }
           }
         }
