@@ -193,7 +193,7 @@
         "label": "Nome sezione Category Carousel Widget"
       },
       {
-        "component": "toggle",
+        "component": "boolean",
         "name": "category-carousel-widget-dark-theme",
         "label": "Tema scuro",
         "default": false
@@ -274,7 +274,7 @@
         "label": "Nome sezione Insurance Product Carousel Widget"
       },
       {
-        "component": "toggle",
+        "component": "boolean",
         "name": "insurance-product-carousel-widget-dark-theme",
         "label": "Tema scuro",
         "default": false
@@ -616,8 +616,8 @@
         "label": "Titolo",
         "required": true,
         "validation": {
-          "maxLength": 15,
-          "customErrorMsg": "Titolo troppo lungo (max 15 caratteri)"
+          "maxLength": 25,
+          "customErrorMsg": "Titolo troppo lungo (max 25 caratteri)"
         }
       },
       {

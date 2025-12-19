@@ -181,21 +181,21 @@
                     "model": "category-carousel",
                     "key-value": true,
                     "category-card-vehicles": {
-                      "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                      "sling:resourceType": "core/franklin/components/block/v1/block",
                       "name": "Category Card Veicoli",
                       "filter": "category-card",
                       "model": "category-card",
                       "key-value": true
                     },
                     "category-card-home": {
-                      "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                      "sling:resourceType": "core/franklin/components/block/v1/block",
                       "name": "Category Card Casa e Famiglia",
                       "filter": "category-card",
                       "model": "category-card",
                       "key-value": true
                     },
                     "category-card-welfare": {
-                      "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                      "sling:resourceType": "core/franklin/components/block/v1/block",
                       "name": "Category Card Salute",
                       "filter": "category-card",
                       "model": "category-card",
@@ -611,7 +611,7 @@
           "plugins": {
             "xwalk": {
               "page": {
-                "resourceType": "core/franklin/components/block/v1/block/item",
+                "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
                   "name": "Category Card",
                   "model": "category-card",
