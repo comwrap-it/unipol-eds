@@ -191,29 +191,6 @@
         "component": "text",
         "name": "data-table-widget-name",
         "label": "Nome sezione Data Table Widget"
-      },
-      {
-        "component": "select",
-        "name": "dataTableWidgetBckcolor",
-        "value": "none",
-        "options": [
-          {
-            "name": "none",
-            "value": ""
-          },
-          {
-            "name": "mobility",
-            "value": "mobility"
-          },
-          {
-            "name": "welfare",
-            "value": "welfare"
-          },
-          {
-            "name": "property",
-            "value": "property"
-          }
-        ]
       }
     ]
   },

@@ -1,16 +1,4 @@
 .tooltip {
-  position: relative;
-  display: inline-block;
+/* margin:0; */
 }
 
-.tooltip-content {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease;
-}
-
-.tooltip.open .tooltip-content {
-  opacity: 1;
-  pointer-events: auto;
-}

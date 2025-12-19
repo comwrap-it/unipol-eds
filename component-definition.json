@@ -178,25 +178,30 @@
                     "name": "Data table",
                     "filter": "data-table",
                     "model": "data-table",
+                    "key-value": true,
                     "data-table-row-1": {
                       "sling:resourceType": "core/franklin/components/block/v1/block",
                       "name": "Data table row",
-                      "model": "data-table-row"
+                      "model": "data-table-row",
+                      "key-value": true
                     },
                     "data-table-row-2": {
                       "sling:resourceType": "core/franklin/components/block/v1/block",
                       "name": "Data table row",
-                      "model": "data-table-row"
+                      "model": "data-table-row",
+                      "key-value": true
                     },
                     "data-table-row-3": {
                       "sling:resourceType": "core/franklin/components/block/v1/block",
                       "name": "Data table row",
-                      "model": "data-table-row"
+                      "model": "data-table-row",
+                      "key-value": true
                     },
                     "data-table-row-4": {
                       "sling:resourceType": "core/franklin/components/block/v1/block",
                       "name": "Data table row",
-                      "model": "data-table-row"
+                      "model": "data-table-row",
+                      "key-value": true
                     }
                   }
                 }
