@@ -16,10 +16,20 @@ async function ensureStylesLoaded() {
 
 const parseRowByProp = (rows, propName) => {
   if (!rows?.length) return null;
-  return rows.find((row) => row?.getAttribute?.('data-aue-prop') === propName
-    || row?.getAttribute?.('data-richtext-prop') === propName
-    || row?.querySelector?.(`[data-aue-prop="${propName}"], [data-richtext-prop="${propName}"]`))
-    || null;
+  const normalizedProp = String(propName || '').trim().toLowerCase();
+  return rows.find((row) => {
+    const directProp = row?.getAttribute?.('data-aue-prop')
+      || row?.getAttribute?.('data-richtext-prop');
+    if (directProp === propName) return true;
+
+    if (row?.querySelector?.(`[data-aue-prop="${propName}"], [data-richtext-prop="${propName}"]`)) {
+      return true;
+    }
+
+    const labelCell = row?.children?.[0];
+    const labelText = labelCell?.textContent?.trim()?.toLowerCase();
+    return labelText === normalizedProp;
+  }) || null;
 };
 
 const parseRowValueElement = (row) => {
@@ -49,6 +59,30 @@ const parseMediaElement = (row) => {
 
 const parseBoolean = (row) => parseTextContent(row).toLowerCase() === 'true';
 
+const parseBooleanValue = (value) => String(value || '').trim().toLowerCase() === 'true';
+
+const parseDatasetValue = (section, name) => {
+  if (!section?.dataset) return '';
+  return section.dataset[name] || section.dataset[String(name || '').toLowerCase()] || '';
+};
+
+const parseWidgetDataset = (section) => ({
+  logoSrc: parseDatasetValue(section, 'logo'),
+  logoAlt: parseDatasetValue(section, 'logoAlt') || parseDatasetValue(section, 'logoalt'),
+  title: parseDatasetValue(section, 'title'),
+  description: parseDatasetValue(section, 'description'),
+  buttonLabel: parseDatasetValue(section, 'buttonLabel') || parseDatasetValue(section, 'buttonlabel'),
+  buttonLink: parseDatasetValue(section, 'buttonLink') || parseDatasetValue(section, 'buttonlink'),
+  buttonOpenInNewTab: parseDatasetValue(section, 'buttonOpenInNewTab')
+    || parseDatasetValue(section, 'buttonopeninnewtab'),
+});
+
+const parseSectionMetadataRows = (section) => {
+  if (!section) return [];
+  const metadata = section.querySelector(':scope > .section-metadata');
+  return metadata ? Array.from(metadata.children) : [];
+};
+
 const parseWidgetRows = (block, section) => {
   let container = null;
   let wrapper = null;
@@ -67,11 +101,14 @@ const parseWidgetRows = (block, section) => {
   }
 
   // eslint-disable-next-line no-nested-ternary
-  const rows = wrapper
+  let rows = wrapper
     ? Array.from(wrapper.children)
     : container
       ? Array.from(container.children)
       : [];
+  if (!rows.length && section) {
+    rows = parseSectionMetadataRows(section);
+  }
   return { container, wrapper, rows };
 };
 
@@ -95,15 +132,20 @@ const parseWidgetConfig = (rows = []) => {
   };
 };
 
-function createLogo(logoRow, logoAltRow) {
-  const mediaElement = parseMediaElement(logoRow);
+function createLogo(logoRow, logoAltRow, datasetConfig) {
+  let mediaElement = parseMediaElement(logoRow);
+  if (!mediaElement && datasetConfig?.logoSrc) {
+    const img = document.createElement('img');
+    img.src = datasetConfig.logoSrc;
+    mediaElement = img;
+  }
   if (!mediaElement) return null;
 
   const logo = document.createElement('div');
   logo.className = 'product-highlights-widget-logo';
   logo.appendChild(mediaElement);
 
-  const altText = parseTextContent(logoAltRow);
+  const altText = parseTextContent(logoAltRow) || datasetConfig?.logoAlt;
   if (altText) {
     const img = mediaElement.tagName === 'IMG'
       ? mediaElement
@@ -115,8 +157,8 @@ function createLogo(logoRow, logoAltRow) {
   return logo;
 }
 
-function createTitle(titleRow) {
-  const titleText = parseTextContent(titleRow);
+function createTitle(titleRow, datasetConfig) {
+  const titleText = parseTextContent(titleRow) || datasetConfig?.title;
   if (!titleText) return null;
   const title = document.createElement('h2');
   title.className = 'product-highlights-widget-title';
@@ -125,8 +167,8 @@ function createTitle(titleRow) {
   return title;
 }
 
-function createDescription(descriptionRow) {
-  if (!descriptionRow) return null;
+function createDescription(descriptionRow, datasetConfig) {
+  if (!descriptionRow && !datasetConfig?.description) return null;
   const description = document.createElement('div');
   description.className = 'product-highlights-widget-description';
 
@@ -134,22 +176,26 @@ function createDescription(descriptionRow) {
   if (fragment && fragment.textContent?.trim()) {
     description.appendChild(fragment);
   } else {
-    const descriptionText = parseTextContent(descriptionRow);
+    const descriptionText = parseTextContent(descriptionRow) || datasetConfig?.description;
     if (!descriptionText) return null;
     description.textContent = descriptionText;
   }
 
-  moveInstrumentation(descriptionRow, description);
+  if (descriptionRow) moveInstrumentation(descriptionRow, description);
   return description;
 }
 
-function createCta(buttonLabelRow, buttonLinkRow, buttonNewTabRow) {
-  const label = parseTextContent(buttonLabelRow);
+function createCta(buttonLabelRow, buttonLinkRow, buttonNewTabRow, datasetConfig) {
+  const label = parseTextContent(buttonLabelRow) || datasetConfig?.buttonLabel;
   if (!label) return null;
 
   const linkElement = parseRowValueElement(buttonLinkRow)?.querySelector?.('a');
-  const href = linkElement?.href || parseTextContent(buttonLinkRow);
-  const openInNewTab = parseBoolean(buttonNewTabRow);
+  const href = linkElement?.href
+    || parseTextContent(buttonLinkRow)
+    || datasetConfig?.buttonLink;
+  const openInNewTab = buttonNewTabRow
+    ? parseBoolean(buttonNewTabRow)
+    : parseBooleanValue(datasetConfig?.buttonOpenInNewTab);
 
   const cta = document.createElement(href ? 'a' : 'button');
   if (href) cta.href = href;
@@ -186,6 +232,11 @@ async function decorateWidgetSection(section, block) {
   if (!carousel) return;
 
   const { container, wrapper, rows } = parseWidgetRows(block, section);
+  const datasetConfig = parseWidgetDataset(section);
+  const hasDatasetConfig = Object.values(datasetConfig)
+    .some((value) => String(value || '').trim());
+  if (!rows.length && !hasDatasetConfig) return;
+
   const {
     logoRow,
     logoAltRow,
@@ -196,10 +247,10 @@ async function decorateWidgetSection(section, block) {
     buttonNewTabRow,
   } = parseWidgetConfig(rows);
 
-  const logo = createLogo(logoRow, logoAltRow);
-  const title = createTitle(titleRow);
-  const description = createDescription(descriptionRow);
-  const cta = createCta(buttonLabelRow, buttonLinkRow, buttonNewTabRow);
+  const logo = createLogo(logoRow, logoAltRow, datasetConfig);
+  const title = createTitle(titleRow, datasetConfig);
+  const description = createDescription(descriptionRow, datasetConfig);
+  const cta = createCta(buttonLabelRow, buttonLinkRow, buttonNewTabRow, datasetConfig);
   const pauseButton = createPauseButton();
 
   const panel = container && container.classList.contains(WIDGET_CLASS)
@@ -264,12 +315,27 @@ export default async function decorateProductHighlightsWidget(block) {
   await ensureStylesLoaded();
 
   if (block instanceof Element) {
-    const section = block.classList.contains('section') ? block : block.closest('.section');
-    await decorateWidgetSection(section, block);
-    return;
+    if (block.classList.contains('product-highlights-carousel')) {
+      const section = block.closest('.section');
+      await decorateWidgetSection(section, section?.querySelector(`.${WIDGET_CLASS}`));
+      return;
+    }
+
+    if (block.classList.contains('section') || block.classList.contains(WIDGET_CLASS)) {
+      const section = block.classList.contains('section') ? block : block.closest('.section');
+      await decorateWidgetSection(section, block.classList.contains(WIDGET_CLASS) ? block : null);
+      return;
+    }
   }
 
-  const sections = Array.from(document.querySelectorAll(`.section.${WIDGET_CLASS}`));
+  const scope = block instanceof Element ? block : document;
+  const sections = Array.from(scope.querySelectorAll(`.section.${WIDGET_CLASS}`));
+  if (!sections.length) {
+    sections.push(
+      ...Array.from(scope.querySelectorAll('.section'))
+        .filter((section) => section.querySelector('.product-highlights-carousel')),
+    );
+  }
   (await Promise.all(sections)).forEach(async (section) => {
     await decorateWidgetSection(section, section.querySelector(`.${WIDGET_CLASS}`));
   });
