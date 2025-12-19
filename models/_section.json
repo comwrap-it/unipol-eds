@@ -59,7 +59,8 @@
         "image-text-grid",
         "accordion",
         "legal-info-widget",
-        "dialog"
+        "dialog",
+        "tooltip"
       ]
     }
   ]

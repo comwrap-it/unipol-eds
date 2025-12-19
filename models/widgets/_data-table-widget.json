@@ -23,22 +23,22 @@
                 "filter": "data-table",
                 "model": "data-table",
                 "data-table-row-1": {
-                  "sling:resourceType": "core/franklin/components/block/v1/block",
+                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
                   "name": "Data table row",
                   "model": "data-table-row"
-              },
+                },
                 "data-table-row-2": {
-                  "sling:resourceType": "core/franklin/components/block/v1/block",
+                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
                   "name": "Data table row",
                   "model": "data-table-row"
-              },
+                },
                 "data-table-row-3": {
-                  "sling:resourceType": "core/franklin/components/block/v1/block",
+                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
                   "name": "Data table row",
                   "model": "data-table-row"
-              },
+                },
                 "data-table-row-4": {
-                  "sling:resourceType": "core/franklin/components/block/v1/block",
+                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
                   "name": "Data table row",
                   "model": "data-table-row"
                 }
@@ -57,17 +57,6 @@
           "component": "text",
           "name": "data-table-widget-name",
           "label": "Nome sezione Data Table Widget"
-        },
-        {
-          "component": "select",
-          "name": "dataTableWidgetBckcolor",
-          "value": "none",
-          "options": [
-            { "name": "none", "value": "" },
-            { "name": "mobility", "value": "mobility" },
-            { "name": "welfare", "value": "welfare" },
-            { "name": "property", "value": "property" }
-          ]
         }
       ]
     }

@@ -191,29 +191,6 @@
         "component": "text",
         "name": "data-table-widget-name",
         "label": "Nome sezione Data Table Widget"
-      },
-      {
-        "component": "select",
-        "name": "dataTableWidgetBckcolor",
-        "value": "none",
-        "options": [
-          {
-            "name": "none",
-            "value": ""
-          },
-          {
-            "name": "mobility",
-            "value": "mobility"
-          },
-          {
-            "name": "welfare",
-            "value": "welfare"
-          },
-          {
-            "name": "property",
-            "value": "property"
-          }
-        ]
       }
     ]
   },
@@ -615,7 +592,7 @@
     "fields": [
       {
         "component": "tab",
-        "label": "Configurazione Colonna 1",
+        "label": "Configurazione cella 1",
         "name": "data-table-col"
       },
       {
@@ -648,30 +625,15 @@
         },
         "fields": [
           {
-            "component": "text",
-            "name": "toolTip",
-            "label": "Titolo tooltip",
-            "required": true,
-            "validation": {
-              "maxLength": 60,
-              "customErrorMsg": "Testo troppo lungo"
-            }
-          },
-          {
-            "component": "richtext",
-            "name": "toolTipSub",
-            "label": "Sottotitolo Tooltip",
-            "valueType": "string",
-            "validation": {
-              "maxLength": 300,
-              "customErrorMsg": "Testo troppo lungo"
-            }
+            "component": "aem-content",
+            "name": "tooltipLink",
+            "label": "Link al Tooltip"
           }
         ]
       },
       {
         "component": "tab",
-        "label": "Configurazione Colonna 2",
+        "label": "Configurazione cella 2",
         "name": "data-table-col-2"
       },
       {
@@ -717,7 +679,7 @@
       },
       {
         "component": "tab",
-        "label": "Configurazione Colonna 3",
+        "label": "Configurazione cella 3",
         "name": "data-table-col-3"
       },
       {
