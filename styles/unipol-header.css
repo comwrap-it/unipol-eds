@@ -7,7 +7,7 @@
     position: absolute;
     padding-inline: 0;
     padding-block: 0;
-    padding: var(--Header-Vertical-Padding-M-Tp, 24px); var(--Header-Horizontal-Padding-D-Ds, 24px);
+    padding: var(--Header-Horizontal-Padding-D-Ds, 24px) var(--Header-Horizontal-Padding-D-Ds, 24px);
     width: 100%;
     z-index: 2;
     padding-bottom: 0 !important;
