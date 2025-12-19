@@ -83,7 +83,7 @@
     }
 }
 
-@media (width <= 768px) {
+@media (width < 1200px) {
     .scroll-indicator {
         width: 100%;
         justify-content: flex-start;
@@ -120,7 +120,7 @@
     }
 }
 
-@media (768px <= width < 1280px) {
+@media (768px <= width < 1200px) {
     .scroll-indicator {
         /* this class is used to absolute position the indicator within a hero block */
         &.hero-indicator {
