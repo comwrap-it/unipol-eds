@@ -612,9 +612,9 @@
         }
       },
       {
-        "component": "container",
-        "name": "data-table-tooltip",
-        "label": "Configurazione tooltip",
+        "component": "aem-content",
+        "name": "tooltipLink",
+        "label": "Link al Tooltip",
         "condition": {
           "===": [
             {
@@ -622,14 +622,7 @@
             },
             true
           ]
-        },
-        "fields": [
-          {
-            "component": "aem-content",
-            "name": "tooltipLink",
-            "label": "Link al Tooltip"
-          }
-        ]
+        }
       },
       {
         "component": "tab",
