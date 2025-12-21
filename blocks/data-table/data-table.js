@@ -6,7 +6,7 @@ let isStylesLoaded = false;
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
-  await loadCSS(`${window.hlx.codeBasePath}/blocks/data-table/data-table.css`);
+  await loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`);
   isStylesLoaded = true;
 }
 
@@ -101,7 +101,6 @@ export default async function decorate(block) {
   table.className = 'data-table';
   const tbody = document.createElement('tbody');
 
-  // Scorro solo le righe esistenti, ignorando righe vuote
   const rows = Array.from(block.children);
   const trPromises = rows.map((row) => decorateDataTableRow(row));
   const trElements = await Promise.all(trPromises);
@@ -113,7 +112,6 @@ export default async function decorate(block) {
   block.innerHTML = '';
   block.appendChild(table);
 
-  // Pulsante opzionale: prendi solo l'ultima riga se è un pulsante separato
   const buttonRow = rows.find((r) => r.dataset.blockName === undefined && textAt(r));
   if (buttonRow) {
     const btn = createButton(
