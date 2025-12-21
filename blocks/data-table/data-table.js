@@ -1,5 +1,5 @@
-import { createButtonFromRows } from '../atoms/buttons/standard-button/standard-button.js';
-import { createDataTableRowFromCells } from '../data-table-row/data-table-row.js';
+import { createDataTableRow } from '../data-table-row/data-table-row.js';
+import { createButton } from '../atoms/buttons/standard-button/standard-button.js';
 
 let isStylesLoaded = false;
 
@@ -10,69 +10,68 @@ async function ensureStylesLoaded() {
   isStylesLoaded = true;
 }
 
-function hasContent(cells) {
-  return cells.some((c) => c?.textContent?.trim());
-}
-
-function createCellElementsFromData(cells = []) {
-  return cells.map((val) => {
-    const div = document.createElement('div');
-    if (val !== undefined && val !== null) {
-      if (val instanceof HTMLElement) {
-        div.appendChild(val);
-      } else {
-        const p = document.createElement('p');
-        p.textContent = val;
-        div.appendChild(p);
-      }
-    }
-    return div;
-  });
-}
-
-export async function createDataTableFromRows(rawRows) {
+/**
+ * Crea l'elemento table a partire da un array di righe
+ * @param {Array<Object>} rowsData - array di oggetti con i dati per ogni riga
+ * @returns {HTMLElement} <table>
+ */
+export async function createDataTableFromRows(rowsData) {
   await ensureStylesLoaded();
 
   const table = document.createElement('table');
+  table.className = 'data-table';
+
   const tbody = document.createElement('tbody');
 
-  await Promise.all(
-    rawRows.map(async (rowData) => {
-      const cells = createCellElementsFromData(rowData);
-      if (!hasContent(cells)) return;
-      const tr = await createDataTableRowFromCells(cells);
-      tbody.appendChild(tr);
-    }),
-  );
+  const rowPromises = rowsData.map((rowData) => createDataTableRow(rowData));
+  const trElements = await Promise.all(rowPromises);
+
+  trElements.forEach((tr) => {
+    if (tr) tbody.appendChild(tr);
+  });
 
   table.appendChild(tbody);
   return table;
 }
 
-export function createDataTableParentButton(buttonRows) {
-  const buttonElement = createButtonFromRows(buttonRows || []);
-  if (!buttonElement) return null;
-
-  const btnWrapper = document.createElement('div');
-  btnWrapper.className = 'data-table-button';
-  btnWrapper.appendChild(buttonElement);
-
-  return btnWrapper;
-}
-
-export async function createDataTableBlockStory(rawRows, buttonRows) {
+/**
+ * Crea un wrapper con la tabella e un pulsante opzionale sotto
+ * @param {Array<Object>} rowsData - array di dati per le righe
+ * @param {Object} buttonData - dati per il pulsante standard (label, href, variant, ecc.)
+ * @returns {HTMLElement} wrapper div
+ */
+export async function createDataTableBlock(rowsData, buttonData = null) {
   const wrapper = document.createElement('div');
   wrapper.className = 'data-table-wrapper';
 
-  const table = await createDataTableFromRows(rawRows);
+  const table = await createDataTableFromRows(rowsData);
   wrapper.appendChild(table);
 
-  const buttonWrapper = createDataTableParentButton(buttonRows);
-  if (buttonWrapper) wrapper.appendChild(buttonWrapper);
+  if (buttonData?.label) {
+    const btn = createButton(
+      buttonData.label,
+      buttonData.href || '#',
+      Boolean(buttonData.openInNewTab),
+      buttonData.variant || 'primary',
+      buttonData.iconSize || 'medium',
+      buttonData.leftIcon || '',
+      buttonData.rightIcon || '',
+      buttonData.disabled || false,
+    );
+
+    const btnWrapper = document.createElement('div');
+    btnWrapper.className = 'data-table-button';
+    btnWrapper.appendChild(btn);
+    wrapper.appendChild(btnWrapper);
+  }
 
   return wrapper;
 }
 
+/**
+ * Decora un blocco esistente <div> con righe e pulsante
+ * @param {HTMLElement} block
+ */
 export default async function decorate(block) {
   if (!block) return;
 
@@ -81,25 +80,39 @@ export default async function decorate(block) {
   const wrapper = document.createElement('div');
   wrapper.className = 'data-table-wrapper';
 
-  const rawRows = Array.from(block.children).map((row) => Array.from(row.children));
+  // Recupera le righe: ogni child del block corrisponde a una riga
+  const rowsData = Array.from(block.children).map((row) => ({
+    showButton: row.children[0]?.textContent?.trim() === 'true',
+    title1: row.children[1]?.textContent?.trim(),
+    tooltipLink: row.children[2]?.querySelector('a')?.href,
+    isTitle2: row.children[3]?.textContent?.trim() === 'true',
+    title2: row.children[4]?.textContent?.trim(),
+    text2: row.children[5]?.textContent?.trim(),
+    isTitle3: row.children[6]?.textContent?.trim() === 'true',
+    title3: row.children[7]?.textContent?.trim(),
+    text3: row.children[8]?.textContent?.trim(),
+    benefit3: row.children[9]?.textContent?.trim(),
+  }));
 
-  const table = document.createElement('table');
-  const tbody = document.createElement('tbody');
-
-  await Promise.all(
-    rawRows.map(async (cells) => {
-      if (!hasContent(cells)) return;
-      const tr = await createDataTableRowFromCells(cells);
-      tbody.appendChild(tr);
-    }),
-  );
-
-  table.appendChild(tbody);
+  const table = await createDataTableFromRows(rowsData);
   wrapper.appendChild(table);
 
-  const buttonRows = Array.from(block.children).filter((row) => !row.dataset.blockName);
-  const buttonWrapper = createDataTableParentButton(buttonRows);
-  if (buttonWrapper) wrapper.appendChild(buttonWrapper);
+  // Pulsante opzionale: cerca l'ultimo elemento che non è una riga
+  const buttonRow = Array.from(block.children).find(
+    (child) => !child.dataset.blockName,
+  );
+
+  if (buttonRow) {
+    const btnData = {
+      label: buttonRow.textContent?.trim() || '',
+      href: buttonRow.querySelector('a')?.href || '#',
+    };
+    const btnWrapper = document.createElement('div');
+    btnWrapper.className = 'data-table-button';
+    const btn = createButton(btnData.label, btnData.href);
+    btnWrapper.appendChild(btn);
+    wrapper.appendChild(btnWrapper);
+  }
 
   block.replaceWith(wrapper);
 }

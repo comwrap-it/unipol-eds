@@ -10,90 +10,118 @@ async function ensureStylesLoaded() {
   isStylesLoaded = true;
 }
 
-function textAt(cell) {
-  return cell?.textContent?.trim() || '';
+function createTooltipButton(title, fragmentPath, instrumentationCells) {
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.textContent = title;
+  button.className = 'data-table-tooltip-btn';
+
+  const tooltip = document.createElement('div');
+  tooltip.className = 'data-table-tooltip';
+  tooltip.hidden = true;
+
+  button.addEventListener('click', async () => {
+    if (!tooltip.hasChildNodes() && fragmentPath) {
+      const fragment = await loadFragment(fragmentPath);
+      if (fragment) tooltip.append(...fragment.children);
+    }
+    tooltip.hidden = !tooltip.hidden;
+  });
+
+  // Preserve instrumentation
+  if (instrumentationCells) {
+    moveInstrumentation(instrumentationCells.titleCell, button);
+    moveInstrumentation(instrumentationCells.tooltipCell, tooltip);
+  }
+
+  const td = document.createElement('td');
+  td.append(button, tooltip);
+  return td;
 }
 
-function linkAt(cell) {
-  return cell?.querySelector('a')?.getAttribute('href');
+function createTextCell(isTitle, title, text, benefit) {
+  const td = document.createElement('td');
+  if (isTitle && title) {
+    td.innerHTML = `<strong>${title}</strong>`;
+  } else {
+    if (text) td.append(text);
+    if (benefit) {
+      const span = document.createElement('span');
+      span.className = 'data-table-benefit';
+      span.textContent = benefit;
+      td.append(' ', span);
+    }
+  }
+  return td;
 }
 
-export async function createDataTableRowFromCells(cells) {
+/**
+ * Crea una riga della tabella a partire dai dati
+ * @param {Object} data - Dati per le celle
+ * @param {boolean} data.showButton
+ * @param {string} data.title1
+ * @param {string} data.tooltipLink
+ * @param {boolean} data.isTitle2
+ * @param {string} data.title2
+ * @param {string} data.text2
+ * @param {boolean} data.isTitle3
+ * @param {string} data.title3
+ * @param {string} data.text3
+ * @param {string} data.benefit3
+ * @param {Object} instrumentationCells - opzionale, celle originali per strumentazione
+ * @returns {HTMLElement} <tr>
+ */
+export async function createDataTableRow({
+  showButton, title1, tooltipLink,
+  isTitle2, title2, text2,
+  isTitle3, title3, text3, benefit3,
+}, instrumentationCells = null) {
+  await ensureStylesLoaded();
+
   const tr = document.createElement('tr');
-  {
+
+  // Cell 1
+  if (showButton && title1) {
+    tr.appendChild(createTooltipButton(title1, tooltipLink, instrumentationCells));
+  } else {
     const td = document.createElement('td');
-    const showButton = textAt(cells[0]) === 'true';
-    const title = textAt(cells[1]);
-    const fragmentPath = linkAt(cells[2]);
-    if (title) {
-      if (!showButton) {
-        td.textContent = title;
-      } else {
-        const button = document.createElement('button');
-        button.type = 'button';
-        button.textContent = title;
-        button.className = 'data-table-tooltip-btn';
-        const tooltip = document.createElement('div');
-        tooltip.className = 'data-table-tooltip';
-        tooltip.hidden = true;
-
-        button.addEventListener('click', async () => {
-          if (!tooltip.hasChildNodes() && fragmentPath) {
-            const fragment = await loadFragment(fragmentPath);
-            if (fragment) tooltip.append(...fragment.children);
-          }
-          tooltip.hidden = !tooltip.hidden;
-        });
-        moveInstrumentation(cells[1], button);
-        moveInstrumentation(cells[2], tooltip);
-        td.append(button, tooltip);
-      }
-    }
-
+    if (title1) td.textContent = title1;
     tr.appendChild(td);
   }
 
-  {
-    const td = document.createElement('td');
-    const isTitle = textAt(cells[3]) === 'true';
-    const title = textAt(cells[4]);
-    const text = textAt(cells[5]);
-    if (isTitle && title) {
-      td.innerHTML = `<strong>${title}</strong>`;
-    } else if (!isTitle && text) {
-      td.textContent = text;
-    }
-    tr.appendChild(td);
-  }
+  // Cell 2
+  tr.appendChild(createTextCell(isTitle2, title2, text2));
 
-  {
-    const td = document.createElement('td');
-    const isTitle = textAt(cells[6]) === 'true';
-    const title = textAt(cells[7]);
-    const text = textAt(cells[8]);
-    const benefit = textAt(cells[9]);
-
-    if (isTitle && title) {
-      td.innerHTML = `<strong>${title}</strong>`;
-    } else {
-      if (text) td.append(text);
-      if (benefit) {
-        const span = document.createElement('span');
-        span.className = 'data-table-benefit';
-        span.textContent = benefit;
-        td.append(' ', span);
-      }
-    }
-    tr.appendChild(td);
-  }
+  // Cell 3
+  tr.appendChild(createTextCell(isTitle3, title3, text3, benefit3));
 
   return tr;
 }
 
-/* ---------- DECORATE ---------- */
+/**
+ * Decora un blocco esistente <div> con celle come figli
+ * @param {HTMLElement} block
+ */
 export default async function decorate(block) {
-  await ensureStylesLoaded();
   const cells = Array.from(block.children);
-  const tr = await createDataTableRowFromCells(cells);
+  const data = {
+    showButton: cells[0]?.textContent?.trim() === 'true',
+    title1: cells[1]?.textContent?.trim(),
+    tooltipLink: cells[2]?.querySelector('a')?.getAttribute('href'),
+    isTitle2: cells[3]?.textContent?.trim() === 'true',
+    title2: cells[4]?.textContent?.trim(),
+    text2: cells[5]?.textContent?.trim(),
+    isTitle3: cells[6]?.textContent?.trim() === 'true',
+    title3: cells[7]?.textContent?.trim(),
+    text3: cells[8]?.textContent?.trim(),
+    benefit3: cells[9]?.textContent?.trim(),
+  };
+
+  const instrumentationCells = {
+    titleCell: cells[1],
+    tooltipCell: cells[2],
+  };
+
+  const tr = await createDataTableRow(data, instrumentationCells);
   block.replaceWith(tr);
 }
