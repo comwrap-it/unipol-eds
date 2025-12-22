@@ -1,7 +1,5 @@
-import {
-  CHECKBOX_TYPES,
-  createCheckbox,
-} from '../../checkbox/standard-checkbox/checkbox.js';
+import { CHECKBOX_TYPES } from "../../../../constants";
+import { createCheckbox } from "../../../../scripts/libs/ds/components/atoms/checkbox/standard-checkbox/checkbox";
 
 /**
  *
