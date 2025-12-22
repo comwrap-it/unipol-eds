@@ -1,5 +1,15 @@
+// #region CONSTANTS
+const CAROUSEL_CLASS = 'product-highlights-carousel';
+const TRACK_CLASS = 'product-highlights-carousel-track';
+// #endregion
+
+// #region HELPERS
 let isStylesLoaded = false;
 let stylesLoadingPromise = null;
+/**
+ * Ensures the carousel and card styles are loaded once.
+ * @returns {Promise<void>}
+ */
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   if (!stylesLoadingPromise) {
@@ -18,21 +28,40 @@ async function ensureStylesLoaded() {
   }
   await stylesLoadingPromise;
 }
+// #endregion
 
+// #region CREATE
+/**
+ * Creates or decorates a product highlights carousel.
+ * @param {Object} [options]
+ * @param {Array<HTMLElement|Object>} [options.cards]
+ * @param {HTMLElement|null} [options.root]
+ * @param {HTMLElement|null} [options.track]
+ * @returns {Promise<HTMLElement>}
+ */
 export async function createProductHighlightsCarousel({
   cards = [],
   root = null,
   track = null,
 } = {}) {
+  /*
+   * Root
+   */
   const carousel = root || document.createElement('div');
-  carousel.classList.add('product-highlights-carousel');
+  carousel.classList.add(CAROUSEL_CLASS);
 
+  /*
+   * Track
+   */
   const trackElement = track
-    || carousel.querySelector(':scope > .product-highlights-carousel-track')
+    || carousel.querySelector(`:scope > .${TRACK_CLASS}`)
     || document.createElement('div');
-  trackElement.classList.add('product-highlights-carousel-track');
+  trackElement.classList.add(TRACK_CLASS);
   if (trackElement.parentElement !== carousel) carousel.appendChild(trackElement);
 
+  /*
+   * Cards
+   */
   const { default: decoratePhotoCard, createPhotoCard } = await import('../photo-card/photo-card.js');
   const cardElements = await Promise.all((cards || []).map(async (card) => {
     if (card instanceof HTMLElement) {
@@ -50,19 +79,39 @@ export async function createProductHighlightsCarousel({
 
   return carousel;
 }
+// #endregion
 
+// #region PARSE
+/**
+ * Parses the carousel block for cards and/or existing track.
+ * @param {HTMLElement} block
+ * @returns {{track: HTMLElement|null, cards: HTMLElement[]}}
+ */
 function parse(block) {
-  const existingTrack = block.querySelector(':scope > .product-highlights-carousel-track');
+  /*
+   * Existing track
+   */
+  const existingTrack = block.querySelector(`:scope > .${TRACK_CLASS}`);
   if (existingTrack) {
     return { track: existingTrack, cards: Array.from(existingTrack.children) };
   }
 
+  /*
+   * Rows
+   */
   const wrapper = block.querySelector(':scope > .default-content-wrapper');
   const cards = wrapper ? Array.from(wrapper.children) : Array.from(block.children);
 
   return { track: wrapper, cards };
 }
+// #endregion
 
+// #region DECORATE
+/**
+ * Decorates the product highlights carousel block.
+ * @param {HTMLElement} block
+ * @returns {Promise<void>}
+ */
 export default async function decorate(block) {
   if (!block) return;
 
@@ -71,3 +120,4 @@ export default async function decorate(block) {
   const props = parse(block);
   await createProductHighlightsCarousel({ root: block, ...props });
 }
+// #endregion

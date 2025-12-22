@@ -26,6 +26,10 @@ const IMAGE_BREAKPOINTS_BY_SIZE = {
 // #region HELPERS
 let isStylesLoaded = false;
 let stylesLoadingPromise = null;
+/**
+ * Ensures the photo card styles are loaded once.
+ * @returns {Promise<void>}
+ */
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   if (!stylesLoadingPromise) {
@@ -40,6 +44,11 @@ async function ensureStylesLoaded() {
   await stylesLoadingPromise;
 }
 
+/**
+ * Attempts to resolve the photo card size from a raw value.
+ * @param {string} value
+ * @returns {string|null}
+ */
 const tryResolvePhotoCardSize = (value) => {
   const normalized = String(value || '').trim().toLowerCase();
   if (['m', 'md', 'medium'].includes(normalized)) return PHOTO_CARD_SIZES.M;
@@ -47,8 +56,19 @@ const tryResolvePhotoCardSize = (value) => {
   return null;
 };
 
+/**
+ * Resolves the photo card size with a default fallback.
+ * @param {string} value
+ * @returns {string}
+ */
 const resolvePhotoCardSize = (value) => tryResolvePhotoCardSize(value) || PHOTO_CARD_SIZES.S;
 
+/**
+ * Finds the first row matching a property name.
+ * @param {HTMLElement[]} rows
+ * @param {string} propName
+ * @returns {HTMLElement|null}
+ */
 const findRowByProp = (rows, propName) => {
   if (!rows?.length) return null;
   return rows.find((row) => row?.getAttribute?.('data-aue-prop') === propName
@@ -57,6 +77,11 @@ const findRowByProp = (rows, propName) => {
     || null;
 };
 
+/**
+ * Returns the value column for a row when present.
+ * @param {HTMLElement|null} row
+ * @returns {HTMLElement|null}
+ */
 const getRowValueElement = (row) => {
   if (!row) return null;
 
@@ -71,8 +96,18 @@ const getRowValueElement = (row) => {
   return row;
 };
 
+/**
+ * Extracts trimmed text content from a row.
+ * @param {HTMLElement|null} row
+ * @returns {string}
+ */
 const extractTextContent = (row) => getRowValueElement(row)?.textContent?.trim() || '';
 
+/**
+ * Extracts a title fragment from a row.
+ * @param {HTMLElement|null} row
+ * @returns {DocumentFragment|string}
+ */
 const extractTitleFromRow = (row) => {
   if (!row) return '';
 
@@ -88,6 +123,11 @@ const extractTitleFromRow = (row) => {
 // #endregion
 
 // #region CREATE
+/**
+ * Creates a photo card element.
+ * @param {Object} [options]
+ * @returns {HTMLElement}
+ */
 export function createPhotoCard({
   size = PHOTO_CARD_SIZES.S,
   title = '',
@@ -165,6 +205,11 @@ export function createPhotoCard({
 // #endregion
 
 // #region PARSE
+/**
+ * Parses a photo card block.
+ * @param {HTMLElement} block
+ * @returns {Object}
+ */
 export function parse(block) {
   /*
    * Rows
@@ -243,6 +288,11 @@ export function parse(block) {
 // #endregion
 
 // #region DECTORATE
+/**
+ * Decorates a photo card block.
+ * @param {HTMLElement} block
+ * @returns {Promise<void>}
+ */
 export default async function decorate(block) {
   if (!block) return;
 

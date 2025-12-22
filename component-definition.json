@@ -360,6 +360,11 @@
                   "name": "Product Highlights Widget",
                   "model": "product-highlights-widget",
                   "style": "product-highlights-widget",
+                  "text-block": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Text Block",
+                    "model": "text-block"
+                  },
                   "product-highlights-carousel": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
                     "name": "Product Highlights Carousel",
@@ -371,6 +376,11 @@
                       "filter": "photo-card",
                       "model": "photo-card"
                     }
+                  },
+                  "standard-button": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Standard Button",
+                    "model": "standard-button"
                   }
                 }
               }
