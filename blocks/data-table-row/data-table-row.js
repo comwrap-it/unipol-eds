@@ -128,12 +128,22 @@ export async function createDataTableRowFromRows(rows) {
 
     if (benefitRow && text(benefitRow)) {
       hasContent = true;
+
+      const container = document.createElement('span');
+      container.className = 'benefit-container';
+
+      const icon = document.createElement('span');
+      icon.className = 'un-icon-check-circle';
+
       const spanBenefit = document.createElement('span');
       spanBenefit.className = 'data-table-benefit';
       spanBenefit.textContent = text(benefitRow);
       moveInstrumentation(benefitRow, spanBenefit);
+
+      container.append(icon, ' ', spanBenefit);
+
       if (cell.hasChildNodes()) cell.append(' ');
-      cell.appendChild(spanBenefit);
+      cell.appendChild(container);
     }
 
     if (!hasContent) {
