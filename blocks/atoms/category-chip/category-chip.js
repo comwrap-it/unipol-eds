@@ -1,4 +1,4 @@
-import { extractInstrumentationAttributes } from "../../../scripts/utils.js";
+import { extractInstrumentationAttributes } from '../../../scripts/utils.js';
 
 /**
  * Create a category chip element with styling
