@@ -6,13 +6,22 @@ const isTrue = (el) => text(el) === 'true';
 const linkHref = (el) => el?.querySelector('a')?.getAttribute('href') || '';
 
 export async function createDataTableRowFromRows(rows) {
-  if (!rows || rows.every((r) => !text(r))) return null;
+  if (!rows || !rows.length) return null;
 
-  const [
-    col1IsTitle, col1Text, col1Tooltip,
-    col2IsTitle, col2Title, col2Text,
-    col3IsTitle, col3Title, col3Text, col3Benefit,
-  ] = rows;
+  const safe = (i) => rows[i] || null;
+
+  const col1IsTitle = safe(0);
+  const col1Text = safe(1);
+  const col1Tooltip = safe(2);
+
+  const col2IsTitle = safe(3);
+  const col2Title = safe(4);
+  const col2Text = safe(5);
+
+  const col3IsTitle = safe(6);
+  const col3Title = safe(7);
+  const col3Text = safe(8);
+  const col3Benefit = safe(9);
 
   const tr = document.createElement('tr');
 
@@ -20,7 +29,6 @@ export async function createDataTableRowFromRows(rows) {
   {
     const th = document.createElement('th');
     th.scope = 'row';
-
     const cellText = text(col1Text);
     const showButton = isTrue(col1IsTitle);
     const tooltipPath = linkHref(col1Tooltip);
@@ -42,7 +50,7 @@ export async function createDataTableRowFromRows(rows) {
         button.setAttribute('aria-expanded', 'false');
 
         button.addEventListener('click', async () => {
-          if (!tooltip.hasChildNodes()) {
+          if (!tooltip.hasChildNodes() && tooltipPath) {
             const fragment = await loadFragment(tooltipPath);
             if (fragment) tooltip.append(...fragment.children);
           }
@@ -71,7 +79,6 @@ export async function createDataTableRowFromRows(rows) {
     const isTitleCell = isTrue(col2IsTitle);
     const contentRow = isTitleCell ? col2Title : col2Text;
     const contentText = text(contentRow);
-
     const cell = document.createElement(isTitleCell ? 'th' : 'td');
     if (isTitleCell) cell.scope = 'col';
 
@@ -99,7 +106,6 @@ export async function createDataTableRowFromRows(rows) {
     const contentRow = isTitleCell ? col3Title : col3Text;
     const benefitRow = col3Benefit;
     const contentText = text(contentRow);
-
     const cell = document.createElement(isTitleCell ? 'th' : 'td');
     if (isTitleCell) cell.scope = 'col';
 
@@ -144,7 +150,6 @@ export async function createDataTableRowFromRows(rows) {
 export default async function decorate(block) {
   if (!block) return;
   if (block.classList.contains('data-table-row--decorated')) return;
-
   block.classList.add('data-table-row--decorated');
 
   let rows = Array.from(block.children);
