@@ -6,96 +6,136 @@ const isTrue = (el) => text(el) === 'true';
 const linkHref = (el) => el?.querySelector('a')?.getAttribute('href') || '';
 
 export async function createDataTableRowFromRows(rows) {
+  if (!rows || rows.every((r) => !text(r))) return null;
+
+  const [
+    col1IsTitle, col1Text, col1Tooltip,
+    col2IsTitle, col2Title, col2Text,
+    col3IsTitle, col3Title, col3Text, col3Benefit,
+  ] = rows;
+
   const tr = document.createElement('tr');
 
-  // COLUMN 1
+  // --- COLONNA 1 ---
   {
-    const td = document.createElement('td');
-    const showButton = isTrue(rows[0]);
-    const titleRow = rows[1];
-    const tooltipRow = rows[2];
-    const title = text(titleRow);
-    const fragmentPath = linkHref(tooltipRow);
+    const th = document.createElement('th');
+    th.scope = 'row';
 
-    if (title) {
-      if (!showButton) {
-        td.textContent = title;
-        moveInstrumentation(titleRow, td);
-      } else {
+    const cellText = text(col1Text);
+    const showButton = isTrue(col1IsTitle);
+    const tooltipPath = linkHref(col1Tooltip);
+
+    if (cellText) {
+      if (showButton && tooltipPath) {
         const button = document.createElement('button');
         button.type = 'button';
         button.className = 'data-table-tooltip-btn';
-        button.textContent = title;
+        button.textContent = cellText;
 
         const tooltip = document.createElement('div');
         tooltip.className = 'data-table-tooltip';
         tooltip.hidden = true;
 
+        const tooltipId = `tooltip-${Math.random().toString(36).slice(2, 11)}`;
+        tooltip.id = tooltipId;
+        button.setAttribute('aria-describedby', tooltipId);
+        button.setAttribute('aria-expanded', 'false');
+
         button.addEventListener('click', async () => {
-          if (!tooltip.hasChildNodes() && fragmentPath) {
-            const fragment = await loadFragment(fragmentPath);
+          if (!tooltip.hasChildNodes()) {
+            const fragment = await loadFragment(tooltipPath);
             if (fragment) tooltip.append(...fragment.children);
           }
+          const expanded = tooltip.hidden;
           tooltip.hidden = !tooltip.hidden;
+          button.setAttribute('aria-expanded', expanded ? 'true' : 'false');
         });
 
-        moveInstrumentation(titleRow, button);
-        moveInstrumentation(tooltipRow, tooltip);
-
-        td.append(button, tooltip);
+        moveInstrumentation(col1Text, button);
+        moveInstrumentation(col1Tooltip, tooltip);
+        th.append(button, tooltip);
+      } else {
+        th.textContent = cellText;
+        moveInstrumentation(col1Text, th);
       }
-    }
-    tr.appendChild(td);
-  }
-
-  // COLUMN 2
-  {
-    const td = document.createElement('td');
-    const isTitleCell = isTrue(rows[3]);
-    const titleRow = rows[4];
-    const textRow = rows[5];
-
-    if (isTitleCell && text(titleRow)) {
-      const strong = document.createElement('strong');
-      strong.textContent = text(titleRow);
-      moveInstrumentation(titleRow, strong);
-      td.appendChild(strong);
-    } else if (!isTitleCell && text(textRow)) {
-      td.textContent = text(textRow);
-      moveInstrumentation(textRow, td);
-    }
-    tr.appendChild(td);
-  }
-
-  // COLUMN 3
-  {
-    const td = document.createElement('td');
-    const isTitleCell = isTrue(rows[6]);
-    const titleRow = rows[7];
-    const textRow = rows[8];
-    const benefitRow = rows[9];
-
-    if (isTitleCell && text(titleRow)) {
-      const strong = document.createElement('strong');
-      strong.textContent = text(titleRow);
-      moveInstrumentation(titleRow, strong);
-      td.appendChild(strong);
     } else {
-      if (text(textRow)) {
-        const spanText = document.createElement('span');
-        spanText.textContent = text(textRow);
-        moveInstrumentation(textRow, spanText);
-        td.appendChild(spanText);
+      th.setAttribute('role', 'rowheader');
+      th.setAttribute('aria-label', 'Nessun contenuto');
+    }
+
+    tr.appendChild(th);
+  }
+
+  // --- COLONNA 2 ---
+  {
+    const isTitleCell = isTrue(col2IsTitle);
+    const contentRow = isTitleCell ? col2Title : col2Text;
+    const contentText = text(contentRow);
+
+    const cell = document.createElement(isTitleCell ? 'th' : 'td');
+    if (isTitleCell) cell.scope = 'col';
+
+    if (contentText) {
+      if (isTitleCell) {
+        const strong = document.createElement('strong');
+        strong.textContent = contentText;
+        moveInstrumentation(contentRow, strong);
+        cell.appendChild(strong);
+      } else {
+        cell.textContent = contentText;
+        moveInstrumentation(contentRow, cell);
       }
-      if (text(benefitRow)) {
-        const benefit = document.createElement('span');
-        benefit.className = 'data-table-benefit';
-        benefit.textContent = text(benefitRow);
-        moveInstrumentation(benefitRow, benefit);
-        td.append(' ', benefit);
+    } else {
+      cell.setAttribute('role', isTitleCell ? 'columnheader' : 'cell');
+      cell.setAttribute('aria-label', 'Nessun contenuto');
+    }
+
+    tr.appendChild(cell);
+  }
+
+  // --- COLONNA 3 ---
+  {
+    const isTitleCell = isTrue(col3IsTitle);
+    const contentRow = isTitleCell ? col3Title : col3Text;
+    const benefitRow = col3Benefit;
+    const contentText = text(contentRow);
+
+    const cell = document.createElement(isTitleCell ? 'th' : 'td');
+    if (isTitleCell) cell.scope = 'col';
+
+    let hasContent = false;
+
+    if (contentText) {
+      hasContent = true;
+      if (isTitleCell) {
+        const strong = document.createElement('strong');
+        strong.textContent = contentText;
+        moveInstrumentation(contentRow, strong);
+        cell.appendChild(strong);
+      } else {
+        const spanText = document.createElement('span');
+        spanText.textContent = contentText;
+        moveInstrumentation(contentRow, spanText);
+        cell.appendChild(spanText);
       }
     }
-    tr.appendChild(td);
+
+    if (benefitRow && text(benefitRow)) {
+      hasContent = true;
+      const spanBenefit = document.createElement('span');
+      spanBenefit.className = 'data-table-benefit';
+      spanBenefit.textContent = text(benefitRow);
+      moveInstrumentation(benefitRow, spanBenefit);
+      if (cell.hasChildNodes()) cell.append(' ');
+      cell.appendChild(spanBenefit);
+    }
+
+    if (!hasContent) {
+      cell.setAttribute('role', isTitleCell ? 'columnheader' : 'cell');
+      cell.setAttribute('aria-label', 'Nessun contenuto');
+    }
+
+    tr.appendChild(cell);
   }
 
   return tr;
@@ -104,9 +144,12 @@ export async function createDataTableRowFromRows(rows) {
 export default async function decorate(block) {
   if (!block) return;
   if (block.classList.contains('data-table-row--decorated')) return;
+
   block.classList.add('data-table-row--decorated');
+
   let rows = Array.from(block.children);
   const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) rows = Array.from(wrapper.children);
+
   await createDataTableRowFromRows(rows);
 }

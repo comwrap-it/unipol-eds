@@ -86,7 +86,15 @@ function bindResponsiveResize(table) {
   window.addEventListener('resize', onResize);
 }
 
-function setupShowMoreAccessibility({ tbody, button }) {
+function setupShowMoreAccessibility({ tbody, button, disableLimit }) {
+  if (disableLimit) {
+    // Pulsante visibile ma non fa nulla
+    button.disabled = false;
+    button.setAttribute('aria-expanded', 'true');
+    button.setAttribute('aria-label', 'Mostra tutte le righe');
+    return;
+  }
+
   button.setAttribute('aria-expanded', 'false');
   button.setAttribute('aria-controls', tbody.id);
 
@@ -104,9 +112,11 @@ function setupShowMoreAccessibility({ tbody, button }) {
   });
 }
 
-function appendRowsWithLimit({ rows, tbody, limit = 5 }) {
+function appendRowsWithLimit({
+  rows, tbody, limit = 5, disableLimit,
+}) {
   rows.filter(Boolean).forEach((tr, index) => {
-    if (index >= limit) {
+    if (!disableLimit && index >= limit) {
       tr.classList.add('hidden');
       tr.style.display = 'none';
       tr.setAttribute('aria-hidden', 'true');
@@ -117,7 +127,7 @@ function appendRowsWithLimit({ rows, tbody, limit = 5 }) {
   });
 }
 
-async function buildTable({ rows, block }) {
+async function buildTable({ rows, block, disableLimit }) {
   const tableWrapper = document.createElement('div');
   tableWrapper.className = 'data-table-container block data-table-block';
 
@@ -141,13 +151,17 @@ async function buildTable({ rows, block }) {
     })),
   );
 
-  appendRowsWithLimit({ rows: trElements, tbody });
+  appendRowsWithLimit({ rows: trElements, tbody, disableLimit });
 
   const showMoreValues = extractShowMoreButtonValue(rows[0]);
   const showMoreButtonWrapper = createShowMoreButton(showMoreValues);
   block.appendChild(showMoreButtonWrapper);
 
-  setupShowMoreAccessibility({ tbody, button: showMoreButtonWrapper.querySelector('button') });
+  setupShowMoreAccessibility({
+    tbody,
+    button: showMoreButtonWrapper.querySelector('button'),
+    disableLimit,
+  });
 
   handleResponsiveTable(table);
   bindResponsiveResize(table);
@@ -163,6 +177,8 @@ export default async function decorate(block) {
   const rows = Array.from(block.children).filter(Boolean);
   if (!rows.length) return;
 
+  const disableLimit = document.documentElement.classList.contains('adobe-ue-edit');
+
   block.innerHTML = '';
-  await buildTable({ rows, block });
+  await buildTable({ rows, block, disableLimit });
 }
