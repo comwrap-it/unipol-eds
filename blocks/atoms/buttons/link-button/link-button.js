@@ -5,7 +5,7 @@
  * It can be imported or used by other components if needed.
  */
 
-import { BUTTON_ICON_SIZES } from '../standard-button/standard-button.js';
+import { BUTTON_ICON_SIZES } from "../../../../constants";
 
 /**
  * Create a link button element

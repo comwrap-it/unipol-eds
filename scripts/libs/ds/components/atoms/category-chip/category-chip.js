@@ -1,4 +1,4 @@
-import { extractInstrumentationAttributes } from '../buttons/standard-button/standard-button.js';
+import { extractInstrumentationAttributes } from "../../../../../utils";
 
 /**
  * Create a category chip element with styling

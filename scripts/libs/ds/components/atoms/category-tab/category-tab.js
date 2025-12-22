@@ -1,7 +1,5 @@
-import {
-  BUTTON_ICON_SIZES,
-  extractInstrumentationAttributes,
-} from '../buttons/standard-button/standard-button.js';
+import { BUTTON_ICON_SIZES } from "../../../../../../constants";
+import { extractInstrumentationAttributes } from "../../../../../utils";
 
 /**
  * Create a category tab element with styling

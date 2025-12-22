@@ -1,4 +1,4 @@
-import { BUTTON_ICON_SIZES } from '../blocks/atoms/buttons/standard-button/standard-button.js';
+import { BUTTON_ICON_SIZES } from '../constants/index.js';
 import { moveInstrumentation } from './scripts.js';
 
 /**

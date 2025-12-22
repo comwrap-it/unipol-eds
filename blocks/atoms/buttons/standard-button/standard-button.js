@@ -9,29 +9,8 @@
 import {
   createButton,
 } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
-import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../../../constants';
-
-/**
- * Extract instrumentation attributes from an element
- * (Placeholder function - implementation depends on specific requirements)
- *
- * @param {HTMLElement} element - The element to extract attributes from
- * @returns {Object} An object containing instrumentation attributes
- */
-export const extractInstrumentationAttributes = (element) => {
-  const instrumentation = {};
-  if (element) {
-    [...element.attributes].forEach((attr) => {
-      if (
-        attr.name.startsWith('data-aue-')
-        || attr.name.startsWith('data-richtext-')
-      ) {
-        instrumentation[attr.name] = attr.value;
-      }
-    });
-  }
-  return instrumentation;
-};
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../../../constants.js';
+import { extractInstrumentationAttributes } from '../../../../scripts/utils.js';
 
 /** Extract button properties from rows
  *

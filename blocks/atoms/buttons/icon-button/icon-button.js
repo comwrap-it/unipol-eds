@@ -6,8 +6,8 @@
  *
  */
 
-import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../../../constants';
-import { extractInstrumentationAttributes } from '../../../../scripts/utils';
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../../../constants.js';
+import { extractInstrumentationAttributes } from '../../../../scripts/utils.js';
 
 /**
  * Create a button element with styling
