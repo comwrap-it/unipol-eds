@@ -10,14 +10,12 @@ async function ensureStylesLoaded() {
   isStylesLoaded = true;
 }
 
-// Estrarre il testo del bottone dalla prima row
 function extractShowMoreButtonValue(row) {
   const cells = Array.from(row.children);
   const label = cells[0]?.textContent?.trim() || 'Mostra di più';
   return { label };
 }
 
-// Creare il bottone in un div wrapper separato
 function createShowMoreButton({ label }) {
   const wrapper = document.createElement('div');
   wrapper.className = 'data-table-button-wrapper';
@@ -32,24 +30,60 @@ function createShowMoreButton({ label }) {
   return wrapper;
 }
 
+export async function createDataTable({ rows = [] } = {}) {
+  if (!rows.length) return null;
+
+  await ensureStylesLoaded();
+  const showMoreValues = extractShowMoreButtonValue(rows[0]);
+  const showMoreButtonWrapper = createShowMoreButton(showMoreValues);
+
+  const tableWrapper = document.createElement('div');
+  tableWrapper.className = 'data-table-container block data-table-block';
+
+  const table = document.createElement('table');
+  table.className = 'data-table';
+  const tbody = document.createElement('tbody');
+  table.appendChild(tbody);
+  tableWrapper.appendChild(table);
+  const trElements = await Promise.all(
+    rows.map((row) => createDataTableRowFromRows(Array.from(row.children))
+      .then((tr) => {
+        if (tr) {
+          moveInstrumentation(row, tr);
+          return tr;
+        }
+        return null;
+      })),
+  );
+  trElements.filter(Boolean).forEach((tr) => tbody.appendChild(tr));
+
+  const block = document.createElement('div');
+  block.className = 'data-table block data-table--decorated';
+  block.appendChild(tableWrapper);
+  block.appendChild(showMoreButtonWrapper);
+
+  showMoreButtonWrapper.querySelector('button').addEventListener('click', () => {
+    const hiddenRows = tbody.querySelectorAll('tr.hidden');
+    hiddenRows.forEach((r) => r.classList.remove('hidden'));
+    showMoreButtonWrapper.remove();
+  });
+
+  return block;
+}
+
 export default async function decorate(block) {
   if (!block) return;
 
   await ensureStylesLoaded();
-
-  // Evita doppia decorazione
   if (block.classList.contains('data-table--decorated')) return;
   block.classList.add('data-table--decorated');
 
-  // Recupera tutte le row come children diretti
   const rows = Array.from(block.children).filter(Boolean);
   if (!rows.length) return;
 
-  // Prima row per il bottone
   const showMoreValues = extractShowMoreButtonValue(rows[0]);
   const showMoreButtonWrapper = createShowMoreButton(showMoreValues);
 
-  // Tabella con tutte le row (eventualmente puoi fare rows.slice(1) se vuoi escludere la prima row)
   const tableWrapper = document.createElement('div');
   tableWrapper.className = 'data-table-container block data-table-block';
 
@@ -71,12 +105,10 @@ export default async function decorate(block) {
   );
   trElements.filter(Boolean).forEach((tr) => tbody.appendChild(tr));
 
-  // Pulizia block e iniezione
   block.innerHTML = '';
   block.appendChild(tableWrapper);
   block.appendChild(showMoreButtonWrapper);
 
-  // Logica del bottone
   showMoreButtonWrapper.querySelector('button').addEventListener('click', () => {
     const hiddenRows = tbody.querySelectorAll('tr.hidden');
     hiddenRows.forEach((r) => r.classList.remove('hidden'));
