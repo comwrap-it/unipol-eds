@@ -106,4 +106,8 @@ export default async function decorate(block) {
   if (!block) return;
   if (block.classList.contains('data-table-row--decorated')) return;
   block.classList.add('data-table-row--decorated');
+  let rows = Array.from(block.children);
+  const wrapper = block.querySelector('.default-content-wrapper');
+  if (wrapper) rows = Array.from(wrapper.children);
+  await createDataTableRowFromRows(rows);
 }

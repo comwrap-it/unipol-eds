@@ -1,15 +1,11 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import {
-  createDataTableRowFromRows,
-} from '../data-table-row/data-table-row.js';
+import { createDataTableRowFromRows } from '../data-table-row/data-table-row.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
-  await loadCSS(
-    `${window.hlx.codeBasePath}/blocks/data-table-row/data-table-row.css`,
-  );
+  await loadCSS(`${window.hlx.codeBasePath}/blocks/data-table-row/data-table-row.css`);
   isStylesLoaded = true;
 }
 
@@ -18,20 +14,18 @@ export default async function decorate(block) {
 
   await ensureStylesLoaded();
 
-  // Evita doppia decorazione
   if (block.classList.contains('data-table--decorated')) return;
   block.classList.add('data-table--decorated');
 
-  // Recupera tutte le righe (children)
   const rows = Array.from(block.children);
   if (!rows.length) return;
 
-  // Primo row è la label per il bottone
+  // Primo row: testo per bottone "Mostra di più"
   const showMoreLabelRow = rows.shift();
   const showMoreButtonLabel = showMoreLabelRow.textContent?.trim() || 'Mostra di più';
   showMoreLabelRow.remove();
 
-  // Crea struttura tabella
+  // Struttura tabella
   const tableWrapper = document.createElement('div');
   tableWrapper.className = 'data-table-container block data-table-block';
 
@@ -42,21 +36,30 @@ export default async function decorate(block) {
   table.appendChild(tbody);
   tableWrapper.appendChild(table);
 
-  // Processa tutte le data-table-row
+  // Crea <tr> per ogni riga senza violare ESLint
   const trElements = await Promise.all(
-    rows.map((row) => createDataTableRowFromRows(Array.from(row.children))),
+    rows
+      .filter(Boolean) // elimina eventuali row falsy
+      .map((row) => createDataTableRowFromRows(Array.from(row.children))
+        .then((tr) => {
+          if (tr) {
+            moveInstrumentation(row, tr);
+            return tr;
+          }
+          return null;
+        })),
   );
 
-  trElements.forEach((tr) => tbody.appendChild(tr));
+  // Append tr validi al tbody
+  trElements.filter(Boolean).forEach((tr) => tbody.appendChild(tr));
 
-  // Aggiungi bottone sotto la tabella
+  // Bottone sotto la tabella
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'data-table-show-more';
   button.textContent = showMoreButtonLabel;
   button.setAttribute('aria-label', showMoreButtonLabel);
 
-  // Eventuale logica del bottone (es. mostra altre righe nascoste)
   button.addEventListener('click', () => {
     const hiddenRows = tbody.querySelectorAll('tr.hidden');
     hiddenRows.forEach((r) => r.classList.remove('hidden'));
@@ -66,5 +69,6 @@ export default async function decorate(block) {
   block.innerHTML = '';
   block.appendChild(tableWrapper);
   block.appendChild(button);
+
   moveInstrumentation(block, tableWrapper);
 }
