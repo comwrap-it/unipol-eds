@@ -1,38 +1,51 @@
+/**
+ * Data Table Row - Block Item
+ *
+ * Transforms a block/item into a <tr> with 3 <td>.
+ * Fully Universal Editor compliant.
+ */
+
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { loadFragment } from '../fragment/fragment.js';
 
-let isStylesLoaded = false;
+/* =========================================================
+   HELPERS
+========================================================= */
 
-async function ensureStylesLoaded() {
-  if (isStylesLoaded) return;
-  const { loadCSS } = await import('../../scripts/aem.js');
-  await loadCSS(`${window.hlx.codeBasePath}/blocks/data-table-row/data-table-row.css`);
-  isStylesLoaded = true;
-}
+const text = (el) => el?.textContent?.trim() || '';
+const isTrue = (el) => text(el) === 'true';
+const linkHref = (el) => el?.querySelector('a')?.getAttribute('href') || '';
 
-function textAt(cell) {
-  return cell?.textContent?.trim() || '';
-}
+/* =========================================================
+   CREATE <TR>
+========================================================= */
 
-function linkAt(cell) {
-  return cell?.querySelector('a')?.getAttribute('href');
-}
-
-export async function createDataTableRowFromCells(cells) {
+async function createDataTableRowFromRows(rows) {
   const tr = document.createElement('tr');
+
+  /* =======================
+     COLUMN 1
+     ======================= */
   {
     const td = document.createElement('td');
-    const showButton = textAt(cells[0]) === 'true';
-    const title = textAt(cells[1]);
-    const fragmentPath = linkAt(cells[2]);
+
+    const showButton = isTrue(rows[0]);
+    const titleRow = rows[1];
+    const tooltipRow = rows[2];
+
+    const title = text(titleRow);
+    const fragmentPath = linkHref(tooltipRow);
+
     if (title) {
       if (!showButton) {
         td.textContent = title;
+        moveInstrumentation(titleRow, td);
       } else {
         const button = document.createElement('button');
         button.type = 'button';
-        button.textContent = title;
         button.className = 'data-table-tooltip-btn';
+        button.textContent = title;
+
         const tooltip = document.createElement('div');
         tooltip.className = 'data-table-tooltip';
         tooltip.hidden = true;
@@ -44,8 +57,10 @@ export async function createDataTableRowFromCells(cells) {
           }
           tooltip.hidden = !tooltip.hidden;
         });
-        moveInstrumentation(cells[1], button);
-        moveInstrumentation(cells[2], tooltip);
+
+        moveInstrumentation(titleRow, button);
+        moveInstrumentation(tooltipRow, tooltip);
+
         td.append(button, tooltip);
       }
     }
@@ -53,47 +68,87 @@ export async function createDataTableRowFromCells(cells) {
     tr.appendChild(td);
   }
 
+  /* =======================
+     COLUMN 2
+     ======================= */
   {
     const td = document.createElement('td');
-    const isTitle = textAt(cells[3]) === 'true';
-    const title = textAt(cells[4]);
-    const text = textAt(cells[5]);
-    if (isTitle && title) {
-      td.innerHTML = `<strong>${title}</strong>`;
-    } else if (!isTitle && text) {
-      td.textContent = text;
+
+    const isTitleCell = isTrue(rows[3]);
+    const titleRow = rows[4];
+    const textRow = rows[5];
+
+    if (isTitleCell && text(titleRow)) {
+      const strong = document.createElement('strong');
+      strong.textContent = text(titleRow);
+      moveInstrumentation(titleRow, strong);
+      td.appendChild(strong);
+    } else if (!isTitleCell && text(textRow)) {
+      td.textContent = text(textRow);
+      moveInstrumentation(textRow, td);
     }
+
     tr.appendChild(td);
   }
 
+  /* =======================
+     COLUMN 3
+     ======================= */
   {
     const td = document.createElement('td');
-    const isTitle = textAt(cells[6]) === 'true';
-    const title = textAt(cells[7]);
-    const text = textAt(cells[8]);
-    const benefit = textAt(cells[9]);
 
-    if (isTitle && title) {
-      td.innerHTML = `<strong>${title}</strong>`;
+    const isTitleCell = isTrue(rows[6]);
+    const titleRow = rows[7];
+    const textRow = rows[8];
+    const benefitRow = rows[9];
+
+    if (isTitleCell && text(titleRow)) {
+      const strong = document.createElement('strong');
+      strong.textContent = text(titleRow);
+      moveInstrumentation(titleRow, strong);
+      td.appendChild(strong);
     } else {
-      if (text) td.append(text);
-      if (benefit) {
-        const span = document.createElement('span');
-        span.className = 'data-table-benefit';
-        span.textContent = benefit;
-        td.append(' ', span);
+      if (text(textRow)) {
+        const spanText = document.createElement('span');
+        spanText.textContent = text(textRow);
+        moveInstrumentation(textRow, spanText);
+        td.appendChild(spanText);
+      }
+
+      if (text(benefitRow)) {
+        const benefit = document.createElement('span');
+        benefit.className = 'data-table-benefit';
+        benefit.textContent = text(benefitRow);
+        moveInstrumentation(benefitRow, benefit);
+        td.append(' ', benefit);
       }
     }
+
     tr.appendChild(td);
   }
 
   return tr;
 }
 
-/* ---------- DECORATE ---------- */
+/* =========================================================
+   DECORATE
+========================================================= */
+
 export default async function decorate(block) {
-  await ensureStylesLoaded();
-  const cells = Array.from(block.children);
-  const tr = await createDataTableRowFromCells(cells);
+  if (!block) return;
+
+  // Prevent double decoration (UE re-render)
+  if (block.classList.contains('data-table-row--decorated')) return;
+  block.classList.add('data-table-row--decorated');
+
+  let rows = Array.from(block.children);
+  const wrapper = block.querySelector('.default-content-wrapper');
+  if (wrapper) rows = Array.from(wrapper.children);
+
+  const tr = await createDataTableRowFromRows(rows);
+
+  // Move instrumentation from block/item root to <tr>
+  moveInstrumentation(block, tr);
+
   block.replaceWith(tr);
 }
