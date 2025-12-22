@@ -18,6 +18,16 @@ module.exports = {
     sourceType: 'module',
     requireConfigFile: false,
   },
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          ['@unipol-ds', './scripts/libs/ds'],
+        ],
+        extensions: ['.js', '.json'],
+      },
+    },
+  },
   rules: {
     'import/extensions': ['error', { js: 'always' }], // require js file extensions in imports
     'linebreak-style': ['error', 'unix'], // enforce unix linebreaks
