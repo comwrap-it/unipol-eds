@@ -1,119 +1,70 @@
-/**
- * Data Table - Block
- *
- * Parent block that renders a <table> and manages "show more".
- * Fully Universal Editor compliant.
- */
-
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import {
+  createDataTableRowFromRows,
+} from '../data-table-row/data-table-row.js';
 
-/* =========================================================
-   HELPERS
-========================================================= */
+let isStylesLoaded = false;
+async function ensureStylesLoaded() {
+  if (isStylesLoaded) return;
+  const { loadCSS } = await import('../../scripts/aem.js');
+  await loadCSS(
+    `${window.hlx.codeBasePath}/blocks/data-table-row/data-table-row.css`,
+  );
+  isStylesLoaded = true;
+}
 
-const text = (el) => el?.textContent?.trim() || '';
+export default async function decorate(block) {
+  if (!block) return;
 
-/* =========================================================
-   CREATE TABLE
-========================================================= */
+  await ensureStylesLoaded();
 
-function createDataTable({
-  tableRows = [],
-  showMoreButtonLabel = 'Mostra di più',
-}) {
-  const container = document.createElement('div');
-  container.className = 'data-table-container';
+  // Evita doppia decorazione
+  if (block.classList.contains('data-table--decorated')) return;
+  block.classList.add('data-table--decorated');
+
+  // Recupera tutte le righe (children)
+  const rows = Array.from(block.children);
+  if (!rows.length) return;
+
+  // Primo row è la label per il bottone
+  const showMoreLabelRow = rows.shift();
+  const showMoreButtonLabel = showMoreLabelRow.textContent?.trim() || 'Mostra di più';
+  showMoreLabelRow.remove();
+
+  // Crea struttura tabella
+  const tableWrapper = document.createElement('div');
+  tableWrapper.className = 'data-table-container block data-table-block';
 
   const table = document.createElement('table');
   table.className = 'data-table';
 
   const tbody = document.createElement('tbody');
   table.appendChild(tbody);
+  tableWrapper.appendChild(table);
 
-  const mq = window.matchMedia('(min-width: 768px)');
-  const renderedRows = [];
+  // Processa tutte le data-table-row
+  const trElements = await Promise.all(
+    rows.map((row) => createDataTableRowFromRows(Array.from(row.children))),
+  );
 
-  tableRows.forEach((tr, index) => {
-    if (!mq.matches && index >= 4) {
-      tr.classList.add('hidden');
-    }
-    renderedRows.push(tr);
-    tbody.appendChild(tr);
+  trElements.forEach((tr) => tbody.appendChild(tr));
+
+  // Aggiungi bottone sotto la tabella
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.className = 'data-table-show-more';
+  button.textContent = showMoreButtonLabel;
+  button.setAttribute('aria-label', showMoreButtonLabel);
+
+  // Eventuale logica del bottone (es. mostra altre righe nascoste)
+  button.addEventListener('click', () => {
+    const hiddenRows = tbody.querySelectorAll('tr.hidden');
+    hiddenRows.forEach((r) => r.classList.remove('hidden'));
+    button.remove();
   });
 
-  container.appendChild(table);
-
-  /* ==========================
-     SHOW MORE BUTTON
-  ========================== */
-
-  if (!mq.matches && renderedRows.length > 4) {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'data-table-show-more';
-    button.textContent = showMoreButtonLabel;
-    button.setAttribute('aria-label', showMoreButtonLabel);
-
-    button.addEventListener('click', (e) => {
-      e.preventDefault();
-      renderedRows.forEach((tr) => tr.classList.remove('hidden'));
-      button.remove();
-    });
-
-    container.appendChild(button);
-  }
-
-  return container;
-}
-
-export const create = createDataTable;
-
-/* =========================================================
-   DECORATE
-========================================================= */
-
-export default function decorate(block) {
-  if (!block) return;
-
-  // Prevent double decoration (UE re-render)
-  if (block.classList.contains('data-table--decorated')) return;
-  block.classList.add('data-table--decorated');
-
-  let rows = Array.from(block.children);
-  const wrapper = block.querySelector('.default-content-wrapper');
-  if (wrapper) rows = Array.from(wrapper.children);
-
-  if (rows.length === 0) return;
-
-  /* ==========================
-     ROW 0 → BUTTON LABEL
-  ========================== */
-
-  const showMoreRow = rows.shift();
-  const showMoreButtonLabel = text(showMoreRow) || 'Mostra di più';
-
-  /* ==========================
-     DATA-TABLE-ROW ITEMS
-  ========================== */
-
-  const tableRows = rows.filter((row) => row.tagName === 'TR');
-
-  if (tableRows.length === 0) return;
-
-  const table = createDataTable({
-    tableRows,
-    showMoreButtonLabel,
-  });
-
-  // Move instrumentation from block to container
-  moveInstrumentation(block, table);
-
-  // Preserve blockName if present
-  if (block.dataset.blockName) {
-    table.dataset.blockName = block.dataset.blockName;
-  }
-
-  block.innerText = '';
-  table.classList.add('block', 'data-table-block');
-  block.appendChild(table);
+  block.innerHTML = '';
+  block.appendChild(tableWrapper);
+  block.appendChild(button);
+  moveInstrumentation(block, tableWrapper);
 }

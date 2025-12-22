@@ -20,7 +20,7 @@ const linkHref = (el) => el?.querySelector('a')?.getAttribute('href') || '';
    CREATE <TR>
 ========================================================= */
 
-async function createDataTableRowFromRows(rows) {
+export async function createDataTableRowFromRows(rows) {
   const tr = document.createElement('tr');
 
   /* =======================
