@@ -1,4 +1,4 @@
-import { createRadio, RADIO_TYPES, extractInstrumentationAttributes } from '../standard-radio-button/radio-button.js';
+import { createRadio } from '../standard-radio-button/radio-button.js';
 
 /**
  * Crete Radio Button Field Component
@@ -49,36 +49,4 @@ export function createRadioButtonField(
   wrapper.appendChild(textBox);
 
   return wrapper;
-}
-
-/**
- * Decorator
- *
- * @param {HTMLElement} block
- */
-export default function decorateRadioButtonField(block) {
-  if (!block) return;
-
-  let rows = [...block.children];
-  const wrapper = block.querySelector('.default-content-wrapper');
-  if (wrapper) rows = [...wrapper.children];
-
-  const type = rows[0]?.textContent?.trim().toLowerCase() || RADIO_TYPES.UNCHECKED;
-  const disabled = rows[1]?.textContent?.trim().toLowerCase() === 'true';
-  const label = rows[2]?.textContent?.trim() || '';
-  const description = rows[3]?.textContent?.trim() || '';
-  const instrumentation = extractInstrumentationAttributes(rows[0]);
-
-  block.textContent = '';
-
-  const radioButtonField = createRadioButtonField({
-    type,
-    disabled,
-    label,
-    description,
-    instrumentation,
-  });
-
-  block.appendChild(radioButtonField);
-  block.classList.add('radio-button-field-block');
 }

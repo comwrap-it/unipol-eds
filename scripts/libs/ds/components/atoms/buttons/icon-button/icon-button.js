@@ -8,7 +8,7 @@
 
 import {
   BUTTON_ICON_SIZES,
-  BUTTON_VARIANTS,
+  BUTTON_VARIANTS
 } from '../standard-button/standard-button.js';
 
 /**

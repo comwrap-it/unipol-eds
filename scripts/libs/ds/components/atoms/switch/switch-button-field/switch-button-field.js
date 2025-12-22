@@ -1,7 +1,6 @@
 import {
   createSwitch,
-  SWITCH_TYPES,
-  extractInstrumentationAttributes,
+  SWITCH_TYPES
 } from '../standard-switch-button/switch-button.js';
 
 /**
@@ -55,34 +54,3 @@ export function createSwitchButtonField(
   return wrapper;
 }
 
-/**
- * Decorator
- *
- * @param {HTMLElement} block
- */
-export default function decorateSwitchButtonField(block) {
-  if (!block) return;
-
-  let rows = [...block.children];
-  const wrapper = block.querySelector('.default-content-wrapper');
-  if (wrapper) rows = [...wrapper.children];
-
-  const type = rows[0]?.textContent?.trim().toLowerCase() || SWITCH_TYPES.UNCHECKED;
-  const disabled = rows[1]?.textContent?.trim().toLowerCase() === 'true';
-  const label = rows[2]?.textContent?.trim() || '';
-  const description = rows[3]?.textContent?.trim() || '';
-  const instrumentation = extractInstrumentationAttributes(rows[0]);
-
-  block.textContent = '';
-
-  const switchButtonField = createSwitchButtonField({
-    type,
-    disabled,
-    label,
-    description,
-    instrumentation,
-  });
-
-  block.appendChild(switchButtonField);
-  block.classList.add('switch-button-field-block');
-}

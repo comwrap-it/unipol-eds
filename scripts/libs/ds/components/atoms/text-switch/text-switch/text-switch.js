@@ -82,30 +82,3 @@ export function createTextSwitch(labelLeft, labelRight, initialActive) {
   return wrapper;
 }
 
-/**
- * Decorator
- */
-export default function decorateTextSwitch(block) {
-  if (!block) return;
-
-  let rows = [...block.children];
-  const wrapper = block.querySelector('.default-content-wrapper');
-  if (wrapper) rows = [...wrapper.children];
-
-  const labelLeft = rows[0]?.textContent?.trim() || 'Option A';
-  const labelRight = rows[1]?.textContent?.trim() || 'Option B';
-  const initialActive = rows[2]?.textContent?.trim().toLowerCase() === 'right'
-    ? 'right'
-    : 'left';
-
-  block.textContent = '';
-
-  const textSwitch = createTextSwitch({
-    labelLeft,
-    labelRight,
-    initialActive,
-  });
-
-  block.appendChild(textSwitch);
-  block.classList.add('text-switch-block');
-}

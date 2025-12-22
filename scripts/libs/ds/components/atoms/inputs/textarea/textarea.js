@@ -1,6 +1,5 @@
 import {
-  BUTTON_ICON_SIZES,
-  extractInstrumentationAttributes,
+  BUTTON_ICON_SIZES
 } from '../../buttons/standard-button/standard-button.js';
 
 /**
@@ -70,91 +69,3 @@ export const createTextarea = (
   return mainWrapper;
 };
 
-/**
- * Extract values from block rows
- * @param {HTMLElement[]} rows The block rows
- * @returns {Object} The extracted values
- */
-const extractValuesFromRows = (rows) => {
-  const label = rows[0].textContent.trim();
-  const icon = rows[1] ? rows[1].textContent.trim() : '';
-  const iconSize = rows[2] ? rows[2].textContent.trim() : '';
-  const hintText = rows[3] ? rows[3].textContent.trim() : '';
-  const hintIcon = rows[4] ? rows[4].textContent.trim() : '';
-  const instrumentation = extractInstrumentationAttributes(rows[0]);
-  return {
-    label,
-    icon,
-    iconSize,
-    hintText,
-    hintIcon,
-    instrumentation,
-  };
-};
-
-/**
- * Decorate Textarea Block
- * @param {HTMLElement} block The Textarea block element
- */
-export default function decorateTextarea(block) {
-  if (!block) return;
-
-  // Get rows from block
-  let rows = Array.from(block.children);
-  const wrapper = block.querySelector('.default-content-wrapper');
-  if (wrapper) {
-    rows = Array.from(wrapper.children);
-  }
-
-  // Check if block has instrumentation (Universal Editor)
-  const hasInstrumentation = block.hasAttribute('data-aue-resource')
-    || block.querySelector('[data-aue-resource]')
-    || block.querySelector('[data-richtext-prop]');
-
-  // Extract category chip properties
-  const {
-    label, icon, iconSize, hintText, hintIcon, instrumentation,
-  } = extractValuesFromRows(rows);
-
-  if (hasInstrumentation) {
-    let textarea = block.querySelector('.textarea');
-    if (!textarea) {
-      textarea = createTextarea(
-        label,
-        icon,
-        iconSize,
-        hintText,
-        hintIcon,
-        instrumentation,
-      );
-      if (rows[0]) {
-        rows[0].textContent = '';
-        rows[0].appendChild(textarea);
-      } else {
-        block.appendChild(textarea);
-      }
-    } else {
-      // Update existing category tab
-      textarea = createTextarea(
-        label,
-        icon,
-        iconSize,
-        hintText,
-        hintIcon,
-        instrumentation,
-      );
-    }
-  } else {
-    const textarea = createTextarea(
-      label,
-      icon,
-      iconSize,
-      hintText,
-      hintIcon,
-      instrumentation,
-    );
-    // Clear block and append textarea
-    block.textContent = '';
-    block.appendChild(textarea);
-  }
-}
