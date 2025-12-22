@@ -101,7 +101,6 @@ export async function createDataTableRowFromRows(rows) {
   return tr;
 }
 
-// NON USARE più replaceWith
 export default async function decorate(block) {
   if (!block) return;
   if (block.classList.contains('data-table-row--decorated')) return;
