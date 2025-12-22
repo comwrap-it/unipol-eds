@@ -1,3 +1,4 @@
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
 import {
   createTextElementFromRow,
   extractBooleanValueFromRow,
@@ -5,8 +6,6 @@ import {
 } from '../../scripts/domHelpers.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import {
-  BUTTON_ICON_SIZES,
-  BUTTON_VARIANTS,
   createButton,
 } from '../atoms/buttons/standard-button/standard-button.js';
 

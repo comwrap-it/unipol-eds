@@ -3,14 +3,13 @@
  */
 
 import {
-  createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES,
+  createButton,
 } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
 import {
   createButtonFromRows,
 } from '../atoms/buttons/standard-button/standard-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-
-export { BUTTON_VARIANTS, BUTTON_ICON_SIZES };
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
 
 let isPrimaryBtnStyleLoaded = false;
 async function ensureBtnStylesLoaded() {

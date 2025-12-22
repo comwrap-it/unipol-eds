@@ -21,12 +21,11 @@ import { moveInstrumentation } from '../../scripts/scripts.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
 import {
   createButton,
-  BUTTON_VARIANTS,
-  BUTTON_ICON_SIZES,
 } from '../atoms/buttons/standard-button/standard-button.js';
 import { initCarouselAnimations } from '../../scripts/reveal.js';
 import loadSwiper from '../../scripts/delayed.js';
 import { handleSlideChange } from '../../scripts/utils.js';
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {

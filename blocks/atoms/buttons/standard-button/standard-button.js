@@ -7,8 +7,9 @@
  * Export constants and functions that can be reused across components.
  */
 import {
-  createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES,
+  createButton,
 } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../../../constants';
 
 /**
  * Extract instrumentation attributes from an element

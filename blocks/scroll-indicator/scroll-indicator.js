@@ -6,11 +6,7 @@
  *
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
-
-import {
-  BUTTON_ICON_SIZES,
-  BUTTON_VARIANTS,
-} from '../atoms/buttons/standard-button/standard-button.js';
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
 import { createIconButton } from '../atoms/buttons/icon-button/icon-button.js';
 
 let isStylesLoaded = false;
