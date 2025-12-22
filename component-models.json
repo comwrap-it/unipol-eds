@@ -1151,11 +1151,14 @@
         "label": "Immagine QR CODE"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "name": "qrCodeImg",
         "value": "",
         "label": "Testo sezione QR Code",
-        "valueType": "string"
+        "validation": {
+          "maxLength": 30,
+          "customErrorMsg": "Testo troppo lungo (max 30 caratteri)"
+        }
       },
       {
         "component": "reference",
@@ -3016,10 +3019,14 @@
         "valueType": "boolean"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "Testo Elenco",
         "name": "listLinks",
         "valueType": "string",
+        "validation": {
+          "maxLength": 25,
+          "customErrorMsg": "Testo troppo lungo (max 25 caratteri)"
+        },
         "condition": {
           "===": [
             {
@@ -3033,6 +3040,10 @@
         "component": "text",
         "name": "linkTextComp",
         "label": "Testo Link",
+        "validation": {
+          "maxLength": 45,
+          "customErrorMsg": "Testo troppo lungo (max 45 caratteri)"
+        },
         "required": true,
         "condition": {
           "===": [
