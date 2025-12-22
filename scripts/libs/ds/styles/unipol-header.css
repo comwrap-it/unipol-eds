@@ -1,0 +1,40 @@
+.section.header-logo-container,
+.section.header-navigation-section-container,
+.section.header-utilities-section-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: absolute;
+    padding-inline: 0;
+    padding-block: 0;
+    padding: var(--Header-Vertical-Padding-M-Tp, 24px); var(--Header-Horizontal-Padding-D-Ds, 24px);
+    width: 100%;
+    z-index: 2;
+    padding-bottom: 0 !important;
+}
+
+main .section.header-logo-container,
+main .section.header-navigation-section-container,
+main .section.header-utilities-section-container {
+    margin-top: 110px;
+    background: #00000080;
+    position: relative;
+}
+
+
+.adobe-ue-edit .section.header-logo-container,
+.adobe-ue-edit .section.header-navigation-section-container,
+.adobe-ue-edit .section.header-utilities-section-container {
+    position: relative;
+    margin-top: unset;
+}
+
+.adobe-ue-edit .section.header-navigation-section-container .header-box-text-container {
+    display: none !important;
+}
+
+@media (width <= 1200px) {
+    main .section.header-navigation-section-container .navigation-pill-container {
+        margin-bottom: 60px;
+    }
+}

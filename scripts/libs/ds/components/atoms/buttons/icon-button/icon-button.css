@@ -1,0 +1,88 @@
+.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: var(--Icon-Button-Dimentions);
+    width: var(--Icon-Button-Dimentions);
+    border-radius: var(--Icon-Button-Radius);
+    gap: var(--Space-200-8);
+    border: var(--Stroke-100-1) solid transparent;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-family: inherit;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.btn-icon-primary {
+    background-color: var(--Icon-Button-Primary-Default-Background);
+    color: var(--Icon-Button-Primary-Default-Icon);
+    border-color: var(--Icon-Button-Primary-Default-Border);
+
+    /* Disabled state */
+    &:disabled {
+        background-color: var(--Icon-Button-Primary-Disabled-Background);
+        color: var(--Icon-Button-Primary-Disabled-Icon);
+        cursor: default;
+        border-color: var(--Icon-Button-Primary-Disabled-Border);
+    }
+
+    /* Focus state */
+    &:focus-visible,
+    &:focus {
+        outline: var(--Stroke-200-2) solid var(--Icon-Button-Primary-Focused-Border-Focused);
+        background-color: var(--Icon-Button-Primary-Focused-Background);
+        color: var(--Icon-Button-Primary-Focused-Icon);
+    }
+
+    /* Hover state */
+    &:hover:not(:disabled) {
+        background-color: var(--Icon-Button-Primary-Hover-Background);
+        color: var(--Icon-Button-Primary-Hover-Icon);
+        border-color: var(--Icon-Button-Primary-Hover-Border);
+    }
+
+    /* Pressed state */
+    &:active:not(:disabled) {
+        background-color: var(--Icon-Button-Primary-Pressed-Background);
+        color: var(--Icon-Button-Primary-Pressed-Icon);
+        border-color: var(--Icon-Button-Primary-Pressed-Border);
+    }
+}
+
+.btn-icon-secondary {
+    background-color: var(--Icon-Button-Secondary-Default-Background);
+    color: var(--Icon-Button-Secondary-Default-Icon);
+    border-color: var(--Icon-Button-Secondary-Default-Border);
+
+    /* Disabled state */
+    &:disabled {
+        background-color: var(--Icon-Button-Secondary-Disabled-Background);
+        color: var(--Icon-Button-Secondary-Disabled-Icon);
+        border-color: var(--Icon-Button-Secondary-Disabled-Border);
+        cursor: default;
+    }
+
+    /* Focus state */
+    &:focus-visible,
+    &:focus {
+        outline: var(--Stroke-200-2) solid var(--Icon-Button-Secondary-Focused-Border);
+        background-color: var(--Icon-Button-Secondary-Focused-Background);
+        color: var(--Icon-Button-Secondary-Focused-Icon);
+    }
+
+    /* Hover state */
+    &:hover:not(:disabled) {
+        background-color: var(--Icon-Button-Secondary-Hover-Background);
+        color: var(--Icon-Button-Secondary-Hover-Icon);
+        border-color: var(--Icon-Button-Secondary-Hover-Border);
+    }
+
+    /* Pressed state */
+    &:active:not(:disabled) {
+        background-color: var(--Icon-Button-Secondary-Pressed-Background);
+        color: var(--Icon-Button-Secondary-Pressed-Icon);
+        border-color: var(--Icon-Button-Secondary-Pressed-Border);
+    }
+}

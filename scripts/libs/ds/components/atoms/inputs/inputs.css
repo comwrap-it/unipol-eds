@@ -1,0 +1,265 @@
+.input-main-wrapper {
+    display: flex;
+    width: 350px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--Input-Fields-Vertical-Gap, 4px);
+    position: relative;
+
+    .input-container {
+        position: relative;
+        width: 100%;
+
+        .input {
+            width: 100%;
+            height: var(--Input-Fields-Text-Field-Height, 48px);
+            padding-block: var(--Input-Fields-Vertical-Padding, 16px);
+            padding-left: var(--Input-Fields-Horizontal-Padding, 24px);
+            padding-right: var(--Input-Fields-Horizontal-Padding-Icon, 20px);
+            border-radius: var(--Input-Fields-Radius-Default, 9999px);
+            border: var(--Input-Fields-Border-Default, 1px) solid var(--Input-Fields-Placeholder-Border);
+            background-color: var(--Input-Fields-Enabled-Background);
+            color: var(--Input-Fields-Placeholder-Text-Value);
+            font-family: var(--Family-Font-2);
+            font-size: var(--Size-16);
+            font-weight: var(--Weight-Italic);
+            line-height: 1.4;
+
+            &::placeholder {
+                color: var(--Input-Fields-Placeholder-Text-Value);
+            }
+
+            &:disabled {
+                background-color: var(--Input-Fields-Disabled-Background);
+                border-color: var(--Input-Fields-Disabled-Border);
+                color: var(--Input-Fields-Disabled-Text-Value);
+                cursor: not-allowed;
+            }
+
+            &:enabled {
+                color: var(--Input-Fields-Enabled-Text-Value);
+                border-color: var(--Input-Fields-Enabled-Border);
+                background-color: var(--Input-Fields-Enabled-Background);
+
+                &:hover {
+                    border-color: var(--Input-Fields-Hover-Border);
+                    background-color: var(--Input-Fields-Hover-Background);
+                    color: var(--Input-Fields-Hover-Text-Value);
+                }
+
+                &:focus {
+                    outline: var(--Input-Fields-Border-Focused) solid var(--Input-Fields-Focused-Border-Focused);
+                    background-color: var(--Input-Fields-Focused-Background);
+                    color: var(--Input-Fields-Focused-Text-Value);
+                }
+
+                &:active {
+                    border-color: var(--Input-Fields-Pressed-Border);
+                    background-color: var(--Input-Fields-Pressed-Background);
+                    color: var(--Input-Fields-Pressed-Text-Value);
+                }
+            }
+        }
+
+        label {
+            color: var(--Input-Fields-Placeholder-Text-Value);
+            padding: var(--Input-Fields-Label-Padding, 4px) 0;
+            position: absolute;
+            left: var(--Input-Fields-Horizontal-Padding, 24px);
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+            transition: all 0.2s ease-in-out;
+            font-family: var(--Family-Font-2);
+            font-size: var(--Size-16);
+            font-weight: var(--Weight-Italic);
+            line-height: 1.4;
+        }
+
+        .select-value {
+            color: var(--Input-Fields-Placeholder-Text-Value);
+            position: absolute;
+            left: var(--Input-Fields-Horizontal-Padding, 24px);
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+        .icon {
+            position: absolute;
+            top: 50%;
+            right: var(--Input-Fields-Horizontal-Padding-Icon, 20px);
+            transform: translateY(-50%);
+        }
+
+        &.has-value {
+            label {
+                top: 0;
+                font-size: var(--Size-12);
+                padding: var(--Label-Input-Fields-Vertical-Padding, 0) var(--Input-Fields-Label-Padding, 4px);
+                background-color: var(--Label-Input-Fields-Secondary-Background);
+                border-radius: var(--Label-Input-Fields-Radius, 4px);
+                color: var(--Label-Input-Fields-Secondary-Text);
+            }
+        }
+
+        .textarea {
+            border-radius: var(--Input-Fields-Radius-Text-Area);
+            resize: none;
+            height: 100%;
+
+            & + label {
+                top: var(--Input-Fields-Vertical-Padding, 16px);
+                padding-block: var(--Label-Input-Fields-Vertical-Padding, 0);
+                transform: translateY(0);
+            }
+
+            &:not(:placeholder-shown),
+            &:focus {
+                & + label {
+                    transform: translateY(-50%);
+                }
+            }
+
+            & ~ .icon {
+                top: var(--Input-Fields-Vertical-Padding, 16px);
+                transform: translateY(0);
+            }
+        }
+
+        /* if i have the icon i increase the padding-right of the icon width + 5px */
+        &:has(.icon.icon-small) {
+            & .input,
+            & .select-value {
+                padding-right: calc(
+                    var(--Input-Fields-Horizontal-Padding-Icon, 20px) +
+                        var(--Space-300-16) + 5px
+                );
+            }
+        }
+
+        &:has(.icon.icon-medium) {
+            & .input,
+            & .select-value {
+                padding-right: calc(
+                    var(--Input-Fields-Horizontal-Padding-Icon, 20px) +
+                        var(--Space-350-20) + 5px
+                );
+            }
+        }
+
+        &:has(.icon.icon-large) {
+            & .input,
+            & .select-value {
+                padding-right: calc(
+                    var(--Input-Fields-Horizontal-Padding-Icon, 20px) +
+                        var(--Space-400-24) + 5px
+                );
+            }
+        }
+
+        &:has(.icon.icon-extra-large) {
+            & .input,
+            & .select-value {
+                padding-right: calc(
+                    var(--Input-Fields-Horizontal-Padding-Icon, 20px) +
+                        var(--Space-500-32) + 5px
+                );
+            }
+        }
+
+        .input:not(:placeholder-shown),
+        .input:focus {
+            & + label {
+                top: 0;
+                    font-size: var(--Size-12);
+                    padding: var(--Label-Input-Fields-Vertical-Padding, 0) var(--Input-Fields-Label-Padding, 4px);
+                    background-color: var(--Label-Input-Fields-Secondary-Background);
+                    border-radius: var(--Label-Input-Fields-Radius, 4px);
+                    color: var(--Label-Input-Fields-Secondary-Text);
+            }
+        }
+
+        &:has(.textarea) {
+            height: var(--Space-1100-96);
+        }
+
+        &:has(.select-value:hover) {
+            .input:enabled {
+                    border-color: var(--Input-Fields-Hover-Border);
+                    background-color: var(--Input-Fields-Hover-Background);
+                    color: var(--Input-Fields-Hover-Text-Value);
+            }
+        }
+    }
+
+    .options-list {
+        position: absolute;
+        opacity: 0;
+        top: calc(
+            var(--Input-Fields-Text-Field-Height, 48px) +
+                var(--Input-Fields-Vertical-Gap, 4px)
+        );
+        z-index: 30;
+        background-color: var(--White-1100);
+        transition: opacity 0.3s ease-in-out;
+
+        &.options-list-visible {
+            opacity: 1;
+        }
+    }
+
+    .helper-container {
+        display: flex;
+        align-items: center;
+        padding-left: var(--Input-Fields-Horizontal-Padding, 24px);
+        gap: var(--Space-200-8, 8px);
+        align-self: stretch;
+        font-family: var(--Family-Font-2);
+        font-size: var(--Size-12);
+        font-weight: var(--Weight-Italic);
+        line-height: 1.4;
+        color: var(--Input-Field-Hint-Helper-Text);
+    }
+
+    /* handle warning state */
+    .input-container:has(.warning) {
+        input.warning {
+            border-color: var(--Input-Fields-Warning-Border);
+            background-color: var(--Input-Fields-Warning-Background);
+            color: var(--Input-Fields-Warning-Text-Value);
+        }
+
+        + .helper-container {
+            color: var(--Input-Field-Hint-Warning-Text);
+        }
+    }
+
+    /* handle success state */
+    .input-container:has(.success) {
+        input.success {
+            border-color: var(--Input-Fields-Success-Border);
+            background-color: var(--Input-Fields-Success-Background);
+            color: var(--Input-Fields-Success-Text-Value);
+        }
+
+        + .helper-container {
+            color: var(--Input-Field-Hint-Success-Text);
+        }
+    }
+
+    /* handle error state */
+    .input-container:has(.error),
+    .input-container:has(input:invalid) {
+        input:invalid,
+        input.error {
+            border-color: var(--Input-Fields-Error-Border);
+            background-color: var(--Input-Fields-Error-Background);
+            color: var(--Input-Fields-Error-Text-Value);
+        }
+
+        + .helper-container {
+            color: var(--Input-Field-Hint-Error-Text);
+        }
+    }
+}

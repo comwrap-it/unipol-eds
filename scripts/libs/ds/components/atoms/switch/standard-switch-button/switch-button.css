@@ -1,0 +1,94 @@
+.switch {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+  gap: var(--Space-200-8);
+  font-family: var(--Family-Font-2);
+  font-size: var(--Text-Styles-Body-Small);
+  user-select: none;
+}
+
+.switch input[type="checkbox"] {
+  appearance: none;
+  display: flex;
+  width: var(--Switch-Width, 40px);
+  height: var(--Switch-Height, 24px);
+  padding: var(--Switch-Padding, 2px);
+  align-items: center;
+  background: var(--Switch-Unchecked-Background, #BFC7CD);
+  border-radius: var(--Switch-Radius, 9999px);
+  cursor: pointer;
+  position: relative;
+  box-sizing: border-box;
+
+}
+
+.switch input[type="checkbox"]::after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--Switch-Unchecked-Pressed-Icon, #F9F9F7);
+  transform: translateX(0);
+  transition: transform 0.25s ease, background 0.25s ease;
+
+}
+
+/* CHECKED */
+.switch input[type="checkbox"]:checked {
+  background: var(--Switch-Checked-Background, #BFC7CD);
+}
+
+.switch input[type="checkbox"]:checked::after {
+  transform: translateX(18px);
+}
+
+/* FOCUSED */
+.switch input[type="checkbox"]:focus-visible {
+  border: var(--Switch-Border-Focus, 2px) solid var(--Switch-Checked-Focused-Border-Focus, #99CFFF);
+}
+
+.switch input[type="checkbox"]:focus-visible:not(:checked) {
+  background: var(--Switch-Unchecked-Focused-Background, #BFC7CD);
+}
+
+.switch input[type="checkbox"]:focus-visible:checked {
+  background: var(--Switch-Checked-Focused-Background, #BFC7CD);
+}
+
+/* HOVER */
+.switch input[type="checkbox"]:not(:disabled):hover:not(:checked) {
+  background: var(--Switch-Unchecked-Hover-Background, #DFE2E5);
+}
+
+.switch input[type="checkbox"]:not(:disabled):hover:checked {
+  background: var(--Switch-Checked-Hover-Background, #DFE2E5);
+}
+
+/* PRESSED */
+.switch input[type="checkbox"]:not(:disabled):active:not(:checked) {
+  background: var(--Switch-Unchecked-Pressed-Background, #DFE2E5);
+}
+
+.switch input[type="checkbox"]:not(:disabled):active:checked {
+  background: var(--Switch-Checked-Pressed-Background, #DFE2E5);
+}
+
+/* DISABLED */
+.switch input[type="checkbox"].custom-disabled {
+  background: var(--Switch-Disabled-Background, #DFE2E5);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.switch input[type="checkbox"].custom-disabled::after {
+  background: var(--Switch-Disabled-Icon, #A4AFB7);
+}
+
+.switch input[type="checkbox"]:not(.custom-disabled)::after {
+  background: var(--Switch-Unchecked-Pressed-Icon, #F9F9F7);
+}
+
+.switch-block {
+  margin: 1rem 0;
+}

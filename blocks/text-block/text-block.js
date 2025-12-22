@@ -3,7 +3,10 @@
  */
 
 import {
-  createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES, createButtonFromRows,
+  createButton, BUTTON_VARIANTS, BUTTON_ICON_SIZES,
+} from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
+import {
+  createButtonFromRows
 } from '../atoms/buttons/standard-button/standard-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
@@ -13,8 +16,9 @@ let isPrimaryBtnStyleLoaded = false;
 async function ensureBtnStylesLoaded() {
   if (isPrimaryBtnStyleLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
+  
   await loadCSS(
-    `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`,
+    "scripts/libs/ds/components/atoms/buttons/standard-button/standard-button.css",
   );
   isPrimaryBtnStyleLoaded = true;
 }
