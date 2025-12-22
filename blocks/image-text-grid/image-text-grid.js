@@ -1,6 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
+import { createButton } from '../../scripts/libs/ds/components/atoms/buttons/standard-button/standard-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import { createButton } from '../atoms/buttons/standard-button/standard-button.js';
 
 export default function decorate(block, isFirstBlock = false) {
   if (!block) return;

@@ -1,5 +1,5 @@
 import { createTextElementFromRow } from '../../../scripts/domHelpers.js';
-import { extractInstrumentationAttributes } from '../buttons/standard-button/standard-button.js';
+import { extractInstrumentationAttributes } from '../../../scripts/utils.js';
 
 /**
  * Create a tag element with styling

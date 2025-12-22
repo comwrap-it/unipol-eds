@@ -1,5 +1,5 @@
 import {
-  BUTTON_ICON_SIZES
+  BUTTON_ICON_SIZES,
 } from '../../buttons/standard-button/standard-button.js';
 
 /**
@@ -68,4 +68,3 @@ export const createTextarea = (
 
   return mainWrapper;
 };
-

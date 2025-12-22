@@ -1,5 +1,5 @@
-import { BUTTON_ICON_SIZES } from "../../../constants";
-import { extractInstrumentationAttributes } from "../../../scripts/utils";
+import { BUTTON_ICON_SIZES } from '../../../constants/index.js';
+import { extractInstrumentationAttributes } from '../../../scripts/utils.js';
 
 /**
  * Create a category tab element with styling

@@ -20,7 +20,7 @@ const createIconAndTagContainer = async (icon, tagConfig) => {
   iconWrapper.appendChild(iconElement);
 
   if (tagConfig?.label) {
-    await loadCSS(`../../../atoms/tag/tag.css`);
+    await loadCSS('../../../atoms/tag/tag.css');
     const tagElement = createTag(
       tagConfig.label,
       tagConfig.category,
@@ -92,7 +92,7 @@ const handleLinkClick = async (event) => {
 
 const createCardLinkButton = async (label, href) => {
   await loadCSS(
-    `../../../atoms/buttons/link-button/link-button.css`,
+    '../../../atoms/buttons/link-button/link-button.css',
   );
   const linkButton = document.createElement('a');
   linkButton.className = 'link-btn';

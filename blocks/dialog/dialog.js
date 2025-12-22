@@ -6,10 +6,9 @@ import {
   restoreInstrumentation,
 } from '../../scripts/utils.js';
 import { createIconButton } from '../atoms/buttons/icon-button/icon-button.js';
-import {
-  createButton,
-} from '../atoms/buttons/standard-button/standard-button.js';
+
 import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
+import { createButton } from '../../scripts/libs/ds/components/atoms/buttons/standard-button/standard-button.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {

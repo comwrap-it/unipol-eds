@@ -74,4 +74,3 @@ export function createCheckbox(typeStatus, disabled, instrumentation = {}) {
 
   return wrapper;
 }
-

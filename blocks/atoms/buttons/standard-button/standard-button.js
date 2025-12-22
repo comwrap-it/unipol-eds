@@ -9,7 +9,7 @@
 import {
   createButton,
 } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
-import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../../../constants.js';
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../../../constants/index.js';
 import { extractInstrumentationAttributes } from '../../../../scripts/utils.js';
 
 /** Extract button properties from rows

@@ -1,5 +1,5 @@
 import {
-  BUTTON_ICON_SIZES
+  BUTTON_ICON_SIZES,
 } from '../../buttons/standard-button/standard-button.js';
 
 /**
@@ -69,4 +69,3 @@ export const createTextfield = (
 
   return mainWrapper;
 };
-

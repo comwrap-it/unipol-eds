@@ -10,13 +10,13 @@
 
 import {
   createButtonFromRows,
-  extractInstrumentationAttributes,
 }
   from '../atoms/buttons/standard-button/standard-button.js';
 import { createTagFromRows } from '../atoms/tag/tag.js';
 import { create3DiconsFromRows } from '../atoms/icons-3D/icons-3D.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { extractInstrumentationAttributes } from '../../scripts/utils.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {

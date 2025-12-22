@@ -4,10 +4,8 @@ import {
   extractBooleanValueFromRow,
   extractMediaElementFromRow,
 } from '../../scripts/domHelpers.js';
+import { createButton } from '../../scripts/libs/ds/components/atoms/buttons/standard-button/standard-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import {
-  createButton,
-} from '../atoms/buttons/standard-button/standard-button.js';
 
 /**
  * Sets up the Hero container with background media (image or video).

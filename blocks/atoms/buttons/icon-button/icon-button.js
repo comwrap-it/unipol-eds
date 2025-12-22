@@ -6,7 +6,7 @@
  *
  */
 
-import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../../../constants.js';
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../../../constants/index.js';
 import { extractInstrumentationAttributes } from '../../../../scripts/utils.js';
 
 /**
