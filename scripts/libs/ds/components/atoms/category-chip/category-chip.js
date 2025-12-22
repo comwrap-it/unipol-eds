@@ -1,3 +1,4 @@
+
 /**
  * Create a category chip element with styling
  * @param {string} category - Category name (required) mobility | welfare | property

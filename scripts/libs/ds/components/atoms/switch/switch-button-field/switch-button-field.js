@@ -1,5 +1,6 @@
 import {
   createSwitch,
+  SWITCH_TYPES
 } from '../standard-switch-button/switch-button.js';
 
 /**
@@ -52,3 +53,4 @@ export function createSwitchButtonField(
 
   return wrapper;
 }
+

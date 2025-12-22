@@ -6,10 +6,7 @@
  *
  */
 
-import {
-  BUTTON_ICON_SIZES,
-  BUTTON_VARIANTS,
-} from '../standard-button/standard-button.js';
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from "../../../../constants";
 
 /**
  * Create a button element with styling

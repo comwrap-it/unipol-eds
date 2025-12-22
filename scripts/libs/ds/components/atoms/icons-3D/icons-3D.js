@@ -57,3 +57,4 @@ export function create3Dicons(
 
   return iconsContainer;
 }
+

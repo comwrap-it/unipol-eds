@@ -1,5 +1,6 @@
-import { loadCSS } from '../../../scripts/aem';
-import { createIconButton } from '../../atoms/buttons/icon-button/icon-button';
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from "../../../constants.js";
+import { loadCSS } from "../../../scripts/aem.js";
+import { createIconButton } from "../../atoms/buttons/icon-button/icon-button.js";
 
 let isStylesLoaded = false;
 
@@ -7,10 +8,10 @@ async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   await Promise.all([
     loadCSS(
-      '../../atoms/buttons/icon-button/icon-button.css',
+      `../../atoms/buttons/icon-button/icon-button.css`,
     ),
     loadCSS(
-      '../scroll-indicator/scroll-indicator.css',
+      `../scroll-indicator/scroll-indicator.css`,
     ),
   ]);
   isStylesLoaded = true;

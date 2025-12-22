@@ -3,6 +3,7 @@ export const SWITCH_TYPES = {
   UNCHECKED: 'unchecked',
 };
 
+
 /**
  * Create Switch Element
  *

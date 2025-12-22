@@ -1,6 +1,4 @@
-import {
-  BUTTON_ICON_SIZES,
-} from '../../buttons/standard-button/standard-button.js';
+import { BUTTON_ICON_SIZES } from "../../../../constants";
 
 /**
  * Create a textfield element with styling
@@ -69,3 +67,4 @@ export const createTextfield = (
 
   return mainWrapper;
 };
+

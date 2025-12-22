@@ -1,5 +1,5 @@
-import { createOptimizedPicture } from '../../../scripts/aem';
-import { createButton } from '../../atoms/buttons/standard-button/standard-button';
+import { createOptimizedPicture } from "../../../scripts/aem.js";
+import { createButton } from "../../atoms/buttons/standard-button/standard-button.js";
 
 /**
  * Sets up the Mini Hero container with background media (image or video).
@@ -11,64 +11,64 @@ import { createButton } from '../../atoms/buttons/standard-button/standard-butto
 const setupMiniHeroWithBg = (
   heroBackground,
   isVideoBackground = false,
-  isCarousel = false,
+  isCarousel = false
 ) => {
-  const hero = document.createElement('div');
-  hero.className = `mini-hero${isCarousel ? ' swiper-slide' : ''}`;
+  const hero = document.createElement("div");
+  hero.className = `mini-hero${isCarousel ? " swiper-slide" : ""}`;
 
   if (!heroBackground) return hero;
 
   if (!isVideoBackground) {
     const pictureBg = createOptimizedPicture(
       heroBackground,
-      'Mini Hero background image',
+      "Mini Hero background image"
     );
 
-    pictureBg.className = 'hero-bg';
-    pictureBg.setAttribute('aria-hidden', 'true');
-    const img = pictureBg.querySelector('img');
+    pictureBg.className = "hero-bg";
+    pictureBg.setAttribute("aria-hidden", "true");
+    const img = pictureBg.querySelector("img");
     if (img) {
-      img.loading = 'eager';
-      img.decoding = 'async';
-      img.fetchPriority = 'high';
+      img.loading = "eager";
+      img.decoding = "async";
+      img.fetchPriority = "high";
     }
     hero.appendChild(pictureBg);
   } else {
     const videoPath = heroBackground;
-    const videoBg = document.createElement('video');
+    const videoBg = document.createElement("video");
     videoBg.muted = true;
-    videoBg.className = 'hero-bg';
-    videoBg.setAttribute('aria-hidden', 'true');
-    videoBg.preload = 'auto';
+    videoBg.className = "hero-bg";
+    videoBg.setAttribute("aria-hidden", "true");
+    videoBg.preload = "auto";
     videoBg.autoplay = true;
     videoBg.loop = true;
     videoBg.playsInline = true;
     videoBg.src = videoPath;
     hero.appendChild(videoBg);
 
-    videoBg.addEventListener('canplay', () => {
+    videoBg.addEventListener("canplay", () => {
       videoBg.play();
     });
 
-    const pauseIcon = document.createElement('button');
-    pauseIcon.className = 'hero-icon un-icon-pause-circle icon-extra-large';
+    const pauseIcon = document.createElement("button");
+    pauseIcon.className = "hero-icon un-icon-pause-circle icon-extra-large";
     hero.appendChild(pauseIcon);
     pauseIcon.onclick = () => {
-      if (pauseIcon.classList.contains('un-icon-play-circle')) {
+      if (pauseIcon.classList.contains("un-icon-play-circle")) {
         videoBg.play();
-        pauseIcon.classList.remove('un-icon-play-circle');
-        pauseIcon.classList.add('un-icon-pause-circle');
+        pauseIcon.classList.remove("un-icon-play-circle");
+        pauseIcon.classList.add("un-icon-pause-circle");
       } else {
         videoBg.pause();
-        pauseIcon.classList.remove('un-icon-pause-circle');
-        pauseIcon.classList.add('un-icon-play-circle');
+        pauseIcon.classList.remove("un-icon-pause-circle");
+        pauseIcon.classList.add("un-icon-play-circle");
       }
     };
   }
 
-  const heroOverlay = document.createElement('div');
-  heroOverlay.className = 'hero-overlay';
-  heroOverlay.setAttribute('aria-hidden', 'true');
+  const heroOverlay = document.createElement("div");
+  heroOverlay.className = "hero-overlay";
+  heroOverlay.setAttribute("aria-hidden", "true");
   hero.appendChild(heroOverlay);
   return hero;
 };
@@ -87,25 +87,25 @@ const createMiniHeroMainSection = (
   subtitle,
   showHeroBulletList,
   bulletList,
-  isCarousel = false,
+  isCarousel = false
 ) => {
-  const mainSection = document.createElement('div');
-  mainSection.className = `main-section${isCarousel ? ' carousel' : ''}`;
-  const titleEl = document.createElement('h2');
-  titleEl.className = 'hero-title';
+  const mainSection = document.createElement("div");
+  mainSection.className = `main-section${isCarousel ? " carousel" : ""}`;
+  const titleEl = document.createElement("h2");
+  titleEl.className = "hero-title";
   titleEl.textContent = title;
   mainSection.appendChild(titleEl);
   if (subtitle) {
-    const subtitleBoldEl = document.createElement('p');
-    subtitleBoldEl.className = 'hero-subtitle';
+    const subtitleBoldEl = document.createElement("p");
+    subtitleBoldEl.className = "hero-subtitle";
     subtitleBoldEl.textContent = subtitle;
     mainSection.appendChild(subtitleBoldEl);
   }
   if (showHeroBulletList && bulletList?.length > 0) {
-    const bullets = document.createElement('ul');
-    bullets.className = 'hero-bullets';
+    const bullets = document.createElement("ul");
+    bullets.className = "hero-bullets";
     bulletList?.forEach((bullet) => {
-      const listItem = document.createElement('li');
+      const listItem = document.createElement("li");
       listItem.textContent = bullet;
       bullets.appendChild(listItem);
     });
@@ -138,10 +138,10 @@ const createMiniHeroButtonSection = async (
   btnLeftIcon,
   btnRightIcon,
   mainSection,
-  isCarousel = false,
+  isCarousel = false
 ) => {
-  const buttonSection = document.createElement('div');
-  buttonSection.className = 'button-section';
+  const buttonSection = document.createElement("div");
+  buttonSection.className = "button-section";
   if (showHeroButton) {
     const button = createButton(
       btnLabel,
@@ -150,7 +150,7 @@ const createMiniHeroButtonSection = async (
       btnVariant,
       btnIconSize,
       btnLeftIcon,
-      btnRightIcon,
+      btnRightIcon
     );
     if (isCarousel) {
       mainSection.appendChild(button);
@@ -196,21 +196,21 @@ export async function createMiniHero(
   btnIconSize,
   btnLeftIcon,
   btnRightIcon,
-  isCarousel = false,
+  isCarousel = false
 ) {
   const hero = setupMiniHeroWithBg(
     heroBackground,
     isVideoBackground,
-    isCarousel,
+    isCarousel
   );
-  const heroContent = document.createElement('div');
-  heroContent.className = 'hero-content';
+  const heroContent = document.createElement("div");
+  heroContent.className = "hero-content";
   const mainSection = createMiniHeroMainSection(
     title,
     subtitle,
     showHeroBulletList,
     bulletList,
-    isCarousel,
+    isCarousel
   );
   heroContent.appendChild(mainSection);
   if (showHeroButton) {
@@ -224,7 +224,7 @@ export async function createMiniHero(
       btnLeftIcon,
       btnRightIcon,
       mainSection,
-      isCarousel,
+      isCarousel
     );
     if (buttonSection) {
       heroContent.appendChild(buttonSection);

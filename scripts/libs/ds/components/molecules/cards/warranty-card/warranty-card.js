@@ -1,5 +1,5 @@
 import { loadCSS } from '../../../../scripts/aem.js';
-import { createTextElementFromRow } from '../../../../scripts/domHelpers.js';
+import { createIconElementFromCssClass, createTextElementFromRow } from '../../../../scripts/domHelpers.js';
 import { loadFragment } from '../../../../scripts/fragment.js';
 import { createTag } from '../../../atoms/tag/tag.js';
 
@@ -20,7 +20,7 @@ const createIconAndTagContainer = async (icon, tagConfig) => {
   iconWrapper.appendChild(iconElement);
 
   if (tagConfig?.label) {
-    await loadCSS('../../../atoms/tag/tag.css');
+    await loadCSS(`../../../atoms/tag/tag.css`);
     const tagElement = createTag(
       tagConfig.label,
       tagConfig.category,
@@ -92,7 +92,7 @@ const handleLinkClick = async (event) => {
 
 const createCardLinkButton = async (label, href) => {
   await loadCSS(
-    '../../../atoms/buttons/link-button/link-button.css',
+    `../../../atoms/buttons/link-button/link-button.css`,
   );
   const linkButton = document.createElement('a');
   linkButton.className = 'link-btn';
@@ -112,6 +112,7 @@ const createCardLinkButton = async (label, href) => {
  * @param {TagConf} tagConfig config for tag (optional)
  * @param {HTMLElement} titleRow the title row element (optional)
  * @param {HTMLElement} descriptionRow the description row element (optional)
+ * @param {DialogConf} dialogConfig config for dialog (optional)
  * @returns {Promise<HTMLElement>} The warranty card element
  */
 export const createWarrantyCard = async (
@@ -123,6 +124,7 @@ export const createWarrantyCard = async (
   tagConfig = {},
   titleRow = null,
   descriptionRow = null,
+  dialogConfig = {},
 ) => {
   const card = document.createElement('div');
   card.className = `warranty-card${category ? ` ${category}` : ''}`;
