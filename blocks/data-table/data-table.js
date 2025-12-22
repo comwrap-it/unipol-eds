@@ -10,20 +10,26 @@ async function ensureStylesLoaded() {
   isStylesLoaded = true;
 }
 
-function extractShowMoreButtonValue(block) {
-  // Recupera il testo configurato del bottone, separato dalle row
-  const btnField = block.querySelector('[data-field-show-more-button]');
-  const label = btnField?.textContent?.trim() || 'Mostra di più';
+// Estrarre il testo del bottone dalla prima row
+function extractShowMoreButtonValue(row) {
+  const cells = Array.from(row.children);
+  const label = cells[0]?.textContent?.trim() || 'Mostra di più';
   return { label };
 }
 
+// Creare il bottone in un div wrapper separato
 function createShowMoreButton({ label }) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'data-table-button-wrapper';
+
   const button = document.createElement('button');
   button.type = 'button';
   button.className = 'data-table-show-more';
   button.textContent = label;
   button.setAttribute('aria-label', label);
-  return button;
+
+  wrapper.appendChild(button);
+  return wrapper;
 }
 
 export default async function decorate(block) {
@@ -37,25 +43,22 @@ export default async function decorate(block) {
 
   // Recupera tutte le row come children diretti
   const rows = Array.from(block.children).filter(Boolean);
-
   if (!rows.length) return;
 
-  // Se esiste un field separato per "Mostra di più"
-  const showMoreValues = extractShowMoreButtonValue(block);
-  const showMoreButton = createShowMoreButton(showMoreValues);
+  // Prima row per il bottone
+  const showMoreValues = extractShowMoreButtonValue(rows[0]);
+  const showMoreButtonWrapper = createShowMoreButton(showMoreValues);
 
-  // Crea struttura tabella
+  // Tabella con tutte le row (eventualmente puoi fare rows.slice(1) se vuoi escludere la prima row)
   const tableWrapper = document.createElement('div');
   tableWrapper.className = 'data-table-container block data-table-block';
 
   const table = document.createElement('table');
   table.className = 'data-table';
-
   const tbody = document.createElement('tbody');
   table.appendChild(tbody);
   tableWrapper.appendChild(table);
 
-  // Crea tutte le righe tramite createDataTableRowFromRows
   const trElements = await Promise.all(
     rows.map((row) => createDataTableRowFromRows(Array.from(row.children))
       .then((tr) => {
@@ -66,20 +69,17 @@ export default async function decorate(block) {
         return null;
       })),
   );
-
   trElements.filter(Boolean).forEach((tr) => tbody.appendChild(tr));
 
-  // Pulisce il block e inserisce tabella + bottone
+  // Pulizia block e iniezione
   block.innerHTML = '';
   block.appendChild(tableWrapper);
-  block.appendChild(showMoreButton);
+  block.appendChild(showMoreButtonWrapper);
 
-  moveInstrumentation(block, tableWrapper);
-
-  // Eventuale logica del bottone
-  showMoreButton.addEventListener('click', () => {
+  // Logica del bottone
+  showMoreButtonWrapper.querySelector('button').addEventListener('click', () => {
     const hiddenRows = tbody.querySelectorAll('tr.hidden');
     hiddenRows.forEach((r) => r.classList.remove('hidden'));
-    showMoreButton.remove();
+    showMoreButtonWrapper.remove();
   });
 }
