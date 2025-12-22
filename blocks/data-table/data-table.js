@@ -22,7 +22,7 @@ function createShowMoreButton({ label }) {
 
   const button = document.createElement('button');
   button.type = 'button';
-  button.className = 'data-table-show-more';
+  button.className = 'data-table-show-more btn btn-primary';
   button.textContent = label;
   button.setAttribute('aria-label', label);
 
@@ -45,6 +45,7 @@ export async function createDataTable({ rows = [] } = {}) {
   const tbody = document.createElement('tbody');
   table.appendChild(tbody);
   tableWrapper.appendChild(table);
+
   const trElements = await Promise.all(
     rows.map((row) => createDataTableRowFromRows(Array.from(row.children))
       .then((tr) => {
@@ -55,17 +56,33 @@ export async function createDataTable({ rows = [] } = {}) {
         return null;
       })),
   );
-  trElements.filter(Boolean).forEach((tr) => tbody.appendChild(tr));
+
+  // Nascondi dalla sesta riga in poi
+  trElements.filter(Boolean).forEach((tr, i) => {
+    if (i >= 5) {
+      tr.classList.add('hidden');
+      tr.style.display = 'none';
+    }
+    tbody.appendChild(tr);
+  });
 
   const block = document.createElement('div');
   block.className = 'data-table block data-table--decorated';
   block.appendChild(tableWrapper);
   block.appendChild(showMoreButtonWrapper);
 
+  // Mostra righe nascoste al click
   showMoreButtonWrapper.querySelector('button').addEventListener('click', () => {
     const hiddenRows = tbody.querySelectorAll('tr.hidden');
-    hiddenRows.forEach((r) => r.classList.remove('hidden'));
-    showMoreButtonWrapper.remove();
+    hiddenRows.forEach((r) => {
+      r.classList.remove('hidden');
+      r.style.display = '';
+    });
+
+    const btn = showMoreButtonWrapper.querySelector('button');
+    btn.textContent = 'Tutte le righe visibili';
+    btn.setAttribute('aria-label', 'Tutte le righe visibili');
+    btn.disabled = true;
   });
 
   return block;
@@ -103,15 +120,31 @@ export default async function decorate(block) {
         return null;
       })),
   );
-  trElements.filter(Boolean).forEach((tr) => tbody.appendChild(tr));
+
+  // Nascondi dalla sesta riga in poi
+  trElements.filter(Boolean).forEach((tr, i) => {
+    if (i >= 5) {
+      tr.classList.add('hidden');
+      tr.style.display = 'none';
+    }
+    tbody.appendChild(tr);
+  });
 
   block.innerHTML = '';
   block.appendChild(tableWrapper);
   block.appendChild(showMoreButtonWrapper);
 
+  // Pulsante mostra tutto
   showMoreButtonWrapper.querySelector('button').addEventListener('click', () => {
     const hiddenRows = tbody.querySelectorAll('tr.hidden');
-    hiddenRows.forEach((r) => r.classList.remove('hidden'));
-    showMoreButtonWrapper.remove();
+    hiddenRows.forEach((r) => {
+      r.classList.remove('hidden');
+      r.style.display = '';
+    });
+
+    const btn = showMoreButtonWrapper.querySelector('button');
+    btn.textContent = 'Tutte le righe visibili';
+    btn.setAttribute('aria-label', 'Tutte le righe visibili');
+    btn.disabled = true;
   });
 }

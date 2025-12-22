@@ -22,12 +22,12 @@
       "fields": [
         {
           "component": "tab",
-          "label": "Configurazione cella 1",
+          "label": "Configurazione colonna 1",
           "name": "data-table-col"
         },
         {
           "component": "boolean",
-          "description": "Attivo: rende il titolo un pulsante e rende configurabile il tooltip associato",
+          "description": "Attiva Tooltip associato",
           "name": "showDataTableRow",
           "valueType": "boolean",
           "value": false
@@ -56,12 +56,12 @@
         },
         {
           "component": "tab",
-          "label": "Configurazione cella 2",
+          "label": "Configurazione colonna 2",
           "name": "data-table-col-2"
         },
         {
           "component": "boolean",
-          "description": "Attivo: rende il contenuto della cella un titolo",
+          "description": "Attivo: rende il contenuto della colonna un titolo",
           "name": "changeTableTextContent",
           "valueType": "boolean",
           "value": false
@@ -102,12 +102,12 @@
         },
         {
           "component": "tab",
-          "label": "Configurazione cella 3",
+          "label": "Configurazione colonna 3",
           "name": "data-table-col-3"
         },
         {
           "component": "boolean",
-          "description": "Attivo: rende il contenuto della cella un titolo",
+          "description": "Attivo: rende il contenuto della colonna un titolo",
           "name": "changeTableTextContent2",
           "valueType": "boolean",
           "value": false
