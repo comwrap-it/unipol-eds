@@ -7,8 +7,8 @@
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
 
-import { createLinkButton } from '../atoms/buttons/link-button/link-button.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
+import { createLinkButton } from '../../scripts/libs/ds/components/atoms/buttons/link-button/link-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export const EDITORIAL_CAROUSEL_CARD_SIZES = {
