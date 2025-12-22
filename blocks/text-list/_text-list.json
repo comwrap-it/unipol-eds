@@ -43,16 +43,24 @@
           "valueType": "boolean"
         },
         {
-          "component": "richtext",
+          "component": "text",
           "label": "Testo Elenco",
           "name": "listLinks",
           "valueType": "string",
+          "validation": {
+            "maxLength": 25,
+            "customErrorMsg": "Testo troppo lungo (max 25 caratteri)"
+          },
           "condition": { "===": [{"var" : "hideTextLinkList"}, true] }
         },
         {
           "component": "text",
           "name": "linkTextComp",
           "label": "Testo Link",
+          "validation": {
+            "maxLength": 45,
+            "customErrorMsg": "Testo troppo lungo (max 45 caratteri)"
+          },
           "required": true,
           "condition": { "===": [{"var" : "hideTextLinkList"}, false] }
         },
