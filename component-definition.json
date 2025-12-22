@@ -376,11 +376,6 @@
                       "filter": "photo-card",
                       "model": "photo-card"
                     }
-                  },
-                  "standard-button": {
-                    "sling:resourceType": "core/franklin/components/block/v1/block",
-                    "name": "Standard Button",
-                    "model": "standard-button"
                   }
                 }
               }

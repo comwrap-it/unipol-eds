@@ -56,18 +56,6 @@ const getDatasetValue = (section, name) => {
 };
 
 /**
- * Resolves a block wrapper or returns the block itself.
- * @param {HTMLElement|null} block
- * @param {string} wrapperClass
- * @returns {HTMLElement|null}
- */
-const resolveBlockWrapper = (block, wrapperClass) => {
-  if (!block) return null;
-  const wrapper = block.closest(`.${wrapperClass}`);
-  return wrapper || block;
-};
-
-/**
  * Appends a child to a parent when it exists.
  * @param {HTMLElement} parent
  * @param {HTMLElement|null} child
@@ -75,6 +63,134 @@ const resolveBlockWrapper = (block, wrapperClass) => {
 const appendIfPresent = (parent, child) => {
   if (child) parent.appendChild(child);
 };
+// #endregion
+
+// #region CREATE
+/**
+ * Creates a product highlights widget panel.
+ * @param {Object} [options]
+ * @param {HTMLElement|null} [options.root]
+ * @param {HTMLElement|null} [options.carousel]
+ * @param {HTMLElement|null} [options.textBlockWrapper]
+ * @param {HTMLElement|null} [options.textBlock]
+ * @param {string} [options.logoSrc]
+ * @param {string} [options.logoAlt]
+ * @param {string} [options.title]
+ * @param {string} [options.description]
+ * @param {Object|null} [options.buttonConfig]
+ * @param {string} [options.buttonConfig.label]
+ * @param {string} [options.buttonConfig.href]
+ * @param {boolean} [options.buttonConfig.openInNewTab]
+ * @param {string} [options.buttonConfig.variant]
+ * @param {string} [options.buttonConfig.iconSize]
+ * @param {string} [options.buttonConfig.leftIcon]
+ * @param {string} [options.buttonConfig.rightIcon]
+ * @param {Object} [options.buttonConfig.instrumentation]
+ * @returns {HTMLElement}
+ */
+export function createProductHighlightsWidget({
+  root = null,
+  carousel = null,
+  textBlockWrapper = null,
+  textBlock = null,
+  logoSrc = '',
+  logoAlt = '',
+  title = '',
+  description = '',
+  buttonConfig = null,
+} = {}) {
+  /*
+   * Root
+   */
+  const panel = root || document.createElement('div');
+  panel.classList.add('product-highlights-widget-panel');
+  panel.textContent = '';
+
+  /*
+   * Header
+   */
+  const header = document.createElement('div');
+  header.className = 'product-highlights-widget-header';
+
+  let ctaElement = null;
+  if (buttonConfig?.label) {
+    ctaElement = createButton(
+      buttonConfig.label,
+      buttonConfig.href,
+      buttonConfig.openInNewTab,
+      buttonConfig.variant || BUTTON_VARIANTS.SECONDARY,
+      buttonConfig.iconSize || BUTTON_ICON_SIZES.MEDIUM,
+      buttonConfig.leftIcon || '',
+      buttonConfig.rightIcon || '',
+      buttonConfig.instrumentation || {},
+    );
+    if (ctaElement.tagName === 'BUTTON') ctaElement.type = 'button';
+  }
+
+  if (logoSrc) {
+    const logo = document.createElement('div');
+    logo.className = 'product-highlights-widget-logo';
+    const img = document.createElement('img');
+    img.src = logoSrc;
+    img.alt = logoAlt || '';
+    logo.appendChild(img);
+    header.appendChild(logo);
+  }
+
+  let headerText = textBlockWrapper || textBlock;
+  if (!headerText && (title || description)) {
+    const titleElement = title ? document.createElement('h2') : null;
+    if (titleElement) titleElement.textContent = title;
+    const descriptionElement = description ? document.createElement('p') : null;
+    if (descriptionElement) descriptionElement.textContent = description;
+    const textBlockElement = createTextBlock(titleElement, true, descriptionElement);
+    const wrapper = document.createElement('div');
+    wrapper.className = 'text-block-wrapper';
+    wrapper.appendChild(textBlockElement);
+    headerText = wrapper;
+  }
+
+  if (headerText && ctaElement) {
+    const textBlockButton = headerText.querySelector('.text-block-button');
+    if (textBlockButton) textBlockButton.remove();
+  }
+
+  appendIfPresent(header, headerText);
+  if (header.childElementCount) panel.appendChild(header);
+
+  /*
+   * Carousel
+   */
+  const carouselWrap = document.createElement('div');
+  carouselWrap.className = 'product-highlights-widget-carousel';
+  appendIfPresent(carouselWrap, carousel);
+  panel.appendChild(carouselWrap);
+
+  /*
+   * CTA
+   */
+  if (ctaElement) {
+    const ctaWrap = document.createElement('div');
+    ctaWrap.className = 'product-highlights-widget-cta';
+    ctaWrap.appendChild(ctaElement);
+    panel.appendChild(ctaWrap);
+  }
+
+  /*
+   * Pause
+   */
+  const pauseButton = createIconButton(
+    'un-icon-pause-circle',
+    BUTTON_VARIANTS.PRIMARY,
+    BUTTON_ICON_SIZES.SMALL,
+  );
+  pauseButton.classList.add('product-highlights-widget-pause');
+  if (pauseButton.tagName === 'BUTTON') pauseButton.type = 'button';
+  pauseButton.setAttribute('aria-label', 'Pausa animazione');
+  panel.appendChild(pauseButton);
+
+  return panel;
+}
 // #endregion
 
 // #region PARSE
@@ -101,10 +217,7 @@ export function parseProductHighlightsWidget(section, block = null) {
    * Child blocks
    */
   const textBlock = section.querySelector('.text-block');
-  const textBlockWrapper = resolveBlockWrapper(textBlock, 'text-block-wrapper');
-
-  const buttonBlock = section.querySelector('.standard-button');
-  const buttonBlockWrapper = resolveBlockWrapper(buttonBlock, 'standard-button-wrapper');
+  const textBlockWrapper = textBlock ? textBlock.closest('.text-block-wrapper') : null;
 
   /*
    * Dataset values
@@ -114,10 +227,53 @@ export function parseProductHighlightsWidget(section, block = null) {
 
   const title = getDatasetValue(section, 'title');
   const description = getDatasetValue(section, 'description');
-  const buttonLabel = getDatasetValue(section, 'buttonLabel') || getDatasetValue(section, 'buttonlabel');
-  const buttonLink = getDatasetValue(section, 'buttonLink') || getDatasetValue(section, 'buttonlink');
-  const buttonOpenInNewTab = getDatasetValue(section, 'buttonOpenInNewTab')
-    || getDatasetValue(section, 'buttonopeninnewtab');
+
+  const standardButtonLabel = getDatasetValue(section, 'standardButtonLabel');
+  const legacyButtonLabel = getDatasetValue(section, 'buttonLabel');
+  const buttonLabel = standardButtonLabel || legacyButtonLabel;
+
+  const standardButtonVariant = getDatasetValue(section, 'standardButtonVariant');
+  const legacyButtonVariant = getDatasetValue(section, 'buttonVariant');
+  const rawVariant = String(
+    standardButtonVariant || legacyButtonVariant || BUTTON_VARIANTS.SECONDARY,
+  ).trim().toLowerCase();
+  const resolvedVariant = Object.values(BUTTON_VARIANTS).includes(rawVariant)
+    ? rawVariant
+    : BUTTON_VARIANTS.SECONDARY;
+
+  const standardButtonHref = getDatasetValue(section, 'standardButtonHref');
+  const legacyButtonHref = getDatasetValue(section, 'buttonLink')
+    || getDatasetValue(section, 'buttonHref');
+  const buttonHref = standardButtonHref || legacyButtonHref;
+
+  const standardButtonOpenInNewTab = getDatasetValue(section, 'standardButtonOpenInNewTab');
+  const legacyButtonOpenInNewTab = getDatasetValue(section, 'buttonOpenInNewTab');
+  const buttonOpenInNewTab = String(
+    standardButtonOpenInNewTab || legacyButtonOpenInNewTab || '',
+  ).trim().toLowerCase() === 'true';
+
+  const standardButtonSize = getDatasetValue(section, 'standardButtonSize');
+  const rawIconSize = String(standardButtonSize || BUTTON_ICON_SIZES.MEDIUM)
+    .trim()
+    .toLowerCase();
+  const resolvedIconSize = Object.values(BUTTON_ICON_SIZES).includes(rawIconSize)
+    ? rawIconSize
+    : BUTTON_ICON_SIZES.MEDIUM;
+
+  const buttonLeftIcon = getDatasetValue(section, 'standardButtonLeftIcon');
+  const buttonRightIcon = getDatasetValue(section, 'standardButtonRightIcon');
+
+  const buttonConfig = buttonLabel && buttonLabel.trim()
+    ? {
+      label: buttonLabel.trim(),
+      href: buttonHref,
+      openInNewTab: buttonOpenInNewTab,
+      variant: resolvedVariant,
+      iconSize: resolvedIconSize,
+      leftIcon: buttonLeftIcon,
+      rightIcon: buttonRightIcon,
+    }
+    : null;
 
   /*
    * Root & wrapper
@@ -134,130 +290,14 @@ export function parseProductHighlightsWidget(section, block = null) {
     carousel,
     textBlock,
     textBlockWrapper,
-    buttonBlock,
-    buttonBlockWrapper,
     logoSrc,
     logoAlt,
     title,
     description,
-    buttonLabel,
-    buttonLink,
-    buttonOpenInNewTab: String(buttonOpenInNewTab).trim().toLowerCase() === 'true',
+    buttonConfig,
     panelRoot,
     wrapper,
   };
-}
-// #endregion
-
-// #region CREATE
-/**
- * Creates a product highlights widget panel.
- * @param {Object} [options]
- * @returns {HTMLElement}
- */
-export function createProductHighlightsWidget({
-  root = null,
-  carousel = null,
-  textBlockWrapper = null,
-  textBlock = null,
-  buttonBlockWrapper = null,
-  buttonBlock = null,
-  logoSrc = '',
-  logoAlt = '',
-  title = '',
-  description = '',
-  buttonLabel = '',
-  buttonLink = '',
-  buttonOpenInNewTab = false,
-} = {}) {
-  /*
-   * Root
-   */
-  const panel = root || document.createElement('div');
-  panel.classList.add('product-highlights-widget-panel');
-  panel.textContent = '';
-
-  /*
-   * Header
-   */
-  const header = document.createElement('div');
-  header.className = 'product-highlights-widget-header';
-
-  if (logoSrc) {
-    const logo = document.createElement('div');
-    logo.className = 'product-highlights-widget-logo';
-    const img = document.createElement('img');
-    img.src = logoSrc;
-    img.alt = logoAlt || '';
-    logo.appendChild(img);
-    header.appendChild(logo);
-  }
-
-  let headerText = textBlockWrapper || textBlock;
-  if (!headerText && (title || description)) {
-    const titleElement = title ? document.createElement('h2') : null;
-    if (titleElement) titleElement.textContent = title;
-    const descriptionElement = description ? document.createElement('p') : null;
-    if (descriptionElement) descriptionElement.textContent = description;
-    const textBlockElement = createTextBlock(titleElement, true, descriptionElement);
-    const wrapper = document.createElement('div');
-    wrapper.className = 'text-block-wrapper';
-    wrapper.appendChild(textBlockElement);
-    headerText = wrapper;
-  }
-
-  if (headerText && buttonBlockWrapper) {
-    const textBlockButton = headerText.querySelector('.text-block-button');
-    if (textBlockButton) textBlockButton.remove();
-  }
-
-  appendIfPresent(header, headerText);
-  if (header.childElementCount) panel.appendChild(header);
-
-  /*
-   * Carousel
-   */
-  const carouselWrap = document.createElement('div');
-  carouselWrap.className = 'product-highlights-widget-carousel';
-  appendIfPresent(carouselWrap, carousel);
-  panel.appendChild(carouselWrap);
-
-  /*
-   * CTA
-   */
-  let ctaElement = buttonBlockWrapper || buttonBlock;
-  if (!ctaElement && buttonLabel) {
-    ctaElement = createButton(
-      buttonLabel,
-      buttonLink,
-      buttonOpenInNewTab,
-      BUTTON_VARIANTS.SECONDARY,
-      BUTTON_ICON_SIZES.MEDIUM,
-    );
-    if (ctaElement.tagName === 'BUTTON') ctaElement.type = 'button';
-  }
-
-  if (ctaElement) {
-    const ctaWrap = document.createElement('div');
-    ctaWrap.className = 'product-highlights-widget-cta';
-    ctaWrap.appendChild(ctaElement);
-    panel.appendChild(ctaWrap);
-  }
-
-  /*
-   * Pause
-   */
-  const pauseButton = createIconButton(
-    'un-icon-pause-circle',
-    BUTTON_VARIANTS.PRIMARY,
-    BUTTON_ICON_SIZES.SMALL,
-  );
-  pauseButton.classList.add('product-highlights-widget-pause');
-  if (pauseButton.tagName === 'BUTTON') pauseButton.type = 'button';
-  pauseButton.setAttribute('aria-label', 'Pausa animazione');
-  panel.appendChild(pauseButton);
-
-  return panel;
 }
 // #endregion
 
@@ -271,6 +311,8 @@ export function createProductHighlightsWidget({
 async function decorateWidgetSection(section, block) {
   if (!section || section.getAttribute(DECORATED_ATTR) === 'true') return;
 
+  await ensureStylesLoaded();
+
   /*
    * Parse
    */
@@ -281,15 +323,11 @@ async function decorateWidgetSection(section, block) {
     carousel,
     textBlockWrapper,
     textBlock,
-    buttonBlockWrapper,
-    buttonBlock,
     logoSrc,
     logoAlt,
     title,
     description,
-    buttonLabel,
-    buttonLink,
-    buttonOpenInNewTab,
+    buttonConfig,
     panelRoot,
     wrapper,
   } = parsed;
@@ -304,15 +342,11 @@ async function decorateWidgetSection(section, block) {
     carousel,
     textBlockWrapper,
     textBlock,
-    buttonBlockWrapper,
-    buttonBlock,
     logoSrc,
     logoAlt,
     title,
     description,
-    buttonLabel,
-    buttonLink,
-    buttonOpenInNewTab,
+    buttonConfig,
   });
 
   /*

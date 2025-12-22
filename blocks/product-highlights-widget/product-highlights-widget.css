@@ -1,35 +1,22 @@
 .section.product-highlights-widget {
     --product-highlights-widget-bg: var(
         --Carousel-Widget-Product-Highlights-Background-Color,
-        var(--Background-Default-Tertiary, #001c35)
+        var(--Background-Default-Tertiary, #001C35)
     );
     --product-highlights-widget-text: var(--Text-Neutral-Tertiary, #fff);
+    --product-highlights-widget-content-width: min(100%, var(--Layout-Page-Width, 90rem));
     --Text-Block-Title: var(--product-highlights-widget-text);
     --Text-Block-Body: var(--product-highlights-widget-text);
     --Text-Block-Centered-Gap: var(--Space-300-16, 16px);
-    --Button-Secondary-Default-Background: var(--Neutral-50, #fff);
-    --Button-Secondary-Default-Text: var(--Text-Default-Primary, #001c35);
-    --Button-Secondary-Default-Border: var(--Neutral-50, #fff);
-    --Button-Secondary-Hover-Background: var(--Neutral-50, #fff);
-    --Button-Secondary-Hover-Text: var(--Text-Default-Primary, #001c35);
-    --Button-Secondary-Hover-Border: var(--Neutral-50, #fff);
-    --Button-Secondary-Pressed-Background: var(--Neutral-50, #fff);
-    --Button-Secondary-Pressed-Text: var(--Text-Default-Primary, #001c35);
-    --Button-Secondary-Pressed-Border: var(--Neutral-50, #fff);
-    --Button-Secondary-Focused-Background: var(--Neutral-50, #fff);
-    --Button-Secondary-Focused-Text: var(--Text-Default-Primary, #001c35);
-    --Button-Secondary-Focused-Border-Default: var(--Neutral-50, #fff);
-    --Button-Secondary-Focused-Border-Focus: var(--product-highlights-widget-text);
-    --Button-Secondary-Disabled-Background: var(--Neutral-200, #e0e0e0);
-    --Button-Secondary-Disabled-Text: var(--Text-Default-Primary, #001c35);
-    --Button-Secondary-Disabled-Border: var(--Neutral-200, #e0e0e0);
 
-    padding: 0;
+    padding-inline: 0;
+    padding-block: var(--Layout-Section-Vertical-Padding, 4rem);
     color: var(--product-highlights-widget-text);
 
     & .product-highlights-widget-panel {
-        width: min(100%, var(--Layout-Page-Page-Width, 1440px));
-        margin-inline: auto;
+        width: 100%;
+        max-width: none;
+        margin-inline: 0;
         padding: var(--Carousel-Widget-Product-Highlights-Vertical-Padding, 64px)
             var(--Layout-Section-Margin-Horizontal-Padding, 4rem);
         background: var(--product-highlights-widget-bg);
@@ -47,7 +34,9 @@
         align-items: center;
         text-align: center;
         gap: var(--Text-Block-Centered-Text-Gap, 16px);
+        width: 100%;
         max-width: min(100%, 48rem);
+        margin-inline: auto;
     }
 
     & .product-highlights-widget-logo {
@@ -79,23 +68,31 @@
 
     & .product-highlights-widget-carousel {
         width: 100%;
+        max-width: var(--product-highlights-widget-content-width);
+        margin-inline: auto;
         display: flex;
         justify-content: center;
     }
 
-    & .product-highlights-carousel {
+    & .product-highlights-widget-carousel .product-highlights-carousel {
         width: 100%;
+        max-width: 100%;
     }
 
-    & .product-highlights-carousel .product-highlights-carousel-track {
+    & .product-highlights-widget-carousel
+        .product-highlights-carousel
+        .product-highlights-carousel-track {
         --product-highlights-carousel-width: 100%;
+
         max-width: 100%;
-        justify-content: flex-start;
+        justify-content: center;
         box-sizing: border-box;
     }
 
     & .product-highlights-widget-cta {
         width: 100%;
+        max-width: var(--product-highlights-widget-content-width);
+        margin-inline: auto;
         display: flex;
         justify-content: center;
     }
