@@ -25,7 +25,19 @@ function createShowMoreButton({ label }) {
 
 export default async function decorate(block) {
   await ensureStylesLoaded();
+
+  if (block.classList.contains('data-table--decorated')) return;
+  block.classList.add('data-table--decorated');
+
   const rows = Array.from(block.children);
+
+  const tableWrapper = document.createElement('div');
+  tableWrapper.className = 'data-table-container block data-table-block';
+  const table = document.createElement('table');
+  table.className = 'data-table';
+  const tbody = document.createElement('tbody');
+  table.appendChild(tbody);
+  tableWrapper.appendChild(table);
 
   const trElements = await Promise.all(
     rows
@@ -39,23 +51,16 @@ export default async function decorate(block) {
           return null;
         })),
   );
-
-  const tableWrapper = document.createElement('div');
-  tableWrapper.className = 'data-table-container block data-table-block';
-  const table = document.createElement('table');
-  table.className = 'data-table';
-  const tbody = document.createElement('tbody');
-  table.appendChild(tbody);
-  tableWrapper.appendChild(table);
-
   trElements.filter(Boolean).forEach((tr) => tbody.appendChild(tr));
-
-  const showMoreValues = extractShowMoreButtonValues(rows);
-  const button = createShowMoreButton(showMoreValues);
 
   block.innerHTML = '';
   block.appendChild(tableWrapper);
-  block.appendChild(button);
+
+  if (!block.querySelector('.data-table-show-more')) {
+    const showMoreValues = extractShowMoreButtonValues(rows);
+    const button = createShowMoreButton(showMoreValues);
+    block.appendChild(button);
+  }
 
   moveInstrumentation(block, tableWrapper);
 }
