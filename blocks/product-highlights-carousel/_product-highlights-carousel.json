@@ -1,0 +1,36 @@
+{
+  "definitions": [
+    {
+      "title": "Product Highlights Carousel",
+      "id": "product-highlights-carousel",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "product-highlights-carousel",
+              "model": "product-highlights-carousel",
+              "name": "Product Highlights Carousel"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "product-highlights-carousel",
+      "fields": []
+    }
+  ],
+  "filters": [
+    {
+      "id": "product-highlights-carousel",
+      "components": [
+        "photo-card"
+      ],
+      "min": 5,
+      "max": 8
+    }
+  ]
+}

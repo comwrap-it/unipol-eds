@@ -4,6 +4,7 @@
     "components": [
       "section",
       "kpi-highlights-widget",
+      "product-highlights-widget",
       "insurance-product-carousel-widget",
       "editorial-carousel-widget",
       "hero-widget",
