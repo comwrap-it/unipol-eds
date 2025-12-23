@@ -100,4 +100,8 @@ table.data-table tr:not(:first-child) th {
       display: none;
     }
 
+    table.data-table td > span.benefit-container:first-child {
+      display: block;
+    }
+
 }

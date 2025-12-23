@@ -180,7 +180,7 @@
                     "model": "data-table",
                     "data-table-row-1": {
                       "sling:resourceType": "core/franklin/components/block/v1/block/item",
-                      "name": "Data table row",
+                      "name": "Data table header",
                       "model": "data-table-row"
                     },
                     "data-table-row-2": {
