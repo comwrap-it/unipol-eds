@@ -1,15 +1,12 @@
-﻿import { loadCSS } from '../../scripts/aem.js';
+import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
+import { loadCSS } from '../../scripts/aem.js';
 import decorateProductHighlightsCarousel, {
   PRODUCT_HIGHLIGHTS_SWIPER_SPEED,
   PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW,
   setProductHighlightsSwiperSpeed,
 } from '../product-highlights-carousel/product-highlights-carousel.js';
-import {
-  createButton,
-  BUTTON_ICON_SIZES,
-  BUTTON_VARIANTS,
-} from '../atoms/buttons/standard-button/standard-button.js';
-import { createIconButton } from '../atoms/buttons/icon-button/icon-button.js';
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
+import { createIconButton } from '../../scripts/libs/ds/components/atoms/buttons/icon-button/icon-button.js';
 
 // #region CONSTANTS
 const WIDGET_CLASS = 'product-highlights-widget';
@@ -391,7 +388,7 @@ async function decorateWidgetSection(section, block) {
   const pauseButton = panel.querySelector('.product-highlights-widget-pause');
   const pauseIcon = pauseButton?.querySelector('.icon');
 
-  if (pauseButton && swiperInstance?.autoplay) {
+  if (pauseButton && swiperInstance?.autoplay && swiperInstance?.params?.autoplay) {
     pauseButton.setAttribute('aria-pressed', 'false');
 
     const setPausedState = (paused) => {

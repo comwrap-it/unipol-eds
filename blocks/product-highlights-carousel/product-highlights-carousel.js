@@ -55,6 +55,7 @@ export const setProductHighlightsSwiperSpeed = (swiperInstance, speed) => {
  */
 const setupHoverSlowdown = (carousel, swiperInstance) => {
   if (!carousel || !swiperInstance || carousel.dataset.productHighlightsHover === 'true') return;
+  if (!swiperInstance.params?.autoplay) return;
 
   const handleMouseEnter = () => {
     carousel.dataset.productHighlightsHoverState = 'true';
@@ -83,17 +84,18 @@ const initSwiper = async (carousel, slideCount) => {
   if (!carousel || carousel.swiper || slideCount < 2) return carousel?.swiper || null;
 
   const Swiper = await loadSwiper();
+  const shouldLoop = slideCount >= 5;
   const swiperInstance = new Swiper(carousel, {
     slidesPerView: 'auto',
-    loop: true,
+    loop: shouldLoop,
     centeredSlides: true,
     speed: PRODUCT_HIGHLIGHTS_SWIPER_SPEED,
     allowTouchMove: true,
-    autoplay: {
+    autoplay: shouldLoop ? {
       delay: 0,
       disableOnInteraction: false,
       reverseDirection: true,
-    },
+    } : false,
     freeMode: {
       enabled: true,
       momentum: false,
