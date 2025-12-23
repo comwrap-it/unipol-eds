@@ -95,24 +95,11 @@
         margin-inline: auto;
         display: flex;
         justify-content: center;
-        overflow: visible;
     }
 
     & .product-highlights-widget-carousel .product-highlights-carousel {
-        width: max-content;
-        max-width: none;
-        margin-inline: auto;
-    }
-
-    & .product-highlights-widget-carousel
-        .product-highlights-carousel
-        .product-highlights-carousel-track {
-        --product-highlights-carousel-width: max-content;
-        width: max-content;
-        max-width: none;
-        justify-content: center;
-        box-sizing: border-box;
-        overflow-x: visible;
+        --product-highlights-carousel-width: var(--product-highlights-widget-content-width);
+        width: 100%;
     }
 
     & .product-highlights-widget-cta {

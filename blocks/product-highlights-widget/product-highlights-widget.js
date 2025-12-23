@@ -1,5 +1,9 @@
 ﻿import { loadCSS } from '../../scripts/aem.js';
-import decorateProductHighlightsCarousel from '../product-highlights-carousel/product-highlights-carousel.js';
+import decorateProductHighlightsCarousel, {
+  PRODUCT_HIGHLIGHTS_SWIPER_SPEED,
+  PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW,
+  setProductHighlightsSwiperSpeed,
+} from '../product-highlights-carousel/product-highlights-carousel.js';
 import {
   createButton,
   BUTTON_ICON_SIZES,
@@ -378,7 +382,55 @@ async function decorateWidgetSection(section, block) {
   section.classList.add(WIDGET_CLASS);
   section.setAttribute(DECORATED_ATTR, 'true');
 
-  await decorateProductHighlightsCarousel(carousel);
+  const swiperInstance = await decorateProductHighlightsCarousel(carousel);
+
+  /*
+   * Pause
+   */
+  const pauseButton = panel.querySelector('.product-highlights-widget-pause');
+  const pauseIcon = pauseButton?.querySelector('.icon');
+
+  if (pauseButton && swiperInstance?.autoplay) {
+    pauseButton.setAttribute('aria-pressed', 'false');
+
+    const setPausedState = (paused) => {
+      carousel.dataset.productHighlightsPaused = paused ? 'true' : 'false';
+
+      if (paused) {
+        swiperInstance.autoplay.stop();
+        if (pauseIcon) {
+          pauseIcon.classList.remove('un-icon-pause-circle');
+          pauseIcon.classList.add('un-icon-play-circle');
+        }
+        pauseButton.setAttribute('aria-label', 'Riprendi animazione');
+        pauseButton.setAttribute('aria-pressed', 'true');
+        return;
+      }
+
+      const isHovering = carousel.dataset.productHighlightsHoverState === 'true';
+      const nextSpeed = isHovering
+        ? PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW
+        : PRODUCT_HIGHLIGHTS_SWIPER_SPEED;
+      setProductHighlightsSwiperSpeed(swiperInstance, nextSpeed);
+      swiperInstance.autoplay.start();
+      if (pauseIcon) {
+        pauseIcon.classList.remove('un-icon-play-circle');
+        pauseIcon.classList.add('un-icon-pause-circle');
+      }
+      pauseButton.setAttribute('aria-label', 'Pausa animazione');
+      pauseButton.setAttribute('aria-pressed', 'false');
+    };
+
+    pauseButton.addEventListener('click', () => {
+      const isPaused = carousel.dataset.productHighlightsPaused === 'true';
+      setPausedState(!isPaused);
+    });
+
+    setPausedState(carousel.dataset.productHighlightsPaused === 'true');
+  } else if (pauseButton) {
+    pauseButton.disabled = true;
+    pauseButton.setAttribute('aria-disabled', 'true');
+  }
 }
 
 /**

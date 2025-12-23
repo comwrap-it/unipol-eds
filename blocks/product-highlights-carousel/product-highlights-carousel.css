@@ -1,44 +1,43 @@
 .product-highlights-carousel {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    --product-highlights-carousel-width: var(--Layout-Page-Page-Width, 1440px);
+    --product-highlights-carousel-gap: var(--Carousel-Product-Highlights-Gap, 16px);
+
+    width: 100%;
     padding: var(--Space-0, 0);
+}
 
-    & .product-highlights-carousel-track {
-        --product-highlights-carousel-width: var(--Layout-Page-Page-Width, 1440px);
-        --product-highlights-carousel-gap: var(--Carousel-Product-Highlights-Gap, 16px);
+.product-highlights-carousel .product-highlights-carousel-track {
+    display: flex;
+    flex-wrap: nowrap;
+    width: 100%;
+    max-width: var(--product-highlights-carousel-width);
+    margin-inline: auto;
+    padding: var(--Space-0, 0);
+    align-items: flex-start;
+    gap: var(--product-highlights-carousel-gap);
+    box-sizing: border-box;
+}
 
-        display: flex;
-        flex-wrap: nowrap;
-        width: 100%;
-        max-width: var(--product-highlights-carousel-width);
-        padding: var(--Space-0, 0);
-        justify-content: center;
-        align-items: flex-start;
-        gap: var(--product-highlights-carousel-gap);
-        overflow-x: auto;
-        scroll-snap-type: x mandatory;
+.product-highlights-carousel:not(.swiper) .product-highlights-carousel-track {
+    justify-content: center;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+}
 
-        & > * {
-            flex: 0 0 auto;
-            scroll-snap-align: start;
-        }
-    }
+.product-highlights-carousel:not(.swiper) .product-highlights-carousel-track > * {
+    flex: 0 0 auto;
+    scroll-snap-align: start;
 }
 
 @media (width < 1440px) {
     .product-highlights-carousel {
-        & .product-highlights-carousel-track {
-            --product-highlights-carousel-width: 1280px;
-        }
+        --product-highlights-carousel-width: 1280px;
     }
 }
 
 @media (width < 768px) {
     .product-highlights-carousel {
-        & .product-highlights-carousel-track {
-            --product-highlights-carousel-width: 375px;
-            --product-highlights-carousel-gap: var(--Carousel-Product-Highlights-Gap-M, 8px);
-        }
+        --product-highlights-carousel-width: 375px;
+        --product-highlights-carousel-gap: var(--Carousel-Product-Highlights-Gap-M, 8px);
     }
 }

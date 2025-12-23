@@ -1,6 +1,10 @@
+import loadSwiper from '../../scripts/delayed.js';
+
 // #region CONSTANTS
 const CAROUSEL_CLASS = 'product-highlights-carousel';
 const TRACK_CLASS = 'product-highlights-carousel-track';
+export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED = 12000;
+export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW = PRODUCT_HIGHLIGHTS_SWIPER_SPEED * 3;
 // #endregion
 
 // #region HELPERS
@@ -28,6 +32,79 @@ async function ensureStylesLoaded() {
   }
   await stylesLoadingPromise;
 }
+
+/**
+ * Updates swiper autoplay speed and restarts the animation.
+ * @param {Object} swiperInstance
+ * @param {number} speed
+ */
+export const setProductHighlightsSwiperSpeed = (swiperInstance, speed) => {
+  if (!swiperInstance) return;
+  swiperInstance.params.speed = speed;
+  if (swiperInstance.autoplay?.running) {
+    swiperInstance.autoplay.stop();
+    swiperInstance.autoplay.start();
+  }
+};
+
+/**
+ * Enables hover-based speed slowdown for autoplay.
+ * @param {HTMLElement} carousel
+ * @param {Object} swiperInstance
+ */
+const setupHoverSlowdown = (carousel, swiperInstance) => {
+  if (!carousel || !swiperInstance || carousel.dataset.productHighlightsHover === 'true') return;
+
+  const handleMouseEnter = () => {
+    carousel.dataset.productHighlightsHoverState = 'true';
+    if (carousel.dataset.productHighlightsPaused === 'true') return;
+    setProductHighlightsSwiperSpeed(swiperInstance, PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW);
+  };
+
+  const handleMouseLeave = () => {
+    carousel.dataset.productHighlightsHoverState = 'false';
+    if (carousel.dataset.productHighlightsPaused === 'true') return;
+    setProductHighlightsSwiperSpeed(swiperInstance, PRODUCT_HIGHLIGHTS_SWIPER_SPEED);
+  };
+
+  carousel.addEventListener('mouseenter', handleMouseEnter);
+  carousel.addEventListener('mouseleave', handleMouseLeave);
+  carousel.dataset.productHighlightsHover = 'true';
+};
+
+/**
+ * Initializes Swiper for the product highlights carousel.
+ * @param {HTMLElement} carousel
+ * @param {number} slideCount
+ * @returns {Promise<Object|null>}
+ */
+const initSwiper = async (carousel, slideCount) => {
+  if (!carousel || carousel.swiper || slideCount < 2) return carousel?.swiper || null;
+
+  const Swiper = await loadSwiper();
+  const swiperInstance = new Swiper(carousel, {
+    slidesPerView: 'auto',
+    loop: true,
+    centeredSlides: true,
+    speed: PRODUCT_HIGHLIGHTS_SWIPER_SPEED,
+    allowTouchMove: true,
+    autoplay: {
+      delay: 0,
+      disableOnInteraction: false,
+      reverseDirection: true,
+    },
+    freeMode: {
+      enabled: true,
+      momentum: false,
+    },
+    a11y: { enabled: false },
+  });
+
+  carousel.dataset.productHighlightsPaused = 'false';
+  carousel.dataset.productHighlightsHoverState = carousel.matches(':hover') ? 'true' : 'false';
+  setupHoverSlowdown(carousel, swiperInstance);
+  return swiperInstance;
+};
 // #endregion
 
 // #region CREATE
@@ -48,7 +125,7 @@ export async function createProductHighlightsCarousel({
    * Root
    */
   const carousel = root || document.createElement('div');
-  carousel.classList.add(CAROUSEL_CLASS);
+  carousel.classList.add(CAROUSEL_CLASS, 'swiper');
 
   /*
    * Track
@@ -56,7 +133,7 @@ export async function createProductHighlightsCarousel({
   const trackElement = track
     || carousel.querySelector(`:scope > .${TRACK_CLASS}`)
     || document.createElement('div');
-  trackElement.classList.add(TRACK_CLASS);
+  trackElement.classList.add(TRACK_CLASS, 'swiper-wrapper');
   if (trackElement.parentElement !== carousel) carousel.appendChild(trackElement);
 
   /*
@@ -66,9 +143,12 @@ export async function createProductHighlightsCarousel({
   const cardElements = await Promise.all((cards || []).map(async (card) => {
     if (card instanceof HTMLElement) {
       await decoratePhotoCard(card);
+      card.classList.add('swiper-slide');
       return card;
     }
-    return createPhotoCard(card);
+    const createdCard = createPhotoCard(card);
+    createdCard.classList.add('swiper-slide');
+    return createdCard;
   }));
 
   cardElements.forEach((cardElement) => {
@@ -110,7 +190,7 @@ function parse(block) {
 /**
  * Decorates the product highlights carousel block.
  * @param {HTMLElement} block
- * @returns {Promise<void>}
+ * @returns {Promise<Object|null>}
  */
 export default async function decorate(block) {
   if (!block) return;
@@ -118,6 +198,8 @@ export default async function decorate(block) {
   await ensureStylesLoaded();
 
   const props = parse(block);
-  await createProductHighlightsCarousel({ root: block, ...props });
+  const carousel = await createProductHighlightsCarousel({ root: block, ...props });
+  const slideCount = carousel.querySelectorAll('.swiper-slide').length;
+  return initSwiper(carousel, slideCount);
 }
 // #endregion
