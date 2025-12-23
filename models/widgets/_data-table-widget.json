@@ -60,12 +60,12 @@
       "fields": [
         {
           "component": "text",
-          "name": "data-table-widget-name",
+          "name": "table-widget-name",
           "label": "Nome sezione Data Table Widget"
         },
         {
           "component": "select",
-          "name": "data-table-widget-style",
+          "name": "style",
           "value": "none",
           "description": "Colore sfondo della sezione Data table Widget",
           "valueType": "string",
