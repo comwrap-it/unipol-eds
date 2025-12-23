@@ -5,7 +5,7 @@ import { extractInstrumentationAttributes } from '../../../../scripts/utils.js';
  * @param {HTMLElement[]} rows The block rows
  * @returns {Object} The extracted values
  */
-const extractValuesFromRows = (rows) => {
+export const extractTextfieldValuesFromRows = (rows) => {
   const label = rows[0].textContent.trim();
   const icon = rows[1] ? rows[1].textContent.trim() : '';
   const iconSize = rows[2] ? rows[2].textContent.trim() : '';

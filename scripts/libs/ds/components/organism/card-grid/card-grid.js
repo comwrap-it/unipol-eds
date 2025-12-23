@@ -1,5 +1,5 @@
-import { loadCSS } from "../../../scripts/aem.js";
-import { createWarrantyCard } from "../../molecules/cards/warranty-card/warranty-card.js";
+import { loadCSS } from '../../../scripts/aem.js';
+import { createWarrantyCard } from '../../molecules/cards/warranty-card/warranty-card.js';
 
 /**
  * ensures styles are loaded only once
@@ -7,7 +7,7 @@ import { createWarrantyCard } from "../../molecules/cards/warranty-card/warranty
 let isStylesAlreadyLoaded = false;
 const ensureStylesLoaded = async () => {
   if (isStylesAlreadyLoaded) return;
-  await loadCSS("../../molecules/cards/warranty-card/warranty-card.css");
+  await loadCSS('../../molecules/cards/warranty-card/warranty-card.css');
   isStylesAlreadyLoaded = true;
 };
 
@@ -30,26 +30,26 @@ const ensureStylesLoaded = async () => {
  * @returns {Promise<HTMLElement>} The card grid element
  */
 export default async function createCardGrid(
-  cards
+  cards,
 ) {
   ensureStylesLoaded();
   // Create card grid container
-  const cardGrid = document.createElement("div");
-  cardGrid.className = "card-grid reveal-in-up";
+  const cardGrid = document.createElement('div');
+  cardGrid.className = 'card-grid reveal-in-up';
 
   // Process each row as a warranty card
   const cardPromises = cards.map(async (card) => {
-    const card = await createWarrantyCard(
-        card.category,
-        card.title,
-        card.description,
-        card.icon,
-        card.linkButtonConfig,
-        card.tagConfig,
-        card.titleRow,
-        card.descriptionRow,
+    const newCard = await createWarrantyCard(
+      card.category,
+      card.title,
+      card.description,
+      card.icon,
+      card.linkButtonConfig,
+      card.tagConfig,
+      card.titleRow,
+      card.descriptionRow,
     );
-    cardGrid.appendChild(card);
+    cardGrid.appendChild(newCard);
   });
   await Promise.all(cardPromises);
 

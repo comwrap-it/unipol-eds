@@ -11,7 +11,6 @@
 
 import createOption from '../option/option.js';
 
-
 /**
  * Builds an options list container with one visual option per item.
  *
@@ -69,4 +68,3 @@ export function createOptionsList(
   });
   return optionsListContainer;
 }
-

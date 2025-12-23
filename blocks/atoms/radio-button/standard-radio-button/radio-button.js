@@ -1,12 +1,13 @@
 import { CHECKED_STATES } from '../../../../constants/index.js';
 import { createRadio } from '../../../../scripts/libs/ds/components/atoms/radio-button/standard-radio-button/radio-button.js';
+import { extractInstrumentationAttributes } from '../../../../scripts/utils.js';
 
 /**
  * Reads UE rows and extracts values
  *
  * @param {Array<HTMLElement>} rows
  */
-function extractValuesFromRows(rows) {
+function extractRadioButtonValuesFromRows(rows) {
   const type = rows[0]?.textContent?.trim().toLowerCase()
     || CHECKED_STATES.UNCHECKED;
 
@@ -33,7 +34,7 @@ export default function decorateRadio(block) {
   const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) rows = [...wrapper.children];
 
-  const { type, disabled, instrumentation } = extractValuesFromRows(rows);
+  const { type, disabled, instrumentation } = extractRadioButtonValuesFromRows(rows);
 
   const hasInstrumentation = block.hasAttribute('data-aue-resource')
     || block.querySelector('[data-aue-resource]')

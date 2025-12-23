@@ -1,5 +1,6 @@
-import { createSwitchButtonField } from "../../../../scripts/libs/ds/components/atoms/switch/switch-button-field/switch-button-field.js";
-import { extractInstrumentationAttributes } from "../../../../scripts/utils.js";
+import { CHECKED_STATES } from '../../../../constants/index.js';
+import { createSwitchButtonField } from '../../../../scripts/libs/ds/components/atoms/switch/switch-button-field/switch-button-field.js';
+import { extractInstrumentationAttributes } from '../../../../scripts/utils.js';
 
 /**
  * Decorator
@@ -13,7 +14,7 @@ export default function decorateSwitchButtonField(block) {
   const wrapper = block.querySelector('.default-content-wrapper');
   if (wrapper) rows = [...wrapper.children];
 
-  const type = rows[0]?.textContent?.trim().toLowerCase() || SWITCH_TYPES.UNCHECKED;
+  const type = rows[0]?.textContent?.trim().toLowerCase() || CHECKED_STATES.UNCHECKED;
   const disabled = rows[1]?.textContent?.trim().toLowerCase() === 'true';
   const label = rows[2]?.textContent?.trim() || '';
   const description = rows[3]?.textContent?.trim() || '';

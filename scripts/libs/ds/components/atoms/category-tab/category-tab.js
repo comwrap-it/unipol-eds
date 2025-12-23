@@ -1,5 +1,4 @@
-import { BUTTON_ICON_SIZES } from "../../../constants";
-
+import { BUTTON_ICON_SIZES } from '../../../constants/index.js';
 
 /**
  * Create a category tab element with styling
@@ -18,11 +17,13 @@ export const createCategoryTab = (
   const tab = document.createElement('button');
   tab.className = 'category-tab';
 
-  const iconSpan = document.createElement('span');
-  iconSpan.className = `icon icon-${
-    iconSize || BUTTON_ICON_SIZES.MEDIUM
-  } ${icon}`;
-  tab.appendChild(iconSpan);
+  if (icon) {
+    const iconSpan = document.createElement('span');
+    iconSpan.className = `icon icon-${
+      iconSize || BUTTON_ICON_SIZES.MEDIUM
+    } ${icon}`;
+    tab.appendChild(iconSpan);
+  }
 
   const textSpan = document.createElement('span');
   textSpan.textContent = category.charAt(0).toUpperCase() + category.slice(1);

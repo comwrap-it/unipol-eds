@@ -1,6 +1,6 @@
-import { CHECKED_STATES } from "../../../../constants/index.js";
-import { createSwitch } from "../../../../scripts/libs/ds/components/atoms/switch/standard-switch-button/switch-button.js";
-import { extractInstrumentationAttributes } from "../../../../scripts/utils.js";
+import { CHECKED_STATES } from '../../../../constants/index.js';
+import { createSwitch } from '../../../../scripts/libs/ds/components/atoms/switch/standard-switch-button/switch-button.js';
+import { extractInstrumentationAttributes } from '../../../../scripts/utils.js';
 
 /**
  * Reads UE rows and extracts values

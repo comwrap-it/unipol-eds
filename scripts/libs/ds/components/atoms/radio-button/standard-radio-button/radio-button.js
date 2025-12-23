@@ -1,7 +1,4 @@
-export const RADIO_TYPES = {
-  CHECKED: 'checked',
-  UNCHECKED: 'unchecked',
-};
+import { CHECKED_STATES } from '../../../../constants/index.js';
 
 /**
  * Create Radio Element
@@ -22,7 +19,7 @@ export function createRadio(type, disabled, instrumentation = {}) {
   input.id = uniqueId;
   input.name = 'radio-group';
 
-  if (type === RADIO_TYPES.CHECKED) {
+  if (type === CHECKED_STATES.CHECKED) {
     input.checked = true;
     input.classList.add('circle-icon');
   }

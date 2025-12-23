@@ -1,6 +1,6 @@
-import { BUTTON_ICON_SIZES, NAVIGATION_PILL_VARIANTS } from "../../../constants/index.js";
-import { createNavigationPill } from "../../../scripts/libs/ds/components/atoms/navigation-pill/navigation-pill.js";
-import { extractInstrumentationAttributes } from "../../../scripts/utils.js";
+import { BUTTON_ICON_SIZES, NAVIGATION_PILL_VARIANTS } from '../../../constants/index.js';
+import { createNavigationPill } from '../../../scripts/libs/ds/components/atoms/navigation-pill/navigation-pill.js';
+import { extractInstrumentationAttributes } from '../../../scripts/utils.js';
 
 /**
  * Retrieves Universal Editor values.

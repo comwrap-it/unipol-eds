@@ -2,11 +2,7 @@
  * Checkbox - Utility Component
  */
 
-export const CHECKBOX_TYPES = {
-  UNCHECKED: 'unchecked',
-  CHECKED: 'checked',
-  INDETERMINATE: 'indeterminate',
-};
+import { CHECKBOX_TYPES } from '../../../../constants/index.js';
 
 /**
  * Create checkbox
@@ -74,4 +70,3 @@ export function createCheckbox(typeStatus, disabled, instrumentation = {}) {
 
   return wrapper;
 }
-

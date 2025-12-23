@@ -1,8 +1,4 @@
-export const SWITCH_TYPES = {
-  CHECKED: 'checked',
-  UNCHECKED: 'unchecked',
-};
-
+import { CHECKED_STATES } from '../../../../constants/index.js';
 
 /**
  * Create Switch Element
@@ -24,7 +20,7 @@ export function createSwitch(type, disabled, instrumentation = {}) {
   input.id = uniqueId;
   input.name = 'switch-group';
 
-  if (type === SWITCH_TYPES.CHECKED) {
+  if (type === CHECKED_STATES.CHECKED) {
     input.checked = true;
   }
 

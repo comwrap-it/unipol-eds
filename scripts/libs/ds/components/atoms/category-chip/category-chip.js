@@ -1,4 +1,3 @@
-
 /**
  * Create a category chip element with styling
  * @param {string} category - Category name (required) mobility | welfare | property
@@ -10,9 +9,11 @@ export const createCategoryChip = (category, icon, instrumentation = {}) => {
   const chip = document.createElement('div');
   chip.className = `category-chip ${category}`;
 
-  const iconSpan = document.createElement('span');
-  iconSpan.className = `icon ${icon}`;
-  chip.appendChild(iconSpan);
+  if (icon) {
+    const iconSpan = document.createElement('span');
+    iconSpan.className = `icon ${icon}`;
+    chip.appendChild(iconSpan);
+  }
 
   const textSpan = document.createElement('span');
   textSpan.textContent = category.charAt(0).toUpperCase() + category.slice(1);

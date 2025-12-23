@@ -1,6 +1,6 @@
-import { createOptimizedPicture } from "../../../../scripts/aem";
-import { createIconElementFromCssClass } from "../../../../scripts/domHelpers";
-import { createTag } from "../../../atoms/tag/tag";
+import { createOptimizedPicture } from '../../../../scripts/aem.js';
+import { createIconElementFromCssClass } from '../../../../scripts/domHelpers.js';
+import { createTag } from '../../../atoms/tag/tag.js';
 
 /**
  *

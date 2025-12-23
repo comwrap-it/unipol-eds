@@ -1,3 +1,4 @@
+import { createCategoryTab } from '../../../scripts/libs/ds/components/atoms/category-tab/category-tab.js';
 import { extractInstrumentationAttributes } from '../../../scripts/utils.js';
 
 /**

@@ -1,18 +1,4 @@
-/**
- * Navigation Pill - Utility Component
- */
-
-export const NAVIGATION_PILL_VARIANTS = {
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-};
-
-export const NAVIGATION_PILL_ICON_SIZES = {
-  SMALL: 'small',
-  MEDIUM: 'medium',
-  LARGE: 'large',
-  EXTRA_LARGE: 'extra-large',
-};
+import { BUTTON_ICON_SIZES, NAVIGATION_PILL_VARIANTS } from '../../../constants/index.js';
 
 /**
  * Creates a Navigation Pill
@@ -44,7 +30,7 @@ export function createNavigationPill(
 
   if (leftIcon) {
     const span = document.createElement('span');
-    span.className = `icon icon-${leftIconSize || NAVIGATION_PILL_ICON_SIZES.MEDIUM} ${leftIcon}`;
+    span.className = `icon icon-${leftIconSize || BUTTON_ICON_SIZES.MEDIUM} ${leftIcon}`;
     el.appendChild(span);
   }
 
@@ -58,7 +44,7 @@ export function createNavigationPill(
 
   if (rightIcon) {
     const span = document.createElement('span');
-    span.className = `icon icon-${rightIconSize || NAVIGATION_PILL_ICON_SIZES.MEDIUM} ${rightIcon}`;
+    span.className = `icon icon-${rightIconSize || BUTTON_ICON_SIZES.MEDIUM} ${rightIcon}`;
     el.appendChild(span);
   }
 
@@ -85,4 +71,3 @@ export function createNavigationPill(
 
   return el;
 }
-

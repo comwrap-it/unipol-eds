@@ -6,7 +6,7 @@
  *
  */
 
-import { create3Dicons } from "../../../scripts/libs/ds/components/atoms/icons-3D/icons-3D.js";
+import { create3Dicons } from '../../../scripts/libs/ds/components/atoms/icons-3D/icons-3D.js';
 
 /**
  * Create 3D icons from Universal Editor rows

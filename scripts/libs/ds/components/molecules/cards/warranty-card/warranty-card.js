@@ -2,6 +2,7 @@ import { loadCSS } from '../../../../scripts/aem.js';
 import { createIconElementFromCssClass, createTextElementFromRow } from '../../../../scripts/domHelpers.js';
 import { loadFragment } from '../../../../scripts/fragment.js';
 import { createTag } from '../../../atoms/tag/tag.js';
+import createDialog from '../../dialog/dialog.js';
 
 /**
  * Create icon and tag container
@@ -20,7 +21,7 @@ const createIconAndTagContainer = async (icon, tagConfig) => {
   iconWrapper.appendChild(iconElement);
 
   if (tagConfig?.label) {
-    await loadCSS(`../../../atoms/tag/tag.css`);
+    await loadCSS('../../../atoms/tag/tag.css');
     const tagElement = createTag(
       tagConfig.label,
       tagConfig.category,
@@ -72,8 +73,9 @@ const createTextContent = (title, titleRow, description, descriptionRow) => {
 /**
  * Handles the link click to load the respective fragment
  * @param {Event} event
+ * @param {DialogConf} dialogConfig
  */
-const handleLinkClick = async (event) => {
+const handleLinkClick = async (event, dialogConfig = {}) => {
   event.stopPropagation();
   event.preventDefault();
   const link = event.currentTarget;
@@ -86,19 +88,32 @@ const handleLinkClick = async (event) => {
         fragmentSection.classList.remove('section');
         document.body.appendChild(fragmentSection);
       }
+    } else if (dialogConfig?.label && dialogConfig?.content) {
+      const dialog = createDialog(
+        dialogConfig.label,
+        dialogConfig.content,
+        dialogConfig.btnLabel,
+        dialogConfig.btnVariant,
+        dialogConfig.btnHref,
+        dialogConfig.btnOpenInNewTab,
+        dialogConfig.btnSize,
+        dialogConfig.btnLeftIcon,
+        dialogConfig.btnRightIcon,
+      );
+      document.body.appendChild(dialog);
     }
   }
 };
 
-const createCardLinkButton = async (label, href) => {
+const createCardLinkButton = async (label, href, dialogConfig = {}) => {
   await loadCSS(
-    `../../../atoms/buttons/link-button/link-button.css`,
+    '../../../atoms/buttons/link-button/link-button.css',
   );
   const linkButton = document.createElement('a');
   linkButton.className = 'link-btn';
   linkButton.href = href;
   linkButton.textContent = label;
-  linkButton.onclick = (event) => handleLinkClick(event);
+  linkButton.onclick = (event) => handleLinkClick(event, dialogConfig);
 
   return linkButton;
 };
@@ -144,6 +159,7 @@ export const createWarrantyCard = async (
     const linkButton = await createCardLinkButton(
       linkButtonConfig.label,
       linkButtonConfig.href,
+      dialogConfig,
     );
     if (linkButton) {
       card.appendChild(linkButton);
