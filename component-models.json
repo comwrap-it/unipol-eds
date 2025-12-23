@@ -191,6 +191,31 @@
         "component": "text",
         "name": "data-table-widget-name",
         "label": "Nome sezione Data Table Widget"
+      },
+      {
+        "component": "select",
+        "name": "data-table-widget-style",
+        "value": "none",
+        "description": "Colore sfondo della sezione Data table Widget",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "none",
+            "value": ""
+          },
+          {
+            "name": "Mobility",
+            "value": "var(--Data-Table-Widget-Background-Mobility, #E5F1FF)"
+          },
+          {
+            "name": "Welfare",
+            "value": "var(--Data-Table-Widget-Background-Welfare, #EBF8E7)"
+          },
+          {
+            "name": "Property",
+            "value": "var(--Data-Table-Widget-Background-Property, #FDEDE7)"
+          }
+        ]
       }
     ]
   },
