@@ -3,18 +3,16 @@ import loadSwiper from '../../scripts/delayed.js';
 // #region CONSTANTS
 const CAROUSEL_CLASS = 'product-highlights-carousel';
 const TRACK_CLASS = 'product-highlights-carousel-track';
+
 export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED = 12000;
-export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW = PRODUCT_HIGHLIGHTS_SWIPER_SPEED * 3;
+export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW = PRODUCT_HIGHLIGHTS_SWIPER_SPEED * 3; // 1/3
 const PRODUCT_HIGHLIGHTS_MIN_LOOP_SLIDES = 5;
 // #endregion
 
 // #region HELPERS
 let isStylesLoaded = false;
 let stylesLoadingPromise = null;
-/**
- * Ensures the carousel and card styles are loaded once.
- * @returns {Promise<void>}
- */
+
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   if (!stylesLoadingPromise) {
@@ -24,9 +22,7 @@ async function ensureStylesLoaded() {
         loadCSS(
           `${window.hlx.codeBasePath}/blocks/product-highlights-carousel/product-highlights-carousel.css`,
         ),
-        loadCSS(
-          `${window.hlx.codeBasePath}/blocks/photo-card/photo-card.css`,
-        ),
+        loadCSS(`${window.hlx.codeBasePath}/blocks/photo-card/photo-card.css`),
       ]);
       isStylesLoaded = true;
     })();
@@ -34,14 +30,83 @@ async function ensureStylesLoaded() {
   await stylesLoadingPromise;
 }
 
+const getSpaceBetween = (carousel) => {
+  const styles = window.getComputedStyle(carousel);
+  const gap = styles.getPropertyValue('--product-highlights-carousel-gap');
+  return Number.parseFloat(gap) || 0;
+};
+
+const removeExistingClones = (track) => {
+  if (!track) return;
+  Array.from(track.children).forEach((slide) => {
+    if (slide?.dataset?.productHighlightsClone === 'true') slide.remove();
+  });
+};
+
+const sanitizeClone = (clone) => {
+  clone.dataset.productHighlightsClone = 'true';
+  clone.setAttribute('aria-hidden', 'true');
+  clone.tabIndex = -1;
+
+  [clone, ...clone.querySelectorAll('*')].forEach((el) => {
+    Array.from(el.attributes).forEach((attr) => {
+      if (
+        attr.name.startsWith('data-aue-')
+        || attr.name.startsWith('data-richtext-')
+      ) {
+        el.removeAttribute(attr.name);
+      }
+    });
+    if (el.id) el.removeAttribute('id');
+  });
+};
+
+const estimateRequiredSlidesForLoop = (carousel, slides, spaceBetween) => {
+  const containerWidth = carousel.getBoundingClientRect().width || 0;
+  const widths = slides
+    .map((s) => s.getBoundingClientRect().width)
+    .filter((w) => w > 0);
+
+  if (!containerWidth || !widths.length) return PRODUCT_HIGHLIGHTS_MIN_LOOP_SLIDES;
+
+  // stima conservativa: slide più stretta => evita warning su viewport larghi
+  const minSlideWidth = Math.min(...widths);
+  const step = Math.max(minSlideWidth + spaceBetween, 1);
+
+  // quante slide "stanno" nel viewport (circa)
+  const slidesPerViewEstimate = Math.ceil(containerWidth / step);
+
+  // centered+loop richiede un margine: +2 è stabile nella pratica
+  return Math.max(
+    PRODUCT_HIGHLIGHTS_MIN_LOOP_SLIDES,
+    slidesPerViewEstimate + 2,
+  );
+};
+
+const ensureEnoughSlidesForLoop = (track, required) => {
+  const slides = Array.from(track.children).filter((n) => n.classList.contains('swiper-slide'));
+  if (!slides.length) return;
+
+  let current = slides.length;
+  let i = 0;
+
+  while (current < required) {
+    const source = slides[i % slides.length];
+    const clone = source.cloneNode(true);
+    sanitizeClone(clone);
+    track.appendChild(clone);
+    current += 1;
+    i += 1;
+  }
+};
+
 /**
- * Updates swiper autoplay speed and restarts the animation.
- * @param {Object} swiperInstance
- * @param {number} speed
+ * Aggiorna speed e riavvia autoplay (se in esecuzione)
  */
 export const setProductHighlightsSwiperSpeed = (swiperInstance, speed) => {
   if (!swiperInstance) return;
   swiperInstance.params.speed = speed;
+
   if (swiperInstance.autoplay?.running) {
     swiperInstance.autoplay.stop();
     swiperInstance.autoplay.start();
@@ -49,24 +114,32 @@ export const setProductHighlightsSwiperSpeed = (swiperInstance, speed) => {
 };
 
 /**
- * Enables hover-based speed slowdown for autoplay.
- * @param {HTMLElement} carousel
- * @param {Object} swiperInstance
+ * Hover lo rallenta a 1/3, leave lo fa tornare normale
  */
 const setupHoverSlowdown = (carousel, swiperInstance) => {
-  if (!carousel || !swiperInstance || carousel.dataset.productHighlightsHover === 'true') return;
+  if (
+    !carousel
+    || !swiperInstance
+    || carousel.dataset.productHighlightsHover === 'true'
+  ) return;
   if (!swiperInstance.params?.autoplay) return;
 
   const handleMouseEnter = () => {
     carousel.dataset.productHighlightsHoverState = 'true';
     if (carousel.dataset.productHighlightsPaused === 'true') return;
-    setProductHighlightsSwiperSpeed(swiperInstance, PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW);
+    setProductHighlightsSwiperSpeed(
+      swiperInstance,
+      PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW,
+    );
   };
 
   const handleMouseLeave = () => {
     carousel.dataset.productHighlightsHoverState = 'false';
     if (carousel.dataset.productHighlightsPaused === 'true') return;
-    setProductHighlightsSwiperSpeed(swiperInstance, PRODUCT_HIGHLIGHTS_SWIPER_SPEED);
+    setProductHighlightsSwiperSpeed(
+      swiperInstance,
+      PRODUCT_HIGHLIGHTS_SWIPER_SPEED,
+    );
   };
 
   carousel.addEventListener('mouseenter', handleMouseEnter);
@@ -75,143 +148,137 @@ const setupHoverSlowdown = (carousel, swiperInstance) => {
 };
 
 /**
- * Initializes Swiper for the product highlights carousel.
- * @param {HTMLElement} carousel
- * @param {number} slideCount
- * @returns {Promise<Object|null>}
+ * Click sulle card, NON deve succedere nulla:
+ * - niente navigazione
+ * - niente "snap"/spostamenti indesiderati
+ * (Da riutilizzare piu avanti)
  */
-const initSwiper = async (carousel, slideCount) => {
-  if (!carousel || carousel.swiper || slideCount < 2) return carousel?.swiper || null;
+const setupNoOpClickOnCards = (carousel) => {
+  if (!carousel || carousel.dataset.productHighlightsNoClick === 'true') return;
+
+  carousel.addEventListener(
+    'click',
+    (e) => {
+      const slide = e.target.closest('.swiper-slide');
+      if (!slide || !carousel.contains(slide)) return;
+
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation?.();
+    },
+    true, // capture: blocca prima di handler interni / link
+  );
+
+  carousel.dataset.productHighlightsNoClick = 'true';
+};
+
+/**
+ * Init Swiper
+ */
+const initSwiper = async (carousel) => {
+  if (!carousel || carousel.swiper) return carousel?.swiper || null;
+
+  const track = carousel.querySelector(`.${TRACK_CLASS}`);
+  if (!track) return null;
+
+  removeExistingClones(track);
+
+  const baseSlides = Array.from(track.children).filter((n) => n.classList.contains('swiper-slide'));
+  if (baseSlides.length < 2) return null;
+
+  const spaceBetween = getSpaceBetween(carousel);
+  const required = estimateRequiredSlidesForLoop(
+    carousel,
+    baseSlides,
+    spaceBetween,
+  );
+
+  ensureEnoughSlidesForLoop(track, required);
+
+  const finalSlidesCount = Array.from(track.children).filter((n) => n.classList.contains('swiper-slide')).length;
+  const canLoop = finalSlidesCount >= required;
 
   const Swiper = await loadSwiper();
-  const track = carousel.querySelector(`.${TRACK_CLASS}`);
-  let effectiveSlideCount = slideCount;
-  const computedStyles = window.getComputedStyle(carousel);
-  const gapValue = computedStyles.getPropertyValue('--product-highlights-carousel-gap');
-  const spaceBetween = Number.parseFloat(gapValue) || 0;
 
-  if (track) {
-    Array.from(track.children).forEach((slide) => {
-      if (slide.dataset.productHighlightsClone === 'true') {
-        slide.remove();
-      }
-    });
-
-    const slides = Array.from(track.children);
-    effectiveSlideCount = slides.length;
-    const slideWidth = slides[0]?.getBoundingClientRect().width || 0;
-    const containerWidth = carousel.getBoundingClientRect().width || 0;
-    const minSlides = slideWidth
-      ? Math.max(
-        PRODUCT_HIGHLIGHTS_MIN_LOOP_SLIDES,
-        Math.ceil(
-          (containerWidth + slideWidth)
-          / Math.max(slideWidth + spaceBetween, 1),
-        ),
-      )
-      : PRODUCT_HIGHLIGHTS_MIN_LOOP_SLIDES;
-
-    if (slides.length && effectiveSlideCount < minSlides) {
-      let index = 0;
-      while (effectiveSlideCount < minSlides) {
-        const source = slides[index % slides.length];
-        const clone = source.cloneNode(true);
-        clone.dataset.productHighlightsClone = 'true';
-        clone.setAttribute('aria-hidden', 'true');
-        clone.tabIndex = -1;
-
-        [clone, ...clone.querySelectorAll('*')].forEach((element) => {
-          Array.from(element.attributes).forEach((attr) => {
-            if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-')) {
-              element.removeAttribute(attr.name);
-            }
-          });
-          if (element.id) element.removeAttribute('id');
-        });
-
-        track.appendChild(clone);
-        effectiveSlideCount += 1;
-        index += 1;
-      }
-    }
-  }
-
-  const shouldLoop = effectiveSlideCount >= PRODUCT_HIGHLIGHTS_MIN_LOOP_SLIDES;
   const swiperInstance = new Swiper(carousel, {
     slidesPerView: 'auto',
-    loop: shouldLoop,
+    spaceBetween,
     centeredSlides: true,
     centeredSlidesBounds: true,
+
+    // evita warning + blocchi
+    loop: canLoop,
+
+    // disabilita comportamenti click che vanno in slide
+    slideToClickedSlide: false,
+    preventClicks: true,
+    preventClicksPropagation: true,
+
     speed: PRODUCT_HIGHLIGHTS_SWIPER_SPEED,
     allowTouchMove: true,
-    spaceBetween,
-    autoplay: shouldLoop ? {
-      delay: 0,
-      disableOnInteraction: false,
-      reverseDirection: true,
-    } : false,
+
+    autoplay: canLoop
+      ? {
+        delay: 0,
+        disableOnInteraction: false,
+        reverseDirection: true,
+      }
+      : false,
+
     freeMode: {
       enabled: true,
       momentum: false,
     },
+
     a11y: { enabled: false },
   });
 
   carousel.dataset.productHighlightsPaused = 'false';
-  carousel.dataset.productHighlightsHoverState = carousel.matches(':hover') ? 'true' : 'false';
+  carousel.dataset.productHighlightsHoverState = carousel.matches(':hover')
+    ? 'true'
+    : 'false';
+
   setupHoverSlowdown(carousel, swiperInstance);
+  setupNoOpClickOnCards(carousel);
+
   return swiperInstance;
 };
 // #endregion
 
 // #region CREATE
-/**
- * Creates or decorates a product highlights carousel.
- * @param {Object} [options]
- * @param {Array<HTMLElement|Object>} [options.cards]
- * @param {HTMLElement|null} [options.root]
- * @param {HTMLElement|null} [options.track]
- * @returns {Promise<HTMLElement>}
- */
 export async function createProductHighlightsCarousel({
   cards = [],
   root = null,
   track = null,
 } = {}) {
-  /*
-   * Root
-   */
   const carousel = root || document.createElement('div');
   carousel.classList.add(CAROUSEL_CLASS, 'swiper');
 
-  /*
-   * Track
-   */
   const trackElement = track
     || carousel.querySelector(`:scope > .${TRACK_CLASS}`)
     || document.createElement('div');
+
   trackElement.classList.add(TRACK_CLASS, 'swiper-wrapper');
   if (trackElement.parentElement !== carousel) carousel.appendChild(trackElement);
 
-  /*
-   * Cards
-   */
-  const { default: decoratePhotoCard, createPhotoCard } = await import('../photo-card/photo-card.js');
-  const cardElements = await Promise.all((cards || []).map(async (card) => {
-    if (card instanceof HTMLElement) {
-      await decoratePhotoCard(card);
-      card.classList.add('swiper-slide');
-      return card;
-    }
-    const createdCard = createPhotoCard(card);
-    createdCard.classList.add('swiper-slide');
-    return createdCard;
-  }));
+  const { default: decoratePhotoCard, createPhotoCard } = await import(
+    '../photo-card/photo-card.js'
+  );
+  const cardElements = await Promise.all(
+    (cards || []).map(async (card) => {
+      if (card instanceof HTMLElement) {
+        await decoratePhotoCard(card);
+        card.classList.add('swiper-slide');
+        return card;
+      }
+      const created = createPhotoCard(card);
+      created.classList.add('swiper-slide');
+      return created;
+    }),
+  );
 
-  cardElements.forEach((cardElement) => {
-    if (cardElement && cardElement.parentElement !== trackElement) {
-      trackElement.appendChild(cardElement);
-    }
+  cardElements.forEach((el) => {
+    if (el && el.parentElement !== trackElement) trackElement.appendChild(el);
   });
 
   return carousel;
@@ -219,63 +286,46 @@ export async function createProductHighlightsCarousel({
 // #endregion
 
 // #region PARSE
-/**
- * Parses the carousel block for cards and/or existing track.
- * @param {HTMLElement} block
- * @returns {{track: HTMLElement|null, cards: HTMLElement[]}}
- */
 function parse(block) {
-  /*
-   * Existing track
-   */
   const existingTrack = block.querySelector(`:scope > .${TRACK_CLASS}`);
-  if (existingTrack) {
-    return { track: existingTrack, cards: Array.from(existingTrack.children) };
-  }
+  if (existingTrack) return { track: existingTrack, cards: Array.from(existingTrack.children) };
 
-  /*
-   * Rows
-   */
   const wrapper = block.querySelector(':scope > .default-content-wrapper');
-  const cards = wrapper ? Array.from(wrapper.children) : Array.from(block.children);
-
+  const cards = wrapper
+    ? Array.from(wrapper.children)
+    : Array.from(block.children);
   return { track: wrapper, cards };
 }
 // #endregion
 
 // #region DECORATE
-/**
- * Decorates the product highlights carousel block.
- * @param {HTMLElement} block
- * @returns {Promise<void>}
- */
 export default async function decorate(block) {
   if (!block) return;
 
   await ensureStylesLoaded();
 
   const props = parse(block);
-  const carousel = await createProductHighlightsCarousel({ root: block, ...props });
-  const slideCount = carousel.querySelectorAll('.swiper-slide').length;
+  const carousel = await createProductHighlightsCarousel({
+    root: block,
+    ...props,
+  });
+
   const doc = block?.ownerDocument || document;
-  const root = doc.documentElement;
-  const isEditor = root?.classList.contains('adobe-ue-edit');
+  const isEditor = doc.documentElement?.classList.contains('adobe-ue-edit');
 
   if (isEditor) {
     carousel.classList.remove('swiper');
     const track = carousel.querySelector(`.${TRACK_CLASS}`);
     track?.classList.remove('swiper-wrapper');
+
     carousel.querySelectorAll('.swiper-slide').forEach((slide) => {
-      if (slide.dataset.productHighlightsClone === 'true') {
-        slide.remove();
-        return;
-      }
-      slide.classList.remove('swiper-slide');
+      if (slide.dataset.productHighlightsClone === 'true') slide.remove();
+      else slide.classList.remove('swiper-slide');
     });
     return;
   }
 
-  const swiperInstance = await initSwiper(carousel, slideCount);
+  const swiperInstance = await initSwiper(carousel);
   if (swiperInstance) carousel.swiper = swiperInstance;
 }
 // #endregion
