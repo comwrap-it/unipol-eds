@@ -382,7 +382,8 @@ async function decorateWidgetSection(section, block) {
   section.classList.add(WIDGET_CLASS);
   section.setAttribute(DECORATED_ATTR, 'true');
 
-  const swiperInstance = await decorateProductHighlightsCarousel(carousel);
+  await decorateProductHighlightsCarousel(carousel);
+  const swiperInstance = carousel.swiper;
 
   /*
    * Pause

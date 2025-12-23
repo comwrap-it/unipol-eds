@@ -190,7 +190,7 @@ function parse(block) {
 /**
  * Decorates the product highlights carousel block.
  * @param {HTMLElement} block
- * @returns {Promise<Object|null>}
+ * @returns {Promise<void>}
  */
 export default async function decorate(block) {
   if (!block) return;
@@ -200,6 +200,7 @@ export default async function decorate(block) {
   const props = parse(block);
   const carousel = await createProductHighlightsCarousel({ root: block, ...props });
   const slideCount = carousel.querySelectorAll('.swiper-slide').length;
-  return initSwiper(carousel, slideCount);
+  const swiperInstance = await initSwiper(carousel, slideCount);
+  if (swiperInstance) carousel.swiper = swiperInstance;
 }
 // #endregion
