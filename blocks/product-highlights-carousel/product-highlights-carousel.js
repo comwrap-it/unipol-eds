@@ -4,7 +4,7 @@ import loadSwiper from '../../scripts/delayed.js';
 const CAROUSEL_CLASS = 'product-highlights-carousel';
 const TRACK_CLASS = 'product-highlights-carousel-track';
 
-export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED = 1200;
+export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED = 10000;
 export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW = PRODUCT_HIGHLIGHTS_SWIPER_SPEED * 3; // 1/3
 // #endregion
 
@@ -227,12 +227,12 @@ const initSwiper = async (carousel, force = false) => {
     allowTouchMove: false,
     simulateTouch: false,
     slideToClickedSlide: false,
-    preventClicks: true,
-    preventClicksPropagation: true,
+    preventClicks: false,
+    preventClicksPropagation: false,
     autoplay: {
       delay: 0,
       disableOnInteraction: false,
-      reverseDirection: true,
+      reverseDirection: false,
       pauseOnMouseEnter: false,
       waitForTransition: false,
     },
@@ -283,21 +283,6 @@ const initSwiper = async (carousel, force = false) => {
     carousel.addEventListener('mouseenter', handleMouseEnter);
     carousel.addEventListener('mouseleave', handleMouseLeave);
     carousel.dataset.productHighlightsHover = 'true';
-  }
-
-  if (carousel.dataset.productHighlightsNoClick !== 'true') {
-    carousel.addEventListener(
-      'click',
-      (event) => {
-        const slide = event.target.closest('.swiper-slide');
-        if (!slide || !carousel.contains(slide)) return;
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation?.();
-      },
-      true,
-    );
-    carousel.dataset.productHighlightsNoClick = 'true';
   }
 
   if (carousel.dataset.productHighlightsResize !== 'true') {

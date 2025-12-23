@@ -68,6 +68,43 @@ const getDatasetValue = (section, name) => {
 const appendIfPresent = (parent, child) => {
   if (child) parent.appendChild(child);
 };
+
+const waitForProductHighlightsSwiper = (carousel, timeoutMs = 2000) => new Promise((resolve) => {
+  if (!carousel) {
+    resolve(null);
+    return;
+  }
+  if (carousel.swiper) {
+    resolve(carousel.swiper);
+    return;
+  }
+
+  const start = window.performance?.now?.() || Date.now();
+  let resolved = false;
+  let rafId = 0;
+
+  const settle = (value) => {
+    if (resolved) return;
+    resolved = true;
+    if (rafId) cancelAnimationFrame(rafId);
+    resolve(value);
+  };
+
+  const tick = () => {
+    if (carousel.swiper) {
+      settle(carousel.swiper);
+      return;
+    }
+    const now = window.performance?.now?.() || Date.now();
+    if (now - start >= timeoutMs) {
+      settle(null);
+      return;
+    }
+    rafId = requestAnimationFrame(tick);
+  };
+
+  rafId = requestAnimationFrame(tick);
+});
 // #endregion
 
 // #region CREATE
@@ -381,7 +418,7 @@ async function decorateWidgetSection(section, block) {
   section.setAttribute(DECORATED_ATTR, 'true');
 
   await decorateProductHighlightsCarousel(carousel);
-  const swiperInstance = carousel.swiper;
+  const swiperInstance = await waitForProductHighlightsSwiper(carousel);
 
   /*
    * Pause
