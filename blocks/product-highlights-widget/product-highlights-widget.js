@@ -1,4 +1,4 @@
-﻿import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
+import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
 import { loadCSS } from '../../scripts/aem.js';
 import decorateProductHighlightsCarousel, {
   PRODUCT_HIGHLIGHTS_SWIPER_SPEED,

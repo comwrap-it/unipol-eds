@@ -13,7 +13,7 @@
         margin-inline: auto;
         padding: var(--Space-0, 0);
         align-items: flex-start;
-        gap: var(--product-highlights-carousel-gap);
+        gap: 0;
         box-sizing: border-box;
     }
 
@@ -22,6 +22,7 @@
             justify-content: center;
             overflow-x: auto;
             scroll-snap-type: x mandatory;
+            gap: var(--product-highlights-carousel-gap);
         }
 
         & .product-highlights-carousel-track > * {

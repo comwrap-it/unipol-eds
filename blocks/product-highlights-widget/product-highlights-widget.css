@@ -4,6 +4,7 @@
         var(--Background-Default-Tertiary, #001C35)
     );
     --product-highlights-widget-content-width: min(100%, var(--Layout-Page-Width, 90rem));
+    --product-highlights-widget-panel-padding: var(--Layout-Section-Margin-Horizontal-Padding, 4rem);
     --Card-Photo-Card-Width-S: clamp(220px, 26vw, 380px);
     --Card-Photo-Card-Image-Height-S: calc(var(--Card-Photo-Card-Width-S) * 0.75);
     --Card-Photo-Card-Width-M: clamp(280px, 42vw, 870px);
@@ -15,7 +16,7 @@
     & .product-highlights-widget-panel {
         width: 100%;
         padding: var(--Carousel-Widget-Product-Highlights-Vertical-Padding, 64px)
-            var(--Layout-Section-Margin-Horizontal-Padding, 4rem);
+            var(--product-highlights-widget-panel-padding);
         background: var(--product-highlights-widget-bg);
         border-radius: var(--Carousel-Widget-Product-Highlights-Radius, 24px);
         display: grid;
@@ -24,6 +25,7 @@
         justify-content: center;
         position: relative;
         box-sizing: border-box;
+        overflow: hidden;
     }
 
     & .product-highlights-widget-header {
@@ -73,14 +75,19 @@
     }
 
     & .product-highlights-widget-carousel {
-        width: 100%;
-        max-width: var(--product-highlights-widget-content-width);
-        margin-inline: auto;
+        width: calc(
+            100%
+            + var(--product-highlights-widget-panel-padding)
+            + var(--product-highlights-widget-panel-padding)
+        );
+        max-width: none;
+        margin-inline: calc(-1 * var(--product-highlights-widget-panel-padding));
         display: flex;
         justify-content: center;
 
         & .product-highlights-carousel {
-            --product-highlights-carousel-width: var(--product-highlights-widget-content-width);
+            --product-highlights-carousel-width: 100%;
+
             width: 100%;
         }
     }
@@ -115,7 +122,7 @@
         cursor: pointer;
 
         &:focus-visible {
-            outline: 2px solid currentColor;
+            outline: 2px solid currentcolor;
             outline-offset: 2px;
         }
     }
@@ -125,7 +132,6 @@
     }
 
     & .photo-card-title {
-        color: var(--product-highlights-widget-text);
         text-align: center;
     }
 
@@ -140,8 +146,10 @@
 
 @media (width < 768px) {
     .section.product-highlights-widget {
+        --product-highlights-widget-panel-padding: var(--Space-400-24, 24px);
+
         & .product-highlights-widget-panel {
-            padding: var(--Space-700-48, 48px) var(--Space-400-24, 24px);
+            padding: var(--Space-700-48, 48px) var(--product-highlights-widget-panel-padding);
             gap: var(--Carousel-Widget-Product-Highlights-Logo-Text-Gap-M, 24px);
         }
 

@@ -86,6 +86,9 @@ const initSwiper = async (carousel, slideCount) => {
   const Swiper = await loadSwiper();
   const track = carousel.querySelector(`.${TRACK_CLASS}`);
   let effectiveSlideCount = slideCount;
+  const computedStyles = window.getComputedStyle(carousel);
+  const gapValue = computedStyles.getPropertyValue('--product-highlights-carousel-gap');
+  const spaceBetween = Number.parseFloat(gapValue) || 0;
 
   if (track) {
     Array.from(track.children).forEach((slide) => {
@@ -96,10 +99,21 @@ const initSwiper = async (carousel, slideCount) => {
 
     const slides = Array.from(track.children);
     effectiveSlideCount = slides.length;
+    const slideWidth = slides[0]?.getBoundingClientRect().width || 0;
+    const containerWidth = carousel.getBoundingClientRect().width || 0;
+    const minSlides = slideWidth
+      ? Math.max(
+        PRODUCT_HIGHLIGHTS_MIN_LOOP_SLIDES,
+        Math.ceil(
+          (containerWidth + slideWidth)
+          / Math.max(slideWidth + spaceBetween, 1),
+        ),
+      )
+      : PRODUCT_HIGHLIGHTS_MIN_LOOP_SLIDES;
 
-    if (slides.length && effectiveSlideCount < PRODUCT_HIGHLIGHTS_MIN_LOOP_SLIDES) {
+    if (slides.length && effectiveSlideCount < minSlides) {
       let index = 0;
-      while (effectiveSlideCount < PRODUCT_HIGHLIGHTS_MIN_LOOP_SLIDES) {
+      while (effectiveSlideCount < minSlides) {
         const source = slides[index % slides.length];
         const clone = source.cloneNode(true);
         clone.dataset.productHighlightsClone = 'true';
@@ -127,8 +141,10 @@ const initSwiper = async (carousel, slideCount) => {
     slidesPerView: 'auto',
     loop: shouldLoop,
     centeredSlides: true,
+    centeredSlidesBounds: true,
     speed: PRODUCT_HIGHLIGHTS_SWIPER_SPEED,
     allowTouchMove: true,
+    spaceBetween,
     autoplay: shouldLoop ? {
       delay: 0,
       disableOnInteraction: false,
