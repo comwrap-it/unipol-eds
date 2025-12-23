@@ -1,11 +1,11 @@
 import loadSwiper from '../../scripts/delayed.js';
-import { isAuthorMode } from '../../scripts/utils.js';
 
 // #region CONSTANTS
 const CAROUSEL_CLASS = 'product-highlights-carousel';
 const TRACK_CLASS = 'product-highlights-carousel-track';
 export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED = 12000;
 export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW = PRODUCT_HIGHLIGHTS_SWIPER_SPEED * 3;
+const PRODUCT_HIGHLIGHTS_MIN_LOOP_SLIDES = 5;
 // #endregion
 
 // #region HELPERS
@@ -84,7 +84,45 @@ const initSwiper = async (carousel, slideCount) => {
   if (!carousel || carousel.swiper || slideCount < 2) return carousel?.swiper || null;
 
   const Swiper = await loadSwiper();
-  const shouldLoop = slideCount >= 5;
+  const track = carousel.querySelector(`.${TRACK_CLASS}`);
+  let effectiveSlideCount = slideCount;
+
+  if (track) {
+    Array.from(track.children).forEach((slide) => {
+      if (slide.dataset.productHighlightsClone === 'true') {
+        slide.remove();
+      }
+    });
+
+    const slides = Array.from(track.children);
+    effectiveSlideCount = slides.length;
+
+    if (slides.length && effectiveSlideCount < PRODUCT_HIGHLIGHTS_MIN_LOOP_SLIDES) {
+      let index = 0;
+      while (effectiveSlideCount < PRODUCT_HIGHLIGHTS_MIN_LOOP_SLIDES) {
+        const source = slides[index % slides.length];
+        const clone = source.cloneNode(true);
+        clone.dataset.productHighlightsClone = 'true';
+        clone.setAttribute('aria-hidden', 'true');
+        clone.tabIndex = -1;
+
+        [clone, ...clone.querySelectorAll('*')].forEach((element) => {
+          Array.from(element.attributes).forEach((attr) => {
+            if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-')) {
+              element.removeAttribute(attr.name);
+            }
+          });
+          if (element.id) element.removeAttribute('id');
+        });
+
+        track.appendChild(clone);
+        effectiveSlideCount += 1;
+        index += 1;
+      }
+    }
+  }
+
+  const shouldLoop = effectiveSlideCount >= PRODUCT_HIGHLIGHTS_MIN_LOOP_SLIDES;
   const swiperInstance = new Swiper(carousel, {
     slidesPerView: 'auto',
     loop: shouldLoop,
@@ -203,13 +241,19 @@ export default async function decorate(block) {
   const props = parse(block);
   const carousel = await createProductHighlightsCarousel({ root: block, ...props });
   const slideCount = carousel.querySelectorAll('.swiper-slide').length;
-  const isAuthor = isAuthorMode(block);
+  const doc = block?.ownerDocument || document;
+  const root = doc.documentElement;
+  const isEditor = root?.classList.contains('adobe-ue-edit');
 
-  if (isAuthor) {
+  if (isEditor) {
     carousel.classList.remove('swiper');
     const track = carousel.querySelector(`.${TRACK_CLASS}`);
     track?.classList.remove('swiper-wrapper');
     carousel.querySelectorAll('.swiper-slide').forEach((slide) => {
+      if (slide.dataset.productHighlightsClone === 'true') {
+        slide.remove();
+        return;
+      }
       slide.classList.remove('swiper-slide');
     });
     return;
