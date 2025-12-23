@@ -1,4 +1,4 @@
-import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
+﻿import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
 import { loadCSS } from '../../scripts/aem.js';
 import decorateProductHighlightsCarousel, {
   PRODUCT_HIGHLIGHTS_SWIPER_SPEED,
@@ -123,7 +123,7 @@ export function createProductHighlightsWidget({
       buttonConfig.label,
       buttonConfig.href,
       buttonConfig.openInNewTab,
-      buttonConfig.variant || BUTTON_VARIANTS.SECONDARY,
+      buttonConfig.variant || BUTTON_VARIANTS.PRIMARY,
       buttonConfig.iconSize || BUTTON_ICON_SIZES.MEDIUM,
       buttonConfig.leftIcon || '',
       buttonConfig.rightIcon || '',
@@ -377,6 +377,7 @@ async function decorateWidgetSection(section, block) {
    * Finalize
    */
   section.classList.add(WIDGET_CLASS);
+  section.classList.add('theme-dark');
   section.setAttribute(DECORATED_ATTR, 'true');
 
   await decorateProductHighlightsCarousel(carousel);

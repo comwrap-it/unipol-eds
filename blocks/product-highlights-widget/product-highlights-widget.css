@@ -3,35 +3,17 @@
         --Carousel-Widget-Product-Highlights-Background-Color,
         var(--Background-Default-Tertiary, #001C35)
     );
-    --product-highlights-widget-text: var(--Text-Neutral-Tertiary, #fff);
     --product-highlights-widget-content-width: min(100%, var(--Layout-Page-Width, 90rem));
-    --Text-Block-Title: var(--product-highlights-widget-text);
-    --Text-Block-Body: var(--product-highlights-widget-text);
-    --Text-Block-Centered-Gap: var(--Space-300-16, 16px);
-    --Button-Secondary-Default-Background: var(--Neutral-50, #fff);
-    --Button-Secondary-Default-Text: var(--Text-Default-Primary, #001C35);
-    --Button-Secondary-Default-Border: var(--Button-Secondary-Default-Background);
-    --Button-Secondary-Hover-Background: var(--Button-Secondary-Default-Background);
-    --Button-Secondary-Hover-Text: var(--Button-Secondary-Default-Text);
-    --Button-Secondary-Hover-Border: var(--Button-Secondary-Default-Border);
-    --Button-Secondary-Pressed-Background: var(--Button-Secondary-Default-Background);
-    --Button-Secondary-Pressed-Text: var(--Button-Secondary-Default-Text);
-    --Button-Secondary-Pressed-Border: var(--Button-Secondary-Default-Border);
-    --Button-Secondary-Focused-Border-Default: var(--Button-Secondary-Default-Border);
-    --Button-Secondary-Focused-Border-Focus: var(--product-highlights-widget-text);
     --Card-Photo-Card-Width-S: clamp(220px, 26vw, 380px);
     --Card-Photo-Card-Image-Height-S: calc(var(--Card-Photo-Card-Width-S) * 0.75);
     --Card-Photo-Card-Width-M: clamp(280px, 42vw, 870px);
     --Card-Photo-Card-Image-Height-M: calc(var(--Card-Photo-Card-Width-M) * 0.562);
 
-    padding-inline: 0;
     padding-block: var(--Layout-Section-Vertical-Padding, 4rem);
-    color: var(--product-highlights-widget-text);
+    color: var(--Text-Default-Primary, #fff);
 
     & .product-highlights-widget-panel {
         width: 100%;
-        max-width: none;
-        margin-inline: 0;
         padding: var(--Carousel-Widget-Product-Highlights-Vertical-Padding, 64px)
             var(--Layout-Section-Margin-Horizontal-Padding, 4rem);
         background: var(--product-highlights-widget-bg);
@@ -39,6 +21,7 @@
         display: grid;
         gap: var(--Carousel-Widget-Product-Highlights-Logo-Text-Gap-D-Ds, 32px);
         justify-items: center;
+        justify-content: center;
         position: relative;
         box-sizing: border-box;
     }
@@ -52,41 +35,41 @@
         width: 100%;
         max-width: min(100%, 48rem);
         margin-inline: auto;
-    }
 
-    & .product-highlights-widget-logo {
-        margin-bottom: var(--Carousel-Widget-Product-Highlights-Logo-Text-Gap-D-Ds, 32px);
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: var(--Space-200-8, 8px);
+        & .product-highlights-widget-logo {
+            margin-bottom: var(--Carousel-Widget-Product-Highlights-Logo-Text-Gap-D-Ds, 32px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: var(--Space-200-8, 8px);
 
-        & img,
-        & picture {
-            max-width: clamp(96px, 20vw, 160px);
-            height: auto;
+            & img,
+            & picture {
+                max-width: clamp(96px, 20vw, 160px);
+                height: auto;
+            }
+
+            & .product-highlights-widget-logo-secondary img,
+            & .product-highlights-widget-logo-secondary picture {
+                max-width: clamp(72px, 14vw, 120px);
+                height: auto;
+            }
         }
-    }
 
-    & .product-highlights-widget-logo-secondary img,
-    & .product-highlights-widget-logo-secondary picture {
-        max-width: clamp(72px, 14vw, 120px);
-        height: auto;
-    }
+        & .text-block-wrapper {
+            width: 100%;
+            max-width: min(100%, 48rem);
+        }
 
-    & .product-highlights-widget-header .text-block-wrapper {
-        width: 100%;
-        max-width: min(100%, 48rem);
-    }
+        & .text-block {
+            width: 100%;
+        }
 
-    & .product-highlights-widget-header .text-block {
-        width: 100%;
-    }
-
-    & .product-highlights-widget-header .text-block-title,
-    & .product-highlights-widget-header .text-block-text {
-        margin: 0;
+        & .text-block-title,
+        & .text-block-text {
+            margin: 0;
+        }
     }
 
     & .product-highlights-widget-carousel {
@@ -95,11 +78,11 @@
         margin-inline: auto;
         display: flex;
         justify-content: center;
-    }
 
-    & .product-highlights-widget-carousel .product-highlights-carousel {
-        --product-highlights-carousel-width: var(--product-highlights-widget-content-width);
-        width: 100%;
+        & .product-highlights-carousel {
+            --product-highlights-carousel-width: var(--product-highlights-widget-content-width);
+            width: 100%;
+        }
     }
 
     & .product-highlights-widget-cta {
@@ -108,11 +91,11 @@
         margin-inline: auto;
         display: flex;
         justify-content: center;
-    }
 
-    & .product-highlights-widget-cta .btn {
-        border-radius: var(--Radius-9999, 999px);
-        padding: var(--Space-200-8, 8px) var(--Space-400-24, 24px);
+        & .btn {
+            border-radius: var(--Radius-9999, 999px);
+            padding: var(--Space-200-8, 8px) var(--Space-400-24, 24px);
+        }
     }
 
     & .product-highlights-widget-pause {
@@ -125,16 +108,16 @@
         place-items: center;
         border-radius: 50%;
         background: transparent;
-        color: var(--product-highlights-widget-text);
+        color: inherit;
         border: none;
         font-size: 16px;
         line-height: 1;
         cursor: pointer;
-    }
 
-    & .product-highlights-widget-pause:focus-visible {
-        outline: 2px solid var(--product-highlights-widget-text);
-        outline-offset: 2px;
+        &:focus-visible {
+            outline: 2px solid currentColor;
+            outline-offset: 2px;
+        }
     }
 
     & .photo-card {
@@ -148,10 +131,10 @@
 
     & .photo-card[data-photo-card-size="m"] {
         align-items: center;
-    }
 
-    & .photo-card[data-photo-card-size="m"] .photo-card-title {
-        text-align: center;
+        & .photo-card-title {
+            text-align: center;
+        }
     }
 }
 
@@ -162,7 +145,7 @@
             gap: var(--Carousel-Widget-Product-Highlights-Logo-Text-Gap-M, 24px);
         }
 
-        & .product-highlights-widget-logo {
+        & .product-highlights-widget-header .product-highlights-widget-logo {
             margin-bottom: var(--Carousel-Widget-Product-Highlights-Logo-Text-Gap-M, 24px);
         }
     }
