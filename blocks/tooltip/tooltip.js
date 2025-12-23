@@ -14,7 +14,15 @@ export async function createTooltip(title, description) {
   if (title) {
     const titleDiv = document.createElement('div');
     titleDiv.className = 'tooltip-title';
-    titleDiv.textContent = title;
+
+    const iconSpan = document.createElement('span');
+    iconSpan.className = 'un-icon-search';
+
+    titleDiv.appendChild(iconSpan);
+
+    const titleText = document.createTextNode(title);
+    titleDiv.appendChild(titleText);
+
     container.appendChild(titleDiv);
   }
 

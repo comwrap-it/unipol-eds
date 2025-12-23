@@ -1,3 +1,22 @@
-.tooltip {
-/* margin:0; */
+.data-table-tooltip {
+    position: absolute;
+    background: var(--Tooltip-Background, #001C35);
+}
+
+.tooltip-container {
+    padding: var(--Tooltip-Vertical-Padding) var(--Tooltip-Horizontal-Padding) !important;
+}
+
+.tooltip-title {
+    font-size: var(--Size-16, 1rem);
+    font-weight: 600;
+    font-family: var(--Family-Font-2, Manrope);
+    color: var(--Tooltip-Title, #F9F9F7);
+}
+
+.tooltip-description {
+    font-size: var(--Size-14);
+    font-weight: 500;
+    font-family: var(--Family-Font-2, Manrope);
+    color: var(--Tooltip-Body-Text, #A4AFB7);
 }

@@ -30,6 +30,28 @@ table.data-table tbody {
     border-spacing: 0;
 }
 
+table.data-table th {
+    font-size: var(--Font-Size-Heading);
+    font-family: var(--Family-Font-2, Manrope);
+    font-weight: 600;
+}
+
+table.data-table td {
+    font-size: var(--Size-16, 1rem);
+    font-family: var(--Family-Font-2, Manrope);
+    font-weight: 400;
+}
+
+table.data-table td .benefit-container {
+    font-weight: 600;
+    margin-top: var(--Table-Cell-Gap, 16px);
+}
+
+.data-table-mobile-merge {
+    font-size: var(--Size-16, 1rem);
+    font-weight: 400;
+}
+
 table.data-table tr:not(:first-child) td,
 table.data-table tr:not(:first-child) th {
     padding: 10px;
@@ -73,4 +95,9 @@ table.data-table tr:not(:first-child) th {
     .data-table-wrapper {
         padding-top: var(--Data-Table-Widget-Gap-M, 40px);
     }
+
+    table.data-table td > span:first-child {
+      display: none;
+    }
+
 }
