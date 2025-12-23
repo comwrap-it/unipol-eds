@@ -130,7 +130,7 @@ export async function createDataTableRowFromRows(rows) {
       hasContent = true;
 
       const container = document.createElement('span');
-      container.className = 'benefit-container';
+      container.className = 'benefit-container color-mobility color-welfare color-property';
 
       const icon = document.createElement('span');
       icon.className = 'un-icon-check-circle';
