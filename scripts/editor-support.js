@@ -22,6 +22,11 @@ const componentsWithMaxItems = [
     itemClass: '.image-text-item',
     maxItems: 4,
   },
+  {
+    filter: 'unipol-footer',
+    itemClass: '.text-list-wrapper',
+    maxItems: 4,
+  },
 ];
 
 async function applyChanges(event) {

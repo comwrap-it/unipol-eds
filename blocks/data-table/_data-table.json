@@ -22,14 +22,11 @@
       "id": "data-table",
       "fields": [
         {
-          "component": "container",
-          "name": "show-more-data-table",
-          "label": "Data table: Configurazione pulsante",
-          "fields": [
-            {
-              "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
-            }
-          ]
+          "component": "text",
+          "name": "showMoreButtonLabel",
+          "label": "Testo bottone",
+          "description": "Default \"Mostra di più\"",
+          "maxlength": 15
         }
       ]
     }

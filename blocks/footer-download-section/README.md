@@ -1,63 +1,51 @@
 # Footer Download Section
 
-Download area containing brand button, optional QR code with text, and app store buttons. UE model in `_footer-download-section.json`; behavior in `footer-download-section.js`.
+## Panoramica
+Sezione del footer dedicata ai download che include:
+- Logo Unipol con pulsante/link personalizzato (testo + icona opzionale)
+- Codice QR con testo descrittivo
+- Pulsanti per il download su Google Play e App Store
 
-## Overview
-- Shows logo with a branded link/button (text + optional icon).
-- Displays a QR code with supporting text.
-- Provides Google Play and App Store download links with badges.
+## Come utilizzare
 
-## Field Reference (UE Model)
-Source: `_footer-download-section.json` (model: `footer-download-section`).
+### Configurazione dei campi
 
-1) logoUnipolFooter (reference)
-- Purpose: Unipol logo image for the section.
+Il componente richiede 10 campi da compilare nell'ordine indicato:
 
-2) UnipolButtonGroup (text)
-- Purpose: Label for the brand button/link.
+1. **Logo Unipol Footer** (immagine)
+   - Carica l'immagine del logo Unipol da visualizzare nella sezione
 
-3) UnipolButtonHref (aem-content)
-- Purpose: URL for the brand button/link.
+2. **Testo Unipol Group** (testo)
+   - Inserisci il testo che apparirà sul pulsante/link del brand
 
-4) buttonIconUnipolGroup (reference)
-- Purpose: Optional icon displayed within the brand button.
+3. **Link URL Unipol Group** (link)
+   - Inserisci l'URL di destinazione per il pulsante del brand
+   - Puoi inserire un URL diretto oppure selezionare un elemento link esistente
 
-5) qrCodeFooterImg (reference)
-- Purpose: QR code image.
+4. **Icona Button Unipol Group** (immagine, opzionale)
+   - Carica un'icona da visualizzare accanto al testo del pulsante del brand
+   - Questo campo è opzionale
 
-6) qrCodeImg (richtext)
-- Purpose: Text displayed near the QR code.
+5. **Immagine QR CODE** (immagine)
+   - Carica l'immagine del codice QR da visualizzare
 
-7) googlePlayImg (reference)
-- Purpose: Google Play badge image.
+6. **Testo sezione QR Code** (testo)
+   - Inserisci il testo descrittivo da mostrare accanto al codice QR
+   - Massimo 30 caratteri
 
-8) googlePlayHref (aem-content)
-- Purpose: Link to Google Play store.
+7. **Immagine GooglePlay** (immagine)
+   - Carica l'immagine del badge "Scarica su Google Play"
 
-9) appStoreImg (reference)
-- Purpose: App Store badge image.
+8. **GooglePlay Link URL** (link)
+   - Inserisci il link che porta alla pagina di download su Google Play Store
 
-10) appStoreHref (aem-content)
-- Purpose: Link to Apple App Store.
+9. **Immagine AppleStore** (immagine)
+   - Carica l'immagine del badge "Scarica su App Store"
 
-## Runtime Behavior (footer-download-section.js)
-- Extracts authored rows and builds the brand area, QR area, and app store buttons.
-- Accepts either prebuilt elements (from UE) or raw URLs and creates appropriate `<img>`/`<a>` elements.
-- Applies section classes and preserves UE attributes on the block.
+10. **appStore Link URL** (link)
+    - Inserisci il link che porta alla pagina di download su Apple App Store
 
-## Authoring Notes (Universal Editor)
-- Recommended row mapping (by order):
-  - Row 0 → logo
-  - Row 1 → brand text
-  - Row 2 → brand link
-  - Row 3 → brand icon
-  - Row 4 → QR code image
-  - Row 5 → QR text
-  - Row 6 → Google Play image
-  - Row 7 → Google Play URL
-  - Row 8 → App Store image
-  - Row 9 → App Store URL
-
-## Defaults and Fallbacks
-- Missing QR/logo or store images: the script uses provided fallbacks for QR and ignores missing items otherwise.
-- If fewer than 10 rows are present, decoration is skipped.
+## Note importanti
+- Tutti i campi devono essere compilati nell'ordine indicato (10 campi totali)
+- Se mancano alcuni elementi (come l'icona del brand o le immagini), il componente utilizzerà valori predefiniti o non visualizzerà quegli elementi
+- Il testo del QR Code ha un limite massimo di 30 caratteri

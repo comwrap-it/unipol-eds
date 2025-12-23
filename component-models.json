@@ -189,8 +189,33 @@
     "fields": [
       {
         "component": "text",
-        "name": "data-table-widget-name",
+        "name": "table-widget-name",
         "label": "Nome sezione Data Table Widget"
+      },
+      {
+        "component": "select",
+        "name": "style",
+        "value": "none",
+        "description": "Colore sfondo della sezione Data table Widget",
+        "valueType": "string",
+        "options": [
+          {
+            "name": "none",
+            "value": ""
+          },
+          {
+            "name": "Mobility",
+            "value": "bg-mobility"
+          },
+          {
+            "name": "Welfare",
+            "value": "bg-welfare"
+          },
+          {
+            "name": "Property",
+            "value": "bg-property"
+          }
+        ]
       }
     ]
   },
@@ -592,12 +617,12 @@
     "fields": [
       {
         "component": "tab",
-        "label": "Configurazione cella 1",
+        "label": "Configurazione colonna 1",
         "name": "data-table-col"
       },
       {
         "component": "boolean",
-        "description": "Attivo: rende il titolo un pulsante e rende configurabile il tooltip associato",
+        "description": "Attiva Tooltip associato",
         "name": "showDataTableRow",
         "valueType": "boolean",
         "value": false
@@ -612,9 +637,9 @@
         }
       },
       {
-        "component": "container",
-        "name": "data-table-tooltip",
-        "label": "Configurazione tooltip",
+        "component": "aem-content",
+        "name": "tooltipLink",
+        "label": "Link al Tooltip",
         "condition": {
           "===": [
             {
@@ -622,23 +647,16 @@
             },
             true
           ]
-        },
-        "fields": [
-          {
-            "component": "aem-content",
-            "name": "tooltipLink",
-            "label": "Link al Tooltip"
-          }
-        ]
+        }
       },
       {
         "component": "tab",
-        "label": "Configurazione cella 2",
+        "label": "Configurazione colonna 2",
         "name": "data-table-col-2"
       },
       {
         "component": "boolean",
-        "description": "Attivo: rende il contenuto della cella un titolo",
+        "description": "Attivo: rende il contenuto della colonna un titolo",
         "name": "changeTableTextContent",
         "valueType": "boolean",
         "value": false
@@ -679,12 +697,12 @@
       },
       {
         "component": "tab",
-        "label": "Configurazione cella 3",
+        "label": "Configurazione colonna 3",
         "name": "data-table-col-3"
       },
       {
         "component": "boolean",
-        "description": "Attivo: rende il contenuto della cella un titolo",
+        "description": "Attivo: rende il contenuto della colonna un titolo",
         "name": "changeTableTextContent2",
         "valueType": "boolean",
         "value": false
@@ -746,126 +764,11 @@
     "id": "data-table",
     "fields": [
       {
-        "component": "container",
-        "name": "show-more-data-table",
-        "label": "Data table: Configurazione pulsante",
-        "fields": [
-          {
-            "component": "text",
-            "name": "standardButtonLabel",
-            "label": "Button Text",
-            "required": false
-          },
-          {
-            "component": "select",
-            "name": "standardButtonVariant",
-            "label": "Variante",
-            "value": "primary",
-            "options": [
-              {
-                "name": "Primary",
-                "value": "primary"
-              },
-              {
-                "name": "Secondary",
-                "value": "secondary"
-              },
-              {
-                "name": "Accent",
-                "value": "accent"
-              }
-            ]
-          },
-          {
-            "component": "aem-content",
-            "name": "standardButtonHref",
-            "label": "Link URL",
-            "description": "URL del bottone"
-          },
-          {
-            "component": "boolean",
-            "label": "Apri in una nuova scheda",
-            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
-            "name": "standardButtonOpenInNewTab",
-            "valueType": "boolean",
-            "value": false
-          },
-          {
-            "component": "select",
-            "name": "standardButtonSize",
-            "description": "Modifica la dimensione delle icone del bottone",
-            "label": "Dimensione Icone",
-            "value": "medium",
-            "options": [
-              {
-                "name": "Small",
-                "value": "small"
-              },
-              {
-                "name": "Medium",
-                "value": "medium"
-              },
-              {
-                "name": "Large",
-                "value": "large"
-              },
-              {
-                "name": "Extra Large",
-                "value": "extra-large"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "standardButtonLeftIcon",
-            "label": "Icona Sinistra",
-            "description": "Select the left icon",
-            "value": "",
-            "options": [
-              {
-                "name": "None",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "un-icon-chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "un-icon-chevron-right"
-              },
-              {
-                "name": "Search Icon",
-                "value": "un-icon-search"
-              }
-            ]
-          },
-          {
-            "component": "select",
-            "name": "standardButtonRightIcon",
-            "label": "Icona Destra",
-            "description": "Select the right icon",
-            "value": "",
-            "options": [
-              {
-                "name": "None",
-                "value": ""
-              },
-              {
-                "name": "Chevron Left",
-                "value": "un-icon-chevron-left"
-              },
-              {
-                "name": "Chevron Right",
-                "value": "un-icon-chevron-right"
-              },
-              {
-                "name": "Search Icon",
-                "value": "un-icon-search"
-              }
-            ]
-          }
-        ]
+        "component": "text",
+        "name": "showMoreButtonLabel",
+        "label": "Testo bottone",
+        "description": "Default \"Mostra di più\"",
+        "maxlength": 15
       }
     ]
   },
@@ -1273,11 +1176,14 @@
         "label": "Immagine QR CODE"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "name": "qrCodeImg",
         "value": "",
         "label": "Testo sezione QR Code",
-        "valueType": "string"
+        "validation": {
+          "maxLength": 30,
+          "customErrorMsg": "Testo troppo lungo (max 30 caratteri)"
+        }
       },
       {
         "component": "reference",
@@ -3138,10 +3044,14 @@
         "valueType": "boolean"
       },
       {
-        "component": "richtext",
+        "component": "text",
         "label": "Testo Elenco",
         "name": "listLinks",
         "valueType": "string",
+        "validation": {
+          "maxLength": 25,
+          "customErrorMsg": "Testo troppo lungo (max 25 caratteri)"
+        },
         "condition": {
           "===": [
             {
@@ -3155,6 +3065,10 @@
         "component": "text",
         "name": "linkTextComp",
         "label": "Testo Link",
+        "validation": {
+          "maxLength": 45,
+          "customErrorMsg": "Testo troppo lungo (max 45 caratteri)"
+        },
         "required": true,
         "condition": {
           "===": [

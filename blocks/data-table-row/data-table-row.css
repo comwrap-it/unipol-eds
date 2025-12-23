@@ -1,3 +1,11 @@
-.data-table-row-wrapper {
-/* margin: 0; */
+table.data-table tbody tr:nth-child(odd) {
+  background-color: var(--Table-Row-Text-Row-Light-Gray, #F6F7F8);
+}
+
+table.data-table tbody tr:nth-child(even) {
+  background-color: var(--Table-Row-Text-Row-White, #FFF);
+}
+
+.benefit-container {
+    display: block;
 }
