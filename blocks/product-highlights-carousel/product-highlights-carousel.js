@@ -1,4 +1,5 @@
 import loadSwiper from '../../scripts/delayed.js';
+import { isAuthorMode } from '../../scripts/utils.js';
 
 // #region CONSTANTS
 const CAROUSEL_CLASS = 'product-highlights-carousel';
@@ -200,6 +201,18 @@ export default async function decorate(block) {
   const props = parse(block);
   const carousel = await createProductHighlightsCarousel({ root: block, ...props });
   const slideCount = carousel.querySelectorAll('.swiper-slide').length;
+  const isAuthor = isAuthorMode(block);
+
+  if (isAuthor) {
+    carousel.classList.remove('swiper');
+    const track = carousel.querySelector(`.${TRACK_CLASS}`);
+    track?.classList.remove('swiper-wrapper');
+    carousel.querySelectorAll('.swiper-slide').forEach((slide) => {
+      slide.classList.remove('swiper-slide');
+    });
+    return;
+  }
+
   const swiperInstance = await initSwiper(carousel, slideCount);
   if (swiperInstance) carousel.swiper = swiperInstance;
 }
