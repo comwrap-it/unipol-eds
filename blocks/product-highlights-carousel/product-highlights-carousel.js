@@ -47,6 +47,7 @@ export const setProductHighlightsSwiperSpeed = (swiperInstance, speed) => {
  */
 const initSwiper = async (carousel, force = false) => {
   if (!carousel || carousel.swiper) return carousel?.swiper || null;
+  if (carousel.dataset.productHighlightsInit === 'initing') return null;
 
   /* -------------------------------------------------------------------------- */
   /* Base elements and cleanup                                                  */
@@ -150,6 +151,8 @@ const initSwiper = async (carousel, force = false) => {
     return null;
   }
 
+  carousel.dataset.productHighlightsInit = 'initing';
+
   /* -------------------------------------------------------------------------- */
   /* Measurements and loop sizing                                               */
   /* -------------------------------------------------------------------------- */
@@ -169,7 +172,12 @@ const initSwiper = async (carousel, force = false) => {
     1,
     Math.ceil(resolvedContainerWidth / step),
   );
-  const requiredSlides = Math.max(baseSlides.length, slidesPerViewEstimate * 4);
+  const halfSlidesPerView = Math.max(1, Math.ceil(slidesPerViewEstimate / 2));
+  const loopAdditionalSlides = 0;
+  const requiredSlides = Math.max(
+    baseSlides.length,
+    slidesPerViewEstimate + halfSlidesPerView + loopAdditionalSlides + 2,
+  );
 
   if (baseSlides.length < requiredSlides) {
     let current = baseSlides.length;
@@ -201,12 +209,6 @@ const initSwiper = async (carousel, force = false) => {
     }
   }
 
-  const slidesForLoop = Array.from(track.children)
-    .filter((node) => node?.classList?.contains('swiper-slide'));
-  const loopedSlides = Math.min(
-    slidesForLoop.length,
-    Math.max(baseSlides.length, slidesPerViewEstimate * 2),
-  );
   const initialIndex = Math.floor(baseSlides.length / 2);
 
   carousel.style.setProperty('--swiper-wrapper-transition-timing-function', 'linear');
@@ -221,8 +223,7 @@ const initSwiper = async (carousel, force = false) => {
     centeredSlides: true,
     loop: true,
     watchSlidesProgress: true,
-    loopedSlides,
-    loopAdditionalSlides: loopedSlides,
+    loopAdditionalSlides,
     speed: PRODUCT_HIGHLIGHTS_SWIPER_SPEED,
     allowTouchMove: false,
     simulateTouch: false,
@@ -250,6 +251,9 @@ const initSwiper = async (carousel, force = false) => {
   swiperInstance.slideToLoop(initialIndex, 0, false);
   if (swiperInstance?.autoplay) swiperInstance.autoplay.start();
   carousel.dataset.productHighlightsInit = 'done';
+  carousel.dispatchEvent(new CustomEvent('product-highlights-swiper-ready', {
+    detail: swiperInstance,
+  }));
 
   /* -------------------------------------------------------------------------- */
   /* State, hover slowdown, and interaction guards                              */

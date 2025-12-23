@@ -426,14 +426,29 @@ async function decorateWidgetSection(section, block) {
   const pauseButton = panel.querySelector('.product-highlights-widget-pause');
   const pauseIcon = pauseButton?.querySelector('.icon');
 
-  if (pauseButton && swiperInstance?.autoplay && swiperInstance?.params?.autoplay) {
+  const bindPauseControls = (instance) => {
+    if (!pauseButton || pauseButton.dataset.productHighlightsPauseBound === 'true') return;
+    if (!instance?.autoplay || !instance?.params?.autoplay) {
+      pauseButton.disabled = true;
+      pauseButton.setAttribute('aria-disabled', 'true');
+      return;
+    }
+
+    pauseButton.dataset.productHighlightsPauseBound = 'true';
     pauseButton.setAttribute('aria-pressed', 'false');
 
     const setPausedState = (paused) => {
       carousel.dataset.productHighlightsPaused = paused ? 'true' : 'false';
 
       if (paused) {
-        swiperInstance.autoplay.stop();
+        instance.autoplay.stop();
+        if (typeof instance.getTranslate === 'function' && typeof instance.setTranslate === 'function') {
+          const currentTranslate = instance.getTranslate();
+          if (typeof instance.setTransition === 'function') instance.setTransition(0);
+          instance.setTranslate(currentTranslate);
+          if (typeof instance.updateActiveIndex === 'function') instance.updateActiveIndex();
+          if (typeof instance.updateSlidesClasses === 'function') instance.updateSlidesClasses();
+        }
         if (pauseIcon) {
           pauseIcon.classList.remove('un-icon-pause-circle');
           pauseIcon.classList.add('un-icon-play-circle');
@@ -447,8 +462,8 @@ async function decorateWidgetSection(section, block) {
       const nextSpeed = isHovering
         ? PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW
         : PRODUCT_HIGHLIGHTS_SWIPER_SPEED;
-      setProductHighlightsSwiperSpeed(swiperInstance, nextSpeed);
-      swiperInstance.autoplay.start();
+      setProductHighlightsSwiperSpeed(instance, nextSpeed);
+      instance.autoplay.start();
       if (pauseIcon) {
         pauseIcon.classList.remove('un-icon-play-circle');
         pauseIcon.classList.add('un-icon-pause-circle');
@@ -463,9 +478,18 @@ async function decorateWidgetSection(section, block) {
     });
 
     setPausedState(carousel.dataset.productHighlightsPaused === 'true');
-  } else if (pauseButton) {
-    pauseButton.disabled = true;
-    pauseButton.setAttribute('aria-disabled', 'true');
+  };
+
+  if (pauseButton) {
+    if (swiperInstance) {
+      bindPauseControls(swiperInstance);
+    } else {
+      carousel.addEventListener('product-highlights-swiper-ready', (event) => {
+        bindPauseControls(event.detail);
+      }, { once: true });
+      const fallbackInstance = await waitForProductHighlightsSwiper(carousel, 6000);
+      if (fallbackInstance) bindPauseControls(fallbackInstance);
+    }
   }
 }
 

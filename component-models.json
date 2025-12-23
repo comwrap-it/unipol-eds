@@ -2861,22 +2861,6 @@
         "name": "title",
         "label": "Titolo",
         "required": true
-      },
-      {
-        "component": "select",
-        "name": "size",
-        "label": "Size",
-        "value": "s",
-        "options": [
-          {
-            "name": "S",
-            "value": "s"
-          },
-          {
-            "name": "M",
-            "value": "m"
-          }
-        ]
       }
     ]
   },
