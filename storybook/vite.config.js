@@ -8,6 +8,7 @@ export default defineConfig({
       { find: '@blocks', replacement: path.resolve(__dirname, '../blocks') },
       { find: '@scripts', replacement: path.resolve(__dirname, '../scripts') },
       { find: '@styles', replacement: path.resolve(__dirname, '../styles') },
+      { find: '@unipol-ds', replacement: path.resolve(__dirname, '../scripts/libs/ds') },
 
       // Intercetta le importazioni AEM e reindirizzale ai mock per Storybook (a qualsiasi profondità)
       { find: /^(\.\.\/)+scripts\/aem\.js$/, replacement: path.resolve(__dirname, 'src/eds-components/aem-mock.js') },

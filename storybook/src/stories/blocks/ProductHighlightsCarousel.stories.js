@@ -1,6 +1,8 @@
 import { html } from 'lit';
 
-import { createProductHighlightsCarousel } from '@blocks/product-highlights-carousel/product-highlights-carousel.js';
+import decorateProductHighlightsCarousel, {
+  createProductHighlightsCarousel,
+} from '@blocks/product-highlights-carousel/product-highlights-carousel.js';
 import { PHOTO_CARD_SIZES } from '@blocks/photo-card/photo-card.js';
 
 const DIMENSIONS_BY_SIZE = {
@@ -55,7 +57,7 @@ export default {
   title: 'Blocks/Product Highlights Carousel',
   tags: ['autodocs'],
   render: (args) => {
-    const cardCount = Math.max(1, Number(args.cardCount) || 1);
+    const cardCount = Math.min(8, Math.max(5, Number(args.cardCount) || 5));
     const cards = [];
 
     for (let index = 0; index < cardCount; index += 1) {
@@ -80,16 +82,18 @@ export default {
     const outer = document.createElement('div');
     outer.style.display = 'flex';
     outer.style.justifyContent = 'center';
+    outer.style.width = '100%';
 
     createProductHighlightsCarousel({ cards }).then((block) => {
       outer.appendChild(block);
+      decorateProductHighlightsCarousel(block);
     });
 
     return html`${outer}`;
   },
   argTypes: {
     cardCount: {
-      control: { type: 'range', min: 1, max: 10, step: 1 },
+      control: { type: 'range', min: 5, max: 8, step: 1 },
       table: { category: 'Carousel' },
     },
     sizeMode: {

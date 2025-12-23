@@ -56,6 +56,7 @@ const config = {
       { find: '@blocks', replacement: path.resolve(__dirname, '../../blocks') },
       { find: '@scripts', replacement: path.resolve(__dirname, '../../scripts') },
       { find: '@styles', replacement: path.resolve(__dirname, '../../styles') },
+      { find: '@unipol-ds', replacement: path.resolve(__dirname, '../../scripts/libs/ds') },
 
       /**
        * Mock AEM/EDS scripts for Storybook environment.

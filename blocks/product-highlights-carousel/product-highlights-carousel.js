@@ -6,7 +6,6 @@ const TRACK_CLASS = 'product-highlights-carousel-track';
 
 export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED = 12000;
 export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW = PRODUCT_HIGHLIGHTS_SWIPER_SPEED * 3; // 1/3
-const PRODUCT_HIGHLIGHTS_MIN_LOOP_SLIDES = 5;
 // #endregion
 
 // #region HELPERS
@@ -30,76 +29,6 @@ async function ensureStylesLoaded() {
   await stylesLoadingPromise;
 }
 
-const getSpaceBetween = (carousel) => {
-  const styles = window.getComputedStyle(carousel);
-  const gap = styles.getPropertyValue('--product-highlights-carousel-gap');
-  return Number.parseFloat(gap) || 0;
-};
-
-const removeExistingClones = (track) => {
-  if (!track) return;
-  Array.from(track.children).forEach((slide) => {
-    if (slide?.dataset?.productHighlightsClone === 'true') slide.remove();
-  });
-};
-
-const sanitizeClone = (clone) => {
-  clone.dataset.productHighlightsClone = 'true';
-  clone.setAttribute('aria-hidden', 'true');
-  clone.tabIndex = -1;
-
-  [clone, ...clone.querySelectorAll('*')].forEach((el) => {
-    Array.from(el.attributes).forEach((attr) => {
-      if (
-        attr.name.startsWith('data-aue-')
-        || attr.name.startsWith('data-richtext-')
-      ) {
-        el.removeAttribute(attr.name);
-      }
-    });
-    if (el.id) el.removeAttribute('id');
-  });
-};
-
-const estimateRequiredSlidesForLoop = (carousel, slides, spaceBetween) => {
-  const containerWidth = carousel.getBoundingClientRect().width || 0;
-  const widths = slides
-    .map((s) => s.getBoundingClientRect().width)
-    .filter((w) => w > 0);
-
-  if (!containerWidth || !widths.length) return PRODUCT_HIGHLIGHTS_MIN_LOOP_SLIDES;
-
-  // stima conservativa: slide più stretta => evita warning su viewport larghi
-  const minSlideWidth = Math.min(...widths);
-  const step = Math.max(minSlideWidth + spaceBetween, 1);
-
-  // quante slide "stanno" nel viewport (circa)
-  const slidesPerViewEstimate = Math.ceil(containerWidth / step);
-
-  // centered+loop richiede un margine: +2 è stabile nella pratica
-  return Math.max(
-    PRODUCT_HIGHLIGHTS_MIN_LOOP_SLIDES,
-    slidesPerViewEstimate + 2,
-  );
-};
-
-const ensureEnoughSlidesForLoop = (track, required) => {
-  const slides = Array.from(track.children).filter((n) => n.classList.contains('swiper-slide'));
-  if (!slides.length) return;
-
-  let current = slides.length;
-  let i = 0;
-
-  while (current < required) {
-    const source = slides[i % slides.length];
-    const clone = source.cloneNode(true);
-    sanitizeClone(clone);
-    track.appendChild(clone);
-    current += 1;
-    i += 1;
-  }
-};
-
 /**
  * Aggiorna speed e riavvia autoplay (se in esecuzione)
  */
@@ -114,132 +43,140 @@ export const setProductHighlightsSwiperSpeed = (swiperInstance, speed) => {
 };
 
 /**
- * Hover lo rallenta a 1/3, leave lo fa tornare normale
- */
-const setupHoverSlowdown = (carousel, swiperInstance) => {
-  if (
-    !carousel
-    || !swiperInstance
-    || carousel.dataset.productHighlightsHover === 'true'
-  ) return;
-  if (!swiperInstance.params?.autoplay) return;
-
-  const handleMouseEnter = () => {
-    carousel.dataset.productHighlightsHoverState = 'true';
-    if (carousel.dataset.productHighlightsPaused === 'true') return;
-    setProductHighlightsSwiperSpeed(
-      swiperInstance,
-      PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW,
-    );
-  };
-
-  const handleMouseLeave = () => {
-    carousel.dataset.productHighlightsHoverState = 'false';
-    if (carousel.dataset.productHighlightsPaused === 'true') return;
-    setProductHighlightsSwiperSpeed(
-      swiperInstance,
-      PRODUCT_HIGHLIGHTS_SWIPER_SPEED,
-    );
-  };
-
-  carousel.addEventListener('mouseenter', handleMouseEnter);
-  carousel.addEventListener('mouseleave', handleMouseLeave);
-  carousel.dataset.productHighlightsHover = 'true';
-};
-
-/**
- * Click sulle card, NON deve succedere nulla:
- * - niente navigazione
- * - niente "snap"/spostamenti indesiderati
- * (Da riutilizzare piu avanti)
- */
-const setupNoOpClickOnCards = (carousel) => {
-  if (!carousel || carousel.dataset.productHighlightsNoClick === 'true') return;
-
-  carousel.addEventListener(
-    'click',
-    (e) => {
-      const slide = e.target.closest('.swiper-slide');
-      if (!slide || !carousel.contains(slide)) return;
-
-      e.preventDefault();
-      e.stopPropagation();
-      e.stopImmediatePropagation?.();
-    },
-    true, // capture: blocca prima di handler interni / link
-  );
-
-  carousel.dataset.productHighlightsNoClick = 'true';
-};
-
-/**
  * Init Swiper
  */
 const initSwiper = async (carousel) => {
   if (!carousel || carousel.swiper) return carousel?.swiper || null;
 
+  /* -------------------------------------------------------------------------- */
+  /* Base elements and cleanup                                                  */
+  /* -------------------------------------------------------------------------- */
   const track = carousel.querySelector(`.${TRACK_CLASS}`);
   if (!track) return null;
 
-  removeExistingClones(track);
+  Array.from(track.children).forEach((slide) => {
+    const isDuplicate = slide?.dataset?.productHighlightsClone === 'true'
+      || slide?.classList?.contains('swiper-slide-duplicate');
+    if (isDuplicate) slide.remove();
+  });
 
-  const baseSlides = Array.from(track.children).filter((n) => n.classList.contains('swiper-slide'));
+  const baseSlides = Array.from(track.children)
+    .filter((node) => node?.classList?.contains('swiper-slide'));
   if (baseSlides.length < 2) return null;
 
-  const spaceBetween = getSpaceBetween(carousel);
-  const required = estimateRequiredSlidesForLoop(
-    carousel,
-    baseSlides,
-    spaceBetween,
-  );
+  /* -------------------------------------------------------------------------- */
+  /* Measurements and continuous loop config                                    */
+  /* -------------------------------------------------------------------------- */
+  const styles = window.getComputedStyle(carousel);
+  const spaceBetween = Number.parseFloat(
+    styles.getPropertyValue('--product-highlights-carousel-gap'),
+  ) || 0;
+  const initialIndex = Math.floor(baseSlides.length / 2);
 
-  ensureEnoughSlidesForLoop(track, required);
+  carousel.style.setProperty('--swiper-wrapper-transition-timing-function', 'linear');
 
-  const finalSlidesCount = Array.from(track.children).filter((n) => n.classList.contains('swiper-slide')).length;
-  const canLoop = finalSlidesCount >= required;
-
+  /* -------------------------------------------------------------------------- */
+  /* Swiper init                                                                */
+  /* -------------------------------------------------------------------------- */
   const Swiper = await loadSwiper();
-
   const swiperInstance = new Swiper(carousel, {
     slidesPerView: 'auto',
     spaceBetween,
     centeredSlides: true,
     centeredSlidesBounds: true,
-
-    // evita warning + blocchi
-    loop: canLoop,
-
-    // disabilita comportamenti click che vanno in slide
+    loop: true,
+    loopedSlides: baseSlides.length,
+    loopAdditionalSlides: baseSlides.length,
+    speed: PRODUCT_HIGHLIGHTS_SWIPER_SPEED,
+    allowTouchMove: false,
+    simulateTouch: false,
     slideToClickedSlide: false,
     preventClicks: true,
     preventClicksPropagation: true,
-
-    speed: PRODUCT_HIGHLIGHTS_SWIPER_SPEED,
-    allowTouchMove: true,
-
-    autoplay: canLoop
-      ? {
-        delay: 0,
-        disableOnInteraction: false,
-        reverseDirection: true,
-      }
-      : false,
-
+    autoplay: {
+      delay: 0,
+      disableOnInteraction: false,
+      reverseDirection: true,
+      pauseOnMouseEnter: false,
+      waitForTransition: false,
+    },
     freeMode: {
       enabled: true,
       momentum: false,
+      momentumBounce: false,
+      sticky: false,
     },
-
     a11y: { enabled: false },
   });
 
+  if (swiperInstance?.autoplay?.running) swiperInstance.autoplay.stop();
+  swiperInstance.slideToLoop(initialIndex, 0, false);
+  if (swiperInstance?.autoplay) swiperInstance.autoplay.start();
+
+  /* -------------------------------------------------------------------------- */
+  /* State, hover slowdown, and interaction guards                              */
+  /* -------------------------------------------------------------------------- */
   carousel.dataset.productHighlightsPaused = 'false';
   carousel.dataset.productHighlightsHoverState = carousel.matches(':hover')
     ? 'true'
     : 'false';
 
-  setupHoverSlowdown(carousel, swiperInstance);
-  setupNoOpClickOnCards(carousel);
+  if (carousel.dataset.productHighlightsHover !== 'true' && swiperInstance.params?.autoplay) {
+    const handleMouseEnter = () => {
+      carousel.dataset.productHighlightsHoverState = 'true';
+      if (carousel.dataset.productHighlightsPaused === 'true') return;
+      swiperInstance.params.speed = PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW;
+      if (swiperInstance.autoplay?.running) {
+        swiperInstance.autoplay.stop();
+        swiperInstance.autoplay.start();
+      }
+    };
+
+    const handleMouseLeave = () => {
+      carousel.dataset.productHighlightsHoverState = 'false';
+      if (carousel.dataset.productHighlightsPaused === 'true') return;
+      swiperInstance.params.speed = PRODUCT_HIGHLIGHTS_SWIPER_SPEED;
+      if (swiperInstance.autoplay?.running) {
+        swiperInstance.autoplay.stop();
+        swiperInstance.autoplay.start();
+      }
+    };
+
+    carousel.addEventListener('mouseenter', handleMouseEnter);
+    carousel.addEventListener('mouseleave', handleMouseLeave);
+    carousel.dataset.productHighlightsHover = 'true';
+  }
+
+  if (carousel.dataset.productHighlightsNoClick !== 'true') {
+    carousel.addEventListener(
+      'click',
+      (event) => {
+        const slide = event.target.closest('.swiper-slide');
+        if (!slide || !carousel.contains(slide)) return;
+        event.preventDefault();
+        event.stopPropagation();
+        event.stopImmediatePropagation?.();
+      },
+      true,
+    );
+    carousel.dataset.productHighlightsNoClick = 'true';
+  }
+
+  if (carousel.dataset.productHighlightsResize !== 'true') {
+    const handleResize = () => {
+      const updatedStyles = window.getComputedStyle(carousel);
+      const nextSpaceBetween = Number.parseFloat(
+        updatedStyles.getPropertyValue('--product-highlights-carousel-gap'),
+      ) || 0;
+      if (swiperInstance.params.spaceBetween !== nextSpaceBetween) {
+        swiperInstance.params.spaceBetween = nextSpaceBetween;
+        swiperInstance.update();
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    carousel.dataset.productHighlightsResize = 'true';
+  }
 
   return swiperInstance;
 };
