@@ -58,6 +58,17 @@
           "required": true
         },
         {
+          "component": "reference",
+          "name": "logoSecondary",
+          "label": "Logo secondario",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "logoSecondaryAlt",
+          "label": "Logo secondario alt"
+        },
+        {
           "...": "../../blocks/atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
         }
       ]

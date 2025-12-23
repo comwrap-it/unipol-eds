@@ -1,6 +1,5 @@
-import { loadCSS } from '../../scripts/aem.js';
+﻿import { loadCSS } from '../../scripts/aem.js';
 import decorateProductHighlightsCarousel from '../product-highlights-carousel/product-highlights-carousel.js';
-import { createTextBlock } from '../text-block/text-block.js';
 import {
   createButton,
   BUTTON_ICON_SIZES,
@@ -52,7 +51,12 @@ async function ensureStylesLoaded() {
  */
 const getDatasetValue = (section, name) => {
   if (!section?.dataset) return '';
-  return section.dataset[name] || section.dataset[String(name || '').toLowerCase()] || '';
+  const direct = section.dataset[name] || section.dataset[String(name || '').toLowerCase()] || '';
+  if (direct) return direct;
+  const target = String(name || '').toLowerCase();
+  const match = Object.entries(section.dataset)
+    .find(([key]) => key.toLowerCase() === target);
+  return match ? match[1] : '';
 };
 
 /**
@@ -75,8 +79,8 @@ const appendIfPresent = (parent, child) => {
  * @param {HTMLElement|null} [options.textBlock]
  * @param {string} [options.logoSrc]
  * @param {string} [options.logoAlt]
- * @param {string} [options.title]
- * @param {string} [options.description]
+ * @param {string} [options.logoSecondarySrc]
+ * @param {string} [options.logoSecondaryAlt]
  * @param {Object|null} [options.buttonConfig]
  * @param {string} [options.buttonConfig.label]
  * @param {string} [options.buttonConfig.href]
@@ -95,8 +99,8 @@ export function createProductHighlightsWidget({
   textBlock = null,
   logoSrc = '',
   logoAlt = '',
-  title = '',
-  description = '',
+  logoSecondarySrc = '',
+  logoSecondaryAlt = '',
   buttonConfig = null,
 } = {}) {
   /*
@@ -127,28 +131,28 @@ export function createProductHighlightsWidget({
     if (ctaElement.tagName === 'BUTTON') ctaElement.type = 'button';
   }
 
-  if (logoSrc) {
+  if (logoSrc || logoSecondarySrc) {
     const logo = document.createElement('div');
     logo.className = 'product-highlights-widget-logo';
-    const img = document.createElement('img');
-    img.src = logoSrc;
-    img.alt = logoAlt || '';
-    logo.appendChild(img);
+    if (logoSrc) {
+      const img = document.createElement('img');
+      img.src = logoSrc;
+      img.alt = logoAlt || '';
+      logo.appendChild(img);
+    }
+    if (logoSecondarySrc) {
+      const subLogo = document.createElement('div');
+      subLogo.className = 'product-highlights-widget-logo-secondary';
+      const subImg = document.createElement('img');
+      subImg.src = logoSecondarySrc;
+      subImg.alt = logoSecondaryAlt || '';
+      subLogo.appendChild(subImg);
+      logo.appendChild(subLogo);
+    }
     header.appendChild(logo);
   }
 
-  let headerText = textBlockWrapper || textBlock;
-  if (!headerText && (title || description)) {
-    const titleElement = title ? document.createElement('h2') : null;
-    if (titleElement) titleElement.textContent = title;
-    const descriptionElement = description ? document.createElement('p') : null;
-    if (descriptionElement) descriptionElement.textContent = description;
-    const textBlockElement = createTextBlock(titleElement, true, descriptionElement);
-    const wrapper = document.createElement('div');
-    wrapper.className = 'text-block-wrapper';
-    wrapper.appendChild(textBlockElement);
-    headerText = wrapper;
-  }
+  const headerText = textBlockWrapper || textBlock;
 
   if (headerText && ctaElement) {
     const textBlockButton = headerText.querySelector('.text-block-button');
@@ -223,33 +227,27 @@ export function parseProductHighlightsWidget(section, block = null) {
    * Dataset values
    */
   const logoSrc = getDatasetValue(section, 'logo');
-  const logoAlt = getDatasetValue(section, 'logoAlt') || getDatasetValue(section, 'logoalt');
-
-  const title = getDatasetValue(section, 'title');
-  const description = getDatasetValue(section, 'description');
+  const logoAlt = getDatasetValue(section, 'logoAlt');
+  const logoSecondarySrc = getDatasetValue(section, 'logoSecondary');
+  const logoSecondaryAlt = getDatasetValue(section, 'logoSecondaryAlt');
 
   const standardButtonLabel = getDatasetValue(section, 'standardButtonLabel');
-  const legacyButtonLabel = getDatasetValue(section, 'buttonLabel');
-  const buttonLabel = standardButtonLabel || legacyButtonLabel;
+  const buttonLabel = standardButtonLabel;
 
   const standardButtonVariant = getDatasetValue(section, 'standardButtonVariant');
-  const legacyButtonVariant = getDatasetValue(section, 'buttonVariant');
   const rawVariant = String(
-    standardButtonVariant || legacyButtonVariant || BUTTON_VARIANTS.SECONDARY,
+    standardButtonVariant || BUTTON_VARIANTS.SECONDARY,
   ).trim().toLowerCase();
   const resolvedVariant = Object.values(BUTTON_VARIANTS).includes(rawVariant)
     ? rawVariant
     : BUTTON_VARIANTS.SECONDARY;
 
   const standardButtonHref = getDatasetValue(section, 'standardButtonHref');
-  const legacyButtonHref = getDatasetValue(section, 'buttonLink')
-    || getDatasetValue(section, 'buttonHref');
-  const buttonHref = standardButtonHref || legacyButtonHref;
+  const buttonHref = standardButtonHref;
 
   const standardButtonOpenInNewTab = getDatasetValue(section, 'standardButtonOpenInNewTab');
-  const legacyButtonOpenInNewTab = getDatasetValue(section, 'buttonOpenInNewTab');
   const buttonOpenInNewTab = String(
-    standardButtonOpenInNewTab || legacyButtonOpenInNewTab || '',
+    standardButtonOpenInNewTab || '',
   ).trim().toLowerCase() === 'true';
 
   const standardButtonSize = getDatasetValue(section, 'standardButtonSize');
@@ -292,8 +290,8 @@ export function parseProductHighlightsWidget(section, block = null) {
     textBlockWrapper,
     logoSrc,
     logoAlt,
-    title,
-    description,
+    logoSecondarySrc,
+    logoSecondaryAlt,
     buttonConfig,
     panelRoot,
     wrapper,
@@ -325,8 +323,8 @@ async function decorateWidgetSection(section, block) {
     textBlock,
     logoSrc,
     logoAlt,
-    title,
-    description,
+    logoSecondarySrc,
+    logoSecondaryAlt,
     buttonConfig,
     panelRoot,
     wrapper,
@@ -344,8 +342,8 @@ async function decorateWidgetSection(section, block) {
     textBlock,
     logoSrc,
     logoAlt,
-    title,
-    description,
+    logoSecondarySrc,
+    logoSecondaryAlt,
     buttonConfig,
   });
 

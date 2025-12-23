@@ -8,6 +8,17 @@
     --Text-Block-Title: var(--product-highlights-widget-text);
     --Text-Block-Body: var(--product-highlights-widget-text);
     --Text-Block-Centered-Gap: var(--Space-300-16, 16px);
+    --Button-Secondary-Default-Background: var(--Neutral-50, #fff);
+    --Button-Secondary-Default-Text: var(--Text-Default-Primary, #001C35);
+    --Button-Secondary-Default-Border: var(--Button-Secondary-Default-Background);
+    --Button-Secondary-Hover-Background: var(--Button-Secondary-Default-Background);
+    --Button-Secondary-Hover-Text: var(--Button-Secondary-Default-Text);
+    --Button-Secondary-Hover-Border: var(--Button-Secondary-Default-Border);
+    --Button-Secondary-Pressed-Background: var(--Button-Secondary-Default-Background);
+    --Button-Secondary-Pressed-Text: var(--Button-Secondary-Default-Text);
+    --Button-Secondary-Pressed-Border: var(--Button-Secondary-Default-Border);
+    --Button-Secondary-Focused-Border-Default: var(--Button-Secondary-Default-Border);
+    --Button-Secondary-Focused-Border-Focus: var(--product-highlights-widget-text);
 
     padding-inline: 0;
     padding-block: var(--Layout-Section-Vertical-Padding, 4rem);
@@ -42,14 +53,22 @@
     & .product-highlights-widget-logo {
         margin-bottom: var(--Carousel-Widget-Product-Highlights-Logo-Text-Gap-D-Ds, 32px);
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
+        gap: var(--Space-200-8, 8px);
 
         & img,
         & picture {
             max-width: clamp(96px, 20vw, 160px);
             height: auto;
         }
+    }
+
+    & .product-highlights-widget-logo-secondary img,
+    & .product-highlights-widget-logo-secondary picture {
+        max-width: clamp(72px, 14vw, 120px);
+        height: auto;
     }
 
     & .product-highlights-widget-header .text-block-wrapper {
