@@ -4,7 +4,7 @@ import loadSwiper from '../../scripts/delayed.js';
 const CAROUSEL_CLASS = 'product-highlights-carousel';
 const TRACK_CLASS = 'product-highlights-carousel-track';
 
-export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED = 12000;
+export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED = 1200;
 export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW = PRODUCT_HIGHLIGHTS_SWIPER_SPEED * 3; // 1/3
 // #endregion
 
@@ -45,7 +45,7 @@ export const setProductHighlightsSwiperSpeed = (swiperInstance, speed) => {
 /**
  * Init Swiper
  */
-const initSwiper = async (carousel) => {
+const initSwiper = async (carousel, force = false) => {
   if (!carousel || carousel.swiper) return carousel?.swiper || null;
 
   /* -------------------------------------------------------------------------- */
@@ -65,12 +65,148 @@ const initSwiper = async (carousel) => {
   if (baseSlides.length < 2) return null;
 
   /* -------------------------------------------------------------------------- */
-  /* Measurements and continuous loop config                                    */
+  /* Readiness gating                                                           */
   /* -------------------------------------------------------------------------- */
+  const measure = () => {
+    const rectWidth = carousel.getBoundingClientRect().width || 0;
+    const parentWidth = carousel.parentElement?.getBoundingClientRect().width || 0;
+    const viewportWidth = window.innerWidth || 0;
+    const resolvedWidth = rectWidth || parentWidth || viewportWidth || 0;
+
+    const slideWidths = baseSlides
+      .map((slide) => slide.getBoundingClientRect().width)
+      .filter((width) => width > 0);
+
+    const computed = window.getComputedStyle(baseSlides[0]);
+    const fallbackWidth = Number.parseFloat(computed?.width) || 200;
+    const minSlideWidth = slideWidths.length ? Math.min(...slideWidths) : fallbackWidth;
+
+    const hasRects = carousel.getClientRects().length > 0;
+    const ready = resolvedWidth > 1 && slideWidths.length > 0 && hasRects;
+
+    return {
+      rectWidth,
+      resolvedWidth,
+      slideWidths,
+      minSlideWidth,
+      ready,
+    };
+  };
+
+  let measurement = measure();
+
+  if (!measurement.ready && !force) {
+    if (carousel.dataset.productHighlightsInit === 'pending') return null;
+    carousel.dataset.productHighlightsInit = 'pending';
+
+    let rafId = 0;
+    let timeoutId = 0;
+    let resizeObserver = null;
+    let intersectionObserver = null;
+
+    const cleanup = () => {
+      if (rafId) cancelAnimationFrame(rafId);
+      if (timeoutId) clearTimeout(timeoutId);
+      if (resizeObserver) resizeObserver.disconnect();
+      if (intersectionObserver) intersectionObserver.disconnect();
+    };
+
+    const tryInit = () => {
+      measurement = measure();
+      if (!measurement.ready) return;
+      cleanup();
+      carousel.dataset.productHighlightsInit = 'ready';
+      initSwiper(carousel, true).then((instance) => {
+        if (instance) carousel.swiper = instance;
+      });
+    };
+
+    if ('ResizeObserver' in window) {
+      resizeObserver = new ResizeObserver(tryInit);
+      resizeObserver.observe(carousel);
+    }
+
+    if ('IntersectionObserver' in window) {
+      intersectionObserver = new IntersectionObserver((entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) tryInit();
+      });
+      intersectionObserver.observe(carousel);
+    }
+
+    const tick = () => {
+      tryInit();
+      rafId = requestAnimationFrame(tick);
+    };
+    rafId = requestAnimationFrame(tick);
+
+    timeoutId = window.setTimeout(() => {
+      cleanup();
+      carousel.dataset.productHighlightsInit = 'ready';
+      initSwiper(carousel, true).then((instance) => {
+        if (instance) carousel.swiper = instance;
+      });
+    }, 1200);
+
+    return null;
+  }
+
+  /* -------------------------------------------------------------------------- */
+  /* Measurements and loop sizing                                               */
+  /* -------------------------------------------------------------------------- */
+  if (!measurement.ready) measurement = measure();
+
   const styles = window.getComputedStyle(carousel);
   const spaceBetween = Number.parseFloat(
     styles.getPropertyValue('--product-highlights-carousel-gap'),
   ) || 0;
+
+  const resolvedContainerWidth = measurement.resolvedWidth
+    || window.innerWidth
+    || 0;
+  const minSlideWidth = measurement.minSlideWidth || 200;
+  const step = Math.max(minSlideWidth + spaceBetween, 1);
+  const slidesPerViewEstimate = Math.max(
+    1,
+    Math.ceil(resolvedContainerWidth / step),
+  );
+  const requiredSlides = Math.max(baseSlides.length, slidesPerViewEstimate * 4);
+
+  if (baseSlides.length < requiredSlides) {
+    let current = baseSlides.length;
+    let i = 0;
+
+    while (current < requiredSlides) {
+      const source = baseSlides[i % baseSlides.length];
+      const clone = source.cloneNode(true);
+      clone.classList.add('swiper-slide');
+      clone.dataset.productHighlightsClone = 'true';
+      clone.setAttribute('aria-hidden', 'true');
+      clone.tabIndex = -1;
+
+      [clone, ...clone.querySelectorAll('*')].forEach((el) => {
+        Array.from(el.attributes).forEach((attr) => {
+          if (
+            attr.name.startsWith('data-aue-')
+            || attr.name.startsWith('data-richtext-')
+          ) {
+            el.removeAttribute(attr.name);
+          }
+        });
+        if (el.id) el.removeAttribute('id');
+      });
+
+      track.appendChild(clone);
+      current += 1;
+      i += 1;
+    }
+  }
+
+  const slidesForLoop = Array.from(track.children)
+    .filter((node) => node?.classList?.contains('swiper-slide'));
+  const loopedSlides = Math.min(
+    slidesForLoop.length,
+    Math.max(baseSlides.length, slidesPerViewEstimate * 2),
+  );
   const initialIndex = Math.floor(baseSlides.length / 2);
 
   carousel.style.setProperty('--swiper-wrapper-transition-timing-function', 'linear');
@@ -83,10 +219,10 @@ const initSwiper = async (carousel) => {
     slidesPerView: 'auto',
     spaceBetween,
     centeredSlides: true,
-    centeredSlidesBounds: true,
     loop: true,
-    loopedSlides: baseSlides.length,
-    loopAdditionalSlides: baseSlides.length,
+    watchSlidesProgress: true,
+    loopedSlides,
+    loopAdditionalSlides: loopedSlides,
     speed: PRODUCT_HIGHLIGHTS_SWIPER_SPEED,
     allowTouchMove: false,
     simulateTouch: false,
@@ -110,8 +246,10 @@ const initSwiper = async (carousel) => {
   });
 
   if (swiperInstance?.autoplay?.running) swiperInstance.autoplay.stop();
+  swiperInstance.update();
   swiperInstance.slideToLoop(initialIndex, 0, false);
   if (swiperInstance?.autoplay) swiperInstance.autoplay.start();
+  carousel.dataset.productHighlightsInit = 'done';
 
   /* -------------------------------------------------------------------------- */
   /* State, hover slowdown, and interaction guards                              */
