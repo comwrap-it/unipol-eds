@@ -1,3 +1,15 @@
+.bg-mobility {
+    background: var(--Data-Table-Widget-Background-Mobility, #E5F1FF);
+}
+
+.bg-welfare {
+    background: var(--Data-Table-Widget-Background-Welfare, #EBF8E7);
+}
+
+.bg-property {
+    background: var(--Data-Table-Widget-Background-Property, #FDEDE7);
+}
+
 .data-table-wrapper {
     padding-top: var(--Data-Table-Widget-Gap, 56px);
 }

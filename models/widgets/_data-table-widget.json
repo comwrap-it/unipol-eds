@@ -76,15 +76,15 @@
             },
             {
               "name": "Mobility",
-              "value": "var(--Data-Table-Widget-Background-Mobility, #E5F1FF)"
+              "value": "bg-mobility"
             },
             {
               "name": "Welfare",
-              "value": "var(--Data-Table-Widget-Background-Welfare, #EBF8E7)"
+              "value": "bg-welfare"
             },
             {
               "name": "Property",
-              "value": "var(--Data-Table-Widget-Background-Property, #FDEDE7)"
+              "value": "bg-property"
             }
           ]
         }
