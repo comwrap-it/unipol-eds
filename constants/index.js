@@ -26,3 +26,15 @@ export const CHECKBOX_TYPES = {
   CHECKED: "checked",
   INDETERMINATE: "indeterminate",
 };
+
+// Navigation Pill constants for shared use
+export const NAVIGATION_PILL_VARIANTS = {
+  PRIMARY: 'primary',
+  SECONDARY: 'secondary',
+};
+
+// Radio Button constants for shared use
+export const CHECKED_STATES = {
+  CHECKED: 'checked',
+  UNCHECKED: 'unchecked',
+};

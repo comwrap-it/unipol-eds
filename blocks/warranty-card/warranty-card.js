@@ -27,7 +27,7 @@ const createIconAndTagContainer = async (icon, tagConfig) => {
   iconWrapper.appendChild(iconElement);
 
   if (tagConfig?.label) {
-    const { createTag } = await import('../atoms/tag/tag.js');
+    const { createTag } = await import('../../scripts/libs/ds/components/atoms/tag/tag.js');
     await loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`);
     const tagElement = createTag(
       tagConfig.label,

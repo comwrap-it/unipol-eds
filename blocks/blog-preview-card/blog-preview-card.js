@@ -3,7 +3,7 @@ import {
   createIconElementFromCssClass,
   extractMediaElementFromRow,
 } from '../../scripts/domHelpers.js';
-import { createTag } from '../atoms/tag/tag.js';
+import { createTag } from '../../scripts/libs/ds/components/atoms/tag/tag.js';
 
 /**
  *

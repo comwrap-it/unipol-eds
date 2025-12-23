@@ -1,10 +1,7 @@
+import { BUTTON_ICON_SIZES, NAVIGATION_PILL_VARIANTS } from '../../constants/index.js';
+import { createNavigationPill } from '../../scripts/libs/ds/components/atoms/navigation-pill/navigation-pill.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import {
-  NAVIGATION_PILL_VARIANTS,
-  NAVIGATION_PILL_ICON_SIZES,
-  createNavigationPill,
-  extractInstrumentationAttributes,
-} from '../atoms/navigation-pill/navigation-pill.js';
+import { extractInstrumentationAttributes } from '../../scripts/utils.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -28,9 +25,9 @@ function extractNavigationPillValues(row) {
   const variant = rows[2]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_VARIANTS.PRIMARY;
   const href = rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || undefined;
   const leftIcon = rows[4]?.textContent?.trim() || '';
-  const lftIcnSze = rows[5]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
+  const lftIcnSze = rows[5]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
   const rightIcon = rows[6]?.textContent?.trim() || '';
-  const rhtIcnSze = rows[7]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
+  const rhtIcnSze = rows[7]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
   const instrumentation = extractInstrumentationAttributes(rows[1]);
 
   return {

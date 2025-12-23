@@ -1,12 +1,8 @@
+import { BUTTON_ICON_SIZES, NAVIGATION_PILL_VARIANTS } from '../../constants/index.js';
 import { loadBlock } from '../../scripts/aem.js';
+import { createNavigationPill } from '../../scripts/libs/ds/components/atoms/navigation-pill/navigation-pill.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import { getTemplateMetaContent } from '../../scripts/utils.js';
-import {
-  NAVIGATION_PILL_VARIANTS,
-  NAVIGATION_PILL_ICON_SIZES,
-  createNavigationPill,
-  extractInstrumentationAttributes,
-} from '../atoms/navigation-pill/navigation-pill.js';
+import { extractInstrumentationAttributes, getTemplateMetaContent } from '../../scripts/utils.js';
 
 let isStylesLoaded = false;
 const openBoxRef = { box: null, pill: null };
@@ -457,9 +453,9 @@ function extractNavigationPillValues(row) {
     variant: rows[2]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_VARIANTS.PRIMARY,
     href: rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || undefined,
     leftIcon: rows[4]?.textContent?.trim() || '',
-    lftIcnSze: rows[5]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM,
+    lftIcnSze: rows[5]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM,
     rightIcon: rows[6]?.textContent?.trim() || '',
-    rhtIcnSze: rows[7]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM,
+    rhtIcnSze: rows[7]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM,
     instrumentation: extractInstrumentationAttributes(rows[1]),
     boxText: rows[8]?.textContent?.trim() || '',
   };

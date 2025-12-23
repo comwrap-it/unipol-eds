@@ -1,4 +1,5 @@
-import { createNavigationPill, NAVIGATION_PILL_VARIANTS } from '../atoms/navigation-pill/navigation-pill.js';
+import { NAVIGATION_PILL_VARIANTS } from "../../constants/index.js";
+import { createNavigationPill } from "../../scripts/libs/ds/components/atoms/navigation-pill/navigation-pill.js";
 
 export const DEFAULT_NAV_ITEMS = [
   { label: 'Navigation Pill', href: '#', variant: NAVIGATION_PILL_VARIANTS.PRIMARY },

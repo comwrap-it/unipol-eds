@@ -1,3 +1,4 @@
+import { BUTTON_ICON_SIZES, NAVIGATION_PILL_VARIANTS } from "../../../constants/index.js";
 import { createNavigationPill } from "../../../scripts/libs/ds/components/atoms/navigation-pill/navigation-pill.js";
 import { extractInstrumentationAttributes } from "../../../scripts/utils.js";
 
@@ -24,10 +25,10 @@ function extractValuesFromRows(rows) {
     || '';
 
   const leftIcon = rows[4]?.textContent?.trim() || '';
-  const leftIconSize = rows[5]?.textContent?.trim() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
+  const leftIconSize = rows[5]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM;
 
   const rightIcon = rows[6]?.textContent?.trim() || '';
-  const rightIconSize = rows[7]?.textContent?.trim() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
+  const rightIconSize = rows[7]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM;
 
   const instrumentation = extractInstrumentationAttributes(rows[1]);
 

@@ -1,4 +1,3 @@
-import createOverlay from '../atoms/overlay/overlay.js';
 import {
   getValuesFromBlock,
   lockBodyScroll,
@@ -9,6 +8,7 @@ import {
 import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
 import { createButton } from '../../scripts/libs/ds/components/atoms/buttons/standard-button/standard-button.js';
 import { createIconButton } from '../../scripts/libs/ds/components/atoms/buttons/icon-button/icon-button.js';
+import createOverlay from '../../scripts/libs/ds/components/atoms/overlay/overlay.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
