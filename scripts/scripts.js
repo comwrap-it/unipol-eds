@@ -83,16 +83,6 @@ function buildAutoBlocks() {
   }
 }
 
-async function loadProductHighlightsWidget(main) {
-  if (!main?.querySelector('.product-highlights-carousel')) return;
-  const widgetModule = await import(
-    `${window.hlx.codeBasePath}/blocks/product-highlights-widget/product-highlights-widget.js`
-  );
-  if (widgetModule?.default) {
-    await widgetModule.default(main);
-  }
-}
-
 /**
  * Applies the Universal Editor filter to the main element based on the template.
  * This controls which widgets/sections can be added to the main element.
@@ -234,7 +224,6 @@ async function loadEager(doc) {
 async function loadLazy(doc) {
   const main = doc.querySelector('main');
   await loadSections(main);
-  await loadProductHighlightsWidget(main);
   const revealModule = await import('./reveal.js');
   revealModule.initRevealAnimations();
   const { hash } = window.location;
