@@ -6,16 +6,16 @@
  * @returns {HTMLElement} The category chip element
  */
 export const createCategoryChip = (category, icon, instrumentation = {}) => {
-  const chip = document.createElement('div');
+  const chip = document.createElement("div");
   chip.className = `category-chip ${category}`;
 
   if (icon) {
-    const iconSpan = document.createElement('span');
+    const iconSpan = document.createElement("span");
     iconSpan.className = `icon ${icon}`;
     chip.appendChild(iconSpan);
   }
 
-  const textSpan = document.createElement('span');
+  const textSpan = document.createElement("span");
   textSpan.textContent = category.charAt(0).toUpperCase() + category.slice(1);
   chip.appendChild(textSpan);
 

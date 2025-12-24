@@ -1,4 +1,5 @@
-import { BUTTON_ICON_SIZES } from '../../../../constants/index.js';
+import { BUTTON_ICON_SIZES } from "../../../../constants/index.js";
+
 
 /**
  * Create a textarea element with styling
@@ -66,3 +67,4 @@ export const createTextarea = (
 
   return mainWrapper;
 };
+

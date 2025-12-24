@@ -52,3 +52,4 @@ export function createSwitchButtonField(
 
   return wrapper;
 }
+

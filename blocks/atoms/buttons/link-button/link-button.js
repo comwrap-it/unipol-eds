@@ -6,7 +6,7 @@
  */
 
 import { BUTTON_ICON_SIZES } from '../../../../constants/index.js';
-import { createLinkButton } from '../../../../scripts/libs/ds/components/atoms/buttons/link-button/link-button.js';
+import { createLinkButton } from '@unipol-ds/components/atoms/buttons/link-button/link-button.js';
 
 /**
  * Create a link button from Universal Editor rows

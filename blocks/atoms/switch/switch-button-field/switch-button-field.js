@@ -1,5 +1,5 @@
 import { CHECKED_STATES } from '../../../../constants/index.js';
-import { createSwitchButtonField } from '../../../../scripts/libs/ds/components/atoms/switch/switch-button-field/switch-button-field.js';
+import { createSwitchButtonField } from '@unipol-ds/components/atoms/switch/switch-button-field/switch-button-field.js';
 import { extractInstrumentationAttributes } from '../../../../scripts/utils.js';
 
 /**

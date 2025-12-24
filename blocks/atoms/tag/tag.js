@@ -1,4 +1,4 @@
-import { createTag } from '../../../scripts/libs/ds/components/atoms/tag/tag.js';
+import { createTag } from '@unipol-ds/components/atoms/tag/tag.js';
 import { extractInstrumentationAttributes } from '../../../scripts/utils.js';
 
 /**

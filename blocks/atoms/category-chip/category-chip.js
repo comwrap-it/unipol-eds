@@ -1,4 +1,4 @@
-import { createCategoryChip } from '../../../scripts/libs/ds/components/atoms/category-chip/category-chip.js';
+import { createCategoryChip } from '@unipol-ds/components/atoms/category-chip/category-chip.js';
 import { extractInstrumentationAttributes } from '../../../scripts/utils.js';
 
 /**

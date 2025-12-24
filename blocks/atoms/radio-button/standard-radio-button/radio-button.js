@@ -1,5 +1,5 @@
 import { CHECKED_STATES } from '../../../../constants/index.js';
-import { createRadio } from '../../../../scripts/libs/ds/components/atoms/radio-button/standard-radio-button/radio-button.js';
+import { createRadio } from '@unipol-ds/components/atoms/radio-button/standard-radio-button/radio-button.js';
 import { extractInstrumentationAttributes } from '../../../../scripts/utils.js';
 
 /**

@@ -1,6 +1,6 @@
 import { BUTTON_ICON_SIZES, NAVIGATION_PILL_VARIANTS } from '../../constants/index.js';
 import { loadBlock } from '../../scripts/aem.js';
-import { createNavigationPill } from '../../scripts/libs/ds/components/atoms/navigation-pill/navigation-pill.js';
+import { createNavigationPill } from '@unipol-ds/components/atoms/navigation-pill/navigation-pill.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { extractInstrumentationAttributes, getTemplateMetaContent } from '../../scripts/utils.js';
 

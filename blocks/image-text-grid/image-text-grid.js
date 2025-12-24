@@ -1,5 +1,5 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
-import { createButton } from '../../scripts/libs/ds/components/atoms/buttons/standard-button/standard-button.js';
+import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 
 export default function decorate(block, isFirstBlock = false) {
