@@ -9,7 +9,7 @@
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
 
-import { create3DiconsFromRows } from '../atoms/icons-3D/icons-3D.js';
+import { create3Dicons } from '../atoms/icons-3D/icons-3D.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { createTextElementFromRow } from '../../scripts/domHelpers.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
@@ -80,6 +80,13 @@ const createCardContent = (title, subTitle, note) => {
   return cardContent;
 };
 
+const create3DcategoryIcons = (category) => {
+  const vehiclesShowIcon = category === 'mobility';
+  const homeShowIcon = category === 'property';
+  const personalShowIcon = category === 'welfare';
+  return create3Dicons(vehiclesShowIcon, homeShowIcon, personalShowIcon);
+};
+
 /**
  * Decorates a card block element
  * @param {HTMLElement} block - The card block element
@@ -116,15 +123,9 @@ export default async function decorateCategoryCard(block) {
   const cardContent = createCardContent(rows[0], rows[1], rows[2]);
   card.appendChild(cardContent);
 
-  /* const iconsRows = rows.slice(2, 6);
-  const iconsElement = create3DiconsFromRows(iconsRows); */
-
-  /* if (iconsElement && iconsElement.children.length > 0) {
-    const imgVector = document.createElement('div');
-    imgVector.className = 'img-vector';
-    imgVector.appendChild(iconsElement);
-    card.appendChild(imgVector);
-  } */
+  const category = rows[5]?.textContent?.trim() || '';
+  const iconsElement = create3DcategoryIcons(category);
+  card.appendChild(iconsElement);
 
   // Append card content
   if (cardContent.children.length > 0) {

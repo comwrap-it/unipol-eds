@@ -75,18 +75,32 @@
             font-weight: 400;
             line-height: 140%;
         }
+    }
 
-        & .img-vector {
-            width: 100%;
-            left: 0;
+    & .icons-3d {
+        display: flex;
+        width: var(--Card-Category-Card-Bg-Icon-Size-D, 7.5rem);
+        height: var(--Card-Category-Card-Bg-Icon-Size-D, 7.5rem);
+        justify-content: center;
+        align-items: center;
+        aspect-ratio: 1/1;
+        position: absolute;
+        left: 9.5625rem;
+        top: 11.25rem;
+
+        & .icons-3d-icon {
             display: flex;
+            width: var(--Card-Category-Card-Bg-Icon-Size-D, 7.5rem);
+            height: var(--Card-Category-Card-Bg-Icon-Size-D, 7.5rem);
             justify-content: center;
-            height: 5.1875rem;
-            position: absolute;
-            top: -2.6095rem;
+            align-items: center;
+            flex-shrink: 0;
+            aspect-ratio: 1/1;
 
-            & .icons-3d {
-                gap: var(--Card-Insurance-Product-Card-Icon-Gap, 0.5rem);
+            .icon-img {
+                width: var(--Card-Category-Card-Icon-Size, 4rem);
+                height: var(--Card-Category-Card-Icon-Size, 4rem);
+                flex-shrink: 0;
             }
         }
     }
