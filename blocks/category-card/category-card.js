@@ -1,10 +1,8 @@
-/* eslint-disable no-unused-vars */
-
 /**
  * Category Card - Molecule
  *
  * Uses primary-button as an atom component for call-to-action buttons.
- * This component can be used as a molecule within insurance-product-carousel.
+ * This component can be used as a molecule within category-carousel organism.
  *
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
@@ -12,7 +10,7 @@
 import { create3Dicons } from '../atoms/icons-3D/icons-3D.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { createTextElementFromRow } from '../../scripts/domHelpers.js';
-import { moveInstrumentation } from '../../scripts/scripts.js';
+import { extractInstrumentationAttributes, restoreInstrumentation } from '../../scripts/utils.js';
 import { createCategoryChip } from '../atoms/category-chip/category-chip.js';
 
 let isStylesLoaded = false;
@@ -36,8 +34,9 @@ const createImageCard = (image, altText) => {
   const cardImage = document.createElement('div');
   cardImage.className = 'category-card-image';
 
-  if (image && image.querySelector('img')) {
-    const src = image.querySelector('img')?.getAttribute('src') ?? '';
+  if (image) {
+    const img = image.querySelector('img');
+    const src = img?.getAttribute('src') ?? '';
     const optimizedPic = createOptimizedPicture(
       src,
       altText?.textContent?.trim() || '',
@@ -45,10 +44,9 @@ const createImageCard = (image, altText) => {
       [{ media: '(max-width: 768)', width: '343' }, { media: '(max-width: 1200)', width: '302' }, { media: '(max-width: 1440)', width: '373' }, { media: '(min-width: 1441)', width: '426' }],
     );
 
-    // Preserve instrumentation from link
-    const newImg = optimizedPic.querySelector('img');
-    if (newImg && image.instrumentation) {
-      moveInstrumentation(image, optimizedPic);
+    const imgInstrumentation = extractInstrumentationAttributes(img);
+    if (imgInstrumentation) {
+      restoreInstrumentation(optimizedPic, imgInstrumentation);
     }
 
     cardImage.appendChild(optimizedPic);
@@ -124,12 +122,19 @@ export default async function decorateCategoryCard(block) {
   card.className = 'category-card-content';
 
   /*
+  Category Card Data Rows
+
   rows[0] --> title
   rows[1] --> subtitle
   rows[2] --> note
   rows[3] --> image
   rows[4] --> imageSR
   rows[5] --> category
+  rows[6] --> firstCategoryChip icon and text
+  rows[7] --> secondCategoryChip icon and text
+  rows[8] --> thirdCategoryChip icon and text
+  rows[9] --> fourthCategoryChip icon and text
+
    */
   const rows = Array.from(block.children);
 
