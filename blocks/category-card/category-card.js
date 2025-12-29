@@ -34,8 +34,8 @@ const createImageCard = (image, altText) => {
   const cardImage = document.createElement('div');
   cardImage.className = 'category-card-image';
 
-  if (image) {
-    const src = image.querySelector('img').getAttribute('src');
+  if (image && image.querySelector('img')) {
+    const src = image.querySelector('img')?.getAttribute('src') ?? '';
     const optimizedPic = createOptimizedPicture(
       src,
       altText?.textContent?.trim() || '',
