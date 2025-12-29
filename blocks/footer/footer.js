@@ -73,7 +73,7 @@ export default async function decorate(block) {
       }
     }
 
-    if (!window.matchMedia('(max-width: 768px)').matches) return;
+    if (!window.matchMedia('(max-width: 767px)').matches) return;
 
     const expanded = title.getAttribute('aria-expanded') === 'true';
     const newState = !expanded;
@@ -151,7 +151,7 @@ export default async function decorate(block) {
     });
   }
 
-  const mql = window.matchMedia('(max-width: 768px)');
+  const mql = window.matchMedia('(max-width: 767px)');
 
   const titles = footerContainer.querySelectorAll('.text-link-title');
   titles.forEach((title) => {

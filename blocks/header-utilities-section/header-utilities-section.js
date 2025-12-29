@@ -71,7 +71,7 @@ function updatePillLabels() {
         pill.setAttribute('aria-label', text);
       }
 
-      if (window.innerWidth <= 1200) {
+      if (window.innerWidth < 1200) {
         labelSpan.classList.add('pill-hide-label');
       } else {
         labelSpan.classList.remove('pill-hide-label');

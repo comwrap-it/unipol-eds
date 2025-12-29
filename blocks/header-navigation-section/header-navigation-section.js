@@ -316,7 +316,7 @@ function observeHomepageFirstSectionForPills(container) {
    MAKE NAVIGATION STICKY
 ------------------------------------------------------------------ */
 function makeNavigationSticky(block) {
-  if (window.innerWidth <= 1200) return () => {};
+  if (window.innerWidth < 1200) return () => {};
 
   const container = block.querySelector('.navigation-pill-container');
   if (!container) return () => {};
@@ -367,7 +367,7 @@ function makeNavigationSticky(block) {
   const offsetTop = sectionWrapper.offsetTop + 32;
 
   const onScroll = () => {
-    if (window.innerWidth <= 1200) return;
+    if (window.innerWidth < 1200) return;
 
     const scrollY = window.scrollY || window.pageYOffset;
     const scrollingDown = scrollY > lastScrollY;
@@ -424,7 +424,7 @@ function navigationResponsiveController(block) {
   };
 
   const check = () => {
-    if (window.innerWidth <= 1200) {
+    if (window.innerWidth < 1200) {
       if (stickyCleanup) { stickyCleanup(); stickyCleanup = null; }
       recalcWidth();
       showMobileSecondRightIcon();
@@ -615,7 +615,7 @@ export default async function decorate(block) {
 
   window.addEventListener('resize', () => {
     pillToBoxMap.forEach((box, pill) => {
-      if (window.innerWidth <= 1200) {
+      if (window.innerWidth < 1200) {
         addCloseIconToBox(box, pill);
       } else {
         const btn = box.querySelector('.un-close-btn');

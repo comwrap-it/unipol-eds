@@ -49,7 +49,7 @@ main .section.text-list-container.footer-download-section-container .text-link {
 }
 
 /* Tablet */
-@media (width > 768px) and (width <= 1280px) {
+@media (width > 767px) and (width < 1280px) {
     main .section.footer-download-section-container ,
     main .section.footer-privacy-section-container ,
     main .section.footer-social-section-container ,
@@ -59,7 +59,7 @@ main .section.text-list-container.footer-download-section-container .text-link {
 }
 
 /* Mobile */
-@media (width <= 768px) {
+@media (width < 768px) {
     main .section.footer-download-section-container ,
     main .section.footer-privacy-section-container ,
     main .section.footer-social-section-container ,
@@ -94,7 +94,7 @@ main .section.text-list-container.footer-download-section-container .text-link {
     }
 }
 
-@media (width <= 365px) {
+@media (width < 365px) {
     main .section.footer-download-section-container .text-list-wrapper,
     main .section.footer-privacy-section-container .text-list-wrapper,
     main .section.footer-social-section-container .text-list-wrapper,
