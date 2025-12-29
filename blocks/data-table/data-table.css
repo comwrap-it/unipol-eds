@@ -12,7 +12,7 @@ div.data-table.block .data-table-container {
     width: 100%;
     text-align: left;
     border-radius: var(--Data-Table-Radius, 24px);
-    overflow: hidden;
+    overflow: visible;
     border: 2px solid transparent;
 }
 
