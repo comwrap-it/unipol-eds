@@ -65,7 +65,9 @@ const createCategoryChips = (category, categoryChips) => {
     const icon = chip.children[0]?.textContent?.trim();
     const text = chip.children[1]?.textContent?.trim();
 
-    chips.appendChild(createCategoryChip(category, icon, text));
+    if (icon !== undefined && text !== undefined) {
+      chips.appendChild(createCategoryChip(category, icon, text));
+    }
   });
 
   return chips;
