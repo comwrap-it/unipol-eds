@@ -109,6 +109,10 @@
                   "value": "un-icon-car"
                 },
                 {
+                  "name": "Casa",
+                  "value": "un-icon-home"
+                },
+                {
                   "name": "Famiglia",
                   "value": "un-icon-family"
                 },
@@ -172,6 +176,10 @@
                   "value": "un-icon-car"
                 },
                 {
+                  "name": "Casa",
+                  "value": "un-icon-home"
+                },
+                {
                   "name": "Famiglia",
                   "value": "un-icon-family"
                 },
@@ -207,8 +215,8 @@
             },
             {
               "component": "text",
-              "name": "firstCategoryChipDescription",
-              "label": "Testo Prima Category Chip",
+              "name": "secondCategoryChip_Description",
+              "label": "Testo Seconda Category Chip",
               "required": true
             }
           ]
@@ -233,6 +241,10 @@
                 {
                   "name": "Auto",
                   "value": "un-icon-car"
+                },
+                {
+                  "name": "Casa",
+                  "value": "un-icon-home"
                 },
                 {
                   "name": "Famiglia",
