@@ -111,7 +111,7 @@ function setupShowMoreAccessibility({ tbody, button, disableLimit }) {
 }
 
 function appendRowsWithLimit({
-  rows, tbody, limit = 5, disableLimit,
+  rows, tbody, limit = 6, disableLimit,
 }) {
   rows.filter(Boolean).forEach((tr, index) => {
     if (!disableLimit && index >= limit) {
@@ -151,13 +151,10 @@ async function buildTable({ rows, block, disableLimit }) {
 
   appendRowsWithLimit({ rows: trElements, tbody, disableLimit });
 
-  // 👉 MOST IMPORTANT PART
-  // Mostra il pulsante solo se ci sono più di 5 righe
-  if (rows.length > 5 && !disableLimit) {
+  if (rows.length > 6) {
     const showMoreValues = extractShowMoreButtonValue(rows[0]);
     const showMoreButtonWrapper = createShowMoreButton(showMoreValues);
     block.appendChild(showMoreButtonWrapper);
-
     setupShowMoreAccessibility({
       tbody,
       button: showMoreButtonWrapper.querySelector('button'),
