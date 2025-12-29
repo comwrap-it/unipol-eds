@@ -31,7 +31,6 @@ function createShowMoreButton({ label }) {
   return wrapper;
 }
 
-// Fusione col2 sotto col1 per mobile <768px
 function handleResponsiveTable(table) {
   const isMobile = window.matchMedia('(max-width: 767px)').matches;
   const rows = Array.from(table.querySelectorAll('tbody tr'));
@@ -88,7 +87,6 @@ function bindResponsiveResize(table) {
 
 function setupShowMoreAccessibility({ tbody, button, disableLimit }) {
   if (disableLimit) {
-    // Pulsante visibile ma non fa nulla
     button.disabled = false;
     button.setAttribute('aria-expanded', 'true');
     button.setAttribute('aria-label', 'Mostra tutte le righe');
@@ -153,15 +151,19 @@ async function buildTable({ rows, block, disableLimit }) {
 
   appendRowsWithLimit({ rows: trElements, tbody, disableLimit });
 
-  const showMoreValues = extractShowMoreButtonValue(rows[0]);
-  const showMoreButtonWrapper = createShowMoreButton(showMoreValues);
-  block.appendChild(showMoreButtonWrapper);
+  // 👉 MOST IMPORTANT PART
+  // Mostra il pulsante solo se ci sono più di 5 righe
+  if (rows.length > 5 && !disableLimit) {
+    const showMoreValues = extractShowMoreButtonValue(rows[0]);
+    const showMoreButtonWrapper = createShowMoreButton(showMoreValues);
+    block.appendChild(showMoreButtonWrapper);
 
-  setupShowMoreAccessibility({
-    tbody,
-    button: showMoreButtonWrapper.querySelector('button'),
-    disableLimit,
-  });
+    setupShowMoreAccessibility({
+      tbody,
+      button: showMoreButtonWrapper.querySelector('button'),
+      disableLimit,
+    });
+  }
 
   handleResponsiveTable(table);
   bindResponsiveResize(table);
