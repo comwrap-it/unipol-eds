@@ -28,7 +28,7 @@ async function ensureStylesLoaded() {
  *
  * @param image
  * @param altText
- * @return {HTMLDivElement}
+ * @return {HTMLDivElement} cardImage
  */
 const createImageCard = (image, altText) => {
   const cardImage = document.createElement('div');
@@ -40,7 +40,7 @@ const createImageCard = (image, altText) => {
       src,
       altText?.textContent?.trim() || '',
       false,
-      [{ media: '(min-width: 769)', width: '316' }, { media: '(max-width: 768)', width: '240' }, { media: '(max-width: 392)', width: '343' }],
+      [{ media: '(max-width: 768)', width: '343' }, { media: '(max-width: 1200)', width: '302' }, { media: '(max-width: 1440)', width: '373' }, { media: '(min-width: 1441)', width: '426' }],
     );
 
     // Preserve instrumentation from link
@@ -55,15 +55,28 @@ const createImageCard = (image, altText) => {
   return cardImage;
 };
 
-const createCardContent = (title, subTitle) => {
+const createCategoryChips = () => {
+
+};
+
+const createCardContent = (title, subTitle, note) => {
   const cardContent = document.createElement('div');
   cardContent.className = 'category-card-inner-content';
 
   const titleElement = createTextElementFromRow(title, 'title', 'h3');
   const subTitleElement = createTextElementFromRow(subTitle, 'subtitle', 'p');
 
-  cardContent.appendChild(titleElement);
-  cardContent.appendChild(subTitleElement);
+  const textElement = document.createElement('div');
+  textElement.className = 'category-card-text';
+
+  textElement.appendChild(titleElement);
+  textElement.appendChild(subTitleElement);
+
+  const categoryChips = [];
+  const noteElement = createTextElementFromRow(note, 'note', 'p');
+
+  cardContent.appendChild(textElement);
+  cardContent.appendChild(noteElement);
   return cardContent;
 };
 
@@ -89,17 +102,18 @@ export default async function decorateCategoryCard(block) {
 
   /*
   rows[0] --> title
-  rows[1] --> description
+  rows[1] --> subtitle
   rows[2] --> note
   rows[3] --> image
   rows[4] --> imageSR
+  rows[5] --> category
    */
   const rows = Array.from(block.children);
 
   const image = createImageCard(rows[3], rows[4]);
   card.appendChild(image);
 
-  const cardContent = createCardContent(rows[0], rows[1]);
+  const cardContent = createCardContent(rows[0], rows[1], rows[2]);
   card.appendChild(cardContent);
 
   /* const iconsRows = rows.slice(2, 6);

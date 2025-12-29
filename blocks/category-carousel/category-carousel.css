@@ -1,83 +1,83 @@
-.insurance-product-carousel-wrapper {
-    /* this wrapper is added from eds */
-    width: 100%;
-}
-
-.insurance-product-carousel-container {
+.section.text-block-container.category-carousel-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--Carousel-Widget-Gap-D-Ds, 3rem);
-    width: 100%;
+    gap: var(--Carousel-Widget-Vertical-Gap, 3rem);
+}
 
-    & .insurance-product-carousel {
+.category-carousel-root-container {
+    display: flex;
+    padding: var(--Space-0, 0);
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--Carousel-Category-Gap-Horizontal, 1rem);
+
+    & .category-carousel.swiper-wrapper {
+        display: inline-flex;
+        width: auto;
+        padding: var(--Space-0, 0);
+        justify-content: center;
+        align-items: flex-start;
+        gap: var(--Carousel-Category-Gap-Horizontal, 1rem);
+    }
+}
+
+/* Desktop small */
+@media (1200px <= width < 1440px) {
+    .category-carousel-root-container {
         display: flex;
-        flex-direction: column;
-        width: 21.4375rem;
-        margin-inline: auto;
-        gap: var(--Carousel-Insurance-Product-Gap, 1rem);
-    }
-}
+        padding: var(--Space-0, 0);
+        justify-content: center;
+        align-items: flex-start;
+        gap: var(--Carousel-Category-Gap-Horizontal, 1rem);
 
-@media (width < 400px) {
-    .insurance-product-carousel-container {
-        & .insurance-product-carousel {
-            width: 100%;
-        }
-    }
-}
-
-/* Tablet Portrait */
-@media (width >= 768px) {
-    .insurance-product-carousel-container {
-        margin-inline: auto;
-        gap: var(--Carousel-Widget-Gap-M-Tp, 2.5rem);
-
-        &.swiper {
-            overflow: visible;
-        }
-
-        .insurance-product-carousel {
-            flex-direction: row;
-            width: 100%;
+        & .category-carousel.swiper-wrapper {
+            display: inline-flex;
+            width: auto;
+            padding: var(--Space-0, 0);
+            justify-content: center;
             align-items: flex-start;
-            gap: 0;
-
-            & .swiper-slide {
-                width: calc(100% / 2.3);
-                height: -webkit-fill-available;
-                margin-inline-end: var(
-                    --Carousel-Insurance-Product-Gap-M-Tp,
-                    0.5rem
-                );
-
-                &:last-child {
-                    margin-inline-end: 0;
-                }
-            }
+            gap: var(--Carousel-Category-Gap-Horizontal, 1rem);
         }
     }
 }
 
-/* Tablet Landscape */
-@media (width >= 1024px) {
-    .insurance-product-carousel-container {
-        .insurance-product-carousel {
-            & .swiper-slide {
-                width: calc(100% / 3.6);
-                margin-inline-end: var(--Carousel-Insurance-Product-Gap, 1rem);
-            }
+/* Tablet */
+@media (768px <= width < 1200px) {
+    .category-carousel-root-container {
+        display: flex;
+        padding: var(--Space-0, 0);
+        justify-content: center;
+        align-items: flex-start;
+        gap: var(--Carousel-Category-Gap-Horizontal, 1rem);
+
+        & .category-carousel.swiper-wrapper {
+            display: inline-flex;
+            width: auto;
+            padding: var(--Space-0, 0);
+            justify-content: center;
+            align-items: flex-start;
+            gap: var(--Carousel-Category-Gap-Horizontal, 1rem);
         }
     }
 }
 
-/* Desktop */
-@media (width >= 1200px) {
-    .insurance-product-carousel-container {
-        .insurance-product-carousel {
-            & .swiper-slide {
-                width: calc(100% / 4.3);
-            }
+/* Mobile */
+@media (width < 768px) {
+    .category-carousel-root-container {
+        display: flex;
+        padding: var(--Space-0, 0);
+        justify-content: center;
+        align-items: flex-start;
+        gap: var(--Carousel-Category-Gap-Horizontal, 1rem);
+
+        & .category-carousel.swiper-wrapper {
+            display: inline-flex;
+            width: auto;
+            padding: var(--Space-0, 0);
+            justify-content: center;
+            align-items: flex-start;
+            gap: var(--Carousel-Category-Gap-Horizontal, 1rem);
         }
     }
 }

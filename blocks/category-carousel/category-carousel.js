@@ -97,7 +97,7 @@ export default async function decorate(block) {
 
   // Create carousel container structure
   const carousel = document.createElement('div');
-  carousel.className = 'category-carousel-container swiper';
+  carousel.className = 'category-carousel-root-container swiper';
   carousel.setAttribute('role', 'region');
   carousel.setAttribute('aria-label', 'Category carousel');
   carousel.setAttribute('tabindex', '0');
