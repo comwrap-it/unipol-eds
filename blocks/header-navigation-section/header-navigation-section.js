@@ -112,7 +112,7 @@ async function closeBox(pill, box) {
 
 function addCloseIconToBox(box, pill) {
   if (!box || !pill) return;
-  if (window.innerWidth > 1200) return;
+  if (window.innerWidth > 1199) return;
 
   if (box.querySelector('.un-close-btn')) return;
 

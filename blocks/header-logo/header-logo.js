@@ -232,7 +232,7 @@ export default function decorate(block) {
     clearTimeout(resizeTimeout);
 
     resizeTimeout = setTimeout(() => {
-      const isMobile = window.matchMedia('(max-width: 1999px)').matches;
+      const isMobile = window.matchMedia('(max-width: 1199px)').matches;
 
       if (!isMobile) toggleMenu(false);
     }, 50);
