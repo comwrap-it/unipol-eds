@@ -151,7 +151,7 @@ async function buildTable({ rows, block, disableLimit }) {
 
   appendRowsWithLimit({ rows: trElements, tbody, disableLimit });
 
-  if (rows.length > 6) {
+  if (disableLimit || rows.length > 6) {
     const showMoreValues = extractShowMoreButtonValue(rows[0]);
     const showMoreButtonWrapper = createShowMoreButton(showMoreValues);
     block.appendChild(showMoreButtonWrapper);
