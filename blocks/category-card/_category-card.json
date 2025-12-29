@@ -86,6 +86,234 @@
               "value": "welfare"
             }
           ]
+        },
+        {
+          "component": "select",
+          "name": "firstCategoryChipIcon",
+          "label": "Prima Icona Category Chip",
+          "required": true,
+          "description": "Seleziona l'icona",
+          "options": [
+            [
+              {
+                "name": "Animali",
+                "value": "un-icon-pets"
+              },
+              {
+                "name": "Auto",
+                "value": "un-icon-car"
+              },
+              {
+                "name": "Famiglia",
+                "value": "un-icon-family"
+              },
+              {
+                "name": "Infortuni",
+                "value": "un-icon-injury"
+              },
+              {
+                "name": "Mezzi pesanti",
+                "value": "un-icon-truck"
+              },
+              {
+                "name": "Mobilità",
+                "value": "un-icon-mobility"
+              },
+              {
+                "name": "Moto",
+                "value": "un-icon-motorcycle"
+              },
+              {
+                "name": "Pensione",
+                "value": "un-icon-pension"
+              },
+              {
+                "name": "Salute",
+                "value": "un-icon-health"
+              },
+              {
+                "name": "Viaggi",
+                "value": "un-icon-travel"
+              }
+            ]
+          ]
+        },
+        {
+          "component": "text",
+          "name": "firstCategoryChipDescription",
+          "label": "Testo Prima Category Chip",
+          "required": true
+        },
+        {
+          "component": "select",
+          "name": "secondCategoryChipIcon",
+          "label": "Seconda Icona Category Chip",
+          "required": true,
+          "description": "Seleziona l'icona",
+          "options": [
+            [
+              {
+                "name": "Animali",
+                "value": "un-icon-pets"
+              },
+              {
+                "name": "Auto",
+                "value": "un-icon-car"
+              },
+              {
+                "name": "Famiglia",
+                "value": "un-icon-family"
+              },
+              {
+                "name": "Infortuni",
+                "value": "un-icon-injury"
+              },
+              {
+                "name": "Mezzi pesanti",
+                "value": "un-icon-truck"
+              },
+              {
+                "name": "Mobilità",
+                "value": "un-icon-mobility"
+              },
+              {
+                "name": "Moto",
+                "value": "un-icon-motorcycle"
+              },
+              {
+                "name": "Pensione",
+                "value": "un-icon-pension"
+              },
+              {
+                "name": "Salute",
+                "value": "un-icon-health"
+              },
+              {
+                "name": "Viaggi",
+                "value": "un-icon-travel"
+              }
+            ]
+          ]
+        },
+        {
+          "component": "text",
+          "name": "secondCategoryChipDescription",
+          "label": "Testo Seconda Category Chip",
+          "required": true
+        },
+        {
+          "component": "select",
+          "name": "thirdCategoryChipIcon",
+          "label": "Terza Icona Category Chip",
+          "required": true,
+          "description": "Seleziona l'icona",
+          "options": [
+            [
+              {
+                "name": "Animali",
+                "value": "un-icon-pets"
+              },
+              {
+                "name": "Auto",
+                "value": "un-icon-car"
+              },
+              {
+                "name": "Famiglia",
+                "value": "un-icon-family"
+              },
+              {
+                "name": "Infortuni",
+                "value": "un-icon-injury"
+              },
+              {
+                "name": "Mezzi pesanti",
+                "value": "un-icon-truck"
+              },
+              {
+                "name": "Mobilità",
+                "value": "un-icon-mobility"
+              },
+              {
+                "name": "Moto",
+                "value": "un-icon-motorcycle"
+              },
+              {
+                "name": "Pensione",
+                "value": "un-icon-pension"
+              },
+              {
+                "name": "Salute",
+                "value": "un-icon-health"
+              },
+              {
+                "name": "Viaggi",
+                "value": "un-icon-travel"
+              }
+            ]
+          ]
+        },
+        {
+          "component": "text",
+          "name": "thirdCategoryChipDescription",
+          "label": "Testo Terza Category Chip",
+          "required": true
+        },
+        {
+          "component": "select",
+          "name": "fourthCategoryChipIcon",
+          "label": "Quarta Icona Category Chip",
+          "required": true,
+          "description": "Seleziona l'icona",
+          "options": [
+            [
+              {
+                "name": "Animali",
+                "value": "un-icon-pets"
+              },
+              {
+                "name": "Auto",
+                "value": "un-icon-car"
+              },
+              {
+                "name": "Famiglia",
+                "value": "un-icon-family"
+              },
+              {
+                "name": "Infortuni",
+                "value": "un-icon-injury"
+              },
+              {
+                "name": "Mezzi pesanti",
+                "value": "un-icon-truck"
+              },
+              {
+                "name": "Mobilità",
+                "value": "un-icon-mobility"
+              },
+              {
+                "name": "Moto",
+                "value": "un-icon-motorcycle"
+              },
+              {
+                "name": "Pensione",
+                "value": "un-icon-pension"
+              },
+              {
+                "name": "Salute",
+                "value": "un-icon-health"
+              },
+              {
+                "name": "Viaggi",
+                "value": "un-icon-travel"
+              }
+            ]
+          ]
+        },
+        {
+          "component": "text",
+          "name": "fourthCategoryChipDescription",
+          "label": "Testo Quarta Category Chip",
+          "required": true
         }
       ]
     }
