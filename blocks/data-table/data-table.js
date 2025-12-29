@@ -128,6 +128,7 @@ function appendRowsWithLimit({
 async function buildTable({ rows, block, disableLimit }) {
   const tableWrapper = document.createElement('div');
   tableWrapper.className = 'data-table-container block data-table-block';
+  tableWrapper.classList.add('reveal-in-up');
 
   const table = document.createElement('table');
   table.className = 'data-table';
