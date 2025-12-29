@@ -65,6 +65,16 @@
             }
         }
 
+        & .category-chips {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            align-content: flex-start;
+            gap: var(--Card-Category-Card-Category-Chips-Gap, 0.5rem);
+            align-self: stretch;
+            flex-wrap: wrap;
+        }
+
         & .note {
             align-self: stretch;
             color: var(--Card-Category-Card-Subdescription, #63727D);

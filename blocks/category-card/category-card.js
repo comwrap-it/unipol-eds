@@ -13,6 +13,7 @@ import { create3Dicons } from '../atoms/icons-3D/icons-3D.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { createTextElementFromRow } from '../../scripts/domHelpers.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { createCategoryChip } from '../atoms/category-chip/category-chip.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -20,6 +21,7 @@ async function ensureStylesLoaded() {
   const { loadCSS } = await import('../../scripts/aem.js');
   await Promise.all([
     loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/icons-3D/icons-3D.css`),
+    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/category-chip/category-chip.css`),
   ]);
   isStylesLoaded = true;
 }
@@ -46,7 +48,7 @@ const createImageCard = (image, altText) => {
     // Preserve instrumentation from link
     const newImg = optimizedPic.querySelector('img');
     if (newImg && image.instrumentation) {
-      moveInstrumentation(image, newImg);
+      moveInstrumentation(image, optimizedPic);
     }
 
     cardImage.appendChild(optimizedPic);
@@ -55,11 +57,21 @@ const createImageCard = (image, altText) => {
   return cardImage;
 };
 
-const createCategoryChips = () => {
+const createCategoryChips = (category, categoryChips) => {
+  const chips = document.createElement('div');
+  chips.className = 'category-chips';
 
+  categoryChips.forEach((chip) => {
+    const icon = chip.children[0]?.textContent?.trim();
+    const text = chip.children[1]?.textContent?.trim();
+
+    chips.appendChild(createCategoryChip(category, icon, text));
+  });
+
+  return chips;
 };
 
-const createCardContent = (title, subTitle, note) => {
+const createCardContent = (title, subTitle, note, category, categoryChips) => {
   const cardContent = document.createElement('div');
   cardContent.className = 'category-card-inner-content';
 
@@ -72,10 +84,12 @@ const createCardContent = (title, subTitle, note) => {
   textElement.appendChild(titleElement);
   textElement.appendChild(subTitleElement);
 
-  const categoryChips = [];
   const noteElement = createTextElementFromRow(note, 'note', 'p');
 
+  const categoryChipsElement = createCategoryChips(category, categoryChips);
+
   cardContent.appendChild(textElement);
+  cardContent.appendChild(categoryChipsElement);
   cardContent.appendChild(noteElement);
   return cardContent;
 };
@@ -120,10 +134,10 @@ export default async function decorateCategoryCard(block) {
   const image = createImageCard(rows[3], rows[4]);
   card.appendChild(image);
 
-  const cardContent = createCardContent(rows[0], rows[1], rows[2]);
+  const category = rows[5]?.textContent?.trim() || '';
+  const cardContent = createCardContent(rows[0], rows[1], rows[2], category, rows.slice(6));
   card.appendChild(cardContent);
 
-  const category = rows[5]?.textContent?.trim() || '';
   const iconsElement = create3DcategoryIcons(category);
   card.appendChild(iconsElement);
 
