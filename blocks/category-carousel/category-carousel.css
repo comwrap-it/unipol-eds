@@ -32,62 +32,35 @@
     }
 }
 
-/* Desktop small */
-@media (1200px <= width < 1440px) {
-    .category-carousel-root-container {
-        display: flex;
-        padding: var(--Space-0, 0);
-        justify-content: center;
-        align-items: flex-start;
-        gap: var(--Carousel-Category-Gap-Horizontal, 1rem);
-
-        & .category-carousel.swiper-wrapper {
-            display: inline-flex;
-            width: auto;
-            padding: var(--Space-0, 0);
-            justify-content: center;
-            align-items: flex-start;
-            gap: var(--Carousel-Category-Gap-Horizontal, 1rem);
-        }
-    }
-}
-
 /* Tablet */
 @media (768px <= width < 1200px) {
-    .category-carousel-root-container {
-        display: flex;
-        padding: var(--Space-0, 0);
-        justify-content: center;
+    .section.text-block-container.category-carousel-container {
         align-items: flex-start;
-        gap: var(--Carousel-Category-Gap-Horizontal, 1rem);
+        gap: var(--Carousel-Widget-Vertical-Gap, 2.5rem);
+    }
+
+    .category-carousel-root-container {
+        gap: var(--Carousel-Category-Gap-Horizontal, 0.5rem);
 
         & .category-carousel.swiper-wrapper {
-            display: inline-flex;
-            width: auto;
-            padding: var(--Space-0, 0);
-            justify-content: center;
-            align-items: flex-start;
-            gap: var(--Carousel-Category-Gap-Horizontal, 1rem);
+            gap: var(--Carousel-Category-Gap-Horizontal, 0.5rem);
         }
     }
 }
 
 /* Mobile */
 @media (width < 768px) {
+    .section.text-block-container.category-carousel-container {
+        flex-direction: column;
+        gap: var(--Carousel-Widget-Vertical-Gap, 2.5rem);
+    }
+
     .category-carousel-root-container {
-        display: flex;
-        padding: var(--Space-0, 0);
-        justify-content: center;
-        align-items: flex-start;
-        gap: var(--Carousel-Category-Gap-Horizontal, 1rem);
+        flex-direction: column;
 
         & .category-carousel.swiper-wrapper {
-            display: inline-flex;
-            width: auto;
-            padding: var(--Space-0, 0);
-            justify-content: center;
-            align-items: flex-start;
-            gap: var(--Carousel-Category-Gap-Horizontal, 1rem);
+            flex-direction: column;
+            gap: var(--Carousel-Category-Gap-Vertical, 1rem);
         }
     }
 }
