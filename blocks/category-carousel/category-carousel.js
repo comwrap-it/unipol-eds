@@ -58,14 +58,8 @@ const initSwiper = (
       addIcons: false,
     },
     speed: 700,
-    slidesPerView: 'auto',
+    slidesPerView: 2.5,
     allowTouchMove: true,
-    breakpoints: {
-      // width >= 1200
-      1200: {
-        allowTouchMove: false,
-      },
-    },
     resistanceRatio: 0.85,
     touchReleaseOnEdges: true,
     effect: 'slide',
@@ -75,6 +69,39 @@ const initSwiper = (
 
   return swiperInstance;
 };
+
+let leftIconButton, scrollIndicator, rightIconButton, setExpandedDot = null;
+let Swiper;
+let swiperInstance;
+
+async function initCategoryCarousel(carousel, block) {
+  ({ leftIconButton, scrollIndicator, rightIconButton, setExpandedDot } = await createScrollIndicator());
+  Swiper = await loadSwiper();
+  block.appendChild(scrollIndicator);
+  swiperInstance = initSwiper(Swiper, carousel, leftIconButton, rightIconButton);
+  handleSlideChange(swiperInstance, setExpandedDot, leftIconButton, rightIconButton);
+}
+
+function destroyCategoryCarousel() {
+  if (swiperInstance) {
+    swiperInstance.destroy(true, true);
+    swiperInstance = null;
+  }
+
+  if (scrollIndicator) {
+    scrollIndicator.remove();
+    scrollIndicator = null;
+  }
+}
+
+async function handleTabletChange(e, carousel, block) {
+  if (e.matches) {
+    await initCategoryCarousel(carousel, block);
+  } else {
+    destroyCategoryCarousel();
+  }
+}
+
 /**
  * Decorates the category carousel block
  * @param {HTMLElement} block - The carousel block element
@@ -167,7 +194,7 @@ export default async function decorate(block) {
 
   // Wait for all cards to be processed
   const cardElements = await Promise.all(cardPromises);
-  cardElements.forEach((slide, index) => {
+  cardElements.forEach((slide) => {
     if (slide && !hasInstrumentation && slide.innerText) {
       track.appendChild(slide);
     } else if (slide && hasInstrumentation) {
@@ -188,4 +215,15 @@ export default async function decorate(block) {
   carousel.classList.add('block', 'category-carousel-block');
   // Replace block with carousel
   block.appendChild(carousel);
+
+
+  const tabletMQ = window.matchMedia(
+    '(min-width: 768px) and (max-width: 953px)'
+  );
+
+  await handleTabletChange(tabletMQ, carousel, block);
+
+  tabletMQ.addEventListener('change', (e) =>
+    handleTabletChange(e, carousel, block)
+  );
 }
