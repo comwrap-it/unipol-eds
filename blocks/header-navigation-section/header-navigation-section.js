@@ -56,6 +56,40 @@ function updateHiddenPillsAccessibility(container) {
   });
 }
 
+function updateMobilePillsDisplay() {
+  const container = document.querySelector('.navigation-pill-container');
+  if (!container) return;
+
+  const wrappers = document.querySelectorAll('.navigation-pill-wrapper');
+  if (!wrappers.length) return;
+
+  const anyOpen = document.querySelector('.header-box-text-container.is-open');
+
+  wrappers.forEach((wrapper, i) => {
+    if (window.innerWidth < 1200) {
+      // Mobile
+      if (anyOpen) {
+        wrapper.style.display = 'none';
+      } else if (i < 2) {
+        wrapper.style.display = 'flex';
+      } else {
+        wrapper.style.display = 'none';
+      }
+    } else {
+      // Desktop
+      wrapper.style.display = '';
+    }
+  });
+
+  if (window.innerWidth < 1200) {
+    // Mobile: se un box è aperto, trasparente; altrimenti colore header
+    container.style.background = anyOpen ? 'transparent' : 'var(--Header-Background)';
+  } else {
+    // Desktop: mantieni il comportamento precedente
+    container.style.background = anyOpen ? 'var(--Header-Background)' : '';
+  }
+}
+
 function closeBoxWithAnimation(pill, box) {
   if (!box) return;
 
@@ -84,6 +118,7 @@ function closeBoxWithAnimation(pill, box) {
     box.classList.remove('is-open');
     pill?.classList.remove('header-nav-pill-active');
     pill?.setAttribute('aria-expanded', 'false');
+    updateMobilePillsDisplay();
     document.body.classList.remove('body-header-overlay');
     if (logoContainer && logoWrapper && utilitiesWrapper) {
       logoContainer.classList.remove('header-box-open');
@@ -210,7 +245,7 @@ function openBoxWithAnimation(pill, box, { defaultOpen = false } = {}) {
       otherAnimator.style.height = '';
       otherAnimator.style.opacity = '';
       otherBox.classList.remove('is-open');
-
+      updateMobilePillsDisplay();
       const otherPill = document.querySelector(`[aria-controls="${otherBox.id}"]`);
       if (otherPill) {
         otherPill.classList.remove('header-nav-pill-active');
@@ -222,6 +257,7 @@ function openBoxWithAnimation(pill, box, { defaultOpen = false } = {}) {
   box.classList.add('is-open');
   pill.classList.add('header-nav-pill-active');
   pill.setAttribute('aria-expanded', 'true');
+  updateMobilePillsDisplay();
   if (!defaultOpen) {
     document.body.classList.add('body-header-overlay');
   }
@@ -423,6 +459,7 @@ function handleHomepageFirstScroll() {
         document.body.classList.remove('body-header-overlay');
 
         box.classList.remove('is-open');
+        updateMobilePillsDisplay();
         const animator = box.querySelector('.header-box-text-content');
         if (animator) {
           animator.style.height = '';
@@ -469,13 +506,20 @@ function navigationResponsiveController(block) {
   };
 
   const check = () => {
+    const container = block.querySelector('.navigation-pill-container');
+    if (!container) return;
+
     if (window.innerWidth < 1200) {
       if (stickyCleanup) { stickyCleanup(); stickyCleanup = null; }
-      recalcWidth();
       showMobileSecondRightIcon();
+      updateMobilePillsDisplay();
     } else {
       if (!stickyCleanup) stickyCleanup = makeNavigationSticky(block);
       recalcWidth();
+      container.querySelectorAll('.navigation-pill-wrapper').forEach((wrapper) => {
+        wrapper.style.display = '';
+      });
+      container.style.background = '';
     }
   };
 
@@ -520,7 +564,9 @@ export default async function decorate(block) {
 
   const container = document.createElement('div');
   container.className = 'navigation-pill-container';
-
+  if (window.innerWidth < 1200 && getTemplateMetaContent() === 'homepage') {
+    container.style.background = 'transparent';
+  }
   const hasInstrumentation = block.hasAttribute('data-aue-resource')
     || block.querySelector('[data-aue-resource]')
     || block.querySelector('[data-richtext-prop]');
@@ -628,8 +674,13 @@ export default async function decorate(block) {
 
     if (firstPill && firstBox) {
       openBoxWithAnimation(firstPill, firstBox, { defaultOpen: true });
-
       handleHomepageFirstScroll(firstPill, firstBox);
+
+      if (window.innerWidth < 1200) {
+        container.querySelectorAll('.navigation-pill-wrapper').forEach((pillWrapper) => {
+          pillWrapper.style.display = 'none';
+        });
+      }
     }
   }
 

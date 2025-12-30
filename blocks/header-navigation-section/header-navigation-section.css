@@ -2,7 +2,7 @@
   content: "";
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  background: var(--Overlay-Default-Background, rgb(0 0 0 / 40%));
   z-index: 2;
   pointer-events: auto;
 }
@@ -17,6 +17,7 @@
 }
 
 .header-navigation-section .navigation-pill-container {
+    position:relative;
     display: flex;
     width: max-content;
     align-items: center;
@@ -30,7 +31,7 @@
 .header-box-text-container {
   position: absolute;
   top: 110%;
-  width: 50%;
+  width: 100%;
   overflow: hidden;
   max-height: 0;
   opacity: 0;
@@ -51,6 +52,7 @@
 }
 
 .header-box-text-content {
+    display: flex;
     background-color: var(--Quote-Tool-Full-Quote-Tool-Background, #F9F9F7);
     padding: var(--Quote-Tool-Full-Quote-Tool-Padding, 16px);
     border-radius: var(--Quote-Tool-Radius, 16px);
@@ -122,7 +124,7 @@
   position: fixed !important;
   top: 0;
   z-index: 3;
-  padding-top: var(--Header-Vertical-Padding-M-Tp,24px);
+  padding-top: var(--Header-Vertical-Padding-M-Tp,24px) !important;
 }
 
 .header-box-open .nav-header-sticky {
@@ -147,14 +149,27 @@
   z-index: 3;
 }
 
+button.un-close-btn {
+    cursor: pointer;
+}
+
 @media (width < 1200px) {
+    .body-header-overlay::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: unset;
+      z-index: 2;
+      pointer-events: auto;
+    }
+
     .header-navigation-section-wrapper {
         width:unset;
     }
 
-    .navigation-pill-container {
+   .header-navigation-section .navigation-pill-container {
         position: fixed;
-        width: max-content;
+        width: max-content !important;
         left: 50%;
         bottom: var(--Header-Vertical-Padding-M-Tp,24px);
         transform: translateX(-50%);
@@ -163,6 +178,7 @@
     }
 
     .header-box-text-content {
+        display:block;
         background-color: transparent;
         padding: unset;
         border-radius: unset;
@@ -179,9 +195,11 @@
         flex-direction: column;
         gap: var(--Header-Vertical-Gap-M, 8px);
         align-items: center;
-        width: 100%;
+        width: 490px;
         bottom: 120%;
         top: unset;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .header-box-text-container button.un-close-btn {
@@ -223,5 +241,8 @@
     }
 }
 
-
-
+@media (width < 768px) {
+    .header-box-text-container {
+        width: 340px;
+    }
+}
