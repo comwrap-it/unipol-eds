@@ -86,13 +86,7 @@ function closeBoxWithAnimation(pill, box) {
     pill?.setAttribute('aria-expanded', 'false');
     document.body.classList.remove('body-header-overlay');
     if (logoContainer && logoWrapper && utilitiesWrapper) {
-      logoContainer.style.position = '';
-      logoContainer.style.top = '';
-      logoContainer.style.zIndex = '';
-      logoContainer.style.paddingTop = '';
-
-      logoWrapper.style.zIndex = '';
-      utilitiesWrapper.style.zIndex = '';
+      logoContainer.classList.remove('header-box-open');
     }
     blockScrollHide = false;
 
@@ -185,13 +179,8 @@ function applyStickyHeaderRulesIfBoxOpen() {
   if (!sectionWrapper || !openBox) return;
 
   if (sectionWrapper.classList.contains('nav-header-sticky') && logoContainer && logoWrapper && utilitiesWrapper) {
-    logoContainer.style.position = 'fixed';
-    logoContainer.style.top = '0';
-    logoContainer.style.zIndex = '3';
-    logoContainer.style.paddingTop = '20px';
+    logoContainer.classList.add('header-box-open');
 
-    logoWrapper.style.zIndex = '3';
-    utilitiesWrapper.style.zIndex = '3';
     if (container) {
       const hiddenWrappers = container.querySelectorAll('.nav-pill-hidden');
       hiddenWrappers.forEach((wrapper) => wrapper.classList.remove('nav-pill-hidden'));
@@ -237,14 +226,7 @@ function openBoxWithAnimation(pill, box, { defaultOpen = false } = {}) {
     document.body.classList.add('body-header-overlay');
   }
   if (sectionWrapper?.classList.contains('nav-header-sticky') && logoContainer && logoWrapper && utilitiesWrapper) {
-    logoContainer.style.position = 'fixed';
-    logoContainer.style.top = '0';
-    logoContainer.style.zIndex = '3';
-    logoContainer.style.paddingTop = '24px';
-
-    logoWrapper.style.zIndex = '3';
-    utilitiesWrapper.style.zIndex = '3';
-
+    logoContainer.classList.add('header-box-open');
     if (container) {
       const hiddenWrappers = container.querySelectorAll('.nav-pill-hidden');
       hiddenWrappers.forEach((wrapper) => wrapper.classList.remove('nav-pill-hidden'));
@@ -461,13 +443,7 @@ function handleHomepageFirstScroll() {
       const utilitiesWrapper = document.querySelector('.header-utilities-section-wrapper');
 
       if (logoContainer && logoWrapper && utilitiesWrapper) {
-        logoContainer.style.position = '';
-        logoContainer.style.top = '';
-        logoContainer.style.zIndex = '';
-        logoContainer.style.paddingTop = '';
-
-        logoWrapper.style.zIndex = '';
-        utilitiesWrapper.style.zIndex = '';
+        logoContainer.classList.remove('header-box-open');
       }
 
       document.body.classList.remove('body-header-overlay');

@@ -118,6 +118,35 @@
   display: inline-flex;
 }
 
+.header-box-open {
+  position: fixed !important;
+  top: 0;
+  z-index: 3;
+  padding-top: var(--Header-Vertical-Padding-M-Tp,24px);
+}
+
+.header-box-open .nav-header-sticky {
+  position: unset;
+  width: 100%;
+  height: unset;
+  padding: 0;
+  left: unset;
+  transform: unset;
+}
+
+.header-box-open .header-sticky-gradient {
+  background: transparent;
+}
+
+.header-box-open  .nav-header-sticky .header-box-text-container {
+    top: 110%;
+}
+
+.header-box-open .header-logo-wrapper,
+.header-box-open .header-utilities-section-wrapper {
+  z-index: 3;
+}
+
 @media (width < 1200px) {
     .header-navigation-section-wrapper {
         width:unset;
