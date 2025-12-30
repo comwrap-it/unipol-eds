@@ -62,9 +62,13 @@ const createCategoryChips = (category, categoryChips) => {
   categoryChips.forEach((chip) => {
     const icon = chip.children[0]?.textContent?.trim();
     const text = chip.children[1]?.textContent?.trim();
+    let textInstrumentation;
+    if (text) {
+      textInstrumentation = extractInstrumentationAttributes(chip.children[1]);
+    }
 
     if (icon !== undefined && text !== undefined) {
-      chips.appendChild(createCategoryChip(category, icon, text));
+      chips.appendChild(createCategoryChip(category, icon, text, textInstrumentation));
     }
   });
 
