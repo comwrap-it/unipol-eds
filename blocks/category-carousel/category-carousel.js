@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars */
-
 /**
  * Category Carousel Component
  *
@@ -39,7 +37,7 @@ async function ensureStylesLoaded() {
 
 /**
  *
- * @param {} Swiper the swiper instance
+ * @param {Object} Swiper the swiper instance
  * @param {HTMLElement} carousel the carousel element
  * @param {HTMLElement} leftIconButton the left navigation button
  * @param {HTMLElement} rightIconButton the right navigation button
@@ -70,12 +68,23 @@ const initSwiper = (
   return swiperInstance;
 };
 
-let leftIconButton, scrollIndicator, rightIconButton, setExpandedDot = null;
-let Swiper;
-let swiperInstance;
+let leftIconButton = null;
+let scrollIndicator = null;
+let rightIconButton = null;
+let setExpandedDot = null;
+let Swiper = null;
+let swiperInstance = null;
 
 async function initCategoryCarousel(carousel, block) {
-  ({ leftIconButton, scrollIndicator, rightIconButton, setExpandedDot } = await createScrollIndicator());
+  // eslint-disable-next-line max-len
+  (
+    {
+      leftIconButton,
+      scrollIndicator,
+      rightIconButton,
+      setExpandedDot,
+    } = await createScrollIndicator()
+  );
   Swiper = await loadSwiper();
   block.appendChild(scrollIndicator);
   swiperInstance = initSwiper(Swiper, carousel, leftIconButton, rightIconButton);
@@ -216,14 +225,11 @@ export default async function decorate(block) {
   // Replace block with carousel
   block.appendChild(carousel);
 
-
   const tabletMQ = window.matchMedia(
-    '(min-width: 768px) and (max-width: 953px)'
+    '(min-width: 768px) and (max-width: 953px)',
   );
 
   await handleTabletChange(tabletMQ, carousel, block);
 
-  tabletMQ.addEventListener('change', (e) =>
-    handleTabletChange(e, carousel, block)
-  );
+  tabletMQ.addEventListener('change', (e) => handleTabletChange(e, carousel, block));
 }
