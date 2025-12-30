@@ -29,9 +29,8 @@ async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
   await Promise.all([
-    loadCSS(
-      `${window.hlx.codeBasePath}/blocks/accordion/accordion.css`,
-    ),
+    loadCSS(`${window.hlx.codeBasePath}/blocks/accordion/accordion.css`),
+    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`),
   ]);
   isStylesLoaded = true;
 }
