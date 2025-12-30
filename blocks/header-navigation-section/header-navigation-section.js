@@ -1,6 +1,6 @@
+import { createNavigationPill } from '@unipol-ds/components/atoms/navigation-pill/navigation-pill.js';
 import { BUTTON_ICON_SIZES, NAVIGATION_PILL_VARIANTS } from '../../constants/index.js';
 import { loadBlock } from '../../scripts/aem.js';
-import { createNavigationPill } from '@unipol-ds/components/atoms/navigation-pill/navigation-pill.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { extractInstrumentationAttributes, getTemplateMetaContent } from '../../scripts/utils.js';
 
@@ -84,7 +84,7 @@ function closeBoxWithAnimation(pill, box) {
     box.classList.remove('is-open');
     pill?.classList.remove('header-nav-pill-active');
     pill?.setAttribute('aria-expanded', 'false');
-
+    document.body.classList.remove('body-header-overlay');
     if (logoContainer && logoWrapper && utilitiesWrapper) {
       logoContainer.style.position = '';
       logoContainer.style.top = '';
@@ -104,7 +104,7 @@ function closeBoxWithAnimation(pill, box) {
 
 async function closeBox(pill, box) {
   if (!box) return;
-  await closeBoxWithAnimation(box);
+  await closeBoxWithAnimation(pill, box);
 
   pill?.classList.remove('header-nav-pill-active');
   pill?.setAttribute('aria-expanded', 'false');
@@ -112,9 +112,10 @@ async function closeBox(pill, box) {
 
 function addCloseIconToBox(box, pill) {
   if (!box || !pill) return;
-  if (window.innerWidth > 1199) return;
-
   if (box.querySelector('.un-close-btn')) return;
+
+  const textContent = box.querySelector('.header-box-text-content');
+  if (!textContent) return;
 
   const closeBtn = document.createElement('button');
   closeBtn.className = 'un-close-btn';
@@ -122,29 +123,14 @@ function addCloseIconToBox(box, pill) {
 
   const spanIcon = document.createElement('span');
   spanIcon.className = 'un-icon-close';
-
   closeBtn.appendChild(spanIcon);
 
-  closeBtn.addEventListener('click', async () => {
+  closeBtn.addEventListener('click', async (e) => {
+    e.stopPropagation();
     await closeBox(pill, box);
   });
 
-  box.appendChild(closeBtn);
-}
-
-function showSecondRightIcon() {
-  const icon = document.querySelector('.second-pill-right-icon');
-  if (icon) icon.style.display = 'block';
-}
-
-function hideSecondRightIcon() {
-  const icon = document.querySelector('.second-pill-right-icon');
-  if (icon) icon.style.display = 'none';
-}
-
-function showMobileSecondRightIcon() {
-  const icon = document.querySelector('.second-pill-right-icon');
-  if (icon) icon.style.display = 'block';
+  textContent.appendChild(closeBtn);
 }
 
 function updateContainerWidth(container) {
@@ -157,10 +143,32 @@ function updateContainerWidth(container) {
   let width = 0;
   wrappers.forEach((w) => {
     if (!w.classList.contains('nav-pill-hidden')) {
-      width += w.offsetWidth + 3.8;
+      width += w.offsetWidth + 4;
     }
   });
   container.style.width = `${width}px`;
+}
+
+function showSecondRightIcon() {
+  const icon = document.querySelector('.second-pill-right-icon');
+  if (!icon) return;
+
+  icon.style.display = 'block';
+
+  const container = document.querySelector('.navigation-pill-container');
+  if (container) {
+    updateContainerWidth(container);
+  }
+}
+
+function hideSecondRightIcon() {
+  const icon = document.querySelector('.second-pill-right-icon');
+  if (icon) icon.style.display = 'none';
+}
+
+function showMobileSecondRightIcon() {
+  const icon = document.querySelector('.second-pill-right-icon');
+  if (icon) icon.style.display = 'block';
 }
 
 let homepageCanHidePills = true;
@@ -179,7 +187,7 @@ function applyStickyHeaderRulesIfBoxOpen() {
   if (sectionWrapper.classList.contains('nav-header-sticky') && logoContainer && logoWrapper && utilitiesWrapper) {
     logoContainer.style.position = 'fixed';
     logoContainer.style.top = '0';
-    logoContainer.style.zIndex = '222';
+    logoContainer.style.zIndex = '3';
     logoContainer.style.paddingTop = '20px';
 
     logoWrapper.style.zIndex = '3';
@@ -225,6 +233,9 @@ function openBoxWithAnimation(pill, box, { defaultOpen = false } = {}) {
   box.classList.add('is-open');
   pill.classList.add('header-nav-pill-active');
   pill.setAttribute('aria-expanded', 'true');
+  if (!defaultOpen) {
+    document.body.classList.add('body-header-overlay');
+  }
   if (sectionWrapper?.classList.contains('nav-header-sticky') && logoContainer && logoWrapper && utilitiesWrapper) {
     logoContainer.style.position = 'fixed';
     logoContainer.style.top = '0';
@@ -341,7 +352,6 @@ function makeNavigationSticky(block) {
         updateHiddenPillsAccessibility(container);
         if (i === wrappersToHide.length - 1) {
           animating = false;
-          showSecondRightIcon();
         }
       }, i * 20);
     });
@@ -358,13 +368,12 @@ function makeNavigationSticky(block) {
         updateHiddenPillsAccessibility(container);
         if (i === wrappersToShow.length - 1) {
           animating = false;
-          hideSecondRightIcon();
         }
       }, i * 20);
     });
   };
 
-  const offsetTop = sectionWrapper.offsetTop + 32;
+  const offsetTop = sectionWrapper.offsetTop + 35;
 
   const onScroll = () => {
     if (window.innerWidth < 1200) return;
@@ -384,6 +393,7 @@ function makeNavigationSticky(block) {
     if (scrollY <= offsetTop) {
       showPills();
       sectionWrapper.classList.remove('nav-header-sticky');
+      hideSecondRightIcon();
       return;
     }
 
@@ -392,11 +402,13 @@ function makeNavigationSticky(block) {
         hidePills();
       }
       sectionWrapper.classList.add('nav-header-sticky');
+      showSecondRightIcon();
     } else {
       if (getTemplateMetaContent() !== 'homepage' || homepageCanHidePills) {
         showPills();
       }
       sectionWrapper.classList.add('nav-header-sticky');
+      showSecondRightIcon();
     }
   };
 
@@ -409,6 +421,63 @@ function makeNavigationSticky(block) {
     updateHiddenPillsAccessibility(container);
     hideSecondRightIcon();
   };
+}
+
+function handleHomepageFirstScroll() {
+  let closedOnScroll = false;
+  const startScrollY = window.scrollY;
+
+  const onScroll = () => {
+    if (closedOnScroll) return;
+
+    if (Math.abs(window.scrollY - startScrollY) > 8) {
+      closedOnScroll = true;
+
+      const openBoxes = document.querySelectorAll('.header-box-text-container.is-open');
+
+      openBoxes.forEach((box) => {
+        const pill = document.querySelector(`[aria-controls="${box.id}"]`);
+
+        document.body.classList.remove('body-header-overlay');
+
+        box.classList.remove('is-open');
+        const animator = box.querySelector('.header-box-text-content');
+        if (animator) {
+          animator.style.height = '';
+          animator.style.opacity = '';
+        }
+
+        if (pill) {
+          pill.classList.remove('header-nav-pill-active');
+          pill.setAttribute('aria-expanded', 'false');
+        }
+
+        if (openBoxRef.box === box) openBoxRef.box = null;
+        if (openBoxRef.pill === pill) openBoxRef.pill = null;
+      });
+
+      const logoContainer = document.querySelector('.section.header-logo-container.header-navigation-section-container');
+      const logoWrapper = document.querySelector('.header-logo-wrapper');
+      const utilitiesWrapper = document.querySelector('.header-utilities-section-wrapper');
+
+      if (logoContainer && logoWrapper && utilitiesWrapper) {
+        logoContainer.style.position = '';
+        logoContainer.style.top = '';
+        logoContainer.style.zIndex = '';
+        logoContainer.style.paddingTop = '';
+
+        logoWrapper.style.zIndex = '';
+        utilitiesWrapper.style.zIndex = '';
+      }
+
+      document.body.classList.remove('body-header-overlay');
+      blockScrollHide = false;
+
+      window.removeEventListener('scroll', onScroll);
+    }
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
 }
 
 /* ------------------------------------------------------------------
@@ -503,15 +572,30 @@ export default async function decorate(block) {
     if (cfg.boxText) {
       boxEl = document.createElement('div');
       boxEl.className = 'header-box-text-container';
+
+      const textContent = document.createElement('div');
+      textContent.className = 'header-box-text-content';
+
       const textWrapper = document.createElement('div');
-      textWrapper.className = 'header-box-text-content';
-      textWrapper.textContent = cfg.boxText;
-      boxEl.appendChild(textWrapper);
+      textWrapper.className = 'text-wrapper';
+
+      if (window.innerWidth < 1200) {
+        const span = document.createElement('span');
+        span.textContent = cfg.boxText;
+        textWrapper.appendChild(span);
+      } else {
+        textWrapper.textContent = cfg.boxText;
+      }
+
+      textContent.appendChild(textWrapper);
+      boxEl.appendChild(textContent);
+
       const boxId = `header-box-${Math.random().toString(36).substr(2, 9)}`;
       boxEl.id = boxId;
       pillEl.setAttribute('aria-controls', boxId);
       pillEl.setAttribute('aria-expanded', 'false');
       pillToBoxMap.set(pillEl, boxEl);
+
       addCloseIconToBox(boxEl, pillEl);
 
       pillEl.addEventListener('click', () => {
@@ -519,7 +603,6 @@ export default async function decorate(block) {
         if (!box) return;
 
         const isOpen = box.classList.contains('is-open');
-
         if (isOpen) {
           closeBoxWithAnimation(pillEl, box);
         } else {
@@ -570,20 +653,7 @@ export default async function decorate(block) {
     if (firstPill && firstBox) {
       openBoxWithAnimation(firstPill, firstBox, { defaultOpen: true });
 
-      let closedOnScroll = false;
-      const startScrollY = window.scrollY;
-
-      const onScroll = () => {
-        if (closedOnScroll) return;
-
-        if (Math.abs(window.scrollY - startScrollY) > 8) {
-          closeBoxWithAnimation(firstPill, firstBox);
-          closedOnScroll = true;
-          window.removeEventListener('scroll', onScroll);
-        }
-      };
-
-      window.addEventListener('scroll', onScroll, { passive: true });
+      handleHomepageFirstScroll(firstPill, firstBox);
     }
   }
 
@@ -611,17 +681,6 @@ export default async function decorate(block) {
     await closeBox(pill, box);
     openBoxRef.box = null;
     openBoxRef.pill = null;
-  });
-
-  window.addEventListener('resize', () => {
-    pillToBoxMap.forEach((box, pill) => {
-      if (window.innerWidth < 1200) {
-        addCloseIconToBox(box, pill);
-      } else {
-        const btn = box.querySelector('.un-close-btn');
-        if (btn) box.removeChild(btn);
-      }
-    });
   });
 
   navigationResponsiveController(block);

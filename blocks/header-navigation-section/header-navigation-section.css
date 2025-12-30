@@ -1,3 +1,12 @@
+.body-header-overlay::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 2;
+  pointer-events: auto;
+}
+
 .header-navigation-section-wrapper {
     width:100%;
 }
@@ -28,8 +37,8 @@
   transform-origin: top;
   will-change: max-height, opacity;
   transition:
-    max-height 0.45s ease,
-    opacity 0.35s ease;
+    max-height 0.3s ease,
+    opacity 0.3s ease;
 }
 
 .nav-header-sticky .header-box-text-container {
@@ -45,10 +54,10 @@
     background-color: var(--Quote-Tool-Full-Quote-Tool-Background, #F9F9F7);
     padding: var(--Quote-Tool-Full-Quote-Tool-Padding, 16px);
     border-radius: var(--Quote-Tool-Radius, 16px);
-      transition: height 0.3s ease, opacity 0.3s ease;
-      overflow: hidden;
-      height: 0;
-      opacity: 0;
+    transition: height 0.45s ease, opacity 0.45s ease;
+    overflow: hidden;
+    height: 0;
+    opacity: 0;
 }
 
 .header-box-text-container.is-open .header-box-text-content {
@@ -109,10 +118,6 @@
   display: inline-flex;
 }
 
-.header-box-text-container button.un-close-btn {
-    display: none;
-}
-
 @media (width < 1200px) {
     .header-navigation-section-wrapper {
         width:unset;
@@ -128,7 +133,20 @@
         backdrop-filter: blur(4px);
     }
 
+    .header-box-text-content {
+        background-color: transparent;
+        padding: unset;
+        border-radius: unset;
+    }
+
+    .header-box-text-content .text-wrapper{
+        background-color: var(--Quote-Tool-Full-Quote-Tool-Background, #F9F9F7);
+        padding: var(--Quote-Tool-Full-Quote-Tool-Padding, 16px);
+        border-radius: var(--Quote-Tool-Radius, 16px);
+    }
+
     .header-box-text-container {
+        display:flex;
         flex-direction: column;
         gap: var(--Header-Vertical-Gap-M, 8px);
         align-items: center;
@@ -138,6 +156,7 @@
     }
 
     .header-box-text-container button.un-close-btn {
+        margin: auto;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -165,7 +184,7 @@
     }
 
     .second-pill-right-icon {
-        display: block;
+        display: block !important;
         opacity: 1 !important;
     }
 
