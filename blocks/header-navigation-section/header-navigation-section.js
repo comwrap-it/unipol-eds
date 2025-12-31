@@ -387,7 +387,7 @@ function makeNavigationSticky(block) {
     });
   };
 
-  const offsetTop = sectionWrapper.offsetTop + 35;
+  const offsetTop = sectionWrapper.offsetTop + 24;
 
   const onScroll = () => {
     if (window.innerWidth < 1200) return;
@@ -551,7 +551,7 @@ async function enableMobileScrollUpSticky() {
       animatedElements.forEach((el) => el.addEventListener('transitionend', onTransitionEnd));
 
       animatedElements.forEach((el) => {
-        el.style.transform = 'translateY(-24px)';
+        el.style.transform = 'translateY(16px)';
         el.style.opacity = '0';
       });
     });
@@ -585,6 +585,25 @@ async function enableMobileScrollUpSticky() {
     const scrollingUp = currentY < lastScrollY;
     const scrollingDown = currentY > lastScrollY;
     lastScrollY = currentY;
+    if (currentY === 0 && stickyVisible) {
+      if (inactivityTimeout) {
+        clearTimeout(inactivityTimeout);
+        inactivityTimeout = null;
+      }
+      if (minVisibleTimeout) {
+        clearTimeout(minVisibleTimeout);
+        minVisibleTimeout = null;
+      }
+
+      headerSection.classList.remove('header-mobile-sticky');
+      animatedElements.forEach((el) => {
+        el.style.transform = '';
+        el.style.opacity = '';
+      });
+      stickyVisible = false;
+      animating = false;
+      return;
+    }
 
     if (scrollingUp) {
       if (!stickyVisible) {
@@ -618,6 +637,19 @@ async function enableMobileScrollUpSticky() {
       startInactivityTimer();
     }
   };
+  const onResize = () => {
+    if (window.innerWidth >= 1200) {
+      clearTimeout(inactivityTimeout);
+      inactivityTimeout = null;
+      clearTimeout(minVisibleTimeout);
+      minVisibleTimeout = null;
+      stickyVisible = false;
+      animating = false;
+      headerSection.classList.remove('header-mobile-sticky');
+      resetAnimation();
+    }
+  };
+  window.addEventListener('resize', onResize);
 
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('touchstart', resetOnTouch, { passive: true });
@@ -636,6 +668,32 @@ function navigationResponsiveController(block) {
     updateContainerWidth(container);
   };
 
+  const resetMobileState = () => {
+    const container = block.querySelector('.navigation-pill-container');
+    if (!container) return;
+
+    const headerSection = document.querySelector('.section.header-logo-container.header-navigation-section-container');
+    if (headerSection) headerSection.classList.remove('header-mobile-sticky');
+
+    const logoWrapper = document.querySelector('.header-logo-wrapper');
+    const utilitiesWrapper = document.querySelector('.header-utilities-section-wrapper');
+    [logoWrapper, utilitiesWrapper].forEach((el) => {
+      if (el) {
+        el.style.transform = '';
+        el.style.opacity = '';
+      }
+    });
+
+    clearTimeout(window.mobileStickyInactivity);
+    window.mobileStickyInactivity = null;
+
+    const wrappers = container.querySelectorAll('.navigation-pill-wrapper');
+    wrappers.forEach((w) => w.classList.remove('nav-pill-hidden'));
+    updateHiddenPillsAccessibility(container);
+
+    blockScrollHide = false;
+  };
+
   const check = () => {
     const container = block.querySelector('.navigation-pill-container');
     if (!container) return;
@@ -645,6 +703,7 @@ function navigationResponsiveController(block) {
       showMobileSecondRightIcon();
       updateMobilePillsDisplay();
     } else {
+      resetMobileState();
       if (!stickyCleanup) stickyCleanup = makeNavigationSticky(block);
       recalcWidth();
       container.querySelectorAll('.navigation-pill-wrapper').forEach((wrapper) => {

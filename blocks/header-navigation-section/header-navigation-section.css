@@ -7,6 +7,13 @@
   pointer-events: auto;
 }
 
+.section.header-logo-container,
+.section.header-navigation-section-container,
+.section.header-utilities-section-container {
+    padding-block: var(--Header-Vertical-Padding-M-Tp, 24px);
+    padding: var(--Header-Vertical-Padding-M-Tp, 24px) var(--Header-Horizontal-Padding-D-Ds, 24px);
+}
+
 .header-navigation-section-wrapper {
     width:100%;
 }
@@ -124,7 +131,6 @@
   position: fixed !important;
   top: 0;
   z-index: 3;
-  padding-top: var(--Header-Vertical-Padding-M-Tp,24px) !important;
 }
 
 .header-box-open .nav-header-sticky {
@@ -161,6 +167,13 @@ button.un-close-btn {
       background: unset;
       z-index: 2;
       pointer-events: auto;
+    }
+
+    .section.header-logo-container,
+    .section.header-navigation-section-container,
+    .section.header-utilities-section-container {
+        padding-block: var(--Header-Vertical-Padding, 16px);
+        padding: var(--Header-Vertical-Padding, 16px) var(--Header-Horizontal-Padding-M-Tp, 16px);
     }
 
     .header-navigation-section-wrapper {
@@ -211,6 +224,7 @@ button.un-close-btn {
         border-radius: var(--Header-Radius);
         background: var(--Header-Background);
         padding: var(--Space-100-4, 4px);
+        margin-top: var(--Header-Vertical-Gap-M, 8px);
     }
 
     .header-box-text-container button.un-close-btn span {
@@ -243,21 +257,20 @@ button.un-close-btn {
     .section.header-logo-container.header-navigation-section-container.header-mobile-sticky {
       position: fixed;
       z-index: 3;
+      padding-top: var(--Header-Vertical-Padding-Tp-M, 16px);
     }
 
     .header-logo-wrapper,
     .header-utilities-section-wrapper {
-      transform: translateY(-24px);
+      transform: translateY(16px);
       opacity: 1;
       transition: transform 550ms ease, opacity 450ms ease;
-      pointer-events: none;
     }
 
     .header-mobile-sticky .header-logo-wrapper,
     .header-mobile-sticky .header-utilities-section-wrapper {
       transform: translateY(0);
       opacity: 1;
-      pointer-events: auto;
     }
 }
 

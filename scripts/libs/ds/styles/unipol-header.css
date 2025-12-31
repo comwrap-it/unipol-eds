@@ -5,11 +5,10 @@
     justify-content: space-between;
     align-items: center;
     position: absolute;
-    padding-block: var(--Header-Vertical-Padding-M-Tp, 24px) !important;
+    padding-block: var(--Header-Vertical-Padding-M-Tp, 24px);
     padding: var(--Header-Vertical-Padding-M-Tp, 24px) var(--Header-Horizontal-Padding-D-Ds, 24px);
     width: 100%;
-    z-index: 2;
-    padding-bottom: 0 !important;
+    z-index: 3;
 }
 
 main .section.header-logo-container,
