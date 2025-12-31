@@ -14,11 +14,10 @@
 main .section.header-logo-container,
 main .section.header-navigation-section-container,
 main .section.header-utilities-section-container {
-    margin-top: 110px;
+    min-height: 200px;
     background: #00000080;
     position: relative;
 }
-
 
 .adobe-ue-edit .section.header-logo-container,
 .adobe-ue-edit .section.header-navigation-section-container,

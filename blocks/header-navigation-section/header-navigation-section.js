@@ -7,6 +7,10 @@ import { extractInstrumentationAttributes, getTemplateMetaContent } from '../../
 let isStylesLoaded = false;
 const openBoxRef = { box: null, pill: null };
 let blockScrollHide = false;
+const PRODUCT_SECTION_ICON_MAP = {
+  '.section.editorial-carousel-container': 'un-icon-plus',
+  '.section.card-grid-container': 'un-icon-question',
+};
 
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
@@ -656,6 +660,52 @@ async function enableMobileScrollUpSticky() {
   window.addEventListener('touchmove', resetOnTouch, { passive: true });
 }
 
+function enableProductDynamicPillIcon(container) {
+  const firstPill = container.querySelector('.navigation-pill');
+  if (!firstPill) return;
+
+  const rightIcon = firstPill.querySelector('.icon:last-child');
+  if (!rightIcon) return;
+
+  const defaultIconClass = Array.from(rightIcon.classList)
+    .find((c) => c.startsWith('un-icon-'));
+
+  const sectionsToObserve = [];
+
+  Object.entries(PRODUCT_SECTION_ICON_MAP).forEach(([selector, icon]) => {
+    const section = document.querySelector(selector);
+    if (section) {
+      sectionsToObserve.push({ el: section, icon });
+    }
+  });
+
+  if (!sectionsToObserve.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const match = sectionsToObserve.find((s) => s.el === entry.target);
+      if (!match) return;
+
+      if (entry.isIntersecting) {
+        rightIcon.classList.forEach((c) => {
+          if (c.startsWith('un-icon-')) rightIcon.classList.remove(c);
+        });
+        rightIcon.classList.add(match.icon);
+      } else {
+        rightIcon.classList.forEach((c) => {
+          if (c.startsWith('un-icon-')) rightIcon.classList.remove(c);
+        });
+        rightIcon.classList.add(defaultIconClass);
+      }
+    });
+  }, {
+    root: null,
+    threshold: 0.4,
+  });
+
+  sectionsToObserve.forEach((s) => observer.observe(s.el));
+}
+
 /* ------------------------------------------------------------------
    CONTROLLER RESPONSIVE
 ------------------------------------------------------------------ */
@@ -840,6 +890,7 @@ export default async function decorate(block) {
   const template = getTemplateMetaContent();
 
   if (template === 'pagina-prodotto') {
+    enableProductDynamicPillIcon(container);
     const firstPill = container.querySelector(
       '.navigation-pill-wrapper .navigation-pill',
     );
