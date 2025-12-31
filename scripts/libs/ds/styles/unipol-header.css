@@ -14,7 +14,7 @@
 main .section.header-logo-container,
 main .section.header-navigation-section-container,
 main .section.header-utilities-section-container {
-    min-height: 200px;
+    min-height: 150px;
     background: #00000080;
     position: relative;
 }
