@@ -239,6 +239,26 @@ button.un-close-btn {
         width: unset;
         height: unset;
     }
+
+    .section.header-logo-container.header-navigation-section-container.header-mobile-sticky {
+      position: fixed;
+      z-index: 3;
+    }
+
+    .header-logo-wrapper,
+    .header-utilities-section-wrapper {
+      transform: translateY(-24px);
+      opacity: 1;
+      transition: transform 550ms ease, opacity 450ms ease;
+      pointer-events: none;
+    }
+
+    .header-mobile-sticky .header-logo-wrapper,
+    .header-mobile-sticky .header-utilities-section-wrapper {
+      transform: translateY(0);
+      opacity: 1;
+      pointer-events: auto;
+    }
 }
 
 @media (width < 768px) {

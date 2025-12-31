@@ -67,7 +67,6 @@ function updateMobilePillsDisplay() {
 
   wrappers.forEach((wrapper, i) => {
     if (window.innerWidth < 1200) {
-      // Mobile
       if (anyOpen) {
         wrapper.style.display = 'none';
       } else if (i < 2) {
@@ -76,16 +75,13 @@ function updateMobilePillsDisplay() {
         wrapper.style.display = 'none';
       }
     } else {
-      // Desktop
       wrapper.style.display = '';
     }
   });
 
   if (window.innerWidth < 1200) {
-    // Mobile: se un box è aperto, trasparente; altrimenti colore header
     container.style.background = anyOpen ? 'transparent' : 'var(--Header-Background)';
   } else {
-    // Desktop: mantieni il comportamento precedente
     container.style.background = anyOpen ? 'var(--Header-Background)' : '';
   }
 }
@@ -493,6 +489,141 @@ function handleHomepageFirstScroll() {
   window.addEventListener('scroll', onScroll, { passive: true });
 }
 
+function waitForHeader() {
+  return new Promise((resolve) => {
+    const el = document.querySelector(
+      '.section.header-logo-container.header-navigation-section-container',
+    );
+    if (el) {
+      resolve(el);
+      return;
+    }
+
+    const observer = new MutationObserver(() => {
+      const node = document.querySelector(
+        '.section.header-logo-container.header-navigation-section-container',
+      );
+      if (node) {
+        observer.disconnect();
+        resolve(node);
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
+}
+
+async function enableMobileScrollUpSticky() {
+  const headerSection = await waitForHeader();
+  if (!headerSection) return;
+
+  const logoWrapper = document.querySelector('.header-logo-wrapper');
+  const utilitiesWrapper = document.querySelector('.header-utilities-section-wrapper');
+  const animatedElements = [logoWrapper, utilitiesWrapper].filter(Boolean);
+
+  let lastScrollY = window.scrollY;
+  let inactivityTimeout = null;
+  let minVisibleTimeout = null;
+  let animating = false;
+  let stickyVisible = false;
+
+  const resetAnimation = () => {
+    animatedElements.forEach((el) => {
+      el.style.transform = '';
+      el.style.opacity = '';
+    });
+  };
+
+  const animateHide = () => {
+    if (!animatedElements.length) return Promise.resolve();
+
+    return new Promise((resolve) => {
+      let completed = 0;
+      const onTransitionEnd = (e) => {
+        if (e.propertyName !== 'transform') return;
+        completed += 1;
+        if (completed === animatedElements.length) {
+          animatedElements.forEach((el) => el.removeEventListener('transitionend', onTransitionEnd));
+          resolve();
+        }
+      };
+
+      animatedElements.forEach((el) => el.addEventListener('transitionend', onTransitionEnd));
+
+      animatedElements.forEach((el) => {
+        el.style.transform = 'translateY(-24px)';
+        el.style.opacity = '0';
+      });
+    });
+  };
+
+  const removeStickyWithAnimation = () => {
+    if (animating || !stickyVisible) return;
+    animating = true;
+
+    animateHide().then(() => {
+      headerSection.classList.remove('header-mobile-sticky');
+      resetAnimation();
+      stickyVisible = false;
+      animating = false;
+    });
+  };
+
+  const startInactivityTimer = () => {
+    if (inactivityTimeout) clearTimeout(inactivityTimeout);
+    inactivityTimeout = setTimeout(() => {
+      if (stickyVisible && !minVisibleTimeout) {
+        removeStickyWithAnimation();
+      }
+    }, 2000);
+  };
+
+  const onScroll = () => {
+    if (window.innerWidth >= 1200) return;
+
+    const currentY = window.scrollY;
+    const scrollingUp = currentY < lastScrollY;
+    const scrollingDown = currentY > lastScrollY;
+    lastScrollY = currentY;
+
+    if (scrollingUp) {
+      if (!stickyVisible) {
+        headerSection.classList.add('header-mobile-sticky');
+        resetAnimation();
+        stickyVisible = true;
+
+        if (minVisibleTimeout) clearTimeout(minVisibleTimeout);
+        minVisibleTimeout = setTimeout(() => {
+          minVisibleTimeout = null;
+        }, 2000);
+      }
+
+      startInactivityTimer();
+      return;
+    }
+
+    if (scrollingDown) {
+      if (stickyVisible && minVisibleTimeout) {
+        clearTimeout(minVisibleTimeout);
+        minVisibleTimeout = null;
+        removeStickyWithAnimation();
+      } else if (stickyVisible && !minVisibleTimeout) {
+        startInactivityTimer();
+      }
+    }
+  };
+
+  const resetOnTouch = () => {
+    if (window.innerWidth < 1200 && stickyVisible) {
+      startInactivityTimer();
+    }
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('touchstart', resetOnTouch, { passive: true });
+  window.addEventListener('touchmove', resetOnTouch, { passive: true });
+}
+
 /* ------------------------------------------------------------------
    CONTROLLER RESPONSIVE
 ------------------------------------------------------------------ */
@@ -711,4 +842,5 @@ export default async function decorate(block) {
   });
 
   navigationResponsiveController(block);
+  enableMobileScrollUpSticky();
 }
