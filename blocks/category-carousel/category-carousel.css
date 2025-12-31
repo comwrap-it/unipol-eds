@@ -1,0 +1,80 @@
+.section.text-block-container.category-carousel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--Carousel-Widget-Vertical-Gap, 3rem);
+}
+
+.category-carousel-root-container {
+    display: flex;
+    padding: var(--Space-0, 0);
+    justify-content: center;
+    align-items: flex-start;
+    gap: var(--Carousel-Category-Gap-Horizontal, 1rem);
+
+    & .category-carousel.swiper-wrapper {
+        display: inline-flex;
+        width: auto;
+        padding: var(--Space-0, 0);
+        justify-content: center;
+        align-items: stretch;
+        gap: var(--Carousel-Category-Gap-Horizontal, 1rem);
+
+        & .category-card-wrapper {
+            display: flex;
+            height: 100%;
+        }
+
+        & .swiper-slide {
+            display: flex;
+            height: auto;
+            padding-bottom: 0.5rem;
+        }
+    }
+}
+
+@media (954px <= width < 1200px) {
+    .section.text-block-container.category-carousel-container {
+        align-items: center;
+        gap: var(--Carousel-Widget-Vertical-Gap, 2.5rem);
+    }
+}
+
+@media (768px <= width < 954px) {
+    .section.text-block-container.category-carousel-container {
+        align-items: flex-start;
+        gap: var(--Carousel-Widget-Vertical-Gap, 2.5rem);
+    }
+}
+
+/* Tablet */
+@media (768px <= width < 1200px) {
+    .category-carousel-root-container {
+        gap: var(--Carousel-Category-Gap-Horizontal, 0.5rem);
+
+        & .category-carousel.swiper-wrapper {
+            gap: var(--Carousel-Category-Gap-Horizontal, 0.5rem);
+
+            & .swiper-slide {
+                max-width: var(--Column-Size-Col-5, 18.875rem);
+            }
+        }
+    }
+}
+
+/* Mobile */
+@media (width < 768px) {
+    .section.text-block-container.category-carousel-container {
+        flex-direction: column;
+        gap: var(--Carousel-Widget-Vertical-Gap, 2.5rem);
+    }
+
+    .category-carousel-root-container {
+        flex-direction: column;
+
+        & .category-carousel.swiper-wrapper {
+            flex-direction: column;
+            gap: var(--Carousel-Category-Gap-Vertical, 1rem);
+        }
+    }
+}

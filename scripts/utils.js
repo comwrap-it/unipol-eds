@@ -134,6 +134,10 @@ export function getValuesFromBlock(block, keys) {
       // if richtext get the first child, the must ends with Richtext
       if (key.endsWith('Richtext')) {
         value = valueNode.children;
+        instrumentation['data-aue-type'] = 'richtext';
+      } else if (valueNode.querySelector('a') && valueNode.querySelector('a').length > 0) {
+        value = valueNode.querySelector('a')?.getAttribute('href') || valueNode.textContent.trim();
+        instrumentation['data-aue-type'] = 'reference';
       } else {
         value = valueNode?.textContent?.trim() || '';
       }

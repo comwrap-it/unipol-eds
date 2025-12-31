@@ -12,7 +12,8 @@
       "blog-carousel-widget",
       "faq-widget-section",
       "card-grid-widget",
-      "data-table-widget"
+      "data-table-widget",
+      "category-carousel-widget"
     ]
   },
   {
@@ -71,6 +72,10 @@
     ]
   },
   {
+    "id": "category-carousel-widget",
+    "components": []
+  },
+  {
     "id": "data-table-widget",
     "components": []
   },
@@ -113,6 +118,14 @@
     "components": [
       "card"
     ]
+  },
+  {
+    "id": "category-card",
+    "components": []
+  },
+  {
+    "id": "category-carousel",
+    "components": []
   },
   {
     "id": "columns",
