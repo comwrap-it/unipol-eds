@@ -8,7 +8,7 @@
 }
 
 /* Tablet - Mobile */
-@media (width <= 768px) {
+@media (width < 768px) {
     .footer-social-section-wrapper {
         margin-left: unset;
     }

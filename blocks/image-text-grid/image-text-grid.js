@@ -1,6 +1,6 @@
 import { createOptimizedPicture } from '../../scripts/aem.js';
+import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import { createButton } from '../atoms/buttons/standard-button/standard-button.js';
 
 export default function decorate(block, isFirstBlock = false) {
   if (!block) return;
@@ -119,7 +119,6 @@ export default function decorate(block, isFirstBlock = false) {
       descriptionEl.classList.add('description');
       textWrapper.appendChild(descriptionEl);
     }
-
 
     contentWrapper.appendChild(textWrapper);
 

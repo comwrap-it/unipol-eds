@@ -1,0 +1,83 @@
+{
+  "definitions": [
+    {
+      "title": "Product Highlights Widget",
+      "id": "product-highlights-widget",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/section/v1/section",
+            "template": {
+              "filter": "product-highlights-widget",
+              "name": "Product Highlights Widget",
+              "model": "product-highlights-widget",
+              "style": "product-highlights-widget",
+              "text-block": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Text Block",
+                "model": "text-block"
+              },
+              "product-highlights-carousel": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Product Highlights Carousel",
+                "filter": "product-highlights-carousel",
+                "model": "product-highlights-carousel",
+                "photo-card": {
+                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                  "name": "Photo Card",
+                  "filter": "photo-card",
+                  "model": "photo-card"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "product-highlights-widget",
+      "fields": [
+        {
+          "component": "text",
+          "name": "product-highlights-widget-name",
+          "label": "Nome sezione Product Highlights Widget"
+        },
+        {
+          "component": "reference",
+          "name": "logo",
+          "label": "Logo",
+          "multi": false,
+          "required": true
+        },
+        {
+          "component": "text",
+          "name": "logoAlt",
+          "label": "Logo alt",
+          "required": true
+        },
+        {
+          "component": "reference",
+          "name": "logoSecondary",
+          "label": "Logo secondario",
+          "multi": false
+        },
+        {
+          "component": "text",
+          "name": "logoSecondaryAlt",
+          "label": "Logo secondario alt"
+        },
+        {
+          "...": "../../blocks/atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "product-highlights-widget",
+      "components": []
+    }
+  ]
+}

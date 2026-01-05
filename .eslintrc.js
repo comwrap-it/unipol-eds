@@ -8,15 +8,20 @@ module.exports = {
   env: {
     browser: true,
   },
-  ignorePatterns: [
-    'static/**',
-    'storybook/**',
-  ],
+  ignorePatterns: ['static/**', 'storybook/**'],
   parser: '@babel/eslint-parser',
   parserOptions: {
     allowImportExportEverywhere: true,
     sourceType: 'module',
     requireConfigFile: false,
+  },
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [['@unipol-ds', './scripts/libs/ds']],
+        extensions: ['.js', '.json'],
+      },
+    },
   },
   rules: {
     'import/extensions': ['error', { js: 'always' }], // require js file extensions in imports
@@ -24,5 +29,6 @@ module.exports = {
     'no-param-reassign': [2, { props: false }], // allow modifying properties of param
     'xwalk/max-cells': ['warn', { '*': 60 }],
     'xwalk/no-orphan-collapsible-fields': 'error',
+    'import/prefer-default-export': 'off',
   },
 };

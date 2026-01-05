@@ -1,0 +1,107 @@
+.data-table-wrapper {
+    padding-top: var(--Data-Table-Widget-Gap, 56px);
+}
+
+div.data-table.block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div.data-table.block .data-table-container {
+    width: 100%;
+    text-align: left;
+    border-radius: var(--Data-Table-Radius, 24px);
+    overflow: visible;
+    border: 2px solid transparent;
+}
+
+table.data-table {
+    width: 100%;
+    border-spacing: 0;
+}
+
+table.data-table th,
+table.data-table td,
+table.data-table tr,
+table.data-table tbody {
+    margin: 0;
+    padding: 0;
+    border-spacing: 0;
+}
+
+table.data-table th {
+    font-size: var(--Font-Size-Heading);
+    font-family: var(--Family-Font-2, Manrope);
+    font-weight: 600;
+}
+
+table.data-table td {
+    font-size: var(--Size-16, 1rem);
+    font-family: var(--Family-Font-2, Manrope);
+    font-weight: 400;
+}
+
+table.data-table td .benefit-container {
+    font-weight: 600;
+    margin-top: var(--Table-Cell-Gap, 16px);
+}
+
+.data-table-mobile-merge {
+    font-size: var(--Size-16, 1rem);
+    font-weight: 400;
+}
+
+table.data-table tr:not(:first-child) td,
+table.data-table tr:not(:first-child) th {
+    padding: 10px;
+}
+
+.data-table-button-wrapper {
+    padding-top: var(--Table-Row-Button-Row-Vertical-Padding, 24px);
+}
+
+.data-table-tooltip-btn {
+    cursor: pointer;
+    border-bottom: 1.5px dashed var(--Accent-500, #0303F5);
+}
+
+.bg-mobility {
+    background: var(--Data-Table-Widget-Background-Mobility, #E5F1FF);
+}
+
+.bg-welfare {
+    background: var(--Data-Table-Widget-Background-Welfare, #EBF8E7);
+}
+
+.bg-property {
+    background: var(--Data-Table-Widget-Background-Property, #FDEDE7);
+}
+
+.bg-mobility .color-mobility {
+    color: var(--Table-Cell-Mobility-Text-Mobility, #0050B4);
+}
+
+.bg-welfare .color-welfare {
+    color: var(--Table-Cell-Welfare-Text-Welfare, #3C7E25);
+}
+
+.bg-property .color-property {
+    color: var(--Table-Cell-Property-Text-Property, #C9430E);
+}
+
+/* Tablet Portrait */
+@media (width < 768px) {
+    .data-table-wrapper {
+        padding-top: var(--Data-Table-Widget-Gap-M, 40px);
+    }
+
+    table.data-table td > span:first-child {
+      display: none;
+    }
+
+    table.data-table td > span.benefit-container:first-child {
+      display: block;
+    }
+
+}

@@ -58,7 +58,9 @@
         "prodotto-unico-header",
         "image-text-grid",
         "accordion",
-        "legal-info-widget"
+        "legal-info-widget",
+        "dialog",
+        "tooltip"
       ]
     }
   ]

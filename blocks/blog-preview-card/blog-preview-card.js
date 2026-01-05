@@ -3,7 +3,7 @@ import {
   createIconElementFromCssClass,
   extractMediaElementFromRow,
 } from '../../scripts/domHelpers.js';
-import { createTag } from '../atoms/tag/tag.js';
+import { createTag } from '@unipol-ds/components/atoms/tag/tag.js';
 
 /**
  *
@@ -35,9 +35,9 @@ export const extractBlogCardDataFromRows = (rows) => {
  * @param {string} title
  * @param {string} durationIcon the css class for duration icon
  * @param {string} durationText
- * @param {string} label - Tag label (optional)
- * @param {string} category - Category name (optional)
- * @param {string} type - Tag type (optional)
+ * @param {string} tagLabel - Tag label (optional)
+ * @param {string} tagCategory - Category name (optional)
+ * @param {string} tagType - Tag type (optional)
  * @param {boolean} isSlide - Whether the card is used in a slide context
  */
 export const createBlogCard = (
@@ -45,9 +45,9 @@ export const createBlogCard = (
   title,
   durationIcon,
   durationText,
-  label,
-  category,
-  type,
+  tagLabel,
+  tagCategory,
+  tagType,
   isSlide = false,
   animationClass = '',
 ) => {
@@ -57,7 +57,7 @@ export const createBlogCard = (
   const picture = createOptimizedPicture(imagePath, `Blog image: ${title}`);
   picture.classList.add('blog-card-image');
   card.appendChild(picture);
-  const tag = createTag(label, category, type);
+  const tag = createTag(tagLabel, tagCategory, tagType);
   tag.classList.add('blog-card-tag');
   picture.appendChild(tag);
 

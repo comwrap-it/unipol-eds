@@ -95,15 +95,19 @@
                     ]
                 },
                 {
-                    "component": "container",
-                    "name": "button-container",
-                    "label": "Configurazione Pulsante",
-                    "collapsible": true,
-                    "fields": [
-                        {
-                            "...": "../atoms/buttons/link-button/_link-button.json#/models/link-button/fields"
-                        }
-                    ]
+                    "component": "text",
+                    "name": "button-label",
+                    "label": "Testo Bottone"
+                },
+                {
+                    "component": "aem-content",
+                    "name": "reference",
+                    "value": "",
+                    "label": "AEM Content Picker",
+                    "valueType": "string",
+                    "validation": {
+                        "rootPath": "/content/unipol"
+                    }
                 },
                 {
                     "component": "text",

@@ -1,5 +1,5 @@
 .category-chip {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     font-size: var(--Size-14);
     font-weight: var(--Weight-Medium);
@@ -9,6 +9,9 @@
     gap: var(--Category-Chips-Gap);
 
     .icon {
+        display: inline-flex;
+        align-items: center;
+        flex-wrap: wrap;
         width: var(--Space-350-20);
         height: var(--Space-350-20);
         flex-shrink: 0;

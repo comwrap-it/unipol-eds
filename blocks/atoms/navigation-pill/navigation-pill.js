@@ -1,109 +1,6 @@
-/**
- * Navigation Pill - Utility Component
- */
-
-export const NAVIGATION_PILL_VARIANTS = {
-  PRIMARY: 'primary',
-  SECONDARY: 'secondary',
-};
-
-export const NAVIGATION_PILL_ICON_SIZES = {
-  SMALL: 'small',
-  MEDIUM: 'medium',
-  LARGE: 'large',
-  EXTRA_LARGE: 'extra-large',
-};
-
-/**
- * Retrieves instrumentation attributes
- *
- * @param {HTMLElement} element
- * @returns {Object}
- */
-export function extractInstrumentationAttributes(element) {
-  const instrumentation = {};
-  if (!element) return instrumentation;
-
-  [...element.attributes].forEach((attr) => {
-    if (attr.name.startsWith('data-aue-') || attr.name.startsWith('data-richtext-')) {
-      instrumentation[attr.name] = attr.value;
-    }
-  });
-
-  return instrumentation;
-}
-
-/**
- * Creates a Navigation Pill
- *
- * @param {string} label - Text.
- * @param {string} [href] - link.
- * @param {string} variant - "primary" or "secondary".
- * @param {string} [leftIcon] - Left Icon className.
- * @param {string} [leftIconSize] - Left Icon size.
- * @param {string} [rightIcon] - Right Icon className.
- * @param {string} [rightIconSize] - Right Icon size.
- * @param {Object} [instrumentation={}] - AEM attributes.
- * @param {boolean} hideLabel - If true, hide label and use aria-label.
- * @returns {HTMLElement}
- */
-export function createNavigationPill(
-  label,
-  href,
-  variant,
-  leftIcon,
-  leftIconSize,
-  rightIcon,
-  rightIconSize,
-  instrumentation = {},
-  hideLabel = false,
-) {
-  const isLink = Boolean(href);
-  const el = isLink ? document.createElement('a') : document.createElement('button');
-
-  if (leftIcon) {
-    const span = document.createElement('span');
-    span.className = `icon icon-${leftIconSize || NAVIGATION_PILL_ICON_SIZES.MEDIUM} ${leftIcon}`;
-    el.appendChild(span);
-  }
-
-  if (!hideLabel) {
-    const txt = document.createElement('span');
-    txt.textContent = label;
-    el.appendChild(txt);
-  } else {
-    el.setAttribute('aria-label', label);
-  }
-
-  if (rightIcon) {
-    const span = document.createElement('span');
-    span.className = `icon icon-${rightIconSize || NAVIGATION_PILL_ICON_SIZES.MEDIUM} ${rightIcon}`;
-    el.appendChild(span);
-  }
-
-  const finalVariant = variant || NAVIGATION_PILL_VARIANTS.PRIMARY;
-  el.className = `navigation-pill navigation-pill-${finalVariant}`;
-
-  if (isLink) {
-    el.href = href;
-    el.setAttribute('role', 'button');
-  }
-
-  el.tabIndex = 0;
-
-  el.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      el.click();
-    }
-  });
-
-  Object.entries(instrumentation).forEach(([attr, value]) => {
-    el.setAttribute(attr, value);
-  });
-
-  return el;
-}
+import { BUTTON_ICON_SIZES, NAVIGATION_PILL_VARIANTS } from '../../../constants/index.js';
+import { createNavigationPill } from '@unipol-ds/components/atoms/navigation-pill/navigation-pill.js';
+import { extractInstrumentationAttributes } from '../../../scripts/utils.js';
 
 /**
  * Retrieves Universal Editor values.
@@ -128,10 +25,10 @@ function extractValuesFromRows(rows) {
     || '';
 
   const leftIcon = rows[4]?.textContent?.trim() || '';
-  const leftIconSize = rows[5]?.textContent?.trim() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
+  const leftIconSize = rows[5]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM;
 
   const rightIcon = rows[6]?.textContent?.trim() || '';
-  const rightIconSize = rows[7]?.textContent?.trim() || NAVIGATION_PILL_ICON_SIZES.MEDIUM;
+  const rightIconSize = rows[7]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM;
 
   const instrumentation = extractInstrumentationAttributes(rows[1]);
 

@@ -1,14 +1,17 @@
+import { createNavigationPill } from '@unipol-ds/components/atoms/navigation-pill/navigation-pill.js';
+import { BUTTON_ICON_SIZES, NAVIGATION_PILL_VARIANTS } from '../../constants/index.js';
 import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import { getTemplateMetaContent } from '../../scripts/utils.js';
-import {
-  NAVIGATION_PILL_VARIANTS,
-  NAVIGATION_PILL_ICON_SIZES,
-  createNavigationPill,
-  extractInstrumentationAttributes,
-} from '../atoms/navigation-pill/navigation-pill.js';
+import { extractInstrumentationAttributes, getTemplateMetaContent } from '../../scripts/utils.js';
 
 let isStylesLoaded = false;
+const openBoxRef = { box: null, pill: null };
+let blockScrollHide = false;
+const PRODUCT_SECTION_ICON_MAP = {
+  '.section.editorial-carousel-container': 'un-icon-plus',
+  '.section.card-grid-container': 'un-icon-question',
+};
+
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
@@ -57,48 +60,91 @@ function updateHiddenPillsAccessibility(container) {
   });
 }
 
-function closeBoxWithAnimation(box) {
-  return new Promise((resolve) => {
-    if (!box) {
-      resolve();
-      return;
-    }
-    box.classList.remove('header-box-open');
-    let finished = false;
-    const onEnd = (e) => {
-      if (!(e && e.propertyName && !['max-height', 'opacity', 'transform'].includes(e.propertyName)) && !finished) {
-        finished = true;
-        box.removeEventListener('transitionend', onEnd);
-        box.style.display = 'none';
-        resolve();
+function updateMobilePillsDisplay() {
+  const container = document.querySelector('.navigation-pill-container');
+  if (!container) return;
+
+  const wrappers = document.querySelectorAll('.navigation-pill-wrapper');
+  if (!wrappers.length) return;
+
+  const anyOpen = document.querySelector('.header-box-text-container.is-open');
+
+  wrappers.forEach((wrapper, i) => {
+    if (window.innerWidth < 1200) {
+      if (anyOpen) {
+        wrapper.style.display = 'none';
+      } else if (i < 2) {
+        wrapper.style.display = 'flex';
+      } else {
+        wrapper.style.display = 'none';
       }
-    };
-    box.addEventListener('transitionend', onEnd, { once: true });
-    setTimeout(() => { if (!finished) { finished = true; box.style.display = 'none'; resolve(); } }, 50);
+    } else {
+      wrapper.style.display = '';
+    }
   });
+
+  if (window.innerWidth < 1200) {
+    container.style.background = anyOpen ? 'transparent' : 'var(--Header-Background)';
+  } else {
+    container.style.background = anyOpen ? 'var(--Header-Background)' : '';
+  }
+}
+
+function closeBoxWithAnimation(pill, box) {
+  if (!box) return;
+
+  const animator = box.querySelector('.header-box-text-content');
+  if (!animator) return;
+
+  const logoContainer = document.querySelector('.section.header-logo-container.header-navigation-section-container');
+  const logoWrapper = document.querySelector('.header-logo-wrapper');
+  const utilitiesWrapper = document.querySelector('.header-utilities-section-wrapper');
+
+  const height = animator.scrollHeight;
+  animator.style.height = `${height}px`;
+  animator.style.opacity = '1';
+
+  requestAnimationFrame(() => {
+    animator.style.height = '0px';
+    animator.style.opacity = '0';
+  });
+
+  const onEnd = (e) => {
+    if (e.propertyName !== 'height') return;
+
+    animator.style.height = '';
+    animator.style.opacity = '';
+
+    box.classList.remove('is-open');
+    pill?.classList.remove('header-nav-pill-active');
+    pill?.setAttribute('aria-expanded', 'false');
+    updateMobilePillsDisplay();
+    document.body.classList.remove('body-header-overlay');
+    if (logoContainer && logoWrapper && utilitiesWrapper) {
+      logoContainer.classList.remove('header-box-open');
+    }
+    blockScrollHide = false;
+
+    animator.removeEventListener('transitionend', onEnd);
+  };
+
+  animator.addEventListener('transitionend', onEnd);
 }
 
 async function closeBox(pill, box) {
   if (!box) return;
-  await closeBoxWithAnimation(box);
+  await closeBoxWithAnimation(pill, box);
 
   pill?.classList.remove('header-nav-pill-active');
   pill?.setAttribute('aria-expanded', 'false');
 }
 
-async function closeOpenBoxOnScroll(openBoxRef) {
-  if (!openBoxRef?.box || !openBoxRef?.pill) return;
-
-  await closeBox(openBoxRef.pill, openBoxRef.box);
-  openBoxRef.box = null;
-  openBoxRef.pill = null;
-}
-
 function addCloseIconToBox(box, pill) {
   if (!box || !pill) return;
-  if (window.innerWidth > 1200) return;
-
   if (box.querySelector('.un-close-btn')) return;
+
+  const textContent = box.querySelector('.header-box-text-content');
+  if (!textContent) return;
 
   const closeBtn = document.createElement('button');
   closeBtn.className = 'un-close-btn';
@@ -106,42 +152,14 @@ function addCloseIconToBox(box, pill) {
 
   const spanIcon = document.createElement('span');
   spanIcon.className = 'un-icon-close';
-
   closeBtn.appendChild(spanIcon);
 
-  closeBtn.addEventListener('click', async () => {
+  closeBtn.addEventListener('click', async (e) => {
+    e.stopPropagation();
     await closeBox(pill, box);
   });
 
-  box.appendChild(closeBtn);
-}
-
-async function closeAllBoxesExcept(map, currentPill, currentBox) {
-  if (!map || typeof map.entries !== 'function') return;
-
-  const tasks = [];
-  map.forEach((box, pill) => {
-    if (box !== currentBox) {
-      tasks.push(closeBox(pill, box));
-    }
-  });
-
-  await Promise.all(tasks);
-}
-
-function showSecondRightIcon() {
-  const icon = document.querySelector('.second-pill-right-icon');
-  if (icon) icon.style.opacity = '1';
-}
-
-function hideSecondRightIcon() {
-  const icon = document.querySelector('.second-pill-right-icon');
-  if (icon) icon.style.opacity = '0';
-}
-
-function showMobileSecondRightIcon() {
-  const icon = document.querySelector('.second-pill-right-icon');
-  if (icon) icon.style.opacity = '1';
+  textContent.appendChild(closeBtn);
 }
 
 function updateContainerWidth(container) {
@@ -154,32 +172,195 @@ function updateContainerWidth(container) {
   let width = 0;
   wrappers.forEach((w) => {
     if (!w.classList.contains('nav-pill-hidden')) {
-      width += w.offsetWidth + 3.5;
+      width += w.offsetWidth + 4;
     }
   });
   container.style.width = `${width}px`;
+}
+
+function showSecondRightIcon() {
+  const icon = document.querySelector('.second-pill-right-icon');
+  if (!icon) return;
+
+  icon.style.display = 'block';
+
+  const container = document.querySelector('.navigation-pill-container');
+  if (container) {
+    updateContainerWidth(container);
+  }
+}
+
+function hideSecondRightIcon() {
+  const icon = document.querySelector('.second-pill-right-icon');
+  if (icon) icon.style.display = 'none';
+}
+
+function showMobileSecondRightIcon() {
+  const icon = document.querySelector('.second-pill-right-icon');
+  if (icon) icon.style.display = 'block';
+}
+
+let homepageCanHidePills = true;
+
+function applyStickyHeaderRulesIfBoxOpen() {
+  const sectionWrapper = document.querySelector('.header-navigation-section-wrapper');
+  const logoContainer = document.querySelector('.section.header-logo-container.header-navigation-section-container');
+  const logoWrapper = document.querySelector('.header-logo-wrapper');
+  const utilitiesWrapper = document.querySelector('.header-utilities-section-wrapper');
+  const container = document.querySelector('.navigation-pill-container');
+
+  const openBox = document.querySelector('.header-box-text-container.is-open');
+
+  if (!sectionWrapper || !openBox) return;
+
+  if (sectionWrapper.classList.contains('nav-header-sticky') && logoContainer && logoWrapper && utilitiesWrapper) {
+    logoContainer.classList.add('header-box-open');
+
+    if (container) {
+      const hiddenWrappers = container.querySelectorAll('.nav-pill-hidden');
+      hiddenWrappers.forEach((wrapper) => wrapper.classList.remove('nav-pill-hidden'));
+      updateHiddenPillsAccessibility(container);
+      updateContainerWidth(container);
+    }
+  }
+}
+
+function openBoxWithAnimation(pill, box, { defaultOpen = false } = {}) {
+  if (!box) return;
+
+  const animator = box.querySelector('.header-box-text-content');
+  if (!animator) return;
+
+  const sectionWrapper = document.querySelector('.header-navigation-section-wrapper');
+  const logoContainer = document.querySelector('.section.header-logo-container.header-navigation-section-container');
+  const logoWrapper = document.querySelector('.header-logo-wrapper');
+  const utilitiesWrapper = document.querySelector('.header-utilities-section-wrapper');
+  const container = box.parentElement;
+
+  document.querySelectorAll('.header-box-text-container.is-open').forEach((otherBox) => {
+    if (otherBox !== box) {
+      const otherAnimator = otherBox.querySelector('.header-box-text-content');
+      if (!otherAnimator) return;
+
+      otherAnimator.style.height = '';
+      otherAnimator.style.opacity = '';
+      otherBox.classList.remove('is-open');
+      updateMobilePillsDisplay();
+      const otherPill = document.querySelector(`[aria-controls="${otherBox.id}"]`);
+      if (otherPill) {
+        otherPill.classList.remove('header-nav-pill-active');
+        otherPill.setAttribute('aria-expanded', 'false');
+      }
+    }
+  });
+
+  box.classList.add('is-open');
+  pill.classList.add('header-nav-pill-active');
+  pill.setAttribute('aria-expanded', 'true');
+  updateMobilePillsDisplay();
+  if (!defaultOpen) {
+    document.body.classList.add('body-header-overlay');
+  }
+  if (sectionWrapper?.classList.contains('nav-header-sticky') && logoContainer && logoWrapper && utilitiesWrapper) {
+    logoContainer.classList.add('header-box-open');
+    if (container) {
+      const hiddenWrappers = container.querySelectorAll('.nav-pill-hidden');
+      hiddenWrappers.forEach((wrapper) => wrapper.classList.remove('nav-pill-hidden'));
+      updateHiddenPillsAccessibility(container);
+      updateContainerWidth(container);
+    }
+    blockScrollHide = true;
+  }
+
+  if (!defaultOpen) {
+    animator.style.height = '0px';
+    animator.style.opacity = '0';
+
+    requestAnimationFrame(() => {
+      const height = animator.scrollHeight;
+      animator.style.height = `${height}px`;
+      animator.style.opacity = '1';
+    });
+
+    const onEnd = (e) => {
+      if (e.propertyName !== 'height') return;
+      animator.style.height = '';
+      animator.removeEventListener('transitionend', onEnd);
+    };
+    animator.addEventListener('transitionend', onEnd);
+  } else {
+    animator.style.height = '';
+    animator.style.opacity = '1';
+  }
+}
+
+function observeHeaderPassingFirstSection(container) {
+  const header = document.querySelector('header');
+  const firstSectionAfterMain = document.querySelector('main .section');
+
+  if (!header || !firstSectionAfterMain || !container) return;
+
+  const sectionWrapper = container.closest('.header-navigation-section-wrapper');
+  if (!sectionWrapper) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      if (entry.isIntersecting) {
+        sectionWrapper.classList.remove('header-sticky-gradient');
+      } else {
+        sectionWrapper.classList.add('header-sticky-gradient');
+      }
+    },
+    {
+      root: null,
+      threshold: 0,
+      rootMargin: `-${header.offsetHeight}px 0px 0px 0px`,
+    },
+  );
+
+  observer.observe(firstSectionAfterMain);
+}
+
+function observeHomepageFirstSectionForPills(container) {
+  const header = document.querySelector('header');
+  const firstSectionAfterMain = document.querySelector('main .section');
+
+  if (!header || !firstSectionAfterMain || !container) return;
+
+  const observer = new IntersectionObserver(
+    ([entry]) => {
+      homepageCanHidePills = !entry.isIntersecting;
+    },
+    {
+      root: null,
+      threshold: 0,
+      rootMargin: `-${header.offsetHeight}px 0px 0px 0px`,
+    },
+  );
+
+  observer.observe(firstSectionAfterMain);
 }
 
 /* ------------------------------------------------------------------
    MAKE NAVIGATION STICKY
 ------------------------------------------------------------------ */
 function makeNavigationSticky(block) {
-  if (window.innerWidth <= 1200) return () => {};
+  if (window.innerWidth < 1200) return () => {};
 
   const container = block.querySelector('.navigation-pill-container');
   if (!container) return () => {};
-  const header = document.querySelector('header');
-  if (!header) return () => {};
 
-  const headerBottom = header.offsetTop + header.offsetHeight;
-  let isSticky = false;
-  let animating = false;
+  const sectionWrapper = block.closest('.header-navigation-section-wrapper');
+  if (!sectionWrapper) return () => {};
 
   const pillWrappers = Array.from(container.children)
     .filter((el) => el.classList.contains('navigation-pill-wrapper'));
 
+  let lastScrollY = window.scrollY || window.pageYOffset;
+  let animating = false;
+
   const hidePills = () => {
-    if (animating) return;
+    if (animating || blockScrollHide) return;
     animating = true;
     const wrappersToHide = pillWrappers.slice(2).reverse();
     wrappersToHide.forEach((wrapper, i) => {
@@ -187,7 +368,9 @@ function makeNavigationSticky(block) {
         wrapper.classList.add('nav-pill-hidden');
         updateContainerWidth(container);
         updateHiddenPillsAccessibility(container);
-        if (i === wrappersToHide.length - 1) { animating = false; showSecondRightIcon(); }
+        if (i === wrappersToHide.length - 1) {
+          animating = false;
+        }
       }, i * 20);
     });
   };
@@ -201,22 +384,49 @@ function makeNavigationSticky(block) {
         wrapper.classList.remove('nav-pill-hidden');
         updateContainerWidth(container);
         updateHiddenPillsAccessibility(container);
-        if (i === wrappersToShow.length - 1) { animating = false; hideSecondRightIcon(); }
+        if (i === wrappersToShow.length - 1) {
+          animating = false;
+        }
       }, i * 20);
     });
   };
 
+  const offsetTop = sectionWrapper.offsetTop + 24;
+
   const onScroll = () => {
-    if (window.innerWidth <= 1200) return;
+    if (window.innerWidth < 1200) return;
+
     const scrollY = window.scrollY || window.pageYOffset;
-    if (scrollY > headerBottom && !isSticky) {
-      isSticky = true;
-      container.classList.add('nav-header-sticky');
-      hidePills();
-    } else if (scrollY <= headerBottom && isSticky) {
-      isSticky = false;
-      container.classList.remove('nav-header-sticky');
+    const scrollingDown = scrollY > lastScrollY;
+    lastScrollY = scrollY;
+
+    const openBox = document.querySelector('.header-box-text-container.is-open');
+
+    if (openBox) {
+      sectionWrapper.classList.add('nav-header-sticky');
+      applyStickyHeaderRulesIfBoxOpen();
+      return;
+    }
+
+    if (scrollY <= offsetTop) {
       showPills();
+      sectionWrapper.classList.remove('nav-header-sticky');
+      hideSecondRightIcon();
+      return;
+    }
+
+    if (scrollingDown) {
+      if (getTemplateMetaContent() !== 'homepage' || homepageCanHidePills) {
+        hidePills();
+      }
+      sectionWrapper.classList.add('nav-header-sticky');
+      showSecondRightIcon();
+    } else {
+      if (getTemplateMetaContent() !== 'homepage' || homepageCanHidePills) {
+        showPills();
+      }
+      sectionWrapper.classList.add('nav-header-sticky');
+      showSecondRightIcon();
     }
   };
 
@@ -224,11 +434,276 @@ function makeNavigationSticky(block) {
 
   return () => {
     window.removeEventListener('scroll', onScroll);
-    container.classList.remove('nav-header-sticky');
+    sectionWrapper.classList.remove('nav-header-sticky');
     pillWrappers.forEach((w) => w.classList.remove('nav-pill-hidden'));
     updateHiddenPillsAccessibility(container);
     hideSecondRightIcon();
   };
+}
+
+function handleHomepageFirstScroll() {
+  let closedOnScroll = false;
+  const startScrollY = window.scrollY;
+
+  const onScroll = () => {
+    if (closedOnScroll) return;
+
+    if (Math.abs(window.scrollY - startScrollY) > 8) {
+      closedOnScroll = true;
+
+      const openBoxes = document.querySelectorAll('.header-box-text-container.is-open');
+
+      openBoxes.forEach((box) => {
+        const pill = document.querySelector(`[aria-controls="${box.id}"]`);
+
+        document.body.classList.remove('body-header-overlay');
+
+        box.classList.remove('is-open');
+        updateMobilePillsDisplay();
+        const animator = box.querySelector('.header-box-text-content');
+        if (animator) {
+          animator.style.height = '';
+          animator.style.opacity = '';
+        }
+
+        if (pill) {
+          pill.classList.remove('header-nav-pill-active');
+          pill.setAttribute('aria-expanded', 'false');
+        }
+
+        if (openBoxRef.box === box) openBoxRef.box = null;
+        if (openBoxRef.pill === pill) openBoxRef.pill = null;
+      });
+
+      const logoContainer = document.querySelector('.section.header-logo-container.header-navigation-section-container');
+      const logoWrapper = document.querySelector('.header-logo-wrapper');
+      const utilitiesWrapper = document.querySelector('.header-utilities-section-wrapper');
+
+      if (logoContainer && logoWrapper && utilitiesWrapper) {
+        logoContainer.classList.remove('header-box-open');
+      }
+
+      document.body.classList.remove('body-header-overlay');
+      blockScrollHide = false;
+
+      window.removeEventListener('scroll', onScroll);
+    }
+  };
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+}
+
+function waitForHeader() {
+  return new Promise((resolve) => {
+    const el = document.querySelector(
+      '.section.header-logo-container.header-navigation-section-container',
+    );
+    if (el) {
+      resolve(el);
+      return;
+    }
+
+    const observer = new MutationObserver(() => {
+      const node = document.querySelector(
+        '.section.header-logo-container.header-navigation-section-container',
+      );
+      if (node) {
+        observer.disconnect();
+        resolve(node);
+      }
+    });
+
+    observer.observe(document.body, { childList: true, subtree: true });
+  });
+}
+
+async function enableMobileScrollUpSticky() {
+  const headerSection = await waitForHeader();
+  if (!headerSection) return;
+
+  const logoWrapper = document.querySelector('.header-logo-wrapper');
+  const utilitiesWrapper = document.querySelector('.header-utilities-section-wrapper');
+  const animatedElements = [logoWrapper, utilitiesWrapper].filter(Boolean);
+
+  let lastScrollY = window.scrollY;
+  let inactivityTimeout = null;
+  let minVisibleTimeout = null;
+  let animating = false;
+  let stickyVisible = false;
+
+  const resetAnimation = () => {
+    animatedElements.forEach((el) => {
+      el.style.transform = '';
+      el.style.opacity = '';
+    });
+  };
+
+  const animateHide = () => {
+    if (!animatedElements.length) return Promise.resolve();
+
+    return new Promise((resolve) => {
+      let completed = 0;
+      const onTransitionEnd = (e) => {
+        if (e.propertyName !== 'transform') return;
+        completed += 1;
+        if (completed === animatedElements.length) {
+          animatedElements.forEach((el) => el.removeEventListener('transitionend', onTransitionEnd));
+          resolve();
+        }
+      };
+
+      animatedElements.forEach((el) => el.addEventListener('transitionend', onTransitionEnd));
+
+      animatedElements.forEach((el) => {
+        el.style.transform = 'translateY(16px)';
+        el.style.opacity = '0';
+      });
+    });
+  };
+
+  const removeStickyWithAnimation = () => {
+    if (animating || !stickyVisible) return;
+    animating = true;
+
+    animateHide().then(() => {
+      headerSection.classList.remove('header-mobile-sticky');
+      resetAnimation();
+      stickyVisible = false;
+      animating = false;
+    });
+  };
+
+  const startInactivityTimer = () => {
+    if (inactivityTimeout) clearTimeout(inactivityTimeout);
+    inactivityTimeout = setTimeout(() => {
+      if (stickyVisible && !minVisibleTimeout) {
+        removeStickyWithAnimation();
+      }
+    }, 2000);
+  };
+
+  const onScroll = () => {
+    if (window.innerWidth >= 1200) return;
+
+    const currentY = window.scrollY;
+    const scrollingUp = currentY < lastScrollY;
+    const scrollingDown = currentY > lastScrollY;
+    lastScrollY = currentY;
+    if (currentY === 0 && stickyVisible) {
+      if (inactivityTimeout) {
+        clearTimeout(inactivityTimeout);
+        inactivityTimeout = null;
+      }
+      if (minVisibleTimeout) {
+        clearTimeout(minVisibleTimeout);
+        minVisibleTimeout = null;
+      }
+
+      headerSection.classList.remove('header-mobile-sticky');
+      animatedElements.forEach((el) => {
+        el.style.transform = '';
+        el.style.opacity = '';
+      });
+      stickyVisible = false;
+      animating = false;
+      return;
+    }
+
+    if (scrollingUp) {
+      if (!stickyVisible) {
+        headerSection.classList.add('header-mobile-sticky');
+        resetAnimation();
+        stickyVisible = true;
+
+        if (minVisibleTimeout) clearTimeout(minVisibleTimeout);
+        minVisibleTimeout = setTimeout(() => {
+          minVisibleTimeout = null;
+        }, 2000);
+      }
+
+      startInactivityTimer();
+      return;
+    }
+
+    if (scrollingDown) {
+      if (stickyVisible && minVisibleTimeout) {
+        clearTimeout(minVisibleTimeout);
+        minVisibleTimeout = null;
+        removeStickyWithAnimation();
+      } else if (stickyVisible && !minVisibleTimeout) {
+        startInactivityTimer();
+      }
+    }
+  };
+
+  const resetOnTouch = () => {
+    if (window.innerWidth < 1200 && stickyVisible) {
+      startInactivityTimer();
+    }
+  };
+  const onResize = () => {
+    if (window.innerWidth >= 1200) {
+      clearTimeout(inactivityTimeout);
+      inactivityTimeout = null;
+      clearTimeout(minVisibleTimeout);
+      minVisibleTimeout = null;
+      stickyVisible = false;
+      animating = false;
+      headerSection.classList.remove('header-mobile-sticky');
+      resetAnimation();
+    }
+  };
+  window.addEventListener('resize', onResize);
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('touchstart', resetOnTouch, { passive: true });
+  window.addEventListener('touchmove', resetOnTouch, { passive: true });
+}
+
+function enableProductDynamicPillIcon(container) {
+  const firstPill = container.querySelector('.navigation-pill');
+  if (!firstPill) return;
+
+  const rightIcon = firstPill.querySelector('.icon:last-child');
+  if (!rightIcon) return;
+
+  const defaultIconClass = Array.from(rightIcon.classList)
+    .find((c) => c.startsWith('un-icon-'));
+
+  const sectionsToObserve = [];
+
+  Object.entries(PRODUCT_SECTION_ICON_MAP).forEach(([selector, icon]) => {
+    const section = document.querySelector(selector);
+    if (section) {
+      sectionsToObserve.push({ el: section, icon });
+    }
+  });
+
+  if (!sectionsToObserve.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const match = sectionsToObserve.find((s) => s.el === entry.target);
+      if (!match) return;
+
+      if (entry.isIntersecting) {
+        rightIcon.classList.forEach((c) => {
+          if (c.startsWith('un-icon-')) rightIcon.classList.remove(c);
+        });
+        rightIcon.classList.add(match.icon);
+      } else {
+        rightIcon.classList.forEach((c) => {
+          if (c.startsWith('un-icon-')) rightIcon.classList.remove(c);
+        });
+        rightIcon.classList.add(defaultIconClass);
+      }
+    });
+  }, {
+    root: null,
+    threshold: 0.4,
+  });
+
+  sectionsToObserve.forEach((s) => observer.observe(s.el));
 }
 
 /* ------------------------------------------------------------------
@@ -243,14 +718,48 @@ function navigationResponsiveController(block) {
     updateContainerWidth(container);
   };
 
+  const resetMobileState = () => {
+    const container = block.querySelector('.navigation-pill-container');
+    if (!container) return;
+
+    const headerSection = document.querySelector('.section.header-logo-container.header-navigation-section-container');
+    if (headerSection) headerSection.classList.remove('header-mobile-sticky');
+
+    const logoWrapper = document.querySelector('.header-logo-wrapper');
+    const utilitiesWrapper = document.querySelector('.header-utilities-section-wrapper');
+    [logoWrapper, utilitiesWrapper].forEach((el) => {
+      if (el) {
+        el.style.transform = '';
+        el.style.opacity = '';
+      }
+    });
+
+    clearTimeout(window.mobileStickyInactivity);
+    window.mobileStickyInactivity = null;
+
+    const wrappers = container.querySelectorAll('.navigation-pill-wrapper');
+    wrappers.forEach((w) => w.classList.remove('nav-pill-hidden'));
+    updateHiddenPillsAccessibility(container);
+
+    blockScrollHide = false;
+  };
+
   const check = () => {
-    if (window.innerWidth <= 1200) {
+    const container = block.querySelector('.navigation-pill-container');
+    if (!container) return;
+
+    if (window.innerWidth < 1200) {
       if (stickyCleanup) { stickyCleanup(); stickyCleanup = null; }
-      recalcWidth();
       showMobileSecondRightIcon();
+      updateMobilePillsDisplay();
     } else {
+      resetMobileState();
       if (!stickyCleanup) stickyCleanup = makeNavigationSticky(block);
       recalcWidth();
+      container.querySelectorAll('.navigation-pill-wrapper').forEach((wrapper) => {
+        wrapper.style.display = '';
+      });
+      container.style.background = '';
     }
   };
 
@@ -273,9 +782,9 @@ function extractNavigationPillValues(row) {
     variant: rows[2]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_VARIANTS.PRIMARY,
     href: rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || undefined,
     leftIcon: rows[4]?.textContent?.trim() || '',
-    lftIcnSze: rows[5]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM,
+    lftIcnSze: rows[5]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM,
     rightIcon: rows[6]?.textContent?.trim() || '',
-    rhtIcnSze: rows[7]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_ICON_SIZES.MEDIUM,
+    rhtIcnSze: rows[7]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM,
     instrumentation: extractInstrumentationAttributes(rows[1]),
     boxText: rows[8]?.textContent?.trim() || '',
   };
@@ -295,12 +804,13 @@ export default async function decorate(block) {
 
   const container = document.createElement('div');
   container.className = 'navigation-pill-container';
-
+  if (window.innerWidth < 1200 && getTemplateMetaContent() === 'homepage') {
+    container.style.background = 'transparent';
+  }
   const hasInstrumentation = block.hasAttribute('data-aue-resource')
     || block.querySelector('[data-aue-resource]')
     || block.querySelector('[data-richtext-prop]');
 
-  const openBoxRef = { current: null };
   const pillToBoxMap = new Map();
 
   const buildNavigationPill = (row) => {
@@ -324,35 +834,41 @@ export default async function decorate(block) {
     if (cfg.boxText) {
       boxEl = document.createElement('div');
       boxEl.className = 'header-box-text-container';
-      boxEl.style.display = 'none';
+
+      const textContent = document.createElement('div');
+      textContent.className = 'header-box-text-content';
+
       const textWrapper = document.createElement('div');
-      textWrapper.className = 'header-box-text-content';
-      textWrapper.textContent = cfg.boxText;
-      boxEl.appendChild(textWrapper);
+      textWrapper.className = 'text-wrapper';
+
+      if (window.innerWidth < 1200) {
+        const span = document.createElement('span');
+        span.textContent = cfg.boxText;
+        textWrapper.appendChild(span);
+      } else {
+        textWrapper.textContent = cfg.boxText;
+      }
+
+      textContent.appendChild(textWrapper);
+      boxEl.appendChild(textContent);
+
       const boxId = `header-box-${Math.random().toString(36).substr(2, 9)}`;
       boxEl.id = boxId;
       pillEl.setAttribute('aria-controls', boxId);
       pillEl.setAttribute('aria-expanded', 'false');
       pillToBoxMap.set(pillEl, boxEl);
+
       addCloseIconToBox(boxEl, pillEl);
 
-      pillEl.addEventListener('click', async () => {
+      pillEl.addEventListener('click', () => {
         const box = pillToBoxMap.get(pillEl);
         if (!box) return;
-        const isClosed = box.style.display === 'none';
-        await closeAllBoxesExcept(pillToBoxMap, pillEl, box);
-        if (isClosed) {
-          box.style.display = 'flex';
-          requestAnimationFrame(() => box.classList.add('header-box-open'));
-          pillEl.classList.add('header-nav-pill-active');
-          pillEl.setAttribute('aria-expanded', 'true');
-          openBoxRef.box = box;
-          openBoxRef.pill = pillEl;
-          addCloseIconToBox(box, pillEl);
+
+        const isOpen = box.classList.contains('is-open');
+        if (isOpen) {
+          closeBoxWithAnimation(pillEl, box);
         } else {
-          await closeBox(pillEl, box);
-          openBoxRef.box = null;
-          openBoxRef.pill = null;
+          openBoxWithAnimation(pillEl, box);
         }
       });
     }
@@ -371,28 +887,40 @@ export default async function decorate(block) {
 
   block.innerHTML = '';
   block.appendChild(container);
+  const template = getTemplateMetaContent();
+
+  if (template === 'pagina-prodotto') {
+    enableProductDynamicPillIcon(container);
+    const firstPill = container.querySelector(
+      '.navigation-pill-wrapper .navigation-pill',
+    );
+
+    if (firstPill) {
+      firstPill.classList.remove('navigation-pill-secondary');
+      firstPill.classList.add('navigation-pill-primary');
+    }
+  }
+
+  observeHeaderPassingFirstSection(container);
+  if (getTemplateMetaContent() === 'homepage') {
+    observeHomepageFirstSectionForPills(container);
+  }
   block.classList.add('header-navigation-pill-and-box');
   buildMobileMenu(container);
   updateContainerWidth(container);
 
-  const template = getTemplateMetaContent();
   if (template === 'homepage') {
-    const firstWrapper = container.querySelector('.navigation-pill-wrapper');
-    if (firstWrapper) {
-      const firstPill = firstWrapper.querySelector('.navigation-pill');
-      const firstBox = pillToBoxMap.get(firstPill);
+    const firstPill = container.querySelector('.navigation-pill');
+    const firstBox = pillToBoxMap.get(firstPill);
 
-      if (firstPill && firstBox) {
-        firstBox.style.display = 'flex';
-        requestAnimationFrame(() => firstBox.classList.add('header-box-open'));
+    if (firstPill && firstBox) {
+      openBoxWithAnimation(firstPill, firstBox, { defaultOpen: true });
+      handleHomepageFirstScroll(firstPill, firstBox);
 
-        firstPill.classList.add('header-nav-pill-active');
-        firstPill.setAttribute('aria-expanded', 'true');
-
-        openBoxRef.box = firstBox;
-        openBoxRef.pill = firstPill;
-
-        addCloseIconToBox(firstBox, firstPill);
+      if (window.innerWidth < 1200) {
+        container.querySelectorAll('.navigation-pill-wrapper').forEach((pillWrapper) => {
+          pillWrapper.style.display = 'none';
+        });
       }
     }
   }
@@ -402,7 +930,7 @@ export default async function decorate(block) {
     const rightIconEl = secondWrapper.querySelector('.icon:last-child');
     if (rightIconEl) {
       rightIconEl.classList.add('second-pill-right-icon');
-      rightIconEl.style.opacity = '0';
+      rightIconEl.style.display = 'none';
     }
   }
 
@@ -411,20 +939,6 @@ export default async function decorate(block) {
       .filter((el) => el.classList.contains('navigation-pill'))
       .map((pillEl) => loadBlock(pillEl)),
   );
-
-  let scrollTicking = false;
-
-  const onScrollCloseBox = () => {
-    if (scrollTicking) return;
-
-    scrollTicking = true;
-    requestAnimationFrame(async () => {
-      await closeOpenBoxOnScroll(openBoxRef);
-      scrollTicking = false;
-    });
-  };
-
-  window.addEventListener('scroll', onScrollCloseBox, { passive: true });
 
   document.addEventListener('click', async (e) => {
     const { box, pill } = openBoxRef;
@@ -437,16 +951,6 @@ export default async function decorate(block) {
     openBoxRef.pill = null;
   });
 
-  window.addEventListener('resize', () => {
-    pillToBoxMap.forEach((box, pill) => {
-      if (window.innerWidth <= 1200) {
-        addCloseIconToBox(box, pill);
-      } else {
-        const btn = box.querySelector('.un-close-btn');
-        if (btn) box.removeChild(btn);
-      }
-    });
-  });
-
   navigationResponsiveController(block);
+  enableMobileScrollUpSticky();
 }

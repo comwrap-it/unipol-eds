@@ -1,8 +1,8 @@
 {
-  "name": "@adobe/aem-boilerplate",
+  "name": "@unipol-tpd/unipol-website",
   "private": true,
   "version": "1.3.0",
-  "description": "Starter project for Adobe Helix",
+  "description": "Unipol TPD Website",
   "scripts": {
     "lint:js": "eslint . --ext .json,.js,.mjs",
     "lint:css": "stylelint \"blocks/**/*.css\" \"styles/*.css\"",
@@ -12,22 +12,25 @@
     "build:json:models": "merge-json-cli -i \"models/_component-models.json\" -o \"component-models.json\"",
     "build:json:definitions": "merge-json-cli -i \"models/_component-definition.json\" -o \"component-definition.json\"",
     "build:json:filters": "merge-json-cli -i \"models/_component-filters.json\" -o \"component-filters.json\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "sync-ds": "cpx \"node_modules/@unipol-tpd/design-system-components/**/*.{js,css,woff2,svg,webp}\" scripts/libs/ds/"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adobe/aem-boilerplate.git"
+    "url": "git@unipolsai.gitlab.host:workload/aws/tpd/aem/unipol-eds/source.git"
   },
-  "author": "Adobe",
+  "author": "Comwrap IT Reply",
   "license": "Apache License 2.0",
   "bugs": {
-    "url": "https://github.com/adobe/aem-boilerplate/issues"
+    "url": "https://unipolsai.gitlab.host/workload/aws/tpd/aem/unipol-eds/source/-/issues"
   },
-  "homepage": "https://github.com/adobe/aem-boilerplate#readme",
+  "homepage": "https://unipolsai.gitlab.host/workload/aws/tpd/aem/unipol-eds/source/-/blob/main/README.md",
   "devDependencies": {
     "@babel/eslint-parser": "7.28.0",
+    "cpx": "^1.5.0",
     "eslint": "8.57.1",
     "eslint-config-airbnb-base": "15.0.0",
+    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-import": "2.32.0",
     "eslint-plugin-json": "3.1.0",
     "eslint-plugin-xwalk": "github:adobe-rnd/eslint-plugin-xwalk#v0.1.3",
@@ -36,5 +39,8 @@
     "npm-run-all": "4.1.5",
     "stylelint": "16.21.1",
     "stylelint-config-standard": "38.0.0"
+  },
+  "dependencies": {
+    "@unipol-tpd/design-system-components": "^1.0.12"
   }
 }

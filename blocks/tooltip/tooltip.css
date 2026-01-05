@@ -1,0 +1,36 @@
+.tooltip-container {
+    position: absolute;
+    background: var(--Tooltip-Background, #001C35);
+    width: 315px;
+    left: 10%;
+    margin-top: 30px;
+    padding: var(--Tooltip-Vertical-Padding) var(--Tooltip-Horizontal-Padding) !important;
+    border-radius: var(--Tooltip-Tail-Radius, 0); var(--Tooltip-Radius, 8px) var(--Tooltip-Radius, 8px) var(--Tooltip-Radius, 8px);
+}
+
+.tooltip-container::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    width: 0;
+    height: 0;
+    border-left: 0 solid transparent;
+    border-right: 16px solid transparent;
+    border-bottom: 16px solid var(--Tooltip-Background, #001C35);
+    border-top: 0 solid transparent;
+}
+
+.tooltip-title {
+    font-size: var(--Size-16, 1rem);
+    font-weight: 600;
+    font-family: var(--Family-Font-2, Manrope);
+    color: var(--Tooltip-Title, #F9F9F7);
+}
+
+.tooltip-description {
+    font-size: var(--Size-14);
+    font-weight: 500;
+    font-family: var(--Family-Font-2, Manrope);
+    color: var(--Tooltip-Body-Text, #A4AFB7);
+}

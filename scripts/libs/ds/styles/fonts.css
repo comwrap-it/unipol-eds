@@ -1,0 +1,75 @@
+/* stylelint-disable max-line-length */
+
+/* Apex New (primary) */
+@font-face {
+  font-family: 'Apex New';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: local('Apex New Medium'), local('Apex-New-Medium'),
+       url('../fonts/Apex-New-Medium.ttf') format('truetype');
+}
+
+/* Manrope (secondary) */
+@font-face {
+  font-family: Manrope;
+  font-style: normal;
+  font-weight: 200;
+  font-display: swap;
+  src: local('Manrope ExtraLight'), local('Manrope-ExtraLight'),
+       url('../fonts/Manrope-ExtraLight.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: Manrope;
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: local('Manrope Light'), local('Manrope-Light'),
+       url('../fonts/Manrope-Light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: Manrope;
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: local('Manrope Regular'), local('Manrope-Regular'),
+       url('../fonts/Manrope-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: Manrope;
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: local('Manrope Medium'), local('Manrope-Medium'),
+       url('../fonts/Manrope-Medium.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: Manrope;
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: local('Manrope SemiBold'), local('Manrope-SemiBold'),
+       url('../fonts/Manrope-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: Manrope;
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: local('Manrope Bold'), local('Manrope-Bold'),
+       url('../fonts/Manrope-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: Manrope;
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: local('Manrope ExtraBold'), local('Manrope-ExtraBold'),
+       url('../fonts/Manrope-ExtraBold.ttf') format('truetype');
+}

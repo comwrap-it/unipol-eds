@@ -1,269 +1,89 @@
 /**
- * Editorial Carousel
+ * Editorial Carousel Component
  *
- * Builds a responsive carousel from Universal Editor-authored rows.
+ * A carousel block that displays a horizontal scrollable list of card components.
+ * Uses editorial-carousel-card as a molecule component.
  *
- * Authoring format (block children):
- * - Row 0: "Show more" label (mobile only)
- * - Row 1..n: editorial-carousel-card rows
+ * Features:
+ * - Horizontal scroll with navigation arrows
+ * - Dot indicators for slide position
+ * - Responsive design (mobile: 1 card, tablet: 2 cards, desktop: 3-4 cards)
+ * - Smooth scrolling with snap points
+ * - Touch/swipe support on mobile
+ * - Keyboard navigation (arrow keys)
+ * - Preserves Universal Editor instrumentation
  *
- * Behavior:
- * - Mobile: renders up to `THRESHOLDS.mobileVisibleCards` cards and reveals the rest using
- *   a "show more" button.
- * - Tablet/Desktop: enables Swiper + scroll indicator when the amount of cards exceeds the
- *   visible threshold.
- *
- * Instrumentation:
- * - Preserves Universal Editor (AUE) instrumentation by moving/copying attributes from the
- *   authored rows into the rendered DOM.
+ * Preserves Universal Editor instrumentation for AEM EDS.
  */
+
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
-import {
-  createButton,
-  BUTTON_VARIANTS,
-  BUTTON_ICON_SIZES,
-} from '../atoms/buttons/standard-button/standard-button.js';
+
+import { createEditorialCarouselCard } from '../editorial-carousel-card/editorial-carousel-card.js';
+import { initCarouselAnimations } from '../../scripts/reveal.js';
 import loadSwiper from '../../scripts/delayed.js';
 import { handleSlideChange } from '../../scripts/utils.js';
-import { initCarouselAnimations } from '../../scripts/reveal.js';
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
+import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
 
-/**
- * @typedef {Object} ViewportFlags
- * @property {boolean} isMobile
- * @property {boolean} isTablet
- * @property {boolean} isDesktop
- */
-
-/**
- * @typedef {Object} CarouselModel
- * @property {HTMLElement | undefined} showMoreRow
- * @property {string} showMoreLabel
- * @property {HTMLElement[]} cardRows
- * @property {number} rowCount
- * @property {boolean} instrumented
- */
-
-/**
- * @typedef {Object} CarouselSkeleton
- * @property {HTMLDivElement} carousel
- * @property {HTMLDivElement} track
- */
-
-/**
- * @typedef {'scroll-indicator' | 'show-more' | 'none'} NavigationMode
- */
-
-/**
- * @typedef {Object} CarouselNavigation
- * @property {NavigationMode} mode
- * @property {HTMLElement} [scrollIndicator]
- * @property {HTMLButtonElement} [leftIconButton]
- * @property {HTMLButtonElement} [rightIconButton]
- * @property {(state: { isBeginning: boolean, isEnd: boolean }) => void} [setExpandedDot]
- * @property {HTMLElement} [showMoreButton]
- */
-
-/**
- * @typedef {(cardBlock: HTMLElement) => Promise<void>} DecorateCardFn
- */
-
-// #region CONFIGS
-
-const DEFAULT_ARIA_LABEL = 'Carosello editoriale';
-const DEFAULT_SHOW_MORE_LABEL = 'Mostra di più';
-
-const MEDIA_QUERIES = {
-  tablet: '(min-width: 768px)',
-  desktop: '(min-width: 1200px)',
-};
-
-const THRESHOLDS = {
-  mobileVisibleCards: 4,
-  tabletNavCards: 3,
-  desktopNavCards: 4,
-};
-
-const CLASS_NAMES = {
-  carousel: 'editorial-carousel-container',
-  track: 'editorial-carousel',
-  slide: 'editorial-carousel-card-wrapper',
-  cardBlock: 'editorial-carousel-card',
-  hidden: 'hidden',
-};
-
-const SELECTORS = {
-  decoratedCard: '.editorial-carousel-card-container, .card',
-  navPrev: '.swiper-button-prev',
-  navNext: '.swiper-button-next',
-};
-
-// #endregion
-
-// #region DEPENDENCIES
-
-/** @type {boolean} */
 let isStylesLoaded = false;
-
-/**
- * Loads CSS dependencies used by the carousel UI.
- *
- * - `editorial-carousel.css`: layout + breakpoints.
- * - `standard-button.css`: mobile "show more" button styling.
- * - `icon-button.css` + `scroll-indicator.css`: navigation UI styling.
- *
- * @returns {Promise<void>}
- */
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
-
   const { loadCSS } = await import('../../scripts/aem.js');
-
   await Promise.all([
     loadCSS(
-      `${window.hlx.codeBasePath}/blocks/editorial-carousel/editorial-carousel.css`,
-    ),
-    loadCSS(
-      `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`,
-    ),
-    loadCSS(
-      `${window.hlx.codeBasePath}/blocks/atoms/buttons/icon-button/icon-button.css`,
-    ),
-    loadCSS(
-      `${window.hlx.codeBasePath}/blocks/scroll-indicator/scroll-indicator.css`,
+      `${window.hlx.codeBasePath}/blocks/editorial-carousel-card/editorial-carousel-card.css`,
     ),
   ]);
-
   isStylesLoaded = true;
 }
 
-// #endregion
-
-// #region PARSE
-
-/**
- * Parses authored rows into a normalized model.
- *
- * @param {HTMLElement} block
- * @returns {CarouselModel}
- */
-function parseCarouselBlock(block) {
-  const rows = Array.from(block.children);
-  const rowCount = rows.length;
-
-  const showMoreRow = rows.shift();
-  const showMoreLabel = showMoreRow?.textContent?.trim() || DEFAULT_SHOW_MORE_LABEL;
-
-  const instrumented = Boolean(
-    block.hasAttribute('data-aue-resource')
-      || block.querySelector('[data-aue-resource]')
-      || block.querySelector('[data-richtext-prop]'),
-  );
-
-  return {
-    showMoreRow,
-    showMoreLabel,
-    cardRows: rows,
-    rowCount,
-    instrumented,
-  };
-}
-
-// #endregion
-
-// #region CREATE
-
-/**
- * Creates the base carousel DOM.
- *
- * @param {{ ariaLabel?: string }} [options]
- * @returns {CarouselSkeleton}
- */
-function createCarouselSkeletonFromConfig({ ariaLabel = DEFAULT_ARIA_LABEL } = {}) {
+export function createEditorialCarousel(
+  {
+    cards = [],
+    showMoreButtonLabel = 'Mostra di più',
+  } = {},
+) {
   const carousel = document.createElement('div');
-  carousel.className = `${CLASS_NAMES.carousel} swiper`;
+  carousel.className = 'editorial-carousel-container swiper';
   carousel.setAttribute('role', 'region');
-  carousel.setAttribute('aria-label', ariaLabel);
+  carousel.setAttribute('aria-label', 'Editorial carousel');
   carousel.setAttribute('tabindex', '0');
 
   const track = document.createElement('div');
-  track.className = `${CLASS_NAMES.track} swiper-wrapper`;
+  track.className = 'editorial-carousel swiper-wrapper';
   track.setAttribute('role', 'list');
 
+  const mq = window.matchMedia('(min-width: 768px)');
+  const slideElements = (cards || []).map((card, index) => {
+    const slide = document.createElement('div');
+    slide.className = 'editorial-carousel-card-wrapper swiper-slide reveal-in-up';
+    slide.setAttribute('role', 'listitem');
+
+    const cardElement = card instanceof HTMLElement
+      ? card
+      : createEditorialCarouselCard({ ...card, isFirstCard: index === 0 });
+
+    slide.appendChild(cardElement);
+
+    if (!mq.matches && index >= 4) {
+      slide.classList.add('hidden');
+    }
+
+    return slide;
+  });
+
+  slideElements.forEach((slide) => track.appendChild(slide));
   carousel.appendChild(track);
 
-  return { carousel, track };
-}
-
-/**
- * Creates one slide from one authored row.
- *
- * @param {HTMLElement} row
- * @param {DecorateCardFn} decorateCard
- * @returns {Promise<HTMLDivElement>}
- */
-async function createSlideFromRow(row, decorateCard) {
-  const slide = document.createElement('div');
-  slide.className = `${CLASS_NAMES.slide} swiper-slide reveal-in-up`;
-  slide.setAttribute('role', 'listitem');
-
-  moveInstrumentation(row, slide);
-
-  const cardBlock = document.createElement('div');
-  cardBlock.className = CLASS_NAMES.cardBlock;
-  cardBlock.dataset.blockName = 'editorial-carousel-card';
-
-  if (row.hasAttribute('data-aue-resource')) {
-    const attrs = ['data-aue-resource', 'data-aue-behavior', 'data-aue-type', 'data-aue-label'];
-    attrs.forEach((name) => {
-      const value = row.getAttribute(name);
-      if (value) cardBlock.setAttribute(name, value);
-    });
+  // When we don't render navigation (few cards on desktop), center the slides group.
+  if (mq.matches && slideElements.length <= 4) {
+    carousel.classList.add('no-scroll-indicator');
   }
 
-  while (row.firstElementChild) {
-    cardBlock.appendChild(row.firstElementChild);
-  }
-
-  slide.appendChild(cardBlock);
-  await decorateCard(cardBlock);
-
-  return slide;
-}
-
-/**
- * Creates the navigation controls based on the viewport and slide count.
- *
- * @param {{ totalSlides: number, viewport: ViewportFlags, showMoreLabel: string }} params
- * @returns {Promise<CarouselNavigation>}
- */
-async function createNavigationFromState({ totalSlides, viewport, showMoreLabel }) {
-  const needsScrollIndicator = (
-    (viewport.isDesktop && totalSlides > THRESHOLDS.desktopNavCards)
-    || (viewport.isTablet && totalSlides > THRESHOLDS.tabletNavCards)
-  );
-
-  if (needsScrollIndicator) {
-    const {
-      leftIconButton,
-      scrollIndicator,
-      rightIconButton,
-      setExpandedDot,
-    } = await createScrollIndicator();
-
-    return {
-      mode: 'scroll-indicator',
-      leftIconButton,
-      rightIconButton,
-      scrollIndicator,
-      setExpandedDot,
-    };
-  }
-
-  const needsShowMore = viewport.isMobile && totalSlides > THRESHOLDS.mobileVisibleCards;
-  if (needsShowMore) {
-    const showMoreButton = createButton(
-      showMoreLabel,
+  if (!mq.matches && slideElements.length > 4) {
+    const button = createButton(
+      showMoreButtonLabel,
       '',
       false,
       BUTTON_VARIANTS.SECONDARY,
@@ -272,232 +92,247 @@ async function createNavigationFromState({ totalSlides, viewport, showMoreLabel 
       '',
     );
 
-    return {
-      mode: 'show-more',
-      showMoreButton,
-    };
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
+      slideElements.forEach((slide) => slide.classList.remove('hidden'));
+      button.remove();
+    });
+
+    carousel.appendChild(button);
   }
 
-  return { mode: 'none' };
+  return carousel;
 }
 
-/**
- * Creates and configures the Swiper instance for desktop/tablet.
- *
- * @param {HTMLElement} carousel
- * @param {CarouselNavigation} navigation
- * @returns {Promise<Object>} Swiper instance.
- */
-async function createSwiperFromCarousel(carousel, navigation) {
-  const SwiperLib = await loadSwiper();
+export const create = createEditorialCarousel;
 
-  /** @type {Record<string, any>} */
-  const config = {
+/**
+ *
+ * @param {} Swiper the swiper instance
+ * @param {HTMLElement} carousel the carousel element
+ * @param {HTMLElement} leftIconButton the left navigation button
+ * @param {HTMLElement} rightIconButton the right navigation button
+ */
+const initSwiper = (
+  Swiper,
+  carousel,
+  leftIconButton = null,
+  rightIconButton = null,
+) => {
+  const swiperInstance = new Swiper(carousel, {
     a11y: { enabled: false },
+    navigation: {
+      prevEl: leftIconButton || carousel.querySelector('.swiper-button-prev'),
+      nextEl: rightIconButton || carousel.querySelector('.swiper-button-next'),
+      addIcons: false,
+    },
     speed: 700,
     slidesPerView: 'auto',
     allowTouchMove: true,
     breakpoints: {
-      1200: { allowTouchMove: false },
+      // width >= 1200
+      1200: {
+        allowTouchMove: false,
+      },
     },
     resistanceRatio: 0.85,
     touchReleaseOnEdges: true,
     effect: 'slide',
-  };
+    // Enable debugger
+    debugger: true,
+  });
 
-  if (navigation.mode === 'scroll-indicator') {
-    config.navigation = {
-      prevEl: navigation.leftIconButton || carousel.querySelector(SELECTORS.navPrev),
-      nextEl: navigation.rightIconButton || carousel.querySelector(SELECTORS.navNext),
-      addIcons: false,
-    };
-  }
-
-  return new SwiperLib(carousel, config);
-}
-
-// #endregion
-
-// #region RENDER
-
+  return swiperInstance;
+};
 /**
- * Renders the carousel into the provided block.
- *
- * Assembly is kept monolithic (except for `create*From*` helpers).
- *
- * @param {HTMLElement} block
- * @param {CarouselModel} model
- * @param {DecorateCardFn} decorateCard
- * @returns {Promise<void>}
+ * Decorates the editorial carousel block
+ * @param {HTMLElement} block - The carousel block element
  */
-async function renderCarousel(block, model, decorateCard) {
-  /**
-   * VIEWPORT: determine responsive behavior.
-   */
-  const mqTablet = window.matchMedia(MEDIA_QUERIES.tablet);
-  const mqDesktop = window.matchMedia(MEDIA_QUERIES.desktop);
-
-  /** @type {ViewportFlags} */
-  const viewport = {
-    isDesktop: mqDesktop.matches,
-    isTablet: mqTablet.matches && !mqDesktop.matches,
-    isMobile: !mqTablet.matches,
-  };
-
-  /**
-   * CREATE: static skeleton (wrapper, container, track).
-   */
-  const { carousel, track } = createCarouselSkeletonFromConfig();
-
-  /**
-   * CREATE: build slides by decorating nested `editorial-carousel-card` blocks.
-   */
-  const slides = await Promise.all(
-    model.cardRows.map((row) => createSlideFromRow(row, decorateCard)),
-  );
-
-  /**
-   * ASSEMBLE: append slides and apply mobile truncation when not instrumented.
-   */
-  const appendedSlides = [];
-  let appendedIndex = 0;
-
-  slides.forEach((slide) => {
-    if (!slide) return;
-
-    const hasContent = Boolean(
-      slide.innerText?.trim() || slide.querySelector('img, picture'),
-    );
-
-    if (!model.instrumented && !hasContent) return;
-
-    if (
-      !model.instrumented
-      && viewport.isMobile
-      && appendedIndex >= THRESHOLDS.mobileVisibleCards
-    ) {
-      slide.classList.add(CLASS_NAMES.hidden);
-    }
-
-    track.appendChild(slide);
-    appendedSlides.push(slide);
-    appendedIndex += 1;
-  });
-
-  /**
-   * CREATE: navigation UI (scroll indicator for tablet/desktop, show-more on mobile).
-   */
-  const navigation = await createNavigationFromState({
-    totalSlides: appendedSlides.length,
-    viewport,
-    showMoreLabel: model.showMoreLabel,
-  });
-
-  /**
-   * ASSEMBLE: mount navigation and wire show-more behavior.
-   */
-  if (navigation.scrollIndicator) {
-    carousel.appendChild(navigation.scrollIndicator);
-  } else if (navigation.showMoreButton) {
-    navigation.showMoreButton.addEventListener('click', (event) => {
-      event.preventDefault();
-      appendedSlides.forEach((slide) => slide.classList.remove(CLASS_NAMES.hidden));
-      navigation.showMoreButton?.remove();
-    });
-
-    carousel.appendChild(navigation.showMoreButton);
-  }
-
-  /**
-   * CLEANUP: remove the authored show-more label row.
-   */
-  model.showMoreRow?.remove();
-
-  /**
-   * MOUNT: replace the block content with the built carousel.
-   */
-  if (block.dataset.blockName) {
-    carousel.dataset.blockName = block.dataset.blockName;
-  }
-
-  block.textContent = '';
-  carousel.classList.add('block', 'editorial-carousel-block');
-  block.appendChild(carousel);
-
-  /**
-   * INIT: reveal animations.
-   */
-  initCarouselAnimations(carousel);
-
-  /**
-   * INIT: section widget (theme + section-level styles).
-   */
-  const decorateWidget = (await import('../editorial-carousel-widget/editorial-carousel-widget.js')).default;
-  await decorateWidget(block);
-
-  /**
-   * INIT: Swiper (tablet/desktop only).
-   */
-  if (viewport.isMobile) return;
-
-  const swiperInstance = await createSwiperFromCarousel(carousel, navigation);
-
-  /**
-   * INIT: scroll indicator behavior (when present).
-   */
-  if (navigation.mode !== 'scroll-indicator' || !navigation.setExpandedDot) return;
-
-  handleSlideChange(
-    swiperInstance,
-    navigation.setExpandedDot,
-    navigation.leftIconButton,
-    navigation.rightIconButton,
-  );
-
-  navigation.setExpandedDot({
-    isBeginning: swiperInstance.isBeginning,
-    isEnd: swiperInstance.isEnd,
-  });
-
-  if (navigation.leftIconButton) {
-    navigation.leftIconButton.disabled = swiperInstance.isBeginning;
-  }
-
-  if (navigation.rightIconButton) {
-    navigation.rightIconButton.disabled = swiperInstance.isEnd;
-  }
-}
-
-// #endregion
-
-// #region DECORATE
-
-/**
- * Decorates the Editorial Carousel block.
- *
- * @param {HTMLElement} block
- * @returns {Promise<void>}
- */
-export default async function decorateEditorialCarousel(block) {
+export default async function decorate(block) {
   if (!block) return;
 
   await ensureStylesLoaded();
 
-  /**
-   * PARSE: build the model from authored rows.
-   */
-  const model = parseCarouselBlock(block);
-  if (!model.cardRows.length) return;
+  // Check if block has instrumentation (Universal Editor)
+  const hasInstrumentation = block.hasAttribute('data-aue-resource')
+    || block.querySelector('[data-aue-resource]')
+    || block.querySelector('[data-richtext-prop]');
 
-  /**
-   * LOAD: card decorator.
-   */
-  const decorateCard = (await import('../editorial-carousel-card/editorial-carousel-card.js')).default;
+  // Import card component dynamically
+  const cardModule = await import(
+    '../editorial-carousel-card/editorial-carousel-card.js'
+  );
+  const decorateEditorialCarouselCard = cardModule.default;
 
-  /**
-   * RENDER: assemble the final carousel.
-   */
-  await renderCarousel(block, model, decorateCard);
+  // Create carousel container structure
+  const carousel = document.createElement('div');
+  carousel.className = 'editorial-carousel-container swiper';
+  carousel.setAttribute('role', 'region');
+  carousel.setAttribute('aria-label', 'Editorial carousel');
+  carousel.setAttribute('tabindex', '0');
+
+  // Create carousel track (scrollable container)
+  const track = document.createElement('div');
+  track.className = 'editorial-carousel swiper-wrapper';
+  track.setAttribute('role', 'list');
+
+  // Get all rows (each row will be a card)
+  const rows = Array.from(block.children);
+
+  const showMoreButtonLabel = rows[0].textContent?.trim() || 'Mostra di più';
+  const showMoreElement = rows.shift();
+
+  if (rows.length === 0) {
+    // eslint-disable-next-line no-console
+    console.warn('Editorial Carousel: No cards found');
+    return;
+  }
+
+  // Process each row as a card
+  const cardPromises = rows.map(async (row, index) => {
+    const slide = document.createElement('div');
+    slide.className = 'editorial-carousel-card-wrapper swiper-slide reveal-in-up';
+    slide.setAttribute('role', 'listitem');
+
+    // Preserve instrumentation from row to slide
+    moveInstrumentation(row, slide);
+
+    // Create a card block element to decorate
+    const cardBlock = document.createElement('div');
+    cardBlock.className = 'editorial-carousel-card-container';
+    cardBlock.dataset.blockName = 'editorial-carousel-card';
+
+    // Preserve row instrumentation on card block if present
+    if (row.hasAttribute('data-aue-resource')) {
+      cardBlock.setAttribute(
+        'data-aue-resource',
+        row.getAttribute('data-aue-resource'),
+      );
+      const aueBehavior = row.getAttribute('data-aue-behavior');
+      if (aueBehavior) cardBlock.setAttribute('data-aue-behavior', aueBehavior);
+      const aueType = row.getAttribute('data-aue-type');
+      if (aueType) cardBlock.setAttribute('data-aue-type', aueType);
+      const aueLabel = row.getAttribute('data-aue-label');
+      if (aueLabel) cardBlock.setAttribute('data-aue-label', aueLabel);
+    }
+
+    // Move all children from row to card block (preserves their instrumentation)
+    while (row.firstElementChild) {
+      cardBlock.appendChild(row.firstElementChild);
+    }
+
+    // Temporarily append cardBlock to slide
+    slide.appendChild(cardBlock);
+
+    // Decorate the card using card component
+    // First card (index 0) is LCP candidate - optimize image loading
+    const isFirstCard = index === 0;
+    await decorateEditorialCarouselCard(cardBlock, isFirstCard);
+
+    return slide;
+  });
+
+  const mq = window.matchMedia('(min-width: 768px)');
+
+  // Wait for all cards to be processed
+  const cardElements = await Promise.all(cardPromises);
+  cardElements.forEach((slide, index) => {
+    if (slide && !hasInstrumentation && slide.innerText) {
+      if (index >= 4 && !mq.matches) {
+        slide.classList.add('hidden');
+      }
+      track.appendChild(slide);
+    } else if (slide && hasInstrumentation) {
+      track.appendChild(slide);
+    }
+  });
+
+  let scrollIndicatorProps = {};
+  let showMoreButton;
+
+  function handleShowMoreButton(e) {
+    e.preventDefault();
+    cardElements.forEach((slide) => {
+      if (slide.classList.contains('hidden')) {
+        slide.classList.remove('hidden');
+      }
+    });
+    showMoreButton.remove();
+  }
+
+  if (mq.matches) {
+    if (cardElements && cardElements.length > 4) {
+      const {
+        leftIconButton,
+        scrollIndicator,
+        rightIconButton,
+        setExpandedDot,
+      } = await createScrollIndicator();
+      scrollIndicatorProps = {
+        leftIconButton,
+        scrollIndicator,
+        rightIconButton,
+        setExpandedDot,
+      };
+    }
+  } else if (cardElements && cardElements.length > 4) {
+    showMoreButton = createButton(
+      showMoreButtonLabel,
+      '',
+      false,
+      BUTTON_VARIANTS.SECONDARY,
+      BUTTON_ICON_SIZES.MEDIUM,
+      '',
+      '',
+    );
+    showMoreButton.addEventListener('click', handleShowMoreButton);
+  }
+
+  // If no scroll-indicator is present on desktop, center the (non-scrollable) slides group.
+  if (mq.matches && !scrollIndicatorProps.scrollIndicator) {
+    carousel.classList.add('no-scroll-indicator');
+  }
+
+  carousel.appendChild(track);
+  initCarouselAnimations(carousel);
+
+  if (scrollIndicatorProps.scrollIndicator) {
+    carousel.appendChild(scrollIndicatorProps.scrollIndicator);
+  } else if (showMoreButton) {
+    carousel.appendChild(showMoreButton);
+  }
+
+  showMoreElement.remove();
+
+  // Preserve blockName if present
+  if (block.dataset.blockName) {
+    carousel.dataset.blockName = block.dataset.blockName;
+  }
+
+  block.innerText = '';
+  // Preserve block class
+  carousel.classList.add('block', 'editorial-carousel-block');
+  // Replace block with carousel
+  block.appendChild(carousel);
+
+  if (mq.matches) {
+    // Initialize Swiper after DOM insertion
+    const Swiper = await loadSwiper();
+    const swiperInstance = initSwiper(
+      Swiper,
+      carousel,
+      scrollIndicatorProps.leftIconButton,
+      scrollIndicatorProps.rightIconButton,
+    );
+    handleSlideChange(
+      swiperInstance,
+      scrollIndicatorProps.setExpandedDot,
+      scrollIndicatorProps.leftIconButton,
+      scrollIndicatorProps.rightIconButton,
+    );
+    const handleEditorialCarouselWidget = await import(
+      '../editorial-carousel-widget/editorial-carousel-widget.js'
+    );
+    handleEditorialCarouselWidget.default();
+  }
 }
-
-// #endregion

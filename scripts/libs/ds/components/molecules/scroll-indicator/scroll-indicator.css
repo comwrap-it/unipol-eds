@@ -1,0 +1,147 @@
+.scroll-indicator {
+    display: flex;
+    align-items: center;
+    gap: var(--Scroll-Indicator-Gap, 2rem);
+
+    --dot-width: 0.5rem;
+
+    & .expanding-dots {
+        position: relative;
+        width: 5rem;
+        height: var(--dot-width);
+
+        & .dot {
+            position: absolute;
+            width: var(--dot-width);
+            height: var(--dot-width);
+            background-color: var(--Expanding-Dots-Background, #001c35);
+            border-radius: var(--Expanding-Dots-Radius, 624.9375rem);
+            transition: left 500ms ease, width 300ms ease;
+            will-change: left, width, transform;
+
+            &.expanded {
+                width: 3rem;
+                z-index: 2; /* ensure expanded sits above */
+                transform: translateZ(0);
+            }
+
+            &.first-dot {
+                left: 0;
+            }
+
+            &.second-dot {
+                left: calc(var(--dot-width) + var(--Expanding-Dots-Gap));
+            }
+
+            &.third-dot {
+                left: calc(
+                    var(--dot-width) + var(--Expanding-Dots-Gap) +
+                        var(--Expanding-Dots-Gap) + var(--dot-width)
+                );
+            }
+        }
+
+        --expanded-dot-adding-width: 2.5rem;
+
+        &.first-expanded {
+            & .dot {
+                &.second-dot {
+                    left: calc(
+                        var(--dot-width) + var(--Expanding-Dots-Gap) +
+                            var(--expanded-dot-adding-width)
+                    );
+                }
+
+                &.third-dot {
+                    left: calc(
+                        var(--dot-width) + var(--Expanding-Dots-Gap) +
+                            var(--Expanding-Dots-Gap) + var(--dot-width) +
+                            var(--expanded-dot-adding-width)
+                    );
+                }
+            }
+        }
+
+        &.second-expanded {
+            & .dot {
+                &.third-dot {
+                    left: calc(
+                        var(--dot-width) + var(--Expanding-Dots-Gap) +
+                            var(--Expanding-Dots-Gap) + var(--dot-width) +
+                            var(--expanded-dot-adding-width)
+                    );
+                }
+            }
+        }
+    }
+
+    &.hero-indicator {
+        position: absolute;
+        bottom: var(--Hero-Full-Screen-Bottom-Padding-M, 120px);
+        right: 0;
+        padding-inline: var(--Hero-Full-Screen-Horizontal-Padding-M-Tp, 16px);
+        z-index: 3;
+    }
+}
+
+/* under 1200 the dots stays on the left and nav buttons on the right */
+@media (width < 1200px) {
+    .scroll-indicator {
+        width: 100%;
+        justify-content: flex-start;
+        gap: var(--Scroll-Indicator-Gap-Icon-M, 24px);
+
+        & .expanding-dots {
+            order: 1;
+            margin-right: auto;
+        }
+
+        & .left-icon-button {
+            order: 2;
+        }
+
+        & .right-icon-button {
+            order: 3;
+        }
+
+        & .arrows {
+            display: flex;
+            align-items: center;
+            gap: var(--Scroll-Indicator-Gap-Icon-M, 1.5rem);
+        }
+    }
+}
+
+/* TABLET */
+@media (768px <= width < 1200px) {
+    .scroll-indicator {
+        /* this class is used to absolute position the indicator within a hero block */
+        &.hero-indicator {
+            bottom: var(--Hero-Full-Screen-Bottom-Padding-Tp, 120px);
+            right: 0;
+            padding-inline: var(--Hero-Full-Screen-Horizontal-Padding-M-Tp, 16px);
+        }
+    }
+}
+
+/* DESKTOP SMALL */
+@media (1200px <= width < 1440px) {
+    .scroll-indicator {
+        /* this class is used to absolute position the indicator within a hero block */
+        &.hero-indicator {
+            bottom: var(--Hero-Full-Screen-Bottom-Padding-Ds, 80px);
+            right: var(--Hero-Full-Screen-Horizontal-Padding-Ds, 24px);
+        }
+    }
+}
+
+/* DESKTOP */
+@media (width >= 1440px) {
+    .scroll-indicator {
+        /* this class is used to absolute position the indicator within a hero block */
+        &.hero-indicator {
+            bottom: var(--Hero-Full-Screen-Bottom-Padding-Ds, 80px);
+            right: var(--Hero-Full-Screen-Horizontal-Padding-D, 64px);
+        }
+    }
+}

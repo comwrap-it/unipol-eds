@@ -4,13 +4,16 @@
     "components": [
       "section",
       "kpi-highlights-widget",
+      "product-highlights-widget",
       "insurance-product-carousel-widget",
       "editorial-carousel-widget",
       "hero-widget",
       "mini-hero-widget",
       "blog-carousel-widget",
       "faq-widget-section",
-      "card-grid-widget"
+      "card-grid-widget",
+      "data-table-widget",
+      "category-carousel-widget"
     ]
   },
   {

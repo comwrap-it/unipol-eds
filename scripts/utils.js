@@ -134,6 +134,10 @@ export function getValuesFromBlock(block, keys) {
       // if richtext get the first child, the must ends with Richtext
       if (key.endsWith('Richtext')) {
         value = valueNode.children;
+        instrumentation['data-aue-type'] = 'richtext';
+      } else if (valueNode.querySelector('a') && valueNode.querySelector('a').length > 0) {
+        value = valueNode.querySelector('a')?.getAttribute('href') || valueNode.textContent.trim();
+        instrumentation['data-aue-type'] = 'reference';
       } else {
         value = valueNode?.textContent?.trim() || '';
       }
@@ -166,3 +170,21 @@ export const getTemplateMetaContent = () => {
   const content = meta?.getAttribute('content') || null;
   return content;
 };
+
+/**
+ * Blocks body scroll in current page
+ */
+export function lockBodyScroll() {
+  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
+
+  document.body.classList.add('hide-scrollbar');
+  document.body.style.paddingRight = `${scrollbarWidth}px`;
+}
+
+/**
+ * Applies body scroll in current page
+ */
+export function unlockBodyScroll() {
+  document.body.classList.remove('hide-scrollbar');
+  document.body.style.paddingRight = '';
+}

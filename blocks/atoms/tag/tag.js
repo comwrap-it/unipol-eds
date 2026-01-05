@@ -1,39 +1,5 @@
-import { createTextElementFromRow } from '../../../scripts/domHelpers.js';
-import { extractInstrumentationAttributes } from '../buttons/standard-button/standard-button.js';
-
-/**
- * Create a tag element with styling
- * @param {string} label - Tag label (required)
- * @param {string} category - Category name (required)
- * @param {string} type - Tag type (required)
- * @param {Object} instrumentation - Instrumentation attributes (optional)
- * @param {HTMLElement} labelRow - The label row element (optional)
- * @returns {HTMLElement} The tag element
- */
-export const createTag = (
-  label,
-  category,
-  type,
-  instrumentation = {},
-  labelRow = null,
-) => {
-  const tag = document.createElement('div');
-  tag.className = `tag ${category} ${type}`;
-
-  if (labelRow) {
-    const textElement = createTextElementFromRow(labelRow, 'tag-label', 'span');
-    tag.appendChild(textElement);
-  } else {
-    tag.textContent = label;
-  }
-
-  // Restore instrumentation to button element
-  Object.entries(instrumentation).forEach(([name, value]) => {
-    tag.setAttribute(name, value);
-  });
-
-  return tag;
-};
+import { createTag } from '@unipol-ds/components/atoms/tag/tag.js';
+import { extractInstrumentationAttributes } from '../../../scripts/utils.js';
 
 /**
  * Extract values from block rows

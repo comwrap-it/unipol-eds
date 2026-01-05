@@ -1,14 +1,11 @@
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
 import {
   createTextElementFromRow,
   extractBooleanValueFromRow,
   extractMediaElementFromRow,
 } from '../../scripts/domHelpers.js';
+import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import {
-  BUTTON_ICON_SIZES,
-  BUTTON_VARIANTS,
-  createButton,
-} from '../atoms/buttons/standard-button/standard-button.js';
 
 /**
  * Sets up the Hero container with background media (image or video).
@@ -40,16 +37,20 @@ const setupHeroWithBg = (
   } else if (heroBackground) {
     const videoPath = heroBackground.href;
     const videoBg = document.createElement('video');
-    videoBg.src = videoPath;
+    videoBg.muted = true;
     moveInstrumentation(heroBackground, videoBg);
     videoBg.className = 'hero-bg';
     videoBg.setAttribute('aria-hidden', 'true');
     videoBg.preload = 'auto';
     videoBg.autoplay = true;
-    videoBg.muted = true;
     videoBg.loop = true;
     videoBg.playsInline = true;
+    videoBg.src = videoPath;
     hero.appendChild(videoBg);
+
+    videoBg.addEventListener('canplay', () => {
+      videoBg.play();
+    });
 
     const pauseIcon = document.createElement('button');
     pauseIcon.className = 'hero-icon un-icon-pause-circle icon-extra-large';
@@ -97,7 +98,7 @@ const createHeroMainSection = (
 ) => {
   const mainSection = document.createElement('div');
   mainSection.className = `main-section${isCarousel ? ' carousel' : ''}`;
-  if (showHeroLogo) {
+  if (showHeroLogo && heroLogo) {
     const logo = heroLogo.cloneNode(true);
     logo.className = 'hero-logo';
     mainSection.appendChild(logo);

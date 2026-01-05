@@ -6,12 +6,8 @@
  *
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
-
-import {
-  BUTTON_ICON_SIZES,
-  BUTTON_VARIANTS,
-} from '../atoms/buttons/standard-button/standard-button.js';
-import { createIconButton } from '../atoms/buttons/icon-button/icon-button.js';
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
+import { createIconButton } from '@unipol-ds/components/atoms/buttons/icon-button/icon-button.js';
 
 let isStylesLoaded = false;
 
@@ -159,6 +155,25 @@ export default async function createScrollIndicator(isInsideHero = false) {
   scrollIndicator.appendChild(leftIconButtonContainer);
   scrollIndicator.appendChild(expandingDotsContainer);
   scrollIndicator.appendChild(rightIconButtonContainer);
+
+  const handleScrollIndicatorResize = () => {
+    if (window.innerWidth < 1200) {
+      leftIconButton?.classList?.remove('btn-icon');
+      leftIconButton?.classList?.add('link-btn');
+
+      rightIconButton?.classList?.remove('btn-icon');
+      rightIconButton?.classList?.add('link-btn');
+    } else {
+      leftIconButton?.classList?.remove('link-btn');
+      leftIconButton?.classList?.add('btn-icon');
+
+      rightIconButton?.classList?.remove('link-btn');
+      rightIconButton?.classList?.add('btn-icon');
+    }
+  };
+
+  handleScrollIndicatorResize();
+  window.addEventListener('resize', handleScrollIndicatorResize);
 
   return {
     leftIconButton,

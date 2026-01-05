@@ -1,0 +1,170 @@
+{
+  "definitions": [
+    {
+      "title": "Data table row",
+      "id": "data-table-row",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Data table row",
+              "model": "data-table-row"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "data-table-row",
+      "fields": [
+        {
+          "component": "tab",
+          "label": "Configurazione colonna 1",
+          "name": "data-table-col"
+        },
+        {
+          "component": "boolean",
+          "description": "Attiva Tooltip associato",
+          "name": "showDataTableRow",
+          "valueType": "boolean",
+          "value": false
+        },
+        {
+          "component": "text",
+          "name": "titleDataTableRow",
+          "label": "Titolo Riga",
+          "validation": {
+            "maxLength": 25,
+            "customErrorMsg": "Testo troppo lungo"
+          }
+        },
+        {
+          "component": "aem-content",
+          "name": "tooltipLink",
+          "label": "Link al Tooltip",
+          "condition": {
+            "===": [
+              {
+                "var": "showDataTableRow"
+              },
+              true
+            ]
+          }
+        },
+        {
+          "component": "tab",
+          "label": "Configurazione colonna 2",
+          "name": "data-table-col-2"
+        },
+        {
+          "component": "boolean",
+          "description": "Attivo: rende il contenuto della colonna un titolo",
+          "name": "changeTableTextContent",
+          "valueType": "boolean",
+          "value": false
+        },
+        {
+          "component": "text",
+          "name": "titleDataTableRow2",
+          "label": "Titolo",
+          "validation": {
+            "maxLength": 20,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": {
+            "===": [
+              {
+                "var": "changeTableTextContent"
+              },
+              true
+            ]
+          }
+        },
+        {
+          "component": "text",
+          "name": "titleDataTableRow3",
+          "label": "Contenuto Testuale",
+          "validation": {
+            "maxLength": 50,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": {
+            "===": [
+              {
+                "var": "changeTableTextContent"
+              },
+              false
+            ]
+          }
+        },
+        {
+          "component": "tab",
+          "label": "Configurazione colonna 3",
+          "name": "data-table-col-3"
+        },
+        {
+          "component": "boolean",
+          "description": "Attivo: rende il contenuto della colonna un titolo",
+          "name": "changeTableTextContent2",
+          "valueType": "boolean",
+          "value": false
+        },
+        {
+          "component": "text",
+          "name": "titleDataTableRow4",
+          "label": "Titolo",
+          "validation": {
+            "maxLength": 20,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": {
+            "===": [
+              {
+                "var": "changeTableTextContent2"
+              },
+              true
+            ]
+          }
+        },
+        {
+          "component": "text",
+          "name": "titleDataTableRow5",
+          "label": "Contenuto Testuale",
+          "validation": {
+            "maxLength": 35,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": {
+            "===": [
+              {
+                "var": "changeTableTextContent2"
+              },
+              false
+            ]
+          }
+        },
+        {
+          "component": "text",
+          "name": "titleDataTableRow6",
+          "label": "Contenuto Testuale Benefit",
+          "validation": {
+            "maxLength": 35,
+            "customErrorMsg": "Testo troppo lungo"
+          },
+          "condition": {
+            "===": [
+              {
+                "var": "changeTableTextContent2"
+              },
+              false
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

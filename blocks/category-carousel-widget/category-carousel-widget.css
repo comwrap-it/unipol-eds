@@ -1,0 +1,7 @@
+.section {
+    &.insurance-product-carousel-container {
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+    }
+}
