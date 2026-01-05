@@ -1,0 +1,94 @@
+{
+  "definitions": [
+    {
+      "title": "Bundle Card",
+      "id": "bundle-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Bundle card",
+              "model": "bundle-card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "bundle-card",
+      "fields": [
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Titolo",
+          "required": true,
+          "validation": {
+            "maxLength": 25,
+            "customErrorMsg": "Titolo troppo lungo (max 15 caratteri)"
+          }
+        },
+        {
+          "component": "text",
+          "name": "description",
+          "label": "Descrizione",
+          "required": true,
+          "validation": {
+            "maxLength": 130,
+            "customErrorMsg": "Descrizione troppo lunga (max 130 caratteri)"
+          }
+        },
+        {
+          "component": "container",
+          "name": "button-container",
+          "label": "Configurazione Pulsante",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
+            }
+          ]
+        },
+        {
+          "component": "text",
+          "name": "note",
+          "label": "Note",
+          "required": true,
+          "validation": {
+            "maxLength": 25,
+            "customErrorMsg": "Note troppo lunghe (max 60 caratteri)"
+          }
+        },
+        {
+          "component": "container",
+          "name": "tag",
+          "label": "Configurazione Tag",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../atoms/tag/_tag.json#/models/tag/fields"
+            }
+          ]
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Immagine",
+          "multi": false,
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageSR",
+          "label": "Testo alternativo per l'immagine",
+          "required": true
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

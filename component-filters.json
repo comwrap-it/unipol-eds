@@ -13,7 +13,8 @@
       "faq-widget-section",
       "card-grid-widget",
       "data-table-widget",
-      "category-carousel-widget"
+      "category-carousel-widget",
+      "bundle-carousel-widget"
     ]
   },
   {
@@ -66,6 +67,10 @@
     ]
   },
   {
+    "id": "bundle-carousel-widget",
+    "components": []
+  },
+  {
     "id": "card-grid-widget",
     "components": [
       "card-grid"
@@ -106,6 +111,14 @@
   {
     "id": "product-highlights-widget",
     "components": []
+  },
+  {
+    "id": "insurance-product-carousel",
+    "components": [
+      "insurance-product-card"
+    ],
+    "min": 1,
+    "max": 8
   },
   {
     "id": "card-grid",

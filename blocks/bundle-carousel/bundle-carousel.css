@@ -1,0 +1,83 @@
+.bundle-carousel-wrapper {
+    /* this wrapper is added from eds */
+    width: 100%;
+}
+
+.bundle-carousel-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--Carousel-Widget-Gap-D-Ds, 3rem);
+    width: 100%;
+
+    & .bundle-carousel {
+        display: flex;
+        flex-direction: column;
+        width: 21.4375rem;
+        margin-inline: auto;
+        gap: var(--Carousel-bundle-Gap, 1rem);
+    }
+}
+
+@media (width < 400px) {
+    .bundle-carousel-container {
+        & .bundle-carousel {
+            width: 100%;
+        }
+    }
+}
+
+/* Tablet Portrait */
+@media (width >= 768px) {
+    .bundle-carousel-container {
+        margin-inline: auto;
+        gap: var(--Carousel-Widget-Gap-M-Tp, 2.5rem);
+
+        &.swiper {
+            overflow: visible;
+        }
+
+        .bundle-carousel {
+            flex-direction: row;
+            width: 100%;
+            align-items: flex-start;
+            gap: 0;
+
+            & .swiper-slide {
+                width: calc(100% / 2.3);
+                height: -webkit-fill-available;
+                margin-inline-end: var(
+                    --Carousel-bundle-Gap-M-Tp,
+                    0.5rem
+                );
+
+                &:last-child {
+                    margin-inline-end: 0;
+                }
+            }
+        }
+    }
+}
+
+/* Tablet Landscape */
+@media (width >= 1024px) {
+    .bundle-carousel-container {
+        .bundle-carousel {
+            & .swiper-slide {
+                width: calc(100% / 3.6);
+                margin-inline-end: var(--Carousel-bundle-Gap, 1rem);
+            }
+        }
+    }
+}
+
+/* Desktop */
+@media (width >= 1200px) {
+    .bundle-carousel-container {
+        .bundle-carousel {
+            & .swiper-slide {
+                width: calc(100% / 4.3);
+            }
+        }
+    }
+}
