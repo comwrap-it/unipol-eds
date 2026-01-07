@@ -22,6 +22,7 @@ import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
 import { initCarouselAnimations } from '../../scripts/reveal.js';
 import loadSwiper from '../../scripts/delayed.js';
 import { handleSlideChange } from '../../scripts/utils.js';
+import handleCategoryCarouselWidget from '../category-carousel-widget/category-carousel-widget.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -232,4 +233,6 @@ export default async function decorate(block) {
   await handleTabletChange(tabletMQ, carousel, block);
 
   tabletMQ.addEventListener('change', (e) => handleTabletChange(e, carousel, block));
+
+  handleCategoryCarouselWidget();
 }
