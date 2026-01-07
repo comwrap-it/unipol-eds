@@ -27,7 +27,7 @@
           "description": "Default \"Mostra di più\"",
           "validation": {
             "maxLength": 15,
-            "customErrorMsg": "Testo troppo lungo (max 15 caratteri)"
+            "customErrorMsg": "Testo troppo lungo"
           }
         }
       ]
@@ -35,9 +35,9 @@
   ],
   "filters": [
     {
-      "id": "insurance-product-carousel",
+      "id": "bundle-carousel",
       "components": [
-        "insurance-product-card"
+        "bundle-card"
       ],
       "min": 1,
       "max": 8

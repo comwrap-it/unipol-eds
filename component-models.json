@@ -1009,6 +1009,16 @@
         ]
       },
       {
+        "component": "text",
+        "name": "note",
+        "label": "Note",
+        "required": true,
+        "validation": {
+          "maxLength": 25,
+          "customErrorMsg": "Note troppo lunghe (max 60 caratteri)"
+        }
+      },
+      {
         "component": "reference",
         "valueType": "string",
         "name": "image",
@@ -1533,7 +1543,7 @@
         "description": "Default \"Mostra di più\"",
         "validation": {
           "maxLength": 15,
-          "customErrorMsg": "Testo troppo lungo (max 15 caratteri)"
+          "customErrorMsg": "Testo troppo lungo"
         }
       }
     ]

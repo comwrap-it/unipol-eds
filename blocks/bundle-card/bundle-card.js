@@ -8,12 +8,7 @@
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
 
-import {
-  createButtonFromRows,
-}
-  from '../atoms/buttons/standard-button/standard-button.js';
-import { createTagFromRows } from '../atoms/tag/tag.js';
-
+import { createButtonFromRows } from '../atoms/buttons/standard-button/index.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { extractInstrumentationAttributes } from '../../scripts/utils.js';
@@ -62,38 +57,40 @@ export default async function decorateBundleCard(block, isFirstCard = false) {
   // Extract card data
   // Row 0:  Title
   // Row 1:  Description
-  // Row 2:  Button label
-  // Row 3:  Button variant
-  // Row 4:  Button link
-  // Row 5:  Button target
-  // Row 6:  Button size
-  // Row 7:  Button left icon
-  // Row 8:  Button right icon
-  // Row 9:  Note
-  // Row 10:  Tag Label
-  // Row 11: Tag Category
-  // Row 12: Tag Variant
-  // Row 13: Image
-  // Row 14: Image Alternative Text
+  // Row 2:  Button 1 label
+  // Row 3:  Button 1 variant
+  // Row 4:  Button 1 link
+  // Row 5:  Button 1 target
+  // Row 6:  Button 1 size
+  // Row 7:  Button 1 left icon
+  // Row 8:  Button 1 right icon
+
+  // Row 9:  Button 2 label
+  // Row 10:  Button 2 variant
+  // Row 11:  Button 2 link
+  // Row 12:  Button 2 target
+  // Row 13:  Button 2 size
+  // Row 14:  Button 2 left icon
+  // Row 15:  Button 2 right icon
+  // Row 16: Note
+  // Row 17: Image
+  // Row 18: Image Alternative Text
+
+  // Row 19: 1 Category Strip Background Color
+  // Row 20: 1 Category Strip Icon
+  // Row 21: 1 Category Strip Desc
+  // Row 22: 1 Category Strip tag 1 label
+  // Row 23: 1 Category Strip tag 1 variant
+  // Row 24: 1 Category Strip tag 2 label
+  // Row 25: 1 Category Strip tag 2 variant
 
   // Card Image
-  const imageRow = rows[13];
+  const imageRow = rows[17];
   if (imageRow) {
     const cardImage = document.createElement('div');
     cardImage.className = 'bundle-card-image';
 
-    const tagRows = rows.slice(10, 13);
-    const tagElement = createTagFromRows(tagRows);
-
-    if (tagElement && tagElement.classList) {
-      tagElement.classList.add('bundle-card-tag');
-    }
-
-    if (cardImage && tagElement && tagRows && tagRows.length > 0) {
-      cardImage.appendChild(tagElement);
-    }
-
-    const altText = rows[14].textContent?.trim() || '';
+    const altText = rows[18].textContent?.trim() || '';
     const picture = imageRow.querySelector('picture');
     if (picture) {
       // Move existing picture (preserves instrumentation)
@@ -217,35 +214,42 @@ export default async function decorateBundleCard(block, isFirstCard = false) {
 
   cardContent.appendChild(cardTextContent);
 
-  // Card Button - Rows 2-9 (optional)
-  // Universal Editor creates separate rows for each button field
-  const buttonRows = rows.slice(2, 9);
-  const buttonElement = createButtonFromRows(buttonRows);
+  // BUTTON 1 (rows 2 → 8)
+  const button1Rows = rows.slice(2, 9);
+  const button1 = createButtonFromRows(button1Rows);
 
-  if (buttonElement && buttonElement.children.length > 0) {
+  // BUTTON 2 (rows 9 → 15)
+  const button2Rows = rows.slice(9, 16);
+  const button2 = createButtonFromRows(button2Rows);
+
+  // NOTE
+  const noteRow = rows[16];
+
+  if (button1 || button2 || noteRow) {
     const buttonsContainer = document.createElement('div');
     buttonsContainer.className = 'button-subdescription';
 
-    buttonsContainer.appendChild(buttonElement);
+    if (button1 && button1.children.length > 0) {
+      buttonsContainer.appendChild(button1);
+    }
 
-    const note = rows[9];
-    if (note) {
-      // Try to preserve existing paragraph
-      const existingPara = note.querySelector('p');
+    if (button2 && button2.children.length > 0) {
+      buttonsContainer.appendChild(button2);
+    }
+
+    if (noteRow) {
+      const existingPara = noteRow.querySelector('p');
       if (existingPara) {
         existingPara.className = 'subdescription';
-        moveInstrumentation(note, existingPara);
+        moveInstrumentation(noteRow, existingPara);
         buttonsContainer.appendChild(existingPara);
-      } else if (note.textContent?.trim()) {
-        // Create new paragraph but preserve instrumentation
+      } else if (noteRow.textContent?.trim()) {
         const noteFromHTML = document.createElement('p');
         noteFromHTML.className = 'subdescription';
-        // Clone child nodes to preserve richtext instrumentation
-        while (note.firstChild) {
-          noteFromHTML.appendChild(note.firstChild);
+        while (noteRow.firstChild) {
+          noteFromHTML.appendChild(noteRow.firstChild);
         }
-        // Move instrumentation from row to note
-        moveInstrumentation(note, noteFromHTML);
+        moveInstrumentation(noteRow, noteFromHTML);
         buttonsContainer.appendChild(noteFromHTML);
       }
     }
@@ -253,6 +257,63 @@ export default async function decorateBundleCard(block, isFirstCard = false) {
     if (buttonsContainer.children.length > 0) {
       cardContent.appendChild(buttonsContainer);
     }
+  }
+
+  // CATEGORY STRIP (rows 19–25)
+  const categoryStripRows = rows.slice(19, 26);
+
+  const [
+    bgColorRow,
+    iconRow,
+    descRow,
+    tag1LabelRow,
+    tag1VariantRow,
+    tag2LabelRow,
+    tag2VariantRow,
+  ] = categoryStripRows;
+
+  const categoryStrip = document.createElement('div');
+  categoryStrip.className = 'category-strip-container';
+
+  // background class
+  const bgClass = bgColorRow?.textContent?.trim();
+  if (bgClass) {
+    categoryStrip.classList.add(bgClass);
+  }
+
+  // icon
+  const icon = iconRow?.textContent?.trim();
+  if (icon) {
+    const iconEl = document.createElement('i');
+    iconEl.className = icon;
+    categoryStrip.appendChild(iconEl);
+  }
+
+  // description
+  if (descRow && descRow.textContent?.trim()) {
+    const desc = document.createElement('span');
+    desc.textContent = descRow.textContent.trim();
+    categoryStrip.appendChild(desc);
+  }
+
+  // tag 1
+  if (tag1LabelRow?.textContent?.trim()) {
+    const t1 = document.createElement('span');
+    t1.className = `tag ${tag1VariantRow?.textContent?.trim() || ''}`;
+    t1.textContent = tag1LabelRow.textContent.trim();
+    categoryStrip.appendChild(t1);
+  }
+
+  // tag 2
+  if (tag2LabelRow?.textContent?.trim()) {
+    const t2 = document.createElement('span');
+    t2.className = `tag ${tag2VariantRow?.textContent?.trim() || ''}`;
+    t2.textContent = tag2LabelRow.textContent.trim();
+    categoryStrip.appendChild(t2);
+  }
+
+  if (categoryStrip.children.length > 0) {
+    card.appendChild(categoryStrip);
   }
 
   // Append card content
