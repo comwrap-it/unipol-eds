@@ -5,7 +5,6 @@ export default async function handleInsuranceProductCarouselWidget() {
   const darkThemeText = section.dataset.insuranceProductCarouselWidgetDarkTheme;
   const darkThemeValue = darkThemeText === 'true';
 
-
   if (darkThemeValue) {
     section?.classList.add('theme-dark');
   } else {
