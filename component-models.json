@@ -740,7 +740,7 @@
     ]
   },
   {
-    "id": "blog-carousel",
+    "id": "card-grid",
     "fields": [
       {
         "component": "container",
