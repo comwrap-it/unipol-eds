@@ -99,6 +99,7 @@ export default function decorate(block, isFirstBlock = false) {
     // Image
     const imageWrapper = document.createElement('div');
     imageWrapper.classList.add('image-wrapper');
+    imageWrapper.classList.add('reveal-in-up');
     const optimized = getOptimizedImage(imgElement);
     if (optimized) imageWrapper.appendChild(optimized);
 
@@ -111,12 +112,12 @@ export default function decorate(block, isFirstBlock = false) {
     textWrapper.classList.add('text-wrapper');
 
     if (titleEl) {
-      titleEl.classList.add('title');
+      titleEl.classList.add('title', 'reveal-in-up', 'delay-1');
       textWrapper.appendChild(titleEl);
     }
 
     if (descriptionEl) {
-      descriptionEl.classList.add('description');
+      descriptionEl.classList.add('description', 'reveal-in-up', 'delay-2');
       textWrapper.appendChild(descriptionEl);
     }
 
@@ -126,6 +127,7 @@ export default function decorate(block, isFirstBlock = false) {
     if (buttonElement) {
       const btnContainer = document.createElement('div');
       btnContainer.classList.add('button-container');
+      btnContainer.classList.add('reveal-in-up', 'delay-3');
       btnContainer.appendChild(buttonElement);
       contentWrapper.appendChild(btnContainer);
     }
