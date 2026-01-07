@@ -1,14 +1,13 @@
+import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
+import { createIconButton } from '@unipol-ds/components/atoms/buttons/icon-button/icon-button.js';
+import createOverlay from '@unipol-ds/components/atoms/overlay/overlay.js';
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
 import {
   getValuesFromBlock,
   lockBodyScroll,
   unlockBodyScroll,
   restoreInstrumentation,
 } from '../../scripts/utils.js';
-
-import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
-import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
-import { createIconButton } from '@unipol-ds/components/atoms/buttons/icon-button/icon-button.js';
-import createOverlay from '@unipol-ds/components/atoms/overlay/overlay.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {

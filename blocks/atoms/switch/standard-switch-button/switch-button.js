@@ -1,5 +1,5 @@
-import { CHECKED_STATES } from '../../../../constants/index.js';
 import { createSwitch } from '@unipol-ds/components/atoms/switch/standard-switch-button/switch-button.js';
+import { CHECKED_STATES } from '../../../../constants/index.js';
 import { extractInstrumentationAttributes } from '../../../../scripts/utils.js';
 
 /**

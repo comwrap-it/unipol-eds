@@ -1,9 +1,9 @@
+import { createTag } from '@unipol-ds/components/atoms/tag/tag.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import {
   createIconElementFromCssClass,
   extractMediaElementFromRow,
 } from '../../scripts/domHelpers.js';
-import { createTag } from '@unipol-ds/components/atoms/tag/tag.js';
 
 /**
  *

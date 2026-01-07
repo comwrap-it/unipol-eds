@@ -1,4 +1,5 @@
 import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
+import { createIconButton } from '@unipol-ds/components/atoms/buttons/icon-button/icon-button.js';
 import { loadCSS } from '../../scripts/aem.js';
 import decorateProductHighlightsCarousel, {
   PRODUCT_HIGHLIGHTS_SWIPER_SPEED,
@@ -6,7 +7,6 @@ import decorateProductHighlightsCarousel, {
   setProductHighlightsSwiperSpeed,
 } from '../product-highlights-carousel/product-highlights-carousel.js';
 import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
-import { createIconButton } from '@unipol-ds/components/atoms/buttons/icon-button/icon-button.js';
 
 // #region CONSTANTS
 const WIDGET_CLASS = 'product-highlights-widget';

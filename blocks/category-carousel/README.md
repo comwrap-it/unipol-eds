@@ -1,33 +1,24 @@
-# Insurance Product Carousel
+# Category Carousel
 
-Carousel of Insurance Product Cards with optional mobile “Show more” button. Defines a label field and restricts children to product cards. Model in `_insurance-product-carousel.json`; behavior in `insurance-product-carousel.js`.
+Carousel of Category Cards. Defines a label field and restricts to only 3 children category cards. Model in `_category-carousel.json`; behavior in `category-carousel.js`.
 
 ## Overview
-- Renders a horizontal, swipeable carousel of `insurance-product-card` items.
-- On desktop, shows scroll indicator (arrows + dots) for many cards; on mobile, hides cards after the first four and shows a configurable “Show more”.
+- Renders a horizontal, swipeable carousel of `category-card` items.
+- On tablet, shows scroll indicator (arrows + dots); on mobile the cards are in column.
 - Loads card CSS on demand and preserves UE instrumentation.
 
 ## Field Reference (UE Model)
-Source: `_insurance-product-carousel.json` (model: `insurance-product-carousel`).
-
-1) showMoreButtonLabel (text)
-- Purpose: Label for the mobile-only “Show more” button.
-- Default: "Mostra di più". Max 15 chars.
+Source: `_category-carousel.json` (model: `category-carousel`).
 
 ## Filters
-- Filter: `insurance-product-carousel` → Allowed components: `insurance-product-card`.
-- Constraints: `min: 1`, `max: 8` cards.
+- Filter: `category-carousel` → Allowed components: `category-card`.
+- Constraints: `only 3 cards embedded`.
 
 ## Runtime Behavior (insurance-product-carousel.js)
-- Builds `.insurance-product-carousel-container.swiper` and `.insurance-product-carousel.swiper-wrapper` with slide items.
-- Desktop: If >4 cards, appends scroll indicator and initializes Swiper.
-- Mobile: If >4 cards, hides extra slides and shows "Show more" that reveals all.
+- Builds `.category-carousel-container.swiper` and `.category-carousel.swiper-wrapper` with slide items.
+- Tablet: appends scroll indicator and initializes Swiper.
+- Mobile: shoes in column the 3 cards.
 - Instrumentation: Moves/preserves UE attributes when transforming rows into slides and cards.
 
 ## Authoring Notes (Universal Editor)
-- First row sets `showMoreButtonLabel`; subsequent rows are `insurance-product-card` items.
-- First card is treated as LCP candidate for image loading.
-
-## Defaults and Fallbacks
-- No label provided: defaults to "Mostra di più".
-- ≤4 cards: no scroll indicator on desktop and no “Show more” on mobile.
+- The rows are `category-card` items.

@@ -1,11 +1,10 @@
 export default async function handleInsuranceProductCarouselWidget() {
   const block = document.querySelector('.insurance-product-carousel-container');
 
-  const rows = [...block.children];
-  const darkThemeText = rows[1]?.textContent?.trim().toLowerCase();
+  const section = block.closest('.section');
+  const darkThemeText = section.dataset.insuranceProductCarouselWidgetDarkTheme;
   const darkThemeValue = darkThemeText === 'true';
 
-  const section = block.closest('.section');
   if (darkThemeValue) {
     section?.classList.add('theme-dark');
   } else {

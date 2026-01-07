@@ -1,4 +1,4 @@
-import { BUTTON_ICON_SIZES, NAVIGATION_PILL_VARIANTS } from "../../../constants/index.js";
+import { BUTTON_ICON_SIZES, NAVIGATION_PILL_VARIANTS } from '../../../constants/index.js';
 
 /**
  * Creates a Navigation Pill
@@ -71,4 +71,3 @@ export function createNavigationPill(
 
   return el;
 }
-

@@ -16,6 +16,7 @@
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
 
+import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
 
@@ -24,7 +25,6 @@ import { initCarouselAnimations } from '../../scripts/reveal.js';
 import loadSwiper from '../../scripts/delayed.js';
 import { handleSlideChange } from '../../scripts/utils.js';
 import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
-import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {

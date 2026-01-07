@@ -1,5 +1,5 @@
-import { CHECKED_STATES } from '../../../../constants/index.js';
 import { createRadioButtonField } from '@unipol-ds/components/atoms/radio-button/radio-button-field/radio-button-field.js';
+import { CHECKED_STATES } from '../../../../constants/index.js';
 import { extractInstrumentationAttributes } from '../../../../scripts/utils.js';
 
 /**
