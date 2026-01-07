@@ -23,19 +23,19 @@ export default async function decorate(block) {
   const rows = Array.from(block.children);
   console.log('🚀 ~ decorate ~ rows:', rows);
 
-  const buttonConfigRows = rows.slice(0, 6);
-  const contentRows = rows.slice(6);
+  const buttonConfigRows = rows.slice(0, 7);
+  const contentRows = rows.slice(7);
 
   // Create card grid container
   const cardGrid = document.createElement('div');
   cardGrid.className = 'card-grid reveal-in-up';
 
+  const { createWarrantyCardFromRows } = await import(
+    '../warranty-card/warranty-card.js'
+  );
   // Process each row as a warranty card
   const cardPromises = contentRows.map(async (row) => {
     const childrenRows = Array.from(row.children);
-    const {
-      createWarrantyCardFromRows,
-    } = await import('../warranty-card/warranty-card.js');
     const card = await createWarrantyCardFromRows(childrenRows);
     moveInstrumentation(row, card);
     cardGrid.appendChild(card);
