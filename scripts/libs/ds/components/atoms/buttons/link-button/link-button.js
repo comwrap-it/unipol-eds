@@ -5,8 +5,7 @@
  * It can be imported or used by other components if needed.
  */
 
-import { BUTTON_ICON_SIZES } from "../../../../constants/index.js";
-
+import { BUTTON_ICON_SIZES } from '../../../../constants/index.js';
 
 /**
  * Create a link button element
@@ -78,4 +77,3 @@ export function createLinkButton(
 
   return link;
 }
-

@@ -1,4 +1,5 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { createButtonFromRows } from '../atoms/buttons/standard-button/standard-button.js';
 
 /**
  * ensures styles are loaded only once
@@ -20,22 +21,32 @@ export default async function decorate(block) {
 
   // Get rows from block
   const rows = Array.from(block.children);
+  console.log('🚀 ~ decorate ~ rows:', rows);
+
+  const buttonConfigRows = rows.slice(0, 7);
+  const contentRows = rows.slice(7);
 
   // Create card grid container
   const cardGrid = document.createElement('div');
   cardGrid.className = 'card-grid reveal-in-up';
 
+  const { createWarrantyCardFromRows } = await import(
+    '../warranty-card/warranty-card.js'
+  );
   // Process each row as a warranty card
-  const cardPromises = rows.map(async (row) => {
+  const cardPromises = contentRows.map(async (row) => {
     const childrenRows = Array.from(row.children);
-    const {
-      createWarrantyCardFromRows,
-    } = await import('../warranty-card/warranty-card.js');
     const card = await createWarrantyCardFromRows(childrenRows);
     moveInstrumentation(row, card);
     cardGrid.appendChild(card);
   });
   await Promise.all(cardPromises);
+
+  const parentSection = block.closest('.section');
+  if (parentSection) {
+    const button = await createButtonFromRows(buttonConfigRows);
+    parentSection.appendChild(button);
+  }
 
   block.replaceChildren(cardGrid);
 }

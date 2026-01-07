@@ -7,7 +7,7 @@
  * Export constants and functions that can be reused across components.
  */
 
-import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from "../../../../constants/index.js";
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../../../constants/index.js';
 
 /**
  * Create a button element with styling

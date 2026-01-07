@@ -1,8 +1,8 @@
-import { loadCSS } from "../../../scripts/aem.js";
-import loadSwiper from "../../../scripts/delayed.js";
-import { handleSlideChange } from "../../../scripts/utils.js";
-import createScrollIndicator from "../../molecules/scroll-indicator/scroll-indicator.js";
-import { createMiniHero } from "../mini-hero/mini-hero.js";
+import { loadCSS } from '../../../scripts/aem.js';
+import loadSwiper from '../../../scripts/delayed.js';
+import { handleSlideChange } from '../../../scripts/utils.js';
+import createScrollIndicator from '../../molecules/scroll-indicator/scroll-indicator.js';
+import { createMiniHero } from '../mini-hero/mini-hero.js';
 
 /**
  *
@@ -15,18 +15,18 @@ const initSwiper = (
   Swiper,
   carousel,
   leftIconButton = null,
-  rightIconButton = null
+  rightIconButton = null,
 ) => {
   // Initialize Swiper after DOM insertion
-  const swiper = new Swiper(carousel || ".swiper", {
+  const swiper = new Swiper(carousel || '.swiper', {
     navigation: {
-      nextEl: rightIconButton || ".swiper-button-next",
-      prevEl: leftIconButton || ".swiper-button-prev",
-      addIcons: false
+      nextEl: rightIconButton || '.swiper-button-next',
+      prevEl: leftIconButton || '.swiper-button-prev',
+      addIcons: false,
     },
     slidesPerView: 1,
     // Optional accessibility tweaks
-    a11y: { enabled: true }
+    a11y: { enabled: true },
   });
 
   return swiper;
@@ -39,8 +39,8 @@ let isStylesAlreadyLoaded = false;
 const ensureStylesLoaded = async () => {
   if (isStylesAlreadyLoaded) return;
   const cssPromises = [
-    `../../atoms/buttons/standard-button/standard-button.css`,
-    `../mini-hero/mini-hero.css`
+    '../../atoms/buttons/standard-button/standard-button.css',
+    '../mini-hero/mini-hero.css',
   ].map((cssPath) => loadCSS(cssPath));
   await Promise.all(cssPromises);
   isStylesAlreadyLoaded = true;
@@ -73,21 +73,21 @@ const ensureStylesLoaded = async () => {
 export default async function createMiniHeroCarousel(miniHeros) {
   await ensureStylesLoaded();
 
-  const miniHeroCarousel = document.createElement("div");
-  miniHeroCarousel.className = "mini-hero-carousel theme-dark";
+  const miniHeroCarousel = document.createElement('div');
+  miniHeroCarousel.className = 'mini-hero-carousel theme-dark';
 
   const isCarousel = miniHeros.length > 1;
 
-  const carousel = document.createElement("div");
-  carousel.className = "swiper";
-  carousel.setAttribute("role", "region");
-  carousel.setAttribute("aria-label", "Hero carousel");
-  carousel.setAttribute("tabindex", "0");
+  const carousel = document.createElement('div');
+  carousel.className = 'swiper';
+  carousel.setAttribute('role', 'region');
+  carousel.setAttribute('aria-label', 'Hero carousel');
+  carousel.setAttribute('tabindex', '0');
 
   // Create carousel track (scrollable container)
-  const track = document.createElement("div");
-  track.className = "swiper-wrapper";
-  track.setAttribute("role", "list");
+  const track = document.createElement('div');
+  track.className = 'swiper-wrapper';
+  track.setAttribute('role', 'list');
 
   const promises = miniHeros.map(async (miniHero) => {
     const hero = await createMiniHero(
@@ -105,7 +105,7 @@ export default async function createMiniHeroCarousel(miniHeros) {
       miniHero.btnIconSize,
       miniHero.btnLeftIcon,
       miniHero.btnRightIcon,
-      isCarousel
+      isCarousel,
     );
     track.appendChild(hero);
   });
@@ -115,8 +115,9 @@ export default async function createMiniHeroCarousel(miniHeros) {
   miniHeroCarousel.replaceChildren(carousel);
 
   if (isCarousel) {
-    const { leftIconButton, scrollIndicator, rightIconButton, setExpandedDot } =
-      await createScrollIndicator(true);
+    const {
+      leftIconButton, scrollIndicator, rightIconButton, setExpandedDot,
+    } = await createScrollIndicator(true);
     carousel.appendChild(scrollIndicator);
     // initialize Swiper
     const Swiper = await loadSwiper();
@@ -124,13 +125,13 @@ export default async function createMiniHeroCarousel(miniHeros) {
       Swiper,
       carousel,
       leftIconButton,
-      rightIconButton
+      rightIconButton,
     );
     handleSlideChange(
       swiperInstance,
       setExpandedDot,
       leftIconButton,
-      rightIconButton
+      rightIconButton,
     );
   }
 }

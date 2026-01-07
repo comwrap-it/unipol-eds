@@ -1,5 +1,5 @@
-import { BUTTON_ICON_SIZES, NAVIGATION_PILL_VARIANTS } from '../../constants/index.js';
 import { createNavigationPill } from '@unipol-ds/components/atoms/navigation-pill/navigation-pill.js';
+import { BUTTON_ICON_SIZES, NAVIGATION_PILL_VARIANTS } from '../../constants/index.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { extractInstrumentationAttributes } from '../../scripts/utils.js';
 

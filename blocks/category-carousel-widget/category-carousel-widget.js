@@ -14,11 +14,10 @@ async function ensureStylesLoaded() {
 export default async function handleCategoryCarouselWidget() {
   const block = document.querySelector('.category-carousel-container');
 
-  const rows = [...block.children];
-  const darkThemeText = rows[1]?.textContent?.trim().toLowerCase();
+  const section = block.closest('.section');
+  const darkThemeText = section.dataset.categoryCarouselWidgetDarkTheme;
   const darkThemeValue = darkThemeText === 'true';
 
-  const section = block.closest('.section');
   if (darkThemeValue) {
     section?.classList.add('theme-dark');
   } else {

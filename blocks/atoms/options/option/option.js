@@ -1,5 +1,5 @@
-import { CHECKBOX_TYPES } from '../../../../constants/index.js';
 import createOption from '@unipol-ds/components/atoms/options/option/option.js';
+import { CHECKBOX_TYPES } from '../../../../constants/index.js';
 
 /**
  * Extract option properties from rows

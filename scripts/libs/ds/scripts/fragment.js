@@ -1,5 +1,5 @@
-import { loadSections } from "./aem.js";
-import { decorateMain } from "./scripts.js";
+import { loadSections } from './aem.js';
+import { decorateMain } from './scripts.js';
 
 /**
  * Loads a fragment.
