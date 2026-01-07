@@ -12,11 +12,11 @@
  *
  */
 
+import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
 import { getValuesFromBlock, isAuthorMode, restoreInstrumentation } from '../../scripts/utils.js';
 import { loadFragment } from '../fragment/fragment.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
-import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
 
 let isStylesLoaded = false;
 

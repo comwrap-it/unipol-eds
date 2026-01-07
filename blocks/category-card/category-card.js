@@ -8,10 +8,10 @@
  */
 
 import { create3Dicons } from '@unipol-ds/components/atoms/icons-3D/icons-3D.js';
+import { createCategoryChip } from '@unipol-ds/components/atoms/category-chip/category-chip.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { createTextElementFromRow } from '../../scripts/domHelpers.js';
 import { extractInstrumentationAttributes, restoreInstrumentation } from '../../scripts/utils.js';
-import { createCategoryChip } from '@unipol-ds/components/atoms/category-chip/category-chip.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {

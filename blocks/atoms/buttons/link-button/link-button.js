@@ -5,8 +5,8 @@
  * It can be imported or used by other components if needed.
  */
 
-import { BUTTON_ICON_SIZES } from '../../../../constants/index.js';
 import { createLinkButton } from '@unipol-ds/components/atoms/buttons/link-button/link-button.js';
+import { BUTTON_ICON_SIZES } from '../../../../constants/index.js';
 
 /**
  * Create a link button from Universal Editor rows
