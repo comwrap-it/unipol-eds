@@ -45,7 +45,7 @@
           "label": "Nome sezione Insurance Product Carousel Widget"
         },
         {
-          "component": "toggle",
+          "component": "boolean",
           "name": "insurance-product-carousel-widget-dark-theme",
           "label": "Tema scuro",
           "default": false

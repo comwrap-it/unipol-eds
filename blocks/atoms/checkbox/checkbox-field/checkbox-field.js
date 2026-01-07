@@ -1,5 +1,5 @@
 import { CHECKBOX_TYPES } from '../../../../constants/index.js';
-import { createCheckboxField } from '../../../../scripts/libs/ds/components/atoms/checkbox/checkbox-field/checkbox-field.js';
+import { createCheckboxField } from '@unipol-ds/components/atoms/checkbox/checkbox-field/checkbox-field.js';
 import { extractInstrumentationAttributes } from '../../../../scripts/utils.js';
 
 /**

@@ -1,8 +1,8 @@
 {
-  "name": "@adobe/aem-boilerplate",
+  "name": "@unipol-tpd/unipol-website",
   "private": true,
   "version": "1.3.0",
-  "description": "Starter project for Adobe Helix",
+  "description": "Unipol TPD Website",
   "scripts": {
     "lint:js": "eslint . --ext .json,.js,.mjs",
     "lint:css": "stylelint \"blocks/**/*.css\" \"styles/*.css\"",
@@ -17,14 +17,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adobe/aem-boilerplate.git"
+    "url": "git@unipolsai.gitlab.host:workload/aws/tpd/aem/unipol-eds/source.git"
   },
-  "author": "Adobe",
+  "author": "Comwrap IT Reply",
   "license": "Apache License 2.0",
   "bugs": {
-    "url": "https://github.com/adobe/aem-boilerplate/issues"
+    "url": "https://unipolsai.gitlab.host/workload/aws/tpd/aem/unipol-eds/source/-/issues"
   },
-  "homepage": "https://github.com/adobe/aem-boilerplate#readme",
+  "homepage": "https://unipolsai.gitlab.host/workload/aws/tpd/aem/unipol-eds/source/-/blob/main/README.md",
   "devDependencies": {
     "@babel/eslint-parser": "7.28.0",
     "cpx": "^1.5.0",
@@ -41,6 +41,6 @@
     "stylelint-config-standard": "38.0.0"
   },
   "dependencies": {
-    "@unipol-tpd/design-system-components": "^1.0.9"
+    "@unipol-tpd/design-system-components": "^1.0.12"
   }
 }

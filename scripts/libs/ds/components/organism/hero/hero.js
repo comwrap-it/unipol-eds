@@ -1,6 +1,6 @@
-import { createOptimizedPicture } from '../../../scripts/aem.js';
-import { moveInstrumentation } from '../../../scripts/scripts.js';
-import { createButton } from '../../atoms/buttons/standard-button/standard-button.js';
+import { createOptimizedPicture } from "../../../scripts/aem.js";
+import { moveInstrumentation } from "../../../scripts/scripts.js";
+import { createButton } from "../../atoms/buttons/standard-button/standard-button.js";
 
 /**
  * Sets up the Hero container with background media (image or video).
@@ -12,65 +12,65 @@ import { createButton } from '../../atoms/buttons/standard-button/standard-butto
 const setupHeroWithBg = (
   heroBackground,
   isVideoBackground = false,
-  isCarousel = false,
+  isCarousel = false
 ) => {
-  const hero = document.createElement('div');
-  hero.className = `hero${isCarousel ? ' swiper-slide' : ''}`;
+  const hero = document.createElement("div");
+  hero.className = `hero${isCarousel ? " swiper-slide" : ""}`;
 
   if (!heroBackground) return hero;
 
   if (!isVideoBackground) {
     const pictureBg = createOptimizedPicture(
       heroBackground,
-      'Hero background image',
-      true,
+      "Hero background image",
+      true
     );
-    pictureBg.className = 'hero-bg';
-    pictureBg.setAttribute('aria-hidden', 'true');
-    const img = pictureBg.querySelector('img');
+    pictureBg.className = "hero-bg";
+    pictureBg.setAttribute("aria-hidden", "true");
+    const img = pictureBg.querySelector("img");
     if (img) {
-      img.loading = 'eager';
-      img.decoding = 'async';
-      img.fetchPriority = 'high';
+      img.loading = "eager";
+      img.decoding = "async";
+      img.fetchPriority = "high";
     }
     hero.appendChild(pictureBg);
   } else {
     const videoPath = heroBackground;
-    const videoBg = document.createElement('video');
+    const videoBg = document.createElement("video");
     videoBg.muted = true;
     moveInstrumentation(heroBackground, videoBg);
-    videoBg.className = 'hero-bg';
-    videoBg.setAttribute('aria-hidden', 'true');
-    videoBg.preload = 'auto';
+    videoBg.className = "hero-bg";
+    videoBg.setAttribute("aria-hidden", "true");
+    videoBg.preload = "auto";
     videoBg.autoplay = true;
     videoBg.loop = true;
     videoBg.playsInline = true;
     videoBg.src = videoPath;
     hero.appendChild(videoBg);
 
-    videoBg.addEventListener('canplay', () => {
+    videoBg.addEventListener("canplay", () => {
       videoBg.play();
     });
 
-    const pauseIcon = document.createElement('button');
-    pauseIcon.className = 'hero-icon un-icon-pause-circle icon-extra-large';
+    const pauseIcon = document.createElement("button");
+    pauseIcon.className = "hero-icon un-icon-pause-circle icon-extra-large";
     hero.appendChild(pauseIcon);
     pauseIcon.onclick = () => {
-      if (pauseIcon.classList.contains('un-icon-play-circle')) {
+      if (pauseIcon.classList.contains("un-icon-play-circle")) {
         videoBg.play();
-        pauseIcon.classList.remove('un-icon-play-circle');
-        pauseIcon.classList.add('un-icon-pause-circle');
+        pauseIcon.classList.remove("un-icon-play-circle");
+        pauseIcon.classList.add("un-icon-pause-circle");
       } else {
         videoBg.pause();
-        pauseIcon.classList.remove('un-icon-pause-circle');
-        pauseIcon.classList.add('un-icon-play-circle');
+        pauseIcon.classList.remove("un-icon-pause-circle");
+        pauseIcon.classList.add("un-icon-play-circle");
       }
     };
   }
 
-  const heroOverlay = document.createElement('div');
-  heroOverlay.className = 'hero-overlay';
-  heroOverlay.setAttribute('aria-hidden', 'true');
+  const heroOverlay = document.createElement("div");
+  heroOverlay.className = "hero-overlay";
+  heroOverlay.setAttribute("aria-hidden", "true");
   hero.appendChild(heroOverlay);
   return hero;
 };
@@ -95,41 +95,41 @@ const createHeroMainSection = (
   subtitle,
   showHeroBulletList,
   bulletList,
-  isCarousel = false,
+  isCarousel = false
 ) => {
-  const mainSection = document.createElement('div');
-  mainSection.className = `main-section${isCarousel ? ' carousel' : ''}`;
+  const mainSection = document.createElement("div");
+  mainSection.className = `main-section${isCarousel ? " carousel" : ""}`;
   if (showHeroLogo && heroLogo) {
     const logo = createOptimizedPicture(
       heroLogo,
-      'Hero logo',
-      true,
+      "Hero logo",
+      true
     );
-    logo.className = 'hero-logo';
+    logo.className = "hero-logo";
     mainSection.appendChild(logo);
   }
-  const titleEl = document.createElement('h2');
-  titleEl.className = 'hero-title';
+  const titleEl = document.createElement("h2");
+  titleEl.className = "hero-title";
   titleEl.textContent = title;
   mainSection.appendChild(titleEl);
   if (subtitleBold) {
-    const subtitleBoldEl = document.createElement('p');
-    subtitleBoldEl.className = 'hero-subtitle-bold';
+    const subtitleBoldEl = document.createElement("p");
+    subtitleBoldEl.className = "hero-subtitle-bold";
     subtitleBoldEl.textContent = subtitleBold;
     mainSection.appendChild(subtitleBoldEl);
   }
   if (subtitle) {
-    const subtitleEl = document.createElement('p');
-    subtitleEl.className = 'hero-subtitle';
+    const subtitleEl = document.createElement("p");
+    subtitleEl.className = "hero-subtitle";
     subtitleEl.textContent = subtitle;
     mainSection.appendChild(subtitleEl);
   }
   if (showHeroBulletList && bulletList?.length > 0) {
-    const bullets = document.createElement('ul');
-    bullets.className = 'hero-bullets';
+    const bullets = document.createElement("ul");
+    bullets.className = "hero-bullets";
     bulletList?.forEach((bullet) => {
-      const listItem = document.createElement('li');
-      listItem.className = 'hero-bullet-item';
+      const listItem = document.createElement("li");
+      listItem.className = "hero-bullet-item";
       listItem.textContent = bullet;
       bullets.appendChild(listItem);
     });
@@ -162,10 +162,10 @@ const createHeroButtonSection = async (
   btnLeftIcon,
   btnRightIcon,
   mainSection,
-  isCarousel = false,
+  isCarousel = false
 ) => {
-  const buttonSection = document.createElement('div');
-  buttonSection.className = 'button-section';
+  const buttonSection = document.createElement("div");
+  buttonSection.className = "button-section";
   if (showHeroButton) {
     const button = createButton(
       btnLabel,
@@ -174,7 +174,7 @@ const createHeroButtonSection = async (
       btnVariant,
       btnIconSize,
       btnLeftIcon,
-      btnRightIcon,
+      btnRightIcon
     );
     if (isCarousel) {
       mainSection.appendChild(button);
@@ -226,11 +226,11 @@ export async function createHero(
   btnIconSize,
   btnLeftIcon,
   btnRightIcon,
-  isCarousel = false,
+  isCarousel = false
 ) {
   const hero = setupHeroWithBg(heroBackground, isVideoBackground, isCarousel);
-  const heroContent = document.createElement('div');
-  heroContent.className = 'hero-content';
+  const heroContent = document.createElement("div");
+  heroContent.className = "hero-content";
   const mainSection = createHeroMainSection(
     showHeroLogo,
     heroLogo,
@@ -239,7 +239,7 @@ export async function createHero(
     subtitle,
     showHeroBulletList,
     bulletList,
-    isCarousel,
+    isCarousel
   );
   heroContent.appendChild(mainSection);
   if (showHeroButton) {
@@ -253,7 +253,7 @@ export async function createHero(
       btnLeftIcon,
       btnRightIcon,
       mainSection,
-      isCarousel,
+      isCarousel
     );
     if (buttonSection) {
       heroContent.appendChild(buttonSection);

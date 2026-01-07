@@ -1,5 +1,5 @@
-import { CHECKBOX_TYPES } from '../../../../constants/index.js';
-import { createCheckbox } from '../../checkbox/standard-checkbox/checkbox.js';
+import { CHECKBOX_TYPES } from "../../../../constants/index.js";
+import { createCheckbox } from "../../checkbox/standard-checkbox/checkbox.js";
 
 /**
  *
@@ -21,38 +21,38 @@ export default function createOption(
   shouldShowCheckbox = false,
   typeStatus = CHECKBOX_TYPES.UNCHECKED,
   disabled = false,
-  instrumentation = {},
+  instrumentation = {}
 ) {
-  const optionContainer = document.createElement('div');
-  optionContainer.className = 'option-container';
+  const optionContainer = document.createElement("div");
+  optionContainer.className = "option-container";
 
-  const option = document.createElement('button');
+  const option = document.createElement("button");
   const optionId = `option-${crypto.randomUUID()}`;
   option.id = optionId;
-  option.className = 'option';
-  option.setAttribute('type', 'button');
-  option.setAttribute('value', optionValue);
-  option.setAttribute('aria-selected', 'false');
-  option.setAttribute('role', 'option');
+  option.className = "option";
+  option.setAttribute("type", "button");
+  option.setAttribute("value", optionValue);
+  option.setAttribute("aria-selected", "false");
+  option.setAttribute("role", "option");
 
   let checkbox = null;
   if (shouldShowCheckbox) {
     checkbox = createCheckbox(typeStatus, disabled);
-    checkbox.setAttribute('tabindex', '-1');
+    checkbox.setAttribute("tabindex", "-1");
     option.appendChild(checkbox);
   }
 
-  const textContainer = document.createElement('div');
-  textContainer.className = 'texts-container';
+  const textContainer = document.createElement("div");
+  textContainer.className = "texts-container";
 
-  const label = document.createElement('span');
-  label.className = 'title';
+  const label = document.createElement("span");
+  label.className = "title";
   label.textContent = labelText;
   textContainer.appendChild(label);
 
   if (descriptionText) {
-    const description = document.createElement('span');
-    description.className = 'description';
+    const description = document.createElement("span");
+    description.className = "description";
     description.textContent = descriptionText;
     textContainer.appendChild(description);
   }
@@ -66,19 +66,19 @@ export default function createOption(
   });
 
   const emitOnClick = (e) => {
-    const customEvent = new CustomEvent('option-click', {
+    const customEvent = new CustomEvent("option-click", {
       bubbles: true,
       cancelable: true,
-      detail: { value: optionValue, optionId, originalEvent: e },
+      detail: { value: optionValue, optionId, originalEvent: e }
     });
     onClick?.(customEvent);
   };
 
   const toggleSelection = () => {
-    option.classList.toggle('selected');
+    option.classList.toggle("selected");
     option.setAttribute(
-      'aria-selected',
-      option.classList.contains('selected') ? 'true' : 'false',
+      "aria-selected",
+      option.classList.contains("selected") ? "true" : "false"
     );
   };
 
@@ -91,15 +91,15 @@ export default function createOption(
     emitOnClick(e);
   };
 
-  option.addEventListener('click', optionSelectHandler);
+  option.addEventListener("click", optionSelectHandler);
 
-  option.addEventListener('keydown', (event) => {
-    if (event.key === 'Enter' || event.key === ' ') {
+  option.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
       optionSelectHandler(event);
     }
   });
 
-  checkbox?.addEventListener('click', (e) => {
+  checkbox?.addEventListener("click", (e) => {
     e.stopPropagation();
     optionSelectHandler(e);
   });

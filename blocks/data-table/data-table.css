@@ -12,7 +12,7 @@ div.data-table.block .data-table-container {
     width: 100%;
     text-align: left;
     border-radius: var(--Data-Table-Radius, 24px);
-    overflow: hidden;
+    overflow: visible;
     border: 2px solid transparent;
 }
 
@@ -98,6 +98,10 @@ table.data-table tr:not(:first-child) th {
 
     table.data-table td > span:first-child {
       display: none;
+    }
+
+    table.data-table td > span.benefit-container:first-child {
+      display: block;
     }
 
 }

@@ -16,7 +16,7 @@ import { getValuesFromBlock, isAuthorMode, restoreInstrumentation } from '../../
 import { loadFragment } from '../fragment/fragment.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
-import { createButton } from '../../scripts/libs/ds/components/atoms/buttons/standard-button/standard-button.js';
+import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
 
 let isStylesLoaded = false;
 
@@ -29,9 +29,8 @@ async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   const { loadCSS } = await import('../../scripts/aem.js');
   await Promise.all([
-    loadCSS(
-      `${window.hlx.codeBasePath}/blocks/accordion/accordion.css`,
-    ),
+    loadCSS(`${window.hlx.codeBasePath}/blocks/accordion/accordion.css`),
+    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`),
   ]);
   isStylesLoaded = true;
 }

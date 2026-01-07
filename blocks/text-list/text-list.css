@@ -33,7 +33,7 @@
 }
 
 /* FOOTER ACCORDION */
-@media (width <= 768px) {
+@media (width < 768px) {
    .unipol-footer .text-list-wrapper {
         width: 45%;
     }
@@ -56,7 +56,7 @@
 
 
 /* Mobile > */
-@media (width > 395px) and (width <= 768px) {
+@media (width > 394px) and (width < 768px) {
     .text-list-wrapper {
         width: 50%;
     }
@@ -67,7 +67,7 @@
 }
 
 /* Mobile < */
-@media (width <= 395px) {
+@media (width < 395px) {
     .section.text-list-container .text-link-title {
         font-weight: 600;
     }

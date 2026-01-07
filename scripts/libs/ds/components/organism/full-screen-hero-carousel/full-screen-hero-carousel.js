@@ -1,8 +1,8 @@
-import { loadCSS } from '../../../scripts/aem.js';
-import loadSwiper from '../../../scripts/delayed.js';
-import { handleSlideChange } from '../../../scripts/utils.js';
-import createScrollIndicator from '../../molecules/scroll-indicator/scroll-indicator.js';
-import { createHero } from '../hero/hero.js';
+import { loadCSS } from "../../../scripts/aem.js";
+import loadSwiper from "../../../scripts/delayed.js";
+import { handleSlideChange } from "../../../scripts/utils.js";
+import createScrollIndicator from "../../molecules/scroll-indicator/scroll-indicator.js";
+import { createHero } from "../hero/hero.js";
 
 /**
  *
@@ -50,12 +50,13 @@ let isStylesAlreadyLoaded = false;
 const ensureStylesLoaded = async () => {
   if (isStylesAlreadyLoaded) return;
   const cssPromises = [
-    '../../atoms/buttons/standard-button/standard-button.css',
-    '../hero/hero.css',
+    `../../atoms/buttons/standard-button/standard-button.css`,
+    `../hero/hero.css`,
   ].map((cssPath) => loadCSS(cssPath));
   await Promise.all(cssPromises);
   isStylesAlreadyLoaded = true;
 };
+
 
 /**
  * @typedef {Object} HeroProps
@@ -103,25 +104,25 @@ export default async function createFullScreenHeroCarousel(heros) {
 
   const promises = heros.map(async (hero) => {
     const newHero = await createHero(
-      hero.heroBackground,
-      hero.isVideoBackground,
-      hero.showHeroButton,
-      hero.showHeroLogo,
-      hero.heroLogo,
-      hero.title,
-      hero.subtitleBold,
-      hero.subtitle,
-      hero.showHeroBulletList,
-      hero.bulletList,
-      hero.btnLabel,
-      hero.btnHref,
-      hero.btnOpenInNewTab,
-      hero.btnVariant,
-      hero.btnIconSize,
-      hero.btnLeftIcon,
-      hero.btnRightIcon,
-      isCarousel,
-    );
+        hero.heroBackground,
+        hero.isVideoBackground,
+        hero.showHeroButton,
+        hero.showHeroLogo,
+        hero.heroLogo,
+        hero.title,
+        hero.subtitleBold,
+        hero.subtitle,
+        hero.showHeroBulletList,
+        hero.bulletList,
+        hero.btnLabel,
+        hero.btnHref,
+        hero.btnOpenInNewTab,
+        hero.btnVariant,
+        hero.btnIconSize,
+        hero.btnLeftIcon,
+        hero.btnRightIcon,
+        isCarousel
+    )
     track.appendChild(newHero);
   });
   await Promise.all(promises);

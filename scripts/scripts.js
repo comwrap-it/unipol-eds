@@ -265,7 +265,7 @@ function applyViewportTheme() {
 
   if (w < 768) {
     body.classList.add('theme-mobile');
-  } else if (w < 1280) {
+  } else if (w < 1200) {
     body.classList.add('theme-tablet-portrait');
   } else if (w < 1440) {
     body.classList.add('theme-tablet');

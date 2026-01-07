@@ -5,22 +5,19 @@
     justify-content: space-between;
     align-items: center;
     position: absolute;
-    padding-inline: 0;
-    padding-block: 0;
-    padding: var(--Header-Vertical-Padding-M-Tp, 24px); var(--Header-Horizontal-Padding-D-Ds, 24px);
+    padding-block: var(--Header-Vertical-Padding-M-Tp, 24px);
+    padding: var(--Header-Vertical-Padding-M-Tp, 24px) var(--Header-Horizontal-Padding-D-Ds, 24px);
     width: 100%;
-    z-index: 2;
-    padding-bottom: 0 !important;
+    z-index: 3;
 }
 
 main .section.header-logo-container,
 main .section.header-navigation-section-container,
 main .section.header-utilities-section-container {
-    margin-top: 110px;
+    min-height: 150px;
     background: #00000080;
     position: relative;
 }
-
 
 .adobe-ue-edit .section.header-logo-container,
 .adobe-ue-edit .section.header-navigation-section-container,

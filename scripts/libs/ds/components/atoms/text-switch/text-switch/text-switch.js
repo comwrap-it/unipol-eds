@@ -81,3 +81,4 @@ export function createTextSwitch(labelLeft, labelRight, initialActive) {
 
   return wrapper;
 }
+

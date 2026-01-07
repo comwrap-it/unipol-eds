@@ -2,7 +2,7 @@
  * Checkbox - Utility Component
  */
 
-import { createCheckbox } from '../../../../scripts/libs/ds/components/atoms/checkbox/standard-checkbox/checkbox.js';
+import { createCheckbox } from '@unipol-ds/components/atoms/checkbox/standard-checkbox/checkbox.js';
 import { extractInstrumentationAttributes } from '../../../../scripts/utils.js';
 import { CHECKBOX_TYPES } from '../../../../constants/index.js';
 

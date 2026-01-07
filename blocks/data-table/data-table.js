@@ -31,7 +31,6 @@ function createShowMoreButton({ label }) {
   return wrapper;
 }
 
-// Fusione col2 sotto col1 per mobile <768px
 function handleResponsiveTable(table) {
   const isMobile = window.matchMedia('(max-width: 767px)').matches;
   const rows = Array.from(table.querySelectorAll('tbody tr'));
@@ -88,7 +87,6 @@ function bindResponsiveResize(table) {
 
 function setupShowMoreAccessibility({ tbody, button, disableLimit }) {
   if (disableLimit) {
-    // Pulsante visibile ma non fa nulla
     button.disabled = false;
     button.setAttribute('aria-expanded', 'true');
     button.setAttribute('aria-label', 'Mostra tutte le righe');
@@ -113,7 +111,7 @@ function setupShowMoreAccessibility({ tbody, button, disableLimit }) {
 }
 
 function appendRowsWithLimit({
-  rows, tbody, limit = 5, disableLimit,
+  rows, tbody, limit = 6, disableLimit,
 }) {
   rows.filter(Boolean).forEach((tr, index) => {
     if (!disableLimit && index >= limit) {
@@ -130,6 +128,7 @@ function appendRowsWithLimit({
 async function buildTable({ rows, block, disableLimit }) {
   const tableWrapper = document.createElement('div');
   tableWrapper.className = 'data-table-container block data-table-block';
+  tableWrapper.classList.add('reveal-in-up');
 
   const table = document.createElement('table');
   table.className = 'data-table';
@@ -153,15 +152,16 @@ async function buildTable({ rows, block, disableLimit }) {
 
   appendRowsWithLimit({ rows: trElements, tbody, disableLimit });
 
-  const showMoreValues = extractShowMoreButtonValue(rows[0]);
-  const showMoreButtonWrapper = createShowMoreButton(showMoreValues);
-  block.appendChild(showMoreButtonWrapper);
-
-  setupShowMoreAccessibility({
-    tbody,
-    button: showMoreButtonWrapper.querySelector('button'),
-    disableLimit,
-  });
+  if (disableLimit || rows.length > 6) {
+    const showMoreValues = extractShowMoreButtonValue(rows[0]);
+    const showMoreButtonWrapper = createShowMoreButton(showMoreValues);
+    block.appendChild(showMoreButtonWrapper);
+    setupShowMoreAccessibility({
+      tbody,
+      button: showMoreButtonWrapper.querySelector('button'),
+      disableLimit,
+    });
+  }
 
   handleResponsiveTable(table);
   bindResponsiveResize(table);

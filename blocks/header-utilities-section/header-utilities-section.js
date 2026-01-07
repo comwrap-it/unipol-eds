@@ -1,5 +1,5 @@
 import { BUTTON_ICON_SIZES, NAVIGATION_PILL_VARIANTS } from '../../constants/index.js';
-import { createNavigationPill } from '../../scripts/libs/ds/components/atoms/navigation-pill/navigation-pill.js';
+import { createNavigationPill } from '@unipol-ds/components/atoms/navigation-pill/navigation-pill.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { extractInstrumentationAttributes } from '../../scripts/utils.js';
 
@@ -71,7 +71,7 @@ function updatePillLabels() {
         pill.setAttribute('aria-label', text);
       }
 
-      if (window.innerWidth <= 1200) {
+      if (window.innerWidth < 1200) {
         labelSpan.classList.add('pill-hide-label');
       } else {
         labelSpan.classList.remove('pill-hide-label');

@@ -2,7 +2,7 @@
  * Checkbox - Utility Component
  */
 
-import { CHECKBOX_TYPES } from '../../../../constants/index.js';
+import { CHECKBOX_TYPES } from "../../../../constants/index.js";
 
 /**
  * Create checkbox
@@ -70,3 +70,4 @@ export function createCheckbox(typeStatus, disabled, instrumentation = {}) {
 
   return wrapper;
 }
+
