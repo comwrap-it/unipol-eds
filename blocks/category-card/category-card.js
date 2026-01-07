@@ -145,20 +145,20 @@ const create3DcategoryIcons = (category) => {
 const extractValuesFromRows = (rows) => {
   const title = {};
   title.value = rows[0]?.textContent?.trim() || '';
-  title.instrumentation = extractInstrumentationAttributes(rows[0]);
+  title.instrumentation = extractInstrumentationAttributes(rows[0].firstChild);
 
   const description = {};
   description.value = rows[1]?.textContent?.trim() || '';
-  description.instrumentation = extractInstrumentationAttributes(rows[1]);
+  description.instrumentation = extractInstrumentationAttributes(rows[1].firstChild);
 
   const note = {};
   note.value = rows[2]?.textContent?.trim() || '';
-  note.instrumentation = extractInstrumentationAttributes(rows[2]);
+  note.instrumentation = extractInstrumentationAttributes(rows[2].firstChild);
 
   const image = {};
   const img = rows[3]?.querySelector('img');
   image.src = img?.getAttribute('src') ?? '';
-  image.instrumentation = extractInstrumentationAttributes(rows[3]);
+  image.instrumentation = extractInstrumentationAttributes(img);
   image.altText = rows[4]?.textContent?.trim() || '';
 
   const category = rows[5]?.textContent?.trim() || '';
