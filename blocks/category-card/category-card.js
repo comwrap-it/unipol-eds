@@ -9,14 +9,14 @@
 
 import { create3Dicons } from '@unipol-ds/components/atoms/icons-3D/icons-3D.js';
 import { createCategoryChip } from '@unipol-ds/components/atoms/category-chip/category-chip.js';
-import { createOptimizedPicture } from '../../scripts/aem.js';
-import { createTextElementFromObj } from '../../scripts/domHelpers.js';
-import { extractInstrumentationAttributes, restoreInstrumentation } from '../../scripts/utils.js';
+import { createOptimizedPicture } from '@unipol-ds/scripts/aem.js';
+import { createTextElementFromObj } from '@unipol-ds/scripts/domHelpers.js';
+import { extractInstrumentationAttributes, restoreInstrumentation } from '@unipol-ds/scripts/utils.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
-  const { loadCSS } = await import('../../scripts/aem.js');
+  const { loadCSS } = await import('@unipol-ds/scripts/aem.js');
   await Promise.all([
     loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/icons-3D/icons-3D.css`),
     loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/category-chip/category-chip.css`),
@@ -115,7 +115,6 @@ const create3DcategoryIcons = (category) => {
   return create3Dicons(vehiclesShowIcon, homeShowIcon, personalShowIcon);
 };
 
-// eslint-disable-next-line max-len
 /**
  *   Category Card Data Rows
  *
