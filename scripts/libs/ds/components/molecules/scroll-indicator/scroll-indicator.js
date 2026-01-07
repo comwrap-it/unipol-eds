@@ -8,10 +8,10 @@ async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   await Promise.all([
     loadCSS(
-      '../../atoms/buttons/icon-button/icon-button.css',
+      `${window.hlx.codeBasePath}/blocks/atoms/buttons/icon-button/icon-button.css`,
     ),
     loadCSS(
-      '../scroll-indicator/scroll-indicator.css',
+      `${window.hlx.codeBasePath}/blocks/scroll-indicator/scroll-indicator.css`,
     ),
   ]);
   isStylesLoaded = true;
@@ -33,6 +33,7 @@ const createNavButton = (containerClass, iconName, buttonClass) => {
     BUTTON_VARIANTS.PRIMARY,
     BUTTON_ICON_SIZES.MEDIUM,
     '',
+    false,
   );
   iconButton.classList.add(buttonClass);
   iconButtonContainer.appendChild(iconButton);
