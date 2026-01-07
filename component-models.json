@@ -916,7 +916,7 @@
         "required": true,
         "validation": {
           "maxLength": 25,
-          "customErrorMsg": "Note troppo lunghe (max 60 caratteri)"
+          "customErrorMsg": "Note troppo lunghe (max 25 caratteri)"
         }
       },
       {
