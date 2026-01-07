@@ -687,7 +687,10 @@
             "component": "text",
             "name": "tagLabel",
             "label": "Tag text",
-            "required": true
+            "required": true,
+            "validation": {
+              "maxLength": 25
+            }
           },
           {
             "component": "select",
@@ -2895,7 +2898,10 @@
             "component": "text",
             "name": "tagLabel",
             "label": "Tag text",
-            "required": true
+            "required": true,
+            "validation": {
+              "maxLength": 25
+            }
           },
           {
             "component": "select",
@@ -5559,7 +5565,10 @@
         "component": "text",
         "name": "tagLabel",
         "label": "Tag text",
-        "required": true
+        "required": true,
+        "validation": {
+          "maxLength": 25
+        }
       },
       {
         "component": "select",
