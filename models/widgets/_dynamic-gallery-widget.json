@@ -1,0 +1,57 @@
+{
+  "definitions": [
+    {
+      "title": "Dynamic Gallery Widget",
+      "id": "dynamic-gallery-widget",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/section/v1/section",
+            "template": {
+              "filter": "dynamic-gallery-widget",
+              "name": "Dynamic Gallery Widget",
+              "model": "dynamic-gallery-widget",
+              "text-block": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Text Block",
+                "model": "text-block"
+              },
+              "dynamic-gallery": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Dynamic Gallery",
+                "filter": "dynamic-gallery",
+                "model": "dynamic-gallery"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "dynamic-gallery-widget",
+      "fields": [
+        {
+          "component": "text",
+          "name": "dynamic-gallery-widget-name",
+          "label": "Nome sezione Dynamic Gallery Widget"
+        },
+        {
+          "component": "toggle",
+          "name": "dynamic-gallery-widget-dark-theme",
+          "label": "Tema scuro",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "filters": [
+    { 
+      "id": "dynamic-gallery-widget",
+      "components": [
+        "dynamic-gallery"
+      ]
+    }
+  ]
+}

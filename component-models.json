@@ -236,6 +236,22 @@
     ]
   },
   {
+    "id": "dynamic-gallery-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "dynamic-gallery-widget-name",
+        "label": "Nome sezione Dynamic Gallery Widget"
+      },
+      {
+        "component": "toggle",
+        "name": "dynamic-gallery-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
     "id": "editorial-carousel-widget",
     "fields": [
       {
@@ -1550,6 +1566,101 @@
             ]
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "dynamic-gallery-card",
+    "fields": [
+      {
+        "component": "reference",
+        "valueType": "string",
+        "name": "image",
+        "label": "Immagine",
+        "multi": false,
+        "required": true
+      },
+      {
+        "component": "text",
+        "valueType": "string",
+        "name": "imageSR",
+        "label": "Testo alternativo per l'immagine",
+        "required": true
+      },
+      {
+        "component": "container",
+        "name": "tag",
+        "label": "Configurazione Tag",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "tagLabel",
+            "label": "Tag text",
+            "required": true
+          },
+          {
+            "component": "select",
+            "name": "tagCategory",
+            "label": "Tag Category",
+            "required": true,
+            "value": "mobility",
+            "options": [
+              {
+                "name": "Mobility",
+                "value": "mobility"
+              },
+              {
+                "name": "Welfare",
+                "value": "welfare"
+              },
+              {
+                "name": "Property",
+                "value": "property"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "tagVariant",
+            "label": "Tag type",
+            "required": true,
+            "value": "default",
+            "options": [
+              {
+                "name": "Default",
+                "value": "default"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Neutral",
+                "value": "neutral"
+              },
+              {
+                "name": "Custom",
+                "value": "custom"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "text",
+        "name": "button-label",
+        "label": "Testo Bottone"
+      },
+      {
+        "component": "aem-content",
+        "name": "reference",
+        "value": "",
+        "label": "AEM Content Picker",
+        "valueType": "string",
+        "validation": {
+          "rootPath": "/content/unipol"
+        }
       }
     ]
   },

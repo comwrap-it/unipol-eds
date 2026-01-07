@@ -1,0 +1,50 @@
+.dynamic-gallery-card {
+    width: 285px;
+    aspect-ratio: 16/9;
+    position: relative;
+
+    & .dynamic-gallery-card-image {
+        border-radius: var(--Images-Radius, 24px);
+        aspect-ratio: inherit;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    & .tag {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+    }
+
+    & .dynamic-gallery-card-overlay {
+        position: absolute;
+        left: 0;
+        top: -100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        border-radius: var(--Card-Dynamic-Gallery-Card-Overlay-Radius, 24px);
+        background: var(
+            --Card-Dynamic-Gallery-Card-Overlay-Background,
+            rgb(0 0 0 / 50%)
+        );
+        backdrop-filter: blur(calc(var(--Blur-200-8, 8px) / 2));
+        transition: top 0.3s ease-in-out;
+        will-change: top;
+    }
+
+    &:hover {
+        & .dynamic-gallery-card-overlay {
+            top: 0;
+        }
+    }
+}
+
+/* DESKTOP */
+@media (width >= 1200px) {
+    .dynamic-gallery-card {
+        width: 360px;
+    }
+}

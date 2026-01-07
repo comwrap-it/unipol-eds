@@ -1,0 +1,6 @@
+.dynamic-gallery-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--Dynamic-Gallery-Gap-M-Tp, 8px);
+}
