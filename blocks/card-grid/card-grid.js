@@ -1,4 +1,5 @@
 import { moveInstrumentation } from '../../scripts/scripts.js';
+// import { createButtonFromRows } from '../atoms/buttons/standard-button/standard-button.js';
 
 /**
  * ensures styles are loaded only once
@@ -20,6 +21,7 @@ export default async function decorate(block) {
 
   // Get rows from block
   const rows = Array.from(block.children);
+  console.log('🚀 ~ decorate ~ rows:', rows);
 
   // Create card grid container
   const cardGrid = document.createElement('div');
@@ -36,6 +38,8 @@ export default async function decorate(block) {
     cardGrid.appendChild(card);
   });
   await Promise.all(cardPromises);
+
+  // const button = createButtonFromRows(rows);
 
   block.replaceChildren(cardGrid);
 }
