@@ -113,9 +113,9 @@
     "components": []
   },
   {
-    "id": "insurance-product-carousel",
+    "id": "bundle-carousel",
     "components": [
-      "insurance-product-card"
+      "bundle-card"
     ],
     "min": 1,
     "max": 8

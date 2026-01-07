@@ -35,7 +35,7 @@
           }
         },
         {
-          "component": "richtext",
+          "component": "text",
           "name": "numberBlockSubText1",
           "label": "Descrizione blocco 1",
           "valueType": "string",
@@ -59,7 +59,7 @@
           }
         },
         {
-          "component": "richtext",
+          "component": "text",
           "name": "numberBlockSubText2",
           "label": "Descrizione blocco 2",
           "valueType": "string",
@@ -83,7 +83,7 @@
           }
         },
         {
-          "component": "richtext",
+          "component": "text",
           "name": "numberBlockSubText3",
           "label": "Descrizione blocco 3",
           "valueType": "string",
