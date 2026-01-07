@@ -736,6 +736,21 @@
           }
         },
         {
+          "title": "Category strip",
+          "id": "category-strip",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Category strip",
+                  "model": "category-strip"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Columns",
           "id": "columns",
           "plugins": {

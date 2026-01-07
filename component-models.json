@@ -1911,6 +1911,177 @@
     "fields": []
   },
   {
+    "id": "category-strip",
+    "fields": [
+      {
+        "component": "container",
+        "name": "categoryStrip",
+        "label": "Category Strip",
+        "collapsible": false,
+        "fields": [
+          {
+            "component": "select",
+            "name": "categoryStripBckgroundColor",
+            "value": "none",
+            "description": "Colore sfondo Category strip",
+            "valueType": "string",
+            "options": [
+              {
+                "name": "none",
+                "value": ""
+              },
+              {
+                "name": "Mobility",
+                "value": "bg-mobility"
+              },
+              {
+                "name": "Welfare",
+                "value": "bg-welfare"
+              },
+              {
+                "name": "Property",
+                "value": "bg-property"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "categoryStrip_Icon",
+            "label": "Icona Category Strip",
+            "required": true,
+            "description": "Seleziona l'icona",
+            "options": [
+              {
+                "name": "Animali",
+                "value": "un-icon-pets"
+              },
+              {
+                "name": "Auto",
+                "value": "un-icon-car"
+              },
+              {
+                "name": "Casa",
+                "value": "un-icon-home"
+              },
+              {
+                "name": "Famiglia",
+                "value": "un-icon-family"
+              },
+              {
+                "name": "Infortuni",
+                "value": "un-icon-injury"
+              },
+              {
+                "name": "Mezzi pesanti",
+                "value": "un-icon-truck"
+              },
+              {
+                "name": "Mobilità",
+                "value": "un-icon-mobility"
+              },
+              {
+                "name": "Moto",
+                "value": "un-icon-motorcycle"
+              },
+              {
+                "name": "Pensione",
+                "value": "un-icon-pension"
+              },
+              {
+                "name": "Salute",
+                "value": "un-icon-health"
+              },
+              {
+                "name": "Viaggi",
+                "value": "un-icon-travel"
+              }
+            ]
+          },
+          {
+            "component": "text",
+            "name": "categoryStrip_Desc",
+            "label": "Testo Category Strip",
+            "validation": {
+              "maxLength": 12,
+              "customErrorMsg": "max 12 caratteri"
+            },
+            "required": true
+          },
+          {
+            "component": "text",
+            "name": "firstCategoryTagLabel",
+            "label": "Label tag",
+            "validation": {
+              "maxLength": 20,
+              "customErrorMsg": "max 20 caratteri"
+            },
+            "required": true
+          },
+          {
+            "component": "select",
+            "name": "firstCategoryTagVariant",
+            "label": "Tipologia Tag",
+            "required": true,
+            "value": "default",
+            "options": [
+              {
+                "name": "Default",
+                "value": "default"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Neutral",
+                "value": "neutral"
+              },
+              {
+                "name": "Custom",
+                "value": "custom"
+              }
+            ]
+          },
+          {
+            "component": "text",
+            "name": "secondCategoryTagLabel",
+            "label": "Label tag",
+            "validation": {
+              "maxLength": 20,
+              "customErrorMsg": "max 20 caratteri"
+            },
+            "required": true
+          },
+          {
+            "component": "select",
+            "name": "secondCategoryTagVariant",
+            "label": "Tipologia secondo Tag",
+            "required": true,
+            "value": "default",
+            "options": [
+              {
+                "name": "Default",
+                "value": "default"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Neutral",
+                "value": "neutral"
+              },
+              {
+                "name": "Custom",
+                "value": "custom"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "columns",
     "fields": [
       {

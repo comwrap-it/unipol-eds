@@ -9,6 +9,7 @@
  */
 
 import { createButtonFromRows } from '../atoms/buttons/standard-button/standard-button.js';
+import { createCategoryStripFromRows } from '../category-strip/category-strip.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { extractInstrumentationAttributes } from '../../scripts/utils.js';
@@ -261,60 +262,8 @@ export default async function decorateBundleCard(block, isFirstCard = false) {
 
   // CATEGORY STRIP (rows 19–25)
   const categoryStripRows = rows.slice(19, 26);
-
-  const [
-    bgColorRow,
-    iconRow,
-    descRow,
-    tag1LabelRow,
-    tag1VariantRow,
-    tag2LabelRow,
-    tag2VariantRow,
-  ] = categoryStripRows;
-
-  const categoryStrip = document.createElement('div');
-  categoryStrip.className = 'category-strip-container';
-
-  // background class
-  const bgClass = bgColorRow?.textContent?.trim();
-  if (bgClass) {
-    categoryStrip.classList.add(bgClass);
-  }
-
-  // icon
-  const icon = iconRow?.textContent?.trim();
-  if (icon) {
-    const iconEl = document.createElement('i');
-    iconEl.className = icon;
-    categoryStrip.appendChild(iconEl);
-  }
-
-  // description
-  if (descRow && descRow.textContent?.trim()) {
-    const desc = document.createElement('span');
-    desc.textContent = descRow.textContent.trim();
-    categoryStrip.appendChild(desc);
-  }
-
-  // tag 1
-  if (tag1LabelRow?.textContent?.trim()) {
-    const t1 = document.createElement('span');
-    t1.className = `tag ${tag1VariantRow?.textContent?.trim() || ''}`;
-    t1.textContent = tag1LabelRow.textContent.trim();
-    categoryStrip.appendChild(t1);
-  }
-
-  // tag 2
-  if (tag2LabelRow?.textContent?.trim()) {
-    const t2 = document.createElement('span');
-    t2.className = `tag ${tag2VariantRow?.textContent?.trim() || ''}`;
-    t2.textContent = tag2LabelRow.textContent.trim();
-    categoryStrip.appendChild(t2);
-  }
-
-  if (categoryStrip.children.length > 0) {
-    card.appendChild(categoryStrip);
-  }
+  const strip = createCategoryStripFromRows(categoryStripRows);
+  if (strip) card.appendChild(strip);
 
   // Append card content
   if (cardContent.children.length > 0) {
