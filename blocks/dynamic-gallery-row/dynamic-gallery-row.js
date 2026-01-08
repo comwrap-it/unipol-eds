@@ -20,13 +20,15 @@ export default async function decorate(block) {
   const galleryRow = document.createElement('div');
   galleryRow.className = 'dynamic-gallery-row';
 
-  rows.forEach(async (row) => {
+  const promises = rows.map(async (row) => {
     const childrenRows = Array.from(row.children);
     const card = await createDynamicGalleryCardFromRows(childrenRows);
     if (card) {
       galleryRow.appendChild(card);
     }
   });
+
+  await Promise.all(promises);
 
   block.replaceChildren(galleryRow);
 }
@@ -37,13 +39,15 @@ export const createDynamicGalleryRowFromRows = async (rows) => {
 
   if (rows.length === 0) return null;
 
-  rows.forEach(async (row) => {
+  const promises = rows.map(async (row) => {
     const childrenRows = Array.from(row.children);
     const card = await createDynamicGalleryCardFromRows(childrenRows);
     if (card) {
       galleryRow.appendChild(card);
     }
   });
+
+  await Promise.all(promises);
 
   return galleryRow;
 };
