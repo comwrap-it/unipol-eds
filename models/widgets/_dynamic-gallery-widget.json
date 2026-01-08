@@ -8,7 +8,6 @@
           "page": {
             "resourceType": "core/franklin/components/section/v1/section",
             "template": {
-              "filter": "dynamic-gallery-widget",
               "name": "Dynamic Gallery Widget",
               "model": "dynamic-gallery-widget",
               "text-block": {
@@ -20,7 +19,7 @@
                 "sling:resourceType": "core/franklin/components/block/v1/block",
                 "name": "Dynamic Gallery",
                 "dynamic-gallery-row-1": {
-                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                  "sling:resourceType": "core/franklin/components/block/v1/block",
                   "name": "Dynamic Gallery Row 1",
                   "filter": "dynamic-gallery-row",
                   "dynamic-gallery-card-1": {
@@ -30,7 +29,7 @@
                   }
                 },
                 "dynamic-gallery-row-2": {
-                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                  "sling:resourceType": "core/franklin/components/block/v1/block",
                   "name": "Dynamic Gallery Row 2",
                   "filter": "dynamic-gallery-row",
                   "dynamic-gallery-card-2": {
@@ -40,7 +39,7 @@
                   }
                 },
                 "dynamic-gallery-row-3": {
-                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                  "sling:resourceType": "core/franklin/components/block/v1/block",
                   "name": "Dynamic Gallery Row 3",
                   "filter": "dynamic-gallery-row",
                   "dynamic-gallery-card-3": {
