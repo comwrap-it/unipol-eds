@@ -7,10 +7,14 @@ import decorateProductHighlightsCarousel, {
   setProductHighlightsSwiperSpeed,
 } from '../product-highlights-carousel/product-highlights-carousel.js';
 import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
+import { isAuthorMode } from '../../scripts/utils.js';
 
 // #region CONSTANTS
 const WIDGET_CLASS = 'product-highlights-widget';
+const PANEL_CLASS = 'product-highlights-widget-panel';
 const DECORATED_ATTR = 'data-product-highlights-widget';
+const OBSERVER_KEY = '__productHighlightsObserver';
+const UPDATING_ATTR = 'data-product-highlights-updating';
 // #endregion
 
 // #region HELPERS
@@ -314,10 +318,15 @@ export function parseProductHighlightsWidget(section, block = null) {
   /*
    * Root & wrapper
    */
-  const panelRoot = block?.classList?.contains(WIDGET_CLASS)
+  const panelRoot = block?.classList?.contains(PANEL_CLASS)
     ? block
-    : section.querySelector(`:scope > .${WIDGET_CLASS}`);
-  const wrapper = panelRoot?.querySelector(':scope > .default-content-wrapper') || null;
+    : (block && block !== section && block.classList?.contains(WIDGET_CLASS) ? block : null)
+      || section.querySelector(`:scope > .${PANEL_CLASS}`);
+  const sectionWrapper = section.querySelector(':scope > .default-content-wrapper');
+  const panelWrapper = panelRoot && panelRoot !== section
+    ? panelRoot.querySelector(':scope > .default-content-wrapper')
+    : null;
+  const wrappers = [sectionWrapper, panelWrapper].filter(Boolean);
 
   /*
    * Return
@@ -332,163 +341,216 @@ export function parseProductHighlightsWidget(section, block = null) {
     logoSecondaryAlt,
     buttonConfig,
     panelRoot,
-    wrapper,
+    wrappers,
   };
 }
 // #endregion
 
 // #region DECORATE
+const shouldRebuildFromMutation = (mutation) => {
+  if (mutation.type === 'attributes') {
+    const { attributeName } = mutation;
+    if (!attributeName) return false;
+    if (attributeName === DECORATED_ATTR || attributeName === UPDATING_ATTR) return false;
+    return attributeName.startsWith('data-');
+  }
+  return mutation.type === 'childList';
+};
+
+const attachAuthoringObserver = (section) => {
+  if (!section || section[OBSERVER_KEY]) return;
+  let scheduled = false;
+
+  const schedule = () => {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(() => {
+      scheduled = false;
+      if (section.getAttribute(UPDATING_ATTR) === 'true') return;
+      decorateWidgetSection(section, section.querySelector(`.${PANEL_CLASS}`), { force: true });
+    });
+  };
+
+  const observer = new MutationObserver((mutations) => {
+    if (section.getAttribute(UPDATING_ATTR) === 'true') return;
+    if (!mutations.some(shouldRebuildFromMutation)) return;
+    schedule();
+  });
+
+  observer.observe(section, {
+    attributes: true,
+    childList: true,
+    subtree: false,
+  });
+
+  section[OBSERVER_KEY] = observer;
+};
+
 /**
  * Decorates a widget section by composing the panel.
  * @param {HTMLElement} section
  * @param {HTMLElement|null} block
+ * @param {Object} [options]
+ * @param {boolean} [options.force=false]
  * @returns {Promise<void>}
  */
-async function decorateWidgetSection(section, block) {
-  if (!section || section.getAttribute(DECORATED_ATTR) === 'true') return;
+async function decorateWidgetSection(section, block, { force = false } = {}) {
+  if (!section) return;
+  const isAuthoring = isAuthorMode(section);
+  if (!force && !isAuthoring && section.getAttribute(DECORATED_ATTR) === 'true') return;
+  if (isAuthoring) section.setAttribute(UPDATING_ATTR, 'true');
 
-  await ensureStylesLoaded();
+  try {
+    await ensureStylesLoaded();
 
-  /*
-   * Parse
-   */
-  const parsed = parseProductHighlightsWidget(section, block);
-  if (!parsed) return;
+    /*
+     * Parse
+     */
+    const parsed = parseProductHighlightsWidget(section, block);
+    if (!parsed) return;
 
-  const {
-    carousel,
-    textBlockWrapper,
-    textBlock,
-    logoSrc,
-    logoAlt,
-    logoSecondarySrc,
-    logoSecondaryAlt,
-    buttonConfig,
-    panelRoot,
-    wrapper,
-  } = parsed;
+    const {
+      carousel,
+      textBlockWrapper,
+      textBlock,
+      logoSrc,
+      logoAlt,
+      logoSecondarySrc,
+      logoSecondaryAlt,
+      buttonConfig,
+      panelRoot,
+      wrappers,
+    } = parsed;
 
-  /*
-   * Create
-   */
-  const originalCarouselWrapper = carousel.parentElement;
+    /*
+     * Create
+     */
+    const originalCarouselWrapper = carousel.parentElement;
 
-  const panel = createProductHighlightsWidget({
-    root: panelRoot,
-    carousel,
-    textBlockWrapper,
-    textBlock,
-    logoSrc,
-    logoAlt,
-    logoSecondarySrc,
-    logoSecondaryAlt,
-    buttonConfig,
-  });
+    const panel = createProductHighlightsWidget({
+      root: panelRoot,
+      carousel,
+      textBlockWrapper,
+      textBlock,
+      logoSrc,
+      logoAlt,
+      logoSecondarySrc,
+      logoSecondaryAlt,
+      buttonConfig,
+    });
 
-  /*
-   * Mount
-   */
-  if (!panel.parentElement) {
-    if (panelRoot && panelRoot.parentElement) {
-      panelRoot.replaceWith(panel);
-    } else {
-      section.appendChild(panel);
-    }
-  }
-
-  /*
-   * Cleanup
-   */
-  if (wrapper && wrapper.isConnected) wrapper.remove();
-  if (panelRoot && panelRoot !== panel && panelRoot.isConnected) panelRoot.remove();
-
-  if (
-    originalCarouselWrapper
-    && originalCarouselWrapper !== carousel.parentElement
-    && originalCarouselWrapper.classList.contains('product-highlights-carousel-wrapper')
-  ) {
-    originalCarouselWrapper.remove();
-  }
-
-  /*
-   * Finalize
-   */
-  section.classList.add(WIDGET_CLASS);
-  section.classList.add('theme-dark');
-  section.setAttribute(DECORATED_ATTR, 'true');
-
-  await decorateProductHighlightsCarousel(carousel);
-  const swiperInstance = await waitForProductHighlightsSwiper(carousel);
-
-  /*
-   * Pause
-   */
-  const pauseButton = panel.querySelector('.product-highlights-widget-pause');
-  const pauseIcon = pauseButton?.querySelector('.icon');
-
-  const bindPauseControls = (instance) => {
-    if (!pauseButton || pauseButton.dataset.productHighlightsPauseBound === 'true') return;
-    if (!instance?.autoplay || !instance?.params?.autoplay) {
-      pauseButton.disabled = true;
-      pauseButton.setAttribute('aria-disabled', 'true');
-      return;
+    /*
+     * Mount
+     */
+    if (!panel.parentElement) {
+      if (panelRoot && panelRoot.parentElement) {
+        panelRoot.replaceWith(panel);
+      } else {
+        section.appendChild(panel);
+      }
     }
 
-    pauseButton.dataset.productHighlightsPauseBound = 'true';
-    pauseButton.setAttribute('aria-pressed', 'false');
+    /*
+     * Cleanup
+     */
+    wrappers.forEach((wrapper) => {
+      if (wrapper && wrapper.isConnected) wrapper.remove();
+    });
+    if (panelRoot && panelRoot !== panel && panelRoot.isConnected) panelRoot.remove();
 
-    const setPausedState = (paused) => {
-      carousel.dataset.productHighlightsPaused = paused ? 'true' : 'false';
+    if (
+      originalCarouselWrapper
+      && originalCarouselWrapper !== carousel.parentElement
+      && originalCarouselWrapper.classList.contains('product-highlights-carousel-wrapper')
+    ) {
+      originalCarouselWrapper.remove();
+    }
 
-      if (paused) {
-        instance.autoplay.stop();
-        if (typeof instance.getTranslate === 'function' && typeof instance.setTranslate === 'function') {
-          const currentTranslate = instance.getTranslate();
-          if (typeof instance.setTransition === 'function') instance.setTransition(0);
-          instance.setTranslate(currentTranslate);
-          if (typeof instance.updateActiveIndex === 'function') instance.updateActiveIndex();
-          if (typeof instance.updateSlidesClasses === 'function') instance.updateSlidesClasses();
-        }
-        if (pauseIcon) {
-          pauseIcon.classList.remove('un-icon-pause-circle');
-          pauseIcon.classList.add('un-icon-play-circle');
-        }
-        pauseButton.setAttribute('aria-label', 'Riprendi animazione');
-        pauseButton.setAttribute('aria-pressed', 'true');
+    /*
+     * Finalize
+     */
+    section.classList.add(WIDGET_CLASS);
+    section.classList.add('theme-dark');
+    section.setAttribute(DECORATED_ATTR, 'true');
+
+    await decorateProductHighlightsCarousel(carousel);
+    const swiperInstance = await waitForProductHighlightsSwiper(carousel);
+
+    /*
+     * Pause
+     */
+    const pauseButton = panel.querySelector('.product-highlights-widget-pause');
+    const pauseIcon = pauseButton?.querySelector('.icon');
+
+    const bindPauseControls = (instance) => {
+      if (!pauseButton || pauseButton.dataset.productHighlightsPauseBound === 'true') return;
+      if (!instance?.autoplay || !instance?.params?.autoplay) {
+        pauseButton.disabled = true;
+        pauseButton.setAttribute('aria-disabled', 'true');
         return;
       }
 
-      const isHovering = carousel.dataset.productHighlightsHoverState === 'true';
-      const nextSpeed = isHovering
-        ? PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW
-        : PRODUCT_HIGHLIGHTS_SWIPER_SPEED;
-      setProductHighlightsSwiperSpeed(instance, nextSpeed);
-      instance.autoplay.start();
-      if (pauseIcon) {
-        pauseIcon.classList.remove('un-icon-play-circle');
-        pauseIcon.classList.add('un-icon-pause-circle');
-      }
-      pauseButton.setAttribute('aria-label', 'Pausa animazione');
+      pauseButton.dataset.productHighlightsPauseBound = 'true';
       pauseButton.setAttribute('aria-pressed', 'false');
+
+      const setPausedState = (paused) => {
+        carousel.dataset.productHighlightsPaused = paused ? 'true' : 'false';
+
+        if (paused) {
+          instance.autoplay.stop();
+          if (typeof instance.getTranslate === 'function' && typeof instance.setTranslate === 'function') {
+            const currentTranslate = instance.getTranslate();
+            if (typeof instance.setTransition === 'function') instance.setTransition(0);
+            instance.setTranslate(currentTranslate);
+            if (typeof instance.updateActiveIndex === 'function') instance.updateActiveIndex();
+            if (typeof instance.updateSlidesClasses === 'function') instance.updateSlidesClasses();
+          }
+          if (pauseIcon) {
+            pauseIcon.classList.remove('un-icon-pause-circle');
+            pauseIcon.classList.add('un-icon-play-circle');
+          }
+          pauseButton.setAttribute('aria-label', 'Riprendi animazione');
+          pauseButton.setAttribute('aria-pressed', 'true');
+          return;
+        }
+
+        const isHovering = carousel.dataset.productHighlightsHoverState === 'true';
+        const nextSpeed = isHovering
+          ? PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW
+          : PRODUCT_HIGHLIGHTS_SWIPER_SPEED;
+        setProductHighlightsSwiperSpeed(instance, nextSpeed);
+        instance.autoplay.start();
+        if (pauseIcon) {
+          pauseIcon.classList.remove('un-icon-play-circle');
+          pauseIcon.classList.add('un-icon-pause-circle');
+        }
+        pauseButton.setAttribute('aria-label', 'Pausa animazione');
+        pauseButton.setAttribute('aria-pressed', 'false');
+      };
+
+      pauseButton.addEventListener('click', () => {
+        const isPaused = carousel.dataset.productHighlightsPaused === 'true';
+        setPausedState(!isPaused);
+      });
+
+      setPausedState(carousel.dataset.productHighlightsPaused === 'true');
     };
 
-    pauseButton.addEventListener('click', () => {
-      const isPaused = carousel.dataset.productHighlightsPaused === 'true';
-      setPausedState(!isPaused);
-    });
-
-    setPausedState(carousel.dataset.productHighlightsPaused === 'true');
-  };
-
-  if (pauseButton) {
-    if (swiperInstance) {
-      bindPauseControls(swiperInstance);
-    } else {
-      carousel.addEventListener('product-highlights-swiper-ready', (event) => {
-        bindPauseControls(event.detail);
-      }, { once: true });
-      const fallbackInstance = await waitForProductHighlightsSwiper(carousel, 6000);
-      if (fallbackInstance) bindPauseControls(fallbackInstance);
+    if (pauseButton) {
+      if (swiperInstance) {
+        bindPauseControls(swiperInstance);
+      } else {
+        carousel.addEventListener('product-highlights-swiper-ready', (event) => {
+          bindPauseControls(event.detail);
+        }, { once: true });
+        const fallbackInstance = await waitForProductHighlightsSwiper(carousel, 6000);
+        if (fallbackInstance) bindPauseControls(fallbackInstance);
+      }
+    }
+  } finally {
+    if (isAuthoring) {
+      setTimeout(() => section.removeAttribute(UPDATING_ATTR), 0);
+      attachAuthoringObserver(section);
     }
   }
 }
@@ -536,7 +598,7 @@ export default async function decorateProductHighlightsWidget(block) {
    */
   const sectionList = sections.filter((section, index, array) => array.indexOf(section) === index);
   (await Promise.all(sectionList)).forEach(async (section) => {
-    await decorateWidgetSection(section, section.querySelector(`.${WIDGET_CLASS}`));
+    await decorateWidgetSection(section, section.querySelector(`.${PANEL_CLASS}`));
   });
 }
 // #endregion
