@@ -1,6 +1,6 @@
 import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
-import { BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '../../constants';
-import { extractInstrumentationAttributes } from '../../scripts/utils';
+import { BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '../../constants/index.js';
+import { extractInstrumentationAttributes } from '../../scripts/utils.js';
 
 /** Extract button properties from rows
  *
