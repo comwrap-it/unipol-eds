@@ -44,9 +44,7 @@
     "filters": [
         {
             "id": "dynamic-gallery",
-            "components": [
-                "dynamic-gallery-row"
-            ]
+            "components": []
         }
     ]
 }

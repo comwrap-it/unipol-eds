@@ -165,9 +165,7 @@
   },
   {
     "id": "dynamic-gallery",
-    "components": [
-      "dynamic-gallery-row"
-    ]
+    "components": []
   },
   {
     "id": "editorial-carousel",
