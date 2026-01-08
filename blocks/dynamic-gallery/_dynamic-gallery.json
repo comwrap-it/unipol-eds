@@ -8,7 +8,6 @@
                     "page": {
                         "resourceType": "core/franklin/components/block/v1/block",
                         "template": {
-                            "filter": "dynamic-gallery",
                             "name": "Dynamic Gallery",
                             "dynamic-gallery-row-1": {
                                 "sling:resourceType": "core/franklin/components/block/v1/block/item",
@@ -35,12 +34,5 @@
         }
     ],
     "models": [],
-    "filters": [
-        {
-            "id": "dynamic-gallery",
-            "components": [
-                "dynamic-gallery-row"
-            ]
-        }
-    ]
+    "filters": []
 }
