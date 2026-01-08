@@ -55,18 +55,25 @@ export default function decorate(block) {
     if (!container) return null;
     const rows = [...container.children];
     const values = extractValuesFromRows(rows);
-    const variant = defaultVariant || values.variant;
-    if (!values.text) return null;
-    return createButton(
+
+    const button = createButton(
       values.text,
       values.href,
       values.openInNewTab,
-      variant,
+      defaultVariant || values.variant,
       values.iconSize,
       values.leftIcon,
       values.rightIcon,
       values.instrumentation
     );
+
+    if (container.hasAttribute('data-aue-resource')) {
+      button.setAttribute('data-aue-resource', container.getAttribute('data-aue-resource'));
+      const aueBehavior = container.getAttribute('data-aue-behavior');
+      if (aueBehavior) button.setAttribute('data-aue-behavior', aueBehavior);
+    }
+
+    return button;
   };
 
   const firstButton = createButtonFromContainer(firstButtonContainer, firstVariant);
