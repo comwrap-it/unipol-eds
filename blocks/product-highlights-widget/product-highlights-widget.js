@@ -1,6 +1,6 @@
 import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
 import { createIconButton } from '@unipol-ds/components/atoms/buttons/icon-button/icon-button.js';
-import { loadBlock, loadCSS } from '../../scripts/aem.js';
+import { loadCSS } from '../../scripts/aem.js';
 import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
 
 // #region CONSTANTS
@@ -111,17 +111,6 @@ const setProductHighlightsSwiperSpeed = (swiperInstance, speed) => {
   if (swiperInstance.autoplay?.running) {
     swiperInstance.autoplay.stop();
     swiperInstance.autoplay.start();
-  }
-};
-
-const ensureCarouselLoaded = async (carousel) => {
-  if (!carousel) return;
-
-  if (carousel.dataset.blockStatus === 'loading') return;
-
-  if (carousel.dataset.blockName === CAROUSEL_CLASS) {
-    if (carousel.dataset.blockStatus === 'loaded') return;
-    await loadBlock(carousel);
   }
 };
 // #endregion
@@ -436,7 +425,6 @@ async function decorateWidgetSection(section, block) {
   section.classList.add('theme-dark');
   section.setAttribute(DECORATED_ATTR, 'true');
 
-  await ensureCarouselLoaded(carousel);
   const swiperInstance = await waitForProductHighlightsSwiper(carousel);
 
   /*
