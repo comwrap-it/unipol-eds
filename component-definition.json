@@ -276,7 +276,12 @@
                     "sling:resourceType": "core/franklin/components/block/v1/block",
                     "name": "Dynamic Gallery Row",
                     "filter": "dynamic-gallery-row",
-                    "model": "dynamic-gallery-row"
+                    "model": "dynamic-gallery-row",
+                    "dynamic-gallery-card": {
+                      "resourceType": "core/franklin/components/block/v1/block/item",
+                      "name": "Dynamic Gallery Card",
+                      "model": "dynamic-gallery-card"
+                    }
                   }
                 }
               }
