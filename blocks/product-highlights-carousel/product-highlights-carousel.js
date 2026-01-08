@@ -172,11 +172,10 @@ const initSwiper = async (carousel, force = false) => {
     1,
     Math.ceil(resolvedContainerWidth / step),
   );
-  const halfSlidesPerView = Math.max(1, Math.ceil(slidesPerViewEstimate / 2));
   const loopAdditionalSlides = 0;
   const requiredSlides = Math.max(
     baseSlides.length,
-    slidesPerViewEstimate + halfSlidesPerView + loopAdditionalSlides + 2,
+    (slidesPerViewEstimate * 2) + loopAdditionalSlides + 2,
   );
 
   if (baseSlides.length < requiredSlides) {

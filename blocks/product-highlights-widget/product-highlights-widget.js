@@ -470,7 +470,18 @@ async function decorateWidgetSection(section, block) {
         ? PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW
         : PRODUCT_HIGHLIGHTS_SWIPER_SPEED;
       setProductHighlightsSwiperSpeed(instance, nextSpeed);
-      instance.autoplay.start();
+      if (instance.params?.loop && typeof instance.slideToLoop === 'function') {
+        const targetIndex = Number.isFinite(instance.realIndex) ? instance.realIndex : 0;
+        instance.slideToLoop(targetIndex, 0, false);
+      } else if (typeof instance.slideTo === 'function') {
+        const targetIndex = instance.isEnd ? 0 : instance.activeIndex || 0;
+        instance.slideTo(targetIndex, 0, false);
+      }
+
+      if (typeof instance.setTransition === 'function') instance.setTransition(nextSpeed);
+      if (typeof instance.update === 'function') instance.update();
+      if (instance.autoplay?.stop) instance.autoplay.stop();
+      if (instance.autoplay?.start) instance.autoplay.start();
       if (pauseIcon) {
         pauseIcon.classList.remove('un-icon-play-circle');
         pauseIcon.classList.add('un-icon-pause-circle');
