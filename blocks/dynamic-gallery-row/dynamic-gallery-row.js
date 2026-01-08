@@ -7,7 +7,7 @@ export default async function decorate(block) {
   const galleryRow = document.createElement('div');
   galleryRow.className = 'dynamic-gallery-row';
 
-  if (rows.length === 0) return;
+  // if (rows.length === 0) return;
 
   rows.forEach(async (row) => {
     const childrenRows = Array.from(row.children);
