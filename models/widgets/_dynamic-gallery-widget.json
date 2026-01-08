@@ -19,19 +19,19 @@
               },
               "dynamic-gallery-row-1": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Dynamic Gallery Row 1",
+                "name": "Dynamic Gallery Row",
                 "filter": "dynamic-gallery-row",
                 "model": "dynamic-gallery-row"
               },
               "dynamic-gallery-row-2": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Dynamic Gallery Row 2",
+                "name": "Dynamic Gallery Row",
                 "filter": "dynamic-gallery-row",
                 "model": "dynamic-gallery-row"
               },
               "dynamic-gallery-row-3": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Dynamic Gallery Row 3",
+                "name": "Dynamic Gallery Row",
                 "filter": "dynamic-gallery-row",
                 "model": "dynamic-gallery-row"
               }
@@ -62,7 +62,9 @@
   "filters": [
     {
       "id": "dynamic-gallery-widget",
-      "components": []
+      "components": [
+        "dynamic-gallery-row"
+      ]
     }
   ]
 }

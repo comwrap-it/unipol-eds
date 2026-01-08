@@ -1,7 +1,0 @@
-.dynamic-gallery {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: var(--Dynamic-Gallery-Gap-D-Ds, 16px);
-    align-self: stretch;
-}

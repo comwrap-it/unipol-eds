@@ -82,7 +82,9 @@
   },
   {
     "id": "dynamic-gallery-widget",
-    "components": []
+    "components": [
+      "dynamic-gallery-row"
+    ]
   },
   {
     "id": "editorial-carousel-widget",
@@ -159,12 +161,6 @@
     "id": "dynamic-gallery-row",
     "components": [
       "dynamic-gallery-card"
-    ]
-  },
-  {
-    "id": "dynamic-gallery",
-    "components": [
-      "dynamic-gallery-row"
     ]
   },
   {
