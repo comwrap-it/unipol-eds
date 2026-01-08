@@ -17,13 +17,13 @@
  */
 
 import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
-import { loadBlock } from '@unipol-ds/scripts/aem.js';
 import { moveInstrumentation } from '@unipol-ds/scripts/scripts.js';
 import createScrollIndicator from '@unipol-ds/components/molecules/scroll-indicator/scroll-indicator.js';
 import { initCarouselAnimations } from '@unipol-ds/scripts/reveal.js';
 import loadSwiper from '@unipol-ds/scripts/delayed.js';
 import { handleSlideChange } from '@unipol-ds/scripts/utils.js';
 import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '@unipol-ds/constants/index.js';
+import { loadBlock } from '../../scripts/aem.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
