@@ -1,3 +1,4 @@
+
 /**
  * Create a tag element with styling
  * @param {string} label - Tag label (required)
