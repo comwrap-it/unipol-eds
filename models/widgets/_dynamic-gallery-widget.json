@@ -45,5 +45,12 @@
       ]
     }
   ],
-  "filters": []
+  "filters": [
+    {
+      "id": "dynamic-gallery-widget",
+      "components": [
+        "dynamic-gallery"
+      ]
+    }
+  ]
 }
