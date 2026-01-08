@@ -11,16 +11,6 @@ import {
 import { decorateRichtext } from './editor-support-rte.js';
 import { decorateMain } from './scripts.js';
 
-async function loadProductHighlightsWidget(main) {
-  if (!main?.querySelector('.product-highlights-carousel')) return;
-  const widgetModule = await import(
-    `${window.hlx.codeBasePath}/blocks/product-highlights-widget/product-highlights-widget.js`
-  );
-  if (widgetModule?.default) {
-    await widgetModule.default(main);
-  }
-}
-
 const componentsWithMaxItems = [
   {
     filter: 'insurance-product-carousel',
@@ -67,7 +57,6 @@ async function applyChanges(event) {
       decorateMain(newMain);
       decorateRichtext(newMain);
       await loadSections(newMain);
-      await loadProductHighlightsWidget(newMain);
       element.remove();
       newMain.style.display = null;
       // eslint-disable-next-line no-use-before-define
@@ -118,7 +107,6 @@ async function applyChanges(event) {
           decorateSections(parentElement);
           decorateBlocks(parentElement);
           await loadSections(parentElement);
-          await loadProductHighlightsWidget(parentElement);
           element.remove();
           newSection.style.display = null;
         } else {

@@ -1,6 +1,6 @@
 import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
 import { createIconButton } from '@unipol-ds/components/atoms/buttons/icon-button/icon-button.js';
-import { loadCSS } from '../../scripts/aem.js';
+import { loadBlock, loadCSS } from '../../scripts/aem.js';
 import decorateProductHighlightsCarousel, {
   PRODUCT_HIGHLIGHTS_SWIPER_SPEED,
   PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW,
@@ -11,6 +11,8 @@ import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
 // #region CONSTANTS
 const WIDGET_CLASS = 'product-highlights-widget';
 const DECORATED_ATTR = 'data-product-highlights-widget';
+const CAROUSEL_CLASS = 'product-highlights-carousel';
+const CAROUSEL_TRACK_CLASS = 'product-highlights-carousel-track';
 // #endregion
 
 // #region HELPERS
@@ -105,6 +107,23 @@ const waitForProductHighlightsSwiper = (carousel, timeoutMs = 2000) => new Promi
 
   rafId = requestAnimationFrame(tick);
 });
+
+const ensureCarouselLoaded = async (carousel) => {
+  if (!carousel) return;
+
+  if (carousel.dataset.blockStatus === 'loading') return;
+
+  if (carousel.dataset.blockName === CAROUSEL_CLASS) {
+    if (carousel.dataset.blockStatus === 'loaded') return;
+    await loadBlock(carousel);
+    return;
+  }
+
+  const hasTrack = carousel.querySelector(`.${CAROUSEL_TRACK_CLASS}`);
+  if (!hasTrack) {
+    await decorateProductHighlightsCarousel(carousel);
+  }
+};
 // #endregion
 
 // #region CREATE
@@ -417,7 +436,7 @@ async function decorateWidgetSection(section, block) {
   section.classList.add('theme-dark');
   section.setAttribute(DECORATED_ATTR, 'true');
 
-  await decorateProductHighlightsCarousel(carousel);
+  await ensureCarouselLoaded(carousel);
   const swiperInstance = await waitForProductHighlightsSwiper(carousel);
 
   /*
@@ -538,5 +557,34 @@ export default async function decorateProductHighlightsWidget(block) {
   (await Promise.all(sectionList)).forEach(async (section) => {
     await decorateWidgetSection(section, section.querySelector(`.${WIDGET_CLASS}`));
   });
+}
+
+export async function maybeDecorateProductHighlightsWidgetFromCarousel(block) {
+  if (!block?.classList?.contains(CAROUSEL_CLASS)) return false;
+
+  const section = block.closest('.section');
+  if (!section) return false;
+
+  const status = section.getAttribute(DECORATED_ATTR);
+  if (status === 'true') return true;
+  if (status === 'pending') return false;
+
+  const hasTextBlock = !!section.querySelector('.text-block');
+  const hasWidgetMeta = Boolean(
+    getDatasetValue(section, 'logo')
+    || getDatasetValue(section, 'logoSecondary')
+    || getDatasetValue(section, 'standardButtonLabel')
+    || getDatasetValue(section, 'standardButtonHref')
+    || getDatasetValue(section, 'standardButtonVariant')
+    || getDatasetValue(section, 'standardButtonOpenInNewTab')
+    || getDatasetValue(section, 'standardButtonSize')
+    || getDatasetValue(section, 'standardButtonLeftIcon')
+    || getDatasetValue(section, 'standardButtonRightIcon'),
+  );
+
+  if (!hasTextBlock && !hasWidgetMeta && !section.classList.contains(WIDGET_CLASS)) return false;
+
+  await decorateProductHighlightsWidget(section);
+  return false;
 }
 // #endregion

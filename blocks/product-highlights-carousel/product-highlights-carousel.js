@@ -368,6 +368,11 @@ export default async function decorate(block) {
 
   await ensureStylesLoaded();
 
+  const widgetModule = await import('../product-highlights-widget/product-highlights-widget.js');
+  if (widgetModule?.maybeDecorateProductHighlightsWidgetFromCarousel) {
+    await widgetModule.maybeDecorateProductHighlightsWidgetFromCarousel(block);
+  }
+
   const props = parse(block);
   const carousel = await createProductHighlightsCarousel({
     root: block,
