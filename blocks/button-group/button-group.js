@@ -47,10 +47,8 @@ export default function decorate(block) {
   const editorialVariant = block.children[0]?.textContent?.trim() || 'primary horizontal';
   const [firstVariant, direction] = editorialVariant.split(' ');
 
-  block.children[0].remove();
-
-  const firstButtonContainer = block.querySelector('[data-field-name="firstButtonConfig"]');
-  const secondButtonContainer = block.querySelector('[data-field-name="secondButtonConfig"]');
+  const firstButtonContainer = block.children[1];
+  const secondButtonContainer = block.children[2];
 
   // Creating buttons
   const createButtonFromContainer = (container, defaultVariant) => {
