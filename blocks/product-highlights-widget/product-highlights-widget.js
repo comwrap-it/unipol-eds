@@ -1,18 +1,14 @@
 import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
 import { createIconButton } from '@unipol-ds/components/atoms/buttons/icon-button/icon-button.js';
 import { loadBlock, loadCSS } from '../../scripts/aem.js';
-import decorateProductHighlightsCarousel, {
-  PRODUCT_HIGHLIGHTS_SWIPER_SPEED,
-  PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW,
-  setProductHighlightsSwiperSpeed,
-} from '../product-highlights-carousel/product-highlights-carousel.js';
 import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
 
 // #region CONSTANTS
 const WIDGET_CLASS = 'product-highlights-widget';
 const DECORATED_ATTR = 'data-product-highlights-widget';
 const CAROUSEL_CLASS = 'product-highlights-carousel';
-const CAROUSEL_TRACK_CLASS = 'product-highlights-carousel-track';
+const PRODUCT_HIGHLIGHTS_SWIPER_SPEED = 10000;
+const PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW = PRODUCT_HIGHLIGHTS_SWIPER_SPEED * 3; // 1/3
 // #endregion
 
 // #region HELPERS
@@ -108,6 +104,16 @@ const waitForProductHighlightsSwiper = (carousel, timeoutMs = 2000) => new Promi
   rafId = requestAnimationFrame(tick);
 });
 
+const setProductHighlightsSwiperSpeed = (swiperInstance, speed) => {
+  if (!swiperInstance) return;
+  swiperInstance.params.speed = speed;
+
+  if (swiperInstance.autoplay?.running) {
+    swiperInstance.autoplay.stop();
+    swiperInstance.autoplay.start();
+  }
+};
+
 const ensureCarouselLoaded = async (carousel) => {
   if (!carousel) return;
 
@@ -116,12 +122,6 @@ const ensureCarouselLoaded = async (carousel) => {
   if (carousel.dataset.blockName === CAROUSEL_CLASS) {
     if (carousel.dataset.blockStatus === 'loaded') return;
     await loadBlock(carousel);
-    return;
-  }
-
-  const hasTrack = carousel.querySelector(`.${CAROUSEL_TRACK_CLASS}`);
-  if (!hasTrack) {
-    await decorateProductHighlightsCarousel(carousel);
   }
 };
 // #endregion
