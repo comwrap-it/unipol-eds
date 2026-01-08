@@ -14,8 +14,8 @@ const PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW = PRODUCT_HIGHLIGHTS_SWIPER_SPEED * 3
 // #region HELPERS
 let stylesLoaded = false;
 let stylesLoadingPromise = null;
+
 /**
- * Ensures widget-related styles are loaded once.
  * @returns {Promise<void>}
  */
 async function ensureStylesLoaded() {
@@ -43,7 +43,6 @@ async function ensureStylesLoaded() {
 }
 
 /**
- * Reads a dataset value with case-insensitive fallback.
  * @param {HTMLElement|null} section
  * @param {string} name
  * @returns {string}
@@ -59,7 +58,6 @@ const getDatasetValue = (section, name) => {
 };
 
 /**
- * Appends a child to a parent when it exists.
  * @param {HTMLElement} parent
  * @param {HTMLElement|null} child
  */
@@ -67,43 +65,56 @@ const appendIfPresent = (parent, child) => {
   if (child) parent.appendChild(child);
 };
 
-const waitForProductHighlightsSwiper = (carousel, timeoutMs = 2000) => new Promise((resolve) => {
-  if (!carousel) {
-    resolve(null);
-    return;
-  }
-  if (carousel.swiper) {
-    resolve(carousel.swiper);
-    return;
-  }
+/**
+ * @param {string|undefined|null} value
+ * @returns {string}
+ */
+const normalizeValue = (value) => String(value ?? '').trim();
 
-  const start = window.performance?.now?.() || Date.now();
-  let resolved = false;
-  let rafId = 0;
+/**
+ * @param {string|undefined|null} value
+ * @returns {boolean}
+ */
+const toBoolean = (value) => normalizeValue(value).toLowerCase() === 'true';
 
-  const settle = (value) => {
-    if (resolved) return;
-    resolved = true;
-    if (rafId) cancelAnimationFrame(rafId);
-    resolve(value);
-  };
+/**
+ * @param {string} value
+ * @param {string[]} options
+ * @param {string} fallback
+ * @returns {string}
+ */
+const resolveOption = (value, options, fallback) => (options.includes(value) ? value : fallback);
 
-  const tick = () => {
-    if (carousel.swiper) {
-      settle(carousel.swiper);
-      return;
-    }
-    const now = window.performance?.now?.() || Date.now();
-    if (now - start >= timeoutMs) {
-      settle(null);
-      return;
-    }
-    rafId = requestAnimationFrame(tick);
-  };
+/**
+ * @type {Record<string, string>}
+ */
+const WIDGET_DATA_MAP = {
+  logoSrc: 'logo',
+  logoAlt: 'logoAlt',
+  standardButtonLabel: 'standardButtonLabel',
+  standardButtonVariant: 'standardButtonVariant',
+  standardButtonHref: 'standardButtonHref',
+  standardButtonOpenInNewTab: 'standardButtonOpenInNewTab',
+  standardButtonSize: 'standardButtonSize',
+  standardButtonLeftIcon: 'standardButtonLeftIcon',
+  standardButtonRightIcon: 'standardButtonRightIcon',
+};
 
-  rafId = requestAnimationFrame(tick);
-});
+/**
+ * @param {HTMLElement} section
+ * @returns {Record<string, string>}
+ */
+const readWidgetData = (section) => Object.fromEntries(
+  Object.entries(WIDGET_DATA_MAP).map(([key, datasetKey]) => [
+    key,
+    getDatasetValue(section, datasetKey),
+  ]),
+);
 
+/**
+ * @param {Object} swiperInstance
+ * @param {number} speed
+ */
 const setProductHighlightsSwiperSpeed = (swiperInstance, speed) => {
   if (!swiperInstance) return;
   swiperInstance.params.speed = speed;
@@ -113,11 +124,20 @@ const setProductHighlightsSwiperSpeed = (swiperInstance, speed) => {
     swiperInstance.autoplay.start();
   }
 };
+
+/**
+ * @param {HTMLElement|null} target
+ * @returns {HTMLElement|null}
+ */
+const resolveSection = (target) => {
+  if (!target) return null;
+  if (target.classList?.contains('section')) return target;
+  return target.closest?.('.section') || null;
+};
 // #endregion
 
 // #region CREATE
 /**
- * Creates a product highlights widget panel.
  * @param {Object} [options]
  * @param {HTMLElement|null} [options.root]
  * @param {HTMLElement|null} [options.carousel]
@@ -125,8 +145,6 @@ const setProductHighlightsSwiperSpeed = (swiperInstance, speed) => {
  * @param {HTMLElement|null} [options.textBlock]
  * @param {string} [options.logoSrc]
  * @param {string} [options.logoAlt]
- * @param {string} [options.logoSecondarySrc]
- * @param {string} [options.logoSecondaryAlt]
  * @param {Object|null} [options.buttonConfig]
  * @param {string} [options.buttonConfig.label]
  * @param {string} [options.buttonConfig.href]
@@ -145,8 +163,6 @@ export function createProductHighlightsWidget({
   textBlock = null,
   logoSrc = '',
   logoAlt = '',
-  logoSecondarySrc = '',
-  logoSecondaryAlt = '',
   buttonConfig = null,
 } = {}) {
   /*
@@ -177,7 +193,7 @@ export function createProductHighlightsWidget({
     if (ctaElement.tagName === 'BUTTON') ctaElement.type = 'button';
   }
 
-  if (logoSrc || logoSecondarySrc) {
+  if (logoSrc) {
     const logo = document.createElement('div');
     logo.className = 'product-highlights-widget-logo';
     if (logoSrc) {
@@ -185,15 +201,6 @@ export function createProductHighlightsWidget({
       img.src = logoSrc;
       img.alt = logoAlt || '';
       logo.appendChild(img);
-    }
-    if (logoSecondarySrc) {
-      const subLogo = document.createElement('div');
-      subLogo.className = 'product-highlights-widget-logo-secondary';
-      const subImg = document.createElement('img');
-      subImg.src = logoSecondarySrc;
-      subImg.alt = logoSecondaryAlt || '';
-      subLogo.appendChild(subImg);
-      logo.appendChild(subLogo);
     }
     header.appendChild(logo);
   }
@@ -245,7 +252,6 @@ export function createProductHighlightsWidget({
 
 // #region PARSE
 /**
- * Parses a product highlights widget section.
  * @param {HTMLElement} section
  * @param {HTMLElement|null} [block]
  * @returns {Object|null}
@@ -272,50 +278,27 @@ export function parseProductHighlightsWidget(section, block = null) {
   /*
    * Dataset values
    */
-  const logoSrc = getDatasetValue(section, 'logo');
-  const logoAlt = getDatasetValue(section, 'logoAlt');
-  const logoSecondarySrc = getDatasetValue(section, 'logoSecondary');
-  const logoSecondaryAlt = getDatasetValue(section, 'logoSecondaryAlt');
-
-  const standardButtonLabel = getDatasetValue(section, 'standardButtonLabel');
-  const buttonLabel = standardButtonLabel;
-
-  const standardButtonVariant = getDatasetValue(section, 'standardButtonVariant');
-  const rawVariant = String(
-    standardButtonVariant || BUTTON_VARIANTS.SECONDARY,
-  ).trim().toLowerCase();
-  const resolvedVariant = Object.values(BUTTON_VARIANTS).includes(rawVariant)
-    ? rawVariant
-    : BUTTON_VARIANTS.SECONDARY;
-
-  const standardButtonHref = getDatasetValue(section, 'standardButtonHref');
-  const buttonHref = standardButtonHref;
-
-  const standardButtonOpenInNewTab = getDatasetValue(section, 'standardButtonOpenInNewTab');
-  const buttonOpenInNewTab = String(
-    standardButtonOpenInNewTab || '',
-  ).trim().toLowerCase() === 'true';
-
-  const standardButtonSize = getDatasetValue(section, 'standardButtonSize');
-  const rawIconSize = String(standardButtonSize || BUTTON_ICON_SIZES.MEDIUM)
-    .trim()
-    .toLowerCase();
-  const resolvedIconSize = Object.values(BUTTON_ICON_SIZES).includes(rawIconSize)
-    ? rawIconSize
-    : BUTTON_ICON_SIZES.MEDIUM;
-
-  const buttonLeftIcon = getDatasetValue(section, 'standardButtonLeftIcon');
-  const buttonRightIcon = getDatasetValue(section, 'standardButtonRightIcon');
-
-  const buttonConfig = buttonLabel && buttonLabel.trim()
+  const data = readWidgetData(section);
+  const buttonLabel = normalizeValue(data.standardButtonLabel);
+  const buttonVariant = resolveOption(
+    normalizeValue(data.standardButtonVariant).toLowerCase(),
+    Object.values(BUTTON_VARIANTS),
+    BUTTON_VARIANTS.SECONDARY,
+  );
+  const buttonIconSize = resolveOption(
+    normalizeValue(data.standardButtonSize).toLowerCase(),
+    Object.values(BUTTON_ICON_SIZES),
+    BUTTON_ICON_SIZES.MEDIUM,
+  );
+  const buttonConfig = buttonLabel
     ? {
-      label: buttonLabel.trim(),
-      href: buttonHref,
-      openInNewTab: buttonOpenInNewTab,
-      variant: resolvedVariant,
-      iconSize: resolvedIconSize,
-      leftIcon: buttonLeftIcon,
-      rightIcon: buttonRightIcon,
+      label: buttonLabel,
+      href: data.standardButtonHref,
+      openInNewTab: toBoolean(data.standardButtonOpenInNewTab),
+      variant: buttonVariant,
+      iconSize: buttonIconSize,
+      leftIcon: data.standardButtonLeftIcon,
+      rightIcon: data.standardButtonRightIcon,
     }
     : null;
 
@@ -324,7 +307,7 @@ export function parseProductHighlightsWidget(section, block = null) {
    */
   const panelRoot = block?.classList?.contains(WIDGET_CLASS)
     ? block
-    : section.querySelector(`:scope > .${WIDGET_CLASS}`);
+    : section.querySelector(`.${WIDGET_CLASS}`);
   const wrapper = panelRoot?.querySelector(':scope > .default-content-wrapper') || null;
 
   /*
@@ -334,10 +317,8 @@ export function parseProductHighlightsWidget(section, block = null) {
     carousel,
     textBlock,
     textBlockWrapper,
-    logoSrc,
-    logoAlt,
-    logoSecondarySrc,
-    logoSecondaryAlt,
+    logoSrc: data.logoSrc,
+    logoAlt: data.logoAlt,
     buttonConfig,
     panelRoot,
     wrapper,
@@ -347,15 +328,12 @@ export function parseProductHighlightsWidget(section, block = null) {
 
 // #region DECORATE
 /**
- * Decorates a widget section by composing the panel.
  * @param {HTMLElement} section
  * @param {HTMLElement|null} block
  * @returns {Promise<void>}
  */
 async function decorateWidgetSection(section, block) {
   if (!section || section.getAttribute(DECORATED_ATTR) === 'true') return;
-
-  await ensureStylesLoaded();
 
   /*
    * Parse
@@ -369,8 +347,6 @@ async function decorateWidgetSection(section, block) {
     textBlock,
     logoSrc,
     logoAlt,
-    logoSecondarySrc,
-    logoSecondaryAlt,
     buttonConfig,
     panelRoot,
     wrapper,
@@ -388,8 +364,6 @@ async function decorateWidgetSection(section, block) {
     textBlock,
     logoSrc,
     logoAlt,
-    logoSecondarySrc,
-    logoSecondaryAlt,
     buttonConfig,
   });
 
@@ -425,16 +399,15 @@ async function decorateWidgetSection(section, block) {
   section.classList.add('theme-dark');
   section.setAttribute(DECORATED_ATTR, 'true');
 
-  const swiperInstance = await waitForProductHighlightsSwiper(carousel);
-
   /*
    * Pause
    */
   const pauseButton = panel.querySelector('.product-highlights-widget-pause');
-  const pauseIcon = pauseButton?.querySelector('.icon');
+  if (!pauseButton) return;
+  const pauseIcon = pauseButton.querySelector('.icon');
 
   const bindPauseControls = (instance) => {
-    if (!pauseButton || pauseButton.dataset.productHighlightsPauseBound === 'true') return;
+    if (pauseButton.dataset.productHighlightsPauseBound === 'true') return;
     if (!instance?.autoplay || !instance?.params?.autoplay) {
       pauseButton.disabled = true;
       pauseButton.setAttribute('aria-disabled', 'true');
@@ -498,70 +471,46 @@ async function decorateWidgetSection(section, block) {
     setPausedState(carousel.dataset.productHighlightsPaused === 'true');
   };
 
-  if (pauseButton) {
-    if (swiperInstance) {
-      bindPauseControls(swiperInstance);
-    } else {
-      carousel.addEventListener('product-highlights-swiper-ready', (event) => {
-        bindPauseControls(event.detail);
-      }, { once: true });
-      const fallbackInstance = await waitForProductHighlightsSwiper(carousel, 6000);
-      if (fallbackInstance) bindPauseControls(fallbackInstance);
+  if (carousel.swiper) {
+    bindPauseControls(carousel.swiper);
+  } else {
+    carousel.addEventListener('product-highlights-swiper-ready', (event) => {
+      bindPauseControls(event.detail);
+    }, { once: true });
+  }
+}
+
+/**
+ * @param {HTMLElement} target
+ * @returns {Promise<void>}
+ */
+export default async function decorateProductHighlightsWidget(target) {
+  const section = resolveSection(target);
+  if (!section) return;
+
+  const status = section.getAttribute(DECORATED_ATTR);
+  if (status === 'true' || status === 'pending') return;
+
+  section.setAttribute(DECORATED_ATTR, 'pending');
+  await ensureStylesLoaded();
+
+  try {
+    await decorateWidgetSection(section, section.querySelector(`.${WIDGET_CLASS}`));
+  } finally {
+    if (section.getAttribute(DECORATED_ATTR) === 'pending') {
+      section.removeAttribute(DECORATED_ATTR);
     }
   }
 }
 
 /**
- * Decorates product highlights widget sections in the given scope.
- * @param {HTMLElement|Document} block
- * @returns {Promise<void>}
+ * @param {HTMLElement} block
+ * @returns {Promise<boolean>}
  */
-export default async function decorateProductHighlightsWidget(block) {
-  await ensureStylesLoaded();
-
-  /*
-   * Scope
-   */
-  const scope = block instanceof Element ? block : document;
-  const sections = [];
-
-  if (block instanceof Element) {
-    if (block.classList.contains('product-highlights-carousel')) {
-      const section = block.closest('.section');
-      if (section) sections.push(section);
-    } else if (block.classList.contains('section') || block.classList.contains(WIDGET_CLASS)) {
-      const section = block.classList.contains('section') ? block : block.closest('.section');
-      if (section) sections.push(section);
-    }
-  }
-
-  /*
-   * Sections
-   */
-  if (!sections.length) {
-    sections.push(...Array.from(scope.querySelectorAll(`.section.${WIDGET_CLASS}`)));
-  }
-
-  if (!sections.length) {
-    sections.push(
-      ...Array.from(scope.querySelectorAll('.section'))
-        .filter((section) => section.querySelector('.product-highlights-carousel')),
-    );
-  }
-
-  /*
-   * Decorate
-   */
-  const sectionList = sections.filter((section, index, array) => array.indexOf(section) === index);
-  (await Promise.all(sectionList)).forEach(async (section) => {
-    await decorateWidgetSection(section, section.querySelector(`.${WIDGET_CLASS}`));
-  });
-}
-
 export async function maybeDecorateProductHighlightsWidgetFromCarousel(block) {
   if (!block?.classList?.contains(CAROUSEL_CLASS)) return false;
 
-  const section = block.closest('.section');
+  const section = resolveSection(block);
   if (!section) return false;
 
   const status = section.getAttribute(DECORATED_ATTR);
@@ -571,14 +520,7 @@ export async function maybeDecorateProductHighlightsWidgetFromCarousel(block) {
   const hasTextBlock = !!section.querySelector('.text-block');
   const hasWidgetMeta = Boolean(
     getDatasetValue(section, 'logo')
-    || getDatasetValue(section, 'logoSecondary')
-    || getDatasetValue(section, 'standardButtonLabel')
-    || getDatasetValue(section, 'standardButtonHref')
-    || getDatasetValue(section, 'standardButtonVariant')
-    || getDatasetValue(section, 'standardButtonOpenInNewTab')
-    || getDatasetValue(section, 'standardButtonSize')
-    || getDatasetValue(section, 'standardButtonLeftIcon')
-    || getDatasetValue(section, 'standardButtonRightIcon'),
+    || getDatasetValue(section, 'standardButtonLabel'),
   );
 
   if (!hasTextBlock && !hasWidgetMeta && !section.classList.contains(WIDGET_CLASS)) return false;
