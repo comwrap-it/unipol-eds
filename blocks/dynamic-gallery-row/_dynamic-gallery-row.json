@@ -16,7 +16,12 @@
             }
         }
     ],
-    "models": [],
+    "models": [
+        {
+            "id": "dynamic-gallery-row",
+            "fields": []
+        }
+    ],
     "filters": [
         {
             "id": "dynamic-gallery-row",

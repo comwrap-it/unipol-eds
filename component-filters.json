@@ -158,6 +158,10 @@
     ]
   },
   {
+    "id": "dynamic-gallery",
+    "components": []
+  },
+  {
     "id": "editorial-carousel",
     "components": [
       "editorial-carousel-card"
