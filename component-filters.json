@@ -109,6 +109,14 @@
     "components": []
   },
   {
+    "id": "button-group",
+    "components": [
+      "standard-button"
+    ],
+    "min": 2,
+    "max": 2
+  },
+  {
     "id": "card-grid",
     "components": [
       "warranty-card"
