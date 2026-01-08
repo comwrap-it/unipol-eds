@@ -1,59 +1,78 @@
-# Insurance Product Card
+# Category Card
 
-Product teaser card with image, tag, title/description, CTA + note, and optional 3D icons. Model in `_insurance-product-card.json`; behavior in `insurance-product-card.js`.
+Category card with image, 3D icon of the category, title/description, category chips and note. Model in `_category-card.json`; behavior in `category-card.js`.
 
 ## Overview
-- Renders product image with Tag overlay, text content, CTA with optional note, and 3D icons bar.
-- Preserves UE instrumentation and optimizes images; prioritizes first card image for LCP.
+- Renders product image, text content, category chips with note and 3D icon.
+- Preserves UE instrumentation and optimizes images.
 
 ## Field Reference (UE Model)
-Source: `_insurance-product-card.json` (model: `insurance-product-card`).
+Source: `_category-card.json` (model: `category-card`).
 
 1) title (text)
-- Purpose: Card title. Required; max 15 chars.
+- Purpose: Card title. Required; max 25 chars.
 
 2) description (text)
 - Purpose: Supporting copy. Required; max 130 chars.
 
-3) button-container (container)
-- Purpose: Configure CTA via Standard Button fields.
+3) note (text)
+- Purpose: Small note under category chips. Required; max 25 chars.
 
-4) note (text)
-- Purpose: Small note under CTA. Required; max 60 chars.
-
-5) tag (container)
-- Purpose: Configure Tag (label/category/variant) via Tag model fields.
-
-6) image (reference)
+4) image (reference)
 - Purpose: Product image.
 - Required: Yes.
 
-7) imageSR (text)
+5) imageSR (text)
 - Purpose: Image alt text. Required.
 
-8) icons-3D (container)
-- Purpose: Configure vehicle/property/welfare icon visibility via Icons 3D model.
+6) category (select)
+- Purpose: Configure vehicle/property/welfare category.
 - Required: Yes.
 
-## Runtime Behavior (insurance-product-card.js)
-- Image: Uses authored `<picture>` or optimizes `<img>`/URL; assigns alt; sets eager/high priority on first card.
-- Tag: Builds from Tag rows and overlays onto the image.
+7) category chip icon (select)
+- Purpose: Select an icon to be displayed in the category chip.
+
+8) category chip text (text)
+- Purpose: text displayed in category chip.
+
+9) category chip icon (select)
+- Purpose: Select an icon to be displayed in the category chip.
+
+10) category chip text (text)
+- Purpose: text displayed in category chip.
+
+11) category chip icon (select)
+- Purpose: Select an icon to be displayed in the category chip.
+
+12) category chip text (text)
+- Purpose: text displayed in category chip.
+
+13) category chip icon (select)
+- Purpose: Select an icon to be displayed in the category chip.
+
+14) category chip text (text)
+- Purpose: text displayed in category chip.
+
+## Runtime Behavior (category-card.js)
+- Image: Uses authored `<picture>` or optimizes `<img>`/URL; assigns alt.
+- 3D Icon: Built via `create3DiconsFromRows`.
 - Text: Preserves existing heading/paragraph nodes; assigns `.title`/`.description` classes.
-- CTA: Builds via Standard Button; note rendered as `.subdescription`.
-- 3D Icons: Built via `create3DiconsFromRows` and appended in `.img-vector`.
-- Instrumentation: Restored from first row onto the final card container.
+- Category chips: Builds via `Category Chip`.
+- Note rendered as `text`.
 
 ## Authoring Notes (Universal Editor)
 - Typical row mapping:
   - 0: title
   - 1: description
-  - 2–8: Standard Button fields
-  - 9: note
-  - 10–12: Tag fields
-  - 13: image
-  - 14: image alt
-  - 15–17: 3D icons flags
+  - 2: note
+  - 3: image
+  - 4: imageSR
+  - 5: category
+  - 6: first Category Chip icon and text
+  - 7: second Category Chip icon and text
+  - 8: third Category Chip icon and text
+  - 9: fourth Category Chip icon and text
 
 ## Defaults and Fallbacks
-- Missing CTA: button area omitted.
-- Missing Tag or 3D icons: those areas are omitted.
+- The 3D icons picks the category selected and always displayed.
+- Category chips displayed only if configured both text and icon 

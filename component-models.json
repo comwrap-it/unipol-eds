@@ -703,7 +703,10 @@
             "component": "text",
             "name": "tagLabel",
             "label": "Tag text",
-            "required": true
+            "required": true,
+            "validation": {
+              "maxLength": 25
+            }
           },
           {
             "component": "select",
@@ -932,7 +935,7 @@
         "required": true,
         "validation": {
           "maxLength": 25,
-          "customErrorMsg": "Note troppo lunghe (max 60 caratteri)"
+          "customErrorMsg": "Note troppo lunghe (max 25 caratteri)"
         }
       },
       {
@@ -2850,7 +2853,7 @@
         "required": true,
         "validation": {
           "maxLength": 25,
-          "customErrorMsg": "Titolo troppo lungo (max 15 caratteri)"
+          "customErrorMsg": "Titolo troppo lungo (max 25 caratteri)"
         }
       },
       {
@@ -2993,7 +2996,7 @@
         "required": true,
         "validation": {
           "maxLength": 25,
-          "customErrorMsg": "Note troppo lunghe (max 60 caratteri)"
+          "customErrorMsg": "Note troppo lunghe (max 25 caratteri)"
         }
       },
       {
@@ -3006,7 +3009,10 @@
             "component": "text",
             "name": "tagLabel",
             "label": "Tag text",
-            "required": true
+            "required": true,
+            "validation": {
+              "maxLength": 25
+            }
           },
           {
             "component": "select",
@@ -5670,7 +5676,10 @@
         "component": "text",
         "name": "tagLabel",
         "label": "Tag text",
-        "required": true
+        "required": true,
+        "validation": {
+          "maxLength": 25
+        }
       },
       {
         "component": "select",

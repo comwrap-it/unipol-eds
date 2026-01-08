@@ -16,17 +16,18 @@
  * Preserves Universal Editor instrumentation for AEM EDS.
  */
 
-import { loadBlock } from '../../scripts/aem.js';
-import { moveInstrumentation } from '../../scripts/scripts.js';
-import createScrollIndicator from '../scroll-indicator/scroll-indicator.js';
-import { initCarouselAnimations } from '../../scripts/reveal.js';
-import loadSwiper from '../../scripts/delayed.js';
-import { handleSlideChange } from '../../scripts/utils.js';
+import { loadBlock } from '@unipol-ds/scripts/aem.js';
+import { moveInstrumentation } from '@unipol-ds/scripts/scripts.js';
+import createScrollIndicator from '@unipol-ds/components/molecules/scroll-indicator/scroll-indicator.js';
+import { initCarouselAnimations } from '@unipol-ds/scripts/reveal.js';
+import loadSwiper from '@unipol-ds/scripts/delayed.js';
+import { handleSlideChange } from '@unipol-ds/scripts/utils.js';
+import handleCategoryCarouselWidget from '../category-carousel-widget/category-carousel-widget.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
-  const { loadCSS } = await import('../../scripts/aem.js');
+  const { loadCSS } = await import('@unipol-ds/scripts/aem.js');
   await Promise.all([
     loadCSS(
       `${window.hlx.codeBasePath}/blocks/category-card/category-card.css`,
@@ -86,7 +87,7 @@ async function initCategoryCarousel(carousel, block) {
     } = await createScrollIndicator()
   );
   Swiper = await loadSwiper();
-  block.appendChild(scrollIndicator);
+  block.closest('.section').appendChild(scrollIndicator);
   swiperInstance = initSwiper(Swiper, carousel, leftIconButton, rightIconButton);
   handleSlideChange(swiperInstance, setExpandedDot, leftIconButton, rightIconButton);
 }
@@ -232,4 +233,6 @@ export default async function decorate(block) {
   await handleTabletChange(tabletMQ, carousel, block);
 
   tabletMQ.addEventListener('change', (e) => handleTabletChange(e, carousel, block));
+
+  handleCategoryCarouselWidget();
 }
