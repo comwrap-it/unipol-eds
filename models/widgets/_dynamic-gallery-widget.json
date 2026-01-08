@@ -31,7 +31,7 @@
               },
               "dynamic-gallery-row-3": {
                 "sling:resourceType": "core/franklin/components/block/v1/block",
-                "name": "Dynamic Gallery Row 3",
+                "name": "Dynamic Gallery Row 33",
                 "filter": "dynamic-gallery-row",
                 "model": "dynamic-gallery-row"
               }
