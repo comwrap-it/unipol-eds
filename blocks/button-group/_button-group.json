@@ -15,6 +15,21 @@
           }
         }
       }
+    },
+    {
+      "title": "Button Group Item",
+      "id": "button-group-item",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Button Group Item",
+              "model": "button-group-item"
+            }
+          }
+        }
+      }
     }
   ],
   "models": [
@@ -35,13 +50,29 @@
           ]
         }
       ]
+    },
+    {
+      "id": "button-group-item",
+      "fields": [
+        {
+          "component": "container",
+          "name": "buttonConfig",
+          "label": "Configurazione Pulsante",
+          "collapsible": true,
+          "fields": [
+            {
+              "...": "../atoms/buttons/standard-button/_standard-button.json#/models/standard-button/fields"
+            }
+          ]
+        }
+      ]
     }
   ],
   "filters": [
     {
       "id": "button-group",
       "components": [
-        "standard-button"
+        "button-group-item"
       ],
       "min": 2,
       "max": 2

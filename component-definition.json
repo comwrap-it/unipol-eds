@@ -611,6 +611,21 @@
           }
         },
         {
+          "title": "Button Group Item",
+          "id": "button-group-item",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block/item",
+                "template": {
+                  "name": "Button Group Item",
+                  "model": "button-group-item"
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Card Grid",
           "id": "card-grid",
           "plugins": {

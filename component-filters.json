@@ -111,7 +111,7 @@
   {
     "id": "button-group",
     "components": [
-      "standard-button"
+      "button-group-item"
     ],
     "min": 2,
     "max": 2
