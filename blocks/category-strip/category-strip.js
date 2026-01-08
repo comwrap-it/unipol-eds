@@ -1,76 +1,104 @@
 import { extractInstrumentationAttributes } from '../../scripts/utils.js';
 
 /**
- * Extract values from block rows (Universal Editor format)
+ * Safely extract text from a row <div>
+ * Supports multiple <p> inside the same row (Universal Editor)
+ *
+ * @param {HTMLElement} row
+ * @param {number} index
+ * @returns {string}
+ */
+const getRowText = (row, index = 0) => {
+  if (!row) return '';
+  const paragraphs = row.querySelectorAll('p');
+  return paragraphs[index]?.textContent.trim() || '';
+};
+
+/**
+ * Extract values from Category Strip block rows
+ *
+ * Expected rows structure:
+ * 0 → background color
+ * 1 → icon (p[0]) + description (p[1])
+ * 2 → first tag label
+ * 3 → first tag variant
+ * 4 → second tag label
+ * 5 → second tag variant
+ *
+ * @param {HTMLElement[]} rows
+ * @returns {Object}
  */
 const extractValuesFromRows = (rows) => {
-  const values = {
-    bgColor: rows[0]?.textContent.trim() || '',
-    icon: rows[1]?.textContent.trim() || '',
-    desc: rows[2]?.textContent.trim() || '',
-    tag1Label: rows[3]?.textContent.trim() || '',
-    tag1Variant: rows[4]?.textContent.trim() || '',
-    tag2Label: rows[5]?.textContent.trim() || '',
-    tag2Variant: rows[6]?.textContent.trim() || '',
-    instrumentation: extractInstrumentationAttributes(rows[0] || rows[1]),
-  };
+  const instrumentation = extractInstrumentationAttributes(rows[0]);
 
-  return values;
+  return {
+    bgColor: getRowText(rows[0]),
+    icon: getRowText(rows[1], 0),
+    desc: getRowText(rows[1], 1),
+    tag1Label: getRowText(rows[2]),
+    tag1Variant: getRowText(rows[3]),
+    tag2Label: getRowText(rows[4]),
+    tag2Variant: getRowText(rows[5]),
+    instrumentation,
+  };
 };
 
 /**
  * Create Category Strip DOM element
- * (used both by blocks and other components)
+ * Used both by blocks and other components if needed
+ *
+ * @param {HTMLElement[]} rows
+ * @returns {HTMLElement|null}
  */
 export function createCategoryStripFromRows(rows) {
   if (!rows || rows.length === 0) return null;
 
   const {
-    bgColor,
-    icon,
-    desc,
-    tag1Label,
-    tag1Variant,
-    tag2Label,
-    tag2Variant,
-    instrumentation,
+    bgColor, icon, desc, tag1Label, tag1Variant, tag2Label, tag2Variant,
   } = extractValuesFromRows(rows);
 
   const container = document.createElement('div');
-  container.className = 'category-strip-container';
+  container.classList.add('category-strip-container');
 
-  if (bgColor) container.classList.add(bgColor);
+  const addSafeClass = (el, classString) => {
+    if (!classString) return;
+    classString.split(/\s+/).forEach((cls) => {
+      if (cls) el.classList.add(cls);
+    });
+  };
 
-  Object.entries(instrumentation).forEach(([k, v]) => {
-    container.setAttribute(k, v);
-  });
+  addSafeClass(container, bgColor);
 
-  // Icon
   if (icon) {
     const iconEl = document.createElement('i');
-    iconEl.className = icon;
+    addSafeClass(iconEl, icon);
     container.appendChild(iconEl);
   }
 
-  // Description
   if (desc) {
-    const span = document.createElement('span');
-    span.textContent = desc;
-    container.appendChild(span);
+    const labelEl = document.createElement('span');
+    labelEl.textContent = desc;
+    container.appendChild(labelEl);
   }
 
-  // Tag 1
+  // First tag
   if (tag1Label) {
     const t1 = document.createElement('span');
-    t1.className = `tag ${tag1Variant || ''}`.trim();
+    t1.classList.add('tag');
+    if (tag1Variant && ['default', 'secondary', 'neutral', 'custom'].includes(tag1Variant)) {
+      t1.classList.add(tag1Variant);
+    }
     t1.textContent = tag1Label;
     container.appendChild(t1);
   }
 
-  // Tag 2
+  // Second tag
   if (tag2Label) {
     const t2 = document.createElement('span');
-    t2.className = `tag ${tag2Variant || ''}`.trim();
+    t2.classList.add('tag');
+    if (tag2Variant && ['default', 'secondary', 'neutral', 'custom'].includes(tag2Variant)) {
+      t2.classList.add(tag2Variant);
+    }
     t2.textContent = tag2Label;
     container.appendChild(t2);
   }
@@ -79,7 +107,9 @@ export function createCategoryStripFromRows(rows) {
 }
 
 /**
- * Decorate Category Strip block (block rendering)
+ * Decorate Category Strip block
+ *
+ * @param {HTMLElement} block
  */
 export default function decorateCategoryStrip(block) {
   if (!block) return;
@@ -91,7 +121,6 @@ export default function decorateCategoryStrip(block) {
   }
 
   const strip = createCategoryStripFromRows(rows);
-
   if (!strip) return;
 
   block.textContent = '';
