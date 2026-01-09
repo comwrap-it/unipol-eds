@@ -1,4 +1,5 @@
 import { loadBlock } from '../../scripts/aem.js';
+import { moveInstrumentation } from '../../scripts/scripts.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -54,6 +55,8 @@ export default async function decorate(block) {
       await loadBlock(decoratedTile);
     }
 
+    moveInstrumentation(row, downloadTileMoleculeBlock);
+
     return downloadTileMoleculeBlock;
   });
 
@@ -66,7 +69,11 @@ export default async function decorate(block) {
       if (index % 2 === 0) {
         prevTile = tile;
       } else {
-        prevTile.appendChild(tile.querySelector('.download-tile-molecule'));
+        const prevDownloadTile = prevTile.querySelector('.download-tile-molecule');
+        moveInstrumentation(prevTile, prevDownloadTile);
+        const nextDownloadTile = tile.querySelector('.download-tile-molecule');
+        moveInstrumentation(tile, nextDownloadTile);
+        prevTile.appendChild(nextDownloadTile);
         block.appendChild(prevTile);
       }
     });
