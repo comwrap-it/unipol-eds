@@ -6,7 +6,9 @@ const CAROUSEL_CLASS = 'product-highlights-carousel';
 const TRACK_CLASS = 'product-highlights-carousel-track';
 
 export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED = 10000;
-export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW = PRODUCT_HIGHLIGHTS_SWIPER_SPEED * 3; // 1/3
+export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW = Number(
+  (PRODUCT_HIGHLIGHTS_SWIPER_SPEED * 3).toFixed(2),
+);
 // #endregion
 
 // #region HELPERS
@@ -35,12 +37,47 @@ async function ensureStylesLoaded() {
  */
 export const setProductHighlightsSwiperSpeed = (swiperInstance, speed) => {
   if (!swiperInstance) return;
-  swiperInstance.params.speed = speed;
 
-  if (swiperInstance.autoplay?.running) {
-    swiperInstance.autoplay.stop();
-    swiperInstance.autoplay.start();
+  const nextSpeed = Number(speed);
+  if (Number.isNaN(nextSpeed)) return;
+
+  const previousSpeed = swiperInstance.params?.speed;
+  if (previousSpeed === nextSpeed) return;
+
+  swiperInstance.params.speed = nextSpeed;
+
+  const isPaused = swiperInstance.el?.dataset?.productHighlightsPaused === 'true';
+  if (isPaused) return;
+
+  if (!swiperInstance.autoplay?.running) return;
+
+  const supportsFreeze = Boolean(
+    swiperInstance.animating
+      && swiperInstance.wrapperEl
+      && typeof swiperInstance.getTranslate === 'function'
+      && typeof swiperInstance.setTranslate === 'function'
+      && typeof swiperInstance.setTransition === 'function',
+  );
+
+  if (typeof swiperInstance.autoplay.stop === 'function') swiperInstance.autoplay.stop();
+
+  if (supportsFreeze) {
+    const currentTranslate = swiperInstance.getTranslate();
+    swiperInstance.setTransition(0);
+    swiperInstance.setTranslate(currentTranslate);
+    if (typeof swiperInstance.updateActiveIndex === 'function') swiperInstance.updateActiveIndex();
+    if (typeof swiperInstance.updateSlidesClasses === 'function') swiperInstance.updateSlidesClasses();
+
+    ['onSlideToWrapperTransitionEnd', 'onTranslateToWrapperTransitionEnd'].forEach((key) => {
+      const handler = swiperInstance[key];
+      if (!handler) return;
+      swiperInstance.wrapperEl.removeEventListener('transitionend', handler);
+      swiperInstance[key] = null;
+    });
+    swiperInstance.animating = false;
   }
+
+  if (typeof swiperInstance.autoplay.start === 'function') swiperInstance.autoplay.start();
 };
 
 /**
@@ -250,34 +287,58 @@ const initSwiper = async (carousel, force = false) => {
   /* State, hover slowdown, and interaction guards                              */
   /* -------------------------------------------------------------------------- */
   carousel.dataset.productHighlightsPaused = 'false';
-  carousel.dataset.productHighlightsHoverState = carousel.matches(':hover')
-    ? 'true'
-    : 'false';
+  carousel.dataset.productHighlightsHoverState = 'false';
 
-  if (carousel.dataset.productHighlightsHover !== 'true' && swiperInstance.params?.autoplay) {
-    const handleMouseEnter = () => {
+  if (carousel.dataset.productHighlightsCardHover !== 'true' && swiperInstance.params?.autoplay) {
+    const supportsPointerEvents = 'PointerEvent' in window;
+    const overEventName = supportsPointerEvents ? 'pointerover' : 'mouseover';
+    const outEventName = supportsPointerEvents ? 'pointerout' : 'mouseout';
+
+    /**
+     * @param {Event} event
+     * @returns {HTMLElement|null}
+     */
+    const resolveSlideFromEvent = (event) => {
+      const target = event?.target instanceof Element ? event.target : null;
+      if (!target) return null;
+      const slide = target.closest('.swiper-slide');
+      return slide && carousel.contains(slide) ? slide : null;
+    };
+
+    const isMousePointer = (event) => !('pointerType' in event) || event.pointerType === 'mouse';
+
+    const handleCardHoverIn = (event) => {
+      if (!isMousePointer(event)) return;
+      const slide = resolveSlideFromEvent(event);
+      if (!slide) return;
+
+      const related = event.relatedTarget instanceof Element ? event.relatedTarget : null;
+      if (related && slide.contains(related)) return;
+
       carousel.dataset.productHighlightsHoverState = 'true';
       if (carousel.dataset.productHighlightsPaused === 'true') return;
-      swiperInstance.params.speed = PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW;
-      if (swiperInstance.autoplay?.running) {
-        swiperInstance.autoplay.stop();
-        swiperInstance.autoplay.start();
-      }
+      setProductHighlightsSwiperSpeed(swiperInstance, PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW);
     };
 
-    const handleMouseLeave = () => {
+    const handleCardHoverOut = (event) => {
+      if (!isMousePointer(event)) return;
+      const slide = resolveSlideFromEvent(event);
+      if (!slide) return;
+
+      const related = event.relatedTarget instanceof Element ? event.relatedTarget : null;
+      if (related && slide.contains(related)) return;
+
+      const nextSlide = related?.closest?.('.swiper-slide');
+      if (nextSlide && carousel.contains(nextSlide)) return;
+
       carousel.dataset.productHighlightsHoverState = 'false';
       if (carousel.dataset.productHighlightsPaused === 'true') return;
-      swiperInstance.params.speed = PRODUCT_HIGHLIGHTS_SWIPER_SPEED;
-      if (swiperInstance.autoplay?.running) {
-        swiperInstance.autoplay.stop();
-        swiperInstance.autoplay.start();
-      }
+      setProductHighlightsSwiperSpeed(swiperInstance, PRODUCT_HIGHLIGHTS_SWIPER_SPEED);
     };
 
-    carousel.addEventListener('mouseenter', handleMouseEnter);
-    carousel.addEventListener('mouseleave', handleMouseLeave);
-    carousel.dataset.productHighlightsHover = 'true';
+    carousel.addEventListener(overEventName, handleCardHoverIn);
+    carousel.addEventListener(outEventName, handleCardHoverOut);
+    carousel.dataset.productHighlightsCardHover = 'true';
   }
 
   if (carousel.dataset.productHighlightsResize !== 'true') {

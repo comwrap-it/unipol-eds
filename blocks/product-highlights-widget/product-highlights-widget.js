@@ -500,6 +500,18 @@ async function decorateWidgetSection(section, block) {
       const nextSpeed = isHovering
         ? PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW
         : PRODUCT_HIGHLIGHTS_SWIPER_SPEED;
+        /**
+         * Pchiamata a setProductHighlightsSwiperSpeed quando si preme play),
+         * serve a riallineare la 'params.speed' prima di riavviare l’autoplay.
+         * Nel flusso la velocità può cambiare per hover sulle card,
+         * ma quando si fa pause -> play Swiper riparte con la speed che ha in quel momento:
+         * se il widget non la reimposta in base allo stato hover,
+         * il play riparte spesso alla speed “sbagliata” (tipicamente quella di default/ultima),
+         * dando l’impressione che l’hover/slowdown non sia coerente dopo il resume.
+         * Se vuoi che il widget non contenga proprio quella logica,
+         * l’alternativa è spostare completamente il “set speed on resume”
+         * nel carosello (così il widget fa solo start/stop).
+         */
       setProductHighlightsSwiperSpeed(instance, nextSpeed);
       instance.autoplay.start();
       if (pauseIcon) {
