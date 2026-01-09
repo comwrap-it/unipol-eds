@@ -102,13 +102,11 @@ const initSwiper = async (carousel, force = false) => {
     carousel.dataset.productHighlightsInit = 'pending';
 
     let rafId = 0;
-    let timeoutId = 0;
     let resizeObserver = null;
     let intersectionObserver = null;
 
     const cleanup = () => {
       if (rafId) cancelAnimationFrame(rafId);
-      if (timeoutId) clearTimeout(timeoutId);
       if (resizeObserver) resizeObserver.disconnect();
       if (intersectionObserver) intersectionObserver.disconnect();
     };
@@ -140,14 +138,6 @@ const initSwiper = async (carousel, force = false) => {
       rafId = requestAnimationFrame(tick);
     };
     rafId = requestAnimationFrame(tick);
-
-    timeoutId = window.setTimeout(() => {
-      cleanup();
-      carousel.dataset.productHighlightsInit = 'ready';
-      initSwiper(carousel, true).then((instance) => {
-        if (instance) carousel.swiper = instance;
-      });
-    }, 1200);
 
     return null;
   }
@@ -236,7 +226,7 @@ const initSwiper = async (carousel, force = false) => {
       disableOnInteraction: false,
       reverseDirection: false,
       pauseOnMouseEnter: false,
-      waitForTransition: false,
+      waitForTransition: true,
     },
     freeMode: {
       enabled: true,
