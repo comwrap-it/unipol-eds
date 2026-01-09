@@ -26,7 +26,7 @@ const componentsWithMaxItems = [
     filter: 'unipol-footer',
     itemClass: '.text-list-wrapper',
     maxItems: 4,
-  },
+  }
 ];
 
 async function applyChanges(event) {
