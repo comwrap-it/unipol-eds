@@ -763,16 +763,32 @@
           }
         },
         {
-          "title": "Download Tile",
-          "id": "download-tile",
+          "title": "Download Tile Molecule",
+          "id": "download-tile-molecule",
           "plugins": {
             "xwalk": {
               "page": {
                 "resourceType": "core/franklin/components/block/v1/block",
                 "template": {
-                  "filter": "download-tile",
-                  "model": "download-tile",
-                  "name": "Download Tile"
+                  "filter": "download-tile-molecule",
+                  "model": "download-tile-molecule",
+                  "name": "Download Tile Molecule"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Download Tile Group",
+          "id": "download-tile-organism",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "download-tile-organism",
+                  "model": "download-tile-organism",
+                  "name": "Download Tile Group"
                 }
               }
             }

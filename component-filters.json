@@ -156,8 +156,14 @@
     "max": 8
   },
   {
-    "id": "download-tile",
+    "id": "download-tile-molecule",
     "components": []
+  },
+  {
+    "id": "download-tile-organism",
+    "components": [
+      "download-tile-molecule"
+    ]
   },
   {
     "id": "editorial-carousel",
