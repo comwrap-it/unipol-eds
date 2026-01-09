@@ -42,7 +42,11 @@
         {
           "component": "text",
           "name": "product-highlights-widget-name",
-          "label": "Nome sezione Product Highlights Widget"
+          "label": "Nome sezione Product Highlights Widget",
+          "validation": {
+            "maxLength": 200,
+            "customErrorMsg": "Testo troppo lungo"
+          }
         },
         {
           "component": "reference",

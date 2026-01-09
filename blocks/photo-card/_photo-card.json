@@ -37,7 +37,11 @@
           "component": "text",
           "name": "title",
           "label": "Titolo",
-          "required": true
+          "required": true,
+          "validation": {
+            "maxLength": 65,
+            "customErrorMsg": "Testo troppo lungo"
+          }
         }
       ]
     }
