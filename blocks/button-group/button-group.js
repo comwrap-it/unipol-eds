@@ -17,7 +17,7 @@ import { extractInstrumentationAttributes } from '../../scripts/utils.js';
  * rows[6]: standardButtonRightIcon (select)
  */
 const extractValuesFromRows = (rows) => {
-  const text = rows[0]?.textContent?.trim() || 'Default';
+  const text = rows[0]?.textContent?.trim() || '';
   const variant = rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
   const href = rows[2]?.querySelector('a')?.href || rows[2]?.textContent?.trim() || '';
   const openInNewTab = rows[3]?.textContent?.trim() === 'true';
@@ -105,9 +105,8 @@ export default function decorate(block) {
 
   block.innerHTML = '';
   block.classList.add('button-group');
+  block.classList.add(`button-group--${direction}`);
   block.style.display = 'flex';
-  block.style.flexDirection = direction === 'vertical' ? 'column' : 'row';
-  block.style.gap = 'var(--Space-200-8)';
 
   buttons.forEach(btn => block.appendChild(btn));
 
