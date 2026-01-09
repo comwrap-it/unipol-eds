@@ -51,14 +51,13 @@ export default function decorate(block) {
   if (!direction) direction = 'horizontal';
 
   const firstContainer = block.children[1];
-  const secondContainer = block.children[2];
+  const secondContainer = block.children[8];
 
   // Creating buttons
   const createButtonFromContainer = (container, forcedVariant) => {
     let values;
     if (container) {
-      const rows = [...container.children];
-      values = extractValuesFromRows(rows);
+      values = extractValuesFromRows(Array.from(container.children));
     } else {
       // Default buttons
       values = {
@@ -99,13 +98,13 @@ export default function decorate(block) {
     createButtonFromContainer(firstContainer, editorialVariantValue),
     createButtonFromContainer(
       secondContainer,
-      editorialVariantValue === 'primary' ? 'secondary' : 'primary'
+      'secondary'
     )
   ];
 
   block.innerHTML = '';
   block.classList.add('button-group');
-  block.classList.add(`button-group--${direction}`);
+  block.classList.add(`button-group-${direction}`);
   block.style.display = 'flex';
 
   buttons.forEach(btn => block.appendChild(btn));
