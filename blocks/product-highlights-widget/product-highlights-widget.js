@@ -479,13 +479,12 @@ async function decorateWidgetSection(section, block) {
 
       if (paused) {
         instance.autoplay.stop();
-        if (typeof instance.getTranslate === 'function' && typeof instance.setTranslate === 'function') {
-          const currentTranslate = instance.getTranslate();
-          if (typeof instance.setTransition === 'function') instance.setTransition(0);
-          instance.setTranslate(currentTranslate);
-          if (typeof instance.updateActiveIndex === 'function') instance.updateActiveIndex();
-          if (typeof instance.updateSlidesClasses === 'function') instance.updateSlidesClasses();
-        }
+        const currentTranslate = instance.getTranslate();
+        instance.setTransition(0);
+        instance.setTranslate(currentTranslate);
+        instance.updateActiveIndex();
+        instance.updateSlidesClasses();
+
         cancelSwiperTransition();
         if (pauseIcon) {
           pauseIcon.classList.remove('un-icon-pause-circle');
