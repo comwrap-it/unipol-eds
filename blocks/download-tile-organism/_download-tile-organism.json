@@ -1,7 +1,7 @@
 {
   "definitions": [
     {
-      "title": "Download Tile Group",
+      "title": "Download Tile Organism",
       "id": "download-tile-organism",
       "plugins": {
         "xwalk": {

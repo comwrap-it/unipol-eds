@@ -274,7 +274,7 @@
                   },
                   "download-tile": {
                     "sling:resourceType": "core/franklin/components/block/v1/block",
-                    "name": "Download Tile Group",
+                    "name": "Download Tile Organism",
                     "filter": "download-tile-organism",
                     "model": "download-tile-organism"
                   }
@@ -779,7 +779,7 @@
           }
         },
         {
-          "title": "Download Tile Group",
+          "title": "Download Tile Organism",
           "id": "download-tile-organism",
           "plugins": {
             "xwalk": {
