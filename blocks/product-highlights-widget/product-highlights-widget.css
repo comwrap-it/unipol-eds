@@ -6,8 +6,7 @@
     --Card-Photo-Card-Image-Height-S: calc(var(--Card-Photo-Card-Width-S) * 0.75);
     --Card-Photo-Card-Width-M: clamp(280px, 42vw, 870px);
     --Card-Photo-Card-Image-Height-M: calc(var(--Card-Photo-Card-Width-M) * 0.562);
-
-    padding-block: var(--Layout-Section-Vertical-Padding, 4rem);
+    padding-inline: 0;
     color: var(--Text-Default-Primary, #001C35);
 
     &.theme-dark {
