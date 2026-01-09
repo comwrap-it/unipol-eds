@@ -4,6 +4,6 @@
  */
 
 .theme-mobile {
-  --Background-Blur-400-24-2: blur(1.5rem);
-  --Background-Blur-200-8: blur(0.5rem);
+  --background-blur-400-24-2: blur(1.5rem);
+  --background-blur-200-8: blur(0.5rem);
 }

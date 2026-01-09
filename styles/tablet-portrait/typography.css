@@ -4,24 +4,24 @@
  */
 
 .theme-tablet-portrait {
-  --Text-Styles-Title-Extra-Large: var(--Weight-Semi-Bold) var(--Font-Size-Title-Extra-Large)/100% var(--Family-Font-2);
-  --Text-Styles-Title-Hero-Apex-New: var(--Weight-Medium) var(--Font-Size-Title-Hero-Apex-New)/115% var(--Family-Font-1);
-  --Text-Styles-Title-Page: var(--Weight-Medium) var(--Font-Size-Title-Page)/115% var(--Family-Font-1);
-  --Text-Styles-Subtitle-Apex-New: var(--Weight-Medium) var(--Size-32)/115% var(--Family-Font-1);
-  --Text-Styles-Subtitle-Manrope: var(--Weight-Semi-Bold) var(--Font-Size-Subtitle-Manrope)/120% var(--Family-Font-2);
-  --Text-Styles-Heading: var(--Weight-Semi-Bold) var(--Font-Size-Heading)/125% var(--Family-Font-2);
-  --Text-Styles-Subheading: var(--Weight-Semi-Bold) var(--Size-20)/130% var(--Family-Font-2);
-  --Text-Styles-Body-Base: var(--Weight-Regular) var(--Size-16)/140% var(--Family-Font-2);
-  --Text-Styles-Body-Strong: var(--Weight-Semi-Bold) var(--Size-16)/140% var(--Family-Font-2);
-  --Text-Styles-Body-Link: var(--Weight-Regular) var(--Size-16)/140% var(--Family-Font-2);
-  --Text-Styles-Body-Small: var(--Weight-Regular) var(--Size-14)/140% var(--Family-Font-2);
-  --Text-Styles-Body-Small-Medium: var(--Weight-Medium) var(--Size-14)/140% var(--Family-Font-2);
-  --Text-Styles-Body-Extra-Small: var(--Weight-Regular) var(--Size-12)/140% var(--Family-Font-2);
-  --Text-Styles-Overline: var(--Weight-Semi-Bold) var(--Size-12)/140% var(--Family-Font-2);
-  --Text-Styles-Single-Line-Body-Base: var(--Weight-Semi-Bold) var(--Size-16)/150% var(--Family-Font-2);
-  --Text-Styles-Single-Line-Body-Link: var(--Weight-Semi-Bold) var(--Size-16)/150% var(--Family-Font-2);
-  --Text-Styles-Title-Hero-Manrope: var(--Weight-Semi-Bold) var(--Size-56)/115% var(--Family-Font-2);
-  --Text-Styles-Subtitle-Manrope-Fixed: var(--Weight-Semi-Bold) var(--Size-32)/120% var(--Family-Font-2);
-  --Text-Styles-Heading-Fixed: var(--Weight-Semi-Bold) var(--Size-24)/125% var(--Family-Font-2);
-  --Text-Styles-Body-Medium: var(--Weight-Medium) var(--Size-16)/140% var(--Family-Font-2);
+  --text-styles-title-extra-large: var(--weight-semi-bold) var(--font-size-title-extra-large)/100% var(--family-font-2);
+  --text-styles-title-hero-apex-new: var(--weight-medium) var(--font-size-title-hero-apex-new)/115% var(--family-font-1);
+  --text-styles-title-page: var(--weight-medium) var(--font-size-title-page)/115% var(--family-font-1);
+  --text-styles-subtitle-apex-new: var(--weight-medium) var(--size-32)/115% var(--family-font-1);
+  --text-styles-subtitle-manrope: var(--weight-semi-bold) var(--font-size-subtitle-manrope)/120% var(--family-font-2);
+  --text-styles-heading: var(--weight-semi-bold) var(--font-size-heading)/125% var(--family-font-2);
+  --text-styles-subheading: var(--weight-semi-bold) var(--size-20)/130% var(--family-font-2);
+  --text-styles-body-base: var(--weight-regular) var(--size-16)/140% var(--family-font-2);
+  --text-styles-body-strong: var(--weight-semi-bold) var(--size-16)/140% var(--family-font-2);
+  --text-styles-body-link: var(--weight-regular) var(--size-16)/140% var(--family-font-2);
+  --text-styles-body-small: var(--weight-regular) var(--size-14)/140% var(--family-font-2);
+  --text-styles-body-small-medium: var(--weight-medium) var(--size-14)/140% var(--family-font-2);
+  --text-styles-body-extra-small: var(--weight-regular) var(--size-12)/140% var(--family-font-2);
+  --text-styles-overline: var(--weight-semi-bold) var(--size-12)/140% var(--family-font-2);
+  --text-styles-single-line-body-base: var(--weight-semi-bold) var(--size-16)/150% var(--family-font-2);
+  --text-styles-single-line-body-link: var(--weight-semi-bold) var(--size-16)/150% var(--family-font-2);
+  --text-styles-title-hero-manrope: var(--weight-semi-bold) var(--size-56)/115% var(--family-font-2);
+  --text-styles-subtitle-manrope-fixed: var(--weight-semi-bold) var(--size-32)/120% var(--family-font-2);
+  --text-styles-heading-fixed: var(--weight-semi-bold) var(--size-24)/125% var(--family-font-2);
+  --text-styles-body-medium: var(--weight-medium) var(--size-16)/140% var(--family-font-2);
 }

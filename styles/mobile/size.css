@@ -4,10 +4,10 @@
  */
 
 .theme-mobile {
-  --Icon-100-16: 1rem;
-  --Icon-200-20: 1.25rem;
-  --Icon-300-24: 1.5rem;
-  --Icon-400-32: 2rem;
-  --Icon-500-40: 2.5rem;
-  --Text-Block-Centered-Width: var(--Container-Width-L8-Lm9-Ms10-S12);
+  --icon-100-16: 1rem;
+  --icon-200-20: 1.25rem;
+  --icon-300-24: 1.5rem;
+  --icon-400-32: 2rem;
+  --icon-500-40: 2.5rem;
+  --text-block-centered-width: var(--container-width-l8-lm9-ms10-s12);
 }

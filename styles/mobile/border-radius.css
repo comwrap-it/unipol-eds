@@ -4,11 +4,11 @@
  */
 
 .theme-mobile {
-  --Radius-0: 0rem;
-  --Radius-100-4: 0.25rem;
-  --Radius-200-8: 0.5rem;
-  --Radius-300-16: 1rem;
-  --Radius-400-24: 1.5rem;
-  --Radius-9999: 624.938rem;
-  --Carousel-Widget-Product-Highlights-Radius: var(--Radius-400-24);
+  --radius-0: 0rem;
+  --radius-100-4: 0.25rem;
+  --radius-200-8: 0.5rem;
+  --radius-300-16: 1rem;
+  --radius-400-24: 1.5rem;
+  --radius-9999: 624.938rem;
+  --carousel-widget-product-highlights-radius: var(--radius-400-24);
 }

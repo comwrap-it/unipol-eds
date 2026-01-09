@@ -4,14 +4,14 @@
  */
 
 :root {
-  --Size-12: 0.75rem;
-  --Size-14: 0.875rem;
-  --Size-16: 1rem;
-  --Size-20: 1.25rem;
-  --Size-24: 1.5rem;
-  --Size-32: 2rem;
-  --Size-40: 2.5rem;
-  --Size-48: 3rem;
-  --Size-56: 3.5rem;
-  --Size-80: 5rem;
+  --size-12: 0.75rem;
+  --size-14: 0.875rem;
+  --size-16: 1rem;
+  --size-20: 1.25rem;
+  --size-24: 1.5rem;
+  --size-32: 2rem;
+  --size-40: 2.5rem;
+  --size-48: 3rem;
+  --size-56: 3.5rem;
+  --size-80: 5rem;
 }

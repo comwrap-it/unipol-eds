@@ -4,9 +4,9 @@
  */
 
 :root {
-  --Weight-Regular: 400;
-  --Weight-Medium: 500;
-  --Weight-Semi-Bold: 600;
-  --Weight-Bold: 700;
-  --Weight-Italic: 400;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semi-bold: 600;
+  --weight-bold: 700;
+  --weight-italic: 400;
 }

@@ -4,8 +4,8 @@
  */
 
 .theme-tablet {
-  --Stroke-0: 0rem;
-  --Stroke-100-1: 0.063rem;
-  --Stroke-200-2: 0.125rem;
-  --Stroke-400-4: 0.25rem;
+  --stroke-0: 0rem;
+  --stroke-100-1: 0.063rem;
+  --stroke-200-2: 0.125rem;
+  --stroke-400-4: 0.25rem;
 }
