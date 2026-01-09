@@ -1,6 +1,11 @@
-.dynamic-gallery-row {
+.dynamic-gallery-row:not(.block) {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: var(--Dynamic-Gallery-Gap-M-Tp, 8px);
+    margin-bottom: var(--Dynamic-Gallery-Gap-D-Ds, 16px);
+
+    &:last-of-type {
+
+    }
 }

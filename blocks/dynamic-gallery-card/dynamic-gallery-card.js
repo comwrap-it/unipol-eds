@@ -1,6 +1,28 @@
 import { extractMediaElementFromRow } from '../../scripts/domHelpers.js';
 import { createButton } from '../../scripts/libs/ds/components/atoms/buttons/standard-button/standard-button.js';
 import { createTag } from '../../scripts/libs/ds/components/atoms/tag/tag.js';
+import { loadFragment } from '../fragment/fragment.js';
+
+/**
+ * Handles the link click to load the respective fragment
+ * @param {Event} event
+ */
+const handleLinkClick = async (event) => {
+  event.stopPropagation();
+  event.preventDefault();
+  const link = event.currentTarget;
+  const href = link.getAttribute('href');
+  if (href) {
+    const fragment = await loadFragment(href);
+    if (fragment) {
+      const fragmentSection = fragment.querySelector(':scope .section');
+      if (fragmentSection) {
+        fragmentSection.classList.remove('section');
+        document.body.appendChild(fragmentSection);
+      }
+    }
+  }
+};
 
 /**
  * Create Dynamic Gallery Card element
@@ -31,6 +53,7 @@ export const createDynamicGalleryCard = async (
     if (imgElement) {
       imgElement.alt = imgAltText || '';
     }
+    picture.className = 'dynamic-gallery-card-image';
     cardContainer.appendChild(picture);
   }
 
@@ -40,10 +63,11 @@ export const createDynamicGalleryCard = async (
   }
 
   const overlay = document.createElement('div');
-  overlay.className = 'dynamic-gallery-card-overlay';
+  overlay.className = 'dynamic-gallery-card-overlay theme-dark';
 
   if (btnLabel && btnLink) {
-    const button = createButton(btnLabel, btnLink, false, 'secondary');
+    const button = createButton(btnLabel, btnLink, false, 'primary');
+    button.onclick = handleLinkClick;
     overlay.appendChild(button);
   }
   cardContainer.appendChild(overlay);

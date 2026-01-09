@@ -17,12 +17,10 @@ const ensureStylesLoaded = async () => {
 
 export default async function decorate(block) {
   if (!block) return;
-  ensureStylesLoaded();
+  await ensureStylesLoaded();
 
   // Get rows from block
   const rows = Array.from(block.children);
-  console.log('🚀 ~ decorate ~ rows:', rows);
-
   const buttonConfigRows = rows.slice(0, 7);
   const contentRows = rows.slice(7);
 
@@ -45,7 +43,9 @@ export default async function decorate(block) {
   const parentSection = block.closest('.section');
   if (parentSection) {
     const button = await createButtonFromRows(buttonConfigRows);
-    parentSection.appendChild(button);
+    if (button) {
+      parentSection.appendChild(button);
+    }
   }
 
   block.replaceChildren(cardGrid);
