@@ -180,19 +180,19 @@
                     "model": "category-carousel",
                     "category-card-vehicles": {
                       "sling:resourceType": "core/franklin/components/block/v1/block",
-                      "name": "Category Card Veicoli",
+                      "name": "Category Card",
                       "filter": "category-card",
                       "model": "category-card"
                     },
                     "category-card-home": {
                       "sling:resourceType": "core/franklin/components/block/v1/block",
-                      "name": "Category Card Casa e Famiglia",
+                      "name": "Category Card",
                       "filter": "category-card",
                       "model": "category-card"
                     },
                     "category-card-welfare": {
                       "sling:resourceType": "core/franklin/components/block/v1/block",
-                      "name": "Category Card Salute",
+                      "name": "Category Card",
                       "filter": "category-card",
                       "model": "category-card"
                     }

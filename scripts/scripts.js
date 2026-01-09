@@ -7,10 +7,12 @@ import {
   toClassName,
   getMetadata,
   decorateBlocks,
+  decorateBlock,
   decorateTemplateAndTheme,
   waitForFirstImage,
   loadSection,
   loadSections,
+  loadBlock,
   loadCSS,
   readBlockConfig,
   toCamelCase,
@@ -230,8 +232,29 @@ async function loadLazy(doc) {
   const element = hash ? doc.getElementById(hash.substring(1)) : false;
   if (hash && element) element.scrollIntoView();
 
-  loadHeader(doc.querySelector('header'));
-  loadFooter(doc.querySelector('footer'));
+  // Load header - check if a header block already exists to avoid duplication
+  const header = doc.querySelector('header');
+  const existingHeaderBlock = header?.querySelector('.header.block');
+  if (existingHeaderBlock) {
+    // If header block already exists, just decorate and load it
+    decorateBlock(existingHeaderBlock);
+    loadBlock(existingHeaderBlock);
+  } else {
+    // Otherwise use the standard loadHeader function
+    loadHeader(header);
+  }
+
+  // Load footer - check if a footer block already exists to avoid duplication
+  const footer = doc.querySelector('footer');
+  const existingFooterBlock = footer?.querySelector('.footer.block');
+  if (existingFooterBlock) {
+    // If footer block already exists, just decorate and load it
+    decorateBlock(existingFooterBlock);
+    loadBlock(existingFooterBlock);
+  } else {
+    // Otherwise use the standard loadFooter function
+    loadFooter(footer);
+  }
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();

@@ -22,17 +22,13 @@ async function ensureStylesLoaded() {
  * @param {HTMLElement} overlay The dialog overlay
  */
 const closeDialog = (block, panel, overlay) => {
-  if (
-    panel.classList.contains('is-closing')
-    && overlay.classList.contains('is-closing')
-  ) {
+  if (panel.classList.contains('is-closing')
+    && overlay.classList.contains('is-closing')) {
     return;
   }
   panel.classList.add('is-closing');
   overlay.classList.add('is-closing');
-  const wrapper = block.closest('.dialog-container')
-    || block.closest('.dialog-wrapper')
-    || block;
+  const wrapper = block.closest('.dialog-container') || block.closest('.dialog-wrapper') || block;
 
   const onAnimEnd = (e) => {
     if (e.target !== panel) return;
