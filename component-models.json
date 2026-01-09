@@ -749,7 +749,6 @@
         "component": "select",
         "name": "buttonGroupVariant",
         "label": "Variante",
-        "description": "Variante del primo button e disposizione orizzontale o verticale",
         "value": "primary horizontal",
         "options": [
           {
@@ -769,27 +768,21 @@
             "value": "accent horizontal"
           }
         ]
-      }
-    ]
-  },
-  {
-    "id": "button-group-item",
-    "fields": [
+      },
       {
         "component": "container",
-        "name": "buttonConfig",
-        "label": "Configurazione Pulsante",
+        "name": "firstButtonConfig",
+        "label": "Primo Button",
         "collapsible": true,
         "fields": [
           {
             "component": "text",
-            "name": "standardButtonLabel",
-            "label": "Button Text",
-            "required": false
+            "name": "firstButtonLabel",
+            "label": "Button Text"
           },
           {
             "component": "select",
-            "name": "standardButtonVariant",
+            "name": "firstButtonVariant",
             "label": "Variante",
             "value": "primary",
             "options": [
@@ -809,22 +802,18 @@
           },
           {
             "component": "aem-content",
-            "name": "standardButtonHref",
-            "label": "Link URL",
-            "description": "URL del bottone"
+            "name": "firstButtonHref",
+            "label": "Link URL"
           },
           {
             "component": "boolean",
+            "name": "firstButtonOpenInNewTab",
             "label": "Apri in una nuova scheda",
-            "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
-            "name": "standardButtonOpenInNewTab",
-            "valueType": "boolean",
             "value": false
           },
           {
             "component": "select",
-            "name": "standardButtonSize",
-            "description": "Modifica la dimensione delle icone del bottone",
+            "name": "firstButtonSize",
             "label": "Dimensione Icone",
             "value": "medium",
             "options": [
@@ -848,10 +837,8 @@
           },
           {
             "component": "select",
-            "name": "standardButtonLeftIcon",
+            "name": "firstButtonLeftIcon",
             "label": "Icona Sinistra",
-            "description": "Select the left icon",
-            "value": "",
             "options": [
               {
                 "name": "None",
@@ -873,10 +860,122 @@
           },
           {
             "component": "select",
-            "name": "standardButtonRightIcon",
+            "name": "firstButtonRightIcon",
             "label": "Icona Destra",
-            "description": "Select the right icon",
-            "value": "",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "component": "container",
+        "name": "secondButtonConfig",
+        "label": "Secondo Button",
+        "collapsible": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "secondButtonLabel",
+            "label": "Button Text"
+          },
+          {
+            "component": "select",
+            "name": "secondButtonVariant",
+            "label": "Variante",
+            "value": "primary",
+            "options": [
+              {
+                "name": "Primary",
+                "value": "primary"
+              },
+              {
+                "name": "Secondary",
+                "value": "secondary"
+              },
+              {
+                "name": "Accent",
+                "value": "accent"
+              }
+            ]
+          },
+          {
+            "component": "aem-content",
+            "name": "secondButtonHref",
+            "label": "Link URL"
+          },
+          {
+            "component": "boolean",
+            "name": "secondButtonOpenInNewTab",
+            "label": "Apri in una nuova scheda",
+            "value": false
+          },
+          {
+            "component": "select",
+            "name": "secondButtonSize",
+            "label": "Dimensione Icone",
+            "value": "medium",
+            "options": [
+              {
+                "name": "Small",
+                "value": "small"
+              },
+              {
+                "name": "Medium",
+                "value": "medium"
+              },
+              {
+                "name": "Large",
+                "value": "large"
+              },
+              {
+                "name": "Extra Large",
+                "value": "extra-large"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "secondButtonLeftIcon",
+            "label": "Icona Sinistra",
+            "options": [
+              {
+                "name": "None",
+                "value": ""
+              },
+              {
+                "name": "Chevron Left",
+                "value": "un-icon-chevron-left"
+              },
+              {
+                "name": "Chevron Right",
+                "value": "un-icon-chevron-right"
+              },
+              {
+                "name": "Search Icon",
+                "value": "un-icon-search"
+              }
+            ]
+          },
+          {
+            "component": "select",
+            "name": "secondButtonRightIcon",
+            "label": "Icona Destra",
             "options": [
               {
                 "name": "None",

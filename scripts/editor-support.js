@@ -26,11 +26,6 @@ const componentsWithMaxItems = [
     filter: 'unipol-footer',
     itemClass: '.text-list-wrapper',
     maxItems: 4,
-  },
-  {
-    filter: 'button-group',
-    itemClass: '.button-group-item',
-    maxItems: 2,
   }
 ];
 

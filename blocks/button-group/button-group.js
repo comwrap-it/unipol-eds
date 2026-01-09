@@ -47,6 +47,9 @@ export default function decorate(block) {
   const editorialVariant = block.children[0]?.textContent?.trim() || 'primary horizontal';
   const [firstVariant, direction] = editorialVariant.split(' ');
 
+  const firstContainer = block.children[1];
+  const secondContainer = block.children[2];
+
   // Creating buttons
   const createButtonFromContainer = (container, defaultVariant) => {
     if (!container) return null;
@@ -73,11 +76,10 @@ export default function decorate(block) {
     return button;
   };
 
-  const buttonContainers = [...block.children].slice(1);
-  const buttons = buttonContainers.map((container, index) => {
-      container.classList.add('button-group-item');
-      return createButtonFromContainer(container, index === 0 ? firstVariant : 'secondary');
-  }).filter(Boolean);
+  const buttons = [
+    createButtonFromContainer(firstContainer, firstVariant),
+    createButtonFromContainer(secondContainer, 'secondary')
+  ].filter(Boolean);
 
   block.innerHTML = '';
   block.classList.add('button-group');
@@ -86,4 +88,5 @@ export default function decorate(block) {
   block.style.gap = 'var(--Space-200-8)';
 
   buttons.forEach(btn => block.appendChild(btn));
+
 }
