@@ -423,7 +423,12 @@ async function decorateWidgetSection(section, block) {
    * Finalize
    */
   section.classList.add(WIDGET_CLASS);
-  section.classList.add('theme-dark');
+  const darkThemeValue = String(
+    getDatasetValue(section, 'productHighlightsWidgetDarkTheme') || '',
+  ).trim().toLowerCase() !== 'false';
+
+  if (darkThemeValue) section.classList.add('theme-dark');
+  else section.classList.remove('theme-dark');
   section.setAttribute(DECORATED_ATTR, 'true');
 
   if (!carousel.dataset.blockStatus) {

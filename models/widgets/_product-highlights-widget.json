@@ -49,6 +49,12 @@
           }
         },
         {
+          "component": "boolean",
+          "name": "product-highlights-widget-dark-theme",
+          "label": "Tema scuro",
+          "default": true
+        },
+        {
           "component": "reference",
           "name": "logo",
           "label": "Logo",
