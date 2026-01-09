@@ -37,47 +37,26 @@ async function ensureStylesLoaded() {
  */
 export const setProductHighlightsSwiperSpeed = (swiperInstance, speed) => {
   if (!swiperInstance) return;
+  swiperInstance.params.speed = speed;
 
-  const nextSpeed = Number(speed);
-  if (Number.isNaN(nextSpeed)) return;
-
-  const previousSpeed = swiperInstance.params?.speed;
-  if (previousSpeed === nextSpeed) return;
-
-  swiperInstance.params.speed = nextSpeed;
-
-  const isPaused = swiperInstance.el?.dataset?.productHighlightsPaused === 'true';
-  if (isPaused) return;
-
+  if (swiperInstance.el?.dataset?.productHighlightsPaused === 'true') return;
   if (!swiperInstance.autoplay?.running) return;
+  swiperInstance.autoplay.stop();
 
-  const supportsFreeze = Boolean(
-    swiperInstance.animating
-      && swiperInstance.wrapperEl
-      && typeof swiperInstance.getTranslate === 'function'
-      && typeof swiperInstance.setTranslate === 'function'
-      && typeof swiperInstance.setTransition === 'function',
-  );
-
-  if (typeof swiperInstance.autoplay.stop === 'function') swiperInstance.autoplay.stop();
-
-  if (supportsFreeze) {
-    const currentTranslate = swiperInstance.getTranslate();
+  if (swiperInstance.animating) {
     swiperInstance.setTransition(0);
-    swiperInstance.setTranslate(currentTranslate);
-    if (typeof swiperInstance.updateActiveIndex === 'function') swiperInstance.updateActiveIndex();
-    if (typeof swiperInstance.updateSlidesClasses === 'function') swiperInstance.updateSlidesClasses();
+    swiperInstance.setTranslate(swiperInstance.getTranslate());
+    swiperInstance.updateActiveIndex();
+    swiperInstance.updateSlidesClasses();
 
     ['onSlideToWrapperTransitionEnd', 'onTranslateToWrapperTransitionEnd'].forEach((key) => {
-      const handler = swiperInstance[key];
-      if (!handler) return;
-      swiperInstance.wrapperEl.removeEventListener('transitionend', handler);
+      swiperInstance.wrapperEl.removeEventListener('transitionend', swiperInstance[key]);
       swiperInstance[key] = null;
     });
     swiperInstance.animating = false;
   }
 
-  if (typeof swiperInstance.autoplay.start === 'function') swiperInstance.autoplay.start();
+  swiperInstance.autoplay.start();
 };
 
 /**
