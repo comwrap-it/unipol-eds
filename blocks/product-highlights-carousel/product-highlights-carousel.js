@@ -173,10 +173,11 @@ const initSwiper = async (carousel, force = false) => {
     1,
     Math.ceil(resolvedContainerWidth / step),
   );
+  const halfSlidesPerView = Math.max(1, Math.ceil(slidesPerViewEstimate / 2));
   const loopAdditionalSlides = 0;
   const requiredSlides = Math.max(
     baseSlides.length,
-    (slidesPerViewEstimate * 2) + loopAdditionalSlides + 2,
+    slidesPerViewEstimate + halfSlidesPerView + loopAdditionalSlides + 2,
   );
 
   if (baseSlides.length < requiredSlides) {
@@ -372,6 +373,7 @@ export default async function decorate(block) {
 
   await ensureStylesLoaded();
 
+  // eslint-disable-next-line import/no-cycle
   const widgetModule = await import('../product-highlights-widget/product-highlights-widget.js');
   if (widgetModule?.maybeDecorateProductHighlightsWidgetFromCarousel) {
     await widgetModule.maybeDecorateProductHighlightsWidgetFromCarousel(block);

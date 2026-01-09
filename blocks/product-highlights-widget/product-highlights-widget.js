@@ -1,14 +1,18 @@
 import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
 import { createIconButton } from '@unipol-ds/components/atoms/buttons/icon-button/icon-button.js';
 import { loadCSS } from '../../scripts/aem.js';
+// eslint-disable-next-line import/no-cycle
+import decorateProductHighlightsCarousel, {
+  PRODUCT_HIGHLIGHTS_SWIPER_SPEED,
+  PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW,
+  setProductHighlightsSwiperSpeed,
+} from '../product-highlights-carousel/product-highlights-carousel.js';
 import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
 
 // #region CONSTANTS
 const WIDGET_CLASS = 'product-highlights-widget';
 const DECORATED_ATTR = 'data-product-highlights-widget';
 const CAROUSEL_CLASS = 'product-highlights-carousel';
-const PRODUCT_HIGHLIGHTS_SWIPER_SPEED = 10000;
-const PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW = PRODUCT_HIGHLIGHTS_SWIPER_SPEED * 3; // 1/3
 // #endregion
 
 // #region HELPERS
@@ -65,6 +69,43 @@ const appendIfPresent = (parent, child) => {
   if (child) parent.appendChild(child);
 };
 
+const waitForProductHighlightsSwiper = (carousel, timeoutMs = 2000) => new Promise((resolve) => {
+  if (!carousel) {
+    resolve(null);
+    return;
+  }
+  if (carousel.swiper) {
+    resolve(carousel.swiper);
+    return;
+  }
+
+  const start = window.performance?.now?.() || Date.now();
+  let resolved = false;
+  let rafId = 0;
+
+  const settle = (value) => {
+    if (resolved) return;
+    resolved = true;
+    if (rafId) cancelAnimationFrame(rafId);
+    resolve(value);
+  };
+
+  const tick = () => {
+    if (carousel.swiper) {
+      settle(carousel.swiper);
+      return;
+    }
+    const now = window.performance?.now?.() || Date.now();
+    if (now - start >= timeoutMs) {
+      settle(null);
+      return;
+    }
+    rafId = requestAnimationFrame(tick);
+  };
+
+  rafId = requestAnimationFrame(tick);
+});
+
 /**
  * @param {string|undefined|null} value
  * @returns {string}
@@ -110,20 +151,6 @@ const readWidgetData = (section) => Object.fromEntries(
     getDatasetValue(section, datasetKey),
   ]),
 );
-
-/**
- * @param {Object} swiperInstance
- * @param {number} speed
- */
-const setProductHighlightsSwiperSpeed = (swiperInstance, speed) => {
-  if (!swiperInstance) return;
-  swiperInstance.params.speed = speed;
-
-  if (swiperInstance.autoplay?.running) {
-    swiperInstance.autoplay.stop();
-    swiperInstance.autoplay.start();
-  }
-};
 
 /**
  * @param {HTMLElement|null} target
@@ -399,6 +426,13 @@ async function decorateWidgetSection(section, block) {
   section.classList.add('theme-dark');
   section.setAttribute(DECORATED_ATTR, 'true');
 
+  if (!carousel.dataset.blockStatus) {
+    await decorateProductHighlightsCarousel(carousel);
+  }
+  const swiperInstance = carousel.dataset.blockStatus === 'loading'
+    ? null
+    : await waitForProductHighlightsSwiper(carousel);
+
   /*
    * Pause
    */
@@ -443,18 +477,7 @@ async function decorateWidgetSection(section, block) {
         ? PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW
         : PRODUCT_HIGHLIGHTS_SWIPER_SPEED;
       setProductHighlightsSwiperSpeed(instance, nextSpeed);
-      if (instance.params?.loop && typeof instance.slideToLoop === 'function') {
-        const targetIndex = Number.isFinite(instance.realIndex) ? instance.realIndex : 0;
-        instance.slideToLoop(targetIndex, 0, false);
-      } else if (typeof instance.slideTo === 'function') {
-        const targetIndex = instance.isEnd ? 0 : instance.activeIndex || 0;
-        instance.slideTo(targetIndex, 0, false);
-      }
-
-      if (typeof instance.setTransition === 'function') instance.setTransition(nextSpeed);
-      if (typeof instance.update === 'function') instance.update();
-      if (instance.autoplay?.stop) instance.autoplay.stop();
-      if (instance.autoplay?.start) instance.autoplay.start();
+      instance.autoplay.start();
       if (pauseIcon) {
         pauseIcon.classList.remove('un-icon-play-circle');
         pauseIcon.classList.add('un-icon-pause-circle');
@@ -471,12 +494,16 @@ async function decorateWidgetSection(section, block) {
     setPausedState(carousel.dataset.productHighlightsPaused === 'true');
   };
 
-  if (carousel.swiper) {
-    bindPauseControls(carousel.swiper);
+  if (swiperInstance) {
+    bindPauseControls(swiperInstance);
   } else {
     carousel.addEventListener('product-highlights-swiper-ready', (event) => {
       bindPauseControls(event.detail);
     }, { once: true });
+    if (carousel.dataset.blockStatus !== 'loading') {
+      const fallbackInstance = await waitForProductHighlightsSwiper(carousel, 6000);
+      if (fallbackInstance) bindPauseControls(fallbackInstance);
+    }
   }
 }
 
