@@ -1,5 +1,4 @@
 import { loadBlock } from '../../scripts/aem.js';
-import { moveInstrumentation } from '../../scripts/scripts.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -40,20 +39,6 @@ export default async function decorate(block) {
     const downloadTileMoleculeBlock = document.createElement('div');
     downloadTileMoleculeBlock.className = 'download-tile-row';
 
-    // Preserve row instrumentation on card block if present
-    if (row.hasAttribute('data-aue-resource')) {
-      downloadTileMoleculeBlock.setAttribute(
-        'data-aue-resource',
-        row.getAttribute('data-aue-resource'),
-      );
-      const aueBehavior = row.getAttribute('data-aue-behavior');
-      if (aueBehavior) downloadTileMoleculeBlock.setAttribute('data-aue-behavior', aueBehavior);
-      const aueType = row.getAttribute('data-aue-type');
-      if (aueType) downloadTileMoleculeBlock.setAttribute('data-aue-type', aueType);
-      const aueLabel = row.getAttribute('data-aue-label');
-      if (aueLabel) downloadTileMoleculeBlock.setAttribute('data-aue-label', aueLabel);
-    }
-
     // Move all children from row to download tile molecule block (preserves their instrumentation)
     while (row.firstElementChild) {
       downloadTileMoleculeBlock.appendChild(row.firstElementChild);
@@ -68,8 +53,6 @@ export default async function decorate(block) {
     if (decoratedTile && decoratedTile.dataset.blockName) {
       await loadBlock(decoratedTile);
     }
-
-    moveInstrumentation(row, downloadTileMoleculeBlock);
 
     return downloadTileMoleculeBlock;
   });
