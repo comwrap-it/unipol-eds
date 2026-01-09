@@ -1,8 +1,5 @@
 .section.product-highlights-widget {
-    --product-highlights-widget-bg: var(
-        --Carousel-Widget-Product-Highlights-Background-Color,
-        var(--Background-Default-Tertiary, #001C35)
-    );
+    --product-highlights-widget-bg: var(--Background-Default-Secondary, #fff);
     --product-highlights-widget-content-width: min(100%, var(--Layout-Page-Width, 90rem));
     --product-highlights-widget-panel-padding: var(--Layout-Section-Margin-Horizontal-Padding, 4rem);
     --Card-Photo-Card-Width-S: clamp(220px, 26vw, 380px);
@@ -10,8 +7,17 @@
     --Card-Photo-Card-Width-M: clamp(280px, 42vw, 870px);
     --Card-Photo-Card-Image-Height-M: calc(var(--Card-Photo-Card-Width-M) * 0.562);
 
-    padding-block: var(--Layout-Section-Vertical-Padding, 4rem);
-    color: var(--Text-Default-Primary, #fff);
+    padding-inline: 0;
+    color: var(--Text-Default-Primary, #001C35);
+
+    &.theme-dark {
+        --product-highlights-widget-bg: var(
+            --Carousel-Widget-Product-Highlights-Background-Color,
+            var(--Background-Default-Tertiary, #001C35)
+        );
+
+        color: var(--Text-Default-Primary, #fff);
+    }
 
     & .product-highlights-widget-panel {
         width: 100%;
@@ -20,9 +26,9 @@
         background: var(--product-highlights-widget-bg);
         border-radius: var(--Carousel-Widget-Product-Highlights-Radius, 24px);
         display: grid;
+        grid-template-columns: minmax(0, 1fr);
         gap: var(--Carousel-Widget-Product-Highlights-Logo-Text-Gap-D-Ds, 32px);
         justify-items: center;
-        justify-content: center;
         position: relative;
         box-sizing: border-box;
         overflow: hidden;
@@ -34,6 +40,7 @@
         align-items: center;
         text-align: center;
         gap: var(--Text-Block-Centered-Text-Gap, 16px);
+        min-width: 0;
         width: 100%;
         max-width: min(100%, 48rem);
         margin-inline: auto;
@@ -62,6 +69,7 @@
         & .text-block-wrapper {
             width: 100%;
             max-width: min(100%, 48rem);
+            min-width: 0;
         }
 
         & .text-block {
@@ -71,6 +79,8 @@
         & .text-block-title,
         & .text-block-text {
             margin: 0;
+            overflow-wrap: break-word;
+            word-break: normal;
         }
     }
 

@@ -1,11 +1,14 @@
 import loadSwiper from '../../scripts/delayed.js';
+import { initCarouselAnimations } from '../../scripts/reveal.js';
 
 // #region CONSTANTS
 const CAROUSEL_CLASS = 'product-highlights-carousel';
 const TRACK_CLASS = 'product-highlights-carousel-track';
 
 export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED = 10000;
-export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW = PRODUCT_HIGHLIGHTS_SWIPER_SPEED * 3; // 1/3
+export const PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW = Number(
+  (PRODUCT_HIGHLIGHTS_SWIPER_SPEED * 3).toFixed(2),
+);
 // #endregion
 
 // #region HELPERS
@@ -36,10 +39,23 @@ export const setProductHighlightsSwiperSpeed = (swiperInstance, speed) => {
   if (!swiperInstance) return;
   swiperInstance.params.speed = speed;
 
-  if (swiperInstance.autoplay?.running) {
-    swiperInstance.autoplay.stop();
-    swiperInstance.autoplay.start();
+  if (swiperInstance.el?.dataset?.productHighlightsPaused === 'true') return;
+  if (!swiperInstance.autoplay?.running) return;
+  swiperInstance.autoplay.stop();
+
+  if (swiperInstance.animating) {
+    swiperInstance.setTranslate(swiperInstance.getTranslate());
+    swiperInstance.updateActiveIndex();
+    swiperInstance.updateSlidesClasses();
+
+    ['onSlideToWrapperTransitionEnd', 'onTranslateToWrapperTransitionEnd'].forEach((key) => {
+      swiperInstance.wrapperEl.removeEventListener('transitionend', swiperInstance[key]);
+      swiperInstance[key] = null;
+    });
+    swiperInstance.animating = false;
   }
+
+  swiperInstance.autoplay.start();
 };
 
 /**
@@ -101,13 +117,11 @@ const initSwiper = async (carousel, force = false) => {
     carousel.dataset.productHighlightsInit = 'pending';
 
     let rafId = 0;
-    let timeoutId = 0;
     let resizeObserver = null;
     let intersectionObserver = null;
 
     const cleanup = () => {
       if (rafId) cancelAnimationFrame(rafId);
-      if (timeoutId) clearTimeout(timeoutId);
       if (resizeObserver) resizeObserver.disconnect();
       if (intersectionObserver) intersectionObserver.disconnect();
     };
@@ -139,14 +153,6 @@ const initSwiper = async (carousel, force = false) => {
       rafId = requestAnimationFrame(tick);
     };
     rafId = requestAnimationFrame(tick);
-
-    timeoutId = window.setTimeout(() => {
-      cleanup();
-      carousel.dataset.productHighlightsInit = 'ready';
-      initSwiper(carousel, true).then((instance) => {
-        if (instance) carousel.swiper = instance;
-      });
-    }, 1200);
 
     return null;
   }
@@ -235,7 +241,7 @@ const initSwiper = async (carousel, force = false) => {
       disableOnInteraction: false,
       reverseDirection: false,
       pauseOnMouseEnter: false,
-      waitForTransition: false,
+      waitForTransition: true,
     },
     freeMode: {
       enabled: true,
@@ -259,34 +265,58 @@ const initSwiper = async (carousel, force = false) => {
   /* State, hover slowdown, and interaction guards                              */
   /* -------------------------------------------------------------------------- */
   carousel.dataset.productHighlightsPaused = 'false';
-  carousel.dataset.productHighlightsHoverState = carousel.matches(':hover')
-    ? 'true'
-    : 'false';
+  carousel.dataset.productHighlightsHoverState = 'false';
 
-  if (carousel.dataset.productHighlightsHover !== 'true' && swiperInstance.params?.autoplay) {
-    const handleMouseEnter = () => {
+  if (carousel.dataset.productHighlightsCardHover !== 'true' && swiperInstance.params?.autoplay) {
+    const supportsPointerEvents = 'PointerEvent' in window;
+    const overEventName = supportsPointerEvents ? 'pointerover' : 'mouseover';
+    const outEventName = supportsPointerEvents ? 'pointerout' : 'mouseout';
+
+    /**
+     * @param {Event} event
+     * @returns {HTMLElement|null}
+     */
+    const resolveSlideFromEvent = (event) => {
+      const target = event?.target instanceof Element ? event.target : null;
+      if (!target) return null;
+      const slide = target.closest('.swiper-slide');
+      return slide && carousel.contains(slide) ? slide : null;
+    };
+
+    const isMousePointer = (event) => !('pointerType' in event) || event.pointerType === 'mouse';
+
+    const handleCardHoverIn = (event) => {
+      if (!isMousePointer(event)) return;
+      const slide = resolveSlideFromEvent(event);
+      if (!slide) return;
+
+      const related = event.relatedTarget instanceof Element ? event.relatedTarget : null;
+      if (related && slide.contains(related)) return;
+
       carousel.dataset.productHighlightsHoverState = 'true';
       if (carousel.dataset.productHighlightsPaused === 'true') return;
-      swiperInstance.params.speed = PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW;
-      if (swiperInstance.autoplay?.running) {
-        swiperInstance.autoplay.stop();
-        swiperInstance.autoplay.start();
-      }
+      setProductHighlightsSwiperSpeed(swiperInstance, PRODUCT_HIGHLIGHTS_SWIPER_SPEED_SLOW);
     };
 
-    const handleMouseLeave = () => {
+    const handleCardHoverOut = (event) => {
+      if (!isMousePointer(event)) return;
+      const slide = resolveSlideFromEvent(event);
+      if (!slide) return;
+
+      const related = event.relatedTarget instanceof Element ? event.relatedTarget : null;
+      if (related && slide.contains(related)) return;
+
+      const nextSlide = related?.closest?.('.swiper-slide');
+      if (nextSlide && carousel.contains(nextSlide)) return;
+
       carousel.dataset.productHighlightsHoverState = 'false';
       if (carousel.dataset.productHighlightsPaused === 'true') return;
-      swiperInstance.params.speed = PRODUCT_HIGHLIGHTS_SWIPER_SPEED;
-      if (swiperInstance.autoplay?.running) {
-        swiperInstance.autoplay.stop();
-        swiperInstance.autoplay.start();
-      }
+      setProductHighlightsSwiperSpeed(swiperInstance, PRODUCT_HIGHLIGHTS_SWIPER_SPEED);
     };
 
-    carousel.addEventListener('mouseenter', handleMouseEnter);
-    carousel.addEventListener('mouseleave', handleMouseLeave);
-    carousel.dataset.productHighlightsHover = 'true';
+    carousel.addEventListener(overEventName, handleCardHoverIn);
+    carousel.addEventListener(outEventName, handleCardHoverOut);
+    carousel.dataset.productHighlightsCardHover = 'true';
   }
 
   if (carousel.dataset.productHighlightsResize !== 'true') {
@@ -341,6 +371,10 @@ export async function createProductHighlightsCarousel({
     }),
   );
 
+  if (cardElements.filter(Boolean).length > 1) {
+    cardElements.forEach((el) => el?.classList.add('reveal-in-up'));
+  }
+
   cardElements.forEach((el) => {
     if (el && el.parentElement !== trackElement) trackElement.appendChild(el);
   });
@@ -368,6 +402,12 @@ export default async function decorate(block) {
 
   await ensureStylesLoaded();
 
+  // eslint-disable-next-line import/no-cycle
+  const widgetModule = await import('../product-highlights-widget/product-highlights-widget.js');
+  if (widgetModule?.maybeDecorateProductHighlightsWidgetFromCarousel) {
+    await widgetModule.maybeDecorateProductHighlightsWidgetFromCarousel(block);
+  }
+
   const props = parse(block);
   const carousel = await createProductHighlightsCarousel({
     root: block,
@@ -388,6 +428,8 @@ export default async function decorate(block) {
     });
     return;
   }
+
+  initCarouselAnimations(carousel);
 
   const swiperInstance = await initSwiper(carousel);
   if (swiperInstance) carousel.swiper = swiperInstance;
