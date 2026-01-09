@@ -451,6 +451,24 @@ async function decorateWidgetSection(section, block) {
     pauseButton.dataset.productHighlightsPauseBound = 'true';
     pauseButton.setAttribute('aria-pressed', 'false');
 
+    const cancelSwiperTransition = () => {
+      if (!instance?.wrapperEl) return;
+
+      const handlers = [
+        'onSlideToWrapperTransitionEnd',
+        'onTranslateToWrapperTransitionEnd',
+      ];
+
+      handlers.forEach((key) => {
+        const handler = instance[key];
+        if (!handler) return;
+        instance.wrapperEl.removeEventListener('transitionend', handler);
+        instance[key] = null;
+      });
+
+      instance.animating = false;
+    };
+
     const setPausedState = (paused) => {
       carousel.dataset.productHighlightsPaused = paused ? 'true' : 'false';
 
@@ -463,6 +481,7 @@ async function decorateWidgetSection(section, block) {
           if (typeof instance.updateActiveIndex === 'function') instance.updateActiveIndex();
           if (typeof instance.updateSlidesClasses === 'function') instance.updateSlidesClasses();
         }
+        cancelSwiperTransition();
         if (pauseIcon) {
           pauseIcon.classList.remove('un-icon-pause-circle');
           pauseIcon.classList.add('un-icon-play-circle');
