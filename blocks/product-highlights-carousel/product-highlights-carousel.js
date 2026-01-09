@@ -44,7 +44,6 @@ export const setProductHighlightsSwiperSpeed = (swiperInstance, speed) => {
   swiperInstance.autoplay.stop();
 
   if (swiperInstance.animating) {
-    swiperInstance.setTransition(0);
     swiperInstance.setTranslate(swiperInstance.getTranslate());
     swiperInstance.updateActiveIndex();
     swiperInstance.updateSlidesClasses();
