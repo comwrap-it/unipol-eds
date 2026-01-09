@@ -1,4 +1,5 @@
 import loadSwiper from '../../scripts/delayed.js';
+import { initCarouselAnimations } from '../../scripts/reveal.js';
 
 // #region CONSTANTS
 const CAROUSEL_CLASS = 'product-highlights-carousel';
@@ -340,6 +341,10 @@ export async function createProductHighlightsCarousel({
     }),
   );
 
+  if (cardElements.filter(Boolean).length > 1) {
+    cardElements.forEach((el) => el?.classList.add('reveal-in-up'));
+  }
+
   cardElements.forEach((el) => {
     if (el && el.parentElement !== trackElement) trackElement.appendChild(el);
   });
@@ -392,6 +397,8 @@ export default async function decorate(block) {
     });
     return;
   }
+
+  initCarouselAnimations(carousel);
 
   const swiperInstance = await initSwiper(carousel);
   if (swiperInstance) carousel.swiper = swiperInstance;
