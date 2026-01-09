@@ -333,7 +333,17 @@
       {
         "component": "text",
         "name": "product-highlights-widget-name",
-        "label": "Nome sezione Product Highlights Widget"
+        "label": "Nome sezione Product Highlights Widget",
+        "validation": {
+          "maxLength": 200,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      },
+      {
+        "component": "boolean",
+        "name": "product-highlights-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": true
       },
       {
         "component": "reference",
@@ -347,17 +357,6 @@
         "name": "logoAlt",
         "label": "Logo alt",
         "required": true
-      },
-      {
-        "component": "reference",
-        "name": "logoSecondary",
-        "label": "Logo secondario",
-        "multi": false
-      },
-      {
-        "component": "text",
-        "name": "logoSecondaryAlt",
-        "label": "Logo secondario alt"
       },
       {
         "component": "text",
@@ -3610,7 +3609,11 @@
         "component": "text",
         "name": "title",
         "label": "Titolo",
-        "required": true
+        "required": true,
+        "validation": {
+          "maxLength": 65,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       }
     ]
   },
