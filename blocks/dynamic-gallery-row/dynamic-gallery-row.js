@@ -32,7 +32,7 @@ const ensureEnoughSlides = (wrapper, minSlides = 10) => {
   // Calculate how many times we need to duplicate
   const duplicationsNeeded = Math.ceil(minSlides / originalCount);
 
-  for (let i = 1; i < duplicationsNeeded; i++) {
+  for (let i = 1; i < duplicationsNeeded; i += 1) {
     originalSlides.forEach((slide) => {
       const clone = slide.cloneNode(true);
       // Remove any instrumentation from clones to avoid duplicate IDs
