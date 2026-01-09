@@ -27,6 +27,11 @@ const componentsWithMaxItems = [
     itemClass: '.text-list-wrapper',
     maxItems: 4,
   },
+  {
+    filter: 'button-group',
+    itemClass: '.button-group-item',
+    maxItems: 2,
+  }
 ];
 
 async function applyChanges(event) {
