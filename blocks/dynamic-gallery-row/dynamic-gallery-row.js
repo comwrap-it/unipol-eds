@@ -46,6 +46,36 @@ const ensureEnoughSlides = (wrapper, minSlides = 10) => {
 
 const SWIPER_SPEED = 3000;
 
+const waitForMeasurableWidth = (el, cb, maxFrames = 180) => {
+  let frames = 0;
+  const tick = () => {
+    if (!el?.isConnected) return;
+    const { width } = el.getBoundingClientRect();
+    if (width > 5) {
+      cb();
+      return;
+    }
+    frames += 1;
+    if (frames >= maxFrames) return;
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+};
+
+const startAutoplaySafely = (swiper, carousel) => {
+  if (!swiper || !carousel) return;
+  waitForMeasurableWidth(
+    carousel,
+    () => {
+      if (swiper.destroyed) return;
+      swiper.update();
+      swiper.autoplay?.stop();
+      swiper.autoplay?.start();
+    },
+    240,
+  );
+};
+
 /**
  *
  * @param {} Swiper the swiper instance
@@ -59,6 +89,9 @@ const initSwiper = (Swiper, carousel) => {
     centeredSlides: false,
     allowTouchMove: false,
     simulateTouch: false,
+    observer: true,
+    observeParents: true,
+    resizeObserver: true,
     autoplay: {
       delay: 0,
       disableOnInteraction: false,
@@ -112,9 +145,7 @@ export default async function decorate(block) {
 
   const Swiper = await loadSwiper();
   const swiperInstance = initSwiper(Swiper, carousel);
-  swiperInstance.update();
-  swiperInstance.autoplay?.stop();
-  swiperInstance.autoplay?.start();
+  startAutoplaySafely(swiperInstance, carousel);
 }
 
 export const createDynamicGalleryRowFromRows = async (rows) => {
@@ -144,9 +175,8 @@ export const createDynamicGalleryRowFromRows = async (rows) => {
   carousel.appendChild(galleryRow);
   const Swiper = await loadSwiper();
   const swiperInstance = initSwiper(Swiper, carousel);
-  swiperInstance.update();
-  swiperInstance.autoplay?.stop();
-  swiperInstance.autoplay?.start();
+  // This helper may be used before insertion into DOM; only start once measurable.
+  startAutoplaySafely(swiperInstance, carousel);
 
   return carousel;
 };
