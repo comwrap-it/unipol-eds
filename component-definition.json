@@ -256,6 +256,34 @@
           }
         },
         {
+          "title": "Download Tile Widget",
+          "id": "download-tile-widget",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/section/v1/section",
+                "template": {
+                  "filter": "download-tile-widget",
+                  "name": "Download Tile Widget",
+                  "model": "download-tile-widget",
+                  "style": "download-tile-widget",
+                  "text-block": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Text Block",
+                    "model": "text-block"
+                  },
+                  "download-tile": {
+                    "sling:resourceType": "core/franklin/components/block/v1/block",
+                    "name": "Download Tile",
+                    "filter": "download-tile",
+                    "model": "download-tile"
+                  }
+                }
+              }
+            }
+          }
+        },
+        {
           "title": "Editorial Carousel Widget",
           "id": "editorial-carousel-widget",
           "plugins": {
@@ -729,6 +757,22 @@
                   "name": "Dialog",
                   "key-value": true,
                   "model": "dialog"
+                }
+              }
+            }
+          }
+        },
+        {
+          "title": "Download Tile",
+          "id": "download-tile",
+          "plugins": {
+            "xwalk": {
+              "page": {
+                "resourceType": "core/franklin/components/block/v1/block",
+                "template": {
+                  "filter": "download-tile",
+                  "model": "download-tile",
+                  "name": "Download Tile"
                 }
               }
             }

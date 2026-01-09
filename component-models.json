@@ -236,6 +236,22 @@
     ]
   },
   {
+    "id": "download-tile-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "download-tile-widget-name",
+        "label": "Nome sezione Download Tile Widget"
+      },
+      {
+        "component": "boolean",
+        "name": "download-tile-widget-dark-theme",
+        "label": "Tema scuro",
+        "default": false
+      }
+    ]
+  },
+  {
     "id": "editorial-carousel-widget",
     "fields": [
       {
@@ -1553,6 +1569,186 @@
             ]
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "download-tile",
+    "fields": [
+      {
+        "component": "boolean",
+        "label": "Carica più di 4 documenti",
+        "description": "Attivo: visualizzato Titolo, Sottotitolo e Pulsante per visualizzare tutti i documenti in modale. Disattivo: Titolo e fino a 4 documenti visibili e scricabili direttamente in pagina.",
+        "name": "dialogActive",
+        "valueType": "boolean"
+      },
+      {
+        "component": "select",
+        "name": "firstDownload_fileIcon",
+        "label": "Icona file",
+        "required": true,
+        "options": [
+          {
+            "name": "Nessuna",
+            "value": ""
+          },
+          {
+            "name": "File",
+            "value": "un-icon-file-text"
+          }
+        ],
+        "condition": {
+          "===": [
+            {
+              "var": "dialogActive"
+            },
+            false
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "firstDownload_title",
+        "label": "Testo descrittivo del documento",
+        "required": true,
+        "validation": {
+          "maxLength": 100,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "dialogActive"
+            },
+            false
+          ]
+        }
+      },
+      {
+        "component": "select",
+        "name": "secondDownload_fileIcon",
+        "label": "Icona file",
+        "required": true,
+        "options": [
+          {
+            "name": "Nessuna",
+            "value": ""
+          },
+          {
+            "name": "File",
+            "value": "un-icon-file-text"
+          }
+        ],
+        "condition": {
+          "===": [
+            {
+              "var": "dialogActive"
+            },
+            false
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "secondDownload_title",
+        "label": "Testo descrittivo del documento",
+        "required": true,
+        "validation": {
+          "maxLength": 100,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "dialogActive"
+            },
+            false
+          ]
+        }
+      },
+      {
+        "component": "select",
+        "name": "thirdDownload_fileIcon",
+        "label": "Icona file",
+        "required": true,
+        "options": [
+          {
+            "name": "Nessuna",
+            "value": ""
+          },
+          {
+            "name": "File",
+            "value": "un-icon-file-text"
+          }
+        ],
+        "condition": {
+          "===": [
+            {
+              "var": "dialogActive"
+            },
+            false
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "thirdDownload_title",
+        "label": "Testo descrittivo del documento",
+        "required": true,
+        "validation": {
+          "maxLength": 100,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "dialogActive"
+            },
+            false
+          ]
+        }
+      },
+      {
+        "component": "select",
+        "name": "fourthDownload_fileIcon",
+        "label": "Icona file",
+        "required": true,
+        "options": [
+          {
+            "name": "Nessuna",
+            "value": ""
+          },
+          {
+            "name": "File",
+            "value": "un-icon-file-text"
+          }
+        ],
+        "condition": {
+          "===": [
+            {
+              "var": "dialogActive"
+            },
+            false
+          ]
+        }
+      },
+      {
+        "component": "text",
+        "name": "fourthDownload_title",
+        "label": "Testo descrittivo del documento",
+        "required": true,
+        "validation": {
+          "maxLength": 100,
+          "customErrorMsg": "Testo troppo lungo"
+        },
+        "condition": {
+          "===": [
+            {
+              "var": "dialogActive"
+            },
+            false
+          ]
+        }
       }
     ]
   },

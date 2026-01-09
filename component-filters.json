@@ -80,6 +80,10 @@
     "components": []
   },
   {
+    "id": "download-tile-widget",
+    "components": []
+  },
+  {
     "id": "editorial-carousel-widget",
     "components": []
   },
@@ -149,6 +153,10 @@
     ],
     "min": 4,
     "max": 8
+  },
+  {
+    "id": "download-tile",
+    "components": []
   },
   {
     "id": "editorial-carousel",
