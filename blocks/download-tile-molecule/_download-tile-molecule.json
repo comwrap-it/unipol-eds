@@ -46,6 +46,13 @@
             "maxLength": 100,
             "customErrorMsg": "Testo troppo lungo"
           }
+        },
+        {
+          "component": "reference",
+          "name": "downloadTile_document",
+          "label": "Riferimento al documento",
+          "required": true,
+          "multi": false
         }
       ]
     }
