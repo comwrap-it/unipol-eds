@@ -1,0 +1,30 @@
+.section.text-block-container.download-tile-organism-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--Download-Tile-Widget-Gap, 2.5rem);
+    align-self: stretch;
+
+    & .download-tile-organism-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: var(--Download-Tile-Widget-Gap-Subtitle, 1.5rem);
+        align-self: stretch;
+
+        & .download-tile-organism {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: var(--Download-Tile-Widget-Gap-Tile, 1rem);
+            align-self: stretch;
+
+            & .download-tile-row {
+                display: flex;
+                align-items: flex-start;
+                gap: var(--Download-Tile-Widget-Gap-Tile, 1rem);
+                align-self: stretch;
+            }
+        }
+    }
+}
