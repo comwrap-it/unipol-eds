@@ -17,7 +17,7 @@ import { extractInstrumentationAttributes } from '../../scripts/utils.js';
  * rows[6]: standardButtonRightIcon (select)
  */
 const extractValuesFromRows = (rows) => {
-  const text = rows[0]?.textContent?.trim() || '';
+  const text = rows[0]?.textContent?.trim() || 'Default';
   const variant = rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
   const href = rows[2]?.querySelector('a')?.href || rows[2]?.textContent?.trim() || '';
   const openInNewTab = rows[3]?.textContent?.trim() === 'true';
@@ -45,29 +45,48 @@ export default function decorate(block) {
   if (!block) return;
 
   const editorialVariant = block.children[0]?.textContent?.trim() || 'primary horizontal';
-  const [firstVariant, direction] = editorialVariant.split(' ');
+  let [editorialVariantValue, direction] = editorialVariant.split(' ');
+
+  if (!editorialVariantValue) editorialVariantValue = 'primary';
+  if (!direction) direction = 'horizontal';
 
   const firstContainer = block.children[1];
   const secondContainer = block.children[2];
 
   // Creating buttons
-  const createButtonFromContainer = (container, defaultVariant) => {
-    if (!container) return null;
-    const rows = [...container.children];
-    const values = extractValuesFromRows(rows);
+  const createButtonFromContainer = (container, forcedVariant) => {
+    let values;
+    if (container) {
+      const rows = [...container.children];
+      values = extractValuesFromRows(rows);
+    } else {
+      // Default buttons
+      values = {
+        text: 'Default',
+        href: '',
+        openInNewTab: false,
+        variant: forcedVariant,
+        iconSize: BUTTON_ICON_SIZES.MEDIUM,
+        leftIcon: '',
+        rightIcon: '',
+        instrumentation: {},
+      };
+    }
+
+    const variant = forcedVariant || values.variant;
 
     const button = createButton(
       values.text,
       values.href,
       values.openInNewTab,
-      defaultVariant || values.variant,
+      variant,
       values.iconSize,
       values.leftIcon,
       values.rightIcon,
       values.instrumentation
     );
 
-    if (container.hasAttribute('data-aue-resource')) {
+    if (container?.hasAttribute('data-aue-resource')) {
       button.setAttribute('data-aue-resource', container.getAttribute('data-aue-resource'));
       const aueBehavior = container.getAttribute('data-aue-behavior');
       if (aueBehavior) button.setAttribute('data-aue-behavior', aueBehavior);
@@ -77,9 +96,12 @@ export default function decorate(block) {
   };
 
   const buttons = [
-    createButtonFromContainer(firstContainer, firstVariant),
-    createButtonFromContainer(secondContainer, 'secondary')
-  ].filter(Boolean);
+    createButtonFromContainer(firstContainer, editorialVariantValue),
+    createButtonFromContainer(
+      secondContainer,
+      editorialVariantValue === 'primary' ? 'secondary' : 'primary'
+    )
+  ];
 
   block.innerHTML = '';
   block.classList.add('button-group');
