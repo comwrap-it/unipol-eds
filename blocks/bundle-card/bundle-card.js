@@ -98,6 +98,8 @@ export function createCardContent({
 }) {
   const cardContent = document.createElement('div');
   cardContent.className = 'bundle-card-content';
+  const textContainer = document.createElement('div');
+  textContainer.className = 'card-bundle-text-cont';
 
   // Title
   if (titleRow) {
@@ -106,7 +108,7 @@ export function createCardContent({
     titleEl.className = 'title';
     if (!existingHeading) while (titleRow.firstChild) titleEl.appendChild(titleRow.firstChild);
     moveInstrumentation(titleRow, titleEl);
-    if (titleEl.textContent?.trim()) cardContent.appendChild(titleEl);
+    if (titleEl.textContent?.trim()) textContainer.appendChild(titleEl);
   }
 
   // Subtitle
@@ -116,7 +118,10 @@ export function createCardContent({
     desc.className = 'description';
     if (!existingPara) while (subtitleRow.firstChild) desc.appendChild(subtitleRow.firstChild);
     moveInstrumentation(subtitleRow, desc);
-    cardContent.appendChild(desc);
+    textContainer.appendChild(desc);
+  }
+  if (textContainer.children.length) {
+    cardContent.appendChild(textContainer);
   }
 
   // Category strips
@@ -125,10 +130,17 @@ export function createCardContent({
     [25, 26, 27, 28, 29, 30],
     [31, 32, 33, 34, 35, 36],
   ];
+  const categoryStripWrapper = document.createElement('div');
+  categoryStripWrapper.className = 'bundle-card-category-strip';
+
   categoryStripOffsets.forEach((offsets) => {
     const stripEl = createCategoryStripFromOffsets(rows, offsets);
-    if (stripEl) cardContent.appendChild(stripEl);
+    if (stripEl) categoryStripWrapper.appendChild(stripEl);
   });
+
+  if (categoryStripWrapper.children.length) {
+    cardContent.appendChild(categoryStripWrapper);
+  }
 
   // Note
   if (noteRow) {

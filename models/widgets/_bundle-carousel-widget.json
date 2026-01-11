@@ -22,7 +22,19 @@
                 "name": "Bundle Carousel",
                 "filter": "bundle-carousel",
                 "model": "bundle-carousel",
-                "bundle-card": {
+                "bundle-card-1": {
+                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                  "name": "Bundle Card",
+                  "filter": "bundle-card",
+                  "model": "bundle-card"
+                },
+                "bundle-card-2": {
+                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                  "name": "Bundle Card",
+                  "filter": "bundle-card",
+                  "model": "bundle-card"
+                },
+                "bundle-card-3": {
                   "sling:resourceType": "core/franklin/components/block/v1/block/item",
                   "name": "Bundle Card",
                   "filter": "bundle-card",

@@ -1,13 +1,5 @@
 import { extractInstrumentationAttributes } from '../../scripts/utils.js';
 
-/**
- * Safely extract text from a row <div>
- * Supports multiple <p> inside the same row (Universal Editor)
- *
- * @param {HTMLElement} row
- * @param {number} index
- * @returns {string}
- */
 const getRowText = (row, index = 0) => {
   if (!row) return '';
   const paragraphs = row.querySelectorAll('p');
@@ -54,8 +46,17 @@ export function createCategoryStripFromRows(rows) {
   if (!rows || rows.length === 0) return null;
 
   const {
-    bgColor, icon, desc, tag1Label, tag1Variant, tag2Label, tag2Variant,
+    bgColor,
+    icon,
+    desc,
+    tag1Label,
+    tag1Variant,
+    tag2Label,
+    tag2Variant,
   } = extractValuesFromRows(rows);
+
+  const hasContent = bgColor || icon || desc || tag1Label || tag2Label;
+  if (!hasContent) return null;
 
   const container = document.createElement('div');
   container.classList.add('category-strip-container');
@@ -69,38 +70,56 @@ export function createCategoryStripFromRows(rows) {
 
   addSafeClass(container, bgColor);
 
+  /* =========================
+     Icon + label container
+     ========================= */
+  const labelIconCont = document.createElement('div');
+  labelIconCont.classList.add('category-label-icon-cont');
+
   if (icon) {
     const iconEl = document.createElement('i');
     addSafeClass(iconEl, icon);
-    container.appendChild(iconEl);
+    labelIconCont.appendChild(iconEl);
   }
 
   if (desc) {
     const labelEl = document.createElement('span');
     labelEl.textContent = desc;
-    container.appendChild(labelEl);
+    labelIconCont.appendChild(labelEl);
   }
 
-  // First tag
+  if (labelIconCont.children.length > 0) {
+    container.appendChild(labelIconCont);
+  }
+
+  /* =========================
+     Tags container
+     ========================= */
+  const tagCont = document.createElement('div');
+  tagCont.classList.add('category-strip-tag-cont');
+
   if (tag1Label) {
     const t1 = document.createElement('span');
     t1.classList.add('tag');
-    if (tag1Variant && ['default', 'secondary', 'neutral', 'custom'].includes(tag1Variant)) {
+    if (['default', 'secondary', 'neutral', 'custom'].includes(tag1Variant)) {
       t1.classList.add(tag1Variant);
     }
     t1.textContent = tag1Label;
-    container.appendChild(t1);
+    tagCont.appendChild(t1);
   }
 
-  // Second tag
   if (tag2Label) {
     const t2 = document.createElement('span');
     t2.classList.add('tag');
-    if (tag2Variant && ['default', 'secondary', 'neutral', 'custom'].includes(tag2Variant)) {
+    if (['default', 'secondary', 'neutral', 'custom'].includes(tag2Variant)) {
       t2.classList.add(tag2Variant);
     }
     t2.textContent = tag2Label;
-    container.appendChild(t2);
+    tagCont.appendChild(t2);
+  }
+
+  if (tagCont.children.length > 0) {
+    container.appendChild(tagCont);
   }
 
   return container;
@@ -116,9 +135,7 @@ export default function decorateCategoryStrip(block) {
 
   let rows = Array.from(block.children);
   const wrapper = block.querySelector('.default-content-wrapper');
-  if (wrapper) {
-    rows = Array.from(wrapper.children);
-  }
+  if (wrapper) rows = Array.from(wrapper.children);
 
   const strip = createCategoryStripFromRows(rows);
   if (!strip) return;

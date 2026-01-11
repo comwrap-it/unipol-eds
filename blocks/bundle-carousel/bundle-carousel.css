@@ -1,5 +1,4 @@
 .bundle-carousel-wrapper {
-    /* this wrapper is added from eds */
     width: 100%;
 }
 
@@ -76,7 +75,7 @@
     .bundle-carousel-container {
         .bundle-carousel {
             & .swiper-slide {
-                width: calc(100% / 4.3);
+                width: calc(100% / 3.3);
             }
         }
     }

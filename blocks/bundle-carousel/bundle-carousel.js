@@ -197,7 +197,7 @@ export default async function decorate(block) {
   }
 
   if (mq.matches) {
-    if (cardElements && cardElements.length > 4) {
+    if (cardElements && cardElements.length > 3) {
       const {
         leftIconButton,
         scrollIndicator,
@@ -211,7 +211,7 @@ export default async function decorate(block) {
         setExpandedDot,
       };
     }
-  } else if (cardElements && cardElements.length > 4) {
+  } else if (cardElements && cardElements.length > 3) {
     showMoreButton = createButton(
       showMoreButtonLabel,
       '',
