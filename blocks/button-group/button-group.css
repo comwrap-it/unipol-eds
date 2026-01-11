@@ -1,0 +1,29 @@
+@import url("./../atoms/buttons/standard-button/standard-button.css");
+
+.button-group {
+  display: flex;
+  gap: var(--Space-200-8);
+}
+
+.button-group-horizontal {
+  flex-direction: row;
+  gap: var(--Button-Group-Horizontal-Padding, var(--Space-200-8));
+}
+
+.button-group-vertical {
+  flex-direction: column;
+  gap: var(--Button-Group-Vertical-Gap, var(--Space-200-8));
+}
+
+.button-group .btn {
+  min-width: var(--Space-700-48);
+  min-height: var(--Space-400-24);
+}
+
+.button-group.vertical {
+  flex-direction: column;
+}
+
+.button-group.horizontal {
+  flex-direction: row;
+}

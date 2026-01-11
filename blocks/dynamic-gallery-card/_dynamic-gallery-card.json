@@ -1,0 +1,68 @@
+{
+    "definitions": [
+        {
+            "title": "Dynamic Gallery Card",
+            "id": "dynamic-gallery-card",
+            "plugins": {
+                "xwalk": {
+                    "page": {
+                        "resourceType": "core/franklin/components/block/v1/block/item",
+                        "template": {
+                            "name": "Dynamic Gallery Card",
+                            "model": "dynamic-gallery-card"
+                        }
+                    }
+                }
+            }
+        }
+    ],
+    "models": [
+        {
+            "id": "dynamic-gallery-card",
+            "fields": [
+                {
+                    "component": "reference",
+                    "valueType": "string",
+                    "name": "image",
+                    "label": "Immagine",
+                    "multi": false,
+                    "required": true
+                },
+                {
+                    "component": "text",
+                    "valueType": "string",
+                    "name": "imageSR",
+                    "label": "Testo alternativo per l'immagine",
+                    "required": true
+                },
+                {
+                    "component": "container",
+                    "name": "tag",
+                    "label": "Configurazione Tag",
+                    "collapsible": true,
+                    "fields": [
+                        {
+                            "...": "../atoms/tag/_tag.json#/models/tag/fields"
+                        }
+                    ]
+                },
+                {
+                    "component": "text",
+                    "name": "button-label",
+                    "label": "Testo Bottone"
+                },
+                {
+                    "component": "aem-content",
+                    "name": "reference",
+                    "value": "",
+                    "label": "AEM Content Picker",
+                    "valueType": "string",
+                    "validation": {
+                        "rootPath": "/content/unipol"
+                    }
+                }
+            ]
+        }
+    ],
+    "filters": []
+}

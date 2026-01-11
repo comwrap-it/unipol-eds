@@ -14,7 +14,8 @@
       "card-grid-widget",
       "data-table-widget",
       "category-carousel-widget",
-      "bundle-carousel-widget"
+      "bundle-carousel-widget",
+      "dynamic-gallery-widget"
     ]
   },
   {
@@ -53,7 +54,8 @@
       "accordion",
       "legal-info-widget",
       "dialog",
-      "tooltip"
+      "tooltip",
+      "button-group"
     ]
   },
   {
@@ -83,6 +85,12 @@
   {
     "id": "data-table-widget",
     "components": []
+  },
+  {
+    "id": "dynamic-gallery-widget",
+    "components": [
+      "dynamic-gallery-row"
+    ]
   },
   {
     "id": "editorial-carousel-widget",
@@ -162,6 +170,12 @@
     ],
     "min": 4,
     "max": 8
+  },
+  {
+    "id": "dynamic-gallery-row",
+    "components": [
+      "dynamic-gallery-card"
+    ]
   },
   {
     "id": "editorial-carousel",

@@ -14,7 +14,8 @@
       "card-grid-widget",
       "data-table-widget",
       "category-carousel-widget",
-      "bundle-carousel-widget"
+      "bundle-carousel-widget",
+      "dynamic-gallery-widget"
     ]
   },
   {

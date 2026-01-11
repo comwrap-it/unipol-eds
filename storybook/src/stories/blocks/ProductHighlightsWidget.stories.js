@@ -70,9 +70,6 @@ export default {
 
     section.dataset.logo = args.logoSrc;
     section.dataset.logoAlt = args.logoAlt;
-    if (args.logoSecondarySrc) section.dataset.logoSecondary = args.logoSecondarySrc;
-    if (args.logoSecondaryAlt) section.dataset.logoSecondaryAlt = args.logoSecondaryAlt;
-
     if (args.buttonLabel) {
       section.dataset.standardButtonLabel = args.buttonLabel;
       section.dataset.standardButtonHref = args.buttonHref;
@@ -149,14 +146,6 @@ export default {
       control: 'text',
       table: { category: 'Header' },
     },
-    logoSecondarySrc: {
-      control: 'text',
-      table: { category: 'Header' },
-    },
-    logoSecondaryAlt: {
-      control: 'text',
-      table: { category: 'Header' },
-    },
     buttonLabel: {
       control: 'text',
       table: { category: 'CTA' },
@@ -205,8 +194,6 @@ export default {
       foreground: '#001C35',
     }),
     logoAlt: 'Brand logo',
-    logoSecondarySrc: '',
-    logoSecondaryAlt: '',
     buttonLabel: 'Discover more',
     buttonHref: 'https://example.com',
     openInNewTab: false,
@@ -218,19 +205,6 @@ export default {
 };
 
 export const Default = {};
-
-export const WithSecondaryLogo = {
-  args: {
-    logoSecondarySrc: createPlaceholderImageDataUri({
-      label: 'SUB LOGO',
-      width: 120,
-      height: 60,
-      background: '#FFFFFF',
-      foreground: '#001C35',
-    }),
-    logoSecondaryAlt: 'Secondary logo',
-  },
-};
 
 export const AllMediumCards = {
   args: {

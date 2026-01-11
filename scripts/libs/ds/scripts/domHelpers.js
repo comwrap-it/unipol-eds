@@ -3,9 +3,9 @@ import { moveInstrumentation } from './scripts.js';
 import { restoreInstrumentation } from './utils.js';
 
 /**
-Allowed text tags for authored content.
-@typedef {'p'|'span'|'h1'|'h2'|'h3'|'h4'|'h5'|'h6'|'li'} AvailableTag
-*/
+ Allowed text tags for authored content.
+ @typedef {'p'|'span'|'h1'|'h2'|'h3'|'h4'|'h5'|'h6'|'li'} AvailableTag
+ */
 const AUTHORIZED_TEXT_TAGS = [
   'p',
   'span',
@@ -18,12 +18,12 @@ const AUTHORIZED_TEXT_TAGS = [
   'li',
 ];
 /**
-Creates a text element from an authored row, preserving UE instrumentation.
-@param {HTMLElement | null} originalRow
-@param {string | string[]} classesToApply
-@param {AvailableTag} elementTag
-@returns {HTMLElement}
-*/
+ Creates a text element from an authored row, preserving UE instrumentation.
+ @param {HTMLElement | null} originalRow
+ @param {string | string[]} classesToApply
+ @param {AvailableTag} elementTag
+ @returns {HTMLElement}
+ */
 export const createTextElementFromRow = (
   originalRow,
   classesToApply = [],
@@ -83,10 +83,10 @@ export const createTextElementFromObj = (
 
 /**
  * Creates an icon element from a CSS class.
-@param {string} iconClass the CSS class for the icon
-@param {'small'|'medium'|'large'|'extra-large'} iconSize the size of the icon
-@returns {HTMLElement}
-*/
+ @param {string} iconClass the CSS class for the icon
+ @param {'small'|'medium'|'large'|'extra-large'} iconSize the size of the icon
+ @returns {HTMLElement}
+ */
 export const createIconElementFromCssClass = (
   iconClass,
   iconSize = BUTTON_ICON_SIZES.MEDIUM,
@@ -115,10 +115,10 @@ export const extractMediaElementFromRow = (row) => {
 };
 
 /**
-Extracts a boolean value from the text content of a row.
-@param {HTMLElement | null} row
-@returns {boolean}
-*/
+ Extracts a boolean value from the text content of a row.
+ @param {HTMLElement | null} row
+ @returns {boolean}
+ */
 export const extractBooleanValueFromRow = (row) => {
   if (!row) return false;
   const text = row.textContent.trim().toLowerCase();

@@ -1,6 +1,5 @@
 .section.text-block-container.card-grid-container {
     display: flex;
-    padding: var(--Space-0, 0);
     flex-direction: column;
     align-items: center;
     gap: var(--Card-Grid-Widget-Gap, 48px);

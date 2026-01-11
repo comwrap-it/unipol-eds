@@ -60,7 +60,8 @@
         "accordion",
         "legal-info-widget",
         "dialog",
-        "tooltip"
+        "tooltip",
+        "button-group"
       ]
     }
   ]

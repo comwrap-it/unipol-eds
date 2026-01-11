@@ -1,0 +1,67 @@
+{
+  "definitions": [
+    {
+      "title": "Dynamic Gallery Widget",
+      "id": "dynamic-gallery-widget",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/section/v1/section",
+            "template": {
+              "name": "Dynamic Gallery Widget",
+              "model": "dynamic-gallery-widget",
+              "filter": "dynamic-gallery-widget",
+              "style": "dynamic-gallery-widget",
+              "text-block": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Text Block",
+                "model": "text-block"
+              },
+              "dynamic-gallery-row-1": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Dynamic Gallery Row",
+                "filter": "dynamic-gallery-row"
+              },
+              "dynamic-gallery-row-2": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Dynamic Gallery Row",
+                "filter": "dynamic-gallery-row"
+              },
+              "dynamic-gallery-row-3": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Dynamic Gallery Row",
+                "filter": "dynamic-gallery-row"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "dynamic-gallery-widget",
+      "fields": [
+        {
+          "component": "text",
+          "name": "dynamic-gallery-widget-name",
+          "label": "Nome sezione Dynamic Gallery Widget"
+        },
+        {
+          "component": "toggle",
+          "name": "dynamic-gallery-widget-dark-theme",
+          "label": "Tema scuro",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "dynamic-gallery-widget",
+      "components": [
+        "dynamic-gallery-row"
+      ]
+    }
+  ]
+}
