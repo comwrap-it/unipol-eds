@@ -23,6 +23,11 @@ const componentsWithMaxItems = [
     maxItems: 4,
   },
   {
+    filter: 'bundle-carousel',
+    itemClass: '.bundle-card-wrapper',
+    maxItems: 8,
+  },
+  {
     filter: 'unipol-footer',
     itemClass: '.text-list-wrapper',
     maxItems: 4,
