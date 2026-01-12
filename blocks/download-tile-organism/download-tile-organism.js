@@ -13,6 +13,70 @@ async function ensureStylesLoaded() {
   isStylesLoaded = true;
 }
 
+async function initMobileTabletView(downloadTileElements, block) {
+  downloadTileElements.forEach((tile) => {
+    const downloadTile = tile.querySelector('.download-tile-molecule');
+    moveInstrumentation(tile, downloadTile);
+    block.appendChild(tile);
+  });
+}
+
+async function initDesktopView(downloadTileElements, block) {
+  let prevTile;
+
+  downloadTileElements.forEach((tile, index) => {
+    if (index % 2 === 0) {
+      prevTile = tile;
+    } else {
+      const prevDownloadTile = prevTile.querySelector('.download-tile-molecule');
+      moveInstrumentation(prevTile, prevDownloadTile);
+      const nextDownloadTile = tile.querySelector('.download-tile-molecule');
+      moveInstrumentation(tile, nextDownloadTile);
+      prevTile.appendChild(nextDownloadTile);
+      block.appendChild(prevTile);
+    }
+  });
+}
+
+async function initDownloadTileOrganism(e, downloadTileElements, block) {
+  if (e.matches) {
+    await initMobileTabletView(downloadTileElements, block);
+  } else {
+    await initDesktopView(downloadTileElements, block);
+  }
+}
+
+async function changeMobileTabletView(block) {
+  block.querySelectorAll('.download-tile-molecule').forEach((tile) => {
+    block.appendChild(tile);
+  });
+}
+
+async function changeDesktopView(block) {
+  let prevTile;
+  let rowIndex = 0;
+  const rows = block.querySelectorAll('.download-tile-row');
+  block.querySelectorAll('.download-tile-molecule').forEach((tile, index) => {
+    if (index % 2 === 0) {
+      prevTile = tile;
+      moveInstrumentation(tile, prevTile);
+    } else {
+      rows[rowIndex].appendChild(prevTile);
+      rows[rowIndex].appendChild(tile);
+      block.appendChild(rows[rowIndex]);
+      rowIndex += 1;
+    }
+  });
+}
+
+async function handleResize(e, block) {
+  if (e.matches) {
+    await changeMobileTabletView(block);
+  } else {
+    await changeDesktopView(block);
+  }
+}
+
 export default async function decorate(block) {
   if (!block) return;
 
@@ -60,22 +124,15 @@ export default async function decorate(block) {
     return downloadTileMoleculeBlock;
   });
 
+  const tabletMobileMQ = window.matchMedia(
+    '(min-width: 0px) and (max-width: 1200px)',
+  );
+
   // Wait for all download tiles to be processed
   if (!dialogActive) {
-    const downloadTileElements = await Promise.all(downloadTileMoleculePromises);
     block.innerText = '';
-    let prevTile;
-    downloadTileElements.forEach((tile, index) => {
-      if (index % 2 === 0) {
-        prevTile = tile;
-      } else {
-        const prevDownloadTile = prevTile.querySelector('.download-tile-molecule');
-        moveInstrumentation(prevTile, prevDownloadTile);
-        const nextDownloadTile = tile.querySelector('.download-tile-molecule');
-        moveInstrumentation(tile, nextDownloadTile);
-        prevTile.appendChild(nextDownloadTile);
-        block.appendChild(prevTile);
-      }
-    });
+    const downloadTileElements = await Promise.all(downloadTileMoleculePromises);
+    await initDownloadTileOrganism(tabletMobileMQ, downloadTileElements, block);
+    tabletMobileMQ.addEventListener('change', (e) => handleResize(e, block));
   }
 }
