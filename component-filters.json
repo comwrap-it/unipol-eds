@@ -14,6 +14,7 @@
       "card-grid-widget",
       "data-table-widget",
       "category-carousel-widget",
+      "bundle-carousel-widget",
       "dynamic-gallery-widget"
     ]
   },
@@ -68,6 +69,10 @@
     ]
   },
   {
+    "id": "bundle-carousel-widget",
+    "components": []
+  },
+  {
     "id": "card-grid-widget",
     "components": [
       "card-grid"
@@ -114,6 +119,14 @@
   {
     "id": "product-highlights-widget",
     "components": []
+  },
+  {
+    "id": "bundle-carousel",
+    "components": [
+      "bundle-card"
+    ],
+    "min": 3,
+    "max": 8
   },
   {
     "id": "card-grid",

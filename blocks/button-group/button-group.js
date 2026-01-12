@@ -50,14 +50,15 @@ export default function decorate(block) {
   if (!editorialVariantValue) editorialVariantValue = 'primary';
   if (!direction) direction = 'horizontal';
 
-  const firstContainer = block.children[1];
-  const secondContainer = block.children[8];
+  const childrenArray = Array.from(block.children);
+  const firstContainer = childrenArray.slice(1, 8);
+  const secondContainer = childrenArray.slice(8);
 
   // Creating buttons
   const createButtonFromContainer = (container, forcedVariant) => {
     let values;
-    if (container) {
-      values = extractValuesFromRows(Array.from(container.children));
+    if (container.length > 0) {
+      values = extractValuesFromRows(container);
     } else {
       // Default buttons
       values = {
@@ -85,7 +86,7 @@ export default function decorate(block) {
       values.instrumentation,
     );
 
-    if (container?.hasAttribute('data-aue-resource')) {
+    if (container?.[0]?.hasAttribute('data-aue-resource')) {
       button.setAttribute('data-aue-resource', container.getAttribute('data-aue-resource'));
       const aueBehavior = container.getAttribute('data-aue-behavior');
       if (aueBehavior) button.setAttribute('data-aue-behavior', aueBehavior);

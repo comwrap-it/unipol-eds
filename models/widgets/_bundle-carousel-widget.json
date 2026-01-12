@@ -1,0 +1,72 @@
+{
+  "definitions": [
+    {
+      "title": "Bundle Carousel Widget",
+      "id": "bundle-carousel-widget",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/section/v1/section",
+            "template": {
+              "filter": "bundle-carousel-widget",
+              "name": "Bundle Carousel Widget",
+              "model": "bundle-carousel-widget",
+              "style": "bundle-carousel-widget",
+              "text-block": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Text Block",
+                "model": "text-block"
+              },
+              "bundle-carousel": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Bundle Carousel",
+                "filter": "bundle-carousel",
+                "model": "bundle-carousel",
+                "bundle-card-1": {
+                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                  "name": "Bundle Card",
+                  "filter": "bundle-card",
+                  "model": "bundle-card"
+                },
+                "bundle-card-2": {
+                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                  "name": "Bundle Card",
+                  "filter": "bundle-card",
+                  "model": "bundle-card"
+                },
+                "bundle-card-3": {
+                  "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                  "name": "Bundle Card",
+                  "filter": "bundle-card",
+                  "model": "bundle-card"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "bundle-carousel-widget",
+      "fields": [
+        {
+          "component": "text",
+          "name": "bundle-carousel-widget-name",
+          "label": "Nome sezione Bundle Carousel Widget"
+        },
+        {
+          "component": "boolean",
+          "name": "bundle-carousel-widget-dark-theme",
+          "label": "Tema scuro",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "filters": [{
+    "id": "bundle-carousel-widget",
+    "components": []
+  }]
+}

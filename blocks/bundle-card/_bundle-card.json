@@ -1,0 +1,800 @@
+{
+  "definitions": [
+    {
+      "title": "Bundle Card",
+      "id": "bundle-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Bundle card",
+              "model": "bundle-card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "bundle-card",
+      "fields": [
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Titolo",
+          "required": true,
+          "validation": {
+            "maxLength": 25,
+            "customErrorMsg": "Titolo troppo lungo (max 15 caratteri)"
+          }
+        },
+        {
+          "component": "text",
+          "name": "description",
+          "label": "Descrizione",
+          "required": true,
+          "validation": {
+            "maxLength": 130,
+            "customErrorMsg": "Descrizione troppo lunga (max 130 caratteri)"
+          }
+        },
+        {
+          "component": "text",
+          "name": "standardButtonLabel",
+          "label": "Button Text",
+          "required": false
+        },
+        {
+          "component": "select",
+          "name": "standardButtonVariant",
+          "label": "Variante",
+          "value": "primary",
+          "options": [
+            {
+              "name": "Primary",
+              "value": "primary"
+            },
+            {
+              "name": "Secondary",
+              "value": "secondary"
+            },
+            {
+              "name": "Accent",
+              "value": "accent"
+            }
+          ]
+        },
+        {
+          "component": "aem-content",
+          "name": "standardButtonHref",
+          "label": "Link URL",
+          "description": "URL del bottone"
+        },
+        {
+          "component": "boolean",
+          "label": "Apri in una nuova scheda",
+          "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+          "name": "standardButtonOpenInNewTab",
+          "valueType": "boolean",
+          "value": false
+        },
+        {
+          "component": "select",
+          "name": "standardButtonSize",
+          "description": "Modifica la dimensione delle icone del bottone",
+          "label": "Dimensione Icone",
+          "value": "medium",
+          "options": [
+            {
+              "name": "Small",
+              "value": "small"
+            },
+            {
+              "name": "Medium",
+              "value": "medium"
+            },
+            {
+              "name": "Large",
+              "value": "large"
+            },
+            {
+              "name": "Extra Large",
+              "value": "extra-large"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "standardButtonLeftIcon",
+          "label": "Icona Sinistra",
+          "description": "Select the left icon",
+          "value": "",
+          "options": [
+            {
+              "name": "None",
+              "value": ""
+            },
+            {
+              "name": "Chevron Left",
+              "value": "un-icon-chevron-left"
+            },
+            {
+              "name": "Chevron Right",
+              "value": "un-icon-chevron-right"
+            },
+            {
+              "name": "Search Icon",
+              "value": "un-icon-search"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "standardButtonRightIcon",
+          "label": "Icona Destra",
+          "description": "Select the right icon",
+          "value": "",
+          "options": [
+            {
+              "name": "None",
+              "value": ""
+            },
+            {
+              "name": "Chevron Left",
+              "value": "un-icon-chevron-left"
+            },
+            {
+              "name": "Chevron Right",
+              "value": "un-icon-chevron-right"
+            },
+            {
+              "name": "Search Icon",
+              "value": "un-icon-search"
+            }
+          ]
+        },
+        {
+          "component": "text",
+          "name": "standardButton2Label",
+          "label": "Button Text",
+          "required": false
+        },
+        {
+          "component": "select",
+          "name": "standardButton2Variant",
+          "label": "Variante",
+          "value": "primary",
+          "options": [
+            {
+              "name": "Primary",
+              "value": "primary"
+            },
+            {
+              "name": "Secondary",
+              "value": "secondary"
+            },
+            {
+              "name": "Accent",
+              "value": "accent"
+            }
+          ]
+        },
+        {
+          "component": "aem-content",
+          "name": "standardButton2Href",
+          "label": "Link URL",
+          "description": "URL del bottone"
+        },
+        {
+          "component": "boolean",
+          "label": "Apri in una nuova scheda",
+          "description": "Attivo: il bottone aprirà il link in una nuova scheda. Disattivo: il bottone aprirà il link nella stessa scheda.",
+          "name": "standardButton2OpenInNewTab",
+          "valueType": "boolean",
+          "value": false
+        },
+        {
+          "component": "select",
+          "name": "standardButton2Size",
+          "description": "Modifica la dimensione delle icone del bottone",
+          "label": "Dimensione Icone",
+          "value": "medium",
+          "options": [
+            {
+              "name": "Small",
+              "value": "small"
+            },
+            {
+              "name": "Medium",
+              "value": "medium"
+            },
+            {
+              "name": "Large",
+              "value": "large"
+            },
+            {
+              "name": "Extra Large",
+              "value": "extra-large"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "standardButton2LeftIcon",
+          "label": "Icona Sinistra",
+          "description": "Select the left icon",
+          "value": "",
+          "options": [
+            {
+              "name": "None",
+              "value": ""
+            },
+            {
+              "name": "Chevron Left",
+              "value": "un-icon-chevron-left"
+            },
+            {
+              "name": "Chevron Right",
+              "value": "un-icon-chevron-right"
+            },
+            {
+              "name": "Search Icon",
+              "value": "un-icon-search"
+            }
+          ]
+        },
+        {
+          "component": "select",
+          "name": "standardButton2RightIcon",
+          "label": "Icona Destra",
+          "description": "Select the right icon",
+          "value": "",
+          "options": [
+            {
+              "name": "None",
+              "value": ""
+            },
+            {
+              "name": "Chevron Left",
+              "value": "un-icon-chevron-left"
+            },
+            {
+              "name": "Chevron Right",
+              "value": "un-icon-chevron-right"
+            },
+            {
+              "name": "Search Icon",
+              "value": "un-icon-search"
+            }
+          ]
+        },
+        {
+          "component": "text",
+          "name": "note",
+          "label": "Prezzo €/ Mese",
+          "required": true,
+          "validation": {
+            "maxLength": 25,
+            "customErrorMsg": "Testo troppo lungo"
+          }
+        },
+        {
+          "component": "reference",
+          "valueType": "string",
+          "name": "image",
+          "label": "Immagine",
+          "multi": false,
+          "required": true
+        },
+        {
+          "component": "text",
+          "valueType": "string",
+          "name": "imageSR",
+          "label": "Testo alternativo per l'immagine",
+          "required": true
+        },
+        {
+          "component": "container",
+          "name": "firstCategoryStrip",
+          "label": "Prima Category Strip",
+          "collapsible": true,
+          "fields": [
+            {
+              "component": "select",
+              "name": "firstCategoryStripBckgroundColor",
+              "value": "none",
+              "description": "Colore sfondo Category strip",
+              "valueType": "string",
+              "options": [
+                {
+                  "name": "none",
+                  "value": ""
+                },
+                {
+                  "name": "Mobility",
+                  "value": "bg-mobility"
+                },
+                {
+                  "name": "Welfare",
+                  "value": "bg-welfare"
+                },
+                {
+                  "name": "Property",
+                  "value": "bg-property"
+                }
+              ]
+            },
+            {
+              "component": "select",
+              "name": "firstCategoryStrip_Icon",
+              "label": "Icona Category Strip",
+              "required": true,
+              "description": "Seleziona l'icona",
+              "options": [
+                {
+                  "name": "Animali",
+                  "value": "un-icon-pets"
+                },
+                {
+                  "name": "Auto",
+                  "value": "un-icon-car"
+                },
+                {
+                  "name": "Casa",
+                  "value": "un-icon-home"
+                },
+                {
+                  "name": "Famiglia",
+                  "value": "un-icon-family"
+                },
+                {
+                  "name": "Infortuni",
+                  "value": "un-icon-injury"
+                },
+                {
+                  "name": "Mezzi pesanti",
+                  "value": "un-icon-truck"
+                },
+                {
+                  "name": "Mobilità",
+                  "value": "un-icon-mobility"
+                },
+                {
+                  "name": "Moto",
+                  "value": "un-icon-motorcycle"
+                },
+                {
+                  "name": "Pensione",
+                  "value": "un-icon-pension"
+                },
+                {
+                  "name": "Salute",
+                  "value": "un-icon-health"
+                },
+                {
+                  "name": "Viaggi",
+                  "value": "un-icon-travel"
+                }
+              ]
+            },
+            {
+              "component": "text",
+              "name": "firstCategoryStrip_Desc",
+              "label": "Testo Category Strip",
+              "validation": {
+                "maxLength": 12,
+                "customErrorMsg": "max 12 caratteri"
+              },
+              "required": true
+            },
+            {
+              "component": "text",
+              "name": "firstTagLabel",
+              "label": "Label tag",
+              "validation": {
+                "maxLength": 20,
+                "customErrorMsg": "max 20 caratteri"
+              },
+              "required": true
+            },
+            {
+              "component": "select",
+              "name": "firstTagVariant",
+              "label": "Tipologia Tag",
+              "required": true,
+              "value": "default",
+              "options": [
+                {
+                  "name": "Default",
+                  "value": "default"
+                },
+                {
+                  "name": "Secondary",
+                  "value": "secondary"
+                },
+                {
+                  "name": "Neutral",
+                  "value": "neutral"
+                },
+                {
+                  "name": "Custom",
+                  "value": "custom"
+                }
+              ]
+            },
+            {
+              "component": "text",
+              "name": "secondTagLabel",
+              "label": "Label tag",
+              "validation": {
+                "maxLength": 20,
+                "customErrorMsg": "max 20 caratteri"
+              },
+              "required": true
+            },
+            {
+              "component": "select",
+              "name": "secondTagVariant",
+              "label": "Tipologia secondo Tag",
+              "required": true,
+              "value": "default",
+              "options": [
+                {
+                  "name": "Default",
+                  "value": "default"
+                },
+                {
+                  "name": "Secondary",
+                  "value": "secondary"
+                },
+                {
+                  "name": "Neutral",
+                  "value": "neutral"
+                },
+                {
+                  "name": "Custom",
+                  "value": "custom"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "secondCategoryStrip",
+          "label": "Seconda Category Strip",
+          "collapsible": true,
+          "fields": [
+            {
+              "component": "select",
+              "name": "secondCategoryStripBckgroundColor",
+              "value": "none",
+              "description": "Colore sfondo Category strip",
+              "valueType": "string",
+              "options": [
+                {
+                  "name": "none",
+                  "value": ""
+                },
+                {
+                  "name": "Mobility",
+                  "value": "bg-mobility"
+                },
+                {
+                  "name": "Welfare",
+                  "value": "bg-welfare"
+                },
+                {
+                  "name": "Property",
+                  "value": "bg-property"
+                }
+              ]
+            },
+            {
+              "component": "select",
+              "name": "secondCategoryStrip_Icon",
+              "label": "Icona Category Strip",
+              "required": true,
+              "description": "Seleziona l'icona",
+              "options": [
+                {
+                  "name": "Animali",
+                  "value": "un-icon-pets"
+                },
+                {
+                  "name": "Auto",
+                  "value": "un-icon-car"
+                },
+                {
+                  "name": "Casa",
+                  "value": "un-icon-home"
+                },
+                {
+                  "name": "Famiglia",
+                  "value": "un-icon-family"
+                },
+                {
+                  "name": "Infortuni",
+                  "value": "un-icon-injury"
+                },
+                {
+                  "name": "Mezzi pesanti",
+                  "value": "un-icon-truck"
+                },
+                {
+                  "name": "Mobilità",
+                  "value": "un-icon-mobility"
+                },
+                {
+                  "name": "Moto",
+                  "value": "un-icon-motorcycle"
+                },
+                {
+                  "name": "Pensione",
+                  "value": "un-icon-pension"
+                },
+                {
+                  "name": "Salute",
+                  "value": "un-icon-health"
+                },
+                {
+                  "name": "Viaggi",
+                  "value": "un-icon-travel"
+                }
+              ]
+            },
+            {
+              "component": "text",
+              "name": "secondCategoryStrip_Desc",
+              "label": "Testo Category Strip",
+              "validation": {
+                "maxLength": 12,
+                "customErrorMsg": "max 12 caratteri"
+              },
+              "required": true
+            },
+            {
+              "component": "text",
+              "name": "firstTagLabel2",
+              "label": "Label tag",
+              "validation": {
+                "maxLength": 20,
+                "customErrorMsg": "max 20 caratteri"
+              },
+              "required": true
+            },
+            {
+              "component": "select",
+              "name": "firstTagVariant2",
+              "label": "Tipologia Tag",
+              "required": true,
+              "value": "default",
+              "options": [
+                {
+                  "name": "Default",
+                  "value": "default"
+                },
+                {
+                  "name": "Secondary",
+                  "value": "secondary"
+                },
+                {
+                  "name": "Neutral",
+                  "value": "neutral"
+                },
+                {
+                  "name": "Custom",
+                  "value": "custom"
+                }
+              ]
+            },
+            {
+              "component": "text",
+              "name": "secondTagLabel2",
+              "label": "Label tag",
+              "validation": {
+                "maxLength": 20,
+                "customErrorMsg": "max 20 caratteri"
+              },
+              "required": true
+            },
+            {
+              "component": "select",
+              "name": "secondTagVariant2",
+              "label": "Tipologia Tag",
+              "required": true,
+              "value": "default",
+              "options": [
+                {
+                  "name": "Default",
+                  "value": "default"
+                },
+                {
+                  "name": "Secondary",
+                  "value": "secondary"
+                },
+                {
+                  "name": "Neutral",
+                  "value": "neutral"
+                },
+                {
+                  "name": "Custom",
+                  "value": "custom"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "component": "container",
+          "name": "thirdCategoryStrip",
+          "label": "Terza Category Strip",
+          "collapsible": true,
+          "fields": [
+            {
+              "component": "select",
+              "name": "thirdCategoryStripBckgroundColor",
+              "value": "none",
+              "description": "Colore sfondo Category strip",
+              "valueType": "string",
+              "options": [
+                {
+                  "name": "none",
+                  "value": ""
+                },
+                {
+                  "name": "Mobility",
+                  "value": "bg-mobility"
+                },
+                {
+                  "name": "Welfare",
+                  "value": "bg-welfare"
+                },
+                {
+                  "name": "Property",
+                  "value": "bg-property"
+                }
+              ]
+            },
+            {
+              "component": "select",
+              "name": "thirdCategoryStrip_Icon",
+              "label": "Icona Category Strip",
+              "required": true,
+              "description": "Seleziona l'icona",
+              "options": [
+                {
+                  "name": "Animali",
+                  "value": "un-icon-pets"
+                },
+                {
+                  "name": "Auto",
+                  "value": "un-icon-car"
+                },
+                {
+                  "name": "Casa",
+                  "value": "un-icon-home"
+                },
+                {
+                  "name": "Famiglia",
+                  "value": "un-icon-family"
+                },
+                {
+                  "name": "Infortuni",
+                  "value": "un-icon-injury"
+                },
+                {
+                  "name": "Mezzi pesanti",
+                  "value": "un-icon-truck"
+                },
+                {
+                  "name": "Mobilità",
+                  "value": "un-icon-mobility"
+                },
+                {
+                  "name": "Moto",
+                  "value": "un-icon-motorcycle"
+                },
+                {
+                  "name": "Pensione",
+                  "value": "un-icon-pension"
+                },
+                {
+                  "name": "Salute",
+                  "value": "un-icon-health"
+                },
+                {
+                  "name": "Viaggi",
+                  "value": "un-icon-travel"
+                }
+              ]
+            },
+            {
+              "component": "text",
+              "name": "thirdCategoryStrip_Desc",
+              "label": "Testo Category Strip",
+              "validation": {
+                "maxLength": 12,
+                "customErrorMsg": "max 12 caratteri"
+              },
+              "required": true
+            },
+            {
+              "component": "text",
+              "name": "firstTagLabel3",
+              "label": "Label primo tag",
+              "validation": {
+                "maxLength": 20,
+                "customErrorMsg": "max 20 caratteri"
+              },
+              "required": true
+            },
+            {
+              "component": "select",
+              "name": "firstTagVariant3",
+              "label": "Tipologia primo Tag",
+              "required": true,
+              "value": "default",
+              "options": [
+                {
+                  "name": "Default",
+                  "value": "default"
+                },
+                {
+                  "name": "Secondary",
+                  "value": "secondary"
+                },
+                {
+                  "name": "Neutral",
+                  "value": "neutral"
+                },
+                {
+                  "name": "Custom",
+                  "value": "custom"
+                }
+              ]
+            },
+            {
+              "component": "text",
+              "name": "secondTagLabel3",
+              "label": "Label secondo tag",
+              "validation": {
+                "maxLength": 20,
+                "customErrorMsg": "max 20 caratteri"
+              },
+              "required": true
+            },
+            {
+              "component": "select",
+              "name": "secondTagVariant3",
+              "label": "Tipologia secondo Tag",
+              "required": true,
+              "value": "default",
+              "options": [
+                {
+                  "name": "Default",
+                  "value": "default"
+                },
+                {
+                  "name": "Secondary",
+                  "value": "secondary"
+                },
+                {
+                  "name": "Neutral",
+                  "value": "neutral"
+                },
+                {
+                  "name": "Custom",
+                  "value": "custom"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
