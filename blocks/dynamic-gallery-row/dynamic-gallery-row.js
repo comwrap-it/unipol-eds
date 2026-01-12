@@ -44,6 +44,12 @@ const ensureEnoughSlides = (wrapper, minSlides = 10) => {
   }
 };
 
+/**
+ * Waits until the element has a measurable width before invoking the callback.
+ * @param {HTMLElement} el - The element to measure
+ * @param {Function} cb - The callback to invoke once measurable
+ * @param {number} maxFrames - Maximum number of animation frames to wait
+ */
 const waitForMeasurableWidth = (el, cb, maxFrames = 180) => {
   let frames = 0;
   const tick = () => {
@@ -60,6 +66,11 @@ const waitForMeasurableWidth = (el, cb, maxFrames = 180) => {
   requestAnimationFrame(tick);
 };
 
+/**
+ * Starts Swiper autoplay safely after ensuring the carousel has measurable width.
+ * @param {Swiper} swiper - The Swiper instance
+ * @param {HTMLElement} carousel - The carousel element
+ */
 const startAutoplaySafely = (swiper, carousel) => {
   if (!swiper || !carousel) return;
   waitForMeasurableWidth(
@@ -74,6 +85,11 @@ const startAutoplaySafely = (swiper, carousel) => {
   );
 };
 
+/**
+ * Sets Swiper speed and restarts autoplay, ensuring the new speed takes effect immediately.
+ * @param {Swiper} swiper - The Swiper instance
+ * @param {number} speed - The new speed in milliseconds
+ */
 const setSwiperSpeedAndRestart = (swiper, speed) => {
   if (!swiper || swiper.destroyed) return;
   swiper.params.speed = speed;
@@ -113,11 +129,16 @@ const FASTER_SWIPER_SPEED = 2000;
 const SWIPER_SLOW_SPEED = SWIPER_SPEED * 3;
 const FASTER_SWIPER_SLOW_SPEED = FASTER_SWIPER_SPEED * 3;
 
+/**
+ *
+ * @param {HTMLElement} block the block element
+ * @returns {boolean} true if the block is the second dynamic-gallery-row in its section
+ */
 const isSecondSectionRow = (block) => {
   if (!block) return false;
   const parentSection = block.closest('.section');
   const rows = Array.from(
-    parentSection.querySelectorAll('.dynamic-gallery-row.block'),
+    parentSection?.querySelectorAll('.dynamic-gallery-row.block'),
   );
   return rows.length > 1 && rows[1] === block;
 };
@@ -170,7 +191,13 @@ const initSwiper = (Swiper, carousel, block = null) => {
   return swiper;
 };
 
-const setupListeners = (swiperInstance, block, carousel) => {
+/**
+ *
+ * @param {} swiperInstance the swiper instance
+ * @param {HTMLElement} carousel the carousel element
+ * @param {HTMLElement} block the block element
+ */
+const setupListeners = (swiperInstance, carousel, block = null) => {
   if (!swiperInstance || !block) return;
   const isSecondRow = isSecondSectionRow(block);
   carousel.addEventListener('mouseenter', () => {
@@ -219,38 +246,5 @@ export default async function decorate(block) {
   const Swiper = await loadSwiper();
   const swiperInstance = initSwiper(Swiper, carousel, block);
   startAutoplaySafely(swiperInstance, carousel);
-  setupListeners(swiperInstance, block, carousel);
+  setupListeners(swiperInstance, carousel, block);
 }
-
-export const createDynamicGalleryRowFromRows = async (rows) => {
-  await ensureStylesLoaded();
-  const carousel = document.createElement('div');
-  carousel.className = 'swiper';
-  const galleryRow = document.createElement('div');
-  galleryRow.className = 'dynamic-gallery-row swiper-wrapper marquee-swiper';
-
-  if (rows.length === 0) return null;
-
-  const promises = rows.map(async (row) => {
-    const childrenRows = Array.from(row.children);
-    const card = await createDynamicGalleryCardFromRows(childrenRows);
-    if (card) {
-      moveInstrumentation(row, card);
-      card.classList.add('swiper-slide');
-      galleryRow.appendChild(card);
-    }
-  });
-
-  await Promise.all(promises);
-
-  // Ensure enough slides for loop mode
-  ensureEnoughSlides(galleryRow, 10);
-
-  carousel.appendChild(galleryRow);
-  const Swiper = await loadSwiper();
-  const swiperInstance = initSwiper(Swiper, carousel, null);
-  // This helper may be used before insertion into DOM; only start once measurable.
-  startAutoplaySafely(swiperInstance, carousel);
-
-  return carousel;
-};

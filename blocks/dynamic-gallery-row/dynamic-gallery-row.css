@@ -1,3 +1,9 @@
+.section.text-block-container.dynamic-gallery-row-container {
+    .text-block-wrapper {
+        margin-bottom: var(--Dynamic-Gallery-Widget-Gap, 56px);
+    }
+}
+
 .dynamic-gallery-row:not(.block) {
     display: flex;
     justify-content: flex-start;
