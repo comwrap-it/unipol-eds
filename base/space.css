@@ -1,0 +1,37 @@
+/**
+ * This file was generated automatically by Supernova.io and should not be changed manually.
+ * To modify the format or content of this file, please contact your design system team. 
+ */
+
+:root {
+  --spacing-padding-24-16: var(--space-400-24);
+  --spacing-gap-24-16: var(--space-400-24);
+  --spacing-gap-16-8: var(--space-300-16);
+  --text-block-centered-text-gap: var(--spacing-gap-16-8);
+  --text-block-centered-gap: var(--space-500-32);
+  --spacing-padding-4-2: var(--space-100-4);
+  --spacing-padding-16-12: var(--space-300-16);
+  --spacing-gap-8-4: var(--space-200-8);
+  --text-block-left-horizontal-gap-d-ds-tp: var(--space-500-32);
+  --spacing-padding-32-24: var(--space-500-32);
+  --spacing-gap-32-24: var(--space-500-32);
+  --spacing-gap-48-40: var(--space-700-48);
+  --spacing-gap-80-48: var(--space-1000-80);
+  --carousel-widget-gap: var(--spacing-gap-48-40);
+  --carousel-widget-gap-m-tp: var(--space-600-40);
+  --spacing-gap-56-48: var(--space-800-56);
+  --carousel-widget-review-text-gap: var(--space-300-16);
+  --carousel-widget-review-text-gap-m: var(--space-200-8);
+  --kpi-highlights-widget-gap-d-ds: var(--space-800-56);
+  --kpi-highlights-widget-gap-m-tp: var(--space-600-40);
+  --carousel-widget-product-highlights-vertical-padding: var(--space-900-64);
+  --carousel-widget-product-highlights-logo-text-gap-d-ds: var(--space-500-32);
+  --carousel-widget-product-highlights-logo-text-gap-m: var(--space-400-24);
+  --spacing-padding-8-4: var(--space-200-8);
+  --spacing-gap-16-8: var(--space-300-16);
+  --spacing-gap-120-96-80: var(--space-1200-120);
+  --carousel-widget-gap-m-alt: var(--space-500-32);
+  --spacing-gap-56-40: var(--space-800-56);
+  --carousel-widget-vertical-gap: var(--spacing-gap-48-40);
+  --kpi-highlights-widget-vertical-gap: var(--spacing-gap-56-40);
+}

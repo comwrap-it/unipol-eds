@@ -3,7 +3,7 @@
  * To modify the format or content of this file, please contact your design system team. 
  */
 
-:root {
+.theme-mobile {
   /* Bg/Utilities/Scrim */
   --background-utilities-scrim: #ffffffcc;
   /* Bg/Utilities/Overlay */

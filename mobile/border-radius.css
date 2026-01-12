@@ -3,7 +3,7 @@
  * To modify the format or content of this file, please contact your design system team. 
  */
 
-:root {
+.theme-mobile {
   --radius-0: 0rem;
   --radius-100-4: 0.25rem;
   --radius-200-8: 0.5rem;

@@ -3,7 +3,7 @@
  * To modify the format or content of this file, please contact your design system team. 
  */
 
-:root {
+.theme-mobile {
   --icon-100-16: 1rem;
   --icon-200-20: 1.25rem;
   --icon-300-24: 1.5rem;

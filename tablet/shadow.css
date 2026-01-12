@@ -3,7 +3,7 @@
  * To modify the format or content of this file, please contact your design system team. 
  */
 
-:root {
+.theme-tablet {
   --drop-shadow-100: 0.125rem 0.125rem 0.5rem 0rem #00000014;
   --inner-shadow-not-in-use-100: inset 0rem 0.063rem 0.25rem 0rem #0c0c0d0d;
   --inner-shadow-not-in-use-200: inset 0rem 0.063rem 0.25rem 0rem #0c0c0d0d;

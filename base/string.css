@@ -4,5 +4,5 @@
  */
 
 :root {
-  --string-visibility-breakpoint: "Desktop";
+  --visibility-breakpoint: "Desktop";
 }

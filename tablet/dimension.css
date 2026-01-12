@@ -3,25 +3,25 @@
  * To modify the format or content of this file, please contact your design system team. 
  */
 
-:root {
-  --layout-page-width: 90rem;
-  --layout-page-min-height: 56.25rem;
+.theme-tablet {
+  --layout-page-width: 75rem;
+  --layout-page-min-height: 45rem;
   --layout-container-horizontal-gap: 1.5rem;
   --layout-container-vertical-gap: 1.5rem;
-  --column-size-col-1: 5.875rem;
-  --column-size-col-2: 12.833rem;
-  --column-size-col-3: 19.75rem;
-  --column-size-col-4: 26.625rem;
-  --column-size-col-5: 33.563rem;
-  --column-size-col-6: 40.5rem;
-  --column-size-col-7: 47.375rem;
-  --column-size-col-8: 54.313rem;
-  --column-size-col-9: 61.25rem;
-  --column-size-col-10: 68.125rem;
-  --column-size-col-11: 75.063rem;
-  --column-size-col-12: 82rem;
-  --padding-c-72-56-24: 4.5rem;
-  --padding-c-64-48-24: 4rem;
+  --column-size-col-1: 5.063rem;
+  --column-size-col-2: 11.125rem;
+  --column-size-col-3: 17.25rem;
+  --column-size-col-4: 23.313rem;
+  --column-size-col-5: 29.375rem;
+  --column-size-col-6: 35.5rem;
+  --column-size-col-7: 41.563rem;
+  --column-size-col-8: 47.625rem;
+  --column-size-col-9: 53.75rem;
+  --column-size-col-10: 59.813rem;
+  --column-size-col-11: 65.875rem;
+  --column-size-col-12: 72rem;
+  --padding-c-72-56-24: 3.5rem;
+  --padding-c-64-48-24: 3rem;
   --space-0: 0rem;
   --space-50-2: 0.125rem;
   --space-100-4: 0.25rem;
@@ -61,8 +61,8 @@
   --card-width: 18.75rem;
   --hero-min-height: 18.75rem;
   --layout-page-gap: var(--space-0);
-  --layout-section-margin-horizontal-padding: var(--space-900-64);
-  --layout-section-vertical-padding: var(--space-900-64);
+  --layout-section-margin-horizontal-padding: var(--space-400-24);
+  --layout-section-vertical-padding: var(--space-700-48);
   --layout-section-vertical-gap: var(--space-300-16);
   --layout-section-horizontal-gap: var(--space-300-16);
   --layout-row-horizontal-padding: var(--space-0);
@@ -73,11 +73,11 @@
   --layout-container-horizontal-padding: var(--space-0);
   --container-width-l6-m6-s12: var(--column-size-col-6);
   --container-width-l4-m4-s12: var(--column-size-col-4);
-  --container-width-l3-m6-s12: var(--column-size-col-3);
-  --container-width-l3-m4-s12: var(--column-size-col-3);
-  --container-width-l6-m3-s12: var(--column-size-col-6);
-  --container-width-l9-m6-s12: var(--column-size-col-9);
-  --container-width-l4-m6-s12: var(--column-size-col-4);
+  --container-width-l3-m6-s12: var(--column-size-col-6);
+  --container-width-l3-m4-s12: var(--column-size-col-4);
+  --container-width-l6-m3-s12: var(--column-size-col-3);
+  --container-width-l9-m6-s12: var(--column-size-col-6);
+  --container-width-l4-m6-s12: var(--column-size-col-6);
   --font-size-title-hero-apex-new: var(--size-56);
   --accordion-vertical-padding: var(--space-400-24);
   --ai-icon-dimentions: var(--space-500-32);
@@ -234,10 +234,10 @@
   --tooltip-border-width-right: var(--stroke-100-1);
   --button-radius-default-2: var(--radius-400-24);
   --font-size-title-extra-large: var(--size-80);
-  --font-size-title-page: var(--size-48);
+  --font-size-title-page: var(--size-40);
   --font-size-subtitle-manrope: var(--size-32);
   --font-size-heading: var(--size-24);
-  --spacing-padding-32-16: var(--space-500-32);
+  --spacing-padding-32-16: 1.5rem;
   --accordion-icon-vertical-padding: var(--spacing-padding-4-2);
   --ai-message-radius: var(--radius-9999);
   --ai-message-radius-m: var(--radius-300-16);
@@ -681,9 +681,9 @@
   --quote-tool-gap-m: var(--space-350-20);
   --hero-vertical-padding-m: var(--space-1100-96);
   --article-kpi-highlights-widget-title-gap-tp-m: var(--space-300-16);
-  --layout-page-gap-old: var(--space-1200-120);
+  --layout-page-gap-old: var(--space-1100-96);
   --tag-radius-sharp: var(--radius-0);
-  --container-width-l8-lm9-ms10-s12: var(--column-size-col-8);
+  --container-width-l8-lm9-ms10-s12: var(--column-size-col-9);
   --ai-search-results-radius: var(--radius-9999);
   --ai-search-results-radius-m: var(--radius-300-16);
   --ai-search-results-horizontal-gap: var(--space-200-8);

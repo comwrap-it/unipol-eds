@@ -3,9 +3,6 @@
  * To modify the format or content of this file, please contact your design system team. 
  */
 
-:root {
-  --stroke-0: 0rem;
-  --stroke-100-1: 0.063rem;
-  --stroke-200-2: 0.125rem;
-  --stroke-400-4: 0.25rem;
+.theme-tablet-portrait {
+  --gradient: linear-gradient(180deg, rgba(var(--accent-500), 1) 0%, rgba(var(--brand-800), 1) 100%);
 }

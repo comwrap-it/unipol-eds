@@ -3,19 +3,19 @@
  * To modify the format or content of this file, please contact your design system team. 
  */
 
-:root {
+.theme-dark {
   /* Bg/Utilities/Scrim */
-  --background-utilities-scrim: #ffffffcc;
+  --background-utilities-scrim: #000000cc;
   /* Bg/Utilities/Overlay */
   --background-utilities-overlay: #00000080;
   /* Bg/Utilities/Blanket */
   --background-utilities-blanket: #000000b2;
-  --text-utilities-text-on-measurement: #8a226f;
-  --icon-default-tertiary: #bfc7cd;
-  --icon-utilities-icon-on-measurement: #8a226f;
-  --icon-utilities-icon: #d732a8;
-  --border-utilities-measurement: #f19edc;
-  --border-utilities-swatch: #0000003d;
+  --text-utilities-text-on-measurement: #fae1fa;
+  --icon-default-tertiary: #ffffff66;
+  --icon-utilities-icon-on-measurement: #fae1fa;
+  --icon-utilities-icon: #f19edc;
+  --border-utilities-measurement: #d732a8;
+  --border-utilities-swatch: #ffffff3d;
   --brand-50: #e5f3ff;
   --accent-50: #ebebff;
   --accent-100: #cdcdff;
@@ -127,17 +127,17 @@
   /* Bg/Default/Default */
   --background-default-primary: var(--neutral-200);
   /* Bg/Default/Default */
-  --background-default-secondary: var(--neutral-50);
+  --background-default-secondary: var(--brand-800);
   /* Bg/Default/Tertiary */
-  --background-default-tertiary: var(--brand-800);
+  --background-default-tertiary: var(--neutral-200);
   /* Bg/Default/Tertiary */
   --background-default-accent-fixed: var(--accent-500);
   /* Bg/Default/Tertiary */
-  --background-default-accent-light: var(--accent-50);
+  --background-default-accent-light: var(--grayscale-700);
   /* Bg/Default/Default Hover */
-  --background-default-accent-hover: var(--accent-100);
+  --background-default-accent-hover: var(--accent-700);
   /* Bg/Default/Tertiary Hover */
-  --background-default-tertiary-hover: var(--brand-600);
+  --background-default-tertiary-hover: var(--grayscale-200);
   /* Bg/Brand/Default */
   --background-brand-mobilty-light: var(--blue-100);
   /* Bg/Brand/Secondary */
@@ -151,85 +151,85 @@
   /* Bg/Brand/Hover */
   --background-brand-property-strong: var(--orange-700);
   /* Bg/Positive/Default */
-  --background-success-default: var(--feedback-success-100);
+  --background-success-default: #4b9d2f;
   /* Bg/Positive/Secondary */
-  --background-success-secondary: var(--feedback-success-200);
+  --background-success-secondary: #387623;
   /* Bg/Positive/Tertiary */
-  --background-success-tertiary: var(--feedback-success-300);
+  --background-success-tertiary: #254f17;
   /* Bg/Warning/Default */
-  --background-warning-default: var(--feedback-warning-100);
+  --background-warning-default: #f59670;
   /* Bg/Warning/Secondary */
-  --background-warning-secondary: var(--feedback-warning-200);
+  --background-warning-secondary: #8f300a;
   /* Bg/Warning/Tertiary */
-  --background-warning-tertiary: var(--feedback-warning-300);
+  --background-warning-tertiary: #5f2007;
   /* Bg/Danger/Default */
-  --background-error-default: var(--feedback-error-100);
+  --background-error-default: #0050b4;
   /* Bg/Danger/Secondary */
-  --background-error-secondary: var(--feedback-error-200);
+  --background-error-secondary: #00295c;
   /* Bg/Danger/Tertiary */
-  --background-error-tertiary: var(--feedback-error-300);
+  --background-error-tertiary: #001b3d;
   /* Bg/Disabled/Default */
-  --background-disabled-primary: var(--grayscale-200);
+  --background-disabled-primary: var(--grayscale-700);
   /* Bg/Disabled/Default */
-  --background-disabled-secondary: var(--grayscale-500);
+  --background-disabled-secondary: var(--grayscale-700);
   /* Bg/Neutral/Secondary */
-  --background-neutral-primary: var(--grayscale-50);
+  --background-neutral-primary: var(--grayscale-800);
   /* Bg/Neutral/Default */
-  --background-neutral-secondary: var(--grayscale-200);
+  --background-neutral-secondary: var(--grayscale-400);
   /* Bg/Neutral/Tertiary */
-  --background-neutral-tertiary: var(--grayscale-400);
-  --text-default-primary: var(--brand-800);
-  --text-default-accent: var(--accent-500);
-  --text-default-secondary: var(--brand-600);
+  --background-neutral-tertiary: var(--grayscale-500);
+  --text-default-primary: var(--neutral-200);
+  --text-default-accent: var(--neutral-200);
+  --text-default-secondary: var(--neutral-200);
   --text-brand-mobility: var(--blue-600);
   --text-brand-welfare: var(--green-800);
   --text-brand-property: var(--orange-700);
-  --text-success-default: var(--feedback-success-200);
-  --text-success-secondary: var(--feedback-success-300);
-  --text-warning-default: var(--feedback-warning-200);
-  --text-warning-secondary: var(--feedback-warning-300);
-  --text-error-default: var(--feedback-error-200);
-  --text-error-secondary: var(--feedback-error-300);
-  --text-disabled-primary: var(--grayscale-500);
-  --text-disabled-secondary: var(--grayscale-700);
-  --text-disabled-tertiary: var(--grayscale-800);
-  --text-utilities-text-on-overlay: var(--black-1100);
+  --text-success-default: var(--feedback-success-100);
+  --text-success-secondary: #9edc89;
+  --text-warning-default: var(--feedback-warning-100);
+  --text-warning-secondary: #f59670;
+  --text-error-default: var(--feedback-error-100);
+  --text-error-secondary: #3d95ff;
+  --text-disabled-primary: #63727d;
+  --text-disabled-secondary: var(--grayscale-400);
+  --text-disabled-tertiary: var(--grayscale-400);
+  --text-utilities-text-on-overlay: var(--white-1100);
   --text-neutral-primary: var(--grayscale-500);
-  --text-neutral-secondary: var(--grayscale-700);
-  --text-neutral-tertiary: var(--neutral-200);
-  --icon-default-primary: var(--brand-800);
-  --icon-default-secondary: var(--brand-600);
-  --icon-brand-mobility: var(--blue-600);
-  --icon-brand-welfare: var(--green-800);
-  --icon-brand-property: var(--orange-600);
-  --icon-success-primary: var(--feedback-success-200);
-  --icon-success-secondary: var(--feedback-success-300);
-  --icon-warning-primary: var(--feedback-warning-200);
-  --icon-warning-secondary: var(--feedback-warning-300);
-  --icon-error-primary: var(--feedback-error-200);
-  --icon-error-secondary: var(--feedback-error-300);
-  --icon-disabled-primary: var(--grayscale-500);
-  --icon-disabled-secondary: var(--grayscale-700);
-  --icon-disabled-tertiary: var(--grayscale-800);
-  --icon-neutral-primary: var(--grayscale-500);
-  --icon-neutral-secondary: var(--grayscale-700);
-  --icon-neutral-tertiary: var(--neutral-200);
-  --border-default-primary: var(--brand-800);
-  --border-default-accent: var(--accent-500);
-  --border-default-secondary: var(--brand-600);
+  --text-neutral-secondary: var(--neutral-200);
+  --text-neutral-tertiary: var(--brand-800);
+  --icon-default-primary: var(--neutral-200);
+  --icon-default-secondary: var(--grayscale-400);
+  --icon-brand-mobility: #e5f3ff;
+  --icon-brand-welfare: #99cfff;
+  --icon-brand-property: #66b8ff;
+  --icon-success-primary: var(--feedback-success-100);
+  --icon-success-secondary: #9edc89;
+  --icon-warning-primary: var(--feedback-warning-100);
+  --icon-warning-secondary: #f59670;
+  --icon-error-primary: var(--feedback-error-100);
+  --icon-error-secondary: #3d95ff;
+  --icon-disabled-primary: var(--grayscale-400);
+  --icon-disabled-secondary: var(--grayscale-500);
+  --icon-disabled-tertiary: var(--grayscale-400);
+  --icon-neutral-primary: #e3e3e3;
+  --icon-neutral-secondary: var(--neutral-200);
+  --icon-neutral-tertiary: var(--brand-800);
+  --border-default-primary: var(--neutral-200);
+  --border-default-accent: #cdcdcd;
+  --border-default-secondary: var(--grayscale-400);
   --border-default-focused: var(--brand-200);
   --border-brand-mobility: var(--blue-400);
   --border-brand-welfare: var(--green-400);
   --border-brand-property: var(--orange-400);
-  --border-success-primary: var(--feedback-success-200);
-  --border-success-secondary: var(--feedback-success-300);
-  --border-warning-primary: var(--feedback-warning-200);
-  --border-warning-secondary: var(--feedback-warning-300);
-  --border-error-primary: var(--feedback-error-200);
-  --border-error-secondary: var(--feedback-error-300);
-  --border-disabled-primary: var(--grayscale-500);
-  --border-disabled-secondary: var(--grayscale-700);
-  --border-neutral-primary: var(--grayscale-200);
+  --border-success-primary: var(--feedback-success-100);
+  --border-success-secondary: #9edc89;
+  --border-warning-primary: var(--feedback-warning-100);
+  --border-warning-secondary: #f59670;
+  --border-error-primary: var(--feedback-error-100);
+  --border-error-secondary: #3d95ff;
+  --border-disabled-primary: var(--grayscale-300);
+  --border-disabled-secondary: var(--grayscale-600);
+  --border-neutral-primary: #f3f3f3;
   --border-neutral-secondary: var(--grayscale-600);
   /* Bg/Neutral/Default */
   --background-opacity-primary: var(--white-600);
@@ -252,7 +252,7 @@
   --avatar-background: var(--background-default-primary);
   --avatar-border: var(--background-default-primary);
   --text-block-title: var(--text-default-primary);
-  --avatar-text: var(--text-block-title);
+  --avatar-text: var(--text-default-primary);
   --button-primary-default-background: var(--background-default-tertiary);
   --button-primary-default-border: var(--border-default-primary);
   --button-primary-default-text: var(--text-neutral-tertiary);
@@ -416,7 +416,7 @@
   --link-button-link-disabled-background: var(--null-000);
   --link-button-link-disabled-border: var(--null-000);
   --link-button-link-disabled-text: var(--text-disabled-secondary);
-  --link-button-link-disabled-icon: var(--link-button-link-disabled-text);
+  --link-button-link-disabled-icon: var(--text-disabled-secondary);
   --link-button-link-hover-background: var(--null-000);
   --link-button-link-hover-border: var(--null-000);
   --link-button-link-hover-text: var(--text-default-secondary);
@@ -677,7 +677,7 @@
   --category-strip-welfare-icon: var(--icon-default-primary);
   --category-strip-welfare-text: var(--text-default-primary);
   --border-default-tertiary: var(--neutral-200);
-  --border-neutral-tertiary: var(--grayscale-700);
+  --border-neutral-tertiary: var(--grayscale-500);
   --card-agency-card-background: var(--background-default-secondary);
   --card-agency-card-icon-pin: var(--icon-neutral-tertiary);
   --card-agency-card-title: var(--text-default-primary);

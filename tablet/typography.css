@@ -3,7 +3,7 @@
  * To modify the format or content of this file, please contact your design system team. 
  */
 
-:root {
+.theme-tablet {
   --text-styles-title-extra-large: var(--weight-semi-bold) var(--font-size-title-extra-large)/100% var(--family-font-2);
   --text-styles-title-hero-apex-new: var(--weight-medium) var(--font-size-title-hero-apex-new)/115% var(--family-font-1);
   --text-styles-title-page: var(--weight-medium) var(--font-size-title-page)/115% var(--family-font-1);

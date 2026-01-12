@@ -3,7 +3,7 @@
  * To modify the format or content of this file, please contact your design system team. 
  */
 
-:root {
+.theme-dark {
   --layout-page-width: 90rem;
   --layout-page-min-height: 56.25rem;
   --layout-container-horizontal-gap: 1.5rem;

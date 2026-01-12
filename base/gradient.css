@@ -4,5 +4,5 @@
  */
 
 :root {
-  --gradient: linear-gradient(180deg, rgba(var(--color-accent-500), 1) 0%, rgba(var(--color-brand-800), 1) 100%);
+  --gradient: linear-gradient(180deg, rgba(var(--accent-500), 1) 0%, rgba(var(--brand-800), 1) 100%);
 }
