@@ -16,12 +16,31 @@
         align-items: center;
         flex-shrink: 0;
         aspect-ratio: 1/1;
+        text-decoration: none;
+        cursor: pointer;
+        font-family: inherit;
+        user-select: none;
 
         & span {
             width: var(--Icon-300-24, 1.5rem);
             height: var(--Icon-300-24, 1.5rem);
             flex-shrink: 0;
             aspect-ratio: 1/1;
+            color: var(--Icon-Button-Secondary-Default-Icon);
+            border-color: var(--Icon-Button-Secondary-Default-Border);
+
+            /* Focus state */
+            &:focus-visible,
+            &:focus {
+                color: var(--Icon-Button-Secondary-Default-Icon);
+                border-color: var(--Icon-Button-Secondary-Default-Border);
+            }
+
+            /* Hover state */
+            &:hover:not(:disabled) {
+                color: var(--Icon-Button-Secondary-Default-Icon);
+                border-color: var(--Icon-Button-Secondary-Default-Border);
+            }
         }
     }
 
@@ -38,13 +57,6 @@
             justify-content: center;
             align-items: center;
             aspect-ratio: 1/1;
-
-            & span {
-                width: var(--Icon-300-24, 1.5rem);
-                height: var(--Icon-300-24, 1.5rem);
-                flex-shrink: 0;
-                aspect-ratio: 1/1;
-            }
         }
 
         & .label {
@@ -56,5 +68,17 @@
             font-weight: 600;
             line-height: 140%;
         }
+    }
+}
+
+@media (width < 1200px) {
+    .download-tile-molecule {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--Download-Tile-Widget-Gap-Tile, 1rem);
+        align-self: stretch;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
     }
 }

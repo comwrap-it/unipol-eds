@@ -28,3 +28,12 @@
         }
     }
 }
+
+/* Mobile */
+@media (width < 768px) {
+    .section.text-block-container.download-tile-organism-container {
+        & .download-tile-organism-wrapper {
+            align-items: center;
+        }
+    }
+}
