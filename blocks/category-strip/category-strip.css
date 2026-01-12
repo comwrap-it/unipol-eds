@@ -25,6 +25,7 @@
 
 .category-strip-container.bg-mobility {
     background: var(--Category-Strip-Mobility-Background, #E5F1FF);
+
     & .category-strip-tag-cont {
         & .tag {
             border: var(--Tag-Border) solid;
@@ -35,6 +36,7 @@
 
 .category-strip-container.bg-property {
     background: var(--Category-Strip-Property-Background, #FDEDE7);
+
     & .category-strip-tag-cont {
         & .tag {
             border: var(--Tag-Border) solid;
@@ -45,6 +47,7 @@
 
 .category-strip-container.bg-welfare {
     background: var(--Category-Strip-Welfare-Background, #EBF8E7);
+
     & .category-strip-tag-cont {
         & .tag {
             border: var(--Tag-Border) solid;
