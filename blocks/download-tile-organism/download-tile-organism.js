@@ -131,6 +131,7 @@ export default async function decorate(block) {
   // Wait for all download tiles to be processed
   if (!dialogActive) {
     block.innerText = '';
+    block.classList.add('reveal-in-up');
     const downloadTileElements = await Promise.all(downloadTileMoleculePromises);
     await initDownloadTileOrganism(tabletMobileMQ, downloadTileElements, block);
     tabletMobileMQ.addEventListener('change', (e) => handleResize(e, block));
