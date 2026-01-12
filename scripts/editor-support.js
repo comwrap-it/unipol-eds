@@ -27,6 +27,11 @@ const componentsWithMaxItems = [
     itemClass: '.text-list-wrapper',
     maxItems: 4,
   },
+  {
+    filter: 'download-tile-organism',
+    itemClass: '.download-tile-molecule',
+    maxItems: 4,
+  },
 ];
 
 async function applyChanges(event) {
