@@ -198,8 +198,14 @@ const initSwiper = (Swiper, carousel, block = null) => {
  * @param {HTMLElement} block the block element
  */
 const setupListeners = (swiperInstance, carousel, block = null) => {
-  if (!swiperInstance || !block) return;
-  const isSecondRow = isSecondSectionRow(block);
+  if (!swiperInstance) return;
+  let isSecondRow;
+  if (block) {
+    isSecondRow = isSecondSectionRow(block);
+  } else {
+    const closestBlock = carousel.closest('.block.dynamic-gallery-row');
+    isSecondRow = isSecondSectionRow(closestBlock);
+  }
   carousel.addEventListener('mouseenter', () => {
     setSwiperSpeedAndRestart(
       swiperInstance,
@@ -248,3 +254,38 @@ export default async function decorate(block) {
   startAutoplaySafely(swiperInstance, carousel);
   setupListeners(swiperInstance, carousel, block);
 }
+
+export const createDynamicGalleryRowFromRows = async (rows) => {
+  await ensureStylesLoaded();
+  const carousel = document.createElement('div');
+  carousel.className = 'swiper';
+  const galleryRow = document.createElement('div');
+  galleryRow.className = 'dynamic-gallery-row swiper-wrapper marquee-swiper';
+
+  if (rows.length === 0) return null;
+
+  const promises = rows.map(async (row) => {
+    const childrenRows = Array.from(row.children);
+    const card = await createDynamicGalleryCardFromRows(childrenRows);
+    if (card) {
+      moveInstrumentation(row, card);
+      card.classList.add('swiper-slide');
+      galleryRow.appendChild(card);
+    }
+  });
+
+  await Promise.all(promises);
+
+  // Ensure enough slides for loop mode
+  ensureEnoughSlides(galleryRow, 10);
+
+  carousel.appendChild(galleryRow);
+
+  const Swiper = await loadSwiper();
+  const swiperInstance = initSwiper(Swiper, carousel, null);
+  // This helper may be used before insertion into DOM; only start once measurable.
+  startAutoplaySafely(swiperInstance, carousel);
+  setupListeners(swiperInstance, carousel, null);
+
+  return carousel;
+};
