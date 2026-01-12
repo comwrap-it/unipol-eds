@@ -181,7 +181,7 @@
             }
 
             & .editorial-carousel-card-content {
-                padding: 0 var(--Card-Insurance-Product-Card-Horizontal-Padding-M, 1rem) var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Horizontal-Padding-M, 1rem);
+                padding: var(--Card-Insurance-Product-Card-Vertical-Padding, 1.5rem) var(--Card-Insurance-Product-Card-Horizontal-Padding-M, 1rem);
                 gap: var(--Card-Insurance-Product-Card-Gap, 1.5rem);
 
             }

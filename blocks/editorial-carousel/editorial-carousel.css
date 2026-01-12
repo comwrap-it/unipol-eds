@@ -13,9 +13,20 @@
     & .editorial-carousel {
         display: flex;
         flex-direction: column;
-        width: 21.4375rem;
         margin-inline: auto;
         gap: var(--Carousel-Insurance-Product-Gap, 1rem);
+    }
+}
+
+@media (width < 768px) {
+    .editorial-carousel-container {
+        &.swiper {
+            overflow: hidden;
+        }
+
+        & .editorial-carousel {
+            align-items: center;
+        }
     }
 }
 
