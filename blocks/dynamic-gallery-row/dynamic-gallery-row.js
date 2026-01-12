@@ -76,6 +76,37 @@ const startAutoplaySafely = (swiper, carousel) => {
   );
 };
 
+const setSwiperSpeedAndRestart = (swiper, speed) => {
+  if (!swiper || swiper.destroyed) return;
+  swiper.params.speed = speed;
+  // Some Swiper internals read from originalParams after init.
+  swiper.originalParams.speed = speed;
+
+  // Changing speed mid-transition won’t affect the current transition.
+  // If we are currently animating, cancel the transition and restart autoplay
+  // so the new speed takes effect immediately.
+  if (!swiper.autoplay?.running) return;
+  swiper.autoplay.stop();
+
+  if (swiper.animating) {
+    swiper.setTranslate(swiper.getTranslate());
+    swiper.updateActiveIndex();
+    swiper.updateSlidesClasses();
+
+    ['onSlideToWrapperTransitionEnd', 'onTranslateToWrapperTransitionEnd'].forEach((key) => {
+      swiper.wrapperEl.removeEventListener('transitionend', swiper[key]);
+      swiper[key] = null;
+    });
+    swiper.animating = false;
+  }
+
+  requestAnimationFrame(() => {
+    if (swiper.destroyed) return;
+    swiper.update();
+    swiper.autoplay.start();
+  });
+};
+
 /**
  *
  * @param {} Swiper the swiper instance
@@ -86,17 +117,19 @@ const initSwiper = (Swiper, carousel) => {
     slidesPerView: 'auto',
     speed: SWIPER_SPEED,
     loop: true,
+    loopAdditionalSlides: 0,
     centeredSlides: false,
     allowTouchMove: false,
     simulateTouch: false,
     observer: true,
     observeParents: true,
     resizeObserver: true,
+    watchSlidesProgress: true,
     autoplay: {
       delay: 0,
       disableOnInteraction: false,
       pauseOnMouseEnter: false,
-      waitForTransition: false,
+      waitForTransition: true,
     },
     freeMode: {
       enabled: true,
@@ -146,6 +179,13 @@ export default async function decorate(block) {
   const Swiper = await loadSwiper();
   const swiperInstance = initSwiper(Swiper, carousel);
   startAutoplaySafely(swiperInstance, carousel);
+  const slowSpeed = SWIPER_SPEED * 3;
+  carousel.addEventListener('mouseenter', () => {
+    setSwiperSpeedAndRestart(swiperInstance, slowSpeed);
+  });
+  carousel.addEventListener('mouseleave', () => {
+    setSwiperSpeedAndRestart(swiperInstance, SWIPER_SPEED);
+  });
 }
 
 export const createDynamicGalleryRowFromRows = async (rows) => {
