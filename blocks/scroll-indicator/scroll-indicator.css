@@ -82,6 +82,11 @@
         padding-inline: var(--Hero-Full-Screen-Horizontal-Padding-M-Tp, 16px);
         z-index: 3;
     }
+
+    & .link-btn {
+        text-decoration: none;
+        text-decoration-line: none;
+    }
 }
 
 /* under 1200 the dots stays on the left and nav buttons on the right */
