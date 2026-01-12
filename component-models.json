@@ -300,6 +300,20 @@
     ]
   },
   {
+    "id": "info-pillars-widget",
+    "fields": [
+      {
+        "component": "text",
+        "name": "info-pillars-widget-name",
+        "label": "Nome sezione Info Pillars Widget",
+        "validation": {
+          "maxLength": 200,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      }
+    ]
+  },
+  {
     "id": "insurance-product-carousel-widget",
     "fields": [
       {
@@ -4035,6 +4049,10 @@
     ]
   },
   {
+    "id": "info-pillars",
+    "fields": []
+  },
+  {
     "id": "insurance-product-card",
     "fields": [
       {
@@ -4911,6 +4929,28 @@
             ]
           }
         ]
+      }
+    ]
+  },
+  {
+    "id": "text-card",
+    "fields": [
+      {
+        "component": "text",
+        "name": "icon",
+        "label": "Icona (classe)",
+        "description": "Usa una classe icona, ad es. un-icon-pets",
+        "required": true
+      },
+      {
+        "component": "text",
+        "name": "title",
+        "label": "Titolo",
+        "required": true,
+        "validation": {
+          "maxLength": 100,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       }
     ]
   },

@@ -1,0 +1,67 @@
+.text-card {
+    --text-card-width: var(
+        --Card-Text-Card-Width,
+        clamp(220px, 26vw, 320px)
+    );
+    --text-card-height: var(--Card-Text-Card-Height, 160px);
+    --text-card-radius: var(--Card-Text-Card-Radius, 24px);
+    --text-card-padding: var(--Card-Text-Card-Padding, 24px);
+    --text-card-gap: var(--Card-Text-Card-Gap, 16px);
+    --text-card-background: var(--Card-Text-Card-Background, #001c35);
+    --text-card-color: var(--Card-Text-Card-Text, #fff);
+    --text-card-icon-size: var(--Card-Text-Card-Icon-Size, 32px);
+    --text-card-icon-background: var(
+        --Card-Text-Card-Icon-Background,
+        #fff
+    );
+    --text-card-icon-color: var(--Card-Text-Card-Icon-Color, #001c35);
+
+    width: var(--text-card-width);
+    min-height: var(--text-card-height);
+    padding: var(--text-card-padding);
+    border-radius: var(--text-card-radius);
+    background: var(--text-card-background);
+    color: var(--text-card-color);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--text-card-gap);
+    box-sizing: border-box;
+
+    & .text-card-icon {
+        width: var(--text-card-icon-size);
+        height: var(--text-card-icon-size);
+        display: grid;
+        place-items: center;
+        border-radius: 9999px;
+        background: var(--text-card-icon-background);
+        color: var(--text-card-icon-color);
+        flex: 0 0 auto;
+    }
+
+    & .text-card-content {
+        width: 100%;
+        margin-top: auto;
+    }
+
+    & .text-card-title {
+        margin: 0;
+        color: inherit;
+        font-family: var(--Family-Font-2, Manrope);
+        font-size: var(--Size-16, 16px);
+        font-weight: 500;
+        line-height: 140%;
+        letter-spacing: -0.16px;
+    }
+}
+
+@media (width < 768px) {
+    .text-card {
+        --text-card-width: var(
+            --Card-Text-Card-Width-M,
+            min(100%, 280px)
+        );
+        --text-card-height: var(--Card-Text-Card-Height-M, 140px);
+        --text-card-padding: var(--Card-Text-Card-Padding-M, 20px);
+    }
+}

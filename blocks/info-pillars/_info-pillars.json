@@ -1,0 +1,41 @@
+{
+  "definitions": [
+    {
+      "title": "Info Pillars",
+      "id": "info-pillars",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "filter": "info-pillars",
+              "name": "Info Pillars",
+              "model": "info-pillars",
+              "text-card": {
+                "sling:resourceType": "core/franklin/components/block/v1/block/item",
+                "name": "Text Card",
+                "filter": "text-card",
+                "model": "text-card"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "info-pillars",
+      "fields": []
+    }
+  ],
+  "filters": [
+    {
+      "id": "info-pillars",
+      "components": [
+        "text-card"
+      ],
+      "min": 3
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "definitions": [
+    {
+      "title": "Text Card",
+      "id": "text-card",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block/item",
+            "template": {
+              "name": "Text Card",
+              "model": "text-card"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "text-card",
+      "fields": [
+        {
+          "component": "text",
+          "name": "icon",
+          "label": "Icona (classe)",
+          "description": "Usa una classe icona, ad es. un-icon-pets",
+          "required": true
+        },
+        {
+          "component": "text",
+          "name": "title",
+          "label": "Titolo",
+          "required": true,
+          "validation": {
+            "maxLength": 100,
+            "customErrorMsg": "Testo troppo lungo"
+          }
+        }
+      ]
+    }
+  ],
+  "filters": []
+}
