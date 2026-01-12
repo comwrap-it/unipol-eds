@@ -1,5 +1,6 @@
 import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { isAuthorMode } from "../../scripts/utils.js";
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -27,9 +28,12 @@ async function initDesktopView(downloadTileElements, block) {
   downloadTileElements.forEach((tile, index) => {
     if (index % 2 === 0) {
       prevTile = tile;
+      if (isAuthorMode(block)) {
+        const prevDownloadTile = prevTile.querySelector('.download-tile-molecule');
+        moveInstrumentation(prevTile, prevDownloadTile);
+        block.appendChild(prevTile);
+      }
     } else {
-      const prevDownloadTile = prevTile.querySelector('.download-tile-molecule');
-      moveInstrumentation(prevTile, prevDownloadTile);
       const nextDownloadTile = tile.querySelector('.download-tile-molecule');
       moveInstrumentation(tile, nextDownloadTile);
       prevTile.appendChild(nextDownloadTile);
