@@ -782,11 +782,10 @@ function extractNavigationPillValues(row) {
     variant: rows[2]?.textContent?.trim().toLowerCase() || NAVIGATION_PILL_VARIANTS.PRIMARY,
     href: rows[3]?.querySelector('a')?.href || rows[3]?.textContent?.trim() || undefined,
     leftIcon: rows[4]?.textContent?.trim() || '',
-    lftIcnSze: rows[5]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM,
-    rightIcon: rows[6]?.textContent?.trim() || '',
-    rhtIcnSze: rows[7]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM,
+    rightIcon: rows[5]?.textContent?.trim() || '',
+    icnSze: rows[6]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM,
     instrumentation: extractInstrumentationAttributes(rows[1]),
-    boxText: rows[8]?.textContent?.trim() || '',
+    boxText: rows[7]?.textContent?.trim() || '',
   };
 }
 
@@ -822,9 +821,8 @@ export default async function decorate(block) {
       cfg.href,
       cfg.variant,
       cfg.leftIcon,
-      cfg.lftIcnSze,
       cfg.rightIcon,
-      cfg.rhtIcnSze,
+      cfg.icnSze,
       cfg.instrumentation,
       cfg.hideLabel,
     );

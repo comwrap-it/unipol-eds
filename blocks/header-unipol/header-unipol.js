@@ -29,9 +29,8 @@ export function createHeaderUnipol(logoUrl = '', navItems = DEFAULT_NAV_ITEMS) {
       item.href || '#',
       item.variant || NAVIGATION_PILL_VARIANTS.PRIMARY,
       item.leftIcon,
-      item.leftIconSize,
       item.rightIcon,
-      item.rightIconSize,
+      item.iconSize,
       item.instrumentation,
       item.hideLabel,
     );

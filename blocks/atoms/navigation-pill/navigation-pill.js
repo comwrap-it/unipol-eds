@@ -25,10 +25,9 @@ function extractValuesFromRows(rows) {
     || '';
 
   const leftIcon = rows[4]?.textContent?.trim() || '';
-  const leftIconSize = rows[5]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM;
 
-  const rightIcon = rows[6]?.textContent?.trim() || '';
-  const rightIconSize = rows[7]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM;
+  const rightIcon = rows[5]?.textContent?.trim() || '';
+  const iconSize = rows[6]?.textContent?.trim() || BUTTON_ICON_SIZES.MEDIUM;
 
   const instrumentation = extractInstrumentationAttributes(rows[1]);
 
@@ -38,9 +37,8 @@ function extractValuesFromRows(rows) {
     variant,
     href,
     leftIcon,
-    leftIconSize,
     rightIcon,
-    rightIconSize,
+    iconSize,
     instrumentation,
   };
 }
@@ -64,9 +62,8 @@ export default function decorateNavigationPill(block) {
     variant,
     href,
     leftIcon,
-    leftIconSize,
     rightIcon,
-    rightIconSize,
+    iconSize,
     instrumentation,
   } = extractValuesFromRows(rows);
 
@@ -86,9 +83,8 @@ export default function decorateNavigationPill(block) {
         href,
         variant,
         leftIcon,
-        leftIconSize,
         rightIcon,
-        rightIconSize,
+        iconSize,
         instrumentation,
       );
 
@@ -106,9 +102,8 @@ export default function decorateNavigationPill(block) {
           href,
           variant,
           leftIcon,
-          leftIconSize,
           rightIcon,
-          rightIconSize,
+          iconSize,
           instrumentation,
         ),
       );
@@ -121,9 +116,8 @@ export default function decorateNavigationPill(block) {
       href,
       variant,
       leftIcon,
-      leftIconSize,
       rightIcon,
-      rightIconSize,
+      iconSize,
       {},
     );
     block.appendChild(pillElement);

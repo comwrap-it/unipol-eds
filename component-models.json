@@ -3356,30 +3356,6 @@
       },
       {
         "component": "select",
-        "name": "navigationPillLeftIconSize",
-        "label": "Dimensione Icone",
-        "value": "medium",
-        "options": [
-          {
-            "name": "Small",
-            "value": "small"
-          },
-          {
-            "name": "Medium",
-            "value": "medium"
-          },
-          {
-            "name": "Large",
-            "value": "large"
-          },
-          {
-            "name": "Extra Large",
-            "value": "extra-large"
-          }
-        ]
-      },
-      {
-        "component": "select",
         "name": "navigationPillRightIcon",
         "label": "Icona Destra",
         "description": "Optional icon on the right",
@@ -3428,7 +3404,7 @@
       },
       {
         "component": "select",
-        "name": "navigationPillRightIconSize",
+        "name": "navigationPillIconSize",
         "label": "Dimensione Icone",
         "value": "medium",
         "options": [
@@ -3551,30 +3527,6 @@
       },
       {
         "component": "select",
-        "name": "navigationPillLeftIconSize",
-        "label": "Dimensione Icone",
-        "value": "medium",
-        "options": [
-          {
-            "name": "Small",
-            "value": "small"
-          },
-          {
-            "name": "Medium",
-            "value": "medium"
-          },
-          {
-            "name": "Large",
-            "value": "large"
-          },
-          {
-            "name": "Extra Large",
-            "value": "extra-large"
-          }
-        ]
-      },
-      {
-        "component": "select",
         "name": "navigationPillRightIcon",
         "label": "Icona Destra",
         "description": "Optional icon on the right",
@@ -3623,7 +3575,7 @@
       },
       {
         "component": "select",
-        "name": "navigationPillRightIconSize",
+        "name": "navigationPillIconSize",
         "label": "Dimensione Icone",
         "value": "medium",
         "options": [
@@ -6508,30 +6460,6 @@
       },
       {
         "component": "select",
-        "name": "navigationPillLeftIconSize",
-        "label": "Dimensione Icone",
-        "value": "medium",
-        "options": [
-          {
-            "name": "Small",
-            "value": "small"
-          },
-          {
-            "name": "Medium",
-            "value": "medium"
-          },
-          {
-            "name": "Large",
-            "value": "large"
-          },
-          {
-            "name": "Extra Large",
-            "value": "extra-large"
-          }
-        ]
-      },
-      {
-        "component": "select",
         "name": "navigationPillRightIcon",
         "label": "Icona Destra",
         "description": "Optional icon on the right",
@@ -6580,7 +6508,7 @@
       },
       {
         "component": "select",
-        "name": "navigationPillRightIconSize",
+        "name": "navigationPillIconSize",
         "label": "Dimensione Icone",
         "value": "medium",
         "options": [
