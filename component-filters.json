@@ -5,6 +5,7 @@
       "section",
       "kpi-highlights-widget",
       "product-highlights-widget",
+      "info-pillars-widget",
       "insurance-product-carousel-widget",
       "editorial-carousel-widget",
       "hero-widget",
@@ -100,6 +101,12 @@
     "id": "hero-widget",
     "components": [
       "full-screen-hero-carousel"
+    ]
+  },
+  {
+    "id": "info-pillars-widget",
+    "components": [
+      "info-pillars"
     ]
   },
   {
@@ -228,6 +235,13 @@
     ],
     "min": 1,
     "max": 4
+  },
+  {
+    "id": "info-pillars",
+    "components": [
+      "text-card"
+    ],
+    "min": 3
   },
   {
     "id": "insurance-product-carousel",
