@@ -1,6 +1,6 @@
 import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
-import { isAuthorMode } from "../../scripts/utils.js";
+import { isAuthorMode } from '../../scripts/utils.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
