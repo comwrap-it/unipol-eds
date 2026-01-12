@@ -20,7 +20,7 @@ const createTextWrapper = (downloadTile) => {
 
   const fileIcon = createIconButton(
     downloadTile.icon,
-    BUTTON_VARIANTS.PRIMARY,
+    BUTTON_VARIANTS.SECONDARY,
     BUTTON_ICON_SIZES.LARGE,
   );
   textWrapper.appendChild(fileIcon);
@@ -40,7 +40,7 @@ const createDownloadTile = (downloadTile) => {
 
   const downloadIcon = createIconButton(
     'un-icon-download-simple',
-    BUTTON_VARIANTS.PRIMARY,
+    BUTTON_VARIANTS.SECONDARY,
     BUTTON_ICON_SIZES.LARGE,
     downloadTile.href,
     true,
