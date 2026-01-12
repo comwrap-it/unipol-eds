@@ -82,7 +82,7 @@ export default function decorate(block) {
       values.iconSize,
       values.leftIcon,
       values.rightIcon,
-      values.instrumentation
+      values.instrumentation,
     );
 
     if (container?.hasAttribute('data-aue-resource')) {
@@ -98,8 +98,8 @@ export default function decorate(block) {
     createButtonFromContainer(firstContainer, editorialVariantValue),
     createButtonFromContainer(
       secondContainer,
-      'secondary'
-    )
+      'secondary',
+    ),
   ];
 
   block.innerHTML = '';
@@ -107,6 +107,5 @@ export default function decorate(block) {
   block.classList.add(`button-group-${direction}`);
   block.style.display = 'flex';
 
-  buttons.forEach(btn => block.appendChild(btn));
-
+  buttons.forEach((btn) => block.appendChild(btn));
 }

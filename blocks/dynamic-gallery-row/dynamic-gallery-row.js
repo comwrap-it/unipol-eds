@@ -44,8 +44,6 @@ const ensureEnoughSlides = (wrapper, minSlides = 10) => {
   }
 };
 
-const SWIPER_SPEED = 3000;
-
 const waitForMeasurableWidth = (el, cb, maxFrames = 180) => {
   let frames = 0;
   const tick = () => {
@@ -93,7 +91,10 @@ const setSwiperSpeedAndRestart = (swiper, speed) => {
     swiper.updateActiveIndex();
     swiper.updateSlidesClasses();
 
-    ['onSlideToWrapperTransitionEnd', 'onTranslateToWrapperTransitionEnd'].forEach((key) => {
+    [
+      'onSlideToWrapperTransitionEnd',
+      'onTranslateToWrapperTransitionEnd',
+    ].forEach((key) => {
       swiper.wrapperEl.removeEventListener('transitionend', swiper[key]);
       swiper[key] = null;
     });
@@ -107,15 +108,37 @@ const setSwiperSpeedAndRestart = (swiper, speed) => {
   });
 };
 
+const SWIPER_SPEED = 3000;
+const FASTER_SWIPER_SPEED = 2000;
+const SWIPER_SLOW_SPEED = SWIPER_SPEED * 3;
+const FASTER_SWIPER_SLOW_SPEED = FASTER_SWIPER_SPEED * 3;
+
+const isSecondSectionRow = (block) => {
+  if (!block) return false;
+  const parentSection = block.closest('.section');
+  const rows = Array.from(
+    parentSection.querySelectorAll('.dynamic-gallery-row.block'),
+  );
+  return rows.length > 1 && rows[1] === block;
+};
+
 /**
  *
  * @param {} Swiper the swiper instance
  * @param {HTMLElement} carousel the carousel element
+ * @param {HTMLElement} block the block element
  */
-const initSwiper = (Swiper, carousel) => {
+const initSwiper = (Swiper, carousel, block = null) => {
+  let isSecondRow = false;
+  if (block) {
+    isSecondRow = isSecondSectionRow(block);
+  } else {
+    const closestBlock = carousel.closest('.block.dynamic-gallery-row');
+    isSecondRow = isSecondSectionRow(closestBlock);
+  }
   const swiper = new Swiper(carousel, {
     slidesPerView: 'auto',
-    speed: SWIPER_SPEED,
+    speed: isSecondRow ? FASTER_SWIPER_SPEED : SWIPER_SPEED,
     loop: true,
     loopAdditionalSlides: 0,
     centeredSlides: false,
@@ -145,6 +168,23 @@ const initSwiper = (Swiper, carousel) => {
   });
 
   return swiper;
+};
+
+const setupListeners = (swiperInstance, block, carousel) => {
+  if (!swiperInstance || !block) return;
+  const isSecondRow = isSecondSectionRow(block);
+  carousel.addEventListener('mouseenter', () => {
+    setSwiperSpeedAndRestart(
+      swiperInstance,
+      isSecondRow ? FASTER_SWIPER_SLOW_SPEED : SWIPER_SLOW_SPEED,
+    );
+  });
+  carousel.addEventListener('mouseleave', () => {
+    setSwiperSpeedAndRestart(
+      swiperInstance,
+      isSecondRow ? FASTER_SWIPER_SPEED : SWIPER_SPEED,
+    );
+  });
 };
 
 export default async function decorate(block) {
@@ -177,15 +217,9 @@ export default async function decorate(block) {
   block.replaceChildren(carousel);
 
   const Swiper = await loadSwiper();
-  const swiperInstance = initSwiper(Swiper, carousel);
+  const swiperInstance = initSwiper(Swiper, carousel, block);
   startAutoplaySafely(swiperInstance, carousel);
-  const slowSpeed = SWIPER_SPEED * 3;
-  carousel.addEventListener('mouseenter', () => {
-    setSwiperSpeedAndRestart(swiperInstance, slowSpeed);
-  });
-  carousel.addEventListener('mouseleave', () => {
-    setSwiperSpeedAndRestart(swiperInstance, SWIPER_SPEED);
-  });
+  setupListeners(swiperInstance, block, carousel);
 }
 
 export const createDynamicGalleryRowFromRows = async (rows) => {
@@ -214,7 +248,7 @@ export const createDynamicGalleryRowFromRows = async (rows) => {
 
   carousel.appendChild(galleryRow);
   const Swiper = await loadSwiper();
-  const swiperInstance = initSwiper(Swiper, carousel);
+  const swiperInstance = initSwiper(Swiper, carousel, null);
   // This helper may be used before insertion into DOM; only start once measurable.
   startAutoplaySafely(swiperInstance, carousel);
 
