@@ -1,4 +1,4 @@
-import { BUTTON_ICON_SIZES, NAVIGATION_PILL_VARIANTS } from '../../../constants/index.js';
+import { BUTTON_ICON_SIZES, NAVIGATION_PILL_VARIANTS } from "../../../constants/index.js";
 
 /**
  * Creates a Navigation Pill
@@ -7,9 +7,8 @@ import { BUTTON_ICON_SIZES, NAVIGATION_PILL_VARIANTS } from '../../../constants/
  * @param {string} [href] - link.
  * @param {string} variant - "primary" or "secondary".
  * @param {string} [leftIcon] - Left Icon className.
- * @param {string} [leftIconSize] - Left Icon size.
  * @param {string} [rightIcon] - Right Icon className.
- * @param {string} [rightIconSize] - Right Icon size.
+ * @param {string} [iconSize] - Icon size.
  * @param {Object} [instrumentation={}] - AEM attributes.
  * @param {boolean} hideLabel - If true, hide label and use aria-label.
  * @returns {HTMLElement}
@@ -19,9 +18,8 @@ export function createNavigationPill(
   href,
   variant,
   leftIcon,
-  leftIconSize,
   rightIcon,
-  rightIconSize,
+  iconSize,
   instrumentation = {},
   hideLabel = false,
 ) {
@@ -30,7 +28,7 @@ export function createNavigationPill(
 
   if (leftIcon) {
     const span = document.createElement('span');
-    span.className = `icon icon-${leftIconSize || BUTTON_ICON_SIZES.MEDIUM} ${leftIcon}`;
+    span.className = `icon icon-${iconSize || BUTTON_ICON_SIZES.MEDIUM} ${leftIcon}`;
     el.appendChild(span);
   }
 
@@ -44,7 +42,7 @@ export function createNavigationPill(
 
   if (rightIcon) {
     const span = document.createElement('span');
-    span.className = `icon icon-${rightIconSize || BUTTON_ICON_SIZES.MEDIUM} ${rightIcon}`;
+    span.className = `icon icon-${iconSize || BUTTON_ICON_SIZES.MEDIUM} ${rightIcon}`;
     el.appendChild(span);
   }
 
@@ -71,3 +69,4 @@ export function createNavigationPill(
 
   return el;
 }
+
