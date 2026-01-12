@@ -19,6 +19,18 @@
     }
 }
 
+@media (width < 768px) {
+    .editorial-carousel-container {
+        &.swiper {
+            overflow: visible;
+        }
+
+        & .editorial-carousel {
+            align-items: center;
+        }
+    }
+}
+
 @media (width < 400px) {
     .editorial-carousel-container {
         & .editorial-carousel {
