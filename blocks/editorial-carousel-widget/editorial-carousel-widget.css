@@ -8,6 +8,6 @@
 
 @media (width < 768px) {
     .section.editorial-carousel-container {
-        overflow: visible;
+        overflow: hidden;
     }
 }
