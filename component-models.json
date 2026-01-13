@@ -514,10 +514,6 @@
           {
             "component": "text",
             "name": "documentLabel"
-          },
-          {
-            "component": "reference",
-            "name": "documentReference"
           }
         ]
       }
