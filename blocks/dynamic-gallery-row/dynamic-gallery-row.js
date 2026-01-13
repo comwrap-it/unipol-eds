@@ -62,17 +62,18 @@ const ensureEnoughSlides = (wrapper, minSlides = 10) => {
 
 const BASE_SPEED_PX_PER_SECOND = 55;
 const FAST_SPEED_PX_PER_SECOND = 70;
-const HOVER_SLOWDOWN_MULTIPLIER = 3;
+// On hover we want to be 33% slower => speed becomes 2/3 of the original.
+const HOVER_SPEED_FACTOR = 2 / 3;
 
 /**
  * Creates a lightweight infinite marquee.
  *
  * Structure expectations:
- * - viewportEl: the overflow-hidden viewport (where hover listeners are attached)
+ * - containerEl: the overflow-hidden viewport (where hover listeners are attached)
  * - beltEl: the element we translate on X (contains segment + cloned segment)
  * - segmentEl: the first segment; its width is the wrap distance
  */
-const createMarqueeController = (viewportEl, beltEl, segmentEl, { speedPxPerSecond }) => {
+const createMarqueeController = (containerEl, beltEl, segmentEl, { speedPxPerSecond }) => {
   let rafId = null;
   let lastFrameTime = 0;
   let x = 0;
@@ -93,7 +94,7 @@ const createMarqueeController = (viewportEl, beltEl, segmentEl, { speedPxPerSeco
     }
   };
 
-  const isAlive = () => viewportEl?.isConnected && beltEl?.isConnected;
+  const isAlive = () => containerEl?.isConnected && beltEl?.isConnected;
 
   const applyTransform = () => {
     beltEl.style.transform = `translate3d(${x}px, 0, 0)`;
@@ -146,7 +147,7 @@ const createMarqueeController = (viewportEl, beltEl, segmentEl, { speedPxPerSeco
 
   const setHoverSlow = (enabled) => {
     targetSpeedPxPerMs = enabled
-      ? baseSpeedPxPerMs / HOVER_SLOWDOWN_MULTIPLIER
+      ? baseSpeedPxPerMs * HOVER_SPEED_FACTOR
       : baseSpeedPxPerMs;
   };
 
@@ -157,7 +158,7 @@ const createMarqueeController = (viewportEl, beltEl, segmentEl, { speedPxPerSeco
     })
     : null;
 
-  ro?.observe?.(viewportEl);
+  ro?.observe?.(containerEl);
   ro?.observe?.(segmentEl);
 
   return {
@@ -263,12 +264,11 @@ export default async function decorate(block) {
 
   const rows = Array.from(block.children);
 
-  // DOM pieces (kept separate on purpose):
-  // - viewport clips overflow
+  // - marqueeContainer clips overflow
   // - belt is translated on X
-  // - segment is measured and cloned to create a seamless loop
-  const viewport = document.createElement('div');
-  viewport.className = 'dynamic-gallery-marquee';
+  // - segment is measured and cloned to create a loop
+  const marqueeContainer = document.createElement('div');
+  marqueeContainer.className = 'dynamic-gallery-marquee';
 
   const belt = document.createElement('div');
   belt.className = 'dynamic-gallery-row marquee-track';
@@ -299,17 +299,17 @@ export default async function decorate(block) {
   } else {
     belt.appendChild(segment);
   }
-  viewport.appendChild(belt);
-  block.replaceChildren(viewport);
+  marqueeContainer.appendChild(belt);
+  block.replaceChildren(marqueeContainer);
   addPlayPauseBtnToSection(block);
 
   const isSecondRow = isSecondSectionRow(block);
   const speed = isSecondRow
     ? FAST_SPEED_PX_PER_SECOND
     : BASE_SPEED_PX_PER_SECOND;
-  const marquee = createMarqueeController(viewport, belt, segment, {
+  const marquee = createMarqueeController(marqueeContainer, belt, segment, {
     speedPxPerSecond: speed,
   });
   if (!isAuthor) marquee.play();
-  setupListeners(marquee, viewport, block);
+  setupListeners(marquee, marqueeContainer, block);
 }
