@@ -1,8 +1,8 @@
 import { createTextElementFromObj } from '@unipol-ds/scripts/domHelpers.js';
 import { extractInstrumentationAttributes, restoreInstrumentation } from '@unipol-ds/scripts/utils.js';
-import { isAuthorMode } from '../../scripts/utils.js';
+import { createDownloadTile } from '../download-tile-molecule/download-tile-molecule.js';
 
-export function createAccordion(accordionLabel, accordionDescription) {
+export async function createAccordionDownload(accordionLabel, downloadTiles) {
   const wrapper = document.createElement('div');
   wrapper.className = 'accordion';
 
@@ -18,12 +18,11 @@ export function createAccordion(accordionLabel, accordionDescription) {
 
   const content = document.createElement('div');
   content.className = 'accordion-content';
-  content.append(...(accordionDescription?.value ?? []));
-  if (isAuthorMode(content)) {
-    wrapper.classList.add('open');
-  }
-  if (accordionDescription?.instrumentation) {
-    restoreInstrumentation(content, accordionDescription.instrumentation);
+  while (downloadTiles.length > 0) {
+    const downloadTile = downloadTiles.shift();
+    const downloadTileEl = createDownloadTile(downloadTile);
+    restoreInstrumentation(downloadTileEl, downloadTile.instrumentation);
+    content.appendChild(downloadTileEl);
   }
 
   wrapper.append(header, content);
@@ -35,27 +34,33 @@ export function createAccordion(accordionLabel, accordionDescription) {
       icon.classList.remove('un-icon-plus');
       icon.classList.add('un-icon-minus');
       content.style.maxHeight = `${content.scrollHeight + 20}px`;
-      content.style.paddingTop = '16px';
-      content.style.paddingBottom = '16px';
     } else {
       icon.classList.add('un-icon-plus');
       icon.classList.remove('un-icon-minus');
       content.style.maxHeight = '0';
-      content.style.paddingTop = '0';
-      content.style.paddingBottom = '0';
     }
   });
 
   return wrapper;
 }
 
-const extractValuesFromRows = (row) => {
+const extractValuesFromRows = (rows) => {
   const config = {};
 
-  config.value = row[0]?.textContent?.trim() || '';
-  config.instrumentation = extractInstrumentationAttributes(row[0]);
+  config.value = rows[0]?.textContent?.trim() || '';
+  config.instrumentation = extractInstrumentationAttributes(rows[0]);
 
   config.downloadTiles = [];
+
+  rows.slice(1).forEach((row) => {
+    const tileConfigs = row.firstElementChild.children;
+    const downloadTile = {};
+    downloadTile.icon = 'un-icon-file-text';
+    downloadTile.href = tileConfigs[0]?.querySelector('a')?.getAttribute('href') || tileConfigs[0]?.textContent?.trim() || '';
+    downloadTile.value = tileConfigs[1]?.textContent?.trim() || '';
+    downloadTile.instrumentation = extractInstrumentationAttributes(rows[0]);
+    config.downloadTiles.push(downloadTile);
+  });
 
   return config;
 };
@@ -66,12 +71,12 @@ export default async function decorateAccordionDownload(block) {
   const rows = Array.from(block.children);
   const values = extractValuesFromRows(rows);
   // eslint-disable-next-line max-len
-  const accordionElement = createAccordion(
+  const accordionElement = await createAccordionDownload(
     values,
     values.downloadTiles,
   );
 
-  // block.textContent = '';
+  block.textContent = '';
   block.appendChild(accordionElement);
 
   block.classList.add('accordion-block');
