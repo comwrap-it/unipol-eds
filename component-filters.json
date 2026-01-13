@@ -156,13 +156,20 @@
     "max": 8
   },
   {
+    "id": "dialog-download",
+    "components": [
+      "fragment"
+    ]
+  },
+  {
     "id": "download-tile-molecule",
     "components": []
   },
   {
     "id": "download-tile-organism",
     "components": [
-      "download-tile-molecule"
+      "download-tile-molecule",
+      "fragment"
     ]
   },
   {

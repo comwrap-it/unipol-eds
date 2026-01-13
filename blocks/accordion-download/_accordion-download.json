@@ -1,0 +1,61 @@
+{
+  "definitions": [
+    {
+      "title": "Accordion Download",
+      "id": "accordion-download",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/block/v1/block",
+            "template": {
+              "name": "Accordion Download",
+              "model": "accordion-download"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "accordion-download",
+      "fields": [
+        {
+          "component": "text",
+          "name": "accordionTopic",
+          "label": "Topic dei documenti",
+          "validation": {
+            "maxLength": 90,
+            "customErrorMsg": "Testo troppo lungo"
+          }
+        },
+        {
+          "component": "container",
+          "name": "accordionContent",
+          "label": "Contenuto dell'accordion download",
+          "collapsible": false,
+          "multi": true,
+          "fields": [
+            {
+              "component": "text",
+              "name": "document_label",
+              "label": "Testo descrittivo del documento",
+              "validation": {
+                "maxLength": 50,
+                "customErrorMsg": "Testo troppo lungo"
+              }
+            },
+            {
+              "component": "reference",
+              "name": "document_reference",
+              "label": "Riferimento al documento",
+              "required": true,
+              "multi": false
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "filters": []
+}

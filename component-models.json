@@ -493,6 +493,45 @@
     ]
   },
   {
+    "id": "accordion-download",
+    "fields": [
+      {
+        "component": "text",
+        "name": "accordionTopic",
+        "label": "Topic dei documenti",
+        "validation": {
+          "maxLength": 90,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      },
+      {
+        "component": "container",
+        "name": "accordionContent",
+        "label": "Contenuto dell'accordion download",
+        "collapsible": false,
+        "multi": true,
+        "fields": [
+          {
+            "component": "text",
+            "name": "document_label",
+            "label": "Testo descrittivo del documento",
+            "validation": {
+              "maxLength": 50,
+              "customErrorMsg": "Testo troppo lungo"
+            }
+          },
+          {
+            "component": "reference",
+            "name": "document_reference",
+            "label": "Riferimento al documento",
+            "required": true,
+            "multi": false
+          }
+        ]
+      }
+    ]
+  },
+  {
     "id": "accordion",
     "fields": [
       {
@@ -1424,6 +1463,21 @@
         "label": "Testo bottone",
         "description": "Default \"Mostra di più\"",
         "maxlength": 15
+      }
+    ]
+  },
+  {
+    "id": "dialog-download",
+    "fields": [
+      {
+        "component": "text",
+        "name": "dialogTitleLabel",
+        "label": "Titolo",
+        "required": true,
+        "validation": {
+          "maxLength": 80,
+          "customErrorMsg": "Testo troppo lungo (Max 80 caratteri)"
+        }
       }
     ]
   },
