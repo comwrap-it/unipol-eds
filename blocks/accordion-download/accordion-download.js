@@ -58,7 +58,7 @@ const extractValuesFromRows = (rows) => {
     downloadTile.icon = 'un-icon-file-text';
     downloadTile.href = tileConfigs[0]?.querySelector('a')?.getAttribute('href') || tileConfigs[0]?.textContent?.trim() || '';
     downloadTile.value = tileConfigs[1]?.textContent?.trim() || '';
-    downloadTile.instrumentation = extractInstrumentationAttributes(rows[0]);
+    downloadTile.instrumentation = extractInstrumentationAttributes(row);
     config.downloadTiles.push(downloadTile);
   });
 
