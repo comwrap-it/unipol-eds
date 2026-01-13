@@ -16,3 +16,7 @@
     transition-timing-function: linear;
     align-items: center;
 }
+
+.dynamic-gallery-play-pause-btn {
+    float: right;
+}

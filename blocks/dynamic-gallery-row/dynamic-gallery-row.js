@@ -1,4 +1,5 @@
 import loadSwiper from '../../scripts/delayed.js';
+import { createIconButton } from '../../scripts/libs/ds/components/atoms/buttons/icon-button/icon-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { createDynamicGalleryCardFromRows } from '../dynamic-gallery-card/dynamic-gallery-card.js';
 
@@ -67,6 +68,51 @@ const waitForMeasurableWidth = (el, cb, maxFrames = 180) => {
 };
 
 /**
+ * Gets the rendered translateX value of the swiper wrapper element.
+ * @param {Swiper} swiper - The Swiper instance
+ * @returns {number} The translateX value
+ */
+const getRenderedTranslateX = (swiper) => {
+  const el = swiper?.wrapperEl;
+  if (!el) return swiper.getTranslate();
+
+  const t = getComputedStyle(el).transform;
+  if (!t || t === 'none') return swiper.getTranslate();
+
+  // matrix(a,b,c,d,tx,ty) or matrix3d(..., tx, ty, tz)
+  const m3d = t.match(/^matrix3d\((.+)\)$/);
+  if (m3d) {
+    const parts = m3d[1].split(',').map((v) => parseFloat(v.trim()));
+    return Number.isFinite(parts[12]) ? parts[12] : swiper.getTranslate();
+  }
+  const m2d = t.match(/^matrix\((.+)\)$/);
+  if (m2d) {
+    const parts = m2d[1].split(',').map((v) => parseFloat(v.trim()));
+    return Number.isFinite(parts[4]) ? parts[4] : swiper.getTranslate();
+  }
+  return swiper.getTranslate();
+};
+
+/**
+ * Freezes the swiper's current position immediately.
+ * @param {Swiper} swiper - The Swiper instance
+ */
+const freezeSwiperNow = (swiper) => {
+  if (!swiper || swiper.destroyed) return;
+
+  const x = getRenderedTranslateX(swiper);
+
+  // cancel current transition immediately
+  swiper.setTransition?.(0);
+  if (swiper.wrapperEl) swiper.wrapperEl.style.transitionDuration = '0ms';
+
+  swiper.setTranslate(x);
+  swiper.updateActiveIndex();
+  swiper.updateSlidesClasses();
+  swiper.animating = false;
+};
+
+/**
  * Starts Swiper autoplay safely after ensuring the carousel has measurable width.
  * @param {Swiper} swiper - The Swiper instance
  * @param {HTMLElement} carousel - The carousel element
@@ -76,8 +122,7 @@ const startAutoplaySafely = (swiper, carousel) => {
   waitForMeasurableWidth(
     carousel,
     () => {
-      if (swiper.destroyed) return;
-      swiper.update();
+      freezeSwiperNow(swiper);
       swiper.autoplay?.stop();
       swiper.autoplay?.start();
     },
@@ -86,46 +131,43 @@ const startAutoplaySafely = (swiper, carousel) => {
 };
 
 /**
- * Sets Swiper speed and restarts autoplay, ensuring the new speed takes effect immediately.
+ * Stops Swiper autoplay immediately and freezes its position.
+ * @param {Swiper} swiper - The Swiper instance
+ */
+const stopSwiperImmediately = (swiper) => {
+  if (!swiper || swiper.destroyed) return;
+
+  // freeze at the exact rendered position and cancel transition
+  freezeSwiperNow(swiper);
+
+  // then stop future autoplay ticks
+  swiper.autoplay?.stop();
+};
+
+/**
+ * Sets the swiper speed and restarts autoplay while preserving position.
  * @param {Swiper} swiper - The Swiper instance
  * @param {number} speed - The new speed in milliseconds
  */
 const setSwiperSpeedAndRestart = (swiper, speed) => {
   if (!swiper || swiper.destroyed) return;
+
   swiper.params.speed = speed;
-  // Some Swiper internals read from originalParams after init.
   swiper.originalParams.speed = speed;
 
-  // Changing speed mid-transition won’t affect the current transition.
-  // If we are currently animating, cancel the transition and restart autoplay
-  // so the new speed takes effect immediately.
   if (!swiper.autoplay?.running) return;
+
   swiper.autoplay.stop();
-
-  if (swiper.animating) {
-    swiper.setTranslate(swiper.getTranslate());
-    swiper.updateActiveIndex();
-    swiper.updateSlidesClasses();
-
-    [
-      'onSlideToWrapperTransitionEnd',
-      'onTranslateToWrapperTransitionEnd',
-    ].forEach((key) => {
-      swiper.wrapperEl.removeEventListener('transitionend', swiper[key]);
-      swiper[key] = null;
-    });
-    swiper.animating = false;
-  }
+  freezeSwiperNow(swiper);
 
   requestAnimationFrame(() => {
     if (swiper.destroyed) return;
-    swiper.update();
     swiper.autoplay.start();
   });
 };
 
-const SWIPER_SPEED = 3000;
-const FASTER_SWIPER_SPEED = 2000;
+const SWIPER_SPEED = 4000;
+const FASTER_SWIPER_SPEED = 3000;
 const SWIPER_SLOW_SPEED = SWIPER_SPEED * 3;
 const FASTER_SWIPER_SLOW_SPEED = FASTER_SWIPER_SPEED * 3;
 
@@ -144,7 +186,7 @@ const isSecondSectionRow = (block) => {
 };
 
 /**
- *
+ * Initializes a Swiper instance for the given carousel element.
  * @param {} Swiper the swiper instance
  * @param {HTMLElement} carousel the carousel element
  * @param {HTMLElement} block the block element
@@ -192,7 +234,7 @@ const initSwiper = (Swiper, carousel, block = null) => {
 };
 
 /**
- *
+ * Sets up event listeners for mouse enter/leave and custom play/pause events.
  * @param {} swiperInstance the swiper instance
  * @param {HTMLElement} carousel the carousel element
  * @param {HTMLElement} block the block element
@@ -218,6 +260,53 @@ const setupListeners = (swiperInstance, carousel, block = null) => {
       isSecondRow ? FASTER_SWIPER_SPEED : SWIPER_SPEED,
     );
   });
+
+  const section = block?.closest('.section') || carousel.closest('.section');
+
+  section.addEventListener('pauseDynamicGallery', () => {
+    stopSwiperImmediately(swiperInstance);
+  });
+
+  section.addEventListener('playDynamicGallery', () => {
+    startAutoplaySafely(swiperInstance, carousel);
+  });
+};
+
+/**
+ * Adds a play/pause button to the section containing the block.
+ * @param {HTMLElement} block the block element
+ */
+const addPlayPauseBtnToSection = (block) => {
+  if (!block) return;
+  const section = block.closest('.section');
+  if (!section) return;
+  const alreadyExistentButton = section.querySelector(
+    '.dynamic-gallery-play-pause-btn',
+  );
+  if (alreadyExistentButton) return;
+  const button = createIconButton(
+    'un-icon-pause-circle',
+    'secondary',
+    'extra-large',
+    null,
+    false,
+  );
+  button.classList.add('dynamic-gallery-play-pause-btn');
+  const iconSpan = button.querySelector('span');
+  button.addEventListener('click', () => {
+    if (iconSpan.classList.contains('un-icon-pause-circle')) {
+      iconSpan.classList.remove('un-icon-pause-circle');
+      iconSpan.classList.add('un-icon-play-circle');
+      const event = new Event('pauseDynamicGallery');
+      section.dispatchEvent(event);
+    } else if (iconSpan.classList.contains('un-icon-play-circle')) {
+      iconSpan.classList.remove('un-icon-play-circle');
+      iconSpan.classList.add('un-icon-pause-circle');
+      const event = new Event('playDynamicGallery');
+      section.dispatchEvent(event);
+    }
+  });
+  section.appendChild(button);
 };
 
 export default async function decorate(block) {
@@ -248,6 +337,7 @@ export default async function decorate(block) {
 
   carousel.appendChild(galleryRow);
   block.replaceChildren(carousel);
+  addPlayPauseBtnToSection(block);
 
   const Swiper = await loadSwiper();
   const swiperInstance = initSwiper(Swiper, carousel, block);
