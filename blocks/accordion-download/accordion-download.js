@@ -1,20 +1,7 @@
-import {
-  getValuesFromBlock,
-  restoreInstrumentation,
-  isAuthorMode,
-} from '../../scripts/utils.js';
+import { createTextElementFromObj } from '@unipol-ds/scripts/domHelpers.js';
+import { extractInstrumentationAttributes, restoreInstrumentation } from '@unipol-ds/scripts/utils.js';
+import { isAuthorMode } from '../../scripts/utils.js';
 
-/**
- * Creates Accordion
- *
- * @param {Object} accordionLabel
- * @param {string} accordionLabel.value - The label text for the accordion
- * @param {Object} accordionLabel.instrumentation - The instrumentation object for the label
- * @param {Object} accordionDescription
- * @param {string} accordionDescription.value - The description content for the accordion
- * @param {Object} accordionDescription.instrumentation - The instrumentation for description
- * @returns {HTMLElement} The accordion wrapper element
- */
 export function createAccordion(accordionLabel, accordionDescription) {
   const wrapper = document.createElement('div');
   wrapper.className = 'accordion';
@@ -22,12 +9,7 @@ export function createAccordion(accordionLabel, accordionDescription) {
   const header = document.createElement('div');
   header.className = 'accordion-header';
 
-  const labelEl = document.createElement('span');
-  labelEl.className = 'accordion-label';
-  labelEl.textContent = accordionLabel?.value || '';
-  if (accordionLabel?.instrumentation) {
-    restoreInstrumentation(labelEl, accordionLabel.instrumentation);
-  }
+  const labelEl = createTextElementFromObj(accordionLabel, 'accordion-label', 'span');
 
   const icon = document.createElement('span');
   icon.className = 'accordion-icon un-icon-plus';
@@ -67,19 +49,34 @@ export function createAccordion(accordionLabel, accordionDescription) {
   return wrapper;
 }
 
-/**
- * Decorator for Accordion
- *
- * @param {HTMLElement} block
- */
-export default async function decorateAccordion(block) {
+const extractValuesFromRows = (row) => {
+  const config = {};
+
+  config.value = row[0]?.textContent?.trim() || '';
+  config.instrumentation = extractInstrumentationAttributes(row[0]);
+
+  config.downloadTiles = [];
+
+  row[1]?.forEach((item) => {
+    const downloadTile = {};
+    downloadTile.icon = 'un-icon-file-text';
+    downloadTile.value = item[0]?.textContent?.trim() || '';
+    downloadTile.href = item[1]?.querySelector('a')?.getAttribute('href') || row[1]?.textContent?.trim() || '';
+    config.downloadTiles.push(downloadTile);
+  });
+
+  return config;
+};
+
+export default async function decorateAccordionDownload(block) {
   if (!block) return;
-  const properties = ['accordionLabel', 'accordionDescriptionRichtext'];
-  const values = getValuesFromBlock(block, properties);
+
+  const rows = Array.from(block.children);
+  const values = extractValuesFromRows(rows);
   // eslint-disable-next-line max-len
   const accordionElement = createAccordion(
-    values.accordionLabel,
-    values.accordionDescriptionRichtext,
+    values,
+    values.downloadTiles,
   );
 
   block.textContent = '';
