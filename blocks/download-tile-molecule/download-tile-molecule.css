@@ -21,7 +21,7 @@
         font-family: inherit;
         user-select: none;
 
-        & span {
+        & .icon {
             width: var(--Icon-300-24, 1.5rem);
             height: var(--Icon-300-24, 1.5rem);
             flex-shrink: 0;

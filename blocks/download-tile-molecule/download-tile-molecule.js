@@ -31,7 +31,7 @@ const createTextWrapper = (downloadTile) => {
   return textWrapper;
 };
 
-const createDownloadTile = (downloadTile) => {
+export async function createDownloadTile(downloadTile) {
   const downloadTileEl = document.createElement('div');
   downloadTileEl.className = 'download-tile-molecule';
 
@@ -50,14 +50,14 @@ const createDownloadTile = (downloadTile) => {
   downloadTileEl.appendChild(downloadIcon);
 
   return downloadTileEl;
-};
+}
 
 export default async function decorate(block) {
   if (!block) return;
 
   const rows = Array.from(block.children);
   const downloadTile = extractValuesFromRows(rows[0].children);
-  const downloadTileEl = createDownloadTile(downloadTile);
+  const downloadTileEl = await createDownloadTile(downloadTile);
 
   if (block.dataset.blockName) {
     downloadTileEl.dataset.blockName = block.dataset.blockName;
