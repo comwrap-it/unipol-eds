@@ -61,6 +61,7 @@
           "component": "text",
           "name": "document_label",
           "label": "Testo descrittivo del documento",
+          "required": true,
           "validation": {
             "maxLength": 50,
             "customErrorMsg": "Testo troppo lungo"
