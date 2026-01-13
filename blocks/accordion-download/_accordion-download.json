@@ -37,8 +37,8 @@
           "multi": true,
           "fields": [
             {
-              "component": "text",
-              "name": "documentLabel"
+              "component": "reference",
+              "name": "documentReference"
             }
           ]
         }
