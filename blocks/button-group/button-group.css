@@ -27,3 +27,26 @@
 .button-group.horizontal {
   flex-direction: row;
 }
+
+.button-group-accent a.btn:first-of-type {
+    background-color: var(--Button-Accent-Default-Background);
+    color: var(--Button-Accent-Default-Text);
+    border-color: var(--Button-Accent-Default-Border);
+
+    &:focus,
+    &:focus-visible {
+        outline: var(--Stroke-200-2) solid var(--Button-Accent-Focused-Border);
+    }
+
+    &:hover:not(:disabled) {
+        background-color: var(--Button-Accent-Hover-Background);
+        color: var(--Button-Accent-Hover-Text);
+        border-color: var(--Button-Accent-Hover-Border);
+    }
+
+    &:active:not(:disabled) {
+        background-color: var(--Button-Accent-Pressed-Background);
+        color: var(--Button-Accent-Pressed-Text);
+        border-color: var(--Button-Accent-Pressed-Border);
+    }
+}

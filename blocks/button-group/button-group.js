@@ -42,8 +42,20 @@ export function createButtonGroup(values) {
   container.className = 'button-group';
 
   container.classList.remove('button-group-primary', 'button-group-accent', 'button-group-vertical', 'button-group-horizontal');
-  const [variantButtonGroup, orientation] = values.buttonGroupVariant.split(' ');
-  container.classList.add(`button-group-${variantButtonGroup}`, `button-group-${orientation}`);
+  const rawVariant = values.buttonGroupVariant;
+
+  const normalizedVariant = rawVariant
+    ? rawVariant.toLowerCase().replace(/\s+/g, ' ').trim()
+    : 'primary horizontal';
+
+  const [variantButtonGroup, orientation] = normalizedVariant.split(' ');
+
+  if (variantButtonGroup) {
+    container.classList.add(`button-group-${variantButtonGroup}`);
+  }
+  if (orientation) {
+    container.classList.add(`button-group-${orientation}`);
+  }
 
   if (values.instrumentation) {
     Object.entries(values.instrumentation).forEach(([key, val]) => {
@@ -55,7 +67,7 @@ export function createButtonGroup(values) {
     label, variant, href, openInNewTab, size, leftIcon, rightIcon,
   }) {
     const button = document.createElement('a');
-    button.className = `btn ${variant}`;
+    button.className = `btn btn-${variant}`;
     button.href = href;
     if (openInNewTab) button.target = '_blank';
     if (!openInNewTab) {
