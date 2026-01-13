@@ -41,9 +41,9 @@ export function extractValuesFromRows(rows) {
     button1Rows: rows.slice(2, 10),
     button2Rows: rows.slice(10, 17),
     categoryStripOffsets: [
-      [20, 21, 22, 23, 24, 25, 26],
-      [27, 28, 29, 30, 31, 32, 33],
-      [34, 35, 36, 37, 38, 39, 40],
+      [20, 21, 22, 23, 24, 25],
+      [26, 27, 28, 29, 30, 31],
+      [32, 33, 34, 35, 36, 37],
     ],
     instrumentation: extractInstrumentationAttributes(rows[0]),
   };
@@ -130,9 +130,9 @@ export function createCardContent({
 
   // Category strips
   const categoryStripOffsets = [
-    [20, 21, 22, 23, 24, 25, 26],
-    [27, 28, 29, 30, 31, 32, 33],
-    [34, 35, 36, 37, 38, 39, 40],
+    [20, 21, 22, 23, 24, 25],
+    [26, 27, 28, 29, 30, 31],
+    [32, 33, 34, 35, 36, 37],
   ];
   const categoryStripWrapper = document.createElement('div');
   categoryStripWrapper.className = 'bundle-card-category-strip';
