@@ -493,6 +493,20 @@
     ]
   },
   {
+    "id": "accordion-download",
+    "fields": [
+      {
+        "component": "text",
+        "name": "accordionTopic",
+        "label": "Topic dei documenti",
+        "validation": {
+          "maxLength": 90,
+          "customErrorMsg": "Testo troppo lungo"
+        }
+      }
+    ]
+  },
+  {
     "id": "download-tile-accordion",
     "fields": [
       {
