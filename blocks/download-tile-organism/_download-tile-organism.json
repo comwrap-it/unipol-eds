@@ -35,7 +35,8 @@
     {
       "id": "download-tile-organism",
       "components": [
-        "download-tile-molecule"
+        "download-tile-molecule",
+        "fragment"
       ]
     }
   ]
