@@ -71,7 +71,7 @@ export default async function decorateAccordionDownload(block) {
     values.downloadTiles,
   );
 
-  block.textContent = '';
+  // block.textContent = '';
   block.appendChild(accordionElement);
 
   block.classList.add('accordion-block');
