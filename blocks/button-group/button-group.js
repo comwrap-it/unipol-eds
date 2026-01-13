@@ -1,112 +1,135 @@
-import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
-import { BUTTON_VARIANTS, BUTTON_ICON_SIZES } from '../../constants/index.js';
 import { extractInstrumentationAttributes } from '../../scripts/utils.js';
 
-/** Extract button properties from rows
- *
- * @param {Array} rows - Array of rows from block children
- * @returns {Object} An object containing button properties
- *
- * Row mapping (based on _standard-button.json field order):
- * rows[0]: standardButtonLabel (text)
- * rows[1]: standardButtonVariant (select)
- * rows[2]: standardButtonHref (aem-content)
- * rows[3]: standardButtonOpenInNewTab (boolean)
- * rows[4]: standardButtonSize (select)
- * rows[5]: standardButtonLeftIcon (select)
- * rows[6]: standardButtonRightIcon (select)
- */
-const extractValuesFromRows = (rows) => {
-  const text = rows[0]?.textContent?.trim() || '';
-  const variant = rows[1]?.textContent?.trim().toLowerCase() || BUTTON_VARIANTS.PRIMARY;
-  const href = rows[2]?.querySelector('a')?.href || rows[2]?.textContent?.trim() || '';
-  const openInNewTab = rows[3]?.textContent?.trim() === 'true';
-  const iconSize = rows[4]?.textContent?.trim().toLowerCase() || BUTTON_ICON_SIZES.MEDIUM;
-  const leftIcon = rows[5]?.textContent?.trim() || '';
-  const rightIcon = rows[6]?.textContent?.trim() || '';
-  const instrumentation = extractInstrumentationAttributes(rows[0]);
+let isStylesLoaded = false;
+async function ensureStylesLoaded() {
+  if (isStylesLoaded) return;
+  const { loadCSS } = await import('../../scripts/aem.js');
+  await Promise.all([
+    loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`),
+  ]);
+  isStylesLoaded = true;
+}
+
+const getText = (row) => row?.textContent?.trim() || '';
+const getBoolean = (row) => getText(row).toLowerCase() === 'true';
+
+export function extractButtonValues(rows) {
   return {
-    text,
-    variant,
-    iconSize,
-    href,
-    openInNewTab,
-    leftIcon,
-    rightIcon,
-    instrumentation,
+    buttonGroupVariant: getText(rows[0]),
+
+    firstButtonLabel: getText(rows[1]),
+    firstButtonVariant: getText(rows[2]) || 'primary',
+    firstButtonHref: getText(rows[3]) || '#',
+    firstButtonOpenInNewTab: getBoolean(rows[4]),
+    firstButtonSize: getText(rows[5]) || 'medium',
+    firstButtonLeftIcon: getText(rows[6]),
+    firstButtonRightIcon: getText(rows[7]),
+
+    secondButtonLabel: getText(rows[8]),
+    secondButtonVariant: getText(rows[9]) || 'primary',
+    secondButtonHref: getText(rows[10]) || '#',
+    secondButtonOpenInNewTab: getBoolean(rows[11]),
+    secondButtonSize: getText(rows[12]) || 'medium',
+    secondButtonLeftIcon: getText(rows[13]),
+    secondButtonRightIcon: getText(rows[14]),
+
+    instrumentation: extractInstrumentationAttributes(rows[0]),
   };
-};
+}
 
-/**
- * Decorating button-group component
- * @param {HTMLElement} block
- */
-export default function decorate(block) {
-  if (!block) return;
+export function createButtonGroup(values) {
+  const container = document.createElement('div');
+  container.className = 'button-group';
 
-  const editorialVariant = block.children[0]?.textContent?.trim() || 'primary horizontal';
-  let [editorialVariantValue, direction] = editorialVariant.split(' ');
+  container.classList.remove('button-group-primary', 'button-group-accent', 'button-group-vertical', 'button-group-horizontal');
+  const rawVariant = values.buttonGroupVariant;
 
-  if (!editorialVariantValue) editorialVariantValue = 'primary';
-  if (!direction) direction = 'horizontal';
+  const normalizedVariant = rawVariant
+    ? rawVariant.toLowerCase().replace(/\s+/g, ' ').trim()
+    : 'primary horizontal';
 
-  const childrenArray = Array.from(block.children);
-  const firstContainer = childrenArray.slice(1, 8);
-  const secondContainer = childrenArray.slice(8);
+  const [variantButtonGroup, orientation] = normalizedVariant.split(' ');
 
-  // Creating buttons
-  const createButtonFromContainer = (container, forcedVariant) => {
-    let values;
-    if (container.length > 0) {
-      values = extractValuesFromRows(container);
-    } else {
-      // Default buttons
-      values = {
-        text: 'Default',
-        href: '',
-        openInNewTab: false,
-        variant: forcedVariant,
-        iconSize: BUTTON_ICON_SIZES.MEDIUM,
-        leftIcon: '',
-        rightIcon: '',
-        instrumentation: {},
-      };
+  if (variantButtonGroup) {
+    container.classList.add(`button-group-${variantButtonGroup}`);
+  }
+  if (orientation) {
+    container.classList.add(`button-group-${orientation}`);
+  }
+
+  if (values.instrumentation) {
+    Object.entries(values.instrumentation).forEach(([key, val]) => {
+      container.setAttribute(key, val);
+    });
+  }
+
+  function createButton({
+    label, variant, href, openInNewTab, size, leftIcon, rightIcon,
+  }) {
+    const button = document.createElement('a');
+    button.className = `btn btn-${variant}`;
+    button.href = href;
+    if (openInNewTab) button.target = '_blank';
+    if (!openInNewTab) {
+      button.role = 'button';
+      button.setAttribute('tabindex', '0');
+    }
+    if (leftIcon) {
+      const iLeft = document.createElement('i');
+      iLeft.className = `${leftIcon} icon-${size}`;
+      button.appendChild(iLeft);
     }
 
-    const variant = forcedVariant || values.variant;
+    const textNode = document.createTextNode(label);
+    button.appendChild(textNode);
 
-    const button = createButton(
-      values.text,
-      values.href,
-      values.openInNewTab,
-      variant,
-      values.iconSize,
-      values.leftIcon,
-      values.rightIcon,
-      values.instrumentation,
-    );
-
-    if (container?.[0]?.hasAttribute('data-aue-resource')) {
-      button.setAttribute('data-aue-resource', container.getAttribute('data-aue-resource'));
-      const aueBehavior = container.getAttribute('data-aue-behavior');
-      if (aueBehavior) button.setAttribute('data-aue-behavior', aueBehavior);
+    if (rightIcon) {
+      const iRight = document.createElement('i');
+      iRight.className = `${rightIcon} icon-${size}`;
+      button.appendChild(iRight);
     }
 
     return button;
-  };
+  }
 
-  const buttons = [
-    createButtonFromContainer(firstContainer, editorialVariantValue),
-    createButtonFromContainer(
-      secondContainer,
-      'secondary',
-    ),
-  ];
+  const firstButton = createButton({
+    label: values.firstButtonLabel,
+    variant: values.firstButtonVariant,
+    href: values.firstButtonHref,
+    openInNewTab: values.firstButtonOpenInNewTab,
+    size: values.firstButtonSize,
+    leftIcon: values.firstButtonLeftIcon,
+    rightIcon: values.firstButtonRightIcon,
+  });
+
+  const secondButton = createButton({
+    label: values.secondButtonLabel,
+    variant: values.secondButtonVariant,
+    href: values.secondButtonHref,
+    openInNewTab: values.secondButtonOpenInNewTab,
+    size: values.secondButtonSize,
+    leftIcon: values.secondButtonLeftIcon,
+    rightIcon: values.secondButtonRightIcon,
+  });
+
+  container.appendChild(firstButton);
+  container.appendChild(secondButton);
+
+  return container;
+}
+
+export default async function decorate(block) {
+  if (!block) return;
+  await ensureStylesLoaded();
+
+  let rows = Array.from(block.children);
+  const wrapper = block.querySelector('.default-content-wrapper');
+  if (wrapper) rows = Array.from(wrapper.children);
+
+  const values = extractButtonValues(rows);
+  const buttonGroupEl = createButtonGroup(values);
 
   block.innerHTML = '';
-  block.classList.add('button-group');
-  block.classList.add(`button-group-${direction}`);
-  block.style.display = 'flex';
-
-  buttons.forEach((btn) => block.appendChild(btn));
+  block.appendChild(buttonGroupEl);
+  block.classList.add('button-group-block');
 }

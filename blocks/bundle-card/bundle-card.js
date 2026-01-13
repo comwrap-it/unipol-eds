@@ -1,10 +1,12 @@
 /**
  * Bundle Card
  *
- */
-
-import { createButtonFromRows } from '../atoms/buttons/standard-button/standard-button.js';
+*/
 import { createCategoryStripFromRows } from '../category-strip/category-strip.js';
+import {
+  createButtonGroup,
+  extractButtonValues,
+} from '../button-group/button-group.js';
 import { createOptimizedPicture } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { extractInstrumentationAttributes } from '../../scripts/utils.js';
@@ -17,6 +19,7 @@ async function ensureStylesLoaded() {
     loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`),
     loadCSS(`${window.hlx.codeBasePath}/blocks/atoms/tag/tag.css`),
     loadCSS(`${window.hlx.codeBasePath}/blocks/category-strip/category-strip.css`),
+    loadCSS(`${window.hlx.codeBasePath}/blocks/button-group/button-group.css`),
   ]);
   isStylesLoaded = true;
 }
@@ -31,15 +34,16 @@ export function extractValuesFromRows(rows) {
   return {
     titleRow: rows[0] || document.createElement('div'),
     subtitleRow: rows[1] || document.createElement('div'),
-    noteRow: rows[16] || document.createElement('div'),
-    imageRow: rows[17] || document.createElement('div'),
-    imageAlt: rows[18]?.textContent?.trim() || '',
-    button1Rows: rows.slice(2, 9),
-    button2Rows: rows.slice(9, 16),
+    noteRow: rows[17] || document.createElement('div'),
+    imageRow: rows[18] || document.createElement('div'),
+    imageAlt: rows[19]?.textContent?.trim() || '',
+    buttonGroupVariant: rows[2]?.value?.trim() || '',
+    button1Rows: rows.slice(3, 10),
+    button2Rows: rows.slice(10, 17),
     categoryStripOffsets: [
-      [19, 20, 21, 22, 23, 24],
-      [25, 26, 27, 28, 29, 30],
-      [31, 32, 33, 34, 35, 36],
+      [20, 21, 22, 23, 24, 25],
+      [26, 27, 28, 29, 30, 31],
+      [32, 33, 34, 35, 36, 37],
     ],
     instrumentation: extractInstrumentationAttributes(rows[0]),
   };
@@ -126,9 +130,9 @@ export function createCardContent({
 
   // Category strips
   const categoryStripOffsets = [
-    [19, 20, 21, 22, 23, 24],
-    [25, 26, 27, 28, 29, 30],
-    [31, 32, 33, 34, 35, 36],
+    [20, 21, 22, 23, 24, 25],
+    [26, 27, 28, 29, 30, 31],
+    [32, 33, 34, 35, 36, 37],
   ];
   const categoryStripWrapper = document.createElement('div');
   categoryStripWrapper.className = 'bundle-card-category-strip';
@@ -152,16 +156,18 @@ export function createCardContent({
     cardContent.appendChild(noteEl);
   }
 
-  // Buttons
-  const button1 = createButtonFromRows(button1Rows);
-  const button2 = createButtonFromRows(button2Rows);
-
-  if ((button1 && button1.children.length) || (button2 && button2.children.length)) {
-    const buttonsContainer = document.createElement('div');
-    buttonsContainer.className = 'button-subdescription';
-    if (button1 && button1.children.length) buttonsContainer.appendChild(button1);
-    if (button2 && button2.children.length) buttonsContainer.appendChild(button2);
-    cardContent.appendChild(buttonsContainer);
+  // --- BUTTON GROUP ---
+  const buttonRows = [
+    rows[2],
+    ...button1Rows,
+    ...button2Rows,
+  ];
+  const hasButtons = buttonRows.some((row) => row?.textContent?.trim()
+    || row?.value || row?.checked);
+  if (hasButtons) {
+    const buttonValues = extractButtonValues(buttonRows);
+    const buttonGroupEl = createButtonGroup(buttonValues);
+    if (buttonGroupEl) cardContent.appendChild(buttonGroupEl);
   }
 
   return cardContent;

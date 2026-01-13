@@ -1,0 +1,56 @@
+{
+  "definitions": [
+    {
+      "title": "Info Pillars Widget",
+      "id": "info-pillars-widget",
+      "plugins": {
+        "xwalk": {
+          "page": {
+            "resourceType": "core/franklin/components/section/v1/section",
+            "template": {
+              "filter": "info-pillars-widget",
+              "name": "Info Pillars Widget",
+              "model": "info-pillars-widget",
+              "style": "info-pillars-widget",
+              "text-block": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Text Block",
+                "model": "text-block"
+              },
+              "info-pillars": {
+                "sling:resourceType": "core/franklin/components/block/v1/block",
+                "name": "Info Pillars",
+                "filter": "info-pillars",
+                "model": "info-pillars"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "models": [
+    {
+      "id": "info-pillars-widget",
+      "fields": [
+        {
+          "component": "text",
+          "name": "info-pillars-widget-name",
+          "label": "Nome sezione Info Pillars Widget",
+          "validation": {
+            "maxLength": 200,
+            "customErrorMsg": "Testo troppo lungo"
+          }
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": "info-pillars-widget",
+      "components": [
+        "info-pillars"
+      ]
+    }
+  ]
+}
