@@ -15,10 +15,6 @@
 .dynamic-gallery-marquee {
     overflow: hidden;
     width: 100%;
-
-    /* px/sec (read by JS). Increase to go faster. */
-    --dynamic-gallery-marquee-speed: 55;
-    --dynamic-gallery-marquee-speed-fast: 70;
 }
 
 .dynamic-gallery-row.marquee-track {

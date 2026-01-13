@@ -64,17 +64,6 @@ const BASE_SPEED_PX_PER_SECOND = 55;
 const FAST_SPEED_PX_PER_SECOND = 70;
 const HOVER_SLOWDOWN_MULTIPLIER = 3;
 
-/**
- * Creates a self-contained, rAF-driven marquee.
- * The track must contain two identical groups placed side-by-side.
- */
-const getCssNumberVar = (el, name, fallback) => {
-  if (!el) return fallback;
-  const raw = getComputedStyle(el).getPropertyValue(name)?.trim();
-  const n = Number.parseFloat(raw);
-  return Number.isFinite(n) ? n : fallback;
-};
-
 const initMarquee = (carouselEl, trackEl, groupEl, { speedPxPerSecond }) => {
   let rafId = null;
   let lastTime = 0;
@@ -198,6 +187,25 @@ const setupListeners = (marquee, carousel, block = null) => {
 };
 
 /**
+ * Handles the play/pause button click event.
+ * @param {HTMLElement} iconEl the icon element inside the button
+ * @param {HTMLElement} section the section containing the block
+ */
+const handlePlayPauseClick = (iconEl, section) => {
+  if (iconEl.classList.contains('un-icon-pause-circle')) {
+    iconEl.classList.remove('un-icon-pause-circle');
+    iconEl.classList.add('un-icon-play-circle');
+    const event = new Event('pauseDynamicGallery');
+    section.dispatchEvent(event);
+  } else if (iconEl.classList.contains('un-icon-play-circle')) {
+    iconEl.classList.remove('un-icon-play-circle');
+    iconEl.classList.add('un-icon-pause-circle');
+    const event = new Event('playDynamicGallery');
+    section.dispatchEvent(event);
+  }
+};
+
+/**
  * Adds a play/pause button to the section containing the block.
  * @param {HTMLElement} block the block element
  */
@@ -218,19 +226,7 @@ const addPlayPauseBtnToSection = (block) => {
   );
   button.classList.add('dynamic-gallery-play-pause-btn');
   const iconSpan = button.querySelector('span');
-  button.addEventListener('click', () => {
-    if (iconSpan.classList.contains('un-icon-pause-circle')) {
-      iconSpan.classList.remove('un-icon-pause-circle');
-      iconSpan.classList.add('un-icon-play-circle');
-      const event = new Event('pauseDynamicGallery');
-      section.dispatchEvent(event);
-    } else if (iconSpan.classList.contains('un-icon-play-circle')) {
-      iconSpan.classList.remove('un-icon-play-circle');
-      iconSpan.classList.add('un-icon-pause-circle');
-      const event = new Event('playDynamicGallery');
-      section.dispatchEvent(event);
-    }
-  });
+  button.addEventListener('click', () => handlePlayPauseClick(iconSpan, section));
   section.appendChild(button);
 };
 
@@ -261,32 +257,28 @@ export default async function decorate(block) {
 
   await Promise.all(promises);
 
-  // Duplicate content for seamless wrap
-  ensureEnoughSlides(group, 10);
+  if (!isAuthor) {
+    // Duplicate content for seamless wrap
+    ensureEnoughSlides(group, 10);
 
-  // Two identical groups are required for a seamless infinite marquee.
-  const groupClone = group.cloneNode(true);
-  stripInstrumentationAndIds(groupClone);
+    // Two identical groups are required for a seamless infinite marquee.
+    const groupClone = group.cloneNode(true);
+    stripInstrumentationAndIds(groupClone);
 
-  track.append(group, groupClone);
+    track.append(group, groupClone);
+  } else {
+    track.appendChild(group);
+  }
   carousel.appendChild(track);
   block.replaceChildren(carousel);
   addPlayPauseBtnToSection(block);
 
   const isSecondRow = isSecondSectionRow(block);
-  const speedVarName = isSecondRow
-    ? '--dynamic-gallery-marquee-speed-fast'
-    : '--dynamic-gallery-marquee-speed';
-  const fallbackSpeed = isSecondRow
+  const speed = isSecondRow
     ? FAST_SPEED_PX_PER_SECOND
     : BASE_SPEED_PX_PER_SECOND;
-  const speedPxPerSecond = getCssNumberVar(
-    carousel,
-    speedVarName,
-    fallbackSpeed,
-  );
   const marquee = initMarquee(carousel, track, group, {
-    speedPxPerSecond,
+    speedPxPerSecond: speed,
   });
   if (!isAuthor) marquee.play();
   setupListeners(marquee, carousel, block);
