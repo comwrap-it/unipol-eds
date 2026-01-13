@@ -19,6 +19,21 @@ async function ensureStylesLoaded() {
   isStylesLoaded = true;
 }
 
+const stripInstrumentationAndIds = (root) => {
+  if (!(root instanceof Element)) return;
+  [root, ...root.querySelectorAll('*')].forEach((el) => {
+    Array.from(el.attributes).forEach((attr) => {
+      if (
+        attr.name.startsWith('data-aue-')
+        || attr.name.startsWith('data-richtext-')
+      ) {
+        el.removeAttribute(attr.name);
+      }
+    });
+    if (el.id) el.removeAttribute('id');
+  });
+};
+
 /**
  * Duplicates slides to ensure enough for loop mode
  * @param {HTMLElement} wrapper - The swiper-wrapper element
@@ -38,10 +53,8 @@ const ensureEnoughSlides = (wrapper, minSlides = 10) => {
   for (let i = 1; i < duplicationsNeeded; i += 1) {
     originalSlides.forEach((slide) => {
       const clone = slide.cloneNode(true);
-      // Remove any instrumentation from clones to avoid duplicate IDs
-      clone.removeAttribute('data-aue-resource');
-      clone.removeAttribute('data-aue-model');
-      clone.removeAttribute('data-aue-type');
+      // Remove any instrumentation/IDs from clones to avoid duplicates
+      stripInstrumentationAndIds(clone);
       wrapper.appendChild(clone);
     });
   }
@@ -118,7 +131,9 @@ const initMarquee = (carouselEl, trackEl, groupEl, { speedPxPerSecond }) => {
 
   const setHoverSlow = (enabled) => {
     const baseSpeed = Math.max(0, speedPxPerSecond) / 1000;
-    targetSpeedPxPerMs = enabled ? baseSpeed / HOVER_SLOWDOWN_MULTIPLIER : baseSpeed;
+    targetSpeedPxPerMs = enabled
+      ? baseSpeed / HOVER_SLOWDOWN_MULTIPLIER
+      : baseSpeed;
   };
 
   const ro = 'ResizeObserver' in window
@@ -222,6 +237,7 @@ const addPlayPauseBtnToSection = (block) => {
 export default async function decorate(block) {
   if (!block) return;
   await ensureStylesLoaded();
+  const isAuthor = isAuthorMode();
 
   const rows = Array.from(block.children);
 
@@ -248,7 +264,11 @@ export default async function decorate(block) {
   // Duplicate content for seamless wrap
   ensureEnoughSlides(group, 10);
 
-  track.append(group);
+  // Two identical groups are required for a seamless infinite marquee.
+  const groupClone = group.cloneNode(true);
+  stripInstrumentationAndIds(groupClone);
+
+  track.append(group, groupClone);
   carousel.appendChild(track);
   block.replaceChildren(carousel);
   addPlayPauseBtnToSection(block);
@@ -257,11 +277,17 @@ export default async function decorate(block) {
   const speedVarName = isSecondRow
     ? '--dynamic-gallery-marquee-speed-fast'
     : '--dynamic-gallery-marquee-speed';
-  const fallbackSpeed = isSecondRow ? FAST_SPEED_PX_PER_SECOND : BASE_SPEED_PX_PER_SECOND;
-  const speedPxPerSecond = getCssNumberVar(carousel, speedVarName, fallbackSpeed);
+  const fallbackSpeed = isSecondRow
+    ? FAST_SPEED_PX_PER_SECOND
+    : BASE_SPEED_PX_PER_SECOND;
+  const speedPxPerSecond = getCssNumberVar(
+    carousel,
+    speedVarName,
+    fallbackSpeed,
+  );
   const marquee = initMarquee(carousel, track, group, {
     speedPxPerSecond,
   });
-  marquee.play();
+  if (!isAuthor) marquee.play();
   setupListeners(marquee, carousel, block);
 }
