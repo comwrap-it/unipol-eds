@@ -1,6 +1,7 @@
 import loadSwiper from '../../scripts/delayed.js';
 import { createIconButton } from '../../scripts/libs/ds/components/atoms/buttons/icon-button/icon-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
+import { isAuthorMode } from '../../scripts/utils.js';
 import { createDynamicGalleryCardFromRows } from '../dynamic-gallery-card/dynamic-gallery-card.js';
 
 let isStylesLoaded = false;
@@ -68,47 +69,17 @@ const waitForMeasurableWidth = (el, cb, maxFrames = 180) => {
 };
 
 /**
- * Gets the rendered translateX value of the swiper wrapper element.
- * @param {Swiper} swiper - The Swiper instance
- * @returns {number} The translateX value
- */
-const getRenderedTranslateX = (swiper) => {
-  const el = swiper?.wrapperEl;
-  if (!el) return swiper.getTranslate();
-
-  const t = getComputedStyle(el).transform;
-  if (!t || t === 'none') return swiper.getTranslate();
-
-  // matrix(a,b,c,d,tx,ty) or matrix3d(..., tx, ty, tz)
-  const m3d = t.match(/^matrix3d\((.+)\)$/);
-  if (m3d) {
-    const parts = m3d[1].split(',').map((v) => parseFloat(v.trim()));
-    return Number.isFinite(parts[12]) ? parts[12] : swiper.getTranslate();
-  }
-  const m2d = t.match(/^matrix\((.+)\)$/);
-  if (m2d) {
-    const parts = m2d[1].split(',').map((v) => parseFloat(v.trim()));
-    return Number.isFinite(parts[4]) ? parts[4] : swiper.getTranslate();
-  }
-  return swiper.getTranslate();
-};
-
-/**
- * Freezes the swiper's current position immediately.
+ * Cancels an in-flight Swiper transition without changing the visible position.
+ * Uses Swiper's internal translate value to keep loop state consistent.
  * @param {Swiper} swiper - The Swiper instance
  */
-const freezeSwiperNow = (swiper) => {
-  if (!swiper || swiper.destroyed) return;
+const cancelOngoingTransition = (swiper) => {
+  if (!swiper?.animating || !swiper.wrapperEl) return;
 
-  const x = getRenderedTranslateX(swiper);
-
-  // cancel current transition immediately
-  swiper.setTransition?.(0);
-  if (swiper.wrapperEl) swiper.wrapperEl.style.transitionDuration = '0ms';
-
-  swiper.setTranslate(x);
+  swiper.setTranslate(swiper.getTranslate());
   swiper.updateActiveIndex();
   swiper.updateSlidesClasses();
+
   swiper.animating = false;
 };
 
@@ -122,7 +93,9 @@ const startAutoplaySafely = (swiper, carousel) => {
   waitForMeasurableWidth(
     carousel,
     () => {
-      freezeSwiperNow(swiper);
+      if (!swiper || swiper.destroyed) return;
+
+      cancelOngoingTransition(swiper);
       swiper.autoplay?.stop();
       swiper.autoplay?.start();
     },
@@ -136,9 +109,7 @@ const startAutoplaySafely = (swiper, carousel) => {
  */
 const stopSwiperImmediately = (swiper) => {
   if (!swiper || swiper.destroyed) return;
-
-  // freeze at the exact rendered position and cancel transition
-  freezeSwiperNow(swiper);
+  cancelOngoingTransition(swiper);
 
   // then stop future autoplay ticks
   swiper.autoplay?.stop();
@@ -152,24 +123,22 @@ const stopSwiperImmediately = (swiper) => {
 const setSwiperSpeedAndRestart = (swiper, speed) => {
   if (!swiper || swiper.destroyed) return;
 
+  if (swiper.params?.speed === speed) return;
+
   swiper.params.speed = speed;
   swiper.originalParams.speed = speed;
 
   if (!swiper.autoplay?.running) return;
 
   swiper.autoplay.stop();
-  freezeSwiperNow(swiper);
-
-  requestAnimationFrame(() => {
-    if (swiper.destroyed) return;
-    swiper.autoplay.start();
-  });
+  cancelOngoingTransition(swiper);
+  swiper.autoplay.start();
 };
 
 const SWIPER_SPEED = 4000;
 const FASTER_SWIPER_SPEED = 3000;
-const SWIPER_SLOW_SPEED = SWIPER_SPEED * 3;
-const FASTER_SWIPER_SLOW_SPEED = FASTER_SWIPER_SPEED * 3;
+const SWIPER_SLOW_SPEED = SWIPER_SPEED + SWIPER_SPEED / 3;
+const FASTER_SWIPER_SLOW_SPEED = FASTER_SWIPER_SPEED + FASTER_SWIPER_SPEED / 3;
 
 /**
  *
@@ -192,6 +161,7 @@ const isSecondSectionRow = (block) => {
  * @param {HTMLElement} block the block element
  */
 const initSwiper = (Swiper, carousel, block = null) => {
+  // const isAuthor = isAuthorMode();
   let isSecondRow = false;
   if (block) {
     isSecondRow = isSecondSectionRow(block);
@@ -240,7 +210,8 @@ const initSwiper = (Swiper, carousel, block = null) => {
  * @param {HTMLElement} block the block element
  */
 const setupListeners = (swiperInstance, carousel, block = null) => {
-  if (!swiperInstance) return;
+  const isAuthor = isAuthorMode();
+  if (!swiperInstance || isAuthor) return;
   let isSecondRow;
   if (block) {
     isSecondRow = isSecondSectionRow(block);
