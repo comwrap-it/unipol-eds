@@ -64,75 +64,101 @@ const BASE_SPEED_PX_PER_SECOND = 55;
 const FAST_SPEED_PX_PER_SECOND = 70;
 const HOVER_SLOWDOWN_MULTIPLIER = 3;
 
-const initMarquee = (carouselEl, trackEl, groupEl, { speedPxPerSecond }) => {
+/**
+ * Creates a lightweight infinite marquee.
+ *
+ * Structure expectations:
+ * - viewportEl: the overflow-hidden viewport (where hover listeners are attached)
+ * - beltEl: the element we translate on X (contains segment + cloned segment)
+ * - segmentEl: the first segment; its width is the wrap distance
+ */
+const createMarqueeController = (viewportEl, beltEl, segmentEl, { speedPxPerSecond }) => {
   let rafId = null;
-  let lastTime = 0;
-  let offsetX = 0;
+  let lastFrameTime = 0;
+  let x = 0;
 
-  let groupWidth = 0;
-  let currentSpeedPxPerMs = Math.max(0, speedPxPerSecond) / 1000;
-  let targetSpeedPxPerMs = Math.max(0, speedPxPerSecond) / 1000;
+  let segmentWidth = 0;
 
-  const computeFromMeasurements = () => {
-    groupWidth = groupEl?.getBoundingClientRect?.().width || 0;
+  const baseSpeedPxPerMs = Math.max(0, speedPxPerSecond) / 1000;
+  let currentSpeedPxPerMs = baseSpeedPxPerMs;
+  let targetSpeedPxPerMs = baseSpeedPxPerMs;
+
+  const measureSegmentWidth = () => {
+    segmentWidth = segmentEl?.getBoundingClientRect?.().width || 0;
+
+    // Keep x within a sane range after resizes to avoid a visible jump.
+    if (segmentWidth > 0) {
+      while (x <= -segmentWidth) x += segmentWidth;
+      while (x > 0) x -= segmentWidth;
+    }
   };
 
-  const step = (t) => {
-    if (!carouselEl?.isConnected || !trackEl?.isConnected) {
+  const isAlive = () => viewportEl?.isConnected && beltEl?.isConnected;
+
+  const applyTransform = () => {
+    beltEl.style.transform = `translate3d(${x}px, 0, 0)`;
+  };
+
+  const wrapX = () => {
+    if (segmentWidth <= 0) return;
+    if (x <= -segmentWidth) x += segmentWidth;
+    if (x > 0) x -= segmentWidth;
+  };
+
+  const tick = (dt) => {
+    // Smooth speed changes (hover in/out) so the belt doesn't "jerk".
+    currentSpeedPxPerMs += (targetSpeedPxPerMs - currentSpeedPxPerMs) * 0.18;
+
+    x -= currentSpeedPxPerMs * dt;
+    wrapX();
+    applyTransform();
+  };
+
+  const frame = (t) => {
+    if (!isAlive()) {
       rafId = null;
       return;
     }
-    if (!lastTime) lastTime = t;
-    const dt = Math.min(64, t - lastTime);
-    lastTime = t;
 
-    if (groupWidth <= 0) computeFromMeasurements();
-    if (groupWidth <= 0) {
-      rafId = requestAnimationFrame(step);
-      return;
-    }
+    if (!lastFrameTime) lastFrameTime = t;
+    const dt = Math.min(64, t - lastFrameTime);
+    lastFrameTime = t;
 
-    // Smooth speed transitions to avoid visual jerk on hover.
-    currentSpeedPxPerMs += (targetSpeedPxPerMs - currentSpeedPxPerMs) * 0.18;
-    offsetX -= currentSpeedPxPerMs * dt;
+    if (segmentWidth <= 0) measureSegmentWidth();
+    if (segmentWidth > 0) tick(dt);
 
-    // Wrap seamlessly when one full group has passed.
-    if (offsetX <= -groupWidth) offsetX += groupWidth;
-    if (offsetX > 0) offsetX -= groupWidth;
-
-    trackEl.style.transform = `translate3d(${offsetX}px, 0, 0)`;
-    rafId = requestAnimationFrame(step);
+    rafId = requestAnimationFrame(frame);
   };
 
   const play = () => {
     if (rafId) return;
-    lastTime = 0;
-    computeFromMeasurements();
-    rafId = requestAnimationFrame(step);
+    lastFrameTime = 0;
+    measureSegmentWidth();
+    rafId = requestAnimationFrame(frame);
   };
 
   const pause = () => {
     if (!rafId) return;
     cancelAnimationFrame(rafId);
     rafId = null;
-    lastTime = 0;
+    lastFrameTime = 0;
   };
 
   const setHoverSlow = (enabled) => {
-    const baseSpeed = Math.max(0, speedPxPerSecond) / 1000;
     targetSpeedPxPerMs = enabled
-      ? baseSpeed / HOVER_SLOWDOWN_MULTIPLIER
-      : baseSpeed;
+      ? baseSpeedPxPerMs / HOVER_SLOWDOWN_MULTIPLIER
+      : baseSpeedPxPerMs;
   };
 
+  // ResizeObserver keeps the wrap distance correct if fonts/images/layout change.
   const ro = 'ResizeObserver' in window
     ? new ResizeObserver(() => {
-      computeFromMeasurements();
+      measureSegmentWidth();
     })
     : null;
 
-  ro?.observe?.(carouselEl);
-  ro?.observe?.(groupEl);
+  ro?.observe?.(viewportEl);
+  ro?.observe?.(segmentEl);
 
   return {
     play,
@@ -237,21 +263,25 @@ export default async function decorate(block) {
 
   const rows = Array.from(block.children);
 
-  const carousel = document.createElement('div');
-  carousel.className = 'dynamic-gallery-marquee';
+  // DOM pieces (kept separate on purpose):
+  // - viewport clips overflow
+  // - belt is translated on X
+  // - segment is measured and cloned to create a seamless loop
+  const viewport = document.createElement('div');
+  viewport.className = 'dynamic-gallery-marquee';
 
-  const track = document.createElement('div');
-  track.className = 'dynamic-gallery-row marquee-track';
+  const belt = document.createElement('div');
+  belt.className = 'dynamic-gallery-row marquee-track';
 
-  const group = document.createElement('div');
-  group.className = 'dynamic-gallery-row-group';
+  const segment = document.createElement('div');
+  segment.className = 'dynamic-gallery-row-group';
 
   const promises = rows.map(async (row) => {
     const childrenRows = Array.from(row.children);
     const card = await createDynamicGalleryCardFromRows(childrenRows);
     if (card) {
       moveInstrumentation(row, card);
-      group.appendChild(card);
+      segment.appendChild(card);
     }
   });
 
@@ -259,27 +289,27 @@ export default async function decorate(block) {
 
   if (!isAuthor) {
     // Duplicate content for seamless wrap
-    ensureEnoughSlides(group, 10);
+    ensureEnoughSlides(segment, 10);
 
     // Two identical groups are required for a seamless infinite marquee.
-    const groupClone = group.cloneNode(true);
+    const groupClone = segment.cloneNode(true);
     stripInstrumentationAndIds(groupClone);
 
-    track.append(group, groupClone);
+    belt.append(segment, groupClone);
   } else {
-    track.appendChild(group);
+    belt.appendChild(segment);
   }
-  carousel.appendChild(track);
-  block.replaceChildren(carousel);
+  viewport.appendChild(belt);
+  block.replaceChildren(viewport);
   addPlayPauseBtnToSection(block);
 
   const isSecondRow = isSecondSectionRow(block);
   const speed = isSecondRow
     ? FAST_SPEED_PX_PER_SECOND
     : BASE_SPEED_PX_PER_SECOND;
-  const marquee = initMarquee(carousel, track, group, {
+  const marquee = createMarqueeController(viewport, belt, segment, {
     speedPxPerSecond: speed,
   });
   if (!isAuthor) marquee.play();
-  setupListeners(marquee, carousel, block);
+  setupListeners(marquee, viewport, block);
 }
