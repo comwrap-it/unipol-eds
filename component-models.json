@@ -510,6 +510,13 @@
     "id": "download-tile-accordion",
     "fields": [
       {
+        "component": "reference",
+        "name": "document_reference",
+        "label": "Riferimento al documento",
+        "required": true,
+        "multi": false
+      },
+      {
         "component": "text",
         "name": "document_label",
         "label": "Testo descrittivo del documento",
@@ -517,13 +524,6 @@
           "maxLength": 50,
           "customErrorMsg": "Testo troppo lungo"
         }
-      },
-      {
-        "component": "reference",
-        "name": "document_reference",
-        "label": "Riferimento al documento",
-        "required": true,
-        "multi": false
       }
     ]
   },
