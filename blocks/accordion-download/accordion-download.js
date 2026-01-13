@@ -57,14 +57,6 @@ const extractValuesFromRows = (row) => {
 
   config.downloadTiles = [];
 
-  row[1]?.forEach((item) => {
-    const downloadTile = {};
-    downloadTile.icon = 'un-icon-file-text';
-    downloadTile.value = item[0]?.textContent?.trim() || '';
-    downloadTile.href = item[1]?.querySelector('a')?.getAttribute('href') || row[1]?.textContent?.trim() || '';
-    config.downloadTiles.push(downloadTile);
-  });
-
   return config;
 };
 
