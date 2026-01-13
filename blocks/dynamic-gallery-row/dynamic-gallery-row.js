@@ -1,4 +1,3 @@
-import loadSwiper from '../../scripts/delayed.js';
 import { createIconButton } from '../../scripts/libs/ds/components/atoms/buttons/icon-button/icon-button.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { isAuthorMode } from '../../scripts/utils.js';
@@ -26,6 +25,8 @@ async function ensureStylesLoaded() {
  * @param {number} minSlides - Minimum number of slides needed
  */
 const ensureEnoughSlides = (wrapper, minSlides = 10) => {
+  const isAuthor = isAuthorMode();
+  if (isAuthor) return;
   const originalSlides = Array.from(wrapper.children);
   const originalCount = originalSlides.length;
 
@@ -46,99 +47,99 @@ const ensureEnoughSlides = (wrapper, minSlides = 10) => {
   }
 };
 
+const BASE_SPEED_PX_PER_SECOND = 55;
+const FAST_SPEED_PX_PER_SECOND = 70;
+const HOVER_SLOWDOWN_MULTIPLIER = 3;
+
 /**
- * Waits until the element has a measurable width before invoking the callback.
- * @param {HTMLElement} el - The element to measure
- * @param {Function} cb - The callback to invoke once measurable
- * @param {number} maxFrames - Maximum number of animation frames to wait
+ * Creates a self-contained, rAF-driven marquee.
+ * The track must contain two identical groups placed side-by-side.
  */
-const waitForMeasurableWidth = (el, cb, maxFrames = 180) => {
-  let frames = 0;
-  const tick = () => {
-    if (!el?.isConnected) return;
-    const { width } = el.getBoundingClientRect();
-    if (width > 5) {
-      cb();
+const getCssNumberVar = (el, name, fallback) => {
+  if (!el) return fallback;
+  const raw = getComputedStyle(el).getPropertyValue(name)?.trim();
+  const n = Number.parseFloat(raw);
+  return Number.isFinite(n) ? n : fallback;
+};
+
+const initMarquee = (carouselEl, trackEl, groupEl, { speedPxPerSecond }) => {
+  let rafId = null;
+  let lastTime = 0;
+  let offsetX = 0;
+
+  let groupWidth = 0;
+  let currentSpeedPxPerMs = Math.max(0, speedPxPerSecond) / 1000;
+  let targetSpeedPxPerMs = Math.max(0, speedPxPerSecond) / 1000;
+
+  const computeFromMeasurements = () => {
+    groupWidth = groupEl?.getBoundingClientRect?.().width || 0;
+  };
+
+  const step = (t) => {
+    if (!carouselEl?.isConnected || !trackEl?.isConnected) {
+      rafId = null;
       return;
     }
-    frames += 1;
-    if (frames >= maxFrames) return;
-    requestAnimationFrame(tick);
+    if (!lastTime) lastTime = t;
+    const dt = Math.min(64, t - lastTime);
+    lastTime = t;
+
+    if (groupWidth <= 0) computeFromMeasurements();
+    if (groupWidth <= 0) {
+      rafId = requestAnimationFrame(step);
+      return;
+    }
+
+    // Smooth speed transitions to avoid visual jerk on hover.
+    currentSpeedPxPerMs += (targetSpeedPxPerMs - currentSpeedPxPerMs) * 0.18;
+    offsetX -= currentSpeedPxPerMs * dt;
+
+    // Wrap seamlessly when one full group has passed.
+    if (offsetX <= -groupWidth) offsetX += groupWidth;
+    if (offsetX > 0) offsetX -= groupWidth;
+
+    trackEl.style.transform = `translate3d(${offsetX}px, 0, 0)`;
+    rafId = requestAnimationFrame(step);
   };
-  requestAnimationFrame(tick);
-};
 
-/**
- * Cancels an in-flight Swiper transition without changing the visible position.
- * Uses Swiper's internal translate value to keep loop state consistent.
- * @param {Swiper} swiper - The Swiper instance
- */
-const cancelOngoingTransition = (swiper) => {
-  if (!swiper?.animating || !swiper.wrapperEl) return;
+  const play = () => {
+    if (rafId) return;
+    lastTime = 0;
+    computeFromMeasurements();
+    rafId = requestAnimationFrame(step);
+  };
 
-  swiper.setTranslate(swiper.getTranslate());
-  swiper.updateActiveIndex();
-  swiper.updateSlidesClasses();
+  const pause = () => {
+    if (!rafId) return;
+    cancelAnimationFrame(rafId);
+    rafId = null;
+    lastTime = 0;
+  };
 
-  swiper.animating = false;
-};
+  const setHoverSlow = (enabled) => {
+    const baseSpeed = Math.max(0, speedPxPerSecond) / 1000;
+    targetSpeedPxPerMs = enabled ? baseSpeed / HOVER_SLOWDOWN_MULTIPLIER : baseSpeed;
+  };
 
-/**
- * Starts Swiper autoplay safely after ensuring the carousel has measurable width.
- * @param {Swiper} swiper - The Swiper instance
- * @param {HTMLElement} carousel - The carousel element
- */
-const startAutoplaySafely = (swiper, carousel) => {
-  if (!swiper || !carousel) return;
-  waitForMeasurableWidth(
-    carousel,
-    () => {
-      if (!swiper || swiper.destroyed) return;
+  const ro = 'ResizeObserver' in window
+    ? new ResizeObserver(() => {
+      computeFromMeasurements();
+    })
+    : null;
 
-      cancelOngoingTransition(swiper);
-      swiper.autoplay?.stop();
-      swiper.autoplay?.start();
+  ro?.observe?.(carouselEl);
+  ro?.observe?.(groupEl);
+
+  return {
+    play,
+    pause,
+    setHoverSlow,
+    destroy: () => {
+      pause();
+      ro?.disconnect?.();
     },
-    240,
-  );
+  };
 };
-
-/**
- * Stops Swiper autoplay immediately and freezes its position.
- * @param {Swiper} swiper - The Swiper instance
- */
-const stopSwiperImmediately = (swiper) => {
-  if (!swiper || swiper.destroyed) return;
-  cancelOngoingTransition(swiper);
-
-  // then stop future autoplay ticks
-  swiper.autoplay?.stop();
-};
-
-/**
- * Sets the swiper speed and restarts autoplay while preserving position.
- * @param {Swiper} swiper - The Swiper instance
- * @param {number} speed - The new speed in milliseconds
- */
-const setSwiperSpeedAndRestart = (swiper, speed) => {
-  if (!swiper || swiper.destroyed) return;
-
-  if (swiper.params?.speed === speed) return;
-
-  swiper.params.speed = speed;
-  swiper.originalParams.speed = speed;
-
-  if (!swiper.autoplay?.running) return;
-
-  swiper.autoplay.stop();
-  cancelOngoingTransition(swiper);
-  swiper.autoplay.start();
-};
-
-const SWIPER_SPEED = 4000;
-const FASTER_SWIPER_SPEED = 3000;
-const SWIPER_SLOW_SPEED = SWIPER_SPEED + SWIPER_SPEED / 3;
-const FASTER_SWIPER_SLOW_SPEED = FASTER_SWIPER_SPEED + FASTER_SWIPER_SPEED / 3;
 
 /**
  *
@@ -155,91 +156,29 @@ const isSecondSectionRow = (block) => {
 };
 
 /**
- * Initializes a Swiper instance for the given carousel element.
- * @param {} Swiper the swiper instance
- * @param {HTMLElement} carousel the carousel element
- * @param {HTMLElement} block the block element
- */
-const initSwiper = (Swiper, carousel, block = null) => {
-  // const isAuthor = isAuthorMode();
-  let isSecondRow = false;
-  if (block) {
-    isSecondRow = isSecondSectionRow(block);
-  } else {
-    const closestBlock = carousel.closest('.block.dynamic-gallery-row');
-    isSecondRow = isSecondSectionRow(closestBlock);
-  }
-  const swiper = new Swiper(carousel, {
-    slidesPerView: 'auto',
-    speed: isSecondRow ? FASTER_SWIPER_SPEED : SWIPER_SPEED,
-    loop: true,
-    loopAdditionalSlides: 0,
-    centeredSlides: false,
-    allowTouchMove: false,
-    simulateTouch: false,
-    observer: true,
-    observeParents: true,
-    resizeObserver: true,
-    watchSlidesProgress: true,
-    autoplay: {
-      delay: 0,
-      disableOnInteraction: false,
-      pauseOnMouseEnter: false,
-      waitForTransition: true,
-    },
-    freeMode: {
-      enabled: true,
-      momentum: false,
-      momentumBounce: false,
-      sticky: false,
-    },
-    effect: 'slide',
-    navigation: false,
-    pagination: false,
-    keyboard: { enabled: false },
-    a11y: { enabled: false },
-  });
-
-  return swiper;
-};
-
-/**
  * Sets up event listeners for mouse enter/leave and custom play/pause events.
- * @param {} swiperInstance the swiper instance
+ * @param {object} marquee the marquee controller
  * @param {HTMLElement} carousel the carousel element
  * @param {HTMLElement} block the block element
  */
-const setupListeners = (swiperInstance, carousel, block = null) => {
+const setupListeners = (marquee, carousel, block = null) => {
   const isAuthor = isAuthorMode();
-  if (!swiperInstance || isAuthor) return;
-  let isSecondRow;
-  if (block) {
-    isSecondRow = isSecondSectionRow(block);
-  } else {
-    const closestBlock = carousel.closest('.block.dynamic-gallery-row');
-    isSecondRow = isSecondSectionRow(closestBlock);
-  }
+  if (!marquee || !carousel || isAuthor) return;
   carousel.addEventListener('mouseenter', () => {
-    setSwiperSpeedAndRestart(
-      swiperInstance,
-      isSecondRow ? FASTER_SWIPER_SLOW_SPEED : SWIPER_SLOW_SPEED,
-    );
+    marquee.setHoverSlow(true);
   });
   carousel.addEventListener('mouseleave', () => {
-    setSwiperSpeedAndRestart(
-      swiperInstance,
-      isSecondRow ? FASTER_SWIPER_SPEED : SWIPER_SPEED,
-    );
+    marquee.setHoverSlow(false);
   });
 
   const section = block?.closest('.section') || carousel.closest('.section');
 
   section.addEventListener('pauseDynamicGallery', () => {
-    stopSwiperImmediately(swiperInstance);
+    marquee.pause();
   });
 
   section.addEventListener('playDynamicGallery', () => {
-    startAutoplaySafely(swiperInstance, carousel);
+    marquee.play();
   });
 };
 
@@ -287,66 +226,42 @@ export default async function decorate(block) {
   const rows = Array.from(block.children);
 
   const carousel = document.createElement('div');
-  carousel.className = 'swiper';
-  const galleryRow = document.createElement('div');
-  galleryRow.className = 'dynamic-gallery-row swiper-wrapper marquee-swiper';
+  carousel.className = 'dynamic-gallery-marquee';
+
+  const track = document.createElement('div');
+  track.className = 'dynamic-gallery-row marquee-track';
+
+  const group = document.createElement('div');
+  group.className = 'dynamic-gallery-row-group';
 
   const promises = rows.map(async (row) => {
     const childrenRows = Array.from(row.children);
     const card = await createDynamicGalleryCardFromRows(childrenRows);
     if (card) {
       moveInstrumentation(row, card);
-      card.classList.add('swiper-slide');
-      galleryRow.appendChild(card);
+      group.appendChild(card);
     }
   });
 
   await Promise.all(promises);
 
-  // Ensure enough slides for loop mode
-  ensureEnoughSlides(galleryRow, 10);
+  // Duplicate content for seamless wrap
+  ensureEnoughSlides(group, 10);
 
-  carousel.appendChild(galleryRow);
+  track.append(group);
+  carousel.appendChild(track);
   block.replaceChildren(carousel);
   addPlayPauseBtnToSection(block);
 
-  const Swiper = await loadSwiper();
-  const swiperInstance = initSwiper(Swiper, carousel, block);
-  startAutoplaySafely(swiperInstance, carousel);
-  setupListeners(swiperInstance, carousel, block);
-}
-
-export const createDynamicGalleryRowFromRows = async (rows) => {
-  await ensureStylesLoaded();
-  const carousel = document.createElement('div');
-  carousel.className = 'swiper';
-  const galleryRow = document.createElement('div');
-  galleryRow.className = 'dynamic-gallery-row swiper-wrapper marquee-swiper';
-
-  if (rows.length === 0) return null;
-
-  const promises = rows.map(async (row) => {
-    const childrenRows = Array.from(row.children);
-    const card = await createDynamicGalleryCardFromRows(childrenRows);
-    if (card) {
-      moveInstrumentation(row, card);
-      card.classList.add('swiper-slide');
-      galleryRow.appendChild(card);
-    }
+  const isSecondRow = isSecondSectionRow(block);
+  const speedVarName = isSecondRow
+    ? '--dynamic-gallery-marquee-speed-fast'
+    : '--dynamic-gallery-marquee-speed';
+  const fallbackSpeed = isSecondRow ? FAST_SPEED_PX_PER_SECOND : BASE_SPEED_PX_PER_SECOND;
+  const speedPxPerSecond = getCssNumberVar(carousel, speedVarName, fallbackSpeed);
+  const marquee = initMarquee(carousel, track, group, {
+    speedPxPerSecond,
   });
-
-  await Promise.all(promises);
-
-  // Ensure enough slides for loop mode
-  ensureEnoughSlides(galleryRow, 10);
-
-  carousel.appendChild(galleryRow);
-
-  const Swiper = await loadSwiper();
-  const swiperInstance = initSwiper(Swiper, carousel, null);
-  // This helper may be used before insertion into DOM; only start once measurable.
-  startAutoplaySafely(swiperInstance, carousel);
-  setupListeners(swiperInstance, carousel, null);
-
-  return carousel;
-};
+  marquee.play();
+  setupListeners(marquee, carousel, block);
+}

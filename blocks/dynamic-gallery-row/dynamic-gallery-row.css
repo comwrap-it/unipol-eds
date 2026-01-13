@@ -12,9 +12,23 @@
     margin-bottom: var(--Dynamic-Gallery-Gap-D-Ds, 16px);
 }
 
-.swiper-wrapper.marquee-swiper {
-    transition-timing-function: linear;
-    align-items: center;
+.dynamic-gallery-marquee {
+    overflow: hidden;
+    width: 100%;
+    /* px/sec (read by JS). Increase to go faster. */
+    --dynamic-gallery-marquee-speed: 55;
+    --dynamic-gallery-marquee-speed-fast: 70;
+}
+
+.dynamic-gallery-row.marquee-track {
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
+}
+
+.dynamic-gallery-row-group {
+    display: flex;
+    align-items: inherit;
+    gap: inherit;
 }
 
 .dynamic-gallery-play-pause-btn {
