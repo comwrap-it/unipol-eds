@@ -51,8 +51,10 @@
       "prodotto-unico-header",
       "image-text-grid",
       "accordion",
+      "accordion-download",
       "legal-info-widget",
       "dialog",
+      "dialog-download",
       "tooltip"
     ]
   },
