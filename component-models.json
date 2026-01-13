@@ -503,19 +503,27 @@
           "maxLength": 90,
           "customErrorMsg": "Testo troppo lungo"
         }
+      }
+    ]
+  },
+  {
+    "id": "download-tile-accordion",
+    "fields": [
+      {
+        "component": "text",
+        "name": "document_label",
+        "label": "Testo descrittivo del documento",
+        "validation": {
+          "maxLength": 50,
+          "customErrorMsg": "Testo troppo lungo"
+        }
       },
       {
-        "component": "container",
-        "name": "accordionContent",
-        "label": "Contenuto dell'accordion download",
-        "collapsible": false,
-        "multi": true,
-        "fields": [
-          {
-            "component": "reference",
-            "name": "documentReference"
-          }
-        ]
+        "component": "reference",
+        "name": "document_reference",
+        "label": "Riferimento al documento",
+        "required": true,
+        "multi": false
       }
     ]
   },
