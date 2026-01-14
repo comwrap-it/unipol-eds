@@ -47,7 +47,7 @@ export function createDownloadTile(downloadTile) {
     true,
   );
   downloadIcon.classList.add('download-icon');
-  downloadIcon.setAttribute('aria-label', 'Apri il file ' + downloadTile.value + ' in una nuova finestra');
+  downloadIcon.setAttribute('aria-label', `Apri il file ${downloadTile.value} in una nuova finestra`);
 
   downloadTileEl.appendChild(downloadIcon);
 
