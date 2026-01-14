@@ -40,6 +40,7 @@
             &:hover:not(:disabled) {
                 color: var(--Icon-Button-Secondary-Default-Icon);
                 border-color: var(--Icon-Button-Secondary-Default-Border);
+                background-color: var(--Icon-Button-Secondary-Default-Background);
             }
         }
     }

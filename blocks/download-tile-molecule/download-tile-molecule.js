@@ -23,6 +23,7 @@ const createTextWrapper = (downloadTile) => {
     BUTTON_VARIANTS.SECONDARY,
     BUTTON_ICON_SIZES.LARGE,
   );
+  fileIcon.setAttribute('tabindex', '-1');
   textWrapper.appendChild(fileIcon);
 
   const label = createTextElementFromObj(downloadTile, 'label', 'p');
@@ -46,6 +47,7 @@ export function createDownloadTile(downloadTile) {
     true,
   );
   downloadIcon.classList.add('download-icon');
+  downloadIcon.setAttribute('aria-label', 'Apri il file ' + downloadTile.value + ' in una nuova finestra');
 
   downloadTileEl.appendChild(downloadIcon);
 
