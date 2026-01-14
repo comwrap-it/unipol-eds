@@ -176,8 +176,7 @@
   {
     "id": "download-tile-organism",
     "components": [
-      "download-tile-molecule",
-      "fragment"
+      "download-tile-molecule"
     ]
   },
   {
