@@ -1,6 +1,7 @@
 import { loadBlock } from '../../scripts/aem.js';
 import { moveInstrumentation } from '../../scripts/scripts.js';
 import { isAuthorMode } from '../../scripts/utils.js';
+import { loadFragment } from '../fragment/fragment.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -81,6 +82,30 @@ async function handleResize(e, block) {
   }
 }
 
+/**
+ * Handles the link click to load the dialog-fragment that contains
+ * accordion-download instances
+ * @param {Event} event
+ */
+const handleLinkClick = async (event) => {
+  event.stopPropagation();
+  event.preventDefault();
+  const link = event.currentTarget;
+  const href = link.getAttribute('href');
+  const url = new URL(href);
+  const relativePath = url.pathname;
+  if (relativePath) {
+    const fragment = await loadFragment(relativePath);
+    if (fragment) {
+      const fragmentSection = fragment.querySelector(':scope .section');
+      if (fragmentSection) {
+        fragmentSection.classList.remove('section');
+        document.body.appendChild(fragmentSection);
+      }
+    }
+  }
+};
+
 export default async function decorate(block) {
   if (!block) return;
 
@@ -97,47 +122,53 @@ export default async function decorate(block) {
   const dialogActive = (rows[0].textContent?.trim() || 'false') === 'true';
   rows.shift();
 
-  if (rows.length === 0) {
-    // eslint-disable-next-line no-console
-    console.warn('No download tile elements found');
-    return;
-  }
-
-  // Process each row as a download tile molecule
-  const downloadTileMoleculePromises = rows.map(async (row) => {
-    const downloadTileMoleculeBlock = document.createElement('div');
-    downloadTileMoleculeBlock.className = 'download-tile-row';
-
-    // Move all children from row to download tile molecule block (preserves their instrumentation)
-    while (row.firstElementChild) {
-      downloadTileMoleculeBlock.appendChild(row.firstElementChild);
-    }
-
-    // Decorate the card using card component
-    await decorateDownloadTileMolecule(downloadTileMoleculeBlock);
-
-    // Load card styles
-    const decoratedTile = downloadTileMoleculeBlock.querySelector('.download-tile-molecule-wrapper')
-      || downloadTileMoleculeBlock.firstElementChild;
-    if (decoratedTile && decoratedTile.dataset.blockName) {
-      await loadBlock(decoratedTile);
-    }
-
-    moveInstrumentation(row, downloadTileMoleculeBlock);
-
-    return downloadTileMoleculeBlock;
-  });
-
-  const tabletMobileMQ = window.matchMedia(
-    '(min-width: 0px) and (max-width: 1200px)',
-  );
-
   // Wait for all download tiles to be processed
   if (!dialogActive) {
+    if (rows.length === 0) {
+      // eslint-disable-next-line no-console
+      console.warn('No download tile elements found');
+      return;
+    }
+
+    // Process each row as a download tile molecule
+    const downloadTileMoleculePromises = rows.map(async (row) => {
+      const downloadTileMoleculeBlock = document.createElement('div');
+      downloadTileMoleculeBlock.className = 'download-tile-row';
+
+      // Move all children from row to download-tile-molecule block
+      while (row.firstElementChild) {
+        downloadTileMoleculeBlock.appendChild(row.firstElementChild);
+      }
+
+      // Decorate the download-tile-molecule
+      await decorateDownloadTileMolecule(downloadTileMoleculeBlock);
+
+      // Load download-tile-molecule styles
+      const decoratedTile = downloadTileMoleculeBlock.querySelector('.download-tile-molecule-wrapper')
+        || downloadTileMoleculeBlock.firstElementChild;
+      if (decoratedTile && decoratedTile.dataset.blockName) {
+        await loadBlock(decoratedTile);
+      }
+
+      moveInstrumentation(row, downloadTileMoleculeBlock);
+
+      return downloadTileMoleculeBlock;
+    });
+
+    const tabletMobileMQ = window.matchMedia(
+      '(min-width: 0px) and (max-width: 1200px)',
+    );
+
     block.innerText = '';
     block.classList.add('reveal-in-up');
     const downloadTileElements = await Promise.all(downloadTileMoleculePromises);
     await initDownloadTileOrganism(tabletMobileMQ, downloadTileElements, block);
     tabletMobileMQ.addEventListener('change', (e) => handleResize(e, block));
+  } else {
+    const section = block.closest('.section');
+    section.classList.remove('download-tile-organism-container');
+    const textBlockButton = section.querySelector('.text-block-button .btn');
+    textBlockButton.addEventListener('click', handleLinkClick);
+    block.textContent = '';
   }
 }
