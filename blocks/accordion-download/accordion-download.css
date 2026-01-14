@@ -71,7 +71,7 @@
           flex-shrink: 0;
           aspect-ratio: 1/1;
           text-decoration: none;
-          cursor: pointer;
+          pointer-events: none;
           font-family: inherit;
           user-select: none;
 
@@ -135,13 +135,26 @@
   .accordion.open {
     gap: var(--Accordion-Accordion-Download-Gap-Download, 1.25rem);
 
-    &.accordion-content {
-      opacity: 1;
+    & .accordion-content {
+        opacity: 1;
+
+        & .download-tile-molecule {
+            & .download-icon {
+                pointer-events: auto;
+                cursor: pointer;
+            }
+        }
     }
   }
 
   .accordion:not(.open) .accordion-content {
     opacity: 0;
+
+      & .download-tile-molecule {
+        & .download-icon {
+          pointer-events: none;
+          cursor: none;
+        }
+      }
   }
 }
-
