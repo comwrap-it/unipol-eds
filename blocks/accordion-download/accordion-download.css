@@ -61,6 +61,10 @@
         align-items: flex-start;
         gap: var(--Accordion-Accordion-Download-Accordion-Tile-Horizontal-Gap, 0.5rem);
         align-self: stretch;
+        padding: unset;
+        border-radius: unset;
+        background: unset;
+        box-shadow: unset;
 
         & .download-icon {
           display: flex;
