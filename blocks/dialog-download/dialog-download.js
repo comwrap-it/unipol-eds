@@ -34,15 +34,15 @@ async function ensureStylesLoaded() {
  * @param {HTMLElement} panel The dialog panel
  * @param {HTMLElement} overlay The dialog overlay
  */
-const closeDialog = (block, panel, overlay) => {
+const closeDownloadDialog = (block, panel, overlay) => {
   if (
     panel.classList.contains('is-closing')
     && overlay.classList.contains('is-closing')
   ) { return; }
   panel.classList.add('is-closing');
   overlay.classList.add('is-closing');
-  const wrapper = block.closest('.dialog-container')
-    || block.closest('.dialog-wrapper')
+  const wrapper = block.closest('.dialog-download-container')
+    || block.closest('.dialog-download-wrapper')
     || block;
 
   const onAnimEnd = (e) => {
@@ -152,7 +152,7 @@ export default async function decorate(block) {
   closeButton.classList.add('dialog-close');
   closeButton.setAttribute('aria-label', 'Chiudi la finestra di dialogo');
   closeButton.onclick = () => {
-    closeDialog(block, panel, overlay);
+    closeDownloadDialog(block, panel, overlay);
     unlockBodyScroll();
   };
   header.appendChild(closeButton);
