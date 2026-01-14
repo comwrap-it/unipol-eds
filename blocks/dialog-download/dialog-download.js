@@ -62,19 +62,25 @@ const closeDialog = (block, panel, overlay) => {
 };
 
 async function loadAccordionDownload(reference) {
+  const wrapper = document.createElement('div');
+  wrapper.className = 'accordion-download-container';
+
   const fragment = await loadFragment(reference.href);
 
-  restoreInstrumentation(fragment, reference.instrumentation);
+  restoreInstrumentation(wrapper, reference.instrumentation);
+
+  if (!fragment) return wrapper;
 
   const sections = fragment?.querySelectorAll(':scope .section');
 
   sections.forEach((section) => {
     if (section) {
       section.classList.remove('section');
+      wrapper.appendChild(section);
     }
   });
 
-  return sections;
+  return wrapper;
 }
 
 async function buildDownloadAccordions(isAuthor, references = []) {
@@ -166,9 +172,7 @@ export default async function decorate(block) {
 
   /* Richtext */
   downloadSections.forEach((downloadSection) => {
-    downloadSection.forEach((downloadElement) => {
-      textContent.appendChild(downloadElement);
-    });
+    textContent.appendChild(downloadSection);
   });
 
   panel.appendChild(textContent);
