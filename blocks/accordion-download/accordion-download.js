@@ -1,5 +1,5 @@
 import { createTextElementFromObj } from '@unipol-ds/scripts/domHelpers.js';
-import { extractInstrumentationAttributes, restoreInstrumentation } from '@unipol-ds/scripts/utils.js';
+import { extractInstrumentationAttributes } from '@unipol-ds/scripts/utils.js';
 import { createDownloadTile } from '../download-tile-molecule/download-tile-molecule.js';
 
 const closeAccordion = (icon, content) => {
@@ -7,9 +7,9 @@ const closeAccordion = (icon, content) => {
   icon.classList.remove('un-icon-minus');
   content.querySelectorAll('.download-tile-molecule').forEach((tile) => {
     const icons = tile.querySelectorAll('.download-icon');
-    icons.forEach((icon) => {
-      icon.setAttribute('aria-hidden', 'true');
-      icon.setAttribute('tabindex', '-1');
+    icons.forEach((downloadIcon) => {
+      downloadIcon.setAttribute('aria-hidden', 'true');
+      downloadIcon.setAttribute('tabindex', '-1');
     });
   });
   content.setAttribute('aria-hidden', 'true');
@@ -20,11 +20,11 @@ const openAccordion = (icon, content) => {
   icon.classList.remove('un-icon-plus');
   icon.classList.add('un-icon-minus');
   content.querySelectorAll('.download-tile-molecule').forEach((tile) => {
-      const icons = tile.querySelectorAll('.download-icon');
-      icons.forEach((icon) => {
-        icon.setAttribute('aria-hidden', 'false');
-        icon.setAttribute('tabindex', '0');
-      });
+    const icons = tile.querySelectorAll('.download-icon');
+    icons.forEach((downloadIcon) => {
+      downloadIcon.setAttribute('aria-hidden', 'false');
+      downloadIcon.setAttribute('tabindex', '0');
+    });
   });
 
   content.setAttribute('aria-hidden', 'false');
@@ -53,7 +53,7 @@ export async function createAccordionDownload(accordionLabel, downloadTiles) {
     const downloadTile = downloadTiles.shift();
     const downloadTileEl = createDownloadTile(downloadTile);
     downloadTileEl.querySelector('.download-icon').setAttribute('tabindex', '-1');
-    restoreInstrumentation(downloadTileEl, downloadTile.instrumentation);
+    // restoreInstrumentation(downloadTileEl, downloadTile.instrumentation);
     content.appendChild(downloadTileEl);
   }
 
@@ -98,7 +98,6 @@ export default async function decorateAccordionDownload(block) {
 
   const rows = Array.from(block.children);
   const values = extractValuesFromRows(rows);
-  // eslint-disable-next-line max-len
   const accordionElement = await createAccordionDownload(
     values,
     values.downloadTiles,
