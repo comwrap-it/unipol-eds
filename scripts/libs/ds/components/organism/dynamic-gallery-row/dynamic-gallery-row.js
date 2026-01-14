@@ -1,34 +1,34 @@
-import { moveInstrumentation } from "../../../scripts/scripts.js";
-import { isAuthorMode } from "../../../scripts/utils.js";
-import { createIconButton } from "../../atoms/buttons/icon-button/icon-button.js";
+import { moveInstrumentation } from '../../../scripts/scripts.js';
+import { isAuthorMode } from '../../../scripts/utils.js';
+import { createIconButton } from '../../atoms/buttons/icon-button/icon-button.js';
 import {
   createDynamicGalleryCard,
-  createDynamicGalleryCardFromRows
-} from "../../molecules/cards/dynamic-gallery-card/dynamic-gallery-card.js";
+  createDynamicGalleryCardFromRows,
+} from '../../molecules/cards/dynamic-gallery-card/dynamic-gallery-card.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
   try {
     if (isStylesLoaded) return;
-    const { loadCSS } = await import("../../../scripts/aem.js");
+    const { loadCSS } = await import('../../../scripts/aem.js');
     await Promise.all([
       loadCSS(
         new URL(
-          "../../atoms/buttons/standard-button/standard-button.css",
-          import.meta.url
-        ).href
+          '../../atoms/buttons/standard-button/standard-button.css',
+          import.meta.url,
+        ).href,
       ),
-      loadCSS(new URL("../../atoms/tag/tag.css", import.meta.url).href),
+      loadCSS(new URL('../../atoms/tag/tag.css', import.meta.url).href),
       loadCSS(
         new URL(
-          "../../molecules/cards/dynamic-gallery-card/dynamic-gallery-card.css",
-          import.meta.url
-        ).href
-      )
+          '../../molecules/cards/dynamic-gallery-card/dynamic-gallery-card.css',
+          import.meta.url,
+        ).href,
+      ),
     ]);
     isStylesLoaded = true;
   } catch (error) {
-    console.error("Error loading styles for Dynamic Gallery Row:", error);
+    console.error('Error loading styles for Dynamic Gallery Row:', error);
   }
 }
 
@@ -38,16 +38,16 @@ async function ensureStylesLoaded() {
  */
 const stripInstrumentationAndIds = (root) => {
   if (!(root instanceof Element)) return;
-  [root, ...root.querySelectorAll("*")].forEach((el) => {
+  [root, ...root.querySelectorAll('*')].forEach((el) => {
     Array.from(el.attributes).forEach((attr) => {
       if (
-        attr.name.startsWith("data-aue-") ||
-        attr.name.startsWith("data-richtext-")
+        attr.name.startsWith('data-aue-')
+        || attr.name.startsWith('data-richtext-')
       ) {
         el.removeAttribute(attr.name);
       }
     });
-    if (el.id) el.removeAttribute("id");
+    if (el.id) el.removeAttribute('id');
   });
 };
 
@@ -83,15 +83,15 @@ const ensureEnoughSlides = (wrapper, minSlides = 10) => {
  * @param {HTMLElement} section the section containing the block
  */
 const handlePlayPauseClick = (iconEl, section) => {
-  if (iconEl.classList.contains("un-icon-pause-circle")) {
-    iconEl.classList.remove("un-icon-pause-circle");
-    iconEl.classList.add("un-icon-play-circle");
-    const event = new Event("pauseDynamicGallery");
+  if (iconEl.classList.contains('un-icon-pause-circle')) {
+    iconEl.classList.remove('un-icon-pause-circle');
+    iconEl.classList.add('un-icon-play-circle');
+    const event = new Event('pauseDynamicGallery');
     section.dispatchEvent(event);
-  } else if (iconEl.classList.contains("un-icon-play-circle")) {
-    iconEl.classList.remove("un-icon-play-circle");
-    iconEl.classList.add("un-icon-pause-circle");
-    const event = new Event("playDynamicGallery");
+  } else if (iconEl.classList.contains('un-icon-play-circle')) {
+    iconEl.classList.remove('un-icon-play-circle');
+    iconEl.classList.add('un-icon-pause-circle');
+    const event = new Event('playDynamicGallery');
     section.dispatchEvent(event);
   }
 };
@@ -102,24 +102,22 @@ const handlePlayPauseClick = (iconEl, section) => {
  */
 const addPlayPauseBtnToSection = (block) => {
   if (!block) return;
-  const section = block.closest(".section") || block.parentElement;
+  const section = block.closest('.section') || block.parentElement;
   if (!section) return;
   const alreadyExistentButton = section.querySelector(
-    ".dynamic-gallery-play-pause-btn"
+    '.dynamic-gallery-play-pause-btn',
   );
   if (alreadyExistentButton) return;
   const button = createIconButton(
-    "un-icon-pause-circle",
-    "secondary",
-    "extra-large",
+    'un-icon-pause-circle',
+    'secondary',
+    'extra-large',
     null,
-    false
+    false,
   );
-  button.classList.add("dynamic-gallery-play-pause-btn");
-  const iconSpan = button.querySelector("span");
-  button.addEventListener("click", () =>
-    handlePlayPauseClick(iconSpan, section)
-  );
+  button.classList.add('dynamic-gallery-play-pause-btn');
+  const iconSpan = button.querySelector('span');
+  button.addEventListener('click', () => handlePlayPauseClick(iconSpan, section));
   section.appendChild(button);
 };
 
@@ -130,12 +128,12 @@ const addPlayPauseBtnToSection = (block) => {
  */
 const isSecondSectionRow = (block) => {
   if (!block) return false;
-  const parentSection = block.closest(".section") || block.parentElement;
+  const parentSection = block.closest('.section') || block.parentElement;
   const parentEl = parentSection || block.parentElement;
   const rows = Array.from(
     parentEl?.querySelectorAll(
-      parentSection ? ".dynamic-gallery-row.block" : ".dynamic-gallery-marquee"
-    )
+      parentSection ? '.dynamic-gallery-row.block' : '.dynamic-gallery-marquee',
+    ),
   );
   return rows.length > 1 && rows[1] === block;
 };
@@ -157,7 +155,7 @@ const createMarqueeController = (
   containerEl,
   beltEl,
   segmentEl,
-  { speedPxPerSecond }
+  { speedPxPerSecond },
 ) => {
   let rafId = null;
   let lastFrameTime = 0;
@@ -237,12 +235,11 @@ const createMarqueeController = (
   };
 
   // ResizeObserver keeps the wrap distance correct if fonts/images/layout change.
-  const ro =
-    "ResizeObserver" in window
-      ? new ResizeObserver(() => {
-          measureSegmentWidth();
-        })
-      : null;
+  const ro = 'ResizeObserver' in window
+    ? new ResizeObserver(() => {
+      measureSegmentWidth();
+    })
+    : null;
 
   ro?.observe?.(containerEl);
   ro?.observe?.(segmentEl);
@@ -254,7 +251,7 @@ const createMarqueeController = (
     destroy: () => {
       pause();
       ro?.disconnect?.();
-    }
+    },
   };
 };
 
@@ -267,23 +264,22 @@ const createMarqueeController = (
 const setupListeners = (marquee, carousel, block = null) => {
   const isAuthor = isAuthorMode();
   if (!marquee || !carousel || isAuthor) return;
-  carousel.addEventListener("mouseenter", () => {
+  carousel.addEventListener('mouseenter', () => {
     marquee.setHoverSlow(true);
   });
-  carousel.addEventListener("mouseleave", () => {
+  carousel.addEventListener('mouseleave', () => {
     marquee.setHoverSlow(false);
   });
 
-  const section =
-    block?.closest(".section") ||
-    carousel.closest(".section") ||
-    carousel.parentElement;
+  const section = block?.closest('.section')
+    || carousel.closest('.section')
+    || carousel.parentElement;
 
-  section.addEventListener("pauseDynamicGallery", () => {
+  section.addEventListener('pauseDynamicGallery', () => {
     marquee.pause();
   });
 
-  section.addEventListener("playDynamicGallery", () => {
+  section.addEventListener('playDynamicGallery', () => {
     marquee.play();
   });
 };
@@ -310,20 +306,20 @@ const setupListeners = (marquee, carousel, block = null) => {
  */
 export const createDynamicGalleryRow = async (
   galleryItems = [],
-  block = null
+  block = null,
 ) => {
   await ensureStylesLoaded();
   // - marqueeContainer clips overflow
   // - belt is translated on X
   // - segment is measured and cloned to create a loop
-  const marqueeContainer = document.createElement("div");
-  marqueeContainer.className = "dynamic-gallery-marquee";
+  const marqueeContainer = document.createElement('div');
+  marqueeContainer.className = 'dynamic-gallery-marquee';
 
-  const belt = document.createElement("div");
-  belt.className = "dynamic-gallery-row marquee-track";
+  const belt = document.createElement('div');
+  belt.className = 'dynamic-gallery-row marquee-track';
 
-  const segment = document.createElement("div");
-  segment.className = "dynamic-gallery-row-group";
+  const segment = document.createElement('div');
+  segment.className = 'dynamic-gallery-row-group';
 
   if (block) {
     const rows = Array.from(block.children);
@@ -345,7 +341,7 @@ export const createDynamicGalleryRow = async (
         item.tagCategory,
         item.tagType,
         item.btnLabel,
-        item.btnLink
+        item.btnLink,
       );
       segment.appendChild(card);
     });
@@ -376,7 +372,7 @@ export const createDynamicGalleryRow = async (
     ? FAST_SPEED_PX_PER_SECOND
     : BASE_SPEED_PX_PER_SECOND;
   const marquee = createMarqueeController(marqueeContainer, belt, segment, {
-    speedPxPerSecond: speed
+    speedPxPerSecond: speed,
   });
   if (!isAuthor) marquee.play();
   setupListeners(marquee, marqueeContainer, block);

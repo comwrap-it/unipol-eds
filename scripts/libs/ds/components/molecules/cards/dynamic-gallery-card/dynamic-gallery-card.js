@@ -1,7 +1,7 @@
-import { extractMediaElementFromRow } from "../../../../scripts/domHelpers.js";
-import { loadFragment } from "../../../../scripts/fragment.js";
-import { createButton } from "../../../atoms/buttons/standard-button/standard-button.js";
-import { createTag } from "../../../atoms/tag/tag.js";
+import { extractMediaElementFromRow } from '../../../../scripts/domHelpers.js';
+import { loadFragment } from '../../../../scripts/fragment.js';
+import { createButton } from '../../../atoms/buttons/standard-button/standard-button.js';
+import { createTag } from '../../../atoms/tag/tag.js';
 
 /**
  * Handles the link click to load the respective fragment
@@ -11,13 +11,13 @@ const handleLinkClick = async (event) => {
   event.stopPropagation();
   event.preventDefault();
   const link = event.currentTarget;
-  const href = link.getAttribute("href");
+  const href = link.getAttribute('href');
   if (href) {
     const fragment = await loadFragment(href);
     if (fragment) {
-      const fragmentSection = fragment.querySelector(":scope .section");
+      const fragmentSection = fragment.querySelector(':scope .section');
       if (fragmentSection) {
-        fragmentSection.classList.remove("section");
+        fragmentSection.classList.remove('section');
         document.body.appendChild(fragmentSection);
       }
     }
@@ -42,18 +42,18 @@ export const createDynamicGalleryCard = async (
   tagCategory,
   tagType,
   btnLabel,
-  btnLink
+  btnLink,
 ) => {
-  const cardContainer = document.createElement("div");
-  cardContainer.className = "dynamic-gallery-card";
+  const cardContainer = document.createElement('div');
+  cardContainer.className = 'dynamic-gallery-card';
 
   if (picture) {
     // Set alt text for image
-    const imgElement = picture.querySelector("img");
+    const imgElement = picture.querySelector('img');
     if (imgElement) {
-      imgElement.alt = imgAltText || "";
+      imgElement.alt = imgAltText || '';
     }
-    picture.className = "dynamic-gallery-card-image";
+    picture.className = 'dynamic-gallery-card-image';
     cardContainer.appendChild(picture);
   }
 
@@ -62,11 +62,11 @@ export const createDynamicGalleryCard = async (
     cardContainer.appendChild(tag);
   }
 
-  const overlay = document.createElement("div");
-  overlay.className = "dynamic-gallery-card-overlay theme-dark";
+  const overlay = document.createElement('div');
+  overlay.className = 'dynamic-gallery-card-overlay theme-dark';
 
   if (btnLabel && btnLink) {
-    const button = createButton(btnLabel, btnLink, false, "primary");
+    const button = createButton(btnLabel, btnLink, false, 'primary');
     button.onclick = handleLinkClick;
     overlay.appendChild(button);
   }
@@ -77,12 +77,12 @@ export const createDynamicGalleryCard = async (
 
 export const extractDynamicGalleryCardValuesFromRows = (rows) => {
   const pictureElement = extractMediaElementFromRow(rows[0]);
-  const imgAltText = rows[1]?.textContent?.trim() || "";
-  const tagLabel = rows[2]?.textContent?.trim() || "";
-  const tagCategory = rows[3]?.textContent?.trim() || "";
-  const tagType = rows[4]?.textContent?.trim() || "";
-  const btnLabel = rows[5]?.textContent?.trim() || "";
-  const btnLink = rows[6]?.querySelector("a")?.getAttribute("href") || "";
+  const imgAltText = rows[1]?.textContent?.trim() || '';
+  const tagLabel = rows[2]?.textContent?.trim() || '';
+  const tagCategory = rows[3]?.textContent?.trim() || '';
+  const tagType = rows[4]?.textContent?.trim() || '';
+  const btnLabel = rows[5]?.textContent?.trim() || '';
+  const btnLink = rows[6]?.querySelector('a')?.getAttribute('href') || '';
   return {
     pictureElement,
     imgAltText,
@@ -90,7 +90,7 @@ export const extractDynamicGalleryCardValuesFromRows = (rows) => {
     tagCategory,
     tagType,
     btnLabel,
-    btnLink
+    btnLink,
   };
 };
 
@@ -102,7 +102,7 @@ export const createDynamicGalleryCardFromRows = async (rows) => {
     tagCategory,
     tagType,
     btnLabel,
-    btnLink
+    btnLink,
   } = extractDynamicGalleryCardValuesFromRows(rows);
   const card = await createDynamicGalleryCard(
     pictureElement,
@@ -111,7 +111,7 @@ export const createDynamicGalleryCardFromRows = async (rows) => {
     tagCategory,
     tagType,
     btnLabel,
-    btnLink
+    btnLink,
   );
 
   return card;

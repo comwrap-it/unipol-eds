@@ -50,4 +50,3 @@ export function createCheckboxField(
 
   return wrapper;
 }
-

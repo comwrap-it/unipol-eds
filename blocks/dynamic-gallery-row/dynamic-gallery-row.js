@@ -2,5 +2,5 @@ import { createDynamicGalleryRow } from '../../scripts/libs/ds/components/organi
 
 export default async function decorate(block) {
   if (!block) return;
-  await createDynamicGalleryRow([], block)
+  await createDynamicGalleryRow([], block);
 }
