@@ -54,7 +54,7 @@
       gap: var(--Accordion-Accordion-Download-Gap-Download, 1.25rem);
       color: var(--Accordion-Description-Open, #001C35);
       max-height: 0;
-      transition: max-height 0.3s ease, padding 0.3s ease;
+      transition: max-height 0.5s ease, padding 0.5s ease;
 
       & .download-tile-molecule {
         display: flex;
