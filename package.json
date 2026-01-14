@@ -41,6 +41,6 @@
     "stylelint-config-standard": "38.0.0"
   },
   "dependencies": {
-    "@unipol-tpd/design-system-components": "^1.0.14"
+    "@unipol-tpd/design-system-components": "^1.0.19"
   }
 }

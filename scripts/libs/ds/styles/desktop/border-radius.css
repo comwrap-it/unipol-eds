@@ -1,0 +1,14 @@
+/**
+ * This file was generated automatically by Supernova.io and should not be changed manually.
+ * To modify the format or content of this file, please contact your design system team. 
+ */
+
+.theme-desktop {
+  --radius-0: 0rem;
+  --radius-100-4: 0.25rem;
+  --radius-200-8: 0.5rem;
+  --radius-300-16: 1rem;
+  --radius-400-24: 1.5rem;
+  --radius-9999: 624.938rem;
+  --carousel-widget-product-highlights-radius: var(--radius-400-24);
+}

@@ -1,6 +1,6 @@
-import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../../constants/index.js';
-import { loadCSS } from '../../../scripts/aem.js';
-import { createIconButton } from '../../atoms/buttons/icon-button/icon-button.js';
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from "../../../constants/index.js";
+import { loadCSS } from "../../../scripts/aem.js";
+import { createIconButton } from "../../atoms/buttons/icon-button/icon-button.js";
 
 let isStylesLoaded = false;
 
@@ -8,10 +8,10 @@ async function ensureStylesLoaded() {
   if (isStylesLoaded) return;
   await Promise.all([
     loadCSS(
-      `${window.hlx.codeBasePath}/blocks/atoms/buttons/icon-button/icon-button.css`,
+      `../../atoms/buttons/icon-button/icon-button.css`,
     ),
     loadCSS(
-      `${window.hlx.codeBasePath}/blocks/scroll-indicator/scroll-indicator.css`,
+      `../scroll-indicator/scroll-indicator.css`,
     ),
   ]);
   isStylesLoaded = true;
@@ -33,7 +33,6 @@ const createNavButton = (containerClass, iconName, buttonClass) => {
     BUTTON_VARIANTS.PRIMARY,
     BUTTON_ICON_SIZES.MEDIUM,
     '',
-    false,
   );
   iconButton.classList.add(buttonClass);
   iconButtonContainer.appendChild(iconButton);

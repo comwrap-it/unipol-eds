@@ -1,0 +1,13 @@
+/**
+ * This file was generated automatically by Supernova.io and should not be changed manually.
+ * To modify the format or content of this file, please contact your design system team. 
+ */
+
+.theme-desktop {
+  --icon-100-16: 1rem;
+  --icon-200-20: 1.25rem;
+  --icon-300-24: 1.5rem;
+  --icon-400-32: 2rem;
+  --icon-500-40: 2.5rem;
+  --text-block-centered-width: var(--container-width-l8-lm9-ms10-s12);
+}

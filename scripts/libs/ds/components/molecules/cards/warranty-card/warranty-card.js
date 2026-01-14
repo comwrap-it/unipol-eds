@@ -21,7 +21,7 @@ const createIconAndTagContainer = async (icon, tagConfig) => {
   iconWrapper.appendChild(iconElement);
 
   if (tagConfig?.label) {
-    await loadCSS('../../../atoms/tag/tag.css');
+    await loadCSS(`../../../atoms/tag/tag.css`);
     const tagElement = createTag(
       tagConfig.label,
       tagConfig.category,
@@ -99,7 +99,7 @@ const handleLinkClick = async (event, dialogConfig = {}) => {
         dialogConfig.btnSize,
         dialogConfig.btnLeftIcon,
         dialogConfig.btnRightIcon,
-      );
+      )
       document.body.appendChild(dialog);
     }
   }
@@ -107,7 +107,7 @@ const handleLinkClick = async (event, dialogConfig = {}) => {
 
 const createCardLinkButton = async (label, href, dialogConfig = {}) => {
   await loadCSS(
-    '../../../atoms/buttons/link-button/link-button.css',
+    `../../../atoms/buttons/link-button/link-button.css`,
   );
   const linkButton = document.createElement('a');
   linkButton.className = 'link-btn';
@@ -159,7 +159,7 @@ export const createWarrantyCard = async (
     const linkButton = await createCardLinkButton(
       linkButtonConfig.label,
       linkButtonConfig.href,
-      dialogConfig,
+      dialogConfig
     );
     if (linkButton) {
       card.appendChild(linkButton);
