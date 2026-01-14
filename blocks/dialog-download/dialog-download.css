@@ -7,6 +7,7 @@
         height: 100%;
 
         & .dialog-overlay {
+            height: 100%;
             position: fixed;
             inset: 0;
             flex-shrink: 0;
@@ -56,7 +57,7 @@
                     font-size: var(--Font-Size-Subtitle-Manrope, 1.5rem);
                     font-style: normal;
                     font-weight: 600;
-                    line-height: 120%; /* 1.8rem */
+                    line-height: 120%;
                     letter-spacing: -0.015rem;
                 }
             }
@@ -67,6 +68,10 @@
                 align-items: flex-start;
                 gap: var(--Dialog-Dialog-Download-Gap-Download, 1rem);
                 overflow-y: auto;
+                /* Firefox scrollbar hide */
+                scrollbar-width: none;
+                /* IE / Edge legacy scrollbar hide */
+                -ms-overflow-style: none;
                 flex: 1 0 0;
                 align-self: stretch;
 
@@ -83,6 +88,11 @@
                         }
                     }
                 }
+            }
+
+            /* Chrome, Safari, Edge scrollbar hide */
+            & .dialog-text-content::-webkit-scrollbar {
+                display: none;
             }
 
             &.is-closing {
@@ -115,7 +125,7 @@
 }
 
 /* Desktop */
-@media (width >= 1152px) {
+@media (width >= 1200px) {
     .dialog-download-wrapper {
         & .dialog-download {
             & .dialog-panel {
