@@ -148,6 +148,7 @@
   }
 
   .accordion:not(.open) .accordion-content {
+    display: none;
     opacity: 0;
 
       & .download-tile-molecule {
