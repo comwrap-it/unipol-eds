@@ -68,8 +68,10 @@
                 align-items: flex-start;
                 gap: var(--Dialog-Dialog-Download-Gap-Download, 1rem);
                 overflow-y: auto;
+
                 /* Firefox scrollbar hide */
                 scrollbar-width: none;
+
                 /* IE / Edge legacy scrollbar hide */
                 -ms-overflow-style: none;
                 flex: 1 0 0;
