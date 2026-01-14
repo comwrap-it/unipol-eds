@@ -1,13 +1,17 @@
-import { createButton } from '@unipol-ds/components/atoms/buttons/standard-button/standard-button.js';
 import { createIconButton } from '@unipol-ds/components/atoms/buttons/icon-button/icon-button.js';
 import createOverlay from '@unipol-ds/components/atoms/overlay/overlay.js';
-import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '../../constants/index.js';
 import {
-  getValuesFromBlock,
+  extractInstrumentationAttributes,
+  restoreInstrumentation,
+} from '@unipol-ds/scripts/utils.js';
+import { createTextElementFromObj } from '@unipol-ds/scripts/domHelpers.js';
+import { BUTTON_ICON_SIZES, BUTTON_VARIANTS } from '@unipol-ds/constants/index.js';
+import {
+  isAuthorMode,
   lockBodyScroll,
   unlockBodyScroll,
-  restoreInstrumentation,
 } from '../../scripts/utils.js';
+import { loadFragment } from '../fragment/fragment.js';
 
 let isStylesLoaded = false;
 async function ensureStylesLoaded() {
@@ -15,10 +19,10 @@ async function ensureStylesLoaded() {
   const { loadCSS } = await import('../../scripts/aem.js');
   await Promise.all([
     loadCSS(
-      `${window.hlx.codeBasePath}/blocks/atoms/buttons/standard-button/standard-button.css`,
+      `${window.hlx.codeBasePath}/blocks/atoms/buttons/icon-button/icon-button.css`,
     ),
     loadCSS(
-      `${window.hlx.codeBasePath}/blocks/atoms/buttons/icon-button/icon-button.css`,
+      `${window.hlx.codeBasePath}/blocks/atoms/overlay/overlay.css`,
     ),
   ]);
   isStylesLoaded = true;
@@ -57,6 +61,53 @@ const closeDialog = (block, panel, overlay) => {
   }, 800);
 };
 
+async function loadAccordionDownload(reference) {
+  const fragment = await loadFragment(reference.href);
+
+  restoreInstrumentation(fragment, reference.instrumentation);
+
+  const sections = fragment?.querySelectorAll(':scope .section');
+
+  sections.forEach((section) => {
+    if (section) {
+      section.classList.remove('section');
+    }
+  });
+
+  return sections;
+}
+
+async function buildDownloadAccordions(isAuthor, references = []) {
+  let refs = [];
+
+  if (Array.isArray(references)) {
+    refs = isAuthor
+      ? references
+      : references.filter((ref) => ref.href !== null);
+  }
+
+  return Promise.all(refs.map(loadAccordionDownload));
+}
+
+const extractValuesFromRows = (rows) => {
+  const configs = {};
+  configs.title = {};
+
+  configs.title.value = rows[0]?.textContent?.trim() || '';
+  configs.title.instrumentation = extractInstrumentationAttributes(rows[0]);
+  configs.fragments = [];
+  rows.shift();
+
+  rows.forEach((row) => {
+    const value = {};
+    value.instrumentation = extractInstrumentationAttributes(row);
+    value.href = row?.querySelector('a')?.getAttribute('href') || row[0]?.textContent?.trim() || '';
+    configs.fragments.push(value);
+  });
+
+  return configs;
+};
+
 /**
  * Decorates a dialog block
  * @param {HTMLElement} block The decorated dialog block element
@@ -67,20 +118,8 @@ export default async function decorate(block) {
   await ensureStylesLoaded();
   lockBodyScroll();
 
-  const properties = [
-    'dialogTitleLabel',
-    'dialogTextContentRichtext',
-    'standardButtonLabel',
-    'standardButtonVariant',
-    'standardButtonHref',
-    'standardButtonOpenInNewTab',
-    'standardButtonSize',
-    'standardButtonLeftIcon',
-    'standardButtonRightIcon',
-    'actionButtonConfig',
-  ];
-
-  const values = getValuesFromBlock(block, properties);
+  const rows = Array.from(block.children);
+  const values = extractValuesFromRows(rows);
 
   block.textContent = '';
   block.classList.add('dialog');
@@ -105,6 +144,7 @@ export default async function decorate(block) {
     BUTTON_ICON_SIZES.MEDIUM,
   );
   closeButton.classList.add('dialog-close');
+  closeButton.setAttribute('aria-label', 'Chiudi la finestra di dialogo');
   closeButton.onclick = () => {
     closeDialog(block, panel, overlay);
     unlockBodyScroll();
@@ -112,10 +152,7 @@ export default async function decorate(block) {
   header.appendChild(closeButton);
 
   /* Title */
-  const titleEl = document.createElement('h2');
-  titleEl.className = 'dialog-title';
-  titleEl.textContent = values.dialogTitleLabel?.value || '';
-  restoreInstrumentation(titleEl, values.dialogTitleLabel?.instrumentation);
+  const titleEl = createTextElementFromObj(values.title, 'dialog-title', 'h2');
   header.appendChild(titleEl);
 
   panel.appendChild(header);
@@ -124,33 +161,17 @@ export default async function decorate(block) {
   const textContent = document.createElement('div');
   textContent.className = 'dialog-text-content';
 
+  const isAuthor = isAuthorMode(block);
+  const downloadSections = await buildDownloadAccordions(isAuthor, values.fragments ?? []);
+
   /* Richtext */
-  if (values.dialogTextContentRichtext?.value) {
-    textContent.append(...values.dialogTextContentRichtext.value);
-  }
+  downloadSections.forEach((downloadSection) => {
+    downloadSection.forEach((downloadElement) => {
+      textContent.appendChild(downloadElement);
+    });
+  });
 
   panel.appendChild(textContent);
-
-  /* Footer */
-  const footer = document.createElement('div');
-  footer.className = 'dialog-footer';
-
-  /* Action button */
-  if (values.standardButtonLabel?.value) {
-    const button = createButton(
-      values.standardButtonLabel?.value,
-      values.standardButtonHref?.value,
-      values.standardButtonOpenInNewTab?.value,
-      values.standardButtonVariant?.value,
-      values.standardButtonSize?.value,
-      values.standardButtonLeftIcon?.value,
-      values.standardButtonRightIcon?.value,
-    );
-
-    footer.appendChild(button);
-  }
-
-  panel.appendChild(footer);
 
   block.appendChild(overlay);
   block.appendChild(panel);
