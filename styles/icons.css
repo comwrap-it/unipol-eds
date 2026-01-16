@@ -207,6 +207,10 @@
   content: "\e928";
 }
 
+.un-icon-open-link:before {
+  content: "\e997";
+}
+
 .un-icon-eye::before {
   content: "\e929";
 }

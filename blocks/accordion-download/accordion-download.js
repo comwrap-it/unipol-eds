@@ -75,7 +75,7 @@ export async function createAccordionDownload(accordionLabel, downloadTiles) {
     const labelEl = createTextElementFromObj(downloadTiles[0], 'accordion-label', 'span');
 
     const downloadIcon = createIconButton(
-      'un-icon-download-simple',
+      'un-icon-open-link',
       BUTTON_VARIANTS.SECONDARY,
       BUTTON_ICON_SIZES.LARGE,
       downloadTiles[0].href,

@@ -40,7 +40,7 @@ export function createDownloadTile(downloadTile) {
   downloadTileEl.appendChild(textWrapper);
 
   const downloadIcon = createIconButton(
-    'un-icon-download-simple',
+    'un-icon-open-link',
     BUTTON_VARIANTS.SECONDARY,
     BUTTON_ICON_SIZES.LARGE,
     downloadTile.href,
