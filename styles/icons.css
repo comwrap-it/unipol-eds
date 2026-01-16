@@ -207,7 +207,7 @@
   content: "\e928";
 }
 
-.un-icon-open-link:before {
+.un-icon-open-link::before {
   content: "\e997";
 }
 
