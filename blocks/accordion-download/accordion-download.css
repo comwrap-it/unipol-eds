@@ -17,6 +17,10 @@
     align-items: flex-start;
     align-self: stretch;
 
+    & .accordion-header.direct-download {
+      cursor: auto;
+    }
+
     & .accordion-header {
       width: 100%;
       display: flex;
@@ -33,7 +37,7 @@
         font-size: var(--Size-16, 1rem);
         font-style: normal;
         font-weight: 600;
-        line-height: 125%;
+        line-height: 140%;
       }
 
       & .accordion-icon {
@@ -42,6 +46,19 @@
         font-size: var(--Size-24);
         flex-shrink: 0;
         aspect-ratio: 1 / 1;
+      }
+
+      & .btn-icon-secondary {
+        justify-content: flex-end;
+        text-decoration: none;
+        background-color: var(--Background-Default-Secondary, #FFF);
+        color: var(--Icon-Button-Secondary-Default-Icon);
+
+        /* Hover state */
+        &:hover:not(:disabled) {
+          background-color: var(--Background-Default-Secondary, #FFF);
+          color: var(--Icon-Button-Secondary-Default-Icon);
+        }
       }
     }
 
@@ -88,16 +105,16 @@
             border-color: var(--Icon-Button-Secondary-Default-Border);
 
             /* Focus state */
-
             &:focus-visible,
             &:focus {
+              background-color: var(--Background-Default-Secondary, #FFF);
               color: var(--Icon-Button-Secondary-Default-Icon);
               border-color: var(--Icon-Button-Secondary-Default-Border);
             }
 
             /* Hover state */
-
             &:hover:not(:disabled) {
+              background-color: var(--Background-Default-Secondary, #FFF);
               color: var(--Icon-Button-Secondary-Default-Icon);
               border-color: var(--Icon-Button-Secondary-Default-Border);
             }

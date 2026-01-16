@@ -33,14 +33,14 @@
             &:focus-visible,
             &:focus {
                 color: var(--Icon-Button-Secondary-Default-Icon);
-                border-color: var(--Icon-Button-Secondary-Default-Border);
+                background-color: var(--Background-Default-Secondary, #FFF);
             }
 
             /* Hover state */
             &:hover:not(:disabled) {
                 color: var(--Icon-Button-Secondary-Default-Icon);
                 border-color: var(--Icon-Button-Secondary-Default-Border);
-                background-color: var(--Icon-Button-Secondary-Default-Background);
+                background-color: var(--Background-Default-Secondary, #FFF);
             }
         }
     }

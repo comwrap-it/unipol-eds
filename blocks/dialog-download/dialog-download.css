@@ -54,11 +54,11 @@
                 & .dialog-title {
                     color: var(--Dialog-Title, #001c35);
                     font-family: var(--Family-Font-2, Manrope);
-                    font-size: var(--Font-Size-Subtitle-Manrope, 1.5rem);
+                    font-size: var(--Font-Size-Subtitle-Manrope, 2rem);
                     font-style: normal;
                     font-weight: 600;
                     line-height: 120%;
-                    letter-spacing: -0.015rem;
+                    letter-spacing: -0.02rem;
                 }
             }
 
@@ -84,9 +84,11 @@
                     gap: var(--Dialog-Dialog-Download-Gap-Download, 1rem);
 
                     & .btn-icon-secondary {
+                        background-color: var(--Background-Default-Secondary, #FFF);
+
                         /* Hover state */
                         &:hover:not(:disabled) {
-                            background-color: var(--Icon-Button-Secondary-Default-Background);
+                            background-color: var(--Background-Default-Secondary, #FFF);
                         }
                     }
                 }
